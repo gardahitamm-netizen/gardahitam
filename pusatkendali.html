@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@700;800&family=Plus+Jakarta+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
+html, body {
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+}
+
+.hero {
+  width: 100%;
+  height: 100vh;
+  background: linear-gradient(135deg, #0f2540 0%, #1a3a5c 50%, #1e5a8a 100%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 60px 48px;
+  position: relative;
+  overflow: hidden;
+}
+
+.hero::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background-image:
+    radial-gradient(circle at 20% 40%, rgba(62,180,200,0.15), transparent 40%),
+    radial-gradient(circle at 80% 10%, rgba(232,160,32,0.1), transparent 40%),
+    linear-gradient(rgba(255,255,255,0.05) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255,255,255,0.05) 1px, transparent 1px);
+  background-size: auto, auto, 40px 40px, 40px 40px;
+  pointer-events: none;
+}
+
+.hero-inner {
+  position: relative;
+  z-index: 2;
+  width: 100%;
+  max-width: 1200px;
+  display: grid;
+  grid-template-columns: 1.2fr 1fr;
+  gap: 50px;
+  align-items: center;
+}
+
+.hero-badge {
+  display: inline-block;
+  background: rgba(232,160,32,0.15);
+  border: 1px solid rgba(232,160,32,0.5);
+  color: #e8a020;
+  font-size: 11px;
+  font-weight: 700;
+  padding: 7px 14px;
+  border-radius: 20px;
+  letter-spacing: .1em;
+  margin-bottom: 22px;
+}
+
+.hero h1 {
+  font-family: 'Syne', sans-serif;
+  font-size: clamp(1.8rem, 3.5vw, 4rem);
+  font-weight: 800;
+  line-height: 1.05;
+  color: white;
+  margin-bottom: 20px;
+}
+.hero h1 em { color: #e8a020; font-style: normal; }
+
+.hero-desc {
+  color: rgba(255,255,255,0.75);
+  font-size: 14px;
+  line-height: 1.7;
+  max-width: 480px;
+  margin-bottom: 30px;
+}
+
+.hero-actions { display: flex; gap: 12px; flex-wrap: wrap; }
+
+.btn-primary {
+  background: #e8a020;
+  color: #0f2540;
+  font-weight: 700;
+  font-size: 13px;
+  padding: 12px 24px;
+  border-radius: 10px;
+  text-decoration: none;
+  transition: .2s;
+}
+.btn-primary:hover { transform: translateY(-2px); background: #f0b030; }
+
+.btn-outline {
+  border: 1px solid rgba(255,255,255,0.4);
+  color: white;
+  font-size: 13px;
+  padding: 12px 22px;
+  border-radius: 10px;
+  text-decoration: none;
+}
+.btn-outline:hover { background: rgba(255,255,255,0.08); }
+
+.stats-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 14px;
+}
+
+.stat-card {
+  background: rgba(255,255,255,0.08);
+  border: 1px solid rgba(255,255,255,0.1);
+  border-radius: 16px;
+  padding: 24px;
+  backdrop-filter: blur(10px);
+  transition: .3s;
+}
+.stat-card:hover { transform: translateY(-4px); background: rgba(255,255,255,0.12); }
+.stat-card.wide { grid-column: span 2; }
+
+.stat-val {
+  font-family: 'Syne', sans-serif;
+  font-size: 30px;
+  font-weight: 800;
+  color: white;
+  margin-bottom: 5px;
+}
+.stat-val.accent { color: #e8a020; }
+
+.stat-lbl {
+  font-size: 10px;
+  letter-spacing: .18em;
+  color: rgba(255,255,255,0.5);
+  text-transform: uppercase;
+}
+
+/* TABLET */
+@media (max-width: 860px) {
+  .hero { padding: 50px 30px; }
+  .hero-inner { grid-template-columns: 1fr; gap: 30px; }
+  .stats-grid { grid-template-columns: repeat(4, 1fr); }
+  .stat-card.wide { grid-column: span 1; }
+  .stat-card { padding: 16px; }
+  .stat-val { font-size: 22px; }
+}
+
+/* MOBILE */
+@media (max-width: 540px) {
+  .hero { padding: 36px 18px; height: auto; min-height: 100vh; }
+  .hero h1 { font-size: 1.6rem; }
+  .hero-desc { font-size: 13px; margin-bottom: 22px; }
+  .stats-grid { grid-template-columns: 1fr 1fr; }
+  .stat-card.wide { grid-column: span 2; }
+  .stat-val { font-size: 22px; }
+  .stat-card { padding: 14px; }
+  .btn-primary, .btn-outline { padding: 11px 16px; font-size: 12px; }
+}
+
+@media (max-width: 360px) {
+  .hero h1 { font-size: 1.4rem; }
+  .hero-actions { flex-direction: column; }
+  .btn-primary, .btn-outline { width: 100%; text-align: center; }
+}
+
+</style>
+</head>
+<body>
+
+<section class="hero" id="hero">
+  <div class="hero-inner">
+    <div>
+      <div class="hero-badge">🏭 GARDA HITAM</div>
+      <h1>Pusat Kendali<br><em>Mixing</em> &<br>Plant Operations</h1>
+      <p class="hero-desc">
+        Platform terpadu untuk monitoring drive komponen, manajemen jadwal PM, dan akses informasi seluruh unit drive INU, DSU serta motor mixing center dan fasilitas share job KECO WATERBANG secara real-time.
+      </p>
+      <div class="hero-actions">
+        <a href="https://sites.google.com/view/kecowaterbang/halaman-muka#units" class="btn-primary">🔍 Lihat Semua Unit</a>
+        <a href="https://sites.google.com/view/kecowaterbang/halaman-muka#about" class="btn-outline">Pelajari Mixing →</a>
+      </div>
+    </div>
+
+    <div class="stats-grid">
+      <div class="stat-card wide">
+        <div class="stat-val accent">7</div>
+        <div class="stat-lbl">Unit Plant Aktif</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-val">24/7</div>
+        <div class="stat-lbl">Operasi Nonstop</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-val">100%</div>
+        <div class="stat-lbl">Uptime Sistem</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-val">∞</div>
+        <div class="stat-lbl">Monitoring Live</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+</body>
+</html>
