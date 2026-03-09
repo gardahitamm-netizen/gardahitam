@@ -584,16 +584,12 @@ async function submitLogin() {
   errEl.style.display = 'none';
 
   try {
-    const res = await fetch(LOGIN_API, {
-      method: 'POST',
-      headers: { 'Content-Type': 'text/plain' },
-      body: JSON.stringify({
-        username: username,
-        password: password,
-        mixing:   S.plant   // pakai nama plant sebagai mixing identifier
-      })
+    const params = new URLSearchParams({
+      username: username,
+      password: password,
+      mixing:   S.plant
     });
-
+    const res    = await fetch(LOGIN_API + '?' + params);
     const result = await res.json();
 
     if (result.success) {
