@@ -513,7 +513,7 @@ body {
 const API = 'https://script.google.com/macros/s/AKfycbwLqgqY-hoyODUDseBeQX3N6RCcIsa4wqHe1qHife8Px4DlwRWYG0J-U4pGf4VrsA6EYw/exec';
 
 // ⚠️ GANTI dengan URL Web App dari DB_Users Apps Script kamu
-const LOGIN_API = 'https://script.google.com/macros/s/AKfycbxDfWv7QiWB79Qzaiaq4EAPKMSFtRk0aLMKIjp6gDSsw6b3YHpx5N02K8ZPqz0Lu01VXg/exec';
+const LOGIN_API = 'https://script.google.com/macros/s/GANTI_DENGAN_URL_LOGIN_API/exec';
 
 // ══════════════════════════════════════════════════════════
 // STATE
@@ -597,9 +597,9 @@ async function submitLogin() {
     const result = await res.json();
 
     if (result.success) {
-      // Login berhasil → tutup login modal → buka edit modal
-      closeLoginModal();
+      // Login berhasil → simpan data dulu, tutup login, baru buka edit modal
       const d = S.pendingDriveData;
+      closeLoginModal();
       if (d) openModal(d.driveId, d.status, d.keterangan, d.merk, d.spesifikasi);
     } else {
       errEl.textContent   = '❌ ' + (result.message || 'Username atau password salah.');
