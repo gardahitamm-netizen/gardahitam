@@ -1,0 +1,250 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Garda Hitam — Halaman Muka</title>
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@700;800&family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html, body { width: 100%; overflow-x: hidden; }
+body { font-family: 'Plus Jakarta Sans', sans-serif; background: #0f2540; color: white; }
+
+/* ── NAVBAR ── */
+.navbar {
+  position: fixed; top: 0; left: 0; right: 0; z-index: 1000;
+  height: 56px;
+  background: rgba(10,18,35,0.92);
+  backdrop-filter: blur(14px);
+  border-bottom: 1px solid rgba(255,255,255,0.08);
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 0 32px;
+}
+.navbar-brand { display: flex; align-items: center; gap: 10px; text-decoration: none; }
+.navbar-logo {
+  width: 34px; height: 34px;
+  background: rgba(232,160,32,0.15);
+  border: 1px solid rgba(232,160,32,0.4);
+  border-radius: 8px;
+  display: flex; align-items: center; justify-content: center; font-size: 16px;
+}
+.navbar-title { font-family: 'Syne', sans-serif; font-size: 14px; font-weight: 800; color: white; letter-spacing: .06em; }
+.navbar-links { display: flex; align-items: center; gap: 2px; list-style: none; }
+.navbar-links a {
+  color: rgba(255,255,255,0.55); text-decoration: none;
+  font-size: 13px; font-weight: 500;
+  padding: 6px 14px; border-radius: 8px; transition: .2s;
+}
+.navbar-links a:hover { color: white; background: rgba(255,255,255,0.08); }
+.navbar-links a.active { color: #e8a020; }
+.nav-toggle { display: none; flex-direction: column; gap: 5px; cursor: pointer; padding: 4px; }
+.nav-toggle span { display: block; width: 22px; height: 2px; background: white; border-radius: 2px; }
+
+/* ── HERO ── */
+.hero {
+  width: 100%; min-height: 100vh;
+  background: linear-gradient(135deg, #0f2540 0%, #1a3a5c 50%, #1e5a8a 100%);
+  display: flex; align-items: center; justify-content: center;
+  padding: 100px 48px 60px; position: relative; overflow: hidden;
+}
+.hero::before {
+  content: ""; position: absolute; inset: 0;
+  background-image:
+    radial-gradient(circle at 20% 40%, rgba(62,180,200,0.15), transparent 40%),
+    radial-gradient(circle at 80% 10%, rgba(232,160,32,0.1), transparent 40%),
+    linear-gradient(rgba(255,255,255,0.05) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255,255,255,0.05) 1px, transparent 1px);
+  background-size: auto, auto, 40px 40px, 40px 40px;
+  pointer-events: none;
+}
+.hero-inner {
+  position: relative; z-index: 2; width: 100%; max-width: 1300px;
+  display: grid; grid-template-columns: 1.2fr 1fr; gap: 60px; align-items: center;
+}
+.hero-badge {
+  display: inline-block;
+  background: rgba(232,160,32,0.15); border: 1px solid rgba(232,160,32,0.5);
+  color: #e8a020; font-size: 12px; font-weight: 700;
+  padding: 8px 16px; border-radius: 20px; letter-spacing: .1em; margin-bottom: 25px;
+}
+.hero h1 {
+  font-family: 'Syne', sans-serif;
+  font-size: clamp(2rem, 4vw, 4.3rem); font-weight: 800; line-height: 1.05;
+  color: white; margin-bottom: 22px;
+}
+.hero h1 em { color: #e8a020; font-style: normal; }
+.hero-desc { color: rgba(255,255,255,0.75); font-size: 15px; line-height: 1.7; max-width: 500px; margin-bottom: 35px; }
+.hero-actions { display: flex; gap: 15px; flex-wrap: wrap; }
+.btn-primary {
+  background: #e8a020; color: #0f2540; font-weight: 700; font-size: 14px;
+  padding: 14px 28px; border-radius: 10px; text-decoration: none; transition: .2s;
+}
+.btn-primary:hover { transform: translateY(-3px); background: #f0b030; }
+.btn-outline {
+  border: 1px solid rgba(255,255,255,0.5); color: white; font-size: 14px;
+  padding: 14px 26px; border-radius: 10px; text-decoration: none; transition: .2s;
+}
+.btn-outline:hover { background: rgba(255,255,255,0.08); }
+
+.stats-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 18px; }
+.stat-card {
+  background: rgba(255,255,255,0.08); border: 1px solid rgba(255,255,255,0.1);
+  border-radius: 18px; padding: 28px; backdrop-filter: blur(10px); transition: .3s;
+}
+.stat-card:hover { transform: translateY(-4px); background: rgba(255,255,255,0.12); }
+.stat-card.wide { grid-column: span 2; }
+.stat-val { font-family: 'Syne', sans-serif; font-size: 34px; font-weight: 800; color: white; margin-bottom: 5px; }
+.stat-val.accent { color: #e8a020; }
+.stat-lbl { font-size: 11px; letter-spacing: .18em; color: rgba(255,255,255,0.5); text-transform: uppercase; }
+
+/* ── QUICK NAV ── */
+.quicknav { background: #0a1628; padding: 60px 48px; }
+.quicknav-inner { max-width: 1300px; margin: 0 auto; }
+.quicknav h2 { font-family: 'Syne', sans-serif; font-size: clamp(1.4rem, 2.5vw, 2rem); font-weight: 800; margin-bottom: 8px; }
+.quicknav p { color: rgba(255,255,255,0.5); font-size: 14px; margin-bottom: 32px; }
+.nav-cards { display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 16px; }
+.nav-card {
+  background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1);
+  border-radius: 16px; padding: 28px 22px;
+  text-decoration: none; color: white;
+  display: flex; flex-direction: column; gap: 14px;
+  transition: .25s; position: relative; overflow: hidden;
+}
+.nav-card::after {
+  content: '›'; position: absolute; right: 18px; top: 50%; transform: translateY(-50%);
+  font-size: 20px; color: rgba(255,255,255,0.2); transition: .2s;
+}
+.nav-card:hover { border-color: rgba(232,160,32,0.4); background: rgba(232,160,32,0.07); transform: translateY(-4px); }
+.nav-card:hover::after { color: #e8a020; right: 14px; }
+.nav-card-icon { font-size: 28px; }
+.nav-card-title { font-family: 'Syne', sans-serif; font-size: 17px; font-weight: 800; }
+.nav-card-desc { font-size: 12px; color: rgba(255,255,255,0.45); }
+
+/* ── RESPONSIVE ── */
+@media (max-width: 900px) {
+  .navbar { padding: 0 20px; }
+  .nav-toggle { display: flex; }
+  .navbar-links {
+    position: fixed; top: 56px; left: 0; right: 0;
+    background: rgba(10,18,35,0.98);
+    flex-direction: column; padding: 12px 16px;
+    border-bottom: 1px solid rgba(255,255,255,0.08);
+    transform: translateY(-110%); transition: transform .3s;
+  }
+  .navbar-links.open { transform: translateY(0); }
+  .navbar-links a { display: block; padding: 10px 14px; }
+  .hero { padding: 86px 30px 50px; }
+  .hero-inner { grid-template-columns: 1fr; gap: 36px; }
+  .stats-grid { grid-template-columns: repeat(4, 1fr); }
+  .stat-card.wide { grid-column: span 1; }
+  .quicknav { padding: 48px 24px; }
+}
+@media (max-width: 600px) {
+  .hero { padding: 80px 20px 40px; }
+  .hero h1 { font-size: 1.75rem; }
+  .stats-grid { grid-template-columns: 1fr 1fr; }
+  .stat-card.wide { grid-column: span 2; }
+  .stat-card { padding: 18px 16px; }
+  .stat-val { font-size: 26px; }
+  .quicknav { padding: 40px 20px; }
+  .nav-cards { grid-template-columns: 1fr 1fr; }
+}
+@media (max-width: 360px) {
+  .hero h1 { font-size: 1.5rem; }
+  .hero-actions { flex-direction: column; }
+  .btn-primary, .btn-outline { width: 100%; text-align: center; }
+  .nav-cards { grid-template-columns: 1fr; }
+}
+</style>
+</head>
+<body>
+
+<!-- NAVBAR -->
+<nav class="navbar">
+  <a href="index.html" class="navbar-brand">
+    <div class="navbar-logo">🏭</div>
+    <span class="navbar-title">GARDA HITAM</span>
+  </a>
+  <div class="nav-toggle" id="navToggle">
+    <span></span><span></span><span></span>
+  </div>
+  <ul class="navbar-links" id="navLinks">
+    <li><a href="index.html" class="active">Halaman Muka</a></li>
+    <li><a href="drives.html">Drives</a></li>
+    <li><a href="sharejob.html">ShareJob</a></li>
+    <li><a href="ioPlc.html">I/O PLC</a></li>
+  </ul>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-inner">
+    <div>
+      <div class="hero-badge">🏭 GARDA HITAM</div>
+      <h1>Pusat Kendali<br><em>Mixing</em> &<br>Plant Operations</h1>
+      <p class="hero-desc">
+        Platform terpadu untuk monitoring drive komponen, manajemen jadwal PM, dan akses informasi seluruh unit drive INU, DSU serta motor mixing center dan fasilitas share job KECO WATERBANG secara real-time.
+      </p>
+      <div class="hero-actions">
+        <a href="#menu" class="btn-primary">🔍 Lihat Semua Unit</a>
+        <a href="drives.html" class="btn-outline">Buka Drive Monitoring →</a>
+      </div>
+    </div>
+    <div class="stats-grid">
+      <div class="stat-card wide">
+        <div class="stat-val accent">7</div>
+        <div class="stat-lbl">Unit Plant Aktif</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-val">24/7</div>
+        <div class="stat-lbl">Operasi Nonstop</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-val">100%</div>
+        <div class="stat-lbl">Uptime Sistem</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-val">∞</div>
+        <div class="stat-lbl">Monitoring Live</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- QUICK NAV -->
+<section class="quicknav" id="menu">
+  <div class="quicknav-inner">
+    <h2>Menu Utama</h2>
+    <p>Pilih modul yang ingin diakses</p>
+    <div class="nav-cards">
+      <a href="drives.html" class="nav-card">
+        <div class="nav-card-icon">⚡</div>
+        <div class="nav-card-title">Drive Monitoring</div>
+        <div class="nav-card-desc">Pantau status drive INU, DSU & motor per mixing plant</div>
+      </a>
+      <a href="sharejob.html" class="nav-card">
+        <div class="nav-card-icon">🤝</div>
+        <div class="nav-card-title">Share Job</div>
+        <div class="nav-card-desc">Fasilitas berbagi pekerjaan antar unit mixing</div>
+      </a>
+      <a href="ioPlc.html" class="nav-card">
+        <div class="nav-card-icon">🖥️</div>
+        <div class="nav-card-title">I/O PLC</div>
+        <div class="nav-card-desc">Control troubleshooting PLC input / output tags</div>
+      </a>
+    </div>
+  </div>
+</section>
+
+<script>
+  var toggle = document.getElementById('navToggle');
+  var links  = document.getElementById('navLinks');
+  toggle.addEventListener('click', function () { links.classList.toggle('open'); });
+  links.querySelectorAll('a').forEach(function (a) {
+    a.addEventListener('click', function () { links.classList.remove('open'); });
+  });
+</script>
+
+</body>
+</html>
