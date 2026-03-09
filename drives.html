@@ -24,9 +24,7 @@
 }
 
 *{margin:0;padding:0;box-sizing:border-box;}
-
 html, body { width:100%; height:100%; overflow:hidden; }
-
 body {
   font-family:'Plus Jakarta Sans',sans-serif;
   background:var(--bg); color:var(--text);
@@ -47,7 +45,6 @@ body {
 }
 @keyframes pulse{0%,100%{opacity:1;transform:scale(1)}50%{opacity:.5;transform:scale(.8)}}
 
-/* ── TOMBOL BACK ── */
 .btn-back{
   display:flex; align-items:center; gap:5px;
   font-family:'JetBrains Mono',monospace; font-size:11px;
@@ -59,7 +56,6 @@ body {
 .btn-back:hover{ border-color:#e8a020; color:#e8a020; }
 
 .topbar-divider{ width:1px; height:20px; background:var(--border); flex-shrink:0; }
-
 .topbar-title{font-family:'JetBrains Mono',monospace;font-weight:700;font-size:13px;color:#fff;}
 .topbar-sep{color:var(--border);}
 .topbar-sub{font-family:'JetBrains Mono',monospace;font-size:11px;color:var(--muted);}
@@ -94,7 +90,6 @@ body {
 
 /* ── PAGES WRAPPER ── */
 #pages-wrapper { flex:1; overflow:hidden; display:flex; flex-direction:column; min-height:0; }
-
 .page { display:none; flex:1; overflow:hidden; flex-direction:column; min-height:0; }
 .page.active { display:flex; animation:fadeUp .2s ease; }
 @keyframes fadeUp{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:translateY(0)}}
@@ -104,7 +99,6 @@ body {
 .pg-title{font-size:20px;font-weight:700;margin-bottom:4px;}
 .pg-sub{font-size:12px;color:var(--muted);margin-bottom:24px;}
 .plant-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(180px,1fr));gap:12px;}
-
 .plant-card{
   background:var(--surf);border:1px solid var(--border);
   border-radius:10px;padding:20px 18px;cursor:pointer;
@@ -125,7 +119,6 @@ body {
 
 /* ── MAIN LAYOUT ── */
 .main-layout { display:flex; flex:1; overflow:hidden; min-height:0; width:100%; }
-
 .sidebar{
   width:185px;min-width:185px;flex-shrink:0;
   background:#080d18;border-right:1px solid var(--border);
@@ -150,7 +143,6 @@ body {
 .sb-fault{width:5px;height:5px;border-radius:50%;background:var(--fault);}
 
 .content-area { flex:1; overflow-y:auto; display:flex; flex-direction:column; min-width:0; min-height:0; }
-
 .content-tabs{
   display:flex;gap:0;
   border-bottom:1px solid var(--border);
@@ -164,7 +156,6 @@ body {
 }
 .ctab:hover{color:var(--text);}
 .ctab.active{color:var(--accent);border-bottom-color:var(--accent);}
-
 .tab-content{display:none;padding:20px;}
 .tab-content.active{display:block;animation:fadeUp .2s ease;}
 
@@ -194,6 +185,7 @@ body {
   background:var(--surf);border:1px solid var(--border);
   border-radius:10px;padding:16px;cursor:pointer;
   transition:all .2s;border-left:4px solid var(--border);
+  position:relative;
 }
 .inu-card:hover{background:var(--surf2);transform:translateY(-1px);box-shadow:0 4px 16px rgba(0,0,0,.3);}
 .inu-card.ok    {border-left-color:var(--ok);}
@@ -214,6 +206,16 @@ body {
 .inu-card.maint  .inu-status{color:var(--maint);}
 .inu-card.kosong .inu-status{color:var(--kosong);}
 .inu-info{font-size:11px;color:var(--muted);margin-top:6px;font-style:italic;}
+
+/* Edit badge on card */
+.inu-edit-hint{
+  position:absolute; top:10px; right:10px;
+  font-size:10px; font-family:'JetBrains Mono',monospace;
+  color:var(--muted); opacity:0; transition:opacity .2s;
+  background:var(--surf3); border:1px solid var(--border);
+  padding:2px 7px; border-radius:4px;
+}
+.inu-card:hover .inu-edit-hint{ opacity:1; }
 
 .hist-table-wrap{overflow-x:auto;}
 .hist-table{width:100%;border-collapse:collapse;font-size:12px;}
@@ -242,6 +244,7 @@ body {
 .pm-card-meta{font-size:11px;color:var(--muted);display:flex;flex-direction:column;gap:3px;}
 .pm-card-status{margin-top:10px;}
 
+/* ── EDIT MODAL ── */
 .modal-overlay{
   display:none;position:fixed;inset:0;
   background:rgba(0,0,0,.7);backdrop-filter:blur(4px);
@@ -273,6 +276,82 @@ body {
 .btn-save:hover{background:#1a6aff;}
 .btn-save:disabled{opacity:.5;pointer-events:none;}
 
+/* ── LOGIN MODAL ── */
+.login-overlay{
+  display:none; position:fixed; inset:0;
+  background:rgba(0,0,0,.75); backdrop-filter:blur(6px);
+  z-index:600; align-items:center; justify-content:center;
+}
+.login-overlay.open{ display:flex; }
+.login-box{
+  background:var(--surf); border:1px solid var(--border);
+  border-radius:16px; padding:28px 28px 24px; width:100%; max-width:360px;
+  animation:modalIn .2s ease; position:relative; overflow:hidden;
+}
+/* top accent line */
+.login-box::before{
+  content:''; position:absolute; top:0; left:0; right:0; height:3px;
+  background:linear-gradient(90deg, var(--accent), var(--teal));
+}
+.login-icon{
+  width:44px; height:44px; border-radius:10px;
+  background:rgba(41,121,255,.12); border:1px solid rgba(41,121,255,.2);
+  display:flex; align-items:center; justify-content:center;
+  font-size:20px; margin-bottom:16px;
+}
+.login-title{ font-size:16px; font-weight:700; margin-bottom:3px; }
+.login-sub{ font-size:12px; color:var(--muted); margin-bottom:6px; }
+.login-area-badge{
+  display:inline-flex; align-items:center; gap:5px;
+  background:rgba(0,184,212,.08); border:1px solid rgba(0,184,212,.18);
+  color:var(--teal); font-family:'JetBrains Mono',monospace; font-size:11px;
+  padding:3px 10px; border-radius:20px; margin-bottom:20px;
+}
+.login-field{ margin-bottom:13px; }
+.login-field label{
+  display:block; font-size:10px; font-weight:600;
+  text-transform:uppercase; letter-spacing:.7px;
+  color:var(--muted); margin-bottom:6px;
+}
+.login-field input{
+  width:100%; background:var(--surf2); border:1px solid var(--border);
+  color:var(--text); padding:10px 12px; border-radius:8px;
+  font-size:13px; font-family:'Plus Jakarta Sans',sans-serif;
+  transition:border-color .15s; outline:none;
+}
+.login-field input:focus{ border-color:var(--accent); }
+.login-err{
+  font-size:12px; color:var(--fault);
+  background:rgba(255,71,87,.08); border:1px solid rgba(255,71,87,.2);
+  border-radius:6px; padding:8px 12px; margin-bottom:12px; display:none;
+}
+.login-actions{ display:flex; gap:8px; margin-top:4px; }
+.btn-login{
+  flex:1; padding:10px; border-radius:8px;
+  font-size:13px; font-weight:600; cursor:pointer;
+  background:var(--accent); border:1px solid var(--accent);
+  color:#fff; transition:all .15s; display:flex;
+  align-items:center; justify-content:center; gap:6px;
+}
+.btn-login:hover{ background:#1a6aff; }
+.btn-login:disabled{ opacity:.5; pointer-events:none; }
+.btn-login-cancel{
+  padding:10px 16px; border-radius:8px;
+  font-size:13px; cursor:pointer;
+  background:transparent; border:1px solid var(--border);
+  color:var(--muted); transition:all .15s;
+}
+.btn-login-cancel:hover{ border-color:var(--text); color:var(--text); }
+
+/* spinner kecil di tombol */
+.btn-spin{
+  width:13px; height:13px; border:2px solid rgba(255,255,255,.3);
+  border-top-color:#fff; border-radius:50%; animation:spin .6s linear infinite;
+  display:none;
+}
+.btn-login.loading .btn-spin{ display:block; }
+.btn-login.loading .btn-login-label{ display:none; }
+
 .state-box{ display:flex;flex-direction:column;align-items:center;justify-content:center;padding:60px 20px;gap:12px;color:var(--muted); }
 .state-box .sp{ width:28px;height:28px;border:2px solid var(--border);border-top-color:var(--accent);border-radius:50%;animation:spin .7s linear infinite; }
 @keyframes spin{to{transform:rotate(360deg)}}
@@ -289,10 +368,8 @@ body {
 
 <!-- TOPBAR -->
 <div class="topbar">
-  <!-- TOMBOL BACK ke Halaman Muka -->
   <a href="index.html" class="btn-back">← Home</a>
   <div class="topbar-divider"></div>
-
   <div class="topbar-pulse"></div>
   <span class="topbar-title">Drive Monitoring</span>
   <span class="topbar-sep">&nbsp;/&nbsp;</span>
@@ -361,7 +438,40 @@ body {
 
 </div>
 
-<!-- EDIT MODAL -->
+<!-- ═══════════════════════════════════════════
+     LOGIN MODAL
+═══════════════════════════════════════════ -->
+<div class="login-overlay" id="login-overlay">
+  <div class="login-box">
+    <div class="login-icon">🔐</div>
+    <div class="login-title">Login Diperlukan</div>
+    <div class="login-sub">Untuk mengedit drive, masukkan kredensial akun mixing ini.</div>
+    <div class="login-area-badge">
+      <span>📍</span>
+      <span id="login-area-label">—</span>
+    </div>
+    <div class="login-field">
+      <label>Username</label>
+      <input type="text" id="login-username" placeholder="Masukkan username" autocomplete="off">
+    </div>
+    <div class="login-field">
+      <label>Password</label>
+      <input type="password" id="login-password" placeholder="Masukkan password">
+    </div>
+    <div class="login-err" id="login-err"></div>
+    <div class="login-actions">
+      <button class="btn-login-cancel" onclick="closeLoginModal()">Batal</button>
+      <button class="btn-login" id="btn-login-submit" onclick="submitLogin()">
+        <div class="btn-spin"></div>
+        <span class="btn-login-label">Masuk & Edit</span>
+      </button>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════
+     EDIT MODAL
+═══════════════════════════════════════════ -->
 <div class="modal-overlay" id="modal">
   <div class="modal">
     <div class="modal-title">Edit Status Drive</div>
@@ -396,9 +506,126 @@ body {
 </div>
 
 <script>
+// ══════════════════════════════════════════════════════════
+// KONFIGURASI
+// ══════════════════════════════════════════════════════════
+
 const API = 'https://script.google.com/macros/s/AKfycbwLqgqY-hoyODUDseBeQX3N6RCcIsa4wqHe1qHife8Px4DlwRWYG0J-U4pGf4VrsA6EYw/exec';
 
-const S = { page:'plant', plant:null, mixing:1, tab:'drive', cache:{}, editDrive:null };
+// ⚠️ GANTI dengan URL Web App dari DB_Users Apps Script kamu
+const LOGIN_API = 'https://script.google.com/macros/s/AKfycbxDfWv7QiWB79Qzaiaq4EAPKMSFtRk0aLMKIjp6gDSsw6b3YHpx5N02K8ZPqz0Lu01VXg/exec';
+
+// ══════════════════════════════════════════════════════════
+// STATE
+// ══════════════════════════════════════════════════════════
+
+const S = {
+  page: 'plant', plant: null, mixing: 1, tab: 'drive',
+  cache: {}, editDrive: null,
+  // Login state
+  pendingDriveData: null  // data drive yang mau diedit, disimpan sementara
+};
+
+// ══════════════════════════════════════════════════════════
+// LOGIN SYSTEM
+// ══════════════════════════════════════════════════════════
+
+/**
+ * Dipanggil saat user klik kartu drive.
+ * Selalu minta login dulu sebelum buka modal edit.
+ */
+function requestEdit(driveId, status, keterangan, merk, spesifikasi) {
+  // Simpan data drive yang mau diedit
+  S.pendingDriveData = { driveId, status, keterangan, merk, spesifikasi };
+
+  // Siapkan label mixing di modal login
+  const mixingLabel = S.plant + ' — Mixing ' + S.mixing;
+  id('login-area-label').textContent = mixingLabel;
+
+  // Reset form login
+  id('login-username').value  = '';
+  id('login-password').value  = '';
+  id('login-err').style.display = 'none';
+  id('login-err').textContent   = '';
+
+  // Set tombol ke state normal
+  const btn = id('btn-login-submit');
+  btn.classList.remove('loading');
+  btn.disabled = false;
+
+  // Tampilkan login modal
+  id('login-overlay').classList.add('open');
+
+  // Auto focus username
+  setTimeout(() => id('login-username').focus(), 100);
+}
+
+function closeLoginModal() {
+  id('login-overlay').classList.remove('open');
+  S.pendingDriveData = null;
+}
+
+async function submitLogin() {
+  const username = id('login-username').value.trim();
+  const password = id('login-password').value.trim();
+  const errEl    = id('login-err');
+  const btn      = id('btn-login-submit');
+
+  // Validasi input kosong
+  if (!username || !password) {
+    errEl.textContent   = '⚠️ Username dan password wajib diisi.';
+    errEl.style.display = 'block';
+    return;
+  }
+
+  // Tampilkan loading
+  btn.classList.add('loading');
+  btn.disabled = true;
+  errEl.style.display = 'none';
+
+  try {
+    const res = await fetch(LOGIN_API, {
+      method: 'POST',
+      headers: { 'Content-Type': 'text/plain' },
+      body: JSON.stringify({
+        username: username,
+        password: password,
+        mixing:   S.plant   // pakai nama plant sebagai mixing identifier
+      })
+    });
+
+    const result = await res.json();
+
+    if (result.success) {
+      // Login berhasil → tutup login modal → buka edit modal
+      closeLoginModal();
+      const d = S.pendingDriveData;
+      if (d) openModal(d.driveId, d.status, d.keterangan, d.merk, d.spesifikasi);
+    } else {
+      errEl.textContent   = '❌ ' + (result.message || 'Username atau password salah.');
+      errEl.style.display = 'block';
+    }
+  } catch (err) {
+    errEl.textContent   = '⚠️ Tidak dapat terhubung ke server. Coba lagi.';
+    errEl.style.display = 'block';
+  } finally {
+    btn.classList.remove('loading');
+    btn.disabled = false;
+  }
+}
+
+// Enter key di field login
+document.addEventListener('DOMContentLoaded', () => {
+  ['login-username','login-password'].forEach(fieldId => {
+    id(fieldId).addEventListener('keydown', e => {
+      if (e.key === 'Enter') submitLogin();
+    });
+  });
+});
+
+// ══════════════════════════════════════════════════════════
+// NAVIGASI
+// ══════════════════════════════════════════════════════════
 
 async function apiGet(params) {
   const res  = await fetch(API + '?' + new URLSearchParams(params));
@@ -430,6 +657,10 @@ function updateBC() {
   s3.style.display = b3.style.display = 'none';
 }
 
+// ══════════════════════════════════════════════════════════
+// RENDER
+// ══════════════════════════════════════════════════════════
+
 async function renderPlantPage() {
   const el = id('plant-content');
   el.innerHTML = loadingHTML('Memuat plant...');
@@ -455,14 +686,14 @@ async function renderDetailPage() {
       S.cache[S.plant + '_config'] = cfg.config;
     }
   } catch(e) {}
-  const cfg = S.cache[S.plant + '_config'] || {};
+  const cfg    = S.cache[S.plant + '_config'] || {};
   const jumlah = cfg[S.plant] || 17;
   renderSidebar(jumlah);
   switchTab(S.tab, true);
 }
 
 function renderSidebar(jumlah) {
-  const drives = S.cache[S.plant + '_drives'] || [];
+  const drives   = S.cache[S.plant + '_drives'] || [];
   const faultMap = {};
   drives.forEach(d => { if (d.status === 'fault') faultMap[d.mixing] = (faultMap[d.mixing] || 0) + 1; });
   let html = '';
@@ -508,13 +739,15 @@ async function renderDriveTab() {
     const fault  = drives.filter(d => d.status === 'fault').length;
     const maint  = drives.filter(d => d.status === 'maint').length;
     const kosong = drives.filter(d => d.status === 'kosong').length;
+
     id('drive-meta').textContent = `${drives.length} drives · ${ok} OK · ${fault} Fault · ${kosong} Kosong · ${maint} Maint`;
-    id('drive-pills').innerHTML = `
+    id('drive-pills').innerHTML  = `
       <div class="pill">Total ${drives.length}</div>
       <div class="pill ok">   <div class="pill-d"></div>OK ${ok}</div>
       <div class="pill fault"><div class="pill-d"></div>Fault ${fault}</div>
       <div class="pill kosong"><div class="pill-d"></div>Kosong ${kosong}</div>
       <div class="pill maint"><div class="pill-d"></div>Maint ${maint}</div>`;
+
     if (!drives.length) {
       id('drive-content').innerHTML = `<div class="state-box"><div style="font-size:28px">📭</div><h3>Tidak ada data</h3><p>Mixing ${S.mixing} belum ada data drive.</p></div>`;
       return;
@@ -530,7 +763,9 @@ async function renderDriveTab() {
 function inuCard(d) {
   const st   = d.status || 'kosong';
   const stTx = { ok:'OK', fault:'Fault', maint:'Maintenance', kosong:'Kosong' }[st] || st;
-  return `<div class="inu-card ${st}" onclick="openModal('${esc(d.drive_id)}','${st}','${esc(d.keterangan)}','${esc(d.merk)}','${esc(d.spesifikasi)}')">
+  // ↓ Ganti onclick dari openModal → requestEdit (lewat login dulu)
+  return `<div class="inu-card ${st}" onclick="requestEdit('${esc(d.drive_id)}','${st}','${esc(d.keterangan)}','${esc(d.merk)}','${esc(d.spesifikasi)}')">
+    <div class="inu-edit-hint">✏️ edit</div>
     <div class="inu-tag">${esc(d.drive_id)}</div>
     <div class="inu-name">${esc(d.merk) || '—'}</div>
     <div class="inu-spec">${esc(d.spesifikasi) || ''}</div>
@@ -589,6 +824,10 @@ function pmCard(p) {
   </div>`;
 }
 
+// ══════════════════════════════════════════════════════════
+// EDIT MODAL
+// ══════════════════════════════════════════════════════════
+
 function openModal(driveId, status, keterangan, merk, spesifikasi) {
   S.editDrive = driveId;
   id('modal-drive-id').textContent = driveId;
@@ -617,7 +856,13 @@ async function saveStatus() {
   finally { btn.disabled = false; btn.textContent = 'Simpan'; }
 }
 
+// Tutup modal saat klik di luar
 id('modal').addEventListener('click', e => { if(e.target === id('modal')) closeModal(); });
+id('login-overlay').addEventListener('click', e => { if(e.target === id('login-overlay')) closeLoginModal(); });
+
+// ══════════════════════════════════════════════════════════
+// REFRESH & UTILS
+// ══════════════════════════════════════════════════════════
 
 async function doRefresh() {
   const btn = id('btn-refresh');
