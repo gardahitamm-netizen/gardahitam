@@ -86,7 +86,6 @@ body { font-family: 'Plus Jakarta Sans', sans-serif; background: #0f2540; color:
   padding: 14px 26px; border-radius: 10px; text-decoration: none; transition: .2s;
 }
 .btn-outline:hover { background: rgba(255,255,255,0.08); }
-
 .stats-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 18px; }
 .stat-card {
   background: rgba(255,255,255,0.08); border: 1px solid rgba(255,255,255,0.1);
@@ -98,28 +97,95 @@ body { font-family: 'Plus Jakarta Sans', sans-serif; background: #0f2540; color:
 .stat-val.accent { color: #e8a020; }
 .stat-lbl { font-size: 11px; letter-spacing: .18em; color: rgba(255,255,255,0.5); text-transform: uppercase; }
 
-/* ── QUICK NAV ── */
-.quicknav { background: #0a1628; padding: 60px 48px; }
-.quicknav-inner { max-width: 1300px; margin: 0 auto; }
-.quicknav h2 { font-family: 'Syne', sans-serif; font-size: clamp(1.4rem, 2.5vw, 2rem); font-weight: 800; margin-bottom: 8px; }
-.quicknav p { color: rgba(255,255,255,0.5); font-size: 14px; margin-bottom: 32px; }
-.nav-cards { display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 16px; }
-.nav-card {
-  background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1);
-  border-radius: 16px; padding: 28px 22px;
-  text-decoration: none; color: white;
-  display: flex; flex-direction: column; gap: 14px;
-  transition: .25s; position: relative; overflow: hidden;
+/* ── HERO NAV CARDS ── */
+.hero-nav-cards { display: flex; flex-direction: column; gap: 10px; }
+.hero-nav-card {
+  display: flex; align-items: center; gap: 14px;
+  background: rgba(255,255,255,0.07); border: 1px solid rgba(255,255,255,0.12);
+  border-radius: 12px; padding: 14px 18px;
+  text-decoration: none; color: white; transition: .2s;
 }
-.nav-card::after {
-  content: '›'; position: absolute; right: 18px; top: 50%; transform: translateY(-50%);
-  font-size: 20px; color: rgba(255,255,255,0.2); transition: .2s;
+.hero-nav-card:hover { border-color: rgba(232,160,32,0.5); background: rgba(232,160,32,0.1); transform: translateX(4px); }
+.hero-nav-icon { font-size: 22px; flex-shrink: 0; }
+.hero-nav-title { font-family: 'Syne', sans-serif; font-size: 14px; font-weight: 800; margin-bottom: 2px; }
+.hero-nav-desc  { font-size: 11px; color: rgba(255,255,255,0.45); }
+.hero-nav-arr   { margin-left: auto; font-size: 18px; color: rgba(255,255,255,0.3); flex-shrink: 0; transition: .2s; }
+.hero-nav-card:hover .hero-nav-arr { color: #e8a020; }
+
+/* ── TENTANG MIXING ── */
+.section-tentang { background: #f5f7fa; color: #0f2540; padding: 80px 48px; }
+.section-tentang .inner { max-width: 1100px; margin: 0 auto; }
+.sec-badge {
+  display: inline-block; border: 1px solid #0f2540; color: #0f2540;
+  font-size: 11px; font-weight: 700; letter-spacing: .12em;
+  padding: 5px 14px; border-radius: 20px; margin-bottom: 20px; text-transform: uppercase;
 }
-.nav-card:hover { border-color: rgba(232,160,32,0.4); background: rgba(232,160,32,0.07); transform: translateY(-4px); }
-.nav-card:hover::after { color: #e8a020; right: 14px; }
-.nav-card-icon { font-size: 28px; }
-.nav-card-title { font-family: 'Syne', sans-serif; font-size: 17px; font-weight: 800; }
-.nav-card-desc { font-size: 12px; color: rgba(255,255,255,0.45); }
+.section-tentang h2 { font-family: 'Syne', sans-serif; font-size: clamp(1.8rem,3.5vw,3rem); font-weight: 800; color: #0f2540; margin-bottom: 16px; }
+.section-tentang .desc { color: #4a6080; font-size: 15px; line-height: 1.75; max-width: 800px; margin-bottom: 14px; }
+.feature-grid { display: grid; grid-template-columns: repeat(auto-fill,minmax(240px,1fr)); gap: 14px; margin-top: 32px; }
+.feature-card {
+  background: white; border: 1px solid #e2e8f0; border-radius: 14px; padding: 22px 20px;
+  display: flex; align-items: flex-start; gap: 14px; transition: .2s;
+}
+.feature-card:hover { box-shadow: 0 4px 20px rgba(15,37,64,.08); transform: translateY(-2px); }
+.feature-icon { width: 42px; height: 42px; border-radius: 10px; background: #0f2540; display: flex; align-items: center; justify-content: center; font-size: 18px; flex-shrink: 0; }
+.feature-title { font-size: 14px; font-weight: 700; color: #0f2540; margin-bottom: 4px; }
+.feature-desc  { font-size: 12px; color: #6b7f99; line-height: 1.5; }
+
+/* ── ALUR KERJA ── */
+.section-alur { background: white; color: #0f2540; padding: 80px 48px; text-align: center; }
+.section-alur .inner { max-width: 1100px; margin: 0 auto; }
+.section-alur h2 { font-family: 'Syne', sans-serif; font-size: clamp(1.8rem,3.5vw,3rem); font-weight: 800; color: #0f2540; margin-bottom: 12px; }
+.subdesc { color: #6b7f99; font-size: 14px; line-height: 1.7; max-width: 560px; margin: 0 auto 52px; }
+.steps-row { display: flex; align-items: flex-start; justify-content: center; gap: 0; flex-wrap: nowrap; position: relative; }
+.step-item { display: flex; flex-direction: column; align-items: center; flex: 1; max-width: 180px; position: relative; z-index: 2; }
+.step-connector { flex: 1; height: 2px; background: linear-gradient(90deg,#3b82f6,#e8a020); margin-top: 38px; z-index: 1; }
+.step-num { width: 76px; height: 76px; border-radius: 50%; border: 2px solid #0f2540; background: white; display: flex; align-items: center; justify-content: center; font-family: 'Syne', sans-serif; font-size: 20px; font-weight: 800; color: #0f2540; margin-bottom: 16px; }
+.step-emoji { font-size: 26px; margin-bottom: 10px; }
+.step-title { font-size: 13px; font-weight: 700; color: #0f2540; margin-bottom: 6px; }
+.step-desc  { font-size: 11px; color: #6b7f99; line-height: 1.5; text-align: center; padding: 0 8px; }
+
+/* ── KEUNGGULAN ── */
+.section-keunggulan { background: #f5f7fa; color: #0f2540; padding: 80px 48px; text-align: center; }
+.section-keunggulan .inner { max-width: 1100px; margin: 0 auto; }
+.section-keunggulan h2 { font-family: 'Syne', sans-serif; font-size: clamp(1.8rem,3.5vw,3rem); font-weight: 800; color: #0f2540; margin-bottom: 40px; }
+.keunggulan-grid { display: grid; grid-template-columns: repeat(auto-fill,minmax(240px,1fr)); gap: 16px; text-align: left; }
+.keunggulan-card { background: white; border: 1px solid #e2e8f0; border-radius: 16px; padding: 28px 24px; transition: .2s; }
+.keunggulan-card:hover { box-shadow: 0 6px 24px rgba(15,37,64,.1); transform: translateY(-3px); }
+.keunggulan-icon  { font-size: 28px; margin-bottom: 16px; }
+.keunggulan-title { font-size: 15px; font-weight: 700; color: #0f2540; margin-bottom: 8px; }
+.keunggulan-desc  { font-size: 13px; color: #6b7f99; line-height: 1.6; }
+
+/* ── FAQ ── */
+.section-faq { background: white; color: #0f2540; padding: 80px 48px; }
+.section-faq .inner { max-width: 760px; margin: 0 auto; }
+.section-faq h2 { font-family: 'Syne', sans-serif; font-size: clamp(1.8rem,3.5vw,3rem); font-weight: 800; color: #0f2540; margin-bottom: 8px; }
+.faq-list { display: flex; flex-direction: column; gap: 12px; }
+.faq-item { border: 1px solid #e2e8f0; border-radius: 14px; overflow: hidden; transition: box-shadow .2s; }
+.faq-item:hover { box-shadow: 0 2px 12px rgba(15,37,64,.07); }
+.faq-q {
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 18px 22px; cursor: pointer; font-size: 14px; font-weight: 600;
+  color: #0f2540; user-select: none; gap: 16px;
+}
+.faq-q:hover { background: #f9fafb; }
+.faq-toggle {
+  width: 28px; height: 28px; border-radius: 50%;
+  border: 1px solid #e2e8f0; background: white;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 18px; font-weight: 300; color: #0f2540;
+  flex-shrink: 0; transition: all .25s;
+}
+.faq-item.open .faq-toggle { background: #0f2540; color: white; border-color: #0f2540; transform: rotate(45deg); }
+.faq-a {
+  max-height: 0; overflow: hidden;
+  transition: max-height .35s ease, padding .35s ease;
+  font-size: 13px; color: #6b7f99; line-height: 1.7; padding: 0 22px;
+}
+.faq-item.open .faq-a { max-height: 300px; padding: 0 22px 18px; }
+
+/* ── FOOTER ── */
+.footer { background: #080d18; padding: 28px 48px; text-align: center; color: rgba(255,255,255,0.3); font-size: 12px; border-top: 1px solid rgba(255,255,255,0.06); }
 
 /* ── RESPONSIVE ── */
 @media (max-width: 900px) {
@@ -127,8 +193,7 @@ body { font-family: 'Plus Jakarta Sans', sans-serif; background: #0f2540; color:
   .nav-toggle { display: flex; }
   .navbar-links {
     position: fixed; top: 56px; left: 0; right: 0;
-    background: rgba(10,18,35,0.98);
-    flex-direction: column; padding: 12px 16px;
+    background: rgba(10,18,35,0.98); flex-direction: column; padding: 12px 16px;
     border-bottom: 1px solid rgba(255,255,255,0.08);
     transform: translateY(-110%); transition: transform .3s;
   }
@@ -136,9 +201,12 @@ body { font-family: 'Plus Jakarta Sans', sans-serif; background: #0f2540; color:
   .navbar-links a { display: block; padding: 10px 14px; }
   .hero { padding: 86px 30px 50px; }
   .hero-inner { grid-template-columns: 1fr; gap: 36px; }
-  .stats-grid { grid-template-columns: repeat(4, 1fr); }
+  .stats-grid { grid-template-columns: repeat(4,1fr); }
   .stat-card.wide { grid-column: span 1; }
-  .quicknav { padding: 48px 24px; }
+  .quicknav, .section-tentang, .section-alur, .section-keunggulan, .section-faq { padding: 60px 24px; }
+  .steps-row { flex-wrap: wrap; gap: 24px; justify-content: center; }
+  .step-connector { display: none; }
+  .step-item { max-width: 140px; }
 }
 @media (max-width: 600px) {
   .hero { padding: 80px 20px 40px; }
@@ -147,8 +215,9 @@ body { font-family: 'Plus Jakarta Sans', sans-serif; background: #0f2540; color:
   .stat-card.wide { grid-column: span 2; }
   .stat-card { padding: 18px 16px; }
   .stat-val { font-size: 26px; }
-  .quicknav { padding: 40px 20px; }
+  .quicknav, .section-tentang, .section-alur, .section-keunggulan, .section-faq { padding: 48px 20px; }
   .nav-cards { grid-template-columns: 1fr 1fr; }
+  .feature-grid, .keunggulan-grid { grid-template-columns: 1fr; }
 }
 @media (max-width: 360px) {
   .hero h1 { font-size: 1.5rem; }
@@ -186,9 +255,31 @@ body { font-family: 'Plus Jakarta Sans', sans-serif; background: #0f2540; color:
       <p class="hero-desc">
         Platform terpadu untuk monitoring drive komponen, manajemen jadwal PM, dan akses informasi seluruh unit drive INU, DSU serta motor mixing center dan fasilitas share job KECO WATERBANG secara real-time.
       </p>
-      <div class="hero-actions">
-        <a href="#menu" class="btn-primary">🔍 Lihat Semua Unit</a>
-        <a href="drives.html" class="btn-outline">Buka Drive Monitoring →</a>
+      <div class="hero-nav-cards">
+        <a href="drives.html" class="hero-nav-card">
+          <div class="hero-nav-icon">⚡</div>
+          <div>
+            <div class="hero-nav-title">Drive Monitoring</div>
+            <div class="hero-nav-desc">Pantau status drive INU, DSU & motor</div>
+          </div>
+          <div class="hero-nav-arr">›</div>
+        </a>
+        <a href="sharejob.html" class="hero-nav-card">
+          <div class="hero-nav-icon">🤝</div>
+          <div>
+            <div class="hero-nav-title">Share Job</div>
+            <div class="hero-nav-desc">Berbagi pekerjaan antar unit mixing</div>
+          </div>
+          <div class="hero-nav-arr">›</div>
+        </a>
+        <a href="ioPlc.html" class="hero-nav-card">
+          <div class="hero-nav-icon">🖥️</div>
+          <div>
+            <div class="hero-nav-title">I/O PLC</div>
+            <div class="hero-nav-desc">Control troubleshooting PLC tags</div>
+          </div>
+          <div class="hero-nav-arr">›</div>
+        </a>
       </div>
     </div>
     <div class="stats-grid">
@@ -212,38 +303,196 @@ body { font-family: 'Plus Jakarta Sans', sans-serif; background: #0f2540; color:
   </div>
 </section>
 
-<!-- QUICK NAV -->
-<section class="quicknav" id="menu">
-  <div class="quicknav-inner">
-    <h2>Menu Utama</h2>
-    <p>Pilih modul yang ingin diakses</p>
-    <div class="nav-cards">
-      <a href="drives.html" class="nav-card">
-        <div class="nav-card-icon">⚡</div>
-        <div class="nav-card-title">Drive Monitoring</div>
-        <div class="nav-card-desc">Pantau status drive INU, DSU & motor per mixing plant</div>
-      </a>
-      <a href="sharejob.html" class="nav-card">
-        <div class="nav-card-icon">🤝</div>
-        <div class="nav-card-title">Share Job</div>
-        <div class="nav-card-desc">Fasilitas berbagi pekerjaan antar unit mixing</div>
-      </a>
-      <a href="ioPlc.html" class="nav-card">
-        <div class="nav-card-icon">🖥️</div>
-        <div class="nav-card-title">I/O PLC</div>
-        <div class="nav-card-desc">Control troubleshooting PLC input / output tags</div>
-      </a>
+
+
+<!-- TENTANG MIXING -->
+<section class="section-tentang">
+  <div class="inner">
+    <div class="sec-badge">TENTANG MIXING</div>
+    <h2>Apa itu Proses Mixing?</h2>
+    <p class="desc">Proses <strong>mixing</strong> adalah inti dari operasi produksi di KECO WATERBANG. Proses ini melibatkan pencampuran bahan baku secara presisi menggunakan sistem Motor Control Center (MCC) yang terdistribusi di berbagai unit plant.</p>
+    <p class="desc">Setiap unit MCC bertanggung jawab atas segmen tertentu dalam alur produksi, mulai dari pengendalian motor penggerak, distribusi daya, hingga monitoring parameter campuran secara real-time untuk memastikan kualitas produk akhir.</p>
+    <div class="feature-grid">
+      <div class="feature-card">
+        <div class="feature-icon">🎛️</div>
+        <div>
+          <div class="feature-title">Kontrol Presisi</div>
+          <div class="feature-desc">Parameter dijaga otomatis oleh MCC</div>
+        </div>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon">📊</div>
+        <div>
+          <div class="feature-title">Monitoring Real-time</div>
+          <div class="feature-desc">Data terpantau 24 jam nonstop</div>
+        </div>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon">🔒</div>
+        <div>
+          <div class="feature-title">Keamanan Tinggi</div>
+          <div class="feature-desc">Sistem proteksi berlapis</div>
+        </div>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon">🔗</div>
+        <div>
+          <div class="feature-title">Data Terintegrasi</div>
+          <div class="feature-desc">Semua unit terhubung terpusat</div>
+        </div>
+      </div>
     </div>
   </div>
 </section>
 
+<!-- ALUR KERJA -->
+<section class="section-alur">
+  <div class="inner">
+    <div class="sec-badge" style="border-color:#0f2540;color:#0f2540;">ALUR KERJA</div>
+    <h2>Proses Mixing Step-by-Step</h2>
+    <p class="subdesc">Setiap batch produksi melewati tahapan yang ketat dan terkontrol untuk menjamin kualitas dan konsistensi hasil akhir.</p>
+    <div class="steps-row">
+      <div class="step-item">
+        <div class="step-num">01</div>
+        <div class="step-emoji">📥</div>
+        <div class="step-title">Input Material</div>
+        <div class="step-desc">Bahan baku diverifikasi dan diinput ke sistem sesuai formula batch</div>
+      </div>
+      <div class="step-connector"></div>
+      <div class="step-item">
+        <div class="step-num">02</div>
+        <div class="step-emoji">⚡</div>
+        <div class="step-title">Aktivasi MCC</div>
+        <div class="step-desc">Motor Control Center mengaktifkan semua unit sesuai urutan operasi</div>
+      </div>
+      <div class="step-connector"></div>
+      <div class="step-item">
+        <div class="step-num">03</div>
+        <div class="step-emoji">🔄</div>
+        <div class="step-title">Proses Mixing</div>
+        <div class="step-desc">Pencampuran berlangsung pada kecepatan dan suhu yang telah diatur</div>
+      </div>
+      <div class="step-connector"></div>
+      <div class="step-item">
+        <div class="step-num">04</div>
+        <div class="step-emoji">📈</div>
+        <div class="step-title">Quality Check</div>
+        <div class="step-desc">Parameter pH, viskositas, dan homogenitas diuji secara otomatis</div>
+      </div>
+      <div class="step-connector"></div>
+      <div class="step-item">
+        <div class="step-num">05</div>
+        <div class="step-emoji">✅</div>
+        <div class="step-title">Output & Laporan</div>
+        <div class="step-desc">Produk siap dan laporan batch dikirim ke sistem terintegrasi</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- KEUNGGULAN -->
+<section class="section-keunggulan">
+  <div class="inner">
+    <div class="sec-badge">KEUNGGULAN</div>
+    <h2>Kenapa Garda Hitam?</h2>
+    <div class="keunggulan-grid">
+      <div class="keunggulan-card">
+        <div class="keunggulan-icon">🛡️</div>
+        <div class="keunggulan-title">Proteksi Motor Berlapis</div>
+        <div class="keunggulan-desc">Setiap motor dilindungi dari overcurrent, overvoltage, dan panas berlebih melalui relay proteksi cerdas.</div>
+      </div>
+      <div class="keunggulan-card">
+        <div class="keunggulan-icon">⚡</div>
+        <div class="keunggulan-title">Efisiensi Energi</div>
+        <div class="keunggulan-desc">Sistem VFD (Variable Frequency Drive) memastikan konsumsi energi optimal di setiap kondisi beban.</div>
+      </div>
+      <div class="keunggulan-card">
+        <div class="keunggulan-icon">📡</div>
+        <div class="keunggulan-title">Akses Remote</div>
+        <div class="keunggulan-desc">Monitoring dan kontrol dapat dilakukan dari jarak jauh melalui portal web terpusat ini.</div>
+      </div>
+      <div class="keunggulan-card">
+        <div class="keunggulan-icon">📋</div>
+        <div class="keunggulan-title">Laporan Otomatis</div>
+        <div class="keunggulan-desc">Laporan operasional harian, mingguan, dan bulanan dibuat otomatis dan dapat diunduh kapanpun.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FAQ -->
+<section class="section-faq">
+  <div class="inner">
+    <div style="text-align:center;margin-bottom:40px;">
+      <div class="sec-badge">FAQ</div>
+      <h2>Pertanyaan Umum</h2>
+      <p class="subdesc">Temukan jawaban atas pertanyaan paling sering diajukan seputar operasi mixing dan sistem garda hitam.</p>
+    </div>
+    <div class="faq-list">
+
+      <div class="faq-item">
+        <div class="faq-q" onclick="toggleFaq(this)">
+          Apa itu garda hitam dan mengapa penting?
+          <div class="faq-toggle">+</div>
+        </div>
+        <div class="faq-a">Garda Hitam adalah platform monitoring terpadu untuk seluruh unit mixing di KECO WATERBANG. Platform ini penting karena memungkinkan tim teknis memantau status drive, menjadwalkan perawatan, dan melakukan troubleshooting PLC secara real-time dari satu tempat, meningkatkan efisiensi dan meminimalkan downtime produksi.</div>
+      </div>
+
+      <div class="faq-item">
+        <div class="faq-q" onclick="toggleFaq(this)">
+          Berapa lama proses satu batch mixing berlangsung?
+          <div class="faq-toggle">+</div>
+        </div>
+        <div class="faq-a">Durasi satu batch mixing bervariasi tergantung jenis produk dan formula yang digunakan. Umumnya berkisar antara 30 menit hingga 4 jam. Seluruh parameter waktu dan suhu diatur otomatis oleh sistem MCC dan dapat dipantau melalui modul Drive Monitoring.</div>
+      </div>
+
+      <div class="faq-item">
+        <div class="faq-q" onclick="toggleFaq(this)">
+          Bagaimana cara mengakses data unit tertentu?
+          <div class="faq-toggle">+</div>
+        </div>
+        <div class="faq-a">Pilih modul yang sesuai dari Menu Utama — Drive Monitoring untuk status drive per mixing, I/O PLC untuk tag control troubleshooting, atau Share Job untuk koordinasi pekerjaan antar unit. Setiap modul menampilkan daftar plant yang bisa dipilih langsung.</div>
+      </div>
+
+      <div class="faq-item">
+        <div class="faq-q" onclick="toggleFaq(this)">
+          Apa yang harus dilakukan jika unit menampilkan status warning?
+          <div class="faq-toggle">+</div>
+        </div>
+        <div class="faq-a">Jika status drive menunjukkan Fault atau Maintenance, segera buka modul Drive Monitoring, pilih plant dan mixing terkait, lalu klik kartu drive untuk melihat detail dan update statusnya. Catat keterangan di kolom keterangan agar histori terdokumentasi. Hubungi teknisi lapangan jika fault tidak dapat diselesaikan secara remote.</div>
+      </div>
+
+      <div class="faq-item">
+        <div class="faq-q" onclick="toggleFaq(this)">
+          Apakah portal ini dapat diakses melalui smartphone?
+          <div class="faq-toggle">+</div>
+        </div>
+        <div class="faq-a">Ya, portal Garda Hitam dirancang responsif dan dapat diakses melalui browser smartphone maupun tablet. Halaman muka dan modul-modulnya menyesuaikan tampilan secara otomatis. Untuk pengalaman terbaik, disarankan menggunakan browser Chrome atau Edge versi terbaru.</div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer class="footer">
+  © 2026 GARDA HITAM — KECO WATERBANG. All rights reserved.
+</footer>
+
 <script>
   var toggle = document.getElementById('navToggle');
   var links  = document.getElementById('navLinks');
-  toggle.addEventListener('click', function () { links.classList.toggle('open'); });
-  links.querySelectorAll('a').forEach(function (a) {
-    a.addEventListener('click', function () { links.classList.remove('open'); });
+  toggle.addEventListener('click', function(){ links.classList.toggle('open'); });
+  links.querySelectorAll('a').forEach(function(a){
+    a.addEventListener('click', function(){ links.classList.remove('open'); });
   });
+
+  function toggleFaq(el) {
+    var item   = el.parentElement;
+    var isOpen = item.classList.contains('open');
+    document.querySelectorAll('.faq-item').forEach(function(i){ i.classList.remove('open'); });
+    if (!isOpen) item.classList.add('open');
+  }
 </script>
 
 </body>
