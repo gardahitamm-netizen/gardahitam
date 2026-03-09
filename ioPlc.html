@@ -1,0 +1,596 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Control Troubleshooting — Garda Hitam</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans:wght@300;400;500;600;700&display=swap');
+
+:root {
+  --bg:      #0a0e1a;
+  --surface: #111827;
+  --surf2:   #1a2235;
+  --border:  #1e2d45;
+  --text:    #e2e8f0;
+  --muted:   #4a5568;
+  --ok:      #10b981;
+  --fault:   #ef4444;
+  --maint:   #f59e0b;
+  --kosong:  #6b7280;
+  --accent:  #3b82f6;
+  --purple:  #8b5cf6;
+}
+
+* { margin:0; padding:0; box-sizing:border-box; }
+
+html, body { width:100%; height:100%; overflow:hidden; }
+
+body {
+  font-family:'IBM Plex Sans',sans-serif;
+  background:var(--bg);
+  color:var(--text);
+  display:flex;
+  flex-direction:column;
+}
+
+/* ── TOPBAR ── */
+.topbar {
+  display:flex; align-items:center; gap:8px;
+  padding:0 24px; height:52px;
+  background:#0d1220;
+  border-bottom:1px solid var(--border);
+  font-family:'IBM Plex Mono',monospace;
+  font-size:13px;
+  flex-shrink:0;
+  z-index:100;
+}
+.topbar-dot {
+  width:8px; height:8px; border-radius:50%;
+  background:var(--accent); box-shadow:0 0 8px var(--accent);
+  animation:blink 2s infinite;
+}
+@keyframes blink { 0%,100%{opacity:1} 50%{opacity:.3} }
+
+/* ── TOMBOL BACK ── */
+.btn-back {
+  display:flex; align-items:center; gap:5px;
+  font-family:'IBM Plex Mono',monospace; font-size:11px;
+  padding:5px 12px; border-radius:5px; cursor:pointer;
+  border:1px solid var(--border); background:var(--surf2);
+  color:var(--muted); text-decoration:none;
+  transition:all .2s; flex-shrink:0;
+}
+.btn-back:hover { border-color:#e8a020; color:#e8a020; }
+.topbar-divider { width:1px; height:20px; background:var(--border); flex-shrink:0; }
+
+.topbar-title { font-weight:600; color:#fff; }
+.topbar-sep   { color:var(--muted); }
+.topbar-sub   { color:var(--muted); font-size:12px; }
+.topbar-right { margin-left:auto; display:flex; align-items:center; gap:10px; }
+.topbar-time  {
+  color:var(--accent); font-size:12px;
+  background:rgba(59,130,246,.1); padding:3px 10px;
+  border-radius:4px; border:1px solid rgba(59,130,246,.2);
+}
+.btn-refresh {
+  display:flex; align-items:center; gap:5px;
+  background:rgba(59,130,246,.12); border:1px solid rgba(59,130,246,.25);
+  color:var(--accent); padding:5px 12px; border-radius:6px;
+  font-size:12px; cursor:pointer; font-family:'IBM Plex Mono',monospace;
+  transition:all .2s;
+}
+.btn-refresh:hover { background:rgba(59,130,246,.22); }
+.btn-refresh.loading { opacity:.6; pointer-events:none; }
+
+/* ── BREADCRUMB ── */
+.breadcrumb {
+  display:flex; align-items:center; gap:6px;
+  padding:10px 24px; font-size:12px; color:var(--muted);
+  border-bottom:1px solid var(--border);
+  font-family:'IBM Plex Mono',monospace;
+  flex-shrink:0;
+}
+.bc-link { cursor:pointer; transition:color .15s; text-decoration:none; color:var(--muted); }
+.bc-link:hover { color:var(--accent); }
+.bc-cur  { color:var(--text); }
+.bc-sep  { color:var(--border); }
+
+/* ── PAGES WRAPPER ── */
+#pages-wrapper {
+  flex:1; overflow:hidden;
+  display:flex; flex-direction:column; min-height:0;
+}
+
+/* ── PAGES ── */
+.page { display:none; flex:1; overflow:hidden; flex-direction:column; min-height:0; }
+.page.active { display:flex; animation:fadeUp .25s ease; }
+@keyframes fadeUp { from{opacity:0;transform:translateY(10px)} to{opacity:1;transform:translateY(0)} }
+
+/* ── LOADING / ERROR ── */
+.state-box {
+  display:flex; flex-direction:column;
+  align-items:center; justify-content:center;
+  padding:80px 20px; gap:14px; color:var(--muted);
+}
+.state-box .spinner {
+  width:32px; height:32px; border:3px solid var(--border);
+  border-top-color:var(--accent); border-radius:50%;
+  animation:spin .7s linear infinite;
+}
+@keyframes spin { to{transform:rotate(360deg)} }
+.state-box .icon  { font-size:32px; }
+.state-box h3     { font-size:15px; color:var(--text); }
+.state-box p      { font-size:13px; text-align:center; max-width:380px; }
+.btn-retry {
+  background:rgba(59,130,246,.15); border:1px solid rgba(59,130,246,.3);
+  color:var(--accent); padding:7px 18px; border-radius:6px;
+  font-size:13px; cursor:pointer; margin-top:4px;
+  font-family:'IBM Plex Mono',monospace;
+}
+
+/* ── PAGE: PLANT SELECTION ── */
+.plant-page { padding:32px 24px; overflow-y:auto; width:100%; }
+.page-title { font-size:22px; font-weight:700; margin-bottom:4px; }
+.page-sub   { font-size:13px; color:var(--muted); margin-bottom:28px; }
+
+.plant-grid {
+  display:grid;
+  grid-template-columns:repeat(auto-fill,minmax(210px,1fr));
+  gap:16px;
+}
+.plant-card {
+  background:var(--surface); border:1px solid var(--border);
+  border-radius:12px; padding:22px; cursor:pointer;
+  transition:all .2s; position:relative; overflow:hidden;
+}
+.plant-card::after {
+  content:''; position:absolute; top:0;left:0;right:0; height:3px;
+  background:linear-gradient(90deg,var(--accent),var(--purple));
+  opacity:0; transition:opacity .2s;
+}
+.plant-card:hover { border-color:rgba(59,130,246,.5); background:var(--surf2); transform:translateY(-2px); box-shadow:0 8px 24px rgba(0,0,0,.4); }
+.plant-card:hover::after { opacity:1; }
+.plant-card-icon  { font-size:28px; margin-bottom:14px; }
+.plant-card-name  { font-size:18px; font-weight:700; font-family:'IBM Plex Mono',monospace; color:#fff; margin-bottom:3px; }
+.plant-card-desc  { font-size:12px; color:var(--muted); margin-bottom:14px; }
+.plant-card-arrow { position:absolute; right:18px; top:50%; transform:translateY(-50%); color:var(--muted); font-size:20px; transition:all .2s; }
+.plant-card:hover .plant-card-arrow { color:var(--accent); right:12px; }
+
+/* ── PAGE: UNIT SELECTION ── */
+.unit-page { padding:28px 24px; overflow-y:auto; width:100%; }
+.unit-grid  { display:grid; grid-template-columns:repeat(auto-fill,minmax(190px,1fr)); gap:12px; }
+.unit-card  {
+  background:var(--surface); border:1px solid var(--border);
+  border-radius:10px; padding:18px; cursor:pointer; transition:all .2s;
+}
+.unit-card:hover { border-color:rgba(139,92,246,.4); background:var(--surf2); transform:translateY(-2px); }
+.unit-card-name { font-size:14px; font-weight:600; font-family:'IBM Plex Mono',monospace; margin-bottom:10px; }
+.badge-row { display:flex; gap:6px; flex-wrap:wrap; }
+.badge { font-size:10px; padding:2px 7px; border-radius:4px; font-family:'IBM Plex Mono',monospace; font-weight:600; }
+.b-ok    { background:rgba(16,185,129,.15); color:var(--ok);    border:1px solid rgba(16,185,129,.2); }
+.b-fault { background:rgba(239,68,68,.15);  color:var(--fault); border:1px solid rgba(239,68,68,.2); }
+.b-maint { background:rgba(245,158,11,.15); color:var(--maint); border:1px solid rgba(245,158,11,.2); }
+
+/* ── PAGE: DETAIL ── */
+.detail-page {
+  display:flex; flex:1; overflow:hidden; min-height:0;
+}
+
+/* Sidebar */
+.sidebar {
+  width:195px; min-width:195px; background:#0d1220;
+  border-right:1px solid var(--border); overflow-y:auto;
+  padding:10px 0; flex-shrink:0;
+}
+.sb-head { font-size:10px; font-weight:600; color:var(--muted); letter-spacing:1.5px; text-transform:uppercase; padding:0 14px 8px; font-family:'IBM Plex Mono',monospace; }
+.sb-item {
+  padding:10px 14px; font-size:13px; cursor:pointer;
+  transition:all .15s; display:flex; align-items:center;
+  justify-content:space-between; color:var(--muted);
+  border-left:3px solid transparent;
+}
+.sb-item:hover  { background:var(--surface); color:var(--text); }
+.sb-item.active { background:var(--surface); color:#fff; border-left-color:var(--ok); }
+.sb-item.has-fault { color:#f87171; }
+.sb-item.has-fault.active { border-left-color:var(--fault); }
+.sb-fault-dot { width:6px;height:6px;border-radius:50%;background:var(--fault); }
+
+/* Main area */
+.detail-main { flex:1; overflow-y:auto; padding:22px 24px; min-width:0; }
+.detail-title { font-size:19px; font-weight:700; font-family:'IBM Plex Mono',monospace; margin-bottom:3px; }
+.detail-meta  { font-size:12px; color:var(--muted); margin-bottom:16px; }
+
+/* Table tabs */
+.table-tabs { display:flex; gap:6px; margin-bottom:20px; flex-wrap:wrap; }
+.tab-btn {
+  padding:6px 14px; border-radius:6px; font-size:12px; cursor:pointer;
+  font-family:'IBM Plex Mono',monospace; border:1px solid var(--border);
+  background:var(--surface); color:var(--muted); transition:all .15s;
+}
+.tab-btn:hover  { border-color:var(--accent); color:var(--text); }
+.tab-btn.active { background:rgba(59,130,246,.15); border-color:var(--accent); color:var(--accent); }
+
+/* Tag table */
+.tag-table-wrap { overflow-x:auto; }
+.tag-table {
+  width:100%; border-collapse:collapse;
+  font-size:13px; font-family:'IBM Plex Mono',monospace;
+}
+.tag-table th {
+  text-align:left; padding:10px 14px;
+  font-size:10px; letter-spacing:1px; text-transform:uppercase;
+  color:var(--muted); border-bottom:1px solid var(--border);
+  background:var(--surface); white-space:nowrap;
+}
+.tag-table td {
+  padding:10px 14px; border-bottom:1px solid rgba(30,45,69,.5);
+  color:var(--text); vertical-align:top;
+}
+.tag-table tr:hover td { background:rgba(255,255,255,.02); }
+.tag-table .row-num { color:var(--muted); font-size:11px; width:36px; }
+.tag-name    { font-weight:600; color:#fff; }
+.tag-addr    { color:var(--accent); }
+.tag-comment { color:var(--muted); font-size:12px; }
+.type-badge  {
+  display:inline-block; padding:2px 8px; border-radius:4px; font-size:11px;
+  background:rgba(139,92,246,.15); color:var(--purple);
+  border:1px solid rgba(139,92,246,.2);
+}
+.spare-comment { color:rgba(74,85,104,.7); font-style:italic; }
+
+/* Status pills */
+.pills { display:flex; gap:8px; margin-bottom:18px; flex-wrap:wrap; }
+.pill {
+  display:flex; align-items:center; gap:5px; padding:5px 12px;
+  border-radius:20px; font-size:11px; font-family:'IBM Plex Mono',monospace;
+  font-weight:600; border:1px solid var(--border);
+  background:rgba(255,255,255,.03);
+}
+.pill-d { width:6px;height:6px;border-radius:50%; }
+.pill.ok    { background:rgba(16,185,129,.08); border-color:rgba(16,185,129,.2); color:var(--ok); }
+.pill.fault { background:rgba(239,68,68,.08);  border-color:rgba(239,68,68,.2);  color:var(--fault); }
+.pill.maint { background:rgba(245,158,11,.08); border-color:rgba(245,158,11,.2); color:var(--maint); }
+.pill.ok    .pill-d { background:var(--ok);    box-shadow:0 0 5px var(--ok); }
+.pill.fault .pill-d { background:var(--fault); box-shadow:0 0 5px var(--fault); }
+.pill.maint .pill-d { background:var(--maint); }
+
+::-webkit-scrollbar { width:5px; height:5px; }
+::-webkit-scrollbar-track { background:transparent; }
+::-webkit-scrollbar-thumb { background:var(--border); border-radius:4px; }
+</style>
+</head>
+<body>
+
+<!-- TOPBAR -->
+<div class="topbar">
+  <a href="index.html" class="btn-back">← Home</a>
+  <div class="topbar-divider"></div>
+  <div class="topbar-dot"></div>
+  <span class="topbar-title">Control Troubleshooting</span>
+  <span class="topbar-sep">&nbsp;/&nbsp;</span>
+  <span class="topbar-sub" id="topbar-sub">PLC Input / Output Tags</span>
+  <div class="topbar-right">
+    <div class="btn-refresh" id="btn-refresh" onclick="doRefresh()">⟳ Refresh</div>
+    <div class="topbar-time" id="clock"></div>
+  </div>
+</div>
+
+<!-- BREADCRUMB -->
+<div class="breadcrumb">
+  <a href="index.html" class="bc-link">Home</a>
+  <span class="bc-sep">›</span>
+  <span class="bc-link" onclick="navTo('plant')">Control Troubleshooting</span>
+  <span class="bc-sep" id="bcs2" style="display:none">›</span>
+  <span id="bc2" style="display:none"></span>
+  <span class="bc-sep" id="bcs3" style="display:none">›</span>
+  <span id="bc3" class="bc-cur" style="display:none"></span>
+</div>
+
+<!-- PAGES WRAPPER -->
+<div id="pages-wrapper">
+
+  <!-- PAGE: PLANT -->
+  <div class="page active" id="page-plant">
+    <div class="plant-page">
+      <div class="page-title">Control Troubleshooting</div>
+      <div class="page-sub">Pilih plant untuk memantau status PLC Tag</div>
+      <div id="plant-content"></div>
+    </div>
+  </div>
+
+  <!-- PAGE: UNIT -->
+  <div class="page" id="page-unit">
+    <div class="unit-page">
+      <div class="page-title" id="unit-title"></div>
+      <div class="page-sub" id="unit-sub">Pilih unit / mixer</div>
+      <div id="unit-content"></div>
+    </div>
+  </div>
+
+  <!-- PAGE: DETAIL -->
+  <div class="page" id="page-detail">
+    <div class="detail-page">
+      <div class="sidebar" id="sidebar"></div>
+      <div class="detail-main">
+        <div class="detail-title" id="det-title"></div>
+        <div class="detail-meta"  id="det-meta"></div>
+        <div class="table-tabs"   id="table-tabs"></div>
+        <div id="det-content"></div>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<script>
+const API = 'https://script.google.com/macros/s/AKfycbwO5p1690DagKDHz0A1s1R4IjWSL89lLGc8SdrZD_u-Ojn4wiRlZg_OyvuaT0QfI3-9Sw/exec';
+
+let state = {
+  page       : 'plant',
+  plant      : null,
+  unit       : null,
+  unitLabel  : null,
+  tableIndex : 1,
+  tagsCache  : {},
+  unitsCache : {},
+};
+
+async function apiFetch(params) {
+  const qs  = new URLSearchParams(params).toString();
+  const res = await fetch(API + '?' + qs);
+  if (!res.ok) throw new Error('HTTP ' + res.status);
+  const data = await res.json();
+  if (data.error) throw new Error(data.error);
+  return data;
+}
+
+function navTo(page, plant, unit, unitLabel) {
+  if (plant)     state.plant     = plant;
+  if (unit)      state.unit      = unit;
+  if (unitLabel) state.unitLabel = unitLabel;
+  state.page = page;
+
+  document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+  document.getElementById('page-' + page).classList.add('active');
+
+  updateBreadcrumb();
+  updateTopbar();
+
+  if (page === 'plant')  renderPlantPage();
+  if (page === 'unit')   renderUnitPage();
+  if (page === 'detail') renderDetailPage();
+}
+
+function updateBreadcrumb() {
+  const s2 = document.getElementById('bcs2');
+  const b2 = document.getElementById('bc2');
+  const s3 = document.getElementById('bcs3');
+  const b3 = document.getElementById('bc3');
+
+  if (state.plant) {
+    s2.style.display = '';
+    b2.style.display = '';
+    b2.className = state.page === 'unit' ? 'bc-cur' : 'bc-link';
+    b2.textContent = state.plant;
+    b2.onclick = state.page !== 'unit' ? () => navTo('unit') : null;
+  } else {
+    s2.style.display = 'none';
+    b2.style.display = 'none';
+  }
+
+  if (state.unit && state.page === 'detail') {
+    s3.style.display = '';
+    b3.style.display = '';
+    b3.textContent = state.unitLabel || state.unit;
+  } else {
+    s3.style.display = 'none';
+    b3.style.display = 'none';
+  }
+}
+
+function updateTopbar() {
+  const sub = document.getElementById('topbar-sub');
+  if (state.page === 'detail')     sub.textContent = state.plant + ' — ' + (state.unitLabel || state.unit);
+  else if (state.page === 'unit')  sub.textContent = state.plant + ' — Pilih Unit';
+  else                             sub.textContent = 'PLC Input / Output Tags';
+}
+
+async function renderPlantPage() {
+  const el = document.getElementById('plant-content');
+  el.innerHTML = loadingHTML('Memuat daftar plant...');
+  try {
+    const data = await apiFetch({ action: 'getPlants' });
+    el.innerHTML = `<div class="plant-grid">${data.plants.map(plantCard).join('')}</div>`;
+  } catch (err) {
+    el.innerHTML = errorHTML(err.message, () => renderPlantPage());
+  }
+}
+
+function plantCard(p) {
+  const icons = { MCG:'⚙️', MCA:'🏭', MCB:'🏭', MCC:'🏭', MCD:'🏭', MCE:'🏭' };
+  const icon  = icons[p.plant] || '🏭';
+  return `
+  <div class="plant-card" onclick="navTo('unit','${p.plant}')">
+    <div class="plant-card-icon">${icon}</div>
+    <div class="plant-card-name">${p.plant}</div>
+    <div class="plant-card-desc">${p.label || ''}</div>
+    <div class="plant-card-arrow">›</div>
+  </div>`;
+}
+
+async function renderUnitPage() {
+  document.getElementById('unit-title').textContent = state.plant + ' — Pilih Unit';
+  const el = document.getElementById('unit-content');
+  el.innerHTML = loadingHTML('Memuat daftar unit...');
+  try {
+    const data = await apiFetch({ action: 'getUnits', plant: state.plant });
+    state.unitsCache[state.plant] = data.units;
+    el.innerHTML = `<div class="unit-grid">${data.units.map(unitCard).join('')}</div>`;
+  } catch (err) {
+    el.innerHTML = errorHTML(err.message, () => renderUnitPage());
+  }
+}
+
+function unitCard(u) {
+  return `
+  <div class="unit-card" onclick="navTo('detail','${u.plant}','${u.unit}','${u.label}')">
+    <div class="unit-card-name">${u.label || u.unit}</div>
+    <div class="badge-row">
+      <span class="badge b-ok">● Active</span>
+    </div>
+  </div>`;
+}
+
+async function renderDetailPage() {
+  renderSidebar();
+
+  document.getElementById('det-title').textContent =
+    state.plant + ' — ' + (state.unitLabel || state.unit);
+  document.getElementById('det-meta').textContent = 'Memuat data...';
+  document.getElementById('table-tabs').innerHTML = '';
+  document.getElementById('det-content').innerHTML = loadingHTML('Mengambil tag dari spreadsheet...');
+
+  const cacheKey = state.plant + '|' + state.unit;
+
+  try {
+    let data = state.tagsCache[cacheKey];
+    if (!data) {
+      data = await apiFetch({ action: 'getTags', plant: state.plant, unit: state.unit });
+      state.tagsCache[cacheKey] = data;
+    }
+
+    const totalTags = data.tables.reduce((s, t) => s + t.rows.length, 0);
+    document.getElementById('det-meta').textContent =
+      `Total ${totalTags} tags · ${data.tables.length} tables · ${state.plant} ${data.label || state.unit}`;
+
+    renderTableTabs(data.tables);
+    state.tableIndex = 1;
+    renderTagTable(data.tables[0]);
+
+  } catch (err) {
+    document.getElementById('det-content').innerHTML = errorHTML(err.message, () => renderDetailPage());
+    document.getElementById('det-meta').textContent = 'Gagal memuat data';
+  }
+}
+
+function renderSidebar() {
+  const units = state.unitsCache[state.plant] || [];
+  if (!units.length) {
+    document.getElementById('sidebar').innerHTML = '<div class="sb-head">UNIT</div>';
+    return;
+  }
+  document.getElementById('sidebar').innerHTML =
+    `<div class="sb-head">UNIT LIST</div>` +
+    units.map(u => {
+      const active = u.unit === state.unit ? 'active' : '';
+      return `<div class="sb-item ${active}" onclick="switchUnit('${u.unit}','${u.label}')">
+        ${u.label || u.unit}
+      </div>`;
+    }).join('');
+}
+
+function switchUnit(unitId, label) {
+  state.unit      = unitId;
+  state.unitLabel = label;
+  updateBreadcrumb();
+  updateTopbar();
+  renderDetailPage();
+}
+
+function renderTableTabs(tables) {
+  document.getElementById('table-tabs').innerHTML = tables.map(t => `
+    <div class="tab-btn ${t.tableIndex === state.tableIndex ? 'active' : ''}"
+         id="tab-${t.tableIndex}"
+         onclick="switchTable(${t.tableIndex})">
+      Table ${t.tableIndex}
+      <span style="color:var(--muted);font-size:10px;margin-left:4px">${t.rows.length}</span>
+    </div>`).join('');
+}
+
+function switchTable(idx) {
+  state.tableIndex = idx;
+  const cacheKey = state.plant + '|' + state.unit;
+  const data = state.tagsCache[cacheKey];
+  if (!data) return;
+  document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+  document.getElementById('tab-' + idx).classList.add('active');
+  const table = data.tables.find(t => t.tableIndex === idx);
+  if (table) renderTagTable(table);
+}
+
+function renderTagTable(table) {
+  if (!table || !table.rows.length) {
+    document.getElementById('det-content').innerHTML =
+      `<div class="state-box"><div class="icon">📭</div><h3>Tidak ada data</h3><p>Table ini kosong atau format tidak dikenali.</p></div>`;
+    return;
+  }
+
+  const rows = table.rows.map((r, i) => {
+    const isSpare = r.comment.toLowerCase() === 'spare' || !r.comment;
+    return `<tr>
+      <td class="row-num">${i + 1}</td>
+      <td class="tag-name">${escHtml(r.name)}</td>
+      <td><span class="type-badge">${escHtml(r.type)}</span></td>
+      <td class="tag-addr">${escHtml(r.address)}</td>
+      <td class="tag-comment ${isSpare ? 'spare-comment' : ''}">${escHtml(r.comment) || '—'}</td>
+    </tr>`;
+  }).join('');
+
+  document.getElementById('det-content').innerHTML = `
+    <div class="tag-table-wrap">
+      <table class="tag-table">
+        <thead><tr>
+          <th>#</th><th>NAME</th><th>DATA TYPE</th><th>ADDRESS</th><th>COMMENT</th>
+        </tr></thead>
+        <tbody>${rows}</tbody>
+      </table>
+    </div>`;
+}
+
+function loadingHTML(msg) {
+  return `<div class="state-box"><div class="spinner"></div><p>${msg}</p></div>`;
+}
+
+function errorHTML(msg, retryFn) {
+  const id = 'retry-' + Date.now();
+  setTimeout(() => { const btn = document.getElementById(id); if (btn) btn.onclick = retryFn; }, 50);
+  return `<div class="state-box">
+    <div class="icon">⚠️</div>
+    <h3>Gagal memuat data</h3>
+    <p>${escHtml(msg)}</p>
+    <button class="btn-retry" id="${id}">Coba Lagi</button>
+  </div>`;
+}
+
+function escHtml(s) {
+  return String(s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
+}
+
+async function doRefresh() {
+  const btn = document.getElementById('btn-refresh');
+  btn.classList.add('loading');
+  btn.textContent = '⟳ Loading...';
+  if (state.page === 'detail') {
+    delete state.tagsCache[state.plant + '|' + state.unit];
+    await renderDetailPage();
+  } else if (state.page === 'unit') {
+    delete state.unitsCache[state.plant];
+    await renderUnitPage();
+  } else {
+    await renderPlantPage();
+  }
+  btn.classList.remove('loading');
+  btn.textContent = '⟳ Refresh';
+}
+
+function tick() {
+  document.getElementById('clock').textContent = new Date().toTimeString().slice(0,8);
+}
+setInterval(tick, 1000);
+tick();
+
+navTo('plant');
+</script>
+</body>
+</html>
