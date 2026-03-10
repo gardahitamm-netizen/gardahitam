@@ -193,6 +193,33 @@ body {
   position:relative;
 }
 .inu-card:hover{background:var(--surf2);transform:translateY(-1px);box-shadow:0 4px 16px rgba(0,0,0,.3);}
+
+/* ★ FOTO DRIVE di kartu */
+.inu-photo{
+  width:100%;
+  height:120px;
+  object-fit:cover;
+  border-radius:7px;
+  margin-bottom:10px;
+  border:1px solid var(--border);
+  background:var(--surf3);
+  display:block;
+}
+.inu-photo-placeholder{
+  width:100%;
+  height:80px;
+  border-radius:7px;
+  margin-bottom:10px;
+  border:1px dashed rgba(126,184,212,.2);
+  background:rgba(126,184,212,.03);
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  font-size:11px;
+  color:rgba(126,184,212,.3);
+  font-family:'JetBrains Mono',monospace;
+  letter-spacing:.5px;
+}
 .inu-card.ok    {border-left-color:var(--ok);}
 .inu-card.fault {border-left-color:var(--fault);background:rgba(255,71,87,.04);}
 .inu-card.maint {border-left-color:var(--maint);}
@@ -620,6 +647,11 @@ body {
       <label class="form-label">Keterangan</label>
       <input class="form-input" id="modal-ket" type="text" placeholder="Contoh: Vendor, Aman, Sedang diperbaiki...">
     </div>
+    <div class="form-group">
+      <label class="form-label">🖼️ Link Foto (Google Drive)</label>
+      <input class="form-input" id="modal-photo" type="text" placeholder="Paste link Google Drive foto...">
+      <div style="font-size:10px;color:var(--muted);margin-top:4px;">Contoh: https://drive.google.com/file/d/xxx/view</div>
+    </div>
     <div class="modal-actions">
       <button class="btn-cancel" onclick="closeModal()">Batal</button>
       <button class="btn-save" id="btn-save" onclick="saveStatus()">Simpan</button>
@@ -638,8 +670,8 @@ const S = {
 };
 
 // ── LOGIN ──
-function requestEdit(driveId, status, keterangan, merk, spesifikasi) {
-  S.pendingDriveData = { driveId, status, keterangan, merk, spesifikasi };
+function requestEdit(driveId, status, keterangan, merk, spesifikasi, photoUrl) {
+  S.pendingDriveData = { driveId, status, keterangan, merk, spesifikasi, photoUrl };
   const mixingLabel = S.plant + ' — Mixing ' + S.mixing;
   id('login-area-label').textContent = mixingLabel;
   id('login-username').value  = '';
@@ -678,7 +710,7 @@ async function submitLogin() {
     if (result.success) {
       const d = S.pendingDriveData;
       closeLoginModal();
-      if (d) openModal(d.driveId, d.status, d.keterangan, d.merk, d.spesifikasi);
+      if (d) openModal(d.driveId, d.status, d.keterangan, d.merk, d.spesifikasi, d.photoUrl);
     } else {
       errEl.textContent   = '❌ ' + (result.message || 'Username atau password salah.');
       errEl.style.display = 'block';
@@ -866,11 +898,26 @@ async function renderDriveTab() {
   }
 }
 
+function gdriveDirect(url) {
+  // Konversi berbagai format Google Drive URL ke direct image link
+  if (!url) return '';
+  // Format: /file/d/FILE_ID/view atau /open?id=FILE_ID
+  let m = url.match(/\/d\/([a-zA-Z0-9_-]+)/);
+  if (!m) m = url.match(/[?&]id=([a-zA-Z0-9_-]+)/);
+  if (m) return 'https://drive.google.com/thumbnail?id=' + m[1] + '&sz=w400';
+  return url; // kalau bukan GDrive, pakai langsung
+}
+
 function inuCard(d) {
   const st   = d.status || 'kosong';
   const stTx = { ok:'OK', fault:'Fault', maint:'Maintenance', kosong:'Kosong' }[st] || st;
-  return `<div class="inu-card ${st}" onclick="requestEdit('${esc(d.drive_id)}','${st}','${esc(d.keterangan)}','${esc(d.merk)}','${esc(d.spesifikasi)}')">
+  const photoUrl = gdriveDirect(d.photo_url);
+  const photoHtml = photoUrl
+    ? `<img class="inu-photo" src="${photoUrl}" alt="Foto ${esc(d.drive_id)}" onerror="this.style.display='none'">`
+    : '';
+  return `<div class="inu-card ${st}" onclick="requestEdit('${esc(d.drive_id)}','${st}','${esc(d.keterangan)}','${esc(d.merk)}','${esc(d.spesifikasi)}','${esc(d.photo_url||'')}')">
     <div class="inu-edit-hint">✏️ edit</div>
+    ${photoHtml}
     <div class="inu-tag">${esc(d.drive_id)}</div>
     <div class="inu-name">${esc(d.merk) || '—'}</div>
     ${d.spesifikasi ? `<div class="inu-spec">${esc(d.spesifikasi)}</div>` : ''}
@@ -947,21 +994,23 @@ function pmCard(p) {
 }
 
 // ── EDIT MODAL ──
-function openModal(driveId, status, keterangan, merk, spesifikasi) {
+function openModal(driveId, status, keterangan, merk, spesifikasi, photoUrl) {
   S.editDrive = driveId;
   id('modal-drive-id').textContent = driveId;
   id('modal-status').value = status || 'ok';
   id('modal-merk').value   = merk   || '';
   id('modal-spek').value   = spesifikasi || '';
   id('modal-ket').value    = keterangan  || '';
+  id('modal-photo').value  = photoUrl    || '';
   id('modal').classList.add('open');
 }
 
 function closeModal() { id('modal').classList.remove('open'); S.editDrive = null; }
 
 async function saveStatus() {
-  const status = id('modal-status').value;
-  const btn    = id('btn-save');
+  const status   = id('modal-status').value;
+  const photoUrl = id('modal-photo').value.trim();
+  const btn      = id('btn-save');
   btn.disabled = true; btn.textContent = 'Menyimpan...';
   try {
     await apiGet({
@@ -969,6 +1018,7 @@ async function saveStatus() {
       keterangan : id('modal-ket').value.trim(),
       merk       : id('modal-merk').value.trim(),
       spesifikasi: id('modal-spek').value.trim(),
+      photo_url  : photoUrl,
       updatedBy  : 'web-user'
     });
     delete S.cache[S.plant + '_drives'];
