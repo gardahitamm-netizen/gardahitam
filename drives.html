@@ -757,6 +757,8 @@ async function apiGet(params) {
 function navTo(page, plant) {
   if (plant) S.plant = plant;
   S.page = page;
+  // Tutup semua modal saat navigasi
+  closeWAModal();
   document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
   document.getElementById('page-' + page).classList.add('active');
   updateBC();
@@ -1135,7 +1137,7 @@ function refreshWAPreview() {
   id('wa-preview').textContent = buildWAMessage(_waType, id('wa-note-input').value);
 }
 
-function closeWAModal() { id('wa-overlay').classList.remove('open'); }
+function closeWAModal() { const o = id('wa-overlay'); if (o) o.classList.remove('open'); }
 
 function buildWAMessage(type, note) {
   const plant = S.plant || '—';
