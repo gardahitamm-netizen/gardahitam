@@ -474,54 +474,6 @@ body {
 
 50%{box-shadow:0 0 10px rgba(255,165,2,.4)}}
 
-/* ── WA MODAL ── */
-.wa-overlay{
-  display:none; position:fixed; inset:0;
-  background:rgba(0,0,0,.75); backdrop-filter:blur(5px);
-  z-index:700; align-items:center; justify-content:center;
-}
-.wa-overlay.open{ display:flex; }
-.wa-box{
-  background:var(--surf); border:1px solid var(--border);
-  border-radius:16px; padding:26px; width:100%; max-width:500px;
-  animation:modalIn .2s ease; position:relative; overflow:hidden;
-  max-height:90vh; overflow-y:auto;
-}
-.wa-box::before{
-  content:''; position:absolute; top:0; left:0; right:0; height:3px;
-  background:linear-gradient(90deg,#25d366,#128c7e);
-}
-.wa-icon{ font-size:28px; margin-bottom:10px; }
-.wa-title{ font-size:15px; font-weight:700; margin-bottom:3px; }
-.wa-sub{ font-size:12px; color:#8ab0d0; margin-bottom:18px; }
-.wa-field{ margin-bottom:13px; }
-.wa-field label{ display:block; font-size:10px; font-weight:600; text-transform:uppercase; letter-spacing:.7px; color:#8ab0d0; margin-bottom:6px; }
-.wa-field input, .wa-field textarea{
-  width:100%; background:var(--surf2); border:1px solid var(--border);
-  color:var(--text); padding:10px 12px; border-radius:8px;
-  font-size:13px; font-family:'Plus Jakarta Sans',sans-serif;
-  transition:border-color .15s; outline:none; resize:vertical;
-}
-.wa-field input:focus, .wa-field textarea:focus{ border-color:#25d366; }
-.wa-preview{
-  background:rgba(37,211,102,.05); border:1px solid rgba(37,211,102,.15);
-  border-radius:8px; padding:12px; margin-bottom:14px;
-  font-size:11px; color:#c8e8d0; line-height:1.7;
-  max-height:200px; overflow-y:auto; white-space:pre-wrap;
-  font-family:'JetBrains Mono',monospace;
-}
-.wa-preview-label{ font-size:10px; font-weight:600; text-transform:uppercase; letter-spacing:.7px; color:#25d366; margin-bottom:6px; }
-.wa-actions{ display:flex; gap:8px; margin-top:6px; }
-.btn-wa-cancel{ padding:9px 16px; border-radius:8px; font-size:13px; cursor:pointer; background:transparent; border:1px solid var(--border); color:#8ab0d0; transition:all .15s; }
-.btn-wa-cancel:hover{ border-color:var(--text); color:var(--text); }
-.btn-wa-send{
-  flex:1; padding:9px; border-radius:8px; font-size:13px; font-weight:600;
-  cursor:pointer; background:#25d366; border:1px solid #25d366;
-  color:#fff; transition:all .15s; display:flex; align-items:center; justify-content:center; gap:6px;
-}
-.btn-wa-send:hover{ background:#1ebe5a; }
-.wa-note{ font-size:11px; color:#8ab0d0; margin-top:10px; text-align:center; padding-top:10px; border-top:1px solid var(--border); }
-
 /* ── TOAST NOTIF ── */
 .toast{
   position:fixed; bottom:24px; right:24px; z-index:900;
@@ -757,8 +709,6 @@ async function apiGet(params) {
 function navTo(page, plant) {
   if (plant) S.plant = plant;
   S.page = page;
-  // Tutup semua modal saat navigasi
-  closeWAModal();
   document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
   document.getElementById('page-' + page).classList.add('active');
   updateBC();
@@ -941,7 +891,6 @@ async function renderHistoriTab() {
         <div class="export-bar-title">📋 Histori Perubahan <span>${rows.length} entri · ${S.plant}</span></div>
         <div class="export-btns">
           <button class="btn-exp pdf"   onclick="exportPDF('histori')">🖨️ PDF</button>
-          <button class="btn-exp wa"    onclick="openWAModal('histori')">💬 Kirim WA</button>
         </div>
       </div>
       <div class="hist-table-wrap"><table class="hist-table" id="tbl-histori">
@@ -975,7 +924,6 @@ async function renderPMTab() {
         <div class="export-bar-title">🔧 Jadwal PM <span>${jadwal.length} jadwal · ${S.plant}</span></div>
         <div class="export-btns">
           <button class="btn-exp pdf"   onclick="exportPDF('pm')">🖨️ PDF</button>
-          <button class="btn-exp wa"    onclick="openWAModal('pm')">💬 Kirim WA</button>
         </div>
       </div>
       <div id="pm-cards-wrap"><div class="pm-grid" id="pm-grid-inner">${jadwal.map(pmCard).join('')}</div></div>`;
@@ -1115,156 +1063,9 @@ async function exportPDF(type) {
 }
 
 // ══════════════════════════════════════════════════════════
-// WA MODAL & MESSAGE BUILDER
-// ══════════════════════════════════════════════════════════
-let _waType = '';
-
-function openWAModal(type) {
-  _waType = type;
-  const plant = S.plant || '—';
-  id('wa-sub').textContent = type === 'histori'
-    ? 'Laporan Histori Perubahan Drive — ' + plant
-    : 'Laporan Jadwal Preventive Maintenance — ' + plant;
-  id('wa-note-input').value = '';
-  id('wa-number').value     = '';
-  refreshWAPreview();
-  id('wa-note-input').oninput = refreshWAPreview;
-  id('wa-overlay').classList.add('open');
-  setTimeout(() => id('wa-number').focus(), 100);
-}
-
-function refreshWAPreview() {
-  id('wa-preview').textContent = buildWAMessage(_waType, id('wa-note-input').value);
-}
-
-function closeWAModal() { const o = id('wa-overlay'); if (o) o.classList.remove('open'); }
-
-function buildWAMessage(type, note) {
-  const plant = S.plant || '—';
-  const now   = new Date().toLocaleString('id-ID');
-  const SEP   = '━━━━━━━━━━━━━━━━━━━━━━';
-  const lines = [];
-
-  if (type === 'histori') {
-    const rows = S.cache[plant + '_histori'] || [];
-    lines.push('📋 *HISTORI PERUBAHAN DRIVE*');
-    lines.push(SEP);
-    lines.push('🏭 Plant   : ' + plant);
-    lines.push('📅 Waktu   : ' + now);
-    lines.push('📊 Total   : ' + rows.length + ' entri');
-    lines.push(SEP);
-    lines.push('');
-    const shown = rows.slice(-15);
-    shown.forEach(r => {
-      const em = {ok:'✅',fault:'❌',maint:'🔧',kosong:'⬜'}[r.status] || '📌';
-      lines.push(em + ' *' + r.drive_id + '*');
-      lines.push('   🕐 ' + r.timestamp);
-      if (r.drive_nama) lines.push('   🔖 ' + r.drive_nama);
-      if (r.group)      lines.push('   📦 ' + r.group);
-      lines.push('   📌 Status: ' + r.status.toUpperCase());
-      if (r.keterangan) lines.push('   📝 ' + r.keterangan);
-      lines.push('');
-    });
-    if (rows.length > 15) lines.push('_... dan ' + (rows.length-15) + ' entri lainnya_');
-
-  } else {
-    const jadwal  = S.cache[plant + '_pm'] || [];
-    const pending = jadwal.filter(p => p.status === 'Pending');
-    const proses  = jadwal.filter(p => p.status === 'Dalam Proses');
-    const selesai = jadwal.filter(p => p.status === 'Selesai');
-    lines.push('🔧 *JADWAL PREVENTIVE MAINTENANCE*');
-    lines.push(SEP);
-    lines.push('🏭 Plant     : ' + plant);
-    lines.push('📅 Dikirim   : ' + now);
-    lines.push('📊 Total     : ' + jadwal.length + ' jadwal');
-    lines.push('   ⏳ Pending      : ' + pending.length);
-    lines.push('   🔄 Dalam Proses : ' + proses.length);
-    lines.push('   ✅ Selesai       : ' + selesai.length);
-    lines.push(SEP);
-    lines.push('');
-    if (proses.length || pending.length) {
-      lines.push('⚠️ *PERLU TINDAKAN SEGERA:*');
-      lines.push('');
-      [...proses, ...pending].forEach(p => {
-        const em = p.status === 'Dalam Proses' ? '🔄' : '⏳';
-        lines.push(em + ' *' + p.judul + '*');
-        lines.push('   🔌 Drive   : ' + p.drive_id);
-        lines.push('   📅 Jadwal  : ' + (p.tanggal||'—'));
-        lines.push('   📌 Status  : ' + p.status);
-        if (p.catatan) lines.push('   📝 Catatan : ' + p.catatan);
-        lines.push('');
-      });
-    }
-    if (selesai.length) {
-      lines.push('✅ *SUDAH SELESAI (' + selesai.length + '):*');
-      selesai.slice(0,5).forEach(p => lines.push('   • ' + p.judul + ' — ' + p.drive_id + ' (' + (p.tanggal||'—') + ')'));
-      if (selesai.length > 5) lines.push('   _... dan ' + (selesai.length-5) + ' lainnya_');
-      lines.push('');
-    }
-  }
-
-  if (note && note.trim()) {
-    lines.push(SEP);
-    lines.push('💬 *Catatan Tambahan:*');
-    lines.push(note.trim());
-  }
-  lines.push(SEP);
-  lines.push('_Dikirim dari Drive Monitoring System_');
-  return lines.join('\n');
-}
-
-function sendWA() {
-  const num = id('wa-number').value.trim().replace(/[^0-9]/g,'');
-  if (!num) { showToast('⚠️ Masukkan nomor WhatsApp tujuan', 'err'); id('wa-number').focus(); return; }
-  const msg = buildWAMessage(_waType, id('wa-note-input').value);
-  const url = 'https://wa.me/' + num + '?text=' + encodeURIComponent(msg.split('\\n').join('\n'));
-  window.open(url, '_blank');
-  closeWAModal();
-  showToast('💬 WhatsApp dibuka di tab baru', 'ok');
-}
-
-// ══════════════════════════════════════════════════════════
-// TOAST
-// ══════════════════════════════════════════════════════════
-function showToast(msg, type) {
-  const el  = document.createElement('div');
-  el.className = 'toast';
-  const color = type === 'ok' ? '#00d084' : type === 'err' ? '#ff4757' : '#8ab0d0';
-  el.innerHTML = '<span style="color:' + color + ';font-size:14px">●</span><span>' + msg + '</span>';
-  document.body.appendChild(el);
-  setTimeout(() => { el.classList.add('hide'); setTimeout(() => el.remove(), 350); }, 3200);
-}
-
-id('wa-overlay').addEventListener('click', e => { if(e.target === id('wa-overlay')) closeWAModal(); });
 
 navTo('plant');
 </script>
-
-<!-- WA MODAL -->
-<div class="wa-overlay" id="wa-overlay">
-  <div class="wa-box">
-    <div class="wa-icon">💬</div>
-    <div class="wa-title">Kirim via WhatsApp</div>
-    <div class="wa-sub" id="wa-sub">Laporan akan dikirim sebagai teks pesan</div>
-    <div class="wa-field">
-      <label>Nomor WhatsApp Tujuan</label>
-      <input type="tel" id="wa-number" placeholder="Contoh: 628123456789" autocomplete="off">
-    </div>
-    <div class="wa-field">
-      <label>Tambahan Pesan / Catatan</label>
-      <textarea id="wa-note-input" rows="2" placeholder="Contoh: Mohon segera ditindaklanjuti..."></textarea>
-    </div>
-    <div class="wa-preview-label">Preview Pesan</div>
-    <div class="wa-preview" id="wa-preview">—</div>
-    <div class="wa-actions">
-      <button class="btn-wa-cancel" onclick="closeWAModal()">Batal</button>
-      <button class="btn-wa-send" onclick="sendWA()">
-        <span>📤</span><span>Buka WhatsApp</span>
-      </button>
-    </div>
-    <div class="wa-note">⚠️ Akan membuka WhatsApp Web / App di tab baru. Pastikan WhatsApp sudah login.</div>
-  </div>
-</div>
 
 <!-- TOAST CONTAINER -->
 <div id="toast-container"></div>
