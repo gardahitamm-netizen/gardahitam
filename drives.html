@@ -279,6 +279,45 @@ body {
   margin-top:1px;
 }
 
+/* ── GROUP SECTION DIVIDER (INU / DSU) ── */
+.drive-section{ margin-bottom:28px; }
+.drive-section-header{
+  display:flex; align-items:center; gap:12px;
+  margin-bottom:14px;
+}
+.drive-section-label{
+  font-family:'JetBrains Mono',monospace;
+  font-size:11px; font-weight:700;
+  letter-spacing:2px; text-transform:uppercase;
+  padding:4px 14px; border-radius:20px;
+  display:flex; align-items:center; gap:7px;
+  flex-shrink:0;
+}
+.drive-section-label.inu{
+  color:#60c8ff;
+  background:rgba(41,121,255,.12);
+  border:1px solid rgba(41,121,255,.3);
+}
+.drive-section-label.dsu{
+  color:#b084f5;
+  background:rgba(140,80,240,.1);
+  border:1px solid rgba(140,80,240,.28);
+}
+.drive-section-label.other{
+  color:#8ab0d0;
+  background:rgba(138,176,208,.08);
+  border:1px solid rgba(138,176,208,.2);
+}
+.drive-section-line{
+  flex:1; height:1px;
+  background:linear-gradient(to right, var(--border), transparent);
+}
+.drive-section-count{
+  font-family:'JetBrains Mono',monospace;
+  font-size:10px; color:#8ab0d0;
+  flex-shrink:0;
+}
+
 /* Edit badge on card */
 .inu-edit-hint{
   position:absolute; top:10px; right:10px;
@@ -767,7 +806,42 @@ async function renderDriveTab() {
       id('drive-content').innerHTML = `<div class="state-box"><div style="font-size:28px">📭</div><h3>Tidak ada data</h3><p>Mixing ${S.mixing} belum ada data drive.</p></div>`;
       return;
     }
-    id('drive-content').innerHTML = `<div class="cards-grid">${drives.map(inuCard).join('')}</div>`;
+
+    // Pisahkan drives berdasarkan tipe (INU, DSU, atau lainnya)
+    // Deteksi dari drive_id: misal MCG.02.INU.01 → tipe = INU
+    function getDriveType(driveId) {
+      const id = String(driveId || '').toUpperCase();
+      if (id.includes('.INU.') || id.includes('_INU_') || id.endsWith('INU')) return 'INU';
+      if (id.includes('.DSU.') || id.includes('_DSU_') || id.endsWith('DSU')) return 'DSU';
+      return 'OTHER';
+    }
+
+    const groups = { INU: [], DSU: [], OTHER: [] };
+    drives.forEach(d => { groups[getDriveType(d.drive_id)].push(d); });
+
+    let html = '';
+
+    const groupConfig = [
+      { key:'INU',   label:'⚡ Inverter (INU)', cls:'inu'   },
+      { key:'DSU',   label:'🔌 Supply Unit (DSU)', cls:'dsu'   },
+      { key:'OTHER', label:'📦 Lainnya',         cls:'other' },
+    ];
+
+    groupConfig.forEach(({ key, label, cls }) => {
+      const grp = groups[key];
+      if (!grp.length) return;
+      html += `
+        <div class="drive-section">
+          <div class="drive-section-header">
+            <div class="drive-section-label ${cls}">${label}</div>
+            <div class="drive-section-line"></div>
+            <div class="drive-section-count">${grp.length} unit</div>
+          </div>
+          <div class="cards-grid">${grp.map(inuCard).join('')}</div>
+        </div>`;
+    });
+
+    id('drive-content').innerHTML = html;
     renderSidebar(Object.values(S.cache[S.plant + '_config'] || { x: 17 })[0] || 17);
   } catch(err) {
     id('drive-content').innerHTML = errHTML(err.message, renderDriveTab);
