@@ -1099,8 +1099,8 @@ async function exportPDF(type) {
       doc.text('Dicetak: ' + now + '  |  Total: ' + jadwal.length + ' jadwal', 14, 22);
       doc.autoTable({
         startY: 28,
-        head: [['ID PM','Judul PM','Drive ID','Tanggal','Teknisi / PIC','Status','Catatan']],
-        body: jadwal.map(p => [p.id||'', p.judul||'', p.drive_id||'', p.tanggal||'—', p.teknisi||'—', p.status||'', p.catatan||'']),
+        head: [['ID PM','Judul PM','Drive ID','Tanggal','Status','Catatan']],
+        body: jadwal.map(p => [p.id||'', p.judul||'', p.drive_id||'', p.tanggal||'—', p.status||'', p.catatan||'']),
         styles: { fontSize: 8, cellPadding: 2 },
         headStyles: { fillColor: [18,25,41], textColor: [255,165,2], fontStyle:'bold' },
         alternateRowStyles: { fillColor: [245,248,255] },
@@ -1188,7 +1188,6 @@ function buildWAMessage(type, note) {
         lines.push(em + ' *' + p.judul + '*');
         lines.push('   🔌 Drive   : ' + p.drive_id);
         lines.push('   📅 Jadwal  : ' + (p.tanggal||'—'));
-        lines.push('   👤 Teknisi : ' + (p.teknisi||'— belum ditentukan'));
         lines.push('   📌 Status  : ' + p.status);
         if (p.catatan) lines.push('   📝 Catatan : ' + p.catatan);
         lines.push('');
