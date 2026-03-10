@@ -23,6 +23,28 @@
   --teal:    #00b8d4;
 }
 
+/* ── LIGHT MODE ── */
+body.light {
+  --bg:     #f0f4f8;
+  --surf:   #ffffff;
+  --surf2:  #e8eef5;
+  --surf3:  #dde6f0;
+  --border: #c8d8e8;
+  --text:   #1a2a3a;
+  --muted:  #6a8aaa;
+  --accent: #1565c0;
+  --teal:   #0088a8;
+}
+body.light .topbar{ background:#e0eaf5; }
+body.light .breadcrumb{ background:#e8f0f8; }
+body.light .sidebar{ background:#e8eef5; border-color:#c8d8e8; }
+body.light .hist-table thead tr{ background:#dde6f0; }
+body.light .hist-table tbody tr:hover{ background:#e8f0f8; }
+body.light .modal-box{ background:#f0f4f8; }
+body.light .login-box{ background:#f0f4f8; }
+body.light input, body.light select{ background:#e8eef5 !important; border-color:#c8d8e8 !important; color:#1a2a3a !important; }
+body.light .running-bar{ background:#dde6f0; border-color:#c8d8e8; }
+
 *{margin:0;padding:0;box-sizing:border-box;}
 html, body { width:100%; height:100%; overflow:hidden; }
 body {
@@ -384,6 +406,50 @@ body {
 .state-box p{font-size:12px;text-align:center;max-width:340px;}
 .btn-retry{ background:rgba(41,121,255,.12);border:1px solid rgba(41,121,255,.25);color:var(--accent);padding:6px 16px;border-radius:6px;font-size:12px;cursor:pointer;font-family:'JetBrains Mono',monospace; }
 
+/* ── RUNNING TEXT BAR ── */
+.running-bar{
+  flex-shrink:0; overflow:hidden; white-space:nowrap;
+  background:#08111e; border-bottom:1px solid var(--border);
+  padding:5px 0; position:relative;
+}
+.running-bar::before,.running-bar::after{
+  content:''; position:absolute; top:0; bottom:0; width:40px; z-index:2;
+}
+.running-bar::before{ left:0; background:linear-gradient(to right, #08111e, transparent); }
+.running-bar::after { right:0; background:linear-gradient(to left,  #08111e, transparent); }
+.running-inner{
+  display:inline-block;
+  animation:marquee 35s linear infinite;
+  font-family:'JetBrains Mono',monospace; font-size:10px; color:var(--muted);
+  letter-spacing:.5px;
+}
+.running-inner span{ margin:0 40px; }
+.running-inner .rb-label{ color:var(--teal); font-weight:700; }
+@keyframes marquee{ from{transform:translateX(100vw)} to{transform:translateX(-100%)} }
+
+/* ── THEME TOGGLE ── */
+.btn-theme{
+  display:flex;align-items:center;gap:5px;
+  font-family:'JetBrains Mono',monospace;font-size:11px;
+  padding:5px 10px;border-radius:5px;cursor:pointer;
+  border:1px solid var(--border);background:var(--surf2);color:var(--muted);
+  transition:all .2s; flex-shrink:0;
+}
+.btn-theme:hover{ border-color:var(--teal); color:var(--teal); }
+
+/* ── PDF PRINT BUTTON ── */
+.tab-action-bar{
+  display:flex; justify-content:flex-end; margin-bottom:14px;
+}
+.btn-pdf{
+  display:flex;align-items:center;gap:5px;
+  font-family:'JetBrains Mono',monospace;font-size:11px;
+  padding:5px 14px;border-radius:5px;cursor:pointer;
+  border:1px solid rgba(255,71,87,.3);background:rgba(255,71,87,.07);color:#ff4757;
+  transition:all .2s;
+}
+.btn-pdf:hover{ background:rgba(255,71,87,.15); border-color:#ff4757; }
+
 ::-webkit-scrollbar{width:4px;height:4px;}
 ::-webkit-scrollbar-track{background:transparent;}
 ::-webkit-scrollbar-thumb{background:var(--border);border-radius:4px;}
@@ -400,8 +466,20 @@ body {
   <span class="topbar-sep">&nbsp;/&nbsp;</span>
   <span class="topbar-sub" id="topbar-sub">Pilih Plant</span>
   <div class="topbar-r">
+    <div class="btn-theme" id="btn-theme" onclick="toggleTheme()" title="Toggle Light/Dark Mode">🌙 Dark</div>
     <div class="btn-sm" id="btn-refresh" onclick="doRefresh()">⟳ Refresh</div>
     <div class="topbar-clock" id="clock"></div>
+  </div>
+</div>
+
+<!-- RUNNING TEXT -->
+<div class="running-bar">
+  <div class="running-inner">
+    <span><span class="rb-label">📢 INFO:</span> Sistem monitoring drive aktif 24 jam — laporkan anomali segera ke tim teknisi</span>
+    <span><span class="rb-label">⚠️ PERHATIAN:</span> Pastikan status drive selalu diperbarui setelah pengecekan lapangan</span>
+    <span><span class="rb-label">🔧 PM:</span> Jadwal Preventive Maintenance wajib dilaksanakan sesuai tanggal yang telah ditentukan</span>
+    <span><span class="rb-label">✅ SOP:</span> Setiap perubahan status drive harus disertai keterangan yang jelas dan akurat</span>
+    <span><span class="rb-label">📊 GARDA HITAM:</span> Drive Monitoring System — KECO WATERBANG</span>
   </div>
 </div>
 
@@ -452,9 +530,15 @@ body {
           <div id="drive-content"></div>
         </div>
         <div class="tab-content" id="tab-histori">
+          <div class="tab-action-bar">
+            <button class="btn-pdf" onclick="printHistoriPDF()">🖨️ Cetak PDF Histori</button>
+          </div>
           <div id="histori-content"></div>
         </div>
         <div class="tab-content" id="tab-pm">
+          <div class="tab-action-bar">
+            <button class="btn-pdf" onclick="printPMPDF()">🖨️ Cetak PDF Jadwal PM</button>
+          </div>
           <div id="pm-content"></div>
         </div>
       </div>
@@ -913,7 +997,72 @@ function errHTML(msg, fn) {
 setInterval(() => { id('clock').textContent = new Date().toTimeString().slice(0,8); }, 1000);
 id('clock').textContent = new Date().toTimeString().slice(0,8);
 
+// ── LIGHT / DARK MODE ──
+function toggleTheme() {
+  const isLight = document.body.classList.toggle('light');
+  const btn = id('btn-theme');
+  btn.textContent = isLight ? '🌙 Dark' : '☀️ Light';
+  // update running bar bg on light mode
+  document.querySelector('.running-bar').style.background = isLight ? '#dde6f0' : '';
+  document.querySelector('.running-bar').style.setProperty('--rb-fade', isLight ? '#dde6f0' : '#08111e');
+  localStorage.setItem('theme', isLight ? 'light' : 'dark');
+}
+// restore saved theme
+if (localStorage.getItem('theme') === 'light') {
+  document.body.classList.add('light');
+  document.addEventListener('DOMContentLoaded', () => {
+    const btn = id('btn-theme');
+    if (btn) btn.textContent = '☀️ Light';
+  });
+}
+
+// ── PDF HISTORI ──
+async function printHistoriPDF() {
+  const rows = S.cache[S.plant + '_histori'];
+  if (!rows || !rows.length) { alert('Tidak ada data histori untuk dicetak.'); return; }
+  const { jsPDF } = window.jspdf;
+  const doc = new jsPDF({ orientation:'landscape' });
+  doc.setFontSize(14); doc.setFont('helvetica','bold');
+  doc.text(`Histori Drive — ${S.plant}`, 14, 16);
+  doc.setFontSize(9); doc.setFont('helvetica','normal');
+  doc.text(`Dicetak: ${new Date().toLocaleString('id-ID')}`, 14, 22);
+  doc.autoTable({
+    startY: 27,
+    head: [['Waktu','Drive ID','Nama','Group','Status','Keterangan']],
+    body: rows.map(r => [r.timestamp, r.drive_id, r.drive_nama||'—', r.group||'—', r.status.toUpperCase(), r.keterangan||'—']),
+    styles:{ fontSize:8, cellPadding:2 },
+    headStyles:{ fillColor:[21,101,192], textColor:255, fontStyle:'bold' },
+    alternateRowStyles:{ fillColor:[240,244,248] },
+    theme:'grid'
+  });
+  doc.save(`Histori_${S.plant}_${new Date().toISOString().slice(0,10)}.pdf`);
+}
+
+// ── PDF JADWAL PM ──
+async function printPMPDF() {
+  const jadwal = S.cache[S.plant + '_pm'];
+  if (!jadwal || !jadwal.length) { alert('Tidak ada data jadwal PM untuk dicetak.'); return; }
+  const { jsPDF } = window.jspdf;
+  const doc = new jsPDF({ orientation:'landscape' });
+  doc.setFontSize(14); doc.setFont('helvetica','bold');
+  doc.text(`Jadwal Preventive Maintenance — ${S.plant}`, 14, 16);
+  doc.setFontSize(9); doc.setFont('helvetica','normal');
+  doc.text(`Dicetak: ${new Date().toLocaleString('id-ID')}`, 14, 22);
+  doc.autoTable({
+    startY: 27,
+    head: [['ID PM','Judul','Drive ID','Tanggal','Teknisi','Status','Catatan']],
+    body: jadwal.map(p => [p.id||'—', p.judul||'—', p.drive_id||'—', p.tanggal||'—', p.teknisi||'—', p.status||'—', p.catatan||'—']),
+    styles:{ fontSize:8, cellPadding:2 },
+    headStyles:{ fillColor:[0,150,136], textColor:255, fontStyle:'bold' },
+    alternateRowStyles:{ fillColor:[240,248,245] },
+    theme:'grid'
+  });
+  doc.save(`JadwalPM_${S.plant}_${new Date().toISOString().slice(0,10)}.pdf`);
+}
+
 navTo('plant');
 </script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.8.2/jspdf.plugin.autotable.min.js"></script>
 </body>
 </html>
