@@ -589,7 +589,8 @@ body {
   <span class="topbar-sub" id="topbar-sub">Pilih Plant</span>
   <div class="topbar-r">
     <div class="btn-sm" id="btn-refresh" onclick="doRefresh()">⟳ Refresh</div>
-    <div class="ar-badge" id="ar-badge" onclick="toggleAutoRefresh()" title="Klik untuk on/off auto refresh"><div class="ar-ring"></div><div class="ar-dot"></div><span id="ar-label">Auto ▸ 30s</span></div>
+    <div class="ar-badge" id="ar-badge" onclick="toggleAutoRefresh()" title="Klik untuk on/off auto refresh (aktif otomatis setelah simpan)"><div class="ar-ring"></div><div class="ar-dot"></div><span id="ar-label">Auto ▸ OFF</span></div>
+    <a href="https://docs.google.com/spreadsheets/d/1kOiC-j5MQ8mVvb6pAsOfUL-D96lAhiaV_Ylm_J9mgdU/edit" target="_blank" title="Buka Google Spreadsheet MCG" style="display:flex;align-items:center;gap:4px;font-family:'JetBrains Mono',monospace;font-size:10px;color:#7a9bbf;background:rgba(0,0,0,.2);border:1px solid #2a4060;border-radius:5px;padding:4px 9px;text-decoration:none;transition:all .2s;" onmouseover="this.style.borderColor='#00c8e8';this.style.color='#00c8e8'" onmouseout="this.style.borderColor='#2a4060';this.style.color='#7a9bbf'">📊 Sheets</a>
     <div class="topbar-clock" id="clock"></div>
   </div>
 </div>
@@ -705,6 +706,10 @@ body {
       <input class="form-input" id="modal-spek" type="text" placeholder="Contoh: Line 1 - Slot 1">
     </div>
     <div class="form-group">
+      <label class="form-label">Nama Teknisi / PIC</label>
+      <input class="form-input" id="modal-teknisi" type="text" placeholder="Contoh: Budi, Tim Elektrik...">
+    </div>
+    <div class="form-group">
       <label class="form-label">Keterangan</label>
       <input class="form-input" id="modal-ket" type="text" placeholder="Contoh: Vendor, Aman, Sedang diperbaiki...">
     </div>
@@ -726,8 +731,8 @@ const S = {
 };
 
 // ── LOGIN ──
-function requestEdit(driveId, status, keterangan, merk, spesifikasi) {
-  S.pendingDriveData = { driveId, status, keterangan, merk, spesifikasi };
+function requestEdit(driveId, status, keterangan, merk, spesifikasi, teknisi) {
+  S.pendingDriveData = { driveId, status, keterangan, merk, spesifikasi, teknisi };
   const mixingLabel = S.plant + ' — Mixing ' + S.mixing;
   id('login-area-label').textContent = mixingLabel;
   id('login-username').value  = '';
@@ -766,7 +771,7 @@ async function submitLogin() {
     if (result.success) {
       const d = S.pendingDriveData;
       closeLoginModal();
-      if (d) openModal(d.driveId, d.status, d.keterangan, d.merk, d.spesifikasi);
+      if (d) openModal(d.driveId, d.status, d.keterangan, d.merk, d.spesifikasi, d.teknisi);
     } else {
       errEl.textContent   = '❌ ' + (result.message || 'Username atau password salah.');
       errEl.style.display = 'block';
@@ -957,12 +962,13 @@ async function renderDriveTab() {
 function inuCard(d) {
   const st   = d.status || 'kosong';
   const stTx = { ok:'OK', fault:'Fault', maint:'Maintenance', kosong:'Kosong' }[st] || st;
-  return `<div class="inu-card ${st}" onclick="requestEdit('${esc(d.drive_id)}','${st}','${esc(d.keterangan)}','${esc(d.merk)}','${esc(d.spesifikasi)}')">
+  return `<div class="inu-card ${st}" onclick="requestEdit('${esc(d.drive_id)}','${st}','${esc(d.keterangan)}','${esc(d.merk)}','${esc(d.spesifikasi)}','${esc(d.teknisi||'')}')">
     <div class="inu-edit-hint">✏️ edit</div>
     <div class="inu-tag">${esc(d.drive_id)}</div>
     <div class="inu-name">${esc(d.merk) || '—'}</div>
     ${d.spesifikasi ? `<div class="inu-spec">${esc(d.spesifikasi)}</div>` : ''}
     <div class="inu-status"><div class="inu-dot"></div>${stTx}</div>
+    ${d.teknisi ? `<div class="inu-info" style="color:#a0c4e8;border-top-color:rgba(41,121,255,.15)">👤 ${esc(d.teknisi)}</div>` : ''}
     ${d.keterangan ? `<div class="inu-info">${esc(d.keterangan)}</div>` : ''}
   </div>`;
 }
@@ -986,13 +992,14 @@ async function renderHistoriTab() {
         </div>
       </div>
       <div class="hist-table-wrap"><table class="hist-table" id="tbl-histori">
-        <thead><tr><th>Waktu</th><th>Drive ID</th><th>Nama</th><th>Group</th><th>Status</th><th>Keterangan</th></tr></thead>
+        <thead><tr><th>Waktu</th><th>Drive ID</th><th>Nama</th><th>Group</th><th>Status</th><th>Teknisi</th><th>Keterangan</th></tr></thead>
         <tbody>${rows.map(r => `<tr>
           <td class="hist-ts">${r.timestamp}</td>
           <td class="hist-id">${esc(r.drive_id)}</td>
           <td>${esc(r.drive_nama)}</td>
           <td>${esc(r.group)}</td>
           <td><span class="status-tag st-${r.status}">${r.status.toUpperCase()}</span></td>
+          <td style="font-size:11px;color:#a0c4e8;">${r.teknisi ? '👤 '+esc(r.teknisi) : '<span style="color:#4a6080">—</span>'}</td>
           <td>${esc(r.keterangan)}</td>
         </tr>`).join('')}</tbody>
       </table></div>`;
@@ -1003,7 +1010,10 @@ async function renderPMTab() {
   id('pm-content').innerHTML = loadingHTML('Memuat jadwal PM...');
   try {
     if (!S.cache[S.plant + '_pm']) {
-      const data = await apiGet({ action: 'getJadwalPM', plant: S.plant });
+      // Try getJadwalPM first (main API), fallback to getPM (MCG-style API)
+      let data;
+      try { data = await apiGet({ action: 'getJadwalPM', plant: S.plant }); }
+      catch(e) { data = await apiGet({ action: 'getPM', plant: S.plant }); }
       S.cache[S.plant + '_pm'] = data.jadwal;
     }
     const jadwal = S.cache[S.plant + '_pm'];
@@ -1037,30 +1047,39 @@ function pmCard(p) {
 }
 
 // ── EDIT MODAL ──
-function openModal(driveId, status, keterangan, merk, spesifikasi) {
+function openModal(driveId, status, keterangan, merk, spesifikasi, teknisi) {
   S.editDrive = driveId;
   id('modal-drive-id').textContent = driveId;
-  id('modal-status').value = status || 'ok';
-  id('modal-merk').value   = merk   || '';
-  id('modal-spek').value   = spesifikasi || '';
-  id('modal-ket').value    = keterangan  || '';
+  id('modal-status').value   = status || 'ok';
+  id('modal-merk').value     = merk   || '';
+  id('modal-spek').value     = spesifikasi || '';
+  id('modal-teknisi').value  = teknisi     || '';
+  id('modal-ket').value      = keterangan  || '';
   id('modal').classList.add('open');
 }
 
 function closeModal() { id('modal').classList.remove('open'); S.editDrive = null; }
 
 async function saveStatus() {
-  const status = id('modal-status').value;
-  const btn    = id('btn-save');
+  const status   = id('modal-status').value;
+  const teknisi  = id('modal-teknisi').value.trim();
+  const btn      = id('btn-save');
   btn.disabled = true; btn.textContent = 'Menyimpan...';
   try {
-    await apiGet({ action:'updateStatus', plant:S.plant, drive_id:S.editDrive, status,
-      keterangan:id('modal-ket').value.trim(), merk:id('modal-merk').value.trim(),
-      spesifikasi:id('modal-spek').value.trim(), updatedBy:'web-user' });
+    await apiGet({
+      action:'updateStatus', plant:S.plant, drive_id:S.editDrive, status,
+      keterangan : id('modal-ket').value.trim(),
+      merk       : id('modal-merk').value.trim(),
+      spesifikasi: id('modal-spek').value.trim(),
+      teknisi    : teknisi,
+      updatedBy  : teknisi || 'web-user'
+    });
     delete S.cache[S.plant + '_drives'];
     delete S.cache[S.plant + '_histori'];
     closeModal();
     await renderDriveTab();
+    // ── Setelah save: aktifkan polling cepat 5-10 detik selama 60 detik
+    triggerPostSaveRefresh();
   } catch(err) { alert('Gagal menyimpan: ' + err.message); }
   finally { btn.disabled = false; btn.textContent = 'Simpan'; }
 }
@@ -1118,34 +1137,66 @@ async function ensureJSPDF() {
 // ══════════════════════════════════════════════════════════
 // AUTO REFRESH
 // ══════════════════════════════════════════════════════════
-const AR = { enabled: false, intervalSec: 30, timer: null, hash: '' };
+const AR = { enabled: false, intervalSec: 8, timer: null, hash: '', postSaveTimer: null };
 
 function toggleAutoRefresh() {
   AR.enabled = !AR.enabled;
-  if (AR.enabled) startAutoRefresh();
-  else            stopAutoRefresh();
+  if (AR.enabled) {
+    startAutoRefresh(8);
+    showToast('🔄 Auto refresh ON — setiap 8 detik', 'ok');
+  } else {
+    stopAutoRefresh();
+    showToast('⏸ Auto refresh dimatikan', '');
+  }
 }
-function startAutoRefresh() {
+function startAutoRefresh(sec) {
+  const interval = sec || AR.intervalSec;
   AR.enabled = true;
   const badge = id('ar-badge');
   badge.classList.add('active');
-  id('ar-label').textContent = 'Auto ▸ ' + AR.intervalSec + 's';
   clearInterval(AR.timer);
-  let countdown = AR.intervalSec;
+  let countdown = interval;
+  id('ar-label').textContent = '🔄 ' + countdown + 's';
   AR.timer = setInterval(async () => {
     countdown--;
-    id('ar-label').textContent = 'Auto ▸ ' + countdown + 's';
-    if (countdown <= 0) { countdown = AR.intervalSec; await autoRefreshTick(); }
+    id('ar-label').textContent = '🔄 ' + countdown + 's';
+    if (countdown <= 0) { countdown = interval; await autoRefreshTick(); }
   }, 1000);
-  showToast('🔄 Auto refresh aktif — setiap ' + AR.intervalSec + ' detik', 'ok');
+}
+
+// Dipanggil otomatis setelah simpan — polling cepat 5-10 detik selama ~2 menit
+function triggerPostSaveRefresh() {
+  clearInterval(AR.timer);
+  clearTimeout(AR.postSaveTimer);
+  AR.enabled = true;
+  const badge = id('ar-badge');
+  badge.classList.add('active');
+  // Set hash kosong biar tick pertama pasti reload
+  AR.hash = '';
+  // Immediate first tick
+  autoRefreshTick();
+  // Polling 5 detik
+  let countdown = 5;
+  id('ar-label').textContent = '🔄 ' + countdown + 's';
+  AR.timer = setInterval(async () => {
+    countdown--;
+    id('ar-label').textContent = '🔄 ' + countdown + 's';
+    if (countdown <= 0) { countdown = 5; await autoRefreshTick(); }
+  }, 1000);
+  // Setelah 2 menit, stop auto refresh
+  AR.postSaveTimer = setTimeout(() => {
+    stopAutoRefresh();
+    showToast('⏸ Auto refresh selesai', '');
+  }, 120000);
+  showToast('🔄 Monitoring perubahan (auto stop 2 menit)...', 'ok');
 }
 function stopAutoRefresh() {
   AR.enabled = false;
   clearInterval(AR.timer);
+  clearTimeout(AR.postSaveTimer);
   const badge = id('ar-badge');
   badge.classList.remove('active', 'changed');
-  id('ar-label').textContent = 'Auto ▸ 30s';
-  showToast('⏸ Auto refresh dimatikan', '');
+  id('ar-label').textContent = 'Auto ▸ OFF';
 }
 async function autoRefreshTick() {
   if (!S.plant || S.page !== 'detail') return;
@@ -1185,12 +1236,12 @@ async function exportPDF(type) {
       doc.text('Dicetak: ' + now + '  |  Total: ' + rows.length + ' entri', 14, 22);
       doc.autoTable({
         startY: 28,
-        head: [['Waktu','Drive ID','Nama Drive','Group','Status','Keterangan']],
-        body: rows.map(r => [r.timestamp, r.drive_id, r.drive_nama||'', r.group||'', r.status.toUpperCase(), r.keterangan||'']),
+        head: [['Waktu','Drive ID','Nama Drive','Group','Status','Teknisi','Keterangan']],
+        body: rows.map(r => [r.timestamp, r.drive_id, r.drive_nama||'', r.group||'', r.status.toUpperCase(), r.teknisi||'—', r.keterangan||'']),
         styles: { fontSize: 8, cellPadding: 2 },
         headStyles: { fillColor: [18,25,41], textColor: [0,200,132], fontStyle:'bold' },
         alternateRowStyles: { fillColor: [245,248,255] },
-        columnStyles: { 0:{cellWidth:35}, 1:{cellWidth:28}, 4:{cellWidth:18} }
+        columnStyles: { 0:{cellWidth:32}, 1:{cellWidth:25}, 4:{cellWidth:15}, 5:{cellWidth:22} }
       });
       doc.save('Histori_' + plant + '_' + Date.now() + '.pdf');
 
@@ -1216,7 +1267,7 @@ async function exportPDF(type) {
 }
 
 // ══════════════════════════════════════════════════════════
-// EXPORT EXCEL
+// EXPORT EXCEL — format .xlsx proper dengan header styling
 // ══════════════════════════════════════════════════════════
 async function exportExcel(type) {
   try {
@@ -1225,40 +1276,100 @@ async function exportExcel(type) {
     const wb    = XLSX.utils.book_new();
     const now   = new Date().toLocaleString('id-ID');
 
+    // Helper: style header row
+    function styleHeader(ws, nCols) {
+      for (let c = 0; c < nCols; c++) {
+        const addr = XLSX.utils.encode_cell({ r: 0, c });
+        if (!ws[addr]) continue;
+        ws[addr].s = {
+          font:    { bold: true, color: { rgb: 'FFFFFF' }, sz: 11 },
+          fill:    { fgColor: { rgb: '121929' } },
+          alignment: { horizontal: 'center', vertical: 'center', wrapText: true },
+          border: {
+            bottom: { style: 'medium', color: { rgb: '00C864' } }
+          }
+        };
+      }
+    }
+
     if (type === 'histori') {
       const rows = S.cache[plant + '_histori'] || [];
-      const ws   = XLSX.utils.json_to_sheet(rows.map(r => ({
-        'Waktu'     : r.timestamp,
-        'Drive ID'  : r.drive_id,
-        'Nama Drive': r.drive_nama||'',
-        'Group'     : r.group||'',
-        'Status'    : r.status.toUpperCase(),
-        'Keterangan': r.keterangan||''
-      })));
-      ws['!cols'] = [{wch:24},{wch:20},{wch:20},{wch:14},{wch:12},{wch:45}];
+      // Build AOA (array of arrays) for full control
+      const headers = ['Waktu','Drive ID','Nama Drive','Group','Status','Teknisi/PIC','Keterangan'];
+      const aoa = [headers, ...rows.map(r => [
+        r.timestamp||'', r.drive_id||'', r.drive_nama||'',
+        r.group||'', (r.status||'').toUpperCase(), r.teknisi||'—', r.keterangan||''
+      ])];
+      const ws = XLSX.utils.aoa_to_sheet(aoa);
+      ws['!cols'] = [{wch:24},{wch:20},{wch:20},{wch:14},{wch:12},{wch:20},{wch:45}];
+      ws['!rows'] = [{ hpt: 20 }]; // header row height
+      styleHeader(ws, headers.length);
+      // Freeze header row
+      ws['!freeze'] = { xSplit: 0, ySplit: 1, topLeftCell: 'A2', activeCell: 'A2', sqref: 'A2' };
       XLSX.utils.book_append_sheet(wb, ws, 'Histori');
-      const info = XLSX.utils.aoa_to_sheet([['Plant',plant],['Dicetak',now],['Total Entri',rows.length]]);
-      XLSX.utils.book_append_sheet(wb, info, 'Info');
-      XLSX.writeFile(wb, 'Histori_' + plant + '_' + Date.now() + '.xlsx');
+
+      // Sheet info
+      const infoData = [
+        ['Laporan Histori Drive — ' + plant],
+        [''],
+        ['Plant', plant],
+        ['Tanggal Cetak', now],
+        ['Total Entri', rows.length],
+        [''],
+        ['Keterangan Status:'],
+        ['OK', 'Drive berjalan normal'],
+        ['FAULT', 'Drive mengalami kerusakan/error'],
+        ['MAINT', 'Drive sedang dalam maintenance'],
+        ['KOSONG', 'Slot drive kosong/tidak terisi'],
+      ];
+      const wsInfo = XLSX.utils.aoa_to_sheet(infoData);
+      wsInfo['!cols'] = [{wch:20},{wch:40}];
+      XLSX.utils.book_append_sheet(wb, wsInfo, 'Info');
+
+      XLSX.writeFile(wb, 'Histori_Drive_' + plant + '_' + Date.now() + '.xlsx');
 
     } else if (type === 'pm') {
       const jadwal = S.cache[plant + '_pm'] || [];
-      const ws     = XLSX.utils.json_to_sheet(jadwal.map(p => ({
-        'ID PM'       : p.id||'',
-        'Judul PM'    : p.judul||'',
-        'Drive ID'    : p.drive_id||'',
-        'Tanggal'     : p.tanggal||'—',
-        'Teknisi/PIC' : p.teknisi||'—',
-        'Status'      : p.status||'',
-        'Catatan'     : p.catatan||''
-      })));
-      ws['!cols'] = [{wch:12},{wch:45},{wch:20},{wch:16},{wch:22},{wch:15},{wch:45}];
+      const pending = jadwal.filter(p => p.status === 'Pending' || p.status === 'Dijadwalkan');
+      const proses  = jadwal.filter(p => p.status === 'Dalam Proses');
+      const selesai = jadwal.filter(p => p.status === 'Selesai');
+
+      const headers = ['ID PM','Judul Kegiatan','Drive ID','Tanggal','Teknisi/PIC','Status','Catatan'];
+      const aoa = [headers, ...jadwal.map(p => [
+        p.id||'', p.judul||'', p.drive_id||'',
+        p.tanggal||'—', p.teknisi||'—', p.status||'', p.catatan||''
+      ])];
+      const ws = XLSX.utils.aoa_to_sheet(aoa);
+      ws['!cols'] = [{wch:14},{wch:45},{wch:22},{wch:16},{wch:24},{wch:16},{wch:45}];
+      ws['!rows'] = [{ hpt: 20 }];
+      styleHeader(ws, headers.length);
+      ws['!freeze'] = { xSplit: 0, ySplit: 1, topLeftCell: 'A2', activeCell: 'A2', sqref: 'A2' };
       XLSX.utils.book_append_sheet(wb, ws, 'Jadwal PM');
-      const info = XLSX.utils.aoa_to_sheet([['Plant',plant],['Dicetak',now],['Total Jadwal',jadwal.length]]);
-      XLSX.utils.book_append_sheet(wb, info, 'Info');
+
+      // Summary sheet
+      const sumData = [
+        ['Ringkasan Jadwal PM — ' + plant],
+        [''],
+        ['Plant', plant],
+        ['Tanggal Cetak', now],
+        [''],
+        ['RINGKASAN STATUS'],
+        ['Total Jadwal', jadwal.length],
+        ['Dijadwalkan/Pending', pending.length],
+        ['Dalam Proses', proses.length],
+        ['Selesai', selesai.length],
+        [''],
+        ['JADWAL YANG PERLU TINDAKAN'],
+        ['Judul','Drive ID','Tanggal','Teknisi','Status'],
+        ...([...proses,...pending].map(p => [p.judul||'',p.drive_id||'',p.tanggal||'—',p.teknisi||'—',p.status||''])),
+      ];
+      const wsSum = XLSX.utils.aoa_to_sheet(sumData);
+      wsSum['!cols'] = [{wch:40},{wch:20},{wch:16},{wch:24},{wch:16}];
+      XLSX.utils.book_append_sheet(wb, wsSum, 'Ringkasan');
+
       XLSX.writeFile(wb, 'JadwalPM_' + plant + '_' + Date.now() + '.xlsx');
     }
-    showToast('📊 Excel berhasil diunduh', 'ok');
+    showToast('📊 Excel (.xlsx) berhasil diunduh', 'ok');
   } catch(err) { showToast('❌ Gagal buat Excel: ' + err.message, 'err'); }
 }
 
@@ -1310,6 +1421,7 @@ function buildWAMessage(type, note) {
       if (r.drive_nama) lines.push('   🔖 ' + r.drive_nama);
       if (r.group)      lines.push('   📦 ' + r.group);
       lines.push('   📌 Status: ' + r.status.toUpperCase());
+      if (r.teknisi)    lines.push('   👤 Teknisi: ' + r.teknisi);
       if (r.keterangan) lines.push('   📝 ' + r.keterangan);
       lines.push('');
     });
