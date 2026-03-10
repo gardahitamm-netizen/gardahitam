@@ -4,6 +4,8 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Drive Monitoring — Garda Hitam</title>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.8.2/jspdf.plugin.autotable.min.js"></script>
 <style>
 @import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap');
 
@@ -1006,23 +1008,9 @@ id('clock').textContent = new Date().toTimeString().slice(0,8);
 // LIBRARIES — jsPDF (PDF)
 // ══════════════════════════════════════════════════════════
 
-let _jspdfLoaded = false;
-
-function loadScript(src) {
-  return new Promise((resolve, reject) => {
-    const s = document.createElement('script');
-    s.src = src;
-    s.onload  = resolve;
-    s.onerror = () => reject(new Error('Gagal load: ' + src));
-    document.head.appendChild(s);
-  });
-}
-
-async function ensureJSPDF() {
-  if (_jspdfLoaded || window.jspdf) { _jspdfLoaded = true; return; }
-  await loadScript('https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js');
-  await loadScript('https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.8.2/jspdf.plugin.autotable.min.js');
-  _jspdfLoaded = true;
+function ensureJSPDF() {
+  // jsPDF sudah di-load di <head>, tidak perlu load ulang
+  if (!window.jspdf) throw new Error('Library jsPDF gagal dimuat. Periksa koneksi internet.');
 }
 
 // ══════════════════════════════════════════════════════════
@@ -1030,7 +1018,7 @@ async function ensureJSPDF() {
 // ══════════════════════════════════════════════════════════
 async function exportPDF(type) {
   try {
-    await ensureJSPDF();
+    ensureJSPDF();
     const { jsPDF } = window.jspdf;
     const doc   = new jsPDF({ orientation: 'landscape', unit: 'mm', format: 'a4' });
     const now   = new Date().toLocaleString('id-ID');
