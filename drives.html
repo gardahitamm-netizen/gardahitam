@@ -180,7 +180,10 @@ body {
 .pill.maint .pill-d{background:var(--maint);}
 .pill.kosong .pill-d{background:var(--kosong);}
 
-.cards-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(230px,1fr));gap:12px;}
+/* ══════════════════════════════════════
+   INU CARD — updated for clearer info
+══════════════════════════════════════ */
+.cards-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:12px;}
 .inu-card{
   background:var(--surf);border:1px solid var(--border);
   border-radius:10px;padding:16px;cursor:pointer;
@@ -192,10 +195,51 @@ body {
 .inu-card.fault {border-left-color:var(--fault);background:rgba(255,71,87,.04);}
 .inu-card.maint {border-left-color:var(--maint);}
 .inu-card.kosong{border-left-color:var(--kosong);}
-.inu-tag{font-family:'JetBrains Mono',monospace;font-size:10px;color:var(--muted);margin-bottom:3px;}
-.inu-name{font-size:15px;font-weight:700;margin-bottom:2px;}
-.inu-spec{font-size:11px;color:var(--muted);margin-bottom:12px;}
-.inu-status{display:flex;align-items:center;gap:5px;font-family:'JetBrains Mono',monospace;font-size:11px;font-weight:600;}
+
+/* Drive ID tag — tetap kecil */
+.inu-tag{
+  font-family:'JetBrains Mono',monospace;font-size:10px;
+  color:var(--muted);margin-bottom:5px;
+}
+
+/* ★ MERK — lebih besar & tebal */
+.inu-name{
+  font-size:17px;
+  font-weight:800;
+  color:#ffffff;
+  letter-spacing:.2px;
+  margin-bottom:6px;
+  line-height:1.2;
+}
+
+/* ★ SPESIFIKASI / SERIAL NUMBER — badge monospace */
+.inu-spec{
+  display:inline-flex;
+  align-items:center;
+  gap:5px;
+  font-family:'JetBrains Mono',monospace;
+  font-size:11px;
+  font-weight:600;
+  color:var(--teal);
+  background:rgba(0,184,212,.08);
+  border:1px solid rgba(0,184,212,.18);
+  border-radius:5px;
+  padding:3px 8px;
+  margin-bottom:10px;
+  max-width:100%;
+  overflow:hidden;
+  text-overflow:ellipsis;
+  white-space:nowrap;
+}
+.inu-spec:empty{ display:none; }
+.inu-spec::before{ content:'#'; opacity:.5; font-size:10px; }
+
+/* Status row */
+.inu-status{
+  display:flex;align-items:center;gap:5px;
+  font-family:'JetBrains Mono',monospace;font-size:11px;font-weight:600;
+  margin-bottom:0;
+}
 .inu-dot{width:6px;height:6px;border-radius:50%;}
 .inu-card.ok     .inu-dot{background:var(--ok);   box-shadow:0 0 6px var(--ok);}
 .inu-card.fault  .inu-dot{background:var(--fault);box-shadow:0 0 6px var(--fault);}
@@ -205,7 +249,26 @@ body {
 .inu-card.fault  .inu-status{color:var(--fault);}
 .inu-card.maint  .inu-status{color:var(--maint);}
 .inu-card.kosong .inu-status{color:var(--kosong);}
-.inu-info{font-size:11px;color:var(--muted);margin-top:6px;font-style:italic;}
+
+/* ★ KETERANGAN — jelas, tidak italic, ada separator */
+.inu-info{
+  font-size:12px;
+  font-weight:600;
+  color:#c8d8e8;
+  margin-top:10px;
+  padding-top:10px;
+  border-top:1px solid var(--border);
+  display:flex;
+  align-items:flex-start;
+  gap:5px;
+  line-height:1.4;
+}
+.inu-info::before{
+  content:'💬';
+  font-size:11px;
+  flex-shrink:0;
+  margin-top:1px;
+}
 
 /* Edit badge on card */
 .inu-edit-hint{
@@ -288,7 +351,6 @@ body {
   border-radius:16px; padding:28px 28px 24px; width:100%; max-width:360px;
   animation:modalIn .2s ease; position:relative; overflow:hidden;
 }
-/* top accent line */
 .login-box::before{
   content:''; position:absolute; top:0; left:0; right:0; height:3px;
   background:linear-gradient(90deg, var(--accent), var(--teal));
@@ -343,7 +405,6 @@ body {
 }
 .btn-login-cancel:hover{ border-color:var(--text); color:var(--text); }
 
-/* spinner kecil di tombol */
 .btn-spin{
   width:13px; height:13px; border:2px solid rgba(255,255,255,.3);
   border-top-color:#fff; border-radius:50%; animation:spin .6s linear infinite;
@@ -438,9 +499,7 @@ body {
 
 </div>
 
-<!-- ═══════════════════════════════════════════
-     LOGIN MODAL
-═══════════════════════════════════════════ -->
+<!-- LOGIN MODAL -->
 <div class="login-overlay" id="login-overlay">
   <div class="login-box">
     <div class="login-icon">🔐</div>
@@ -469,9 +528,7 @@ body {
   </div>
 </div>
 
-<!-- ═══════════════════════════════════════════
-     EDIT MODAL
-═══════════════════════════════════════════ -->
+<!-- EDIT MODAL -->
 <div class="modal-overlay" id="modal">
   <div class="modal">
     <div class="modal-title">Edit Status Drive</div>
@@ -506,57 +563,28 @@ body {
 </div>
 
 <script>
-// ══════════════════════════════════════════════════════════
-// KONFIGURASI
-// ══════════════════════════════════════════════════════════
-
 const API = 'https://script.google.com/macros/s/AKfycbwLqgqY-hoyODUDseBeQX3N6RCcIsa4wqHe1qHife8Px4DlwRWYG0J-U4pGf4VrsA6EYw/exec';
-
-// ⚠️ GANTI dengan URL Web App dari DB_Users Apps Script kamu
 const LOGIN_API = 'https://script.google.com/macros/s/AKfycbzlhK15JovW0NpWxk5_aVE_IOmwGlEPgjssYzJjPGfQSZUKfMhQu_LqcU5hItI5HR91PQ/exec';
-
-// ══════════════════════════════════════════════════════════
-// STATE
-// ══════════════════════════════════════════════════════════
 
 const S = {
   page: 'plant', plant: null, mixing: 1, tab: 'drive',
   cache: {}, editDrive: null,
-  // Login state
-  pendingDriveData: null  // data drive yang mau diedit, disimpan sementara
+  pendingDriveData: null
 };
 
-// ══════════════════════════════════════════════════════════
-// LOGIN SYSTEM
-// ══════════════════════════════════════════════════════════
-
-/**
- * Dipanggil saat user klik kartu drive.
- * Selalu minta login dulu sebelum buka modal edit.
- */
+// ── LOGIN ──
 function requestEdit(driveId, status, keterangan, merk, spesifikasi) {
-  // Simpan data drive yang mau diedit
   S.pendingDriveData = { driveId, status, keterangan, merk, spesifikasi };
-
-  // Siapkan label mixing di modal login
   const mixingLabel = S.plant + ' — Mixing ' + S.mixing;
   id('login-area-label').textContent = mixingLabel;
-
-  // Reset form login
   id('login-username').value  = '';
   id('login-password').value  = '';
   id('login-err').style.display = 'none';
   id('login-err').textContent   = '';
-
-  // Set tombol ke state normal
   const btn = id('btn-login-submit');
   btn.classList.remove('loading');
   btn.disabled = false;
-
-  // Tampilkan login modal
   id('login-overlay').classList.add('open');
-
-  // Auto focus username
   setTimeout(() => id('login-username').focus(), 100);
 }
 
@@ -570,30 +598,19 @@ async function submitLogin() {
   const password = id('login-password').value.trim();
   const errEl    = id('login-err');
   const btn      = id('btn-login-submit');
-
-  // Validasi input kosong
   if (!username || !password) {
     errEl.textContent   = '⚠️ Username dan password wajib diisi.';
     errEl.style.display = 'block';
     return;
   }
-
-  // Tampilkan loading
   btn.classList.add('loading');
   btn.disabled = true;
   errEl.style.display = 'none';
-
   try {
-    const params = new URLSearchParams({
-      username: username,
-      password: password,
-      mixing:   S.plant
-    });
+    const params = new URLSearchParams({ username, password, mixing: S.plant });
     const res    = await fetch(LOGIN_API + '?' + params);
     const result = await res.json();
-
     if (result.success) {
-      // Login berhasil → simpan data dulu, tutup login, baru buka edit modal
       const d = S.pendingDriveData;
       closeLoginModal();
       if (d) openModal(d.driveId, d.status, d.keterangan, d.merk, d.spesifikasi);
@@ -610,7 +627,6 @@ async function submitLogin() {
   }
 }
 
-// Enter key di field login
 document.addEventListener('DOMContentLoaded', () => {
   ['login-username','login-password'].forEach(fieldId => {
     id(fieldId).addEventListener('keydown', e => {
@@ -619,10 +635,7 @@ document.addEventListener('DOMContentLoaded', () => {
   });
 });
 
-// ══════════════════════════════════════════════════════════
-// NAVIGASI
-// ══════════════════════════════════════════════════════════
-
+// ── NAVIGASI ──
 async function apiGet(params) {
   const res  = await fetch(API + '?' + new URLSearchParams(params));
   const data = await res.json();
@@ -653,10 +666,7 @@ function updateBC() {
   s3.style.display = b3.style.display = 'none';
 }
 
-// ══════════════════════════════════════════════════════════
-// RENDER
-// ══════════════════════════════════════════════════════════
-
+// ── RENDER ──
 async function renderPlantPage() {
   const el = id('plant-content');
   el.innerHTML = loadingHTML('Memuat plant...');
@@ -759,12 +769,11 @@ async function renderDriveTab() {
 function inuCard(d) {
   const st   = d.status || 'kosong';
   const stTx = { ok:'OK', fault:'Fault', maint:'Maintenance', kosong:'Kosong' }[st] || st;
-  // ↓ Ganti onclick dari openModal → requestEdit (lewat login dulu)
   return `<div class="inu-card ${st}" onclick="requestEdit('${esc(d.drive_id)}','${st}','${esc(d.keterangan)}','${esc(d.merk)}','${esc(d.spesifikasi)}')">
     <div class="inu-edit-hint">✏️ edit</div>
     <div class="inu-tag">${esc(d.drive_id)}</div>
     <div class="inu-name">${esc(d.merk) || '—'}</div>
-    <div class="inu-spec">${esc(d.spesifikasi) || ''}</div>
+    ${d.spesifikasi ? `<div class="inu-spec">${esc(d.spesifikasi)}</div>` : ''}
     <div class="inu-status"><div class="inu-dot"></div>${stTx}</div>
     ${d.keterangan ? `<div class="inu-info">${esc(d.keterangan)}</div>` : ''}
   </div>`;
@@ -820,10 +829,7 @@ function pmCard(p) {
   </div>`;
 }
 
-// ══════════════════════════════════════════════════════════
-// EDIT MODAL
-// ══════════════════════════════════════════════════════════
-
+// ── EDIT MODAL ──
 function openModal(driveId, status, keterangan, merk, spesifikasi) {
   S.editDrive = driveId;
   id('modal-drive-id').textContent = driveId;
@@ -852,14 +858,10 @@ async function saveStatus() {
   finally { btn.disabled = false; btn.textContent = 'Simpan'; }
 }
 
-// Tutup modal saat klik di luar
 id('modal').addEventListener('click', e => { if(e.target === id('modal')) closeModal(); });
 id('login-overlay').addEventListener('click', e => { if(e.target === id('login-overlay')) closeLoginModal(); });
 
-// ══════════════════════════════════════════════════════════
-// REFRESH & UTILS
-// ══════════════════════════════════════════════════════════
-
+// ── UTILS ──
 async function doRefresh() {
   const btn = id('btn-refresh');
   btn.classList.add('loading');
