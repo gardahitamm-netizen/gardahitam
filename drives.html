@@ -1003,7 +1003,7 @@ async function saveStatus() {
   btn.disabled = true; btn.textContent = 'Menyimpan...';
   try {
     await apiGet({
-      action:'saveDrive', plant:S.plant, drive_id:S.editDrive, status,
+      action:'updateStatus', plant:S.plant, drive_id:S.editDrive, status,
       keterangan : id('modal-ket').value.trim(),
       merk       : id('modal-merk').value.trim(),
       spesifikasi: id('modal-spek').value.trim(),
