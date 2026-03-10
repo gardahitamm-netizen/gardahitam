@@ -180,6 +180,18 @@ body {
 .pill.maint .pill-d{background:var(--maint);}
 .pill.kosong .pill-d{background:var(--kosong);}
 
+/* ── GROUP SEPARATOR INU / DSU / OTHER ── */
+.drive-group { margin-bottom: 28px; }
+.drive-group-header { display:flex; align-items:center; gap:10px; margin-bottom:12px; }
+.drive-group-label {
+  font-family:'JetBrains Mono',monospace; font-size:10px; font-weight:700;
+  letter-spacing:1.5px; text-transform:uppercase;
+  padding:4px 14px; border-radius:20px; border:1px solid; flex-shrink:0;
+  background:rgba(255,255,255,.03);
+}
+.drive-group-line { flex:1; height:1px; background:linear-gradient(to right, var(--border), transparent); }
+.drive-group-count { font-family:'JetBrains Mono',monospace; font-size:10px; color:var(--muted); flex-shrink:0; }
+
 .cards-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(230px,1fr));gap:12px;}
 .inu-card{
   background:var(--surf);border:1px solid var(--border);
@@ -720,7 +732,39 @@ async function renderDriveTab() {
       id('drive-content').innerHTML = `<div class="state-box"><div style="font-size:28px">📭</div><h3>Tidak ada data</h3><p>Mixing ${S.mixing} belum ada data drive.</p></div>`;
       return;
     }
-    id('drive-content').innerHTML = `<div class="cards-grid">${drives.map(inuCard).join('')}</div>`;
+
+    // ── PISAH GRUP: INU / DSU / OTHER ──
+    function getDriveType(driveId) {
+      const s = String(driveId || '').toUpperCase();
+      if (s.includes('.INU.') || s.includes('-INU') || s.includes('_INU')) return 'INU';
+      if (s.includes('.DSU.') || s.includes('-DSU') || s.includes('_DSU')) return 'DSU';
+      return 'OTHER';
+    }
+    const groups = { INU: [], DSU: [], OTHER: [] };
+    drives.forEach(d => { groups[getDriveType(d.drive_id)].push(d); });
+
+    const groupConfig = [
+      { key: 'INU',   label: '⚡ Inverter Unit (INU)',    color: '#2979ff' },
+      { key: 'DSU',   label: '🔌 DC Supply Unit (DSU)',   color: '#9c27b0' },
+      { key: 'OTHER', label: '📦 Lainnya',                color: '#5a7a99' },
+    ];
+
+    let html = '';
+    groupConfig.forEach(({ key, label, color }) => {
+      const grp = groups[key];
+      if (!grp.length) return;
+      html += `
+        <div class="drive-group">
+          <div class="drive-group-header">
+            <div class="drive-group-label" style="border-color:${color};color:${color}">${label}</div>
+            <div class="drive-group-line"></div>
+            <div class="drive-group-count">${grp.length} unit</div>
+          </div>
+          <div class="cards-grid">${grp.map(inuCard).join('')}</div>
+        </div>`;
+    });
+
+    id('drive-content').innerHTML = html;
     renderSidebar(Object.values(S.cache[S.plant + '_config'] || { x: 17 })[0] || 17);
   } catch(err) {
     id('drive-content').innerHTML = errHTML(err.message, renderDriveTab);
