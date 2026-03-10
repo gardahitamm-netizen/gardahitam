@@ -194,32 +194,7 @@ body {
 }
 .inu-card:hover{background:var(--surf2);transform:translateY(-1px);box-shadow:0 4px 16px rgba(0,0,0,.3);}
 
-/* ★ FOTO DRIVE di kartu */
-.inu-photo{
-  width:100%;
-  height:120px;
-  object-fit:cover;
-  border-radius:7px;
-  margin-bottom:10px;
-  border:1px solid var(--border);
-  background:var(--surf3);
-  display:block;
-}
-.inu-photo-placeholder{
-  width:100%;
-  height:80px;
-  border-radius:7px;
-  margin-bottom:10px;
-  border:1px dashed rgba(126,184,212,.2);
-  background:rgba(126,184,212,.03);
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  font-size:11px;
-  color:rgba(126,184,212,.3);
-  font-family:'JetBrains Mono',monospace;
-  letter-spacing:.5px;
-}
+
 .inu-card.ok    {border-left-color:var(--ok);}
 .inu-card.fault {border-left-color:var(--fault);background:rgba(255,71,87,.04);}
 .inu-card.maint {border-left-color:var(--maint);}
@@ -345,6 +320,21 @@ body {
   font-family:'JetBrains Mono',monospace;
   font-size:10px; color:#8ab0d0;
   flex-shrink:0;
+}
+
+/* ★ TOMBOL LIHAT FOTO */
+.inu-photo-btn{
+  display:inline-flex; align-items:center; gap:5px;
+  margin-top:10px; padding:5px 11px;
+  font-family:'JetBrains Mono',monospace; font-size:10px; font-weight:600;
+  color:#00c8e8; background:rgba(0,200,232,.08);
+  border:1px solid rgba(0,200,232,.22); border-radius:6px;
+  cursor:pointer; transition:all .18s; text-decoration:none;
+  width:100%; justify-content:center;
+}
+.inu-photo-btn:hover{
+  background:rgba(0,200,232,.18); border-color:rgba(0,200,232,.5);
+  color:#fff; transform:translateY(-1px);
 }
 
 /* Edit badge on card */
@@ -911,18 +901,17 @@ function gdriveDirect(url) {
 function inuCard(d) {
   const st   = d.status || 'kosong';
   const stTx = { ok:'OK', fault:'Fault', maint:'Maintenance', kosong:'Kosong' }[st] || st;
-  const photoUrl = gdriveDirect(d.photo_url);
-  const photoHtml = photoUrl
-    ? `<img class="inu-photo" src="${photoUrl}" alt="Foto ${esc(d.drive_id)}" onerror="this.style.display='none'">`
+  const photoHtml = d.photo_url
+    ? `<a class="inu-photo-btn" href="${esc(d.photo_url)}" target="_blank" onclick="event.stopPropagation()">📷 Lihat Foto</a>`
     : '';
   return `<div class="inu-card ${st}" onclick="requestEdit('${esc(d.drive_id)}','${st}','${esc(d.keterangan)}','${esc(d.merk)}','${esc(d.spesifikasi)}','${esc(d.photo_url||'')}')">
     <div class="inu-edit-hint">✏️ edit</div>
-    ${photoHtml}
     <div class="inu-tag">${esc(d.drive_id)}</div>
     <div class="inu-name">${esc(d.merk) || '—'}</div>
     ${d.spesifikasi ? `<div class="inu-spec">${esc(d.spesifikasi)}</div>` : ''}
     <div class="inu-status"><div class="inu-dot"></div>${stTx}</div>
     ${d.keterangan ? `<div class="inu-info">${esc(d.keterangan)}</div>` : ''}
+    ${photoHtml}
   </div>`;
 }
 
