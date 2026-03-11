@@ -22,363 +22,173 @@
   --accent:  #2979ff;
   --teal:    #00b8d4;
 }
-
-/* ── LIGHT MODE ── */
 body.light {
-  --bg:     #f0f4f8;
-  --surf:   #ffffff;
-  --surf2:  #e8eef5;
-  --surf3:  #dde6f0;
-  --border: #c8d8e8;
-  --text:   #1a2a3a;
-  --muted:  #6a8aaa;
-  --accent: #1565c0;
-  --teal:   #0088a8;
+  --bg:#f0f4f8;--surf:#ffffff;--surf2:#e8eef5;--surf3:#dde6f0;
+  --border:#c8d8e8;--text:#1a2a3a;--muted:#6a8aaa;--accent:#1565c0;--teal:#0088a8;
 }
-body.light .topbar{ background:#e0eaf5; }
-body.light .breadcrumb{ background:#e8f0f8; }
-body.light .sidebar{ background:#e8eef5; border-color:#c8d8e8; }
-body.light .hist-table thead tr{ background:#dde6f0; }
-body.light .hist-table tbody tr:hover{ background:#e8f0f8; }
-body.light .modal-box{ background:#f0f4f8; }
-body.light .login-box{ background:#f0f4f8; }
-body.light input, body.light select{ background:#e8eef5 !important; border-color:#c8d8e8 !important; color:#1a2a3a !important; }
-body.light .running-bar{ background:#dde6f0; border-color:#c8d8e8; }
+body.light .topbar{background:#e0eaf5;}
+body.light .breadcrumb{background:#e8f0f8;}
+body.light .sidebar{background:#e8eef5;border-color:#c8d8e8;}
+body.light .hist-table thead tr{background:#dde6f0;}
+body.light .hist-table tbody tr:hover{background:#e8f0f8;}
+body.light .login-box{background:#f0f4f8;}
+body.light input,body.light select{background:#e8eef5 !important;border-color:#c8d8e8 !important;color:#1a2a3a !important;}
+body.light .running-bar{background:#dde6f0;border-color:#c8d8e8;}
 
 *{margin:0;padding:0;box-sizing:border-box;}
-html, body { width:100%; height:100%; overflow:hidden; }
-body {
-  font-family:'Plus Jakarta Sans',sans-serif;
-  background:var(--bg); color:var(--text);
-  display:flex; flex-direction:column;
-}
+html,body{width:100%;height:100%;overflow:hidden;}
+body{font-family:'Plus Jakarta Sans',sans-serif;background:var(--bg);color:var(--text);display:flex;flex-direction:column;}
 
-/* ── TOPBAR ── */
-.topbar{
-  display:flex; align-items:center; gap:10px;
-  padding:0 20px; height:50px;
-  background:#080d18; border-bottom:1px solid var(--border);
-  flex-shrink:0; z-index:200;
-}
-.topbar-pulse{
-  width:8px; height:8px; border-radius:50%;
-  background:var(--ok); box-shadow:0 0 10px var(--ok);
-  animation:pulse 2s infinite;
-}
+.topbar{display:flex;align-items:center;gap:10px;padding:0 20px;height:50px;background:#080d18;border-bottom:1px solid var(--border);flex-shrink:0;z-index:200;}
+.topbar-pulse{width:8px;height:8px;border-radius:50%;background:var(--ok);box-shadow:0 0 10px var(--ok);animation:pulse 2s infinite;}
 @keyframes pulse{0%,100%{opacity:1;transform:scale(1)}50%{opacity:.5;transform:scale(.8)}}
-
-.btn-back{
-  display:flex; align-items:center; gap:5px;
-  font-family:'JetBrains Mono',monospace; font-size:11px;
-  padding:5px 12px; border-radius:5px; cursor:pointer;
-  border:1px solid var(--border); background:var(--surf2);
-  color:var(--muted); text-decoration:none;
-  transition:all .2s; flex-shrink:0;
-}
-.btn-back:hover{ border-color:#e8a020; color:#e8a020; }
-
-.topbar-divider{ width:1px; height:20px; background:var(--border); flex-shrink:0; }
+.btn-back{display:flex;align-items:center;gap:5px;font-family:'JetBrains Mono',monospace;font-size:11px;padding:5px 12px;border-radius:5px;cursor:pointer;border:1px solid var(--border);background:var(--surf2);color:var(--muted);text-decoration:none;transition:all .2s;flex-shrink:0;}
+.btn-back:hover{border-color:#e8a020;color:#e8a020;}
+.topbar-divider{width:1px;height:20px;background:var(--border);flex-shrink:0;}
 .topbar-title{font-family:'JetBrains Mono',monospace;font-weight:700;font-size:13px;color:#fff;}
 .topbar-sep{color:var(--border);}
 .topbar-sub{font-family:'JetBrains Mono',monospace;font-size:11px;color:var(--muted);}
 .topbar-r{margin-left:auto;display:flex;align-items:center;gap:8px;}
-.topbar-clock{
-  font-family:'JetBrains Mono',monospace;font-size:12px;color:var(--teal);
-  background:rgba(0,184,212,.08);border:1px solid rgba(0,184,212,.15);
-  padding:3px 10px;border-radius:4px;
-}
-.btn-sm{
-  display:flex;align-items:center;gap:5px;
-  font-family:'JetBrains Mono',monospace;font-size:11px;
-  padding:5px 12px;border-radius:5px;cursor:pointer;
-  border:1px solid var(--border);background:var(--surf2);color:var(--muted);
-  transition:all .2s;
-}
+.topbar-clock{font-family:'JetBrains Mono',monospace;font-size:12px;color:var(--teal);background:rgba(0,184,212,.08);border:1px solid rgba(0,184,212,.15);padding:3px 10px;border-radius:4px;}
+.btn-sm{display:flex;align-items:center;gap:5px;font-family:'JetBrains Mono',monospace;font-size:11px;padding:5px 12px;border-radius:5px;cursor:pointer;border:1px solid var(--border);background:var(--surf2);color:var(--muted);transition:all .2s;}
 .btn-sm:hover{border-color:var(--accent);color:var(--accent);}
 .btn-sm.loading{opacity:.5;pointer-events:none;}
+.btn-theme{display:flex;align-items:center;gap:5px;font-family:'JetBrains Mono',monospace;font-size:11px;padding:5px 10px;border-radius:5px;cursor:pointer;border:1px solid var(--border);background:var(--surf2);color:var(--muted);transition:all .2s;flex-shrink:0;}
+.btn-theme:hover{border-color:var(--teal);color:var(--teal);}
 
-/* ── BREADCRUMB ── */
-.breadcrumb{
-  display:flex;align-items:center;gap:5px;
-  padding:8px 20px;font-family:'JetBrains Mono',monospace;
-  font-size:11px;color:var(--muted);
-  border-bottom:1px solid var(--border);background:#09101d;
-  flex-shrink:0;
-}
+.breadcrumb{display:flex;align-items:center;gap:5px;padding:8px 20px;font-family:'JetBrains Mono',monospace;font-size:11px;color:var(--muted);border-bottom:1px solid var(--border);background:#09101d;flex-shrink:0;}
 .bc-link{cursor:pointer;transition:color .15s;text-decoration:none;color:var(--muted);}
 .bc-link:hover{color:var(--accent);}
 .bc-cur{color:var(--text);}
 .bc-sep{color:var(--border);}
 
-/* ── PAGES WRAPPER ── */
-#pages-wrapper { flex:1; overflow:hidden; display:flex; flex-direction:column; min-height:0; }
-.page { display:none; flex:1; overflow:hidden; flex-direction:column; min-height:0; }
-.page.active { display:flex; animation:fadeUp .2s ease; }
+#pages-wrapper{flex:1;overflow:hidden;display:flex;flex-direction:column;min-height:0;}
+.page{display:none;flex:1;overflow:hidden;flex-direction:column;min-height:0;}
+.page.active{display:flex;animation:fadeUp .2s ease;}
 @keyframes fadeUp{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:translateY(0)}}
 
-/* ── PLANT PAGE ── */
-.plant-wrap { padding:0; overflow-y:auto; width:100%; }
-
-/* Hero Banner */
-.plant-hero {
-  position:relative; overflow:hidden;
-  padding:36px 28px 28px;
-  background:linear-gradient(135deg,#070c18 0%,#0c1628 50%,#0a1220 100%);
-  border-bottom:1px solid var(--border);
-}
-.plant-hero::before {
-  content:'';position:absolute;inset:0;
-  background:radial-gradient(ellipse 60% 80% at 70% 50%, rgba(41,121,255,.07) 0%, transparent 70%),
-             radial-gradient(ellipse 40% 60% at 20% 80%, rgba(0,184,212,.05) 0%, transparent 60%);
-}
-.plant-hero-grid {
-  position:absolute;inset:0;opacity:.04;
-  background-image:linear-gradient(var(--border) 1px,transparent 1px),
-                   linear-gradient(90deg,var(--border) 1px,transparent 1px);
-  background-size:40px 40px;
-}
-.plant-hero-badge {
-  display:inline-flex;align-items:center;gap:6px;
-  font-family:'JetBrains Mono',monospace;font-size:9px;font-weight:700;
-  letter-spacing:2px;text-transform:uppercase;
-  color:var(--teal);border:1px solid rgba(0,184,212,.25);
-  background:rgba(0,184,212,.07);padding:4px 12px;border-radius:20px;
-  margin-bottom:14px;position:relative;
-}
+.plant-wrap{padding:0;overflow-y:auto;width:100%;}
+.plant-hero{position:relative;overflow:hidden;padding:36px 28px 28px;background:linear-gradient(135deg,#070c18 0%,#0c1628 50%,#0a1220 100%);border-bottom:1px solid var(--border);}
+.plant-hero::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse 60% 80% at 70% 50%,rgba(41,121,255,.07) 0%,transparent 70%),radial-gradient(ellipse 40% 60% at 20% 80%,rgba(0,184,212,.05) 0%,transparent 60%);}
+.plant-hero-grid{position:absolute;inset:0;opacity:.04;background-image:linear-gradient(var(--border) 1px,transparent 1px),linear-gradient(90deg,var(--border) 1px,transparent 1px);background-size:40px 40px;}
+.plant-hero-badge{display:inline-flex;align-items:center;gap:6px;font-family:'JetBrains Mono',monospace;font-size:9px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:var(--teal);border:1px solid rgba(0,184,212,.25);background:rgba(0,184,212,.07);padding:4px 12px;border-radius:20px;margin-bottom:14px;position:relative;}
 .plant-hero-badge::before{content:'';width:5px;height:5px;border-radius:50%;background:var(--teal);box-shadow:0 0 8px var(--teal);animation:pulse 2s infinite;}
-.plant-hero-title {
-  font-family:'JetBrains Mono',monospace;
-  font-size:26px;font-weight:700;color:#fff;
-  margin-bottom:6px;position:relative;
-  text-shadow:0 0 40px rgba(41,121,255,.3);
-}
-.plant-hero-sub {font-size:12px;color:var(--muted);position:relative;margin-bottom:20px;}
-
-/* System status row */
-.plant-stats-row {
-  display:flex;gap:12px;flex-wrap:wrap;position:relative;
-}
-.plant-stat-box {
-  background:rgba(255,255,255,.03);border:1px solid var(--border);
-  border-radius:8px;padding:10px 16px;min-width:110px;
-}
+.plant-hero-title{font-family:'JetBrains Mono',monospace;font-size:26px;font-weight:700;color:#fff;margin-bottom:6px;position:relative;text-shadow:0 0 40px rgba(41,121,255,.3);}
+.plant-hero-sub{font-size:12px;color:var(--muted);position:relative;margin-bottom:20px;}
+.plant-stats-row{display:flex;gap:12px;flex-wrap:wrap;position:relative;}
+.plant-stat-box{background:rgba(255,255,255,.03);border:1px solid var(--border);border-radius:8px;padding:10px 16px;min-width:110px;}
 .plant-stat-label{font-family:'JetBrains Mono',monospace;font-size:9px;color:var(--muted);letter-spacing:1px;text-transform:uppercase;margin-bottom:4px;}
 .plant-stat-val{font-family:'JetBrains Mono',monospace;font-size:18px;font-weight:700;color:#fff;}
 .plant-stat-val.ok{color:var(--ok);}
 .plant-stat-val.accent{color:var(--accent);}
 .plant-stat-val.teal{color:var(--teal);}
-
-/* Plant grid section */
-.plant-section { padding:24px 28px; }
-.plant-section-head {
-  display:flex;align-items:center;gap:10px;margin-bottom:16px;
-}
-.plant-section-label {
-  font-family:'JetBrains Mono',monospace;font-size:10px;font-weight:700;
-  letter-spacing:2px;text-transform:uppercase;color:var(--muted);
-}
+.plant-section{padding:24px 28px;}
+.plant-section-head{display:flex;align-items:center;gap:10px;margin-bottom:16px;}
+.plant-section-label{font-family:'JetBrains Mono',monospace;font-size:10px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:var(--muted);}
 .plant-section-line{flex:1;height:1px;background:linear-gradient(to right,var(--border),transparent);}
-
 .plant-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:14px;}
-.plant-card{
-  background:var(--surf);border:1px solid var(--border);
-  border-radius:12px;padding:0;cursor:pointer;
-  transition:all .25s;position:relative;overflow:hidden;
-}
-.plant-card-top {
-  padding:18px 18px 14px;
-  background:linear-gradient(135deg,var(--surf) 0%,var(--surf2) 100%);
-  position:relative;
-}
-.plant-card-top::after{
-  content:'';position:absolute;top:0;left:0;right:0;height:2px;
-  background:linear-gradient(90deg,var(--accent),var(--teal));
-  transform:scaleX(0);transform-origin:left;transition:transform .3s;
-}
+.plant-card{background:var(--surf);border:1px solid var(--border);border-radius:12px;padding:0;cursor:pointer;transition:all .25s;position:relative;overflow:hidden;animation:cardIn .4s ease both;}
+@keyframes cardIn{from{opacity:0;transform:translateY(16px)}to{opacity:1;transform:translateY(0)}}
+.plant-card:nth-child(1){animation-delay:.05s}.plant-card:nth-child(2){animation-delay:.10s}.plant-card:nth-child(3){animation-delay:.15s}.plant-card:nth-child(4){animation-delay:.20s}.plant-card:nth-child(5){animation-delay:.25s}.plant-card:nth-child(6){animation-delay:.30s}.plant-card:nth-child(7){animation-delay:.35s}
+.plant-card-top{padding:18px 18px 14px;background:linear-gradient(135deg,var(--surf) 0%,var(--surf2) 100%);position:relative;}
+.plant-card-top::after{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,var(--accent),var(--teal));transform:scaleX(0);transform-origin:left;transition:transform .3s;}
 .plant-card:hover .plant-card-top::after{transform:scaleX(1);}
-.plant-card-corner{
-  position:absolute;top:10px;right:10px;
-  width:6px;height:6px;border-radius:50%;
-  background:var(--ok);box-shadow:0 0 8px var(--ok);
-}
-.plant-card-id{
-  font-family:'JetBrains Mono',monospace;font-size:9px;
-  color:var(--muted);letter-spacing:1.5px;margin-bottom:8px;
-}
+.plant-card-corner{position:absolute;top:10px;right:10px;width:6px;height:6px;border-radius:50%;background:var(--ok);box-shadow:0 0 8px var(--ok);}
+.plant-card-id{font-family:'JetBrains Mono',monospace;font-size:9px;color:var(--muted);letter-spacing:1.5px;margin-bottom:8px;}
 .plant-card-name{font-family:'JetBrains Mono',monospace;font-size:20px;font-weight:700;color:#fff;margin-bottom:2px;}
 .plant-card-desc{font-size:11px;color:var(--muted);}
-.plant-card-bottom{
-  padding:10px 18px;
-  border-top:1px solid var(--border);
-  display:flex;align-items:center;justify-content:space-between;
-  background:rgba(0,0,0,.15);
-}
-.plant-card-tag{
-  font-family:'JetBrains Mono',monospace;font-size:9px;
-  color:var(--teal);background:rgba(0,184,212,.08);
-  border:1px solid rgba(0,184,212,.15);padding:2px 8px;border-radius:4px;
-}
+.plant-card-bottom{padding:10px 18px;border-top:1px solid var(--border);display:flex;align-items:center;justify-content:space-between;background:rgba(0,0,0,.15);}
+.plant-card-tag{font-family:'JetBrains Mono',monospace;font-size:9px;color:var(--teal);background:rgba(0,184,212,.08);border:1px solid rgba(0,184,212,.15);padding:2px 8px;border-radius:4px;}
 .plant-card-arr{color:var(--border);font-size:14px;transition:all .2s;}
 .plant-card:hover{border-color:rgba(41,121,255,.4);transform:translateY(-3px);box-shadow:0 12px 30px rgba(0,0,0,.5),0 0 0 1px rgba(41,121,255,.1);}
 .plant-card:hover .plant-card-arr{color:var(--accent);transform:translateX(3px);}
 
-/* Animated enter */
-.plant-card{animation:cardIn .4s ease both;}
-@keyframes cardIn{from{opacity:0;transform:translateY(16px)}to{opacity:1;transform:translateY(0)}}
-.plant-card:nth-child(1){animation-delay:.05s}
-.plant-card:nth-child(2){animation-delay:.10s}
-.plant-card:nth-child(3){animation-delay:.15s}
-.plant-card:nth-child(4){animation-delay:.20s}
-.plant-card:nth-child(5){animation-delay:.25s}
-.plant-card:nth-child(6){animation-delay:.30s}
-.plant-card:nth-child(7){animation-delay:.35s}
-
-/* ── MAIN LAYOUT ── */
-.main-layout { display:flex; flex:1; overflow:hidden; min-height:0; width:100%; }
-.sidebar{
-  width:185px;min-width:185px;flex-shrink:0;
-  background:#080d18;border-right:1px solid var(--border);
-  overflow-y:auto;display:flex;flex-direction:column;
-}
+.main-layout{display:flex;flex:1;overflow:hidden;min-height:0;width:100%;}
+.sidebar{width:185px;min-width:185px;flex-shrink:0;background:#080d18;border-right:1px solid var(--border);overflow-y:auto;display:flex;flex-direction:column;}
 .sb-section{padding:10px 0;}
-.sb-head{
-  font-family:'JetBrains Mono',monospace;font-size:9px;
-  font-weight:600;letter-spacing:1.5px;text-transform:uppercase;
-  color:var(--muted);padding:0 14px 6px;
-}
-.sb-item{
-  padding:9px 14px;font-size:12px;cursor:pointer;
-  transition:all .15s;display:flex;align-items:center;
-  justify-content:space-between;color:var(--muted);
-  border-left:2px solid transparent;
-}
+.sb-head{font-family:'JetBrains Mono',monospace;font-size:9px;font-weight:600;letter-spacing:1.5px;text-transform:uppercase;color:var(--muted);padding:0 14px 6px;}
+.sb-item{padding:9px 14px;font-size:12px;cursor:pointer;transition:all .15s;display:flex;align-items:center;justify-content:space-between;color:var(--muted);border-left:2px solid transparent;}
 .sb-item:hover{background:var(--surf);color:var(--text);}
 .sb-item.active{background:var(--surf);color:#fff;border-left-color:var(--ok);}
 .sb-item.has-fault{color:#f87171;}
 .sb-item.has-fault.active{border-left-color:var(--fault);}
 .sb-fault{width:5px;height:5px;border-radius:50%;background:var(--fault);}
-
-.content-area { flex:1; overflow-y:auto; display:flex; flex-direction:column; min-width:0; min-height:0; }
-.content-tabs{
-  display:flex;gap:0;
-  border-bottom:1px solid var(--border);
-  background:#09101d;padding:0 20px;
-  flex-shrink:0; position:sticky; top:0; z-index:10;
-}
-.ctab{
-  padding:12px 18px;font-size:12px;font-weight:600;
-  cursor:pointer;color:var(--muted);border-bottom:2px solid transparent;
-  transition:all .15s;white-space:nowrap;
-}
+.content-area{flex:1;overflow-y:auto;display:flex;flex-direction:column;min-width:0;min-height:0;}
+.content-tabs{display:flex;gap:0;border-bottom:1px solid var(--border);background:#09101d;padding:0 20px;flex-shrink:0;position:sticky;top:0;z-index:10;}
+.ctab{padding:12px 18px;font-size:12px;font-weight:600;cursor:pointer;color:var(--muted);border-bottom:2px solid transparent;transition:all .15s;white-space:nowrap;}
 .ctab:hover{color:var(--text);}
 .ctab.active{color:var(--accent);border-bottom-color:var(--accent);}
 .tab-content{display:none;padding:20px;}
 .tab-content.active{display:block;animation:fadeUp .2s ease;}
-
 .drive-header{margin-bottom:16px;}
 .drive-title{font-size:16px;font-weight:700;font-family:'JetBrains Mono',monospace;margin-bottom:3px;}
 .drive-meta{font-size:11px;color:var(--muted);margin-bottom:14px;}
-
 .pills{display:flex;gap:7px;margin-bottom:18px;flex-wrap:wrap;}
-.pill{
-  display:flex;align-items:center;gap:5px;
-  padding:4px 11px;border-radius:20px;
-  font-family:'JetBrains Mono',monospace;font-size:11px;font-weight:600;
-  border:1px solid var(--border);background:rgba(255,255,255,.02);color:var(--muted);
-}
+.pill{display:flex;align-items:center;gap:5px;padding:4px 11px;border-radius:20px;font-family:'JetBrains Mono',monospace;font-size:11px;font-weight:600;border:1px solid var(--border);background:rgba(255,255,255,.02);color:var(--muted);}
 .pill-d{width:6px;height:6px;border-radius:50%;}
-.pill.ok    {background:rgba(0,208,132,.07);border-color:rgba(0,208,132,.2);color:var(--ok);}
-.pill.fault {background:rgba(255,71,87,.07); border-color:rgba(255,71,87,.2); color:var(--fault);}
-.pill.maint {background:rgba(255,165,2,.07); border-color:rgba(255,165,2,.2); color:var(--maint);}
+.pill.ok{background:rgba(0,208,132,.07);border-color:rgba(0,208,132,.2);color:var(--ok);}
+.pill.fault{background:rgba(255,71,87,.07);border-color:rgba(255,71,87,.2);color:var(--fault);}
+.pill.maint{background:rgba(255,165,2,.07);border-color:rgba(255,165,2,.2);color:var(--maint);}
 .pill.kosong{background:rgba(90,122,153,.07);border-color:rgba(90,122,153,.2);color:var(--kosong);}
-.pill.ok    .pill-d{background:var(--ok);   box-shadow:0 0 5px var(--ok);}
+.pill.ok .pill-d{background:var(--ok);box-shadow:0 0 5px var(--ok);}
 .pill.fault .pill-d{background:var(--fault);box-shadow:0 0 5px var(--fault);}
 .pill.maint .pill-d{background:var(--maint);}
 .pill.kosong .pill-d{background:var(--kosong);}
 
-/* ── GROUP SEPARATOR INU / DSU / OTHER ── */
-.drive-group { margin-bottom: 28px; }
-.drive-group-header { display:flex; align-items:center; gap:10px; margin-bottom:12px; }
-.drive-group-label {
-  font-family:'JetBrains Mono',monospace; font-size:10px; font-weight:700;
-  letter-spacing:1.5px; text-transform:uppercase;
-  padding:4px 14px; border-radius:20px; border:1px solid; flex-shrink:0;
-  background:rgba(255,255,255,.03);
-}
-.drive-group-line { flex:1; height:1px; background:linear-gradient(to right, var(--border), transparent); }
-.drive-group-count { font-family:'JetBrains Mono',monospace; font-size:10px; color:var(--muted); flex-shrink:0; }
-
+.drive-group{margin-bottom:28px;}
+.drive-group-header{display:flex;align-items:center;gap:10px;margin-bottom:12px;}
+.drive-group-label{font-family:'JetBrains Mono',monospace;font-size:10px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;padding:4px 14px;border-radius:20px;border:1px solid;flex-shrink:0;background:rgba(255,255,255,.03);}
+.drive-group-line{flex:1;height:1px;background:linear-gradient(to right,var(--border),transparent);}
+.drive-group-count{font-family:'JetBrains Mono',monospace;font-size:10px;color:var(--muted);flex-shrink:0;}
 .cards-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(230px,1fr));gap:12px;}
-.inu-card{
-  background:var(--surf);border:1px solid var(--border);
-  border-radius:10px;padding:16px;cursor:pointer;
-  transition:all .2s;border-left:4px solid var(--border);
-  position:relative;
-}
+.inu-card{background:var(--surf);border:1px solid var(--border);border-radius:10px;padding:16px;cursor:pointer;transition:all .2s;border-left:4px solid var(--border);position:relative;}
 .inu-card:hover{background:var(--surf2);transform:translateY(-1px);box-shadow:0 4px 16px rgba(0,0,0,.3);}
-.inu-card.ok    {border-left-color:var(--ok);}
-.inu-card.fault {border-left-color:var(--fault);background:rgba(255,71,87,.04);}
-.inu-card.maint {border-left-color:var(--maint);}
+.inu-card.ok{border-left-color:var(--ok);}
+.inu-card.fault{border-left-color:var(--fault);background:rgba(255,71,87,.04);}
+.inu-card.maint{border-left-color:var(--maint);}
 .inu-card.kosong{border-left-color:var(--kosong);}
 .inu-tag{font-family:'JetBrains Mono',monospace;font-size:10px;color:var(--muted);margin-bottom:3px;}
 .inu-name{font-size:15px;font-weight:700;margin-bottom:2px;}
 .inu-spec{font-size:11px;color:var(--muted);margin-bottom:12px;}
 .inu-status{display:flex;align-items:center;gap:5px;font-family:'JetBrains Mono',monospace;font-size:11px;font-weight:600;}
 .inu-dot{width:6px;height:6px;border-radius:50%;}
-.inu-card.ok     .inu-dot{background:var(--ok);   box-shadow:0 0 6px var(--ok);}
-.inu-card.fault  .inu-dot{background:var(--fault);box-shadow:0 0 6px var(--fault);}
-.inu-card.maint  .inu-dot{background:var(--maint);}
+.inu-card.ok .inu-dot{background:var(--ok);box-shadow:0 0 6px var(--ok);}
+.inu-card.fault .inu-dot{background:var(--fault);box-shadow:0 0 6px var(--fault);}
+.inu-card.maint .inu-dot{background:var(--maint);}
 .inu-card.kosong .inu-dot{background:var(--kosong);}
-.inu-card.ok     .inu-status{color:var(--ok);}
-.inu-card.fault  .inu-status{color:var(--fault);}
-.inu-card.maint  .inu-status{color:var(--maint);}
+.inu-card.ok .inu-status{color:var(--ok);}
+.inu-card.fault .inu-status{color:var(--fault);}
+.inu-card.maint .inu-status{color:var(--maint);}
 .inu-card.kosong .inu-status{color:var(--kosong);}
 .inu-info{font-size:11px;color:var(--muted);margin-top:6px;font-style:italic;}
 
-/* ★ TOMBOL LIHAT FOTO */
+/* ── TOMBOL LIHAT FOTO — amber/kuning + ikon kunci ── */
 .inu-photo-btn{
-  display:inline-flex; align-items:center; gap:5px;
-  margin-top:10px; padding:5px 11px;
-  font-family:'JetBrains Mono',monospace; font-size:10px; font-weight:600;
-  color:#00b8d4; background:rgba(0,184,212,.08);
-  border:1px solid rgba(0,184,212,.22); border-radius:6px;
-  cursor:pointer; transition:all .18s; text-decoration:none;
-  width:100%; justify-content:center;
+  display:inline-flex;align-items:center;justify-content:center;gap:6px;
+  margin-top:10px;padding:6px 11px;
+  font-family:'JetBrains Mono',monospace;font-size:10px;font-weight:600;
+  color:#ffa502;background:rgba(255,165,2,.08);
+  border:1px solid rgba(255,165,2,.25);border-radius:6px;
+  cursor:pointer;transition:all .18s;width:100%;
 }
-.inu-photo-btn:hover{
-  background:rgba(0,184,212,.18); border-color:rgba(0,184,212,.5);
-  color:#fff; transform:translateY(-1px);
-}
+.inu-photo-btn:hover{background:rgba(255,165,2,.18);border-color:rgba(255,165,2,.6);color:#fff;transform:translateY(-1px);}
+.inu-photo-lock{font-size:9px;opacity:.65;margin-left:auto;}
 
-/* Edit badge on card */
-.inu-edit-hint{
-  position:absolute; top:10px; right:10px;
-  font-size:10px; font-family:'JetBrains Mono',monospace;
-  color:var(--muted); opacity:0; transition:opacity .2s;
-  background:var(--surf3); border:1px solid var(--border);
-  padding:2px 7px; border-radius:4px;
-}
-.inu-card:hover .inu-edit-hint{ opacity:1; }
+.inu-edit-hint{position:absolute;top:10px;right:10px;font-size:10px;font-family:'JetBrains Mono',monospace;color:var(--muted);opacity:0;transition:opacity .2s;background:var(--surf3);border:1px solid var(--border);padding:2px 7px;border-radius:4px;}
+.inu-card:hover .inu-edit-hint{opacity:1;}
 
 .hist-table-wrap{overflow-x:auto;}
 .hist-table{width:100%;border-collapse:collapse;font-size:12px;}
-.hist-table th{
-  text-align:left;padding:9px 12px;
-  font-family:'JetBrains Mono',monospace;font-size:10px;
-  letter-spacing:1px;text-transform:uppercase;
-  color:var(--muted);border-bottom:1px solid var(--border);
-  background:var(--surf);white-space:nowrap;
-}
-.hist-table td{ padding:9px 12px;border-bottom:1px solid rgba(31,48,80,.5);vertical-align:middle; }
+.hist-table th{text-align:left;padding:9px 12px;font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:1px;text-transform:uppercase;color:var(--muted);border-bottom:1px solid var(--border);background:var(--surf);white-space:nowrap;}
+.hist-table td{padding:9px 12px;border-bottom:1px solid rgba(31,48,80,.5);vertical-align:middle;}
 .hist-table tr:hover td{background:rgba(255,255,255,.02);}
 .hist-ts{font-family:'JetBrains Mono',monospace;font-size:10px;color:var(--muted);}
 .hist-id{font-family:'JetBrains Mono',monospace;font-size:11px;color:var(--teal);}
-.status-tag{ display:inline-block;padding:2px 8px;border-radius:4px;font-family:'JetBrains Mono',monospace;font-size:10px;font-weight:700; }
-.st-ok    {background:rgba(0,208,132,.15);color:var(--ok);}
-.st-fault {background:rgba(255,71,87,.15); color:var(--fault);}
-.st-maint {background:rgba(255,165,2,.15); color:var(--maint);}
+.status-tag{display:inline-block;padding:2px 8px;border-radius:4px;font-family:'JetBrains Mono',monospace;font-size:10px;font-weight:700;}
+.st-ok{background:rgba(0,208,132,.15);color:var(--ok);}
+.st-fault{background:rgba(255,71,87,.15);color:var(--fault);}
+.st-maint{background:rgba(255,165,2,.15);color:var(--maint);}
 .st-kosong{background:rgba(90,122,153,.15);color:var(--kosong);}
-
 .pm-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:12px;}
 .pm-card{background:var(--surf);border:1px solid var(--border);border-radius:10px;padding:16px;}
 .pm-card-id{font-family:'JetBrains Mono',monospace;font-size:10px;color:var(--muted);margin-bottom:4px;}
@@ -388,162 +198,74 @@ body {
 .pm-card-status{margin-top:10px;}
 
 /* ── EDIT MODAL ── */
-.modal-overlay{
-  display:none;position:fixed;inset:0;
-  background:rgba(0,0,0,.7);backdrop-filter:blur(4px);
-  z-index:500;align-items:center;justify-content:center;
-}
+.modal-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,.7);backdrop-filter:blur(4px);z-index:500;align-items:center;justify-content:center;}
 .modal-overlay.open{display:flex;}
-.modal{
-  background:var(--surf);border:1px solid var(--border);
-  border-radius:14px;padding:24px;width:100%;max-width:420px;
-  animation:modalIn .2s ease;
-}
+.modal{background:var(--surf);border:1px solid var(--border);border-radius:14px;padding:24px;width:100%;max-width:420px;animation:modalIn .2s ease;}
 @keyframes modalIn{from{opacity:0;transform:scale(.95)}to{opacity:1;transform:scale(1)}}
 .modal-title{font-size:15px;font-weight:700;margin-bottom:4px;}
 .modal-sub{font-size:12px;color:var(--muted);margin-bottom:20px;}
-.modal-id{ font-family:'JetBrains Mono',monospace;font-size:12px;background:var(--surf2);padding:8px 12px;border-radius:6px;color:var(--teal);margin-bottom:16px; }
+.modal-id{font-family:'JetBrains Mono',monospace;font-size:12px;background:var(--surf2);padding:8px 12px;border-radius:6px;color:var(--teal);margin-bottom:16px;}
 .form-group{margin-bottom:14px;}
 .form-label{font-size:11px;font-weight:600;color:var(--muted);margin-bottom:6px;display:block;text-transform:uppercase;letter-spacing:.5px;}
-.form-select,.form-input{
-  width:100%;background:var(--surf2);border:1px solid var(--border);
-  color:var(--text);padding:9px 12px;border-radius:7px;font-size:13px;
-  font-family:'Plus Jakarta Sans',sans-serif;transition:border-color .15s;outline:none;
-}
+.form-select,.form-input{width:100%;background:var(--surf2);border:1px solid var(--border);color:var(--text);padding:9px 12px;border-radius:7px;font-size:13px;font-family:'Plus Jakarta Sans',sans-serif;transition:border-color .15s;outline:none;}
 .form-select:focus,.form-input:focus{border-color:var(--accent);}
 .form-select option{background:var(--surf2);}
 .form-hint{font-size:10px;color:var(--muted);margin-top:4px;}
 .modal-actions{display:flex;gap:8px;margin-top:20px;justify-content:flex-end;}
-.btn-cancel{ padding:8px 18px;border-radius:7px;font-size:13px;cursor:pointer;background:transparent;border:1px solid var(--border);color:var(--muted);transition:all .15s; }
+.btn-cancel{padding:8px 18px;border-radius:7px;font-size:13px;cursor:pointer;background:transparent;border:1px solid var(--border);color:var(--muted);transition:all .15s;}
 .btn-cancel:hover{border-color:var(--text);color:var(--text);}
-.btn-save{ padding:8px 20px;border-radius:7px;font-size:13px;cursor:pointer;background:var(--accent);border:1px solid var(--accent);color:#fff;font-weight:600;transition:all .15s; }
+.btn-save{padding:8px 20px;border-radius:7px;font-size:13px;cursor:pointer;background:var(--accent);border:1px solid var(--accent);color:#fff;font-weight:600;transition:all .15s;}
 .btn-save:hover{background:#1a6aff;}
 .btn-save:disabled{opacity:.5;pointer-events:none;}
 
 /* ── LOGIN MODAL ── */
-.login-overlay{
-  display:none; position:fixed; inset:0;
-  background:rgba(0,0,0,.75); backdrop-filter:blur(6px);
-  z-index:600; align-items:center; justify-content:center;
-}
-.login-overlay.open{ display:flex; }
-.login-box{
-  background:var(--surf); border:1px solid var(--border);
-  border-radius:16px; padding:28px 28px 24px; width:100%; max-width:360px;
-  animation:modalIn .2s ease; position:relative; overflow:hidden;
-}
-.login-box::before{
-  content:''; position:absolute; top:0; left:0; right:0; height:3px;
-  background:linear-gradient(90deg, var(--accent), var(--teal));
-}
-.login-icon{
-  width:44px; height:44px; border-radius:10px;
-  background:rgba(41,121,255,.12); border:1px solid rgba(41,121,255,.2);
-  display:flex; align-items:center; justify-content:center;
-  font-size:20px; margin-bottom:16px;
-}
-.login-title{ font-size:16px; font-weight:700; margin-bottom:3px; }
-.login-sub{ font-size:12px; color:var(--muted); margin-bottom:6px; }
-.login-area-badge{
-  display:inline-flex; align-items:center; gap:5px;
-  background:rgba(0,184,212,.08); border:1px solid rgba(0,184,212,.18);
-  color:var(--teal); font-family:'JetBrains Mono',monospace; font-size:11px;
-  padding:3px 10px; border-radius:20px; margin-bottom:20px;
-}
-.login-field{ margin-bottom:13px; }
-.login-field label{
-  display:block; font-size:10px; font-weight:600;
-  text-transform:uppercase; letter-spacing:.7px;
-  color:var(--muted); margin-bottom:6px;
-}
-.login-field input{
-  width:100%; background:var(--surf2); border:1px solid var(--border);
-  color:var(--text); padding:10px 12px; border-radius:8px;
-  font-size:13px; font-family:'Plus Jakarta Sans',sans-serif;
-  transition:border-color .15s; outline:none;
-}
-.login-field input:focus{ border-color:var(--accent); }
-.login-err{
-  font-size:12px; color:var(--fault);
-  background:rgba(255,71,87,.08); border:1px solid rgba(255,71,87,.2);
-  border-radius:6px; padding:8px 12px; margin-bottom:12px; display:none;
-}
-.login-actions{ display:flex; gap:8px; margin-top:4px; }
-.btn-login{
-  flex:1; padding:10px; border-radius:8px;
-  font-size:13px; font-weight:600; cursor:pointer;
-  background:var(--accent); border:1px solid var(--accent);
-  color:#fff; transition:all .15s; display:flex;
-  align-items:center; justify-content:center; gap:6px;
-}
-.btn-login:hover{ background:#1a6aff; }
-.btn-login:disabled{ opacity:.5; pointer-events:none; }
-.btn-login-cancel{
-  padding:10px 16px; border-radius:8px;
-  font-size:13px; cursor:pointer;
-  background:transparent; border:1px solid var(--border);
-  color:var(--muted); transition:all .15s;
-}
-.btn-login-cancel:hover{ border-color:var(--text); color:var(--text); }
-.btn-spin{
-  width:13px; height:13px; border:2px solid rgba(255,255,255,.3);
-  border-top-color:#fff; border-radius:50%; animation:spin .6s linear infinite;
-  display:none;
-}
-.btn-login.loading .btn-spin{ display:block; }
-.btn-login.loading .btn-login-label{ display:none; }
+.login-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,.75);backdrop-filter:blur(6px);z-index:600;align-items:center;justify-content:center;}
+.login-overlay.open{display:flex;}
+.login-box{background:var(--surf);border:1px solid var(--border);border-radius:16px;padding:28px 28px 24px;width:100%;max-width:360px;animation:modalIn .2s ease;position:relative;overflow:hidden;}
+.login-box::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;background:linear-gradient(90deg,var(--accent),var(--teal));transition:background .3s;}
+/* Mode foto: garis atas berubah amber */
+.login-box.mode-photo::before{background:linear-gradient(90deg,#ffa502,#ffcc02);}
+.login-icon{width:44px;height:44px;border-radius:10px;background:rgba(41,121,255,.12);border:1px solid rgba(41,121,255,.2);display:flex;align-items:center;justify-content:center;font-size:20px;margin-bottom:16px;transition:all .3s;}
+.login-box.mode-photo .login-icon{background:rgba(255,165,2,.12);border-color:rgba(255,165,2,.3);}
+.login-title{font-size:16px;font-weight:700;margin-bottom:3px;}
+.login-sub{font-size:12px;color:var(--muted);margin-bottom:6px;}
+.login-area-badge{display:inline-flex;align-items:center;gap:5px;background:rgba(0,184,212,.08);border:1px solid rgba(0,184,212,.18);color:var(--teal);font-family:'JetBrains Mono',monospace;font-size:11px;padding:3px 10px;border-radius:20px;margin-bottom:20px;}
+.login-field{margin-bottom:13px;}
+.login-field label{display:block;font-size:10px;font-weight:600;text-transform:uppercase;letter-spacing:.7px;color:var(--muted);margin-bottom:6px;}
+.login-field input{width:100%;background:var(--surf2);border:1px solid var(--border);color:var(--text);padding:10px 12px;border-radius:8px;font-size:13px;font-family:'Plus Jakarta Sans',sans-serif;transition:border-color .15s;outline:none;}
+.login-field input:focus{border-color:var(--accent);}
+.login-err{font-size:12px;color:var(--fault);background:rgba(255,71,87,.08);border:1px solid rgba(255,71,87,.2);border-radius:6px;padding:8px 12px;margin-bottom:12px;display:none;}
+.login-actions{display:flex;gap:8px;margin-top:4px;}
+.btn-login{flex:1;padding:10px;border-radius:8px;font-size:13px;font-weight:600;cursor:pointer;background:var(--accent);border:1px solid var(--accent);color:#fff;transition:all .15s;display:flex;align-items:center;justify-content:center;gap:6px;}
+.btn-login:hover{background:#1a6aff;}
+.btn-login:disabled{opacity:.5;pointer-events:none;}
+/* Mode foto: tombol warna amber */
+.btn-login.mode-photo{background:#c87000;border-color:#c87000;}
+.btn-login.mode-photo:hover{background:#b06000;}
+.btn-login-cancel{padding:10px 16px;border-radius:8px;font-size:13px;cursor:pointer;background:transparent;border:1px solid var(--border);color:var(--muted);transition:all .15s;}
+.btn-login-cancel:hover{border-color:var(--text);color:var(--text);}
+.btn-spin{width:13px;height:13px;border:2px solid rgba(255,255,255,.3);border-top-color:#fff;border-radius:50%;animation:spin .6s linear infinite;display:none;}
+.btn-login.loading .btn-spin{display:block;}
+.btn-login.loading .btn-login-label{display:none;}
 
-.state-box{ display:flex;flex-direction:column;align-items:center;justify-content:center;padding:60px 20px;gap:12px;color:var(--muted); }
-.state-box .sp{ width:28px;height:28px;border:2px solid var(--border);border-top-color:var(--accent);border-radius:50%;animation:spin .7s linear infinite; }
+.state-box{display:flex;flex-direction:column;align-items:center;justify-content:center;padding:60px 20px;gap:12px;color:var(--muted);}
+.state-box .sp{width:28px;height:28px;border:2px solid var(--border);border-top-color:var(--accent);border-radius:50%;animation:spin .7s linear infinite;}
 @keyframes spin{to{transform:rotate(360deg)}}
 .state-box h3{font-size:14px;color:var(--text);}
 .state-box p{font-size:12px;text-align:center;max-width:340px;}
-.btn-retry{ background:rgba(41,121,255,.12);border:1px solid rgba(41,121,255,.25);color:var(--accent);padding:6px 16px;border-radius:6px;font-size:12px;cursor:pointer;font-family:'JetBrains Mono',monospace; }
+.btn-retry{background:rgba(41,121,255,.12);border:1px solid rgba(41,121,255,.25);color:var(--accent);padding:6px 16px;border-radius:6px;font-size:12px;cursor:pointer;font-family:'JetBrains Mono',monospace;}
 
-/* ── RUNNING TEXT BAR ── */
-.running-bar{
-  flex-shrink:0; overflow:hidden; white-space:nowrap;
-  background:#08111e; border-bottom:1px solid var(--border);
-  padding:5px 0; position:relative;
-}
-.running-bar::before,.running-bar::after{
-  content:''; position:absolute; top:0; bottom:0; width:40px; z-index:2;
-}
-.running-bar::before{ left:0; background:linear-gradient(to right, #08111e, transparent); }
-.running-bar::after { right:0; background:linear-gradient(to left,  #08111e, transparent); }
-.running-inner{
-  display:inline-block;
-  animation:marquee 35s linear infinite;
-  font-family:'JetBrains Mono',monospace; font-size:10px; color:var(--muted);
-  letter-spacing:.5px;
-}
-.running-inner span{ margin:0 40px; }
-.running-inner .rb-label{ color:var(--teal); font-weight:700; }
-@keyframes marquee{ from{transform:translateX(100vw)} to{transform:translateX(-100%)} }
-
-/* ── THEME TOGGLE ── */
-.btn-theme{
-  display:flex;align-items:center;gap:5px;
-  font-family:'JetBrains Mono',monospace;font-size:11px;
-  padding:5px 10px;border-radius:5px;cursor:pointer;
-  border:1px solid var(--border);background:var(--surf2);color:var(--muted);
-  transition:all .2s; flex-shrink:0;
-}
-.btn-theme:hover{ border-color:var(--teal); color:var(--teal); }
-
-/* ── PDF PRINT BUTTON ── */
-.tab-action-bar{
-  display:flex; justify-content:flex-end; margin-bottom:14px;
-}
-.btn-pdf{
-  display:flex;align-items:center;gap:5px;
-  font-family:'JetBrains Mono',monospace;font-size:11px;
-  padding:5px 14px;border-radius:5px;cursor:pointer;
-  border:1px solid rgba(255,71,87,.3);background:rgba(255,71,87,.07);color:#ff4757;
-  transition:all .2s;
-}
-.btn-pdf:hover{ background:rgba(255,71,87,.15); border-color:#ff4757; }
-
+.running-bar{flex-shrink:0;overflow:hidden;white-space:nowrap;background:#08111e;border-bottom:1px solid var(--border);padding:5px 0;position:relative;}
+.running-bar::before,.running-bar::after{content:'';position:absolute;top:0;bottom:0;width:40px;z-index:2;}
+.running-bar::before{left:0;background:linear-gradient(to right,#08111e,transparent);}
+.running-bar::after{right:0;background:linear-gradient(to left,#08111e,transparent);}
+.running-inner{display:inline-block;animation:marquee 35s linear infinite;font-family:'JetBrains Mono',monospace;font-size:10px;color:var(--muted);letter-spacing:.5px;}
+.running-inner span{margin:0 40px;}
+.running-inner .rb-label{color:var(--teal);font-weight:700;}
+@keyframes marquee{from{transform:translateX(100vw)}to{transform:translateX(-100%)}}
+.tab-action-bar{display:flex;justify-content:flex-end;margin-bottom:14px;}
+.btn-pdf{display:flex;align-items:center;gap:5px;font-family:'JetBrains Mono',monospace;font-size:11px;padding:5px 14px;border-radius:5px;cursor:pointer;border:1px solid rgba(255,71,87,.3);background:rgba(255,71,87,.07);color:#ff4757;transition:all .2s;}
+.btn-pdf:hover{background:rgba(255,71,87,.15);border-color:#ff4757;}
 ::-webkit-scrollbar{width:4px;height:4px;}
 ::-webkit-scrollbar-track{background:transparent;}
 ::-webkit-scrollbar-thumb{background:var(--border);border-radius:4px;}
@@ -551,7 +273,6 @@ body {
 </head>
 <body>
 
-<!-- TOPBAR -->
 <div class="topbar">
   <a href="index.html" class="btn-back">← Home</a>
   <div class="topbar-divider"></div>
@@ -560,13 +281,12 @@ body {
   <span class="topbar-sep">&nbsp;/&nbsp;</span>
   <span class="topbar-sub" id="topbar-sub">Pilih Plant</span>
   <div class="topbar-r">
-    <div class="btn-theme" id="btn-theme" onclick="toggleTheme()" title="Toggle Light/Dark Mode">🌙 Dark</div>
+    <div class="btn-theme" id="btn-theme" onclick="toggleTheme()">🌙 Dark</div>
     <div class="btn-sm" id="btn-refresh" onclick="doRefresh()">⟳ Refresh</div>
     <div class="topbar-clock" id="clock"></div>
   </div>
 </div>
 
-<!-- RUNNING TEXT -->
 <div class="running-bar">
   <div class="running-inner">
     <span><span class="rb-label">📢 INFO:</span> Sistem monitoring drive aktif 24 jam — laporkan anomali segera ke tim teknisi</span>
@@ -577,7 +297,6 @@ body {
   </div>
 </div>
 
-<!-- BREADCRUMB -->
 <div class="breadcrumb">
   <a href="index.html" class="bc-link">Home</a>
   <span class="bc-sep">›</span>
@@ -588,10 +307,7 @@ body {
   <span id="bc3" class="bc-cur" style="display:none"></span>
 </div>
 
-<!-- PAGES WRAPPER -->
 <div id="pages-wrapper">
-
-  <!-- PAGE: PLANT -->
   <div class="page active" id="page-plant">
     <div class="plant-wrap">
       <div class="plant-hero">
@@ -600,22 +316,10 @@ body {
         <div class="plant-hero-title">Drive Monitoring</div>
         <div class="plant-hero-sub">KECO WATERBANG — Pilih plant untuk memantau kondisi drive secara real-time</div>
         <div class="plant-stats-row">
-          <div class="plant-stat-box">
-            <div class="plant-stat-label">Total Plant</div>
-            <div class="plant-stat-val accent" id="stat-total">—</div>
-          </div>
-          <div class="plant-stat-box">
-            <div class="plant-stat-label">System Status</div>
-            <div class="plant-stat-val ok">ONLINE</div>
-          </div>
-          <div class="plant-stat-box">
-            <div class="plant-stat-label">Last Sync</div>
-            <div class="plant-stat-val teal" id="stat-sync">—</div>
-          </div>
-          <div class="plant-stat-box">
-            <div class="plant-stat-label">Mode</div>
-            <div class="plant-stat-val" id="stat-mode">DARK</div>
-          </div>
+          <div class="plant-stat-box"><div class="plant-stat-label">Total Plant</div><div class="plant-stat-val accent" id="stat-total">—</div></div>
+          <div class="plant-stat-box"><div class="plant-stat-label">System Status</div><div class="plant-stat-val ok">ONLINE</div></div>
+          <div class="plant-stat-box"><div class="plant-stat-label">Last Sync</div><div class="plant-stat-val teal" id="stat-sync">—</div></div>
+          <div class="plant-stat-box"><div class="plant-stat-label">Mode</div><div class="plant-stat-val" id="stat-mode">DARK</div></div>
         </div>
       </div>
       <div class="plant-section">
@@ -628,7 +332,6 @@ body {
     </div>
   </div>
 
-  <!-- PAGE: DETAIL -->
   <div class="page" id="page-detail">
     <div class="main-layout">
       <div class="sidebar" id="sidebar">
@@ -652,33 +355,25 @@ body {
           <div id="drive-content"></div>
         </div>
         <div class="tab-content" id="tab-histori">
-          <div class="tab-action-bar">
-            <button class="btn-pdf" onclick="printHistoriPDF()">🖨️ Cetak PDF Histori</button>
-          </div>
+          <div class="tab-action-bar"><button class="btn-pdf" onclick="printHistoriPDF()">🖨️ Cetak PDF Histori</button></div>
           <div id="histori-content"></div>
         </div>
         <div class="tab-content" id="tab-pm">
-          <div class="tab-action-bar">
-            <button class="btn-pdf" onclick="printPMPDF()">🖨️ Cetak PDF Jadwal PM</button>
-          </div>
+          <div class="tab-action-bar"><button class="btn-pdf" onclick="printPMPDF()">🖨️ Cetak PDF Jadwal PM</button></div>
           <div id="pm-content"></div>
         </div>
       </div>
     </div>
   </div>
-
 </div>
 
 <!-- LOGIN MODAL -->
 <div class="login-overlay" id="login-overlay">
-  <div class="login-box">
-    <div class="login-icon">🔐</div>
-    <div class="login-title">Login Diperlukan</div>
-    <div class="login-sub">Untuk mengedit drive, masukkan kredensial akun mixing ini.</div>
-    <div class="login-area-badge">
-      <span>📍</span>
-      <span id="login-area-label">—</span>
-    </div>
+  <div class="login-box" id="login-box">
+    <div class="login-icon" id="login-icon">🔐</div>
+    <div class="login-title" id="login-title">Login Diperlukan</div>
+    <div class="login-sub"  id="login-sub">Untuk mengedit drive, masukkan kredensial akun mixing ini.</div>
+    <div class="login-area-badge"><span>📍</span><span id="login-area-label">—</span></div>
     <div class="login-field">
       <label>Username</label>
       <input type="text" id="login-username" placeholder="Masukkan username" autocomplete="off">
@@ -692,13 +387,13 @@ body {
       <button class="btn-login-cancel" onclick="closeLoginModal()">Batal</button>
       <button class="btn-login" id="btn-login-submit" onclick="submitLogin()">
         <div class="btn-spin"></div>
-        <span class="btn-login-label">Masuk & Edit</span>
+        <span class="btn-login-label" id="login-btn-label">Masuk & Edit</span>
       </button>
     </div>
   </div>
 </div>
 
-<!-- EDIT MODAL — sekarang ada field foto -->
+<!-- EDIT MODAL -->
 <div class="modal-overlay" id="modal">
   <div class="modal">
     <div class="modal-title">Edit Status Drive</div>
@@ -725,7 +420,6 @@ body {
       <label class="form-label">Keterangan</label>
       <input class="form-input" id="modal-ket" type="text" placeholder="Contoh: Vendor, Aman, Sedang diperbaiki...">
     </div>
-    <!-- ★ FIELD FOTO BARU -->
     <div class="form-group">
       <label class="form-label">🖼️ Link Foto (Google Drive)</label>
       <input class="form-input" id="modal-photo" type="text" placeholder="Paste link Google Drive foto...">
@@ -745,31 +439,71 @@ const LOGIN_API = 'https://script.google.com/macros/s/AKfycbzlhK15JovW0NpWxk5_aV
 const S = {
   page:'plant', plant:null, mixing:1, tab:'drive',
   cache:{}, editDrive:null,
-  pendingDriveData:null
+  pendingDriveData : null,
+  pendingPhotoUrl  : null,
+  pendingAction    : 'edit'   // 'edit' | 'photo'
 };
 
 // ══════════════════════════════════════════════════════════
-// LOGIN
+// LOGIN — dua mode: 'edit' dan 'photo'
 // ══════════════════════════════════════════════════════════
 
-// ★ FIX 1: requestEdit sekarang terima 6 parameter (+ photoUrl)
-function requestEdit(driveId, status, keterangan, merk, spesifikasi, photoUrl) {
-  S.pendingDriveData = { driveId, status, keterangan, merk, spesifikasi, photoUrl };
+function _openLoginModal(mode) {
+  // reset field
+  id('login-username').value         = '';
+  id('login-password').value         = '';
+  id('login-err').style.display      = 'none';
+  id('login-err').textContent        = '';
   id('login-area-label').textContent = S.plant + ' — Mixing ' + S.mixing;
-  id('login-username').value  = '';
-  id('login-password').value  = '';
-  id('login-err').style.display = 'none';
-  id('login-err').textContent   = '';
-  const btn = id('btn-login-submit');
-  btn.classList.remove('loading');
+
+  const box   = id('login-box');
+  const btn   = id('btn-login-submit');
+  btn.classList.remove('loading', 'mode-photo');
   btn.disabled = false;
+
+  if (mode === 'photo') {
+    // Tampilan mode foto: ikon kamera, warna amber
+    box.classList.add('mode-photo');
+    id('login-icon').textContent  = '📷';
+    id('login-title').textContent = 'Login untuk Lihat Foto';
+    id('login-sub').textContent   = 'Akses foto drive memerlukan verifikasi akun mixing.';
+    id('login-btn-label').textContent = 'Masuk & Lihat Foto';
+    btn.classList.add('mode-photo');
+  } else {
+    // Tampilan mode edit: ikon kunci, warna biru
+    box.classList.remove('mode-photo');
+    id('login-icon').textContent  = '🔐';
+    id('login-title').textContent = 'Login Diperlukan';
+    id('login-sub').textContent   = 'Untuk mengedit drive, masukkan kredensial akun mixing ini.';
+    id('login-btn-label').textContent = 'Masuk & Edit';
+  }
+
   id('login-overlay').classList.add('open');
   setTimeout(() => id('login-username').focus(), 100);
 }
 
+// Dipanggil klik card (untuk edit)
+function requestEdit(driveId, status, keterangan, merk, spesifikasi, photoUrl) {
+  S.pendingAction    = 'edit';
+  S.pendingDriveData = { driveId, status, keterangan, merk, spesifikasi, photoUrl };
+  S.pendingPhotoUrl  = null;
+  _openLoginModal('edit');
+}
+
+// ★ BARU — dipanggil klik tombol "Lihat Foto"
+function requestViewPhoto(photoUrl) {
+  S.pendingAction    = 'photo';
+  S.pendingPhotoUrl  = photoUrl;
+  S.pendingDriveData = null;
+  _openLoginModal('photo');
+}
+
 function closeLoginModal() {
   id('login-overlay').classList.remove('open');
+  id('login-box').classList.remove('mode-photo');
   S.pendingDriveData = null;
+  S.pendingPhotoUrl  = null;
+  S.pendingAction    = 'edit';
 }
 
 async function submitLogin() {
@@ -777,29 +511,46 @@ async function submitLogin() {
   const password = id('login-password').value.trim();
   const errEl    = id('login-err');
   const btn      = id('btn-login-submit');
+
   if (!username || !password) {
-    errEl.textContent = '⚠️ Username dan password wajib diisi.';
+    errEl.textContent   = '⚠️ Username dan password wajib diisi.';
     errEl.style.display = 'block';
     return;
   }
-  btn.classList.add('loading'); btn.disabled = true; errEl.style.display = 'none';
+
+  btn.classList.add('loading');
+  btn.disabled        = true;
+  errEl.style.display = 'none';
+
   try {
     const res    = await fetch(LOGIN_API + '?' + new URLSearchParams({ username, password, mixing: S.plant }));
     const result = await res.json();
+
     if (result.success) {
-      const d = S.pendingDriveData;
+      // Simpan nilai sebelum closeLoginModal mereset state
+      const action   = S.pendingAction;
+      const photoUrl = S.pendingPhotoUrl;
+      const d        = S.pendingDriveData;
+
       closeLoginModal();
-      // ★ FIX 2: teruskan photoUrl ke openModal
-      if (d) openModal(d.driveId, d.status, d.keterangan, d.merk, d.spesifikasi, d.photoUrl);
+
+      // ★ Jalankan aksi sesuai mode
+      if (action === 'photo' && photoUrl) {
+        window.open(photoUrl, '_blank');
+      } else if (action === 'edit' && d) {
+        openModal(d.driveId, d.status, d.keterangan, d.merk, d.spesifikasi, d.photoUrl);
+      }
+
     } else {
-      errEl.textContent = '❌ ' + (result.message || 'Username atau password salah.');
+      errEl.textContent   = '❌ ' + (result.message || 'Username atau password salah.');
       errEl.style.display = 'block';
     }
   } catch (err) {
-    errEl.textContent = '⚠️ Tidak dapat terhubung ke server. Coba lagi.';
+    errEl.textContent   = '⚠️ Tidak dapat terhubung ke server. Coba lagi.';
     errEl.style.display = 'block';
   } finally {
-    btn.classList.remove('loading'); btn.disabled = false;
+    btn.classList.remove('loading');
+    btn.disabled = false;
   }
 }
 
@@ -859,12 +610,12 @@ async function renderPlantPage() {
 }
 
 const PLANT_META = {
-  MCA:{ mixing:'17 Mixing', desc:'Mixing Plant Alpha', color:'#2979ff' },
+  MCA:{ mixing:'17 Mixing', desc:'Mixing Plant Alpha',   color:'#2979ff' },
   MCC:{ mixing:'17 Mixing', desc:'Mixing Plant Charlie', color:'#00b8d4' },
-  MCD:{ mixing:'17 Mixing', desc:'Mixing Plant Delta', color:'#00d084' },
-  MCG:{ mixing:'17 Mixing', desc:'Mixing Plant Golf', color:'#ffa502' },
-  MCH:{ mixing:'17 Mixing', desc:'Mixing Plant Hotel', color:'#ff6b81' },
-  MCI:{ mixing:'17 Mixing', desc:'Mixing Plant India', color:'#a29bfe' },
+  MCD:{ mixing:'17 Mixing', desc:'Mixing Plant Delta',   color:'#00d084' },
+  MCG:{ mixing:'17 Mixing', desc:'Mixing Plant Golf',    color:'#ffa502' },
+  MCH:{ mixing:'17 Mixing', desc:'Mixing Plant Hotel',   color:'#ff6b81' },
+  MCI:{ mixing:'17 Mixing', desc:'Mixing Plant India',   color:'#a29bfe' },
   'PLANT E':{ mixing:'17 Mixing', desc:'Plant Extension E', color:'#fd79a8' },
 };
 
@@ -900,7 +651,7 @@ async function renderDetailPage() {
 function renderSidebar(jumlah) {
   const drives   = S.cache[S.plant + '_drives'] || [];
   const faultMap = {};
-  drives.forEach(d => { if (d.status === 'fault') faultMap[d.mixing] = (faultMap[d.mixing] || 0) + 1; });
+  drives.forEach(d => { if (d.status === 'fault') faultMap[d.mixing] = (faultMap[d.mixing]||0)+1; });
   let html = '';
   for (let i = 1; i <= jumlah; i++) {
     const active   = S.mixing === i ? 'active' : '';
@@ -914,7 +665,7 @@ function renderSidebar(jumlah) {
 function selectMixing(num) {
   S.mixing = num;
   updateBC();
-  renderSidebar(Object.values(S.cache[S.plant + '_config'] || { x: 17 })[0] || 17);
+  renderSidebar(Object.values(S.cache[S.plant+'_config']||{x:17})[0]||17);
   if (S.tab === 'drive') renderDriveTab();
 }
 
@@ -923,8 +674,8 @@ function switchTab(tab, force) {
   S.tab = tab;
   document.querySelectorAll('.ctab').forEach(t => t.classList.remove('active'));
   document.querySelectorAll('.tab-content').forEach(t => t.classList.remove('active'));
-  id('ctab-' + tab).classList.add('active');
-  id('tab-'  + tab).classList.add('active');
+  id('ctab-'+tab).classList.add('active');
+  id('tab-'+tab).classList.add('active');
   if (tab === 'drive')   renderDriveTab();
   if (tab === 'histori') renderHistoriTab();
   if (tab === 'pm')      renderPMTab();
@@ -934,21 +685,21 @@ async function renderDriveTab() {
   id('drive-title').textContent = S.plant + ' — Mixing ' + S.mixing;
   id('drive-content').innerHTML = loadingHTML('Memuat data drive...');
   try {
-    if (!S.cache[S.plant + '_drives']) {
-      const data = await apiGet({ action: 'getDrives', plant: S.plant });
-      S.cache[S.plant + '_drives'] = data.drives;
+    if (!S.cache[S.plant+'_drives']) {
+      const data = await apiGet({ action:'getDrives', plant:S.plant });
+      S.cache[S.plant+'_drives'] = data.drives;
     }
-    const all    = S.cache[S.plant + '_drives'];
+    const all    = S.cache[S.plant+'_drives'];
     const drives = all.filter(d => d.mixing === S.mixing);
-    const ok     = drives.filter(d => d.status === 'ok').length;
-    const fault  = drives.filter(d => d.status === 'fault').length;
-    const maint  = drives.filter(d => d.status === 'maint').length;
-    const kosong = drives.filter(d => d.status === 'kosong').length;
+    const ok     = drives.filter(d => d.status==='ok').length;
+    const fault  = drives.filter(d => d.status==='fault').length;
+    const maint  = drives.filter(d => d.status==='maint').length;
+    const kosong = drives.filter(d => d.status==='kosong').length;
 
     id('drive-meta').textContent = `${drives.length} drives · ${ok} OK · ${fault} Fault · ${kosong} Kosong · ${maint} Maint`;
     id('drive-pills').innerHTML  = `
       <div class="pill">Total ${drives.length}</div>
-      <div class="pill ok">   <div class="pill-d"></div>OK ${ok}</div>
+      <div class="pill ok"><div class="pill-d"></div>OK ${ok}</div>
       <div class="pill fault"><div class="pill-d"></div>Fault ${fault}</div>
       <div class="pill kosong"><div class="pill-d"></div>Kosong ${kosong}</div>
       <div class="pill maint"><div class="pill-d"></div>Maint ${maint}</div>`;
@@ -958,60 +709,62 @@ async function renderDriveTab() {
       return;
     }
 
-    // ── PISAH GRUP: INU / DSU / OTHER ──
     function getDriveType(driveId) {
-      const s = String(driveId || '').toUpperCase();
-      if (s.includes('.INU.') || s.includes('-INU') || s.includes('_INU')) return 'INU';
-      if (s.includes('.DSU.') || s.includes('-DSU') || s.includes('_DSU')) return 'DSU';
+      const s = String(driveId||'').toUpperCase();
+      if (s.includes('.INU.')||s.includes('-INU')||s.includes('_INU')) return 'INU';
+      if (s.includes('.DSU.')||s.includes('-DSU')||s.includes('_DSU')) return 'DSU';
       return 'OTHER';
     }
-    const groups = { INU: [], DSU: [], OTHER: [] };
+    const groups = { INU:[], DSU:[], OTHER:[] };
     drives.forEach(d => { groups[getDriveType(d.drive_id)].push(d); });
 
     const groupConfig = [
-      { key: 'INU',   label: '⚡ Inverter Unit (INU)',    color: '#2979ff' },
-      { key: 'DSU',   label: '🔌 DC Supply Unit (DSU)',   color: '#9c27b0' },
-      { key: 'OTHER', label: '📦 Lainnya',                color: '#5a7a99' },
+      { key:'INU',   label:'⚡ Inverter Unit (INU)',  color:'#2979ff' },
+      { key:'DSU',   label:'🔌 DC Supply Unit (DSU)', color:'#9c27b0' },
+      { key:'OTHER', label:'📦 Lainnya',              color:'#5a7a99' },
     ];
 
     let html = '';
-    groupConfig.forEach(({ key, label, color }) => {
+    groupConfig.forEach(({key,label,color}) => {
       const grp = groups[key];
       if (!grp.length) return;
-      html += `
-        <div class="drive-group">
-          <div class="drive-group-header">
-            <div class="drive-group-label" style="border-color:${color};color:${color}">${label}</div>
-            <div class="drive-group-line"></div>
-            <div class="drive-group-count">${grp.length} unit</div>
-          </div>
-          <div class="cards-grid">${grp.map(inuCard).join('')}</div>
-        </div>`;
+      html += `<div class="drive-group">
+        <div class="drive-group-header">
+          <div class="drive-group-label" style="border-color:${color};color:${color}">${label}</div>
+          <div class="drive-group-line"></div>
+          <div class="drive-group-count">${grp.length} unit</div>
+        </div>
+        <div class="cards-grid">${grp.map(inuCard).join('')}</div>
+      </div>`;
     });
 
     id('drive-content').innerHTML = html;
-    renderSidebar(Object.values(S.cache[S.plant + '_config'] || { x: 17 })[0] || 17);
+    renderSidebar(Object.values(S.cache[S.plant+'_config']||{x:17})[0]||17);
   } catch(err) {
     id('drive-content').innerHTML = errHTML(err.message, renderDriveTab);
     id('drive-meta').textContent  = 'Gagal memuat';
   }
 }
 
-// ★ FIX 3: inuCard sekarang passing photo_url ke requestEdit DAN render tombol Lihat Foto
+// ★ KUNCI: tombol foto memanggil requestViewPhoto, bukan href langsung
 function inuCard(d) {
   const st   = d.status || 'kosong';
-  const stTx = { ok:'OK', fault:'Fault', maint:'Maintenance', kosong:'Kosong' }[st] || st;
-  // Tombol foto hanya muncul kalau ada photo_url
+  const stTx = {ok:'OK',fault:'Fault',maint:'Maintenance',kosong:'Kosong'}[st] || st;
+
+  // Tombol Lihat Foto — wajib login dulu
   const photoHtml = d.photo_url
-    ? `<a class="inu-photo-btn" href="${esc(d.photo_url)}" target="_blank" onclick="event.stopPropagation()">📷 Lihat Foto</a>`
+    ? `<button class="inu-photo-btn" onclick="event.stopPropagation();requestViewPhoto('${esc(d.photo_url)}')">
+         📷 Lihat Foto <span class="inu-photo-lock">🔒</span>
+       </button>`
     : '';
+
   return `<div class="inu-card ${st}" onclick="requestEdit('${esc(d.drive_id)}','${st}','${esc(d.keterangan)}','${esc(d.merk)}','${esc(d.spesifikasi)}','${esc(d.photo_url||'')}')">
     <div class="inu-edit-hint">✏️ edit</div>
     <div class="inu-tag">${esc(d.drive_id)}</div>
-    <div class="inu-name">${esc(d.merk) || '—'}</div>
-    <div class="inu-spec">${esc(d.spesifikasi) || ''}</div>
+    <div class="inu-name">${esc(d.merk)||'—'}</div>
+    <div class="inu-spec">${esc(d.spesifikasi)||''}</div>
     <div class="inu-status"><div class="inu-dot"></div>${stTx}</div>
-    ${d.keterangan ? `<div class="inu-info">${esc(d.keterangan)}</div>` : ''}
+    ${d.keterangan?`<div class="inu-info">${esc(d.keterangan)}</div>`:''}
     ${photoHtml}
   </div>`;
 }
@@ -1019,15 +772,15 @@ function inuCard(d) {
 async function renderHistoriTab() {
   id('histori-content').innerHTML = loadingHTML('Memuat histori...');
   try {
-    if (!S.cache[S.plant + '_histori']) {
-      const data = await apiGet({ action: 'getHistori', plant: S.plant });
-      S.cache[S.plant + '_histori'] = data.histori;
+    if (!S.cache[S.plant+'_histori']) {
+      const data = await apiGet({ action:'getHistori', plant:S.plant });
+      S.cache[S.plant+'_histori'] = data.histori;
     }
-    const rows = S.cache[S.plant + '_histori'];
-    if (!rows.length) { id('histori-content').innerHTML = `<div class="state-box"><div style="font-size:28px">📋</div><h3>Belum ada histori</h3></div>`; return; }
+    const rows = S.cache[S.plant+'_histori'];
+    if (!rows.length) { id('histori-content').innerHTML=`<div class="state-box"><div style="font-size:28px">📋</div><h3>Belum ada histori</h3></div>`; return; }
     id('histori-content').innerHTML = `<div class="hist-table-wrap"><table class="hist-table">
       <thead><tr><th>Waktu</th><th>Drive ID</th><th>Nama</th><th>Group</th><th>Status</th><th>Keterangan</th></tr></thead>
-      <tbody>${rows.map(r => `<tr>
+      <tbody>${rows.map(r=>`<tr>
         <td class="hist-ts">${r.timestamp}</td>
         <td class="hist-id">${esc(r.drive_id)}</td>
         <td>${esc(r.drive_nama)}</td>
@@ -1035,32 +788,32 @@ async function renderHistoriTab() {
         <td><span class="status-tag st-${r.status}">${r.status.toUpperCase()}</span></td>
         <td>${esc(r.keterangan)}</td>
       </tr>`).join('')}</tbody></table></div>`;
-  } catch(err) { id('histori-content').innerHTML = errHTML(err.message, renderHistoriTab); }
+  } catch(err) { id('histori-content').innerHTML=errHTML(err.message,renderHistoriTab); }
 }
 
 async function renderPMTab() {
   id('pm-content').innerHTML = loadingHTML('Memuat jadwal PM...');
   try {
-    if (!S.cache[S.plant + '_pm']) {
-      const data = await apiGet({ action: 'getJadwalPM', plant: S.plant });
-      S.cache[S.plant + '_pm'] = data.jadwal;
+    if (!S.cache[S.plant+'_pm']) {
+      const data = await apiGet({ action:'getJadwalPM', plant:S.plant });
+      S.cache[S.plant+'_pm'] = data.jadwal;
     }
-    const jadwal = S.cache[S.plant + '_pm'];
-    if (!jadwal.length) { id('pm-content').innerHTML = `<div class="state-box"><div style="font-size:28px">🔧</div><h3>Belum ada jadwal PM</h3></div>`; return; }
+    const jadwal = S.cache[S.plant+'_pm'];
+    if (!jadwal.length) { id('pm-content').innerHTML=`<div class="state-box"><div style="font-size:28px">🔧</div><h3>Belum ada jadwal PM</h3></div>`; return; }
     id('pm-content').innerHTML = `<div class="pm-grid">${jadwal.map(pmCard).join('')}</div>`;
-  } catch(err) { id('pm-content').innerHTML = errHTML(err.message, renderPMTab); }
+  } catch(err) { id('pm-content').innerHTML=errHTML(err.message,renderPMTab); }
 }
 
 function pmCard(p) {
-  const stClass = { Selesai:'ok', Pending:'maint', 'Dalam Proses':'fault' }[p.status] || 'kosong';
+  const stClass={Selesai:'ok',Pending:'maint','Dalam Proses':'fault'}[p.status]||'kosong';
   return `<div class="pm-card">
     <div class="pm-card-id">${esc(p.id)}</div>
     <div class="pm-card-judul">${esc(p.judul)}</div>
     <div class="pm-card-drive">${esc(p.drive_id)}</div>
     <div class="pm-card-meta">
-      <span>📅 ${p.tanggal || '—'}</span>
-      <span>👤 ${esc(p.teknisi) || '—'}</span>
-      ${p.catatan ? `<span>📝 ${esc(p.catatan)}</span>` : ''}
+      <span>📅 ${p.tanggal||'—'}</span>
+      <span>👤 ${esc(p.teknisi)||'—'}</span>
+      ${p.catatan?`<span>📝 ${esc(p.catatan)}</span>`:''}
     </div>
     <div class="pm-card-status"><span class="status-tag st-${stClass}">${esc(p.status)}</span></div>
   </div>`;
@@ -1070,7 +823,6 @@ function pmCard(p) {
 // EDIT MODAL
 // ══════════════════════════════════════════════════════════
 
-// ★ FIX 4: openModal sekarang terima & isi field photo
 function openModal(driveId, status, keterangan, merk, spesifikasi, photoUrl) {
   S.editDrive = driveId;
   id('modal-drive-id').textContent = driveId;
@@ -1078,40 +830,34 @@ function openModal(driveId, status, keterangan, merk, spesifikasi, photoUrl) {
   id('modal-merk').value   = merk        || '';
   id('modal-spek').value   = spesifikasi || '';
   id('modal-ket').value    = keterangan  || '';
-  id('modal-photo').value  = photoUrl    || ''; // ★ isi field foto
+  id('modal-photo').value  = photoUrl    || '';
   id('modal').classList.add('open');
 }
 
-function closeModal() { id('modal').classList.remove('open'); S.editDrive = null; }
+function closeModal() { id('modal').classList.remove('open'); S.editDrive=null; }
 
-// ★ FIX 5: saveStatus sekarang kirim photo_url ke API
 async function saveStatus() {
   const status   = id('modal-status').value;
   const photoUrl = id('modal-photo').value.trim();
   const btn      = id('btn-save');
-  btn.disabled = true; btn.textContent = 'Menyimpan...';
+  btn.disabled=true; btn.textContent='Menyimpan...';
   try {
     await apiGet({
-      action     : 'updateStatus',
-      plant      : S.plant,
-      drive_id   : S.editDrive,
-      status,
-      keterangan : id('modal-ket').value.trim(),
-      merk       : id('modal-merk').value.trim(),
-      spesifikasi: id('modal-spek').value.trim(),
-      photo_url  : photoUrl,   // ★ kirim ke API
-      updatedBy  : 'web-user'
+      action:'updateStatus', plant:S.plant, drive_id:S.editDrive,
+      status, keterangan:id('modal-ket').value.trim(),
+      merk:id('modal-merk').value.trim(), spesifikasi:id('modal-spek').value.trim(),
+      photo_url:photoUrl, updatedBy:'web-user'
     });
-    delete S.cache[S.plant + '_drives'];
-    delete S.cache[S.plant + '_histori'];
+    delete S.cache[S.plant+'_drives'];
+    delete S.cache[S.plant+'_histori'];
     closeModal();
     await renderDriveTab();
-  } catch(err) { alert('Gagal menyimpan: ' + err.message); }
-  finally { btn.disabled = false; btn.textContent = 'Simpan'; }
+  } catch(err) { alert('Gagal menyimpan: '+err.message); }
+  finally { btn.disabled=false; btn.textContent='Simpan'; }
 }
 
-id('modal').addEventListener('click', e => { if(e.target === id('modal')) closeModal(); });
-id('login-overlay').addEventListener('click', e => { if(e.target === id('login-overlay')) closeLoginModal(); });
+id('modal').addEventListener('click', e => { if(e.target===id('modal')) closeModal(); });
+id('login-overlay').addEventListener('click', e => { if(e.target===id('login-overlay')) closeLoginModal(); });
 
 // ══════════════════════════════════════════════════════════
 // REFRESH & UTILS
@@ -1120,8 +866,8 @@ id('login-overlay').addEventListener('click', e => { if(e.target === id('login-o
 async function doRefresh() {
   const btn = id('btn-refresh');
   btn.classList.add('loading');
-  if (S.plant) ['drives','histori','pm','config'].forEach(k => delete S.cache[S.plant + '_' + k]);
-  if (S.page === 'detail') await renderDetailPage();
+  if (S.plant) ['drives','histori','pm','config'].forEach(k => delete S.cache[S.plant+'_'+k]);
+  if (S.page==='detail') await renderDetailPage();
   else await renderPlantPage();
   btn.classList.remove('loading');
 }
@@ -1130,74 +876,55 @@ function id(i) { return document.getElementById(i); }
 function esc(s) { return String(s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;'); }
 function loadingHTML(msg) { return `<div class="state-box"><div class="sp"></div><p>${msg}</p></div>`; }
 function errHTML(msg, fn) {
-  const rid = 'r' + Date.now();
-  setTimeout(() => { const b = id(rid); if(b) b.onclick = fn; }, 50);
+  const rid = 'r'+Date.now();
+  setTimeout(() => { const b=id(rid); if(b) b.onclick=fn; }, 50);
   return `<div class="state-box"><div style="font-size:28px">⚠️</div><h3>Gagal memuat</h3><p>${esc(msg)}</p><button class="btn-retry" id="${rid}">Coba Lagi</button></div>`;
 }
 
-setInterval(() => { id('clock').textContent = new Date().toTimeString().slice(0,8); }, 1000);
+setInterval(() => { id('clock').textContent=new Date().toTimeString().slice(0,8); }, 1000);
 id('clock').textContent = new Date().toTimeString().slice(0,8);
 
-// ── LIGHT / DARK MODE ──
 function toggleTheme() {
   const isLight = document.body.classList.toggle('light');
-  const btn = id('btn-theme');
-  btn.textContent = isLight ? '☀️ Light' : '🌙 Dark';
-  const modeEl = id('stat-mode');
-  if (modeEl) modeEl.textContent = isLight ? 'LIGHT' : 'DARK';
+  id('btn-theme').textContent = isLight ? '☀️ Light' : '🌙 Dark';
+  const m = id('stat-mode'); if(m) m.textContent = isLight ? 'LIGHT' : 'DARK';
   document.querySelector('.running-bar').style.background = isLight ? '#dde6f0' : '';
   localStorage.setItem('theme', isLight ? 'light' : 'dark');
 }
-// restore saved theme
 if (localStorage.getItem('theme') === 'light') {
   document.body.classList.add('light');
   document.addEventListener('DOMContentLoaded', () => {
-    const btn = id('btn-theme');
-    if (btn) btn.textContent = '☀️ Light';
+    const b = id('btn-theme'); if(b) b.textContent = '☀️ Light';
   });
 }
 
-// ── PDF HISTORI ──
 async function printHistoriPDF() {
-  const rows = S.cache[S.plant + '_histori'];
-  if (!rows || !rows.length) { alert('Tidak ada data histori untuk dicetak.'); return; }
-  const { jsPDF } = window.jspdf;
-  const doc = new jsPDF({ orientation:'landscape' });
+  const rows = S.cache[S.plant+'_histori'];
+  if (!rows||!rows.length) { alert('Tidak ada data histori untuk dicetak.'); return; }
+  const {jsPDF}=window.jspdf; const doc=new jsPDF({orientation:'landscape'});
   doc.setFontSize(14); doc.setFont('helvetica','bold');
-  doc.text(`Histori Drive — ${S.plant}`, 14, 16);
+  doc.text(`Histori Drive — ${S.plant}`,14,16);
   doc.setFontSize(9); doc.setFont('helvetica','normal');
-  doc.text(`Dicetak: ${new Date().toLocaleString('id-ID')}`, 14, 22);
-  doc.autoTable({
-    startY: 27,
-    head: [['Waktu','Drive ID','Nama','Group','Status','Keterangan']],
-    body: rows.map(r => [r.timestamp, r.drive_id, r.drive_nama||'—', r.group||'—', r.status.toUpperCase(), r.keterangan||'—']),
-    styles:{ fontSize:8, cellPadding:2 },
-    headStyles:{ fillColor:[21,101,192], textColor:255, fontStyle:'bold' },
-    alternateRowStyles:{ fillColor:[240,244,248] },
-    theme:'grid'
-  });
+  doc.text(`Dicetak: ${new Date().toLocaleString('id-ID')}`,14,22);
+  doc.autoTable({startY:27,head:[['Waktu','Drive ID','Nama','Group','Status','Keterangan']],
+    body:rows.map(r=>[r.timestamp,r.drive_id,r.drive_nama||'—',r.group||'—',r.status.toUpperCase(),r.keterangan||'—']),
+    styles:{fontSize:8,cellPadding:2},headStyles:{fillColor:[21,101,192],textColor:255,fontStyle:'bold'},
+    alternateRowStyles:{fillColor:[240,244,248]},theme:'grid'});
   doc.save(`Histori_${S.plant}_${new Date().toISOString().slice(0,10)}.pdf`);
 }
 
-// ── PDF JADWAL PM ──
 async function printPMPDF() {
-  const jadwal = S.cache[S.plant + '_pm'];
-  if (!jadwal || !jadwal.length) { alert('Tidak ada data jadwal PM untuk dicetak.'); return; }
-  const { jsPDF } = window.jspdf;
-  const doc = new jsPDF({ orientation:'landscape' });
+  const jadwal = S.cache[S.plant+'_pm'];
+  if (!jadwal||!jadwal.length) { alert('Tidak ada data jadwal PM untuk dicetak.'); return; }
+  const {jsPDF}=window.jspdf; const doc=new jsPDF({orientation:'landscape'});
   doc.setFontSize(14); doc.setFont('helvetica','bold');
-  doc.text(`Jadwal Preventive Maintenance — ${S.plant}`, 14, 16);
+  doc.text(`Jadwal Preventive Maintenance — ${S.plant}`,14,16);
   doc.setFontSize(9); doc.setFont('helvetica','normal');
-  doc.text(`Dicetak: ${new Date().toLocaleString('id-ID')}`, 14, 22);
-  doc.autoTable({
-    startY: 27,
-    head: [['ID PM','Judul','Drive ID','Tanggal','Teknisi','Status','Catatan']],
-    body: jadwal.map(p => [p.id||'—', p.judul||'—', p.drive_id||'—', p.tanggal||'—', p.teknisi||'—', p.status||'—', p.catatan||'—']),
-    styles:{ fontSize:8, cellPadding:2 },
-    headStyles:{ fillColor:[0,150,136], textColor:255, fontStyle:'bold' },
-    alternateRowStyles:{ fillColor:[240,248,245] },
-    theme:'grid'
-  });
+  doc.text(`Dicetak: ${new Date().toLocaleString('id-ID')}`,14,22);
+  doc.autoTable({startY:27,head:[['ID PM','Judul','Drive ID','Tanggal','Teknisi','Status','Catatan']],
+    body:jadwal.map(p=>[p.id||'—',p.judul||'—',p.drive_id||'—',p.tanggal||'—',p.teknisi||'—',p.status||'—',p.catatan||'—']),
+    styles:{fontSize:8,cellPadding:2},headStyles:{fillColor:[0,150,136],textColor:255,fontStyle:'bold'},
+    alternateRowStyles:{fillColor:[240,248,245]},theme:'grid'});
   doc.save(`JadwalPM_${S.plant}_${new Date().toISOString().slice(0,10)}.pdf`);
 }
 
