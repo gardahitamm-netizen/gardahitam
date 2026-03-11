@@ -560,90 +560,175 @@ body {
 /* ══════════════════════════════════════
    RESPONSIVE — MOBILE
 ══════════════════════════════════════ */
+/*
+  ═══════════════════════════════════════════════════════
+  PATCH: Ganti seluruh blok @media (max-width: 768px)
+  di file HTML asli dengan CSS di bawah ini.
+  ═══════════════════════════════════════════════════════
+*/
+
+/* ══════════════════════════════════════
+   RESPONSIVE — MOBILE
+══════════════════════════════════════ */
 @media (max-width: 768px) {
 
+  /* ── PAKSA html/body TIDAK SCROLL ── */
+  html, body {
+    overflow: hidden !important;
+    height: 100% !important;
+    width: 100% !important;
+  }
+
   /* ── TOPBAR ── */
-  .topbar { padding: 0 10px; gap: 6px; height: 48px; }
+  .topbar { padding: 0 10px; gap: 6px; height: 44px; flex-shrink: 0; }
   .topbar-title { font-size: 11px; }
   .topbar-sub { display: none; }
   .topbar-divider { display: none; }
+  .btn-back { font-size: 10px; padding: 4px 8px; }
+  .btn-theme { font-size: 10px; padding: 4px 8px; }
+  .btn-sm { font-size: 10px; padding: 4px 8px; }
+  .topbar-clock { font-size: 11px; padding: 2px 7px; }
+
+  /* ── RUNNING BAR ── */
+  .running-bar { flex-shrink: 0; }
   .running-inner { font-size: 9px; }
-  .btn-back { font-size: 10px; padding: 5px 8px; }
-  .btn-theme { font-size: 10px; padding: 5px 8px; }
-  .btn-sm { font-size: 10px; padding: 5px 8px; }
-  .topbar-clock { font-size: 11px; padding: 3px 7px; }
 
   /* ── BREADCRUMB ── */
-  .breadcrumb { padding: 6px 12px; font-size: 10px; }
+  .breadcrumb { padding: 5px 10px; font-size: 10px; flex-shrink: 0; }
 
-  /* ── PLANT PAGE ── */
-  .plant-wrap { padding: 0; }
-  .plant-hero { padding: 18px 14px 16px; }
-  .plant-hero-title { font-size: 20px; }
-  .plant-hero-sub { font-size: 11px; margin-bottom: 14px; }
-  .plant-stats-row { gap: 7px; }
-  .plant-stat-box { min-width: 72px; padding: 7px 10px; }
-  .plant-stat-val { font-size: 16px; }
+  /* ── PAGES WRAPPER ── */
+  #pages-wrapper {
+    flex: 1;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    min-height: 0;
+  }
+
+  .page {
+    flex: 1;
+    overflow: hidden;
+    display: none;
+    flex-direction: column;
+    min-height: 0;
+  }
+  .page.active { display: flex; }
+
+  /* ── PLANT PAGE: boleh scroll ── */
+  .plant-wrap {
+    flex: 1;
+    overflow-y: auto;
+    -webkit-overflow-scrolling: touch;
+  }
+  .plant-hero { padding: 16px 12px 14px; }
+  .plant-hero-title { font-size: 18px; }
+  .plant-hero-sub { font-size: 10px; margin-bottom: 12px; }
+  .plant-stats-row { gap: 6px; }
+  .plant-stat-box { min-width: 68px; padding: 6px 9px; }
+  .plant-stat-val { font-size: 15px; }
   .plant-stat-label { font-size: 8px; }
-  .plant-section { padding: 16px 12px; }
-  .plant-grid { grid-template-columns: repeat(auto-fill, minmax(140px, 1fr)); gap: 9px; }
-  .plant-card-top { padding: 14px 12px 10px; }
-  .plant-card-name { font-size: 17px; }
+  .plant-section { padding: 14px 10px; }
+  .plant-grid { grid-template-columns: repeat(auto-fill, minmax(140px, 1fr)); gap: 8px; }
+  .plant-card-top { padding: 12px 10px 9px; }
+  .plant-card-name { font-size: 16px; }
   .plant-card-desc { font-size: 10px; }
-  .plant-card-bottom { padding: 8px 12px; }
+  .plant-card-bottom { padding: 7px 10px; }
 
-  /* ── DETAIL: sidebar jadi horizontal pill row ── */
-  .main-layout { flex-direction: column; overflow: hidden; }
+  /* ══════════════════════════════════════
+     KUNCI UTAMA: main-layout HARUS FLEX COLUMN
+     DAN MENGISI SISA TINGGI LAYAR PERSIS
+  ══════════════════════════════════════ */
+  .main-layout {
+    display: flex !important;
+    flex-direction: column !important;
+    flex: 1 !important;
+    overflow: hidden !important;
+    min-height: 0 !important;
+    height: 100% !important;
+  }
 
+  /* ── SIDEBAR: horizontal scroll, tinggi tetap, TIDAK BOLEH VERTICAL ── */
   .sidebar {
     width: 100% !important;
     min-width: unset !important;
     height: auto !important;
+    max-height: 52px !important;        /* ← kunci: cukup 1 baris pill */
+    flex-shrink: 0 !important;
     flex-direction: row !important;
+    display: flex !important;
     overflow-x: auto !important;
     overflow-y: hidden !important;
     border-right: none !important;
     border-bottom: 1px solid var(--border) !important;
-    padding: 6px 10px !important;
+    padding: 7px 10px !important;
     gap: 5px !important;
-    flex-shrink: 0 !important;
+    align-items: center !important;
+    -webkit-overflow-scrolling: touch !important;
+    scrollbar-width: none !important;   /* hide scrollbar Firefox */
   }
+  .sidebar::-webkit-scrollbar { display: none !important; } /* hide scrollbar Chrome */
+
   .sb-section {
     padding: 0 !important;
     display: flex !important;
     flex-direction: row !important;
     gap: 5px !important;
-    flex-shrink: 0;
+    flex-shrink: 0 !important;
+    align-items: center !important;
   }
+
   .sb-head { display: none !important; }
+
   .sb-item {
     flex-shrink: 0 !important;
-    padding: 5px 13px !important;
+    padding: 5px 12px !important;
     border-radius: 20px !important;
     font-size: 11px !important;
     white-space: nowrap !important;
     border: 1px solid var(--border) !important;
-    border-left: 1px solid var(--border) !important;
+    border-left: 1px solid var(--border) !important;  /* override 2px left */
     justify-content: center !important;
+    line-height: 1 !important;
   }
+
   .sb-item.active {
     background: var(--accent) !important;
     border-color: var(--accent) !important;
     color: #fff !important;
   }
+
   .sb-fault { display: none !important; }
 
-  /* ── CONTENT AREA ── */
-  .content-area { min-width: 0; width: 100%; flex: 1; overflow-y: auto; }
-  .content-tabs { padding: 0 10px; }
-  .ctab { padding: 10px 12px; font-size: 11px; }
-  .tab-content { padding: 14px 12px !important; }
+  /* ── CONTENT AREA: ambil sisa ruang, scroll internal ── */
+  .content-area {
+    flex: 1 !important;
+    min-height: 0 !important;
+    overflow-y: auto !important;
+    -webkit-overflow-scrolling: touch !important;
+    display: flex !important;
+    flex-direction: column !important;
+    width: 100% !important;
+  }
+
+  /* ── CONTENT TABS: sticky di atas konten, tidak ikut scroll ── */
+  .content-tabs {
+    position: sticky !important;
+    top: 0 !important;
+    z-index: 10 !important;
+    padding: 0 8px !important;
+    flex-shrink: 0 !important;
+    background: #09101d !important;
+  }
+  .ctab { padding: 10px 11px; font-size: 11px; }
+
+  /* ── TAB CONTENT ── */
+  .tab-content { padding: 12px 10px !important; }
 
   /* ── DRIVE HEADER ── */
-  .drive-title { font-size: 14px; }
+  .drive-title { font-size: 13px; }
   .drive-meta  { font-size: 10px; }
-  .pills { gap: 5px; }
-  .pill  { font-size: 10px; padding: 3px 9px; }
+  .pills { gap: 4px; }
+  .pill  { font-size: 10px; padding: 3px 8px; }
 
   /* ── DRIVE CARDS: 1 kolom ── */
   .cards-grid { grid-template-columns: 1fr !important; gap: 8px; }
@@ -670,7 +755,7 @@ body {
     border-radius: 18px 18px 0 0 !important;
     max-width: 100% !important;
     margin: 0 !important;
-    padding: 20px 18px !important;
+    padding: 20px 16px !important;
     max-height: 90vh;
     overflow-y: auto;
   }
@@ -679,19 +764,21 @@ body {
     border-radius: 18px 18px 0 0 !important;
     max-width: 100% !important;
     margin: 0 !important;
-    padding: 22px 18px 20px !important;
+    padding: 20px 16px 18px !important;
   }
 }
 
 /* Layar sangat kecil < 380px */
 @media (max-width: 380px) {
   .plant-grid { grid-template-columns: 1fr 1fr; }
-  .plant-card-name { font-size: 15px; }
+  .plant-card-name { font-size: 14px; }
   .topbar-title {
-    font-size: 10px; max-width: 90px;
+    font-size: 10px; max-width: 80px;
     overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
   }
   .topbar-clock { display: none; }
+  .sidebar { max-height: 48px !important; }
+  .sb-item { font-size: 10px !important; padding: 4px 10px !important; }
 }
 </style>
 </head>
