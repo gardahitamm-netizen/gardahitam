@@ -131,7 +131,11 @@ body { font-family:'Plus Jakarta Sans',sans-serif; background:var(--bg); color:v
 .sb-item.active{background:var(--surf);color:#fff;border-left-color:var(--ok);}
 .sb-item.has-fault{color:#f87171;}
 .sb-item.has-fault.active{border-left-color:var(--fault);}
+.sb-right{display:flex;align-items:center;gap:4px;flex-shrink:0;}
 .sb-fault{width:5px;height:5px;border-radius:50%;background:var(--fault);}
+
+/* ★ Badge kosong di sidebar */
+.sb-kosong-badge{display:inline-block;background:rgba(90,122,153,.25);color:var(--kosong);border:1px solid rgba(90,122,153,.35);border-radius:8px;font-size:9px;padding:1px 5px;font-family:'JetBrains Mono',monospace;line-height:1.4;font-weight:700;}
 
 .content-area { flex:1; overflow-y:auto; display:flex; flex-direction:column; min-width:0; min-height:0; }
 .content-tabs{ display:flex;gap:0; border-bottom:1px solid var(--border); background:#09101d;padding:0 20px; flex-shrink:0; position:sticky; top:0; z-index:10; }
@@ -208,6 +212,33 @@ body { font-family:'Plus Jakarta Sans',sans-serif; background:var(--bg); color:v
 .pm-card-drive{font-size:12px;color:var(--teal);font-family:'JetBrains Mono',monospace;margin-bottom:8px;}
 .pm-card-meta{font-size:11px;color:var(--muted);display:flex;flex-direction:column;gap:3px;}
 .pm-card-status{margin-top:10px;}
+
+/* ── SUMMARY KOSONG ── */
+.summary-stats{display:flex;gap:12px;flex-wrap:wrap;margin-bottom:20px;}
+.sum-stat{background:var(--surf);border:1px solid var(--border);border-radius:10px;padding:14px 18px;min-width:120px;}
+.sum-stat-label{font-family:'JetBrains Mono',monospace;font-size:9px;letter-spacing:1.5px;text-transform:uppercase;color:var(--muted);margin-bottom:6px;}
+.sum-stat-val{font-family:'JetBrains Mono',monospace;font-size:22px;font-weight:700;}
+.sum-stat-val.kosong{color:var(--kosong);}
+.sum-stat-val.accent{color:var(--accent);}
+.sum-stat-val.ok{color:var(--ok);}
+.summary-panel{background:var(--surf);border:1px solid var(--border);border-radius:12px;overflow:hidden;margin-bottom:20px;}
+.summary-panel-head{display:flex;align-items:center;gap:10px;padding:14px 18px;border-bottom:1px solid var(--border);background:rgba(90,122,153,.06);}
+.summary-panel-title{font-family:'JetBrains Mono',monospace;font-size:10px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:var(--kosong);}
+.summary-panel-count{margin-left:auto;font-family:'JetBrains Mono',monospace;font-size:10px;color:var(--muted);}
+.sum-table{width:100%;border-collapse:collapse;font-size:12px;}
+.sum-table th{text-align:left;padding:10px 18px;font-family:'JetBrains Mono',monospace;font-size:9px;letter-spacing:1px;text-transform:uppercase;color:var(--muted);border-bottom:1px solid var(--border);background:var(--surf2);white-space:nowrap;}
+.sum-table td{padding:10px 18px;border-bottom:1px solid rgba(31,48,80,.4);vertical-align:middle;}
+.sum-table tr:last-child td{border-bottom:none;}
+.sum-table tr:hover td{background:rgba(255,255,255,.02);}
+.sum-table tr.has-kosong td:first-child{border-left:3px solid var(--kosong);padding-left:15px;}
+.sum-group-name{font-family:'JetBrains Mono',monospace;font-size:11px;color:var(--text);font-weight:600;}
+.sum-mixing-num{font-family:'JetBrains Mono',monospace;font-size:10px;color:var(--muted);margin-top:2px;}
+.sum-kosong-badge{display:inline-flex;align-items:center;gap:4px;background:rgba(90,122,153,.15);color:var(--kosong);border:1px solid rgba(90,122,153,.3);border-radius:6px;padding:3px 10px;font-size:11px;font-weight:700;font-family:'JetBrains Mono',monospace;}
+.sum-zero{color:var(--muted);font-family:'JetBrains Mono',monospace;font-size:11px;}
+.sum-pct-bar{display:flex;align-items:center;gap:8px;}
+.sum-bar-track{width:80px;height:5px;background:var(--surf3);border-radius:3px;overflow:hidden;flex-shrink:0;}
+.sum-bar-fill{height:100%;border-radius:3px;background:var(--kosong);transition:width .4s ease;}
+.sum-pct-txt{font-family:'JetBrains Mono',monospace;font-size:10px;color:var(--muted);}
 
 .modal-overlay{ display:none;position:fixed;inset:0; background:rgba(0,0,0,.7);backdrop-filter:blur(4px); z-index:500;align-items:center;justify-content:center; }
 .modal-overlay.open{display:flex;}
@@ -314,7 +345,7 @@ body { font-family:'Plus Jakarta Sans',sans-serif; background:var(--bg); color:v
   .sb-item.has-fault.active { background: var(--fault) !important; border-color: var(--fault) !important; color: #fff !important; }
   .sb-fault { display: none !important; }
   .content-area { flex: 1 !important; min-height: 0 !important; overflow-y: auto !important; -webkit-overflow-scrolling: touch !important; display: flex !important; flex-direction: column !important; width: 100% !important; }
-  .content-tabs { position: sticky !important; top: 0 !important; z-index: 10 !important; padding: 0 8px !important; flex-shrink: 0 !important; background: #09101d !important; }
+  .content-tabs { position: sticky !important; top: 0 !important; z-index: 10 !important; padding: 0 8px !important; flex-shrink: 0 !important; background: #09101d !important; overflow-x: auto !important; }
   .ctab { padding: 10px 11px; font-size: 11px; }
   .tab-content { padding: 12px 10px !important; }
   .drive-title { font-size: 13px; }
@@ -332,6 +363,10 @@ body { font-family:'Plus Jakarta Sans',sans-serif; background:var(--bg); color:v
   .hist-table { min-width: 500px; font-size: 11px; }
   .tab-action-bar { margin-bottom: 10px; }
   .pm-grid { grid-template-columns: 1fr !important; }
+  .summary-stats { gap: 8px; }
+  .sum-stat { min-width: 80px; padding: 10px 12px; }
+  .sum-stat-val { font-size: 18px; }
+  .sum-table { min-width: 400px; }
   .modal-overlay { align-items: flex-end; }
   .modal { border-radius: 18px 18px 0 0 !important; max-width: 100% !important; margin: 0 !important; padding: 20px 16px !important; max-height: 90vh; overflow-y: auto; }
   .login-overlay { align-items: flex-end; }
@@ -422,6 +457,7 @@ body { font-family:'Plus Jakarta Sans',sans-serif; background:var(--bg); color:v
           <div class="ctab active" id="ctab-drive"   onclick="switchTab('drive')">⚡ Drive</div>
           <div class="ctab"        id="ctab-histori" onclick="switchTab('histori')">📋 Histori</div>
           <div class="ctab"        id="ctab-pm"      onclick="switchTab('pm')">🔧 Jadwal PM</div>
+          <div class="ctab"        id="ctab-summary" onclick="switchTab('summary')">⬜ Summary Kosong</div>
         </div>
         <div class="tab-content active" id="tab-drive">
           <div class="drive-header">
@@ -438,6 +474,10 @@ body { font-family:'Plus Jakarta Sans',sans-serif; background:var(--bg); color:v
         <div class="tab-content" id="tab-pm">
           <div class="tab-action-bar"><button class="btn-pdf" onclick="printPMPDF()">🖨️ Cetak PDF Jadwal PM</button></div>
           <div id="pm-content"></div>
+        </div>
+        <!-- ★ TAB SUMMARY KOSONG -->
+        <div class="tab-content" id="tab-summary">
+          <div id="summary-content"></div>
         </div>
       </div>
     </div>
@@ -618,7 +658,6 @@ async function renderPlantPage() {
     id('stat-total').textContent = data.plants.length;
     id('stat-sync').textContent  = new Date().toTimeString().slice(0,5);
     el.innerHTML = `<div class="plant-grid">${data.plants.map((p,i) => plantCard(p,i)).join('')}</div>`;
-    // Update tag jumlah mixing per plant (dari drives/groupList)
     await Promise.all(data.plants.map(async (p) => {
       try {
         if (!S.cache[p.plant + '_groupList']) {
@@ -669,7 +708,6 @@ function plantCard(p, i) {
 
 async function renderDetailPage() {
   try {
-    // ★ Load drives sekaligus build groupList
     if (!S.cache[S.plant + '_drives']) {
       const data   = await apiGet({ action: 'getDrives', plant: S.plant });
       const drives = Array.isArray(data.drives) ? data.drives : (Array.isArray(data) ? data : []);
@@ -688,12 +726,17 @@ async function renderDetailPage() {
   switchTab(S.tab, true);
 }
 
-// ★ renderSidebar — nama & jumlah dari groupList spreadsheet
+// ── SIDEBAR dengan badge kosong ──────────────────────────────
+
 function renderSidebar() {
   const drives    = S.cache[S.plant + '_drives']    || [];
   const groupList = S.cache[S.plant + '_groupList'] || [];
+  const summary   = S.cache[S.plant + '_summary']   || [];
 
-  // faultMap by group label
+  // map kosong per group label dari summary cache
+  const kosongMap = {};
+  summary.forEach(s => { kosongMap[s.group] = s.kosong; });
+
   const faultMap = {};
   drives.forEach(d => {
     const g = String(d.group || '').trim();
@@ -702,11 +745,16 @@ function renderSidebar() {
 
   let html = '';
   groupList.forEach((label, i) => {
-    const idx      = i + 1;
-    const active   = S.mixing === idx ? 'active' : '';
-    const hasFault = faultMap[label] ? 'has-fault' : '';
-    const faultDot = faultMap[label] ? '<div class="sb-fault"></div>' : '';
-    html += `<div class="sb-item ${active} ${hasFault}" onclick="selectMixing(${idx})">${esc(label)} ${faultDot}</div>`;
+    const idx         = i + 1;
+    const active      = S.mixing === idx ? 'active' : '';
+    const hasFault    = faultMap[label] ? 'has-fault' : '';
+    const faultDot    = faultMap[label] ? '<div class="sb-fault"></div>' : '';
+    const kosongCount = kosongMap[label] || 0;
+    const kosongBadge = kosongCount > 0 ? `<span class="sb-kosong-badge">${kosongCount}⬜</span>` : '';
+    html += `<div class="sb-item ${active} ${hasFault}" onclick="selectMixing(${idx})">
+      <span>${esc(label)}</span>
+      <span class="sb-right">${kosongBadge}${faultDot}</span>
+    </div>`;
   });
   id('sb-items').innerHTML = html;
 }
@@ -728,12 +776,12 @@ function switchTab(tab, force) {
   if (tab === 'drive')   renderDriveTab();
   if (tab === 'histori') renderHistoriTab();
   if (tab === 'pm')      renderPMTab();
+  if (tab === 'summary') renderSummaryTab();
 }
 
 // ── DRIVE TAB ──────────────────────────────────────────
 
 async function renderDriveTab() {
-  // ★ Judul pakai nama group dari spreadsheet
   const mixLabel = _getCurGroupLabel();
   id('drive-title').textContent = mixLabel;
   id('drive-content').innerHTML = loadingHTML('Memuat data drive...');
@@ -742,7 +790,6 @@ async function renderDriveTab() {
       const data   = await apiGet({ action: 'getDrives', plant: S.plant });
       const drives = Array.isArray(data.drives) ? data.drives : (Array.isArray(data) ? data : []);
       S.cache[S.plant + '_drives'] = drives;
-      // rebuild groupList jika belum ada
       if (!S.cache[S.plant + '_groupList']) {
         const seen = [], groups = [];
         drives.forEach(d => { const g = String(d.group||'').trim(); if(g && !seen.includes(g)){seen.push(g);groups.push(g);} });
@@ -753,7 +800,6 @@ async function renderDriveTab() {
     const groupList = S.cache[S.plant + '_groupList'] || [];
     const curGroup  = groupList[S.mixing - 1] || '';
 
-    // ★ Filter by group name
     const drives = all.filter(d => String(d.group || '').trim() === curGroup);
     const ok     = drives.filter(d => d.status === 'ok').length;
     const fault  = drives.filter(d => d.status === 'fault').length;
@@ -881,6 +927,78 @@ function pmCard(p) {
   </div>`;
 }
 
+// ── SUMMARY KOSONG TAB ★ BARU ────────────────────────────────
+
+async function renderSummaryTab() {
+  id('summary-content').innerHTML = loadingHTML('Memuat summary kosong...');
+  try {
+    const data = await apiGet({ action: 'getSummaryKosong', plant: S.plant });
+    S.cache[S.plant + '_summary'] = data.summary || [];
+
+    const rows        = data.summary || [];
+    const totalKosong = data.totalKosong || 0;
+    const totalDrive  = data.totalDrive  || 0;
+    const adaKosong   = rows.filter(r => r.kosong > 0);
+    const bersih      = rows.filter(r => r.kosong === 0).length;
+
+    let html = `<div class="summary-stats">
+      <div class="sum-stat"><div class="sum-stat-label">Total Drive Kosong</div><div class="sum-stat-val kosong">${totalKosong}</div></div>
+      <div class="sum-stat"><div class="sum-stat-label">Mixing Terdampak</div><div class="sum-stat-val" style="color:var(--maint)">${adaKosong.length}</div></div>
+      <div class="sum-stat"><div class="sum-stat-label">Mixing Bersih</div><div class="sum-stat-val ok">${bersih}</div></div>
+      <div class="sum-stat"><div class="sum-stat-label">Total Drive</div><div class="sum-stat-val accent">${totalDrive}</div></div>
+    </div>`;
+
+    if (!adaKosong.length) {
+      html += `<div class="state-box"><div style="font-size:36px">✅</div><h3>Semua Drive Terisi</h3><p>Tidak ada drive kosong di ${esc(S.plant)}</p></div>`;
+    } else {
+      html += `<div class="summary-panel">
+        <div class="summary-panel-head">
+          <div class="summary-panel-title">⬜ Mixing dengan Drive Kosong</div>
+          <div class="summary-panel-count">${adaKosong.length} dari ${rows.length} mixing</div>
+        </div>
+        <table class="sum-table">
+          <thead><tr><th>Mixing</th><th>Jumlah Kosong</th><th>Total Drive</th><th>Proporsi</th></tr></thead>
+          <tbody>
+            ${adaKosong.map(r => {
+              const pct = Math.round(r.kosong / r.total * 100);
+              return `<tr class="has-kosong">
+                <td><div class="sum-group-name">${esc(r.group)}</div><div class="sum-mixing-num">Mixing ${r.mixing}</div></td>
+                <td><span class="sum-kosong-badge">⬜ ${r.kosong} kosong</span></td>
+                <td><span class="sum-zero">${r.total} drive</span></td>
+                <td><div class="sum-pct-bar"><div class="sum-bar-track"><div class="sum-bar-fill" style="width:${pct}%"></div></div><span class="sum-pct-txt">${pct}%</span></div></td>
+              </tr>`;
+            }).join('')}
+          </tbody>
+        </table>
+      </div>
+      <div class="summary-panel">
+        <div class="summary-panel-head">
+          <div class="summary-panel-title">📋 Semua Mixing</div>
+          <div class="summary-panel-count">${rows.length} mixing</div>
+        </div>
+        <table class="sum-table">
+          <thead><tr><th>Mixing</th><th>OK</th><th>Kosong</th><th>Fault</th><th>Maint</th><th>Total</th></tr></thead>
+          <tbody>
+            ${rows.map(r => `<tr class="${r.kosong > 0 ? 'has-kosong' : ''}">
+              <td><div class="sum-group-name">${esc(r.group)}</div><div class="sum-mixing-num">Mixing ${r.mixing}</div></td>
+              <td style="color:var(--ok);font-family:'JetBrains Mono',monospace;font-size:11px">${r.ok}</td>
+              <td>${r.kosong > 0 ? `<span class="sum-kosong-badge">⬜ ${r.kosong}</span>` : `<span class="sum-zero">0</span>`}</td>
+              <td style="color:${r.fault > 0 ? 'var(--fault)' : 'var(--muted)'};font-family:'JetBrains Mono',monospace;font-size:11px">${r.fault}</td>
+              <td style="color:${r.maint > 0 ? 'var(--maint)' : 'var(--muted)'};font-family:'JetBrains Mono',monospace;font-size:11px">${r.maint}</td>
+              <td class="sum-zero">${r.total}</td>
+            </tr>`).join('')}
+          </tbody>
+        </table>
+      </div>`;
+    }
+
+    id('summary-content').innerHTML = html;
+    renderSidebar(); // refresh sidebar biar badge kosong muncul
+  } catch(err) {
+    id('summary-content').innerHTML = errHTML(err.message, renderSummaryTab);
+  }
+}
+
 // ── EDIT MODAL ──────────────────────────────────────────
 
 function openModal(driveId, status, keterangan, merk, spesifikasi, photoUrl) {
@@ -915,6 +1033,7 @@ async function saveStatus() {
     delete S.cache[S.plant + '_drives'];
     delete S.cache[S.plant + '_groupList'];
     delete S.cache[S.plant + '_histori'];
+    delete S.cache[S.plant + '_summary']; // ★ clear summary cache juga
     closeModal();
     await renderDetailPage();
   } catch(err) { alert('Gagal menyimpan: ' + err.message); }
@@ -929,7 +1048,7 @@ id('login-overlay').addEventListener('click', e => { if(e.target === id('login-o
 async function doRefresh() {
   const btn = id('btn-refresh');
   btn.classList.add('loading');
-  if (S.plant) ['drives','groupList','histori','pm'].forEach(k => delete S.cache[S.plant + '_' + k]);
+  if (S.plant) ['drives','groupList','histori','pm','summary'].forEach(k => delete S.cache[S.plant + '_' + k]);
   if (S.page === 'detail') await renderDetailPage();
   else await renderPlantPage();
   btn.classList.remove('loading');
