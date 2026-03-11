@@ -4,12 +4,12 @@ const CACHE_VERSION = 'garda-hitam-v1';
 
 // File-file yang di-cache untuk akses offline
 const STATIC_ASSETS = [
-  '/',
-  '/index.html',
-  '/drives.html',
-  '/manifest.json',
-  '/icon-192.png',
-  '/icon-512.png',
+  '/gardahitam/',
+  '/gardahitam/index.html',
+  '/gardahitam/drive-monitoring.html',
+  '/gardahitam/manifest.json',
+  '/gardahitam/icon-192.png',
+  '/gardahitam/icon-512.png',
   // Font Google (opsional — kalau offline font fallback ke system font)
   'https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap',
 ];
@@ -97,7 +97,7 @@ self.addEventListener('fetch', (event) => {
           if (cached) return cached;
           // Fallback halaman offline
           if (event.request.destination === 'document') {
-            return caches.match('/index.html');
+            return caches.match('/gardahitam/index.html');
           }
         });
       })
