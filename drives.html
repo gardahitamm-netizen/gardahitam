@@ -570,9 +570,16 @@ body {
 /* ══════════════════════════════════════
    RESPONSIVE — MOBILE
 ══════════════════════════════════════ */
+/*
+  ═══════════════════════════════════════════════════════
+  PATCH SIDEBAR MOBILE — Ganti seluruh blok
+  @media (max-width: 768px) dan @media (max-width: 380px)
+  di file HTML asli dengan CSS di bawah ini.
+  ═══════════════════════════════════════════════════════
+*/
+
 @media (max-width: 768px) {
 
-  /* ── PAKSA html/body TIDAK SCROLL ── */
   html, body {
     overflow: hidden !important;
     height: 100% !important;
@@ -589,14 +596,10 @@ body {
   .btn-sm { font-size: 10px; padding: 4px 8px; }
   .topbar-clock { font-size: 11px; padding: 2px 7px; }
 
-  /* ── RUNNING BAR ── */
   .running-bar { flex-shrink: 0; }
   .running-inner { font-size: 9px; }
-
-  /* ── BREADCRUMB ── */
   .breadcrumb { padding: 5px 10px; font-size: 10px; flex-shrink: 0; }
 
-  /* ── PAGES WRAPPER ── */
   #pages-wrapper {
     flex: 1;
     overflow: hidden;
@@ -604,7 +607,6 @@ body {
     flex-direction: column;
     min-height: 0;
   }
-
   .page {
     flex: 1;
     overflow: hidden;
@@ -614,12 +616,8 @@ body {
   }
   .page.active { display: flex; }
 
-  /* ── PLANT PAGE: boleh scroll ── */
-  .plant-wrap {
-    flex: 1;
-    overflow-y: auto;
-    -webkit-overflow-scrolling: touch;
-  }
+  /* ── PLANT PAGE ── */
+  .plant-wrap { flex: 1; overflow-y: auto; -webkit-overflow-scrolling: touch; }
   .plant-hero { padding: 16px 12px 14px; }
   .plant-hero-title { font-size: 18px; }
   .plant-hero-sub { font-size: 10px; margin-bottom: 12px; }
@@ -634,39 +632,79 @@ body {
   .plant-card-desc { font-size: 10px; }
   .plant-card-bottom { padding: 7px 10px; }
 
-  /* ══════════════════════════════════════
-     KUNCI UTAMA: main-layout HARUS FLEX COLUMN
-     DAN MENGISI SISA TINGGI LAYAR PERSIS
-  ══════════════════════════════════════ */
+  /* ── MAIN LAYOUT ── */
   .main-layout {
     display: flex !important;
     flex-direction: column !important;
     flex: 1 !important;
     overflow: hidden !important;
     min-height: 0 !important;
-    height: 100% !important;
   }
 
-  /* ── SIDEBAR: horizontal scroll, tinggi tetap, TIDAK BOLEH VERTICAL ── */
+  /* ══════════════════════════════════════
+     SIDEBAR — wrapper dengan tombol panah
+  ══════════════════════════════════════ */
   .sidebar {
     width: 100% !important;
     min-width: unset !important;
     height: auto !important;
-    max-height: 52px !important;        /* ← kunci: cukup 1 baris pill */
     flex-shrink: 0 !important;
-    flex-direction: row !important;
-    display: flex !important;
-    overflow-x: auto !important;
-    overflow-y: hidden !important;
     border-right: none !important;
     border-bottom: 1px solid var(--border) !important;
-    padding: 7px 10px !important;
-    gap: 5px !important;
-    align-items: center !important;
-    -webkit-overflow-scrolling: touch !important;
-    scrollbar-width: none !important;   /* hide scrollbar Firefox */
+    background: #080d18 !important;
+    /* Hapus flex row dari sidebar langsung — kita pakai wrapper JS */
+    display: block !important;
+    overflow: visible !important;
+    padding: 0 !important;
+    position: relative !important;
   }
-  .sidebar::-webkit-scrollbar { display: none !important; } /* hide scrollbar Chrome */
+
+  /* Container panah + scroll */
+  .sb-scroll-wrapper {
+    display: flex !important;
+    align-items: center !important;
+    height: 48px !important;
+    position: relative !important;
+  }
+
+  /* Tombol panah kiri/kanan */
+  .sb-arrow {
+    flex-shrink: 0 !important;
+    width: 32px !important;
+    height: 100% !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    cursor: pointer !important;
+    color: var(--muted) !important;
+    font-size: 16px !important;
+    background: #080d18 !important;
+    border: none !important;
+    z-index: 5 !important;
+    transition: color .15s !important;
+    user-select: none !important;
+    -webkit-user-select: none !important;
+    padding: 0 !important;
+  }
+  .sb-arrow:active { color: var(--accent) !important; }
+  .sb-arrow-left  { border-right: 1px solid var(--border) !important; }
+  .sb-arrow-right { border-left:  1px solid var(--border) !important; }
+
+  /* Scroll area pill */
+  .sb-scroll-inner {
+    flex: 1 !important;
+    display: flex !important;
+    flex-direction: row !important;
+    align-items: center !important;
+    gap: 5px !important;
+    overflow-x: auto !important;
+    overflow-y: hidden !important;
+    padding: 7px 8px !important;
+    scrollbar-width: none !important;
+    -webkit-overflow-scrolling: touch !important;
+    scroll-behavior: smooth !important;
+  }
+  .sb-scroll-inner::-webkit-scrollbar { display: none !important; }
 
   .sb-section {
     padding: 0 !important;
@@ -681,25 +719,27 @@ body {
 
   .sb-item {
     flex-shrink: 0 !important;
-    padding: 5px 12px !important;
+    padding: 5px 13px !important;
     border-radius: 20px !important;
     font-size: 11px !important;
     white-space: nowrap !important;
     border: 1px solid var(--border) !important;
-    border-left: 1px solid var(--border) !important;  /* override 2px left */
+    border-left: 1px solid var(--border) !important;
     justify-content: center !important;
     line-height: 1 !important;
+    color: var(--muted) !important;
+    background: transparent !important;
   }
-
   .sb-item.active {
     background: var(--accent) !important;
     border-color: var(--accent) !important;
     color: #fff !important;
   }
-
+  .sb-item.has-fault { color: #f87171 !important; border-color: rgba(255,71,87,.35) !important; }
+  .sb-item.has-fault.active { background: var(--fault) !important; border-color: var(--fault) !important; color: #fff !important; }
   .sb-fault { display: none !important; }
 
-  /* ── CONTENT AREA: ambil sisa ruang, scroll internal ── */
+  /* ── CONTENT AREA ── */
   .content-area {
     flex: 1 !important;
     min-height: 0 !important;
@@ -710,7 +750,6 @@ body {
     width: 100% !important;
   }
 
-  /* ── CONTENT TABS: sticky di atas konten, tidak ikut scroll ── */
   .content-tabs {
     position: sticky !important;
     top: 0 !important;
@@ -720,24 +759,20 @@ body {
     background: #09101d !important;
   }
   .ctab { padding: 10px 11px; font-size: 11px; }
-
-  /* ── TAB CONTENT ── */
   .tab-content { padding: 12px 10px !important; }
 
   /* ── DRIVE HEADER ── */
   .drive-title { font-size: 13px; }
   .drive-meta  { font-size: 10px; }
-  .pills { gap: 4px; }
+  .pills { gap: 4px; flex-wrap: wrap; }
   .pill  { font-size: 10px; padding: 3px 8px; }
 
-  /* ── DRIVE CARDS: 1 kolom ── */
+  /* ── CARDS ── */
   .cards-grid { grid-template-columns: 1fr !important; gap: 8px; }
   .inu-card   { padding: 12px 13px; }
   .inu-tag    { font-size: 9px; }
   .inu-name   { font-size: 14px; }
   .inu-spec   { font-size: 10px; }
-
-  /* ── DRIVE GROUP HEADER ── */
   .drive-group-label { font-size: 9px; padding: 3px 10px; }
   .drive-group-count { font-size: 9px; }
 
@@ -749,7 +784,7 @@ body {
   /* ── PM GRID ── */
   .pm-grid { grid-template-columns: 1fr !important; }
 
-  /* ── MODAL: bottom sheet style ── */
+  /* ── MODALS ── */
   .modal-overlay { align-items: flex-end; }
   .modal {
     border-radius: 18px 18px 0 0 !important;
@@ -768,7 +803,6 @@ body {
   }
 }
 
-/* Layar sangat kecil < 380px */
 @media (max-width: 380px) {
   .plant-grid { grid-template-columns: 1fr 1fr; }
   .plant-card-name { font-size: 14px; }
@@ -777,8 +811,6 @@ body {
     overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
   }
   .topbar-clock { display: none; }
-  .sidebar { max-height: 48px !important; }
-  .sb-item { font-size: 10px !important; padding: 4px 10px !important; }
 }
 </style>
 </head>
@@ -1489,7 +1521,99 @@ async function printPMPDF() {
   });
   doc.save(`JadwalPM_${S.plant}_${new Date().toISOString().slice(0,10)}.pdf`);
 }
+/*
+  ═══════════════════════════════════════════════════════
+  PATCH JS — Tambahkan kode ini SEBELUM baris navTo('plant');
+  di bagian paling bawah <script> utama kamu.
+  ═══════════════════════════════════════════════════════
+*/
 
+// ── MOBILE SIDEBAR: inject scroll wrapper + tombol panah ──
+function initMobileSidebar() {
+  if (window.innerWidth > 768) return;
+
+  const sidebar = document.getElementById('sidebar');
+  if (!sidebar || sidebar.dataset.mobileInit === '1') return;
+  sidebar.dataset.mobileInit = '1';
+
+  // Ambil .sb-section (isinya sb-items)
+  const section = sidebar.querySelector('.sb-section');
+  if (!section) return;
+
+  // Buat wrapper
+  const wrapper = document.createElement('div');
+  wrapper.className = 'sb-scroll-wrapper';
+
+  // Tombol kiri
+  const btnLeft = document.createElement('button');
+  btnLeft.className = 'sb-arrow sb-arrow-left';
+  btnLeft.innerHTML = '‹';
+  btnLeft.setAttribute('aria-label', 'Scroll kiri');
+
+  // Tombol kanan
+  const btnRight = document.createElement('button');
+  btnRight.className = 'sb-arrow sb-arrow-right';
+  btnRight.innerHTML = '›';
+  btnRight.setAttribute('aria-label', 'Scroll kanan');
+
+  // Scroll inner container
+  const inner = document.createElement('div');
+  inner.className = 'sb-scroll-inner';
+
+  // Pindahkan .sb-section ke dalam inner
+  inner.appendChild(section);
+
+  // Rakit wrapper
+  wrapper.appendChild(btnLeft);
+  wrapper.appendChild(inner);
+  wrapper.appendChild(btnRight);
+  sidebar.appendChild(wrapper);
+
+  // Scroll per klik panah (lebar ~3 pill sekaligus)
+  const SCROLL_STEP = 120;
+  btnLeft.addEventListener('click',  () => { inner.scrollBy({ left: -SCROLL_STEP, behavior: 'smooth' }); });
+  btnRight.addEventListener('click', () => { inner.scrollBy({ left:  SCROLL_STEP, behavior: 'smooth' }); });
+
+  // Auto-scroll ke active item saat ganti mixing
+  observeActiveItem(inner);
+}
+
+// Auto scroll ke pill aktif agar selalu terlihat
+function observeActiveItem(inner) {
+  const mo = new MutationObserver(() => {
+    const active = inner.querySelector('.sb-item.active');
+    if (active) {
+      active.scrollIntoView({ inline: 'center', block: 'nearest', behavior: 'smooth' });
+    }
+  });
+  mo.observe(inner, { subtree: true, attributes: true, attributeFilter: ['class'] });
+}
+
+// Hook ke renderSidebar agar wrapper diinit ulang setiap re-render
+const _origRenderSidebar = renderSidebar;
+window.renderSidebar = function(jumlah) {
+  // Reset flag agar bisa re-init setelah innerHTML berubah
+  const sidebar = document.getElementById('sidebar');
+  if (sidebar) delete sidebar.dataset.mobileInit;
+
+  _origRenderSidebar(jumlah);
+
+  // Init setelah DOM update
+  requestAnimationFrame(() => {
+    initMobileSidebar();
+    // Scroll ke active item
+    const inner = document.querySelector('.sb-scroll-inner');
+    const active = inner && inner.querySelector('.sb-item.active');
+    if (active) active.scrollIntoView({ inline: 'center', block: 'nearest', behavior: 'smooth' });
+  });
+};
+
+// Inisialisasi pertama saat halaman load
+window.addEventListener('resize', () => {
+  const sidebar = document.getElementById('sidebar');
+  if (sidebar) delete sidebar.dataset.mobileInit;
+  initMobileSidebar();
+});
 navTo('plant');
 </script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
