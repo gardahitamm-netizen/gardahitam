@@ -886,17 +886,21 @@ async function renderPlantPage() {
 }
 
 const PLANT_META = {
-  MCA:{ mixing:'17 Mixing', desc:'Mixing Plant Alpha', color:'#2979ff' },
-  MCC:{ mixing:'17 Mixing', desc:'Mixing Plant Charlie', color:'#00b8d4' },
-  MCD:{ mixing:'17 Mixing', desc:'Mixing Plant Delta', color:'#00d084' },
-  MCG:{ mixing:'17 Mixing', desc:'Mixing Plant Golf', color:'#ffa502' },
-  MCH:{ mixing:'17 Mixing', desc:'Mixing Plant Hotel', color:'#ff6b81' },
-  MCI:{ mixing:'17 Mixing', desc:'Mixing Plant India', color:'#a29bfe' },
-  'PLANT E':{ mixing:'17 Mixing', desc:'Plant Extension E', color:'#fd79a8' },
+  MCA:     { desc:'Mixing Center A', color:'#2979ff' },
+  MCC:     { desc:'Mixing Center C', color:'#00b8d4' },
+  MCD:     { desc:'Mixing Center D', color:'#00d084' },
+  MCG:     { desc:'Mixing Center G', color:'#ffa502' },
+  MCH:     { desc:'Mixing Center H', color:'#ff6b81' },
+  MCI:     { desc:'Mixing Center I', color:'#a29bfe' },
+  'PLANT E':{ desc:'Plant Extension E', color:'#fd79a8' },
 };
 
 function plantCard(p, i) {
-  const m = PLANT_META[p.plant] || { mixing:'Mixing Plant', desc:p.label||'', color:'#2979ff' };
+  const m      = PLANT_META[p.plant] || { desc:p.label||'', color:'#2979ff' };
+  // ambil jumlah mixing dari config jika sudah ter-cache, fallback ke p.jumlah atau '...'
+  const cfg    = S.cache[p.plant + '_config'] || {};
+  const jumlah = p.jumlah || cfg[p.plant] || '…';
+  const mixTag = jumlah !== '…' ? `${jumlah} Mixing` : 'Memuat…';
   return `<div class="plant-card" onclick="navTo('detail','${p.plant}')" style="animation-delay:${i*0.06}s">
     <div class="plant-card-top">
       <div class="plant-card-corner" style="background:${m.color};box-shadow:0 0 8px ${m.color}"></div>
@@ -905,7 +909,7 @@ function plantCard(p, i) {
       <div class="plant-card-desc">${m.desc}</div>
     </div>
     <div class="plant-card-bottom">
-      <span class="plant-card-tag">${m.mixing}</span>
+      <span class="plant-card-tag">${mixTag}</span>
       <span class="plant-card-arr">→</span>
     </div>
   </div>`;
@@ -918,8 +922,13 @@ async function renderDetailPage() {
       S.cache[S.plant + '_config'] = cfg.config;
     }
   } catch(e) {}
-  const cfg    = S.cache[S.plant + '_config'] || {};
-  const jumlah = cfg[S.plant] || 17;
+  const cfg = S.cache[S.plant + '_config'] || {};
+  // Coba berbagai kemungkinan key dari spreadsheet
+  const jumlah = cfg[S.plant]
+    || cfg[S.plant.toLowerCase()]
+    || cfg[S.plant.toUpperCase()]
+    || Object.values(cfg)[0]
+    || 17;
   renderSidebar(jumlah);
   switchTab(S.tab, true);
 }
@@ -941,7 +950,9 @@ function renderSidebar(jumlah) {
 function selectMixing(num) {
   S.mixing = num;
   updateBC();
-  renderSidebar(Object.values(S.cache[S.plant + '_config'] || { x: 17 })[0] || 17);
+  const cfg    = S.cache[S.plant + '_config'] || {};
+  const jumlah = cfg[S.plant] || cfg[S.plant.toLowerCase()] || cfg[S.plant.toUpperCase()] || Object.values(cfg)[0] || 17;
+  renderSidebar(jumlah);
   if (S.tab === 'drive') renderDriveTab();
 }
 
@@ -1017,7 +1028,9 @@ async function renderDriveTab() {
     });
 
     id('drive-content').innerHTML = html;
-    renderSidebar(Object.values(S.cache[S.plant + '_config'] || { x: 17 })[0] || 17);
+    const cfg2   = S.cache[S.plant + '_config'] || {};
+    const jumlah2 = cfg2[S.plant] || cfg2[S.plant.toLowerCase()] || cfg2[S.plant.toUpperCase()] || Object.values(cfg2)[0] || 17;
+    renderSidebar(jumlah2);
   } catch(err) {
     id('drive-content').innerHTML = errHTML(err.message, renderDriveTab);
     id('drive-meta').textContent  = 'Gagal memuat';
