@@ -3,7 +3,6 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <!-- PWA -->
 <link rel="manifest" href="/gardahitam/manifest.json">
 <meta name="theme-color" content="#0b0f1a">
 <meta name="mobile-web-app-capable" content="yes">
@@ -30,25 +29,15 @@
   --accent:  #2979ff;
   --teal:    #00b8d4;
 }
-
-/* ── LIGHT MODE ── */
 body.light {
-  --bg:     #f0f4f8;
-  --surf:   #ffffff;
-  --surf2:  #e8eef5;
-  --surf3:  #dde6f0;
-  --border: #c8d8e8;
-  --text:   #1a2a3a;
-  --muted:  #6a8aaa;
-  --accent: #1565c0;
-  --teal:   #0088a8;
+  --bg:#f0f4f8;--surf:#ffffff;--surf2:#e8eef5;--surf3:#dde6f0;
+  --border:#c8d8e8;--text:#1a2a3a;--muted:#6a8aaa;--accent:#1565c0;--teal:#0088a8;
 }
 body.light .topbar{ background:#e0eaf5; }
 body.light .breadcrumb{ background:#e8f0f8; }
 body.light .sidebar{ background:#e8eef5; border-color:#c8d8e8; }
 body.light .hist-table thead tr{ background:#dde6f0; }
 body.light .hist-table tbody tr:hover{ background:#e8f0f8; }
-body.light .modal-box{ background:#f0f4f8; }
 body.light .login-box{ background:#f0f4f8; }
 body.light input, body.light select{ background:#e8eef5 !important; border-color:#c8d8e8 !important; color:#1a2a3a !important; }
 body.light .running-bar{ background:#dde6f0; border-color:#c8d8e8; }
@@ -56,70 +45,40 @@ body.light .running-bar{ background:#dde6f0; border-color:#c8d8e8; }
 *{margin:0;padding:0;box-sizing:border-box;}
 html, body { width:100%; height:100%; overflow:hidden; }
 @media (max-width: 768px) { html, body { overflow: auto; } }
-body {
-  font-family:'Plus Jakarta Sans',sans-serif;
-  background:var(--bg); color:var(--text);
-  display:flex; flex-direction:column;
-}
+body { font-family:'Plus Jakarta Sans',sans-serif; background:var(--bg); color:var(--text); display:flex; flex-direction:column; }
 
-/* ── TOPBAR ── */
-.topbar{
-  display:flex; align-items:center; gap:10px;
-  padding:0 20px; height:50px;
-  background:#080d18; border-bottom:1px solid var(--border);
-  flex-shrink:0; z-index:200;
-}
-.topbar-pulse{
-  width:8px; height:8px; border-radius:50%;
-  background:var(--ok); box-shadow:0 0 10px var(--ok);
-  animation:pulse 2s infinite;
-}
+.topbar{ display:flex; align-items:center; gap:10px; padding:0 20px; height:50px; background:#080d18; border-bottom:1px solid var(--border); flex-shrink:0; z-index:200; }
+.topbar-pulse{ width:8px; height:8px; border-radius:50%; background:var(--ok); box-shadow:0 0 10px var(--ok); animation:pulse 2s infinite; }
 @keyframes pulse{0%,100%{opacity:1;transform:scale(1)}50%{opacity:.5;transform:scale(.8)}}
-
-.btn-back{
-  display:flex; align-items:center; gap:5px;
-  font-family:'JetBrains Mono',monospace; font-size:11px;
-  padding:5px 12px; border-radius:5px; cursor:pointer;
-  border:1px solid var(--border); background:var(--surf2);
-  color:var(--muted); text-decoration:none;
-  transition:all .2s; flex-shrink:0;
-}
+.btn-back{ display:flex; align-items:center; gap:5px; font-family:'JetBrains Mono',monospace; font-size:11px; padding:5px 12px; border-radius:5px; cursor:pointer; border:1px solid var(--border); background:var(--surf2); color:var(--muted); text-decoration:none; transition:all .2s; flex-shrink:0; }
 .btn-back:hover{ border-color:#e8a020; color:#e8a020; }
-
 .topbar-divider{ width:1px; height:20px; background:var(--border); flex-shrink:0; }
 .topbar-title{font-family:'JetBrains Mono',monospace;font-weight:700;font-size:13px;color:#fff;}
 .topbar-sep{color:var(--border);}
 .topbar-sub{font-family:'JetBrains Mono',monospace;font-size:11px;color:var(--muted);}
 .topbar-r{margin-left:auto;display:flex;align-items:center;gap:8px;}
-.topbar-clock{
-  font-family:'JetBrains Mono',monospace;font-size:12px;color:var(--teal);
-  background:rgba(0,184,212,.08);border:1px solid rgba(0,184,212,.15);
-  padding:3px 10px;border-radius:4px;
-}
-.btn-sm{
-  display:flex;align-items:center;gap:5px;
-  font-family:'JetBrains Mono',monospace;font-size:11px;
-  padding:5px 12px;border-radius:5px;cursor:pointer;
-  border:1px solid var(--border);background:var(--surf2);color:var(--muted);
-  transition:all .2s;
-}
+.topbar-clock{ font-family:'JetBrains Mono',monospace;font-size:12px;color:var(--teal); background:rgba(0,184,212,.08);border:1px solid rgba(0,184,212,.15); padding:3px 10px;border-radius:4px; }
+.btn-sm{ display:flex;align-items:center;gap:5px; font-family:'JetBrains Mono',monospace;font-size:11px; padding:5px 12px;border-radius:5px;cursor:pointer; border:1px solid var(--border);background:var(--surf2);color:var(--muted); transition:all .2s; }
 .btn-sm:hover{border-color:var(--accent);color:var(--accent);}
 .btn-sm.loading{opacity:.5;pointer-events:none;}
+.btn-theme{ display:flex;align-items:center;gap:5px; font-family:'JetBrains Mono',monospace;font-size:11px; padding:5px 10px;border-radius:5px;cursor:pointer; border:1px solid var(--border);background:var(--surf2);color:var(--muted); transition:all .2s; flex-shrink:0; }
+.btn-theme:hover{ border-color:var(--teal); color:var(--teal); }
 
-/* ── BREADCRUMB ── */
-.breadcrumb{
-  display:flex;align-items:center;gap:5px;
-  padding:8px 20px;font-family:'JetBrains Mono',monospace;
-  font-size:11px;color:var(--muted);
-  border-bottom:1px solid var(--border);background:#09101d;
-  flex-shrink:0;
-}
+.breadcrumb{ display:flex;align-items:center;gap:5px; padding:8px 20px;font-family:'JetBrains Mono',monospace; font-size:11px;color:var(--muted); border-bottom:1px solid var(--border);background:#09101d; flex-shrink:0; }
 .bc-link{cursor:pointer;transition:color .15s;text-decoration:none;color:var(--muted);}
 .bc-link:hover{color:var(--accent);}
 .bc-cur{color:var(--text);}
 .bc-sep{color:var(--border);}
 
-/* ── PAGES WRAPPER ── */
+.running-bar{ flex-shrink:0; overflow:hidden; white-space:nowrap; background:#08111e; border-bottom:1px solid var(--border); padding:5px 0; position:relative; }
+.running-bar::before,.running-bar::after{ content:''; position:absolute; top:0; bottom:0; width:40px; z-index:2; }
+.running-bar::before{ left:0; background:linear-gradient(to right, #08111e, transparent); }
+.running-bar::after { right:0; background:linear-gradient(to left, #08111e, transparent); }
+.running-inner{ display:inline-block; animation:marquee 35s linear infinite; font-family:'JetBrains Mono',monospace; font-size:10px; color:var(--muted); letter-spacing:.5px; }
+.running-inner span{ margin:0 40px; }
+.running-inner .rb-label{ color:var(--teal); font-weight:700; }
+@keyframes marquee{ from{transform:translateX(100vw)} to{transform:translateX(-100%)} }
+
 #pages-wrapper { flex:1; overflow:hidden; display:flex; flex-direction:column; min-height:0; }
 .page { display:none; flex:1; overflow:hidden; flex-direction:column; min-height:0; }
 .page.active { display:flex; animation:fadeUp .2s ease; }
@@ -127,140 +86,47 @@ body {
 
 /* ── PLANT PAGE ── */
 .plant-wrap { padding:0; overflow-y:auto; width:100%; }
-
-/* Hero Banner */
-.plant-hero {
-  position:relative; overflow:hidden;
-  padding:36px 28px 28px;
-  background:linear-gradient(135deg,#070c18 0%,#0c1628 50%,#0a1220 100%);
-  border-bottom:1px solid var(--border);
-}
-.plant-hero::before {
-  content:'';position:absolute;inset:0;
-  background:radial-gradient(ellipse 60% 80% at 70% 50%, rgba(41,121,255,.07) 0%, transparent 70%),
-             radial-gradient(ellipse 40% 60% at 20% 80%, rgba(0,184,212,.05) 0%, transparent 60%);
-}
-.plant-hero-grid {
-  position:absolute;inset:0;opacity:.04;
-  background-image:linear-gradient(var(--border) 1px,transparent 1px),
-                   linear-gradient(90deg,var(--border) 1px,transparent 1px);
-  background-size:40px 40px;
-}
-.plant-hero-badge {
-  display:inline-flex;align-items:center;gap:6px;
-  font-family:'JetBrains Mono',monospace;font-size:9px;font-weight:700;
-  letter-spacing:2px;text-transform:uppercase;
-  color:var(--teal);border:1px solid rgba(0,184,212,.25);
-  background:rgba(0,184,212,.07);padding:4px 12px;border-radius:20px;
-  margin-bottom:14px;position:relative;
-}
+.plant-hero { position:relative; overflow:hidden; padding:36px 28px 28px; background:linear-gradient(135deg,#070c18 0%,#0c1628 50%,#0a1220 100%); border-bottom:1px solid var(--border); }
+.plant-hero::before { content:'';position:absolute;inset:0; background:radial-gradient(ellipse 60% 80% at 70% 50%, rgba(41,121,255,.07) 0%, transparent 70%), radial-gradient(ellipse 40% 60% at 20% 80%, rgba(0,184,212,.05) 0%, transparent 60%); }
+.plant-hero-grid { position:absolute;inset:0;opacity:.04; background-image:linear-gradient(var(--border) 1px,transparent 1px),linear-gradient(90deg,var(--border) 1px,transparent 1px); background-size:40px 40px; }
+.plant-hero-badge { display:inline-flex;align-items:center;gap:6px; font-family:'JetBrains Mono',monospace;font-size:9px;font-weight:700; letter-spacing:2px;text-transform:uppercase; color:var(--teal);border:1px solid rgba(0,184,212,.25); background:rgba(0,184,212,.07);padding:4px 12px;border-radius:20px; margin-bottom:14px;position:relative; }
 .plant-hero-badge::before{content:'';width:5px;height:5px;border-radius:50%;background:var(--teal);box-shadow:0 0 8px var(--teal);animation:pulse 2s infinite;}
-.plant-hero-title {
-  font-family:'JetBrains Mono',monospace;
-  font-size:26px;font-weight:700;color:#fff;
-  margin-bottom:6px;position:relative;
-  text-shadow:0 0 40px rgba(41,121,255,.3);
-}
+.plant-hero-title { font-family:'JetBrains Mono',monospace; font-size:26px;font-weight:700;color:#fff; margin-bottom:6px;position:relative; text-shadow:0 0 40px rgba(41,121,255,.3); }
 .plant-hero-sub {font-size:12px;color:var(--muted);position:relative;margin-bottom:20px;}
-
-/* System status row */
-.plant-stats-row {
-  display:flex;gap:12px;flex-wrap:wrap;position:relative;
-}
-.plant-stat-box {
-  background:rgba(255,255,255,.03);border:1px solid var(--border);
-  border-radius:8px;padding:10px 16px;min-width:110px;
-}
+.plant-stats-row { display:flex;gap:12px;flex-wrap:wrap;position:relative; }
+.plant-stat-box { background:rgba(255,255,255,.03);border:1px solid var(--border); border-radius:8px;padding:10px 16px;min-width:110px; }
 .plant-stat-label{font-family:'JetBrains Mono',monospace;font-size:9px;color:var(--muted);letter-spacing:1px;text-transform:uppercase;margin-bottom:4px;}
 .plant-stat-val{font-family:'JetBrains Mono',monospace;font-size:18px;font-weight:700;color:#fff;}
-.plant-stat-val.ok{color:var(--ok);}
-.plant-stat-val.accent{color:var(--accent);}
-.plant-stat-val.teal{color:var(--teal);}
-
-/* Plant grid section */
+.plant-stat-val.ok{color:var(--ok);}.plant-stat-val.accent{color:var(--accent);}.plant-stat-val.teal{color:var(--teal);}
 .plant-section { padding:24px 28px; }
-.plant-section-head {
-  display:flex;align-items:center;gap:10px;margin-bottom:16px;
-}
-.plant-section-label {
-  font-family:'JetBrains Mono',monospace;font-size:10px;font-weight:700;
-  letter-spacing:2px;text-transform:uppercase;color:var(--muted);
-}
+.plant-section-head { display:flex;align-items:center;gap:10px;margin-bottom:16px; }
+.plant-section-label { font-family:'JetBrains Mono',monospace;font-size:10px;font-weight:700; letter-spacing:2px;text-transform:uppercase;color:var(--muted); }
 .plant-section-line{flex:1;height:1px;background:linear-gradient(to right,var(--border),transparent);}
-
 .plant-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:14px;}
-.plant-card{
-  background:var(--surf);border:1px solid var(--border);
-  border-radius:12px;padding:0;cursor:pointer;
-  transition:all .25s;position:relative;overflow:hidden;
-}
-.plant-card-top {
-  padding:18px 18px 14px;
-  background:linear-gradient(135deg,var(--surf) 0%,var(--surf2) 100%);
-  position:relative;
-}
-.plant-card-top::after{
-  content:'';position:absolute;top:0;left:0;right:0;height:2px;
-  background:linear-gradient(90deg,var(--accent),var(--teal));
-  transform:scaleX(0);transform-origin:left;transition:transform .3s;
-}
+.plant-card{ background:var(--surf);border:1px solid var(--border); border-radius:12px;padding:0;cursor:pointer; transition:all .25s;position:relative;overflow:hidden; }
+.plant-card-top { padding:18px 18px 14px; background:linear-gradient(135deg,var(--surf) 0%,var(--surf2) 100%); position:relative; }
+.plant-card-top::after{ content:'';position:absolute;top:0;left:0;right:0;height:2px; background:linear-gradient(90deg,var(--accent),var(--teal)); transform:scaleX(0);transform-origin:left;transition:transform .3s; }
 .plant-card:hover .plant-card-top::after{transform:scaleX(1);}
-.plant-card-corner{
-  position:absolute;top:10px;right:10px;
-  width:6px;height:6px;border-radius:50%;
-  background:var(--ok);box-shadow:0 0 8px var(--ok);
-}
-.plant-card-id{
-  font-family:'JetBrains Mono',monospace;font-size:9px;
-  color:var(--muted);letter-spacing:1.5px;margin-bottom:8px;
-}
+.plant-card-corner{ position:absolute;top:10px;right:10px; width:6px;height:6px;border-radius:50%; background:var(--ok);box-shadow:0 0 8px var(--ok); }
+.plant-card-id{ font-family:'JetBrains Mono',monospace;font-size:9px; color:var(--muted);letter-spacing:1.5px;margin-bottom:8px; }
 .plant-card-name{font-family:'JetBrains Mono',monospace;font-size:20px;font-weight:700;color:#fff;margin-bottom:2px;}
 .plant-card-desc{font-size:11px;color:var(--muted);}
-.plant-card-bottom{
-  padding:10px 18px;
-  border-top:1px solid var(--border);
-  display:flex;align-items:center;justify-content:space-between;
-  background:rgba(0,0,0,.15);
-}
-.plant-card-tag{
-  font-family:'JetBrains Mono',monospace;font-size:9px;
-  color:var(--teal);background:rgba(0,184,212,.08);
-  border:1px solid rgba(0,184,212,.15);padding:2px 8px;border-radius:4px;
-}
+.plant-card-bottom{ padding:10px 18px; border-top:1px solid var(--border); display:flex;align-items:center;justify-content:space-between; background:rgba(0,0,0,.15); }
+.plant-card-tag{ font-family:'JetBrains Mono',monospace;font-size:9px; color:var(--teal);background:rgba(0,184,212,.08); border:1px solid rgba(0,184,212,.15);padding:2px 8px;border-radius:4px; }
 .plant-card-arr{color:var(--border);font-size:14px;transition:all .2s;}
 .plant-card:hover{border-color:rgba(41,121,255,.4);transform:translateY(-3px);box-shadow:0 12px 30px rgba(0,0,0,.5),0 0 0 1px rgba(41,121,255,.1);}
 .plant-card:hover .plant-card-arr{color:var(--accent);transform:translateX(3px);}
-
-/* Animated enter */
 .plant-card{animation:cardIn .4s ease both;}
 @keyframes cardIn{from{opacity:0;transform:translateY(16px)}to{opacity:1;transform:translateY(0)}}
-.plant-card:nth-child(1){animation-delay:.05s}
-.plant-card:nth-child(2){animation-delay:.10s}
-.plant-card:nth-child(3){animation-delay:.15s}
-.plant-card:nth-child(4){animation-delay:.20s}
-.plant-card:nth-child(5){animation-delay:.25s}
-.plant-card:nth-child(6){animation-delay:.30s}
-.plant-card:nth-child(7){animation-delay:.35s}
+.plant-card:nth-child(1){animation-delay:.05s}.plant-card:nth-child(2){animation-delay:.10s}.plant-card:nth-child(3){animation-delay:.15s}
+.plant-card:nth-child(4){animation-delay:.20s}.plant-card:nth-child(5){animation-delay:.25s}.plant-card:nth-child(6){animation-delay:.30s}.plant-card:nth-child(7){animation-delay:.35s}
 
 /* ── MAIN LAYOUT ── */
 .main-layout { display:flex; flex:1; overflow:hidden; min-height:0; width:100%; }
-.sidebar{
-  width:185px;min-width:185px;flex-shrink:0;
-  background:#080d18;border-right:1px solid var(--border);
-  overflow-y:auto;display:flex;flex-direction:column;
-}
+.sidebar{ width:190px;min-width:190px;flex-shrink:0; background:#080d18;border-right:1px solid var(--border); overflow-y:auto;display:flex;flex-direction:column; }
 .sb-section{padding:10px 0;}
-.sb-head{
-  font-family:'JetBrains Mono',monospace;font-size:9px;
-  font-weight:600;letter-spacing:1.5px;text-transform:uppercase;
-  color:var(--muted);padding:0 14px 6px;
-}
-.sb-item{
-  padding:9px 14px;font-size:12px;cursor:pointer;
-  transition:all .15s;display:flex;align-items:center;
-  justify-content:space-between;color:var(--muted);
-  border-left:2px solid transparent;
-}
+.sb-head{ font-family:'JetBrains Mono',monospace;font-size:9px; font-weight:600;letter-spacing:1.5px;text-transform:uppercase; color:var(--muted);padding:0 14px 6px; }
+.sb-item{ padding:8px 14px;font-size:11px;cursor:pointer; transition:all .15s;display:flex;align-items:center; justify-content:space-between;color:var(--muted); border-left:2px solid transparent; font-family:'JetBrains Mono',monospace; letter-spacing:.3px; }
 .sb-item:hover{background:var(--surf);color:var(--text);}
 .sb-item.active{background:var(--surf);color:#fff;border-left-color:var(--ok);}
 .sb-item.has-fault{color:#f87171;}
@@ -268,17 +134,8 @@ body {
 .sb-fault{width:5px;height:5px;border-radius:50%;background:var(--fault);}
 
 .content-area { flex:1; overflow-y:auto; display:flex; flex-direction:column; min-width:0; min-height:0; }
-.content-tabs{
-  display:flex;gap:0;
-  border-bottom:1px solid var(--border);
-  background:#09101d;padding:0 20px;
-  flex-shrink:0; position:sticky; top:0; z-index:10;
-}
-.ctab{
-  padding:12px 18px;font-size:12px;font-weight:600;
-  cursor:pointer;color:var(--muted);border-bottom:2px solid transparent;
-  transition:all .15s;white-space:nowrap;
-}
+.content-tabs{ display:flex;gap:0; border-bottom:1px solid var(--border); background:#09101d;padding:0 20px; flex-shrink:0; position:sticky; top:0; z-index:10; }
+.ctab{ padding:12px 18px;font-size:12px;font-weight:600; cursor:pointer;color:var(--muted);border-bottom:2px solid transparent; transition:all .15s;white-space:nowrap; }
 .ctab:hover{color:var(--text);}
 .ctab.active{color:var(--accent);border-bottom-color:var(--accent);}
 .tab-content{display:none;padding:20px;}
@@ -287,105 +144,61 @@ body {
 .drive-header{margin-bottom:16px;}
 .drive-title{font-size:16px;font-weight:700;font-family:'JetBrains Mono',monospace;margin-bottom:3px;}
 .drive-meta{font-size:11px;color:var(--muted);margin-bottom:14px;}
-
 .pills{display:flex;gap:7px;margin-bottom:18px;flex-wrap:wrap;}
-.pill{
-  display:flex;align-items:center;gap:5px;
-  padding:4px 11px;border-radius:20px;
-  font-family:'JetBrains Mono',monospace;font-size:11px;font-weight:600;
-  border:1px solid var(--border);background:rgba(255,255,255,.02);color:var(--muted);
-}
+.pill{ display:flex;align-items:center;gap:5px; padding:4px 11px;border-radius:20px; font-family:'JetBrains Mono',monospace;font-size:11px;font-weight:600; border:1px solid var(--border);background:rgba(255,255,255,.02);color:var(--muted); }
 .pill-d{width:6px;height:6px;border-radius:50%;}
-.pill.ok    {background:rgba(0,208,132,.07);border-color:rgba(0,208,132,.2);color:var(--ok);}
-.pill.fault {background:rgba(255,71,87,.07); border-color:rgba(255,71,87,.2); color:var(--fault);}
-.pill.maint {background:rgba(255,165,2,.07); border-color:rgba(255,165,2,.2); color:var(--maint);}
+.pill.ok{background:rgba(0,208,132,.07);border-color:rgba(0,208,132,.2);color:var(--ok);}
+.pill.fault{background:rgba(255,71,87,.07);border-color:rgba(255,71,87,.2);color:var(--fault);}
+.pill.maint{background:rgba(255,165,2,.07);border-color:rgba(255,165,2,.2);color:var(--maint);}
 .pill.kosong{background:rgba(90,122,153,.07);border-color:rgba(90,122,153,.2);color:var(--kosong);}
-.pill.ok    .pill-d{background:var(--ok);   box-shadow:0 0 5px var(--ok);}
+.pill.ok .pill-d{background:var(--ok);box-shadow:0 0 5px var(--ok);}
 .pill.fault .pill-d{background:var(--fault);box-shadow:0 0 5px var(--fault);}
 .pill.maint .pill-d{background:var(--maint);}
 .pill.kosong .pill-d{background:var(--kosong);}
 
-/* ── GROUP SEPARATOR INU / DSU / OTHER ── */
 .drive-group { margin-bottom: 28px; }
 .drive-group-header { display:flex; align-items:center; gap:10px; margin-bottom:12px; }
-.drive-group-label {
-  font-family:'JetBrains Mono',monospace; font-size:10px; font-weight:700;
-  letter-spacing:1.5px; text-transform:uppercase;
-  padding:4px 14px; border-radius:20px; border:1px solid; flex-shrink:0;
-  background:rgba(255,255,255,.03);
-}
+.drive-group-label { font-family:'JetBrains Mono',monospace; font-size:10px; font-weight:700; letter-spacing:1.5px; text-transform:uppercase; padding:4px 14px; border-radius:20px; border:1px solid; flex-shrink:0; background:rgba(255,255,255,.03); }
 .drive-group-line { flex:1; height:1px; background:linear-gradient(to right, var(--border), transparent); }
 .drive-group-count { font-family:'JetBrains Mono',monospace; font-size:10px; color:var(--muted); flex-shrink:0; }
 
 .cards-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(230px,1fr));gap:12px;}
-.inu-card{
-  background:var(--surf);border:1px solid var(--border);
-  border-radius:10px;padding:16px;cursor:pointer;
-  transition:all .2s;border-left:4px solid var(--border);
-  position:relative;
-}
+.inu-card{ background:var(--surf);border:1px solid var(--border); border-radius:10px;padding:16px;cursor:pointer; transition:all .2s;border-left:4px solid var(--border); position:relative; }
 .inu-card:hover{background:var(--surf2);transform:translateY(-1px);box-shadow:0 4px 16px rgba(0,0,0,.3);}
-.inu-card.ok    {border-left-color:var(--ok);}
-.inu-card.fault {border-left-color:var(--fault);background:rgba(255,71,87,.04);}
-.inu-card.maint {border-left-color:var(--maint);}
+.inu-card.ok{border-left-color:var(--ok);}
+.inu-card.fault{border-left-color:var(--fault);background:rgba(255,71,87,.04);}
+.inu-card.maint{border-left-color:var(--maint);}
 .inu-card.kosong{border-left-color:var(--kosong);}
 .inu-tag{font-family:'JetBrains Mono',monospace;font-size:10px;color:var(--muted);margin-bottom:3px;}
 .inu-name{font-size:15px;font-weight:700;margin-bottom:2px;}
 .inu-spec{font-size:11px;color:var(--muted);margin-bottom:12px;}
 .inu-status{display:flex;align-items:center;gap:5px;font-family:'JetBrains Mono',monospace;font-size:11px;font-weight:600;}
 .inu-dot{width:6px;height:6px;border-radius:50%;}
-.inu-card.ok     .inu-dot{background:var(--ok);   box-shadow:0 0 6px var(--ok);}
-.inu-card.fault  .inu-dot{background:var(--fault);box-shadow:0 0 6px var(--fault);}
-.inu-card.maint  .inu-dot{background:var(--maint);}
+.inu-card.ok .inu-dot{background:var(--ok);box-shadow:0 0 6px var(--ok);}
+.inu-card.fault .inu-dot{background:var(--fault);box-shadow:0 0 6px var(--fault);}
+.inu-card.maint .inu-dot{background:var(--maint);}
 .inu-card.kosong .inu-dot{background:var(--kosong);}
-.inu-card.ok     .inu-status{color:var(--ok);}
-.inu-card.fault  .inu-status{color:var(--fault);}
-.inu-card.maint  .inu-status{color:var(--maint);}
+.inu-card.ok .inu-status{color:var(--ok);}
+.inu-card.fault .inu-status{color:var(--fault);}
+.inu-card.maint .inu-status{color:var(--maint);}
 .inu-card.kosong .inu-status{color:var(--kosong);}
 .inu-info{font-size:11px;color:var(--muted);margin-top:6px;font-style:italic;}
-
-/* ★ TOMBOL LIHAT FOTO */
-.inu-photo-btn{
-  display:inline-flex; align-items:center; gap:5px;
-  margin-top:10px; padding:5px 11px;
-  font-family:'JetBrains Mono',monospace; font-size:10px; font-weight:600;
-  color:#00b8d4; background:rgba(0,184,212,.08);
-  border:1px solid rgba(0,184,212,.22); border-radius:6px;
-  cursor:pointer; transition:all .18s; text-decoration:none;
-  width:100%; justify-content:center;
-}
-.inu-photo-btn:hover{
-  background:rgba(0,184,212,.18); border-color:rgba(0,184,212,.5);
-  color:#fff; transform:translateY(-1px);
-}
-
-/* Edit badge on card */
-.inu-edit-hint{
-  position:absolute; top:10px; right:10px;
-  font-size:10px; font-family:'JetBrains Mono',monospace;
-  color:var(--muted); opacity:0; transition:opacity .2s;
-  background:var(--surf3); border:1px solid var(--border);
-  padding:2px 7px; border-radius:4px;
-}
+.inu-photo-btn{ display:inline-flex; align-items:center; gap:5px; margin-top:10px; padding:5px 11px; font-family:'JetBrains Mono',monospace; font-size:10px; font-weight:600; color:#00b8d4; background:rgba(0,184,212,.08); border:1px solid rgba(0,184,212,.22); border-radius:6px; cursor:pointer; transition:all .18s; text-decoration:none; width:100%; justify-content:center; }
+.inu-photo-btn:hover{ background:rgba(0,184,212,.18); border-color:rgba(0,184,212,.5); color:#fff; transform:translateY(-1px); }
+.inu-edit-hint{ position:absolute; top:10px; right:10px; font-size:10px; font-family:'JetBrains Mono',monospace; color:var(--muted); opacity:0; transition:opacity .2s; background:var(--surf3); border:1px solid var(--border); padding:2px 7px; border-radius:4px; }
 .inu-card:hover .inu-edit-hint{ opacity:1; }
 
 .hist-table-wrap{overflow-x:auto;}
 .hist-table{width:100%;border-collapse:collapse;font-size:12px;}
-.hist-table th{
-  text-align:left;padding:9px 12px;
-  font-family:'JetBrains Mono',monospace;font-size:10px;
-  letter-spacing:1px;text-transform:uppercase;
-  color:var(--muted);border-bottom:1px solid var(--border);
-  background:var(--surf);white-space:nowrap;
-}
+.hist-table th{ text-align:left;padding:9px 12px; font-family:'JetBrains Mono',monospace;font-size:10px; letter-spacing:1px;text-transform:uppercase; color:var(--muted);border-bottom:1px solid var(--border); background:var(--surf);white-space:nowrap; }
 .hist-table td{ padding:9px 12px;border-bottom:1px solid rgba(31,48,80,.5);vertical-align:middle; }
 .hist-table tr:hover td{background:rgba(255,255,255,.02);}
 .hist-ts{font-family:'JetBrains Mono',monospace;font-size:10px;color:var(--muted);}
 .hist-id{font-family:'JetBrains Mono',monospace;font-size:11px;color:var(--teal);}
 .status-tag{ display:inline-block;padding:2px 8px;border-radius:4px;font-family:'JetBrains Mono',monospace;font-size:10px;font-weight:700; }
-.st-ok    {background:rgba(0,208,132,.15);color:var(--ok);}
-.st-fault {background:rgba(255,71,87,.15); color:var(--fault);}
-.st-maint {background:rgba(255,165,2,.15); color:var(--maint);}
+.st-ok{background:rgba(0,208,132,.15);color:var(--ok);}
+.st-fault{background:rgba(255,71,87,.15);color:var(--fault);}
+.st-maint{background:rgba(255,165,2,.15);color:var(--maint);}
 .st-kosong{background:rgba(90,122,153,.15);color:var(--kosong);}
 
 .pm-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:12px;}
@@ -396,29 +209,16 @@ body {
 .pm-card-meta{font-size:11px;color:var(--muted);display:flex;flex-direction:column;gap:3px;}
 .pm-card-status{margin-top:10px;}
 
-/* ── EDIT MODAL ── */
-.modal-overlay{
-  display:none;position:fixed;inset:0;
-  background:rgba(0,0,0,.7);backdrop-filter:blur(4px);
-  z-index:500;align-items:center;justify-content:center;
-}
+.modal-overlay{ display:none;position:fixed;inset:0; background:rgba(0,0,0,.7);backdrop-filter:blur(4px); z-index:500;align-items:center;justify-content:center; }
 .modal-overlay.open{display:flex;}
-.modal{
-  background:var(--surf);border:1px solid var(--border);
-  border-radius:14px;padding:24px;width:100%;max-width:420px;
-  animation:modalIn .2s ease;
-}
+.modal{ background:var(--surf);border:1px solid var(--border); border-radius:14px;padding:24px;width:100%;max-width:420px; animation:modalIn .2s ease; }
 @keyframes modalIn{from{opacity:0;transform:scale(.95)}to{opacity:1;transform:scale(1)}}
 .modal-title{font-size:15px;font-weight:700;margin-bottom:4px;}
 .modal-sub{font-size:12px;color:var(--muted);margin-bottom:20px;}
 .modal-id{ font-family:'JetBrains Mono',monospace;font-size:12px;background:var(--surf2);padding:8px 12px;border-radius:6px;color:var(--teal);margin-bottom:16px; }
 .form-group{margin-bottom:14px;}
 .form-label{font-size:11px;font-weight:600;color:var(--muted);margin-bottom:6px;display:block;text-transform:uppercase;letter-spacing:.5px;}
-.form-select,.form-input{
-  width:100%;background:var(--surf2);border:1px solid var(--border);
-  color:var(--text);padding:9px 12px;border-radius:7px;font-size:13px;
-  font-family:'Plus Jakarta Sans',sans-serif;transition:border-color .15s;outline:none;
-}
+.form-select,.form-input{ width:100%;background:var(--surf2);border:1px solid var(--border); color:var(--text);padding:9px 12px;border-radius:7px;font-size:13px; font-family:'Plus Jakarta Sans',sans-serif;transition:border-color .15s;outline:none; }
 .form-select:focus,.form-input:focus{border-color:var(--accent);}
 .form-select option{background:var(--surf2);}
 .form-hint{font-size:10px;color:var(--muted);margin-top:4px;}
@@ -429,76 +229,26 @@ body {
 .btn-save:hover{background:#1a6aff;}
 .btn-save:disabled{opacity:.5;pointer-events:none;}
 
-/* ── LOGIN MODAL ── */
-.login-overlay{
-  display:none; position:fixed; inset:0;
-  background:rgba(0,0,0,.75); backdrop-filter:blur(6px);
-  z-index:600; align-items:center; justify-content:center;
-}
+.login-overlay{ display:none; position:fixed; inset:0; background:rgba(0,0,0,.75); backdrop-filter:blur(6px); z-index:600; align-items:center; justify-content:center; }
 .login-overlay.open{ display:flex; }
-.login-box{
-  background:var(--surf); border:1px solid var(--border);
-  border-radius:16px; padding:28px 28px 24px; width:100%; max-width:360px;
-  animation:modalIn .2s ease; position:relative; overflow:hidden;
-}
-.login-box::before{
-  content:''; position:absolute; top:0; left:0; right:0; height:3px;
-  background:linear-gradient(90deg, var(--accent), var(--teal));
-}
-.login-icon{
-  width:44px; height:44px; border-radius:10px;
-  background:rgba(41,121,255,.12); border:1px solid rgba(41,121,255,.2);
-  display:flex; align-items:center; justify-content:center;
-  font-size:20px; margin-bottom:16px;
-}
+.login-box{ background:var(--surf); border:1px solid var(--border); border-radius:16px; padding:28px 28px 24px; width:100%; max-width:360px; animation:modalIn .2s ease; position:relative; overflow:hidden; }
+.login-box::before{ content:''; position:absolute; top:0; left:0; right:0; height:3px; background:linear-gradient(90deg, var(--accent), var(--teal)); }
+.login-icon{ width:44px; height:44px; border-radius:10px; background:rgba(41,121,255,.12); border:1px solid rgba(41,121,255,.2); display:flex; align-items:center; justify-content:center; font-size:20px; margin-bottom:16px; }
 .login-title{ font-size:16px; font-weight:700; margin-bottom:3px; }
 .login-sub{ font-size:12px; color:var(--muted); margin-bottom:6px; }
-.login-area-badge{
-  display:inline-flex; align-items:center; gap:5px;
-  background:rgba(0,184,212,.08); border:1px solid rgba(0,184,212,.18);
-  color:var(--teal); font-family:'JetBrains Mono',monospace; font-size:11px;
-  padding:3px 10px; border-radius:20px; margin-bottom:20px;
-}
+.login-area-badge{ display:inline-flex; align-items:center; gap:5px; background:rgba(0,184,212,.08); border:1px solid rgba(0,184,212,.18); color:var(--teal); font-family:'JetBrains Mono',monospace; font-size:11px; padding:3px 10px; border-radius:20px; margin-bottom:20px; }
 .login-field{ margin-bottom:13px; }
-.login-field label{
-  display:block; font-size:10px; font-weight:600;
-  text-transform:uppercase; letter-spacing:.7px;
-  color:var(--muted); margin-bottom:6px;
-}
-.login-field input{
-  width:100%; background:var(--surf2); border:1px solid var(--border);
-  color:var(--text); padding:10px 12px; border-radius:8px;
-  font-size:13px; font-family:'Plus Jakarta Sans',sans-serif;
-  transition:border-color .15s; outline:none;
-}
+.login-field label{ display:block; font-size:10px; font-weight:600; text-transform:uppercase; letter-spacing:.7px; color:var(--muted); margin-bottom:6px; }
+.login-field input{ width:100%; background:var(--surf2); border:1px solid var(--border); color:var(--text); padding:10px 12px; border-radius:8px; font-size:13px; font-family:'Plus Jakarta Sans',sans-serif; transition:border-color .15s; outline:none; }
 .login-field input:focus{ border-color:var(--accent); }
-.login-err{
-  font-size:12px; color:var(--fault);
-  background:rgba(255,71,87,.08); border:1px solid rgba(255,71,87,.2);
-  border-radius:6px; padding:8px 12px; margin-bottom:12px; display:none;
-}
+.login-err{ font-size:12px; color:var(--fault); background:rgba(255,71,87,.08); border:1px solid rgba(255,71,87,.2); border-radius:6px; padding:8px 12px; margin-bottom:12px; display:none; }
 .login-actions{ display:flex; gap:8px; margin-top:4px; }
-.btn-login{
-  flex:1; padding:10px; border-radius:8px;
-  font-size:13px; font-weight:600; cursor:pointer;
-  background:var(--accent); border:1px solid var(--accent);
-  color:#fff; transition:all .15s; display:flex;
-  align-items:center; justify-content:center; gap:6px;
-}
+.btn-login{ flex:1; padding:10px; border-radius:8px; font-size:13px; font-weight:600; cursor:pointer; background:var(--accent); border:1px solid var(--accent); color:#fff; transition:all .15s; display:flex; align-items:center; justify-content:center; gap:6px; }
 .btn-login:hover{ background:#1a6aff; }
 .btn-login:disabled{ opacity:.5; pointer-events:none; }
-.btn-login-cancel{
-  padding:10px 16px; border-radius:8px;
-  font-size:13px; cursor:pointer;
-  background:transparent; border:1px solid var(--border);
-  color:var(--muted); transition:all .15s;
-}
+.btn-login-cancel{ padding:10px 16px; border-radius:8px; font-size:13px; cursor:pointer; background:transparent; border:1px solid var(--border); color:var(--muted); transition:all .15s; }
 .btn-login-cancel:hover{ border-color:var(--text); color:var(--text); }
-.btn-spin{
-  width:13px; height:13px; border:2px solid rgba(255,255,255,.3);
-  border-top-color:#fff; border-radius:50%; animation:spin .6s linear infinite;
-  display:none;
-}
+.btn-spin{ width:13px; height:13px; border:2px solid rgba(255,255,255,.3); border-top-color:#fff; border-radius:50%; animation:spin .6s linear infinite; display:none; }
 .btn-login.loading .btn-spin{ display:block; }
 .btn-login.loading .btn-login-label{ display:none; }
 
@@ -509,84 +259,16 @@ body {
 .state-box p{font-size:12px;text-align:center;max-width:340px;}
 .btn-retry{ background:rgba(41,121,255,.12);border:1px solid rgba(41,121,255,.25);color:var(--accent);padding:6px 16px;border-radius:6px;font-size:12px;cursor:pointer;font-family:'JetBrains Mono',monospace; }
 
-/* ── RUNNING TEXT BAR ── */
-.running-bar{
-  flex-shrink:0; overflow:hidden; white-space:nowrap;
-  background:#08111e; border-bottom:1px solid var(--border);
-  padding:5px 0; position:relative;
-}
-.running-bar::before,.running-bar::after{
-  content:''; position:absolute; top:0; bottom:0; width:40px; z-index:2;
-}
-.running-bar::before{ left:0; background:linear-gradient(to right, #08111e, transparent); }
-.running-bar::after { right:0; background:linear-gradient(to left,  #08111e, transparent); }
-.running-inner{
-  display:inline-block;
-  animation:marquee 35s linear infinite;
-  font-family:'JetBrains Mono',monospace; font-size:10px; color:var(--muted);
-  letter-spacing:.5px;
-}
-.running-inner span{ margin:0 40px; }
-.running-inner .rb-label{ color:var(--teal); font-weight:700; }
-@keyframes marquee{ from{transform:translateX(100vw)} to{transform:translateX(-100%)} }
-
-/* ── THEME TOGGLE ── */
-.btn-theme{
-  display:flex;align-items:center;gap:5px;
-  font-family:'JetBrains Mono',monospace;font-size:11px;
-  padding:5px 10px;border-radius:5px;cursor:pointer;
-  border:1px solid var(--border);background:var(--surf2);color:var(--muted);
-  transition:all .2s; flex-shrink:0;
-}
-.btn-theme:hover{ border-color:var(--teal); color:var(--teal); }
-
-/* ── PDF PRINT BUTTON ── */
-.tab-action-bar{
-  display:flex; justify-content:flex-end; margin-bottom:14px;
-}
-.btn-pdf{
-  display:flex;align-items:center;gap:5px;
-  font-family:'JetBrains Mono',monospace;font-size:11px;
-  padding:5px 14px;border-radius:5px;cursor:pointer;
-  border:1px solid rgba(255,71,87,.3);background:rgba(255,71,87,.07);color:#ff4757;
-  transition:all .2s;
-}
+.tab-action-bar{ display:flex; justify-content:flex-end; margin-bottom:14px; }
+.btn-pdf{ display:flex;align-items:center;gap:5px; font-family:'JetBrains Mono',monospace;font-size:11px; padding:5px 14px;border-radius:5px;cursor:pointer; border:1px solid rgba(255,71,87,.3);background:rgba(255,71,87,.07);color:#ff4757; transition:all .2s; }
 .btn-pdf:hover{ background:rgba(255,71,87,.15); border-color:#ff4757; }
 
 ::-webkit-scrollbar{width:4px;height:4px;}
 ::-webkit-scrollbar-track{background:transparent;}
 ::-webkit-scrollbar-thumb{background:var(--border);border-radius:4px;}
 
-/* ══════════════════════════════════════
-   RESPONSIVE — MOBILE
-══════════════════════════════════════ */
-/*
-  ═══════════════════════════════════════════════════════
-  PATCH: Ganti seluruh blok @media (max-width: 768px)
-  di file HTML asli dengan CSS di bawah ini.
-  ═══════════════════════════════════════════════════════
-*/
-
-/* ══════════════════════════════════════
-   RESPONSIVE — MOBILE
-══════════════════════════════════════ */
-/*
-  ═══════════════════════════════════════════════════════
-  PATCH SIDEBAR MOBILE — Ganti seluruh blok
-  @media (max-width: 768px) dan @media (max-width: 380px)
-  di file HTML asli dengan CSS di bawah ini.
-  ═══════════════════════════════════════════════════════
-*/
-
 @media (max-width: 768px) {
-
-  html, body {
-    overflow: hidden !important;
-    height: 100% !important;
-    width: 100% !important;
-  }
-
-  /* ── TOPBAR ── */
+  html, body { overflow: hidden !important; height: 100% !important; width: 100% !important; }
   .topbar { padding: 0 10px; gap: 6px; height: 44px; flex-shrink: 0; }
   .topbar-title { font-size: 11px; }
   .topbar-sub { display: none; }
@@ -595,28 +277,12 @@ body {
   .btn-theme { font-size: 10px; padding: 4px 8px; }
   .btn-sm { font-size: 10px; padding: 4px 8px; }
   .topbar-clock { font-size: 11px; padding: 2px 7px; }
-
   .running-bar { flex-shrink: 0; }
   .running-inner { font-size: 9px; }
   .breadcrumb { padding: 5px 10px; font-size: 10px; flex-shrink: 0; }
-
-  #pages-wrapper {
-    flex: 1;
-    overflow: hidden;
-    display: flex;
-    flex-direction: column;
-    min-height: 0;
-  }
-  .page {
-    flex: 1;
-    overflow: hidden;
-    display: none;
-    flex-direction: column;
-    min-height: 0;
-  }
+  #pages-wrapper { flex: 1; overflow: hidden; display: flex; flex-direction: column; min-height: 0; }
+  .page { flex: 1; overflow: hidden; display: none; flex-direction: column; min-height: 0; }
   .page.active { display: flex; }
-
-  /* ── PLANT PAGE ── */
   .plant-wrap { flex: 1; overflow-y: auto; -webkit-overflow-scrolling: touch; }
   .plant-hero { padding: 16px 12px 14px; }
   .plant-hero-title { font-size: 18px; }
@@ -631,192 +297,56 @@ body {
   .plant-card-name { font-size: 16px; }
   .plant-card-desc { font-size: 10px; }
   .plant-card-bottom { padding: 7px 10px; }
-
-  /* ── MAIN LAYOUT ── */
-  .main-layout {
-    display: flex !important;
-    flex-direction: column !important;
-    flex: 1 !important;
-    overflow: hidden !important;
-    min-height: 0 !important;
-  }
-
-  /* ══════════════════════════════════════
-     SIDEBAR — wrapper dengan tombol panah
-  ══════════════════════════════════════ */
-  .sidebar {
-    width: 100% !important;
-    min-width: unset !important;
-    height: auto !important;
-    flex-shrink: 0 !important;
-    border-right: none !important;
-    border-bottom: 1px solid var(--border) !important;
-    background: #080d18 !important;
-    /* Hapus flex row dari sidebar langsung — kita pakai wrapper JS */
-    display: block !important;
-    overflow: visible !important;
-    padding: 0 !important;
-    position: relative !important;
-  }
-
-  /* Container panah + scroll */
-  .sb-scroll-wrapper {
-    display: flex !important;
-    align-items: center !important;
-    height: 48px !important;
-    position: relative !important;
-  }
-
-  /* Tombol panah kiri/kanan */
-  .sb-arrow {
-    flex-shrink: 0 !important;
-    width: 32px !important;
-    height: 100% !important;
-    display: flex !important;
-    align-items: center !important;
-    justify-content: center !important;
-    cursor: pointer !important;
-    color: var(--muted) !important;
-    font-size: 16px !important;
-    background: #080d18 !important;
-    border: none !important;
-    z-index: 5 !important;
-    transition: color .15s !important;
-    user-select: none !important;
-    -webkit-user-select: none !important;
-    padding: 0 !important;
-  }
+  .main-layout { display: flex !important; flex-direction: column !important; flex: 1 !important; overflow: hidden !important; min-height: 0 !important; }
+  .sidebar { width: 100% !important; min-width: unset !important; height: auto !important; flex-shrink: 0 !important; border-right: none !important; border-bottom: 1px solid var(--border) !important; background: #080d18 !important; display: block !important; overflow: visible !important; padding: 0 !important; position: relative !important; }
+  .sb-scroll-wrapper { display: flex !important; align-items: center !important; height: 48px !important; position: relative !important; }
+  .sb-arrow { flex-shrink: 0 !important; width: 32px !important; height: 100% !important; display: flex !important; align-items: center !important; justify-content: center !important; cursor: pointer !important; color: var(--muted) !important; font-size: 16px !important; background: #080d18 !important; border: none !important; z-index: 5 !important; transition: color .15s !important; user-select: none !important; -webkit-user-select: none !important; padding: 0 !important; }
   .sb-arrow:active { color: var(--accent) !important; }
-  .sb-arrow-left  { border-right: 1px solid var(--border) !important; }
-  .sb-arrow-right { border-left:  1px solid var(--border) !important; }
-
-  /* Scroll area pill */
-  .sb-scroll-inner {
-    flex: 1 !important;
-    display: flex !important;
-    flex-direction: row !important;
-    align-items: center !important;
-    gap: 5px !important;
-    overflow-x: auto !important;
-    overflow-y: hidden !important;
-    padding: 7px 8px !important;
-    scrollbar-width: none !important;
-    -webkit-overflow-scrolling: touch !important;
-    scroll-behavior: smooth !important;
-  }
+  .sb-arrow-left { border-right: 1px solid var(--border) !important; }
+  .sb-arrow-right { border-left: 1px solid var(--border) !important; }
+  .sb-scroll-inner { flex: 1 !important; display: flex !important; flex-direction: row !important; align-items: center !important; gap: 5px !important; overflow-x: auto !important; overflow-y: hidden !important; padding: 7px 8px !important; scrollbar-width: none !important; -webkit-overflow-scrolling: touch !important; scroll-behavior: smooth !important; }
   .sb-scroll-inner::-webkit-scrollbar { display: none !important; }
-
-  .sb-section {
-    padding: 0 !important;
-    display: flex !important;
-    flex-direction: row !important;
-    gap: 5px !important;
-    flex-shrink: 0 !important;
-    align-items: center !important;
-  }
-
+  .sb-section { padding: 0 !important; display: flex !important; flex-direction: row !important; gap: 5px !important; flex-shrink: 0 !important; align-items: center !important; }
   .sb-head { display: none !important; }
-
-  .sb-item {
-    flex-shrink: 0 !important;
-    padding: 5px 13px !important;
-    border-radius: 20px !important;
-    font-size: 11px !important;
-    white-space: nowrap !important;
-    border: 1px solid var(--border) !important;
-    border-left: 1px solid var(--border) !important;
-    justify-content: center !important;
-    line-height: 1 !important;
-    color: var(--muted) !important;
-    background: transparent !important;
-  }
-  .sb-item.active {
-    background: var(--accent) !important;
-    border-color: var(--accent) !important;
-    color: #fff !important;
-  }
+  .sb-item { flex-shrink: 0 !important; padding: 5px 10px !important; border-radius: 20px !important; font-size: 10px !important; white-space: nowrap !important; border: 1px solid var(--border) !important; border-left: 1px solid var(--border) !important; justify-content: center !important; line-height: 1 !important; color: var(--muted) !important; background: transparent !important; }
+  .sb-item.active { background: var(--accent) !important; border-color: var(--accent) !important; color: #fff !important; }
   .sb-item.has-fault { color: #f87171 !important; border-color: rgba(255,71,87,.35) !important; }
   .sb-item.has-fault.active { background: var(--fault) !important; border-color: var(--fault) !important; color: #fff !important; }
   .sb-fault { display: none !important; }
-
-  /* ── CONTENT AREA ── */
-  .content-area {
-    flex: 1 !important;
-    min-height: 0 !important;
-    overflow-y: auto !important;
-    -webkit-overflow-scrolling: touch !important;
-    display: flex !important;
-    flex-direction: column !important;
-    width: 100% !important;
-  }
-
-  .content-tabs {
-    position: sticky !important;
-    top: 0 !important;
-    z-index: 10 !important;
-    padding: 0 8px !important;
-    flex-shrink: 0 !important;
-    background: #09101d !important;
-  }
+  .content-area { flex: 1 !important; min-height: 0 !important; overflow-y: auto !important; -webkit-overflow-scrolling: touch !important; display: flex !important; flex-direction: column !important; width: 100% !important; }
+  .content-tabs { position: sticky !important; top: 0 !important; z-index: 10 !important; padding: 0 8px !important; flex-shrink: 0 !important; background: #09101d !important; }
   .ctab { padding: 10px 11px; font-size: 11px; }
   .tab-content { padding: 12px 10px !important; }
-
-  /* ── DRIVE HEADER ── */
   .drive-title { font-size: 13px; }
-  .drive-meta  { font-size: 10px; }
+  .drive-meta { font-size: 10px; }
   .pills { gap: 4px; flex-wrap: wrap; }
-  .pill  { font-size: 10px; padding: 3px 8px; }
-
-  /* ── CARDS ── */
+  .pill { font-size: 10px; padding: 3px 8px; }
   .cards-grid { grid-template-columns: 1fr !important; gap: 8px; }
-  .inu-card   { padding: 12px 13px; }
-  .inu-tag    { font-size: 9px; }
-  .inu-name   { font-size: 14px; }
-  .inu-spec   { font-size: 10px; }
+  .inu-card { padding: 12px 13px; }
+  .inu-tag { font-size: 9px; }
+  .inu-name { font-size: 14px; }
+  .inu-spec { font-size: 10px; }
   .drive-group-label { font-size: 9px; padding: 3px 10px; }
   .drive-group-count { font-size: 9px; }
-
-  /* ── HISTORI TABLE ── */
   .hist-table-wrap { overflow-x: auto; -webkit-overflow-scrolling: touch; }
   .hist-table { min-width: 500px; font-size: 11px; }
   .tab-action-bar { margin-bottom: 10px; }
-
-  /* ── PM GRID ── */
   .pm-grid { grid-template-columns: 1fr !important; }
-
-  /* ── MODALS ── */
   .modal-overlay { align-items: flex-end; }
-  .modal {
-    border-radius: 18px 18px 0 0 !important;
-    max-width: 100% !important;
-    margin: 0 !important;
-    padding: 20px 16px !important;
-    max-height: 90vh;
-    overflow-y: auto;
-  }
+  .modal { border-radius: 18px 18px 0 0 !important; max-width: 100% !important; margin: 0 !important; padding: 20px 16px !important; max-height: 90vh; overflow-y: auto; }
   .login-overlay { align-items: flex-end; }
-  .login-box {
-    border-radius: 18px 18px 0 0 !important;
-    max-width: 100% !important;
-    margin: 0 !important;
-    padding: 20px 16px 18px !important;
-  }
+  .login-box { border-radius: 18px 18px 0 0 !important; max-width: 100% !important; margin: 0 !important; padding: 20px 16px 18px !important; }
 }
-
 @media (max-width: 380px) {
   .plant-grid { grid-template-columns: 1fr 1fr; }
   .plant-card-name { font-size: 14px; }
-  .topbar-title {
-    font-size: 10px; max-width: 80px;
-    overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
-  }
+  .topbar-title { font-size: 10px; max-width: 80px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
   .topbar-clock { display: none; }
 }
 </style>
 </head>
 <body>
 
-<!-- TOPBAR -->
 <div class="topbar">
   <a href="index.html" class="btn-back">← Home</a>
   <div class="topbar-divider"></div>
@@ -831,7 +361,6 @@ body {
   </div>
 </div>
 
-<!-- RUNNING TEXT -->
 <div class="running-bar">
   <div class="running-inner">
     <span><span class="rb-label">📢 INFO:</span> Sistem monitoring drive aktif 24 jam — laporkan anomali segera ke tim teknisi</span>
@@ -842,7 +371,6 @@ body {
   </div>
 </div>
 
-<!-- BREADCRUMB -->
 <div class="breadcrumb">
   <a href="index.html" class="bc-link">Home</a>
   <span class="bc-sep">›</span>
@@ -853,7 +381,6 @@ body {
   <span id="bc3" class="bc-cur" style="display:none"></span>
 </div>
 
-<!-- PAGES WRAPPER -->
 <div id="pages-wrapper">
 
   <!-- PAGE: PLANT -->
@@ -865,22 +392,10 @@ body {
         <div class="plant-hero-title">Drive Monitoring</div>
         <div class="plant-hero-sub">KECO WATERBANG — Pilih plant untuk memantau kondisi drive secara real-time</div>
         <div class="plant-stats-row">
-          <div class="plant-stat-box">
-            <div class="plant-stat-label">Total Plant</div>
-            <div class="plant-stat-val accent" id="stat-total">—</div>
-          </div>
-          <div class="plant-stat-box">
-            <div class="plant-stat-label">System Status</div>
-            <div class="plant-stat-val ok">ONLINE</div>
-          </div>
-          <div class="plant-stat-box">
-            <div class="plant-stat-label">Last Sync</div>
-            <div class="plant-stat-val teal" id="stat-sync">—</div>
-          </div>
-          <div class="plant-stat-box">
-            <div class="plant-stat-label">Mode</div>
-            <div class="plant-stat-val" id="stat-mode">DARK</div>
-          </div>
+          <div class="plant-stat-box"><div class="plant-stat-label">Total Plant</div><div class="plant-stat-val accent" id="stat-total">—</div></div>
+          <div class="plant-stat-box"><div class="plant-stat-label">System Status</div><div class="plant-stat-val ok">ONLINE</div></div>
+          <div class="plant-stat-box"><div class="plant-stat-label">Last Sync</div><div class="plant-stat-val teal" id="stat-sync">—</div></div>
+          <div class="plant-stat-box"><div class="plant-stat-label">Mode</div><div class="plant-stat-val" id="stat-mode">DARK</div></div>
         </div>
       </div>
       <div class="plant-section">
@@ -917,15 +432,11 @@ body {
           <div id="drive-content"></div>
         </div>
         <div class="tab-content" id="tab-histori">
-          <div class="tab-action-bar">
-            <button class="btn-pdf" onclick="printHistoriPDF()">🖨️ Cetak PDF Histori</button>
-          </div>
+          <div class="tab-action-bar"><button class="btn-pdf" onclick="printHistoriPDF()">🖨️ Cetak PDF Histori</button></div>
           <div id="histori-content"></div>
         </div>
         <div class="tab-content" id="tab-pm">
-          <div class="tab-action-bar">
-            <button class="btn-pdf" onclick="printPMPDF()">🖨️ Cetak PDF Jadwal PM</button>
-          </div>
+          <div class="tab-action-bar"><button class="btn-pdf" onclick="printPMPDF()">🖨️ Cetak PDF Jadwal PM</button></div>
           <div id="pm-content"></div>
         </div>
       </div>
@@ -940,18 +451,9 @@ body {
     <div class="login-icon">🔐</div>
     <div class="login-title">Login Diperlukan</div>
     <div class="login-sub">Untuk mengedit drive, masukkan kredensial akun mixing ini.</div>
-    <div class="login-area-badge">
-      <span>📍</span>
-      <span id="login-area-label">—</span>
-    </div>
-    <div class="login-field">
-      <label>Username</label>
-      <input type="text" id="login-username" placeholder="Masukkan username" autocomplete="off">
-    </div>
-    <div class="login-field">
-      <label>Password</label>
-      <input type="password" id="login-password" placeholder="Masukkan password">
-    </div>
+    <div class="login-area-badge"><span>📍</span><span id="login-area-label">—</span></div>
+    <div class="login-field"><label>Username</label><input type="text" id="login-username" placeholder="Masukkan username" autocomplete="off"></div>
+    <div class="login-field"><label>Password</label><input type="password" id="login-password" placeholder="Masukkan password"></div>
     <div class="login-err" id="login-err"></div>
     <div class="login-actions">
       <button class="btn-login-cancel" onclick="closeLoginModal()">Batal</button>
@@ -963,14 +465,13 @@ body {
   </div>
 </div>
 
-<!-- EDIT MODAL — sekarang ada field foto -->
+<!-- EDIT MODAL -->
 <div class="modal-overlay" id="modal">
   <div class="modal">
     <div class="modal-title">Edit Status Drive</div>
     <div class="modal-sub">Perubahan akan otomatis tersimpan ke spreadsheet & log histori</div>
     <div class="modal-id" id="modal-drive-id"></div>
-    <div class="form-group">
-      <label class="form-label">Status Saat Ini</label>
+    <div class="form-group"><label class="form-label">Status Saat Ini</label>
       <select class="form-select" id="modal-status">
         <option value="ok">✅ OK / Aktif</option>
         <option value="fault">❌ Fault</option>
@@ -978,19 +479,9 @@ body {
         <option value="kosong">⬜ Kosong</option>
       </select>
     </div>
-    <div class="form-group">
-      <label class="form-label">Merk / Nama</label>
-      <input class="form-input" id="modal-merk" type="text" placeholder="Contoh: INU 1, ABB...">
-    </div>
-    <div class="form-group">
-      <label class="form-label">Spesifikasi / Slot</label>
-      <input class="form-input" id="modal-spek" type="text" placeholder="Contoh: Line 1 - Slot 1">
-    </div>
-    <div class="form-group">
-      <label class="form-label">Keterangan</label>
-      <input class="form-input" id="modal-ket" type="text" placeholder="Contoh: Vendor, Aman, Sedang diperbaiki...">
-    </div>
-    <!-- ★ FIELD FOTO BARU -->
+    <div class="form-group"><label class="form-label">Merk / Nama</label><input class="form-input" id="modal-merk" type="text" placeholder="Contoh: INU 1, ABB..."></div>
+    <div class="form-group"><label class="form-label">Spesifikasi / Slot</label><input class="form-input" id="modal-spek" type="text" placeholder="Contoh: Line 1 - Slot 1"></div>
+    <div class="form-group"><label class="form-label">Keterangan</label><input class="form-input" id="modal-ket" type="text" placeholder="Contoh: Vendor, Aman, Sedang diperbaiki..."></div>
     <div class="form-group">
       <label class="form-label">🖼️ Link Foto (Google Drive)</label>
       <input class="form-input" id="modal-photo" type="text" placeholder="Paste link Google Drive foto...">
@@ -1011,88 +502,64 @@ const S = {
   page:'plant', plant:null, mixing:1, tab:'drive',
   cache:{}, editDrive:null,
   pendingDriveData:null,
-  pendingPhotoUrl:null,      // ★ TAMBAHAN
-  pendingAction:'edit'       // ★ TAMBAHAN: 'edit' | 'photo'
+  pendingPhotoUrl:null,
+  pendingAction:'edit'
 };
 
-// ══════════════════════════════════════════════════════════
-// LOGIN
-// ══════════════════════════════════════════════════════════
+// ── LOGIN ──────────────────────────────────────────────────
 
 function requestEdit(driveId, status, keterangan, merk, spesifikasi, photoUrl) {
-  S.pendingAction    = 'edit';                                        // ★ TAMBAHAN
+  S.pendingAction    = 'edit';
   S.pendingDriveData = { driveId, status, keterangan, merk, spesifikasi, photoUrl };
-  id('login-area-label').textContent = S.plant + ' — Mixing ' + S.mixing;
-  id('login-username').value  = '';
-  id('login-password').value  = '';
-  id('login-err').style.display = 'none';
-  id('login-err').textContent   = '';
+  const curGroup     = _getCurGroupLabel();
+  id('login-area-label').textContent = curGroup;
+  id('login-username').value = ''; id('login-password').value = '';
+  id('login-err').style.display = 'none'; id('login-err').textContent = '';
   const btn = id('btn-login-submit');
-  btn.classList.remove('loading');
-  btn.disabled = false;
+  btn.classList.remove('loading'); btn.disabled = false;
+  id('login-overlay').classList.add('open');
+  setTimeout(() => id('login-username').focus(), 100);
+}
+
+function requestViewPhoto(photoUrl) {
+  S.pendingAction   = 'photo';
+  S.pendingPhotoUrl = photoUrl;
+  S.pendingDriveData = null;
+  const curGroup = _getCurGroupLabel();
+  id('login-area-label').textContent = curGroup;
+  id('login-username').value = ''; id('login-password').value = '';
+  id('login-err').style.display = 'none'; id('login-err').textContent = '';
+  const btn = id('btn-login-submit');
+  btn.classList.remove('loading'); btn.disabled = false;
   id('login-overlay').classList.add('open');
   setTimeout(() => id('login-username').focus(), 100);
 }
 
 function closeLoginModal() {
   id('login-overlay').classList.remove('open');
-  S.pendingDriveData = null;
-  S.pendingPhotoUrl  = null;   // ★ TAMBAHAN
-  S.pendingAction    = 'edit'; // ★ TAMBAHAN
-}
-
-// ★ TAMBAHAN: fungsi baru untuk request lihat foto (alur login sama seperti edit)
-function requestViewPhoto(photoUrl) {
-  S.pendingAction    = 'photo';
-  S.pendingPhotoUrl  = photoUrl;
-  S.pendingDriveData = null;
-  id('login-area-label').textContent = S.plant + ' — Mixing ' + S.mixing;
-  id('login-username').value  = '';
-  id('login-password').value  = '';
-  id('login-err').style.display = 'none';
-  id('login-err').textContent   = '';
-  const btn = id('btn-login-submit');
-  btn.classList.remove('loading');
-  btn.disabled = false;
-  id('login-overlay').classList.add('open');
-  setTimeout(() => id('login-username').focus(), 100);
+  S.pendingDriveData = null; S.pendingPhotoUrl = null; S.pendingAction = 'edit';
 }
 
 async function submitLogin() {
   const username = id('login-username').value.trim();
   const password = id('login-password').value.trim();
-  const errEl    = id('login-err');
-  const btn      = id('btn-login-submit');
-  if (!username || !password) {
-    errEl.textContent = '⚠️ Username dan password wajib diisi.';
-    errEl.style.display = 'block';
-    return;
-  }
+  const errEl = id('login-err'), btn = id('btn-login-submit');
+  if (!username || !password) { errEl.textContent = '⚠️ Username dan password wajib diisi.'; errEl.style.display = 'block'; return; }
   btn.classList.add('loading'); btn.disabled = true; errEl.style.display = 'none';
   try {
     const res    = await fetch(LOGIN_API + '?' + new URLSearchParams({ username, password, mixing: S.plant }));
     const result = await res.json();
     if (result.success) {
-      const action   = S.pendingAction;   // ★ TAMBAHAN
-      const photoUrl = S.pendingPhotoUrl; // ★ TAMBAHAN
-      const d        = S.pendingDriveData;
+      const action = S.pendingAction, photoUrl = S.pendingPhotoUrl, d = S.pendingDriveData;
       closeLoginModal();
-      // ★ TAMBAHAN: cek aksi — buka foto atau buka modal edit
-      if (action === 'photo' && photoUrl) {
-        window.open(photoUrl, '_blank');
-      } else if (d) {
-        openModal(d.driveId, d.status, d.keterangan, d.merk, d.spesifikasi, d.photoUrl);
-      }
+      if (action === 'photo' && photoUrl) window.open(photoUrl, '_blank');
+      else if (d) openModal(d.driveId, d.status, d.keterangan, d.merk, d.spesifikasi, d.photoUrl);
     } else {
       errEl.textContent = '❌ ' + (result.message || 'Username atau password salah.');
       errEl.style.display = 'block';
     }
-  } catch (err) {
-    errEl.textContent = '⚠️ Tidak dapat terhubung ke server. Coba lagi.';
-    errEl.style.display = 'block';
-  } finally {
-    btn.classList.remove('loading'); btn.disabled = false;
-  }
+  } catch (err) { errEl.textContent = '⚠️ Tidak dapat terhubung ke server. Coba lagi.'; errEl.style.display = 'block'; }
+  finally { btn.classList.remove('loading'); btn.disabled = false; }
 }
 
 document.addEventListener('DOMContentLoaded', () => {
@@ -1101,9 +568,7 @@ document.addEventListener('DOMContentLoaded', () => {
   });
 });
 
-// ══════════════════════════════════════════════════════════
-// NAVIGASI & API
-// ══════════════════════════════════════════════════════════
+// ── API ──────────────────────────────────────────────────
 
 async function apiGet(params) {
   const res  = await fetch(API + '?' + new URLSearchParams(params));
@@ -1111,6 +576,8 @@ async function apiGet(params) {
   if (data.error) throw new Error(data.error);
   return data;
 }
+
+// ── NAVIGASI ──────────────────────────────────────────────
 
 function navTo(page, plant) {
   if (plant) S.plant = plant;
@@ -1122,12 +589,18 @@ function navTo(page, plant) {
   if (page === 'detail') { S.mixing = 1; S.tab = 'drive'; renderDetailPage(); }
 }
 
+function _getCurGroupLabel() {
+  const gl = S.cache[S.plant + '_groupList'] || [];
+  return gl[S.mixing - 1] || (S.plant + ' — Mixing ' + S.mixing);
+}
+
 function updateBC() {
   const s2 = id('bcs2'), b2 = id('bc2'), s3 = id('bcs3'), b3 = id('bc3');
   if (S.plant && S.page === 'detail') {
+    const label = _getCurGroupLabel();
     s2.style.display = b2.style.display = '';
-    b2.className = 'bc-cur'; b2.textContent = S.plant;
-    id('topbar-sub').textContent = S.plant + ' — Mixing ' + S.mixing;
+    b2.className = 'bc-cur'; b2.textContent = label;
+    id('topbar-sub').textContent = label;
   } else {
     s2.style.display = b2.style.display = 'none';
     id('topbar-sub').textContent = 'Pilih Plant';
@@ -1135,9 +608,7 @@ function updateBC() {
   s3.style.display = b3.style.display = 'none';
 }
 
-// ══════════════════════════════════════════════════════════
-// RENDER
-// ══════════════════════════════════════════════════════════
+// ── PLANT PAGE ──────────────────────────────────────────
 
 async function renderPlantPage() {
   const el = id('plant-content');
@@ -1146,45 +617,40 @@ async function renderPlantPage() {
     const data = await apiGet({ action: 'getPlants' });
     id('stat-total').textContent = data.plants.length;
     id('stat-sync').textContent  = new Date().toTimeString().slice(0,5);
-
-    // Render cards dulu (tag mixing masih Memuat)
     el.innerHTML = `<div class="plant-grid">${data.plants.map((p,i) => plantCard(p,i)).join('')}</div>`;
-
-    // Fetch config semua plant paralel, lalu update tag jumlah mixing tiap card
+    // Update tag jumlah mixing per plant (dari drives/groupList)
     await Promise.all(data.plants.map(async (p) => {
       try {
-        if (!S.cache[p.plant + '_config']) {
-          const res = await apiGet({ action: 'getConfig', plant: p.plant });
-          S.cache[p.plant + '_config'] = res.config;
+        if (!S.cache[p.plant + '_groupList']) {
+          const res = await apiGet({ action: 'getDrives', plant: p.plant });
+          const drives = Array.isArray(res.drives) ? res.drives : (Array.isArray(res) ? res : []);
+          S.cache[p.plant + '_drives']    = drives;
+          const seen = [], groups = [];
+          drives.forEach(d => { const g = String(d.group||'').trim(); if(g && !seen.includes(g)){seen.push(g);groups.push(g);} });
+          S.cache[p.plant + '_groupList'] = groups;
         }
-        const cfg    = S.cache[p.plant + '_config'] || {};
-        const jumlah = cfg[p.plant]
-          || cfg[p.plant.toLowerCase()]
-          || cfg[p.plant.toUpperCase()]
-          || Object.values(cfg)[0];
+        const gl    = S.cache[p.plant + '_groupList'] || [];
         const tagEl = document.getElementById('mix-tag-' + p.plant);
-        if (tagEl && jumlah) tagEl.textContent = jumlah + ' Mixing';
+        if (tagEl && gl.length) tagEl.textContent = gl.length + ' Mixing';
       } catch(e) {}
     }));
   } catch(err) { el.innerHTML = errHTML(err.message, renderPlantPage); }
 }
 
 const PLANT_META = {
-  MCA:     { desc:'Mixing Center A', color:'#2979ff' },
-  MCC:     { desc:'Mixing Center C', color:'#00b8d4' },
-  MCD:     { desc:'Mixing Center D', color:'#00d084' },
-  MCG:     { desc:'Mixing Center G', color:'#ffa502' },
-  MCH:     { desc:'Mixing Center H', color:'#ff6b81' },
-  MCI:     { desc:'Mixing Center I', color:'#a29bfe' },
-  'PLANT E':{ desc:'Plant Extension E', color:'#fd79a8' },
+  MCA:      { desc:'Mixing Center A',    color:'#2979ff' },
+  MCC:      { desc:'Mixing Center C',    color:'#00b8d4' },
+  MCD:      { desc:'Mixing Center D',    color:'#00d084' },
+  MCG:      { desc:'Mixing Center G',    color:'#ffa502' },
+  MCH:      { desc:'Mixing Center H',    color:'#ff6b81' },
+  MCI:      { desc:'Mixing Center I',    color:'#a29bfe' },
+  'PLANT E':{ desc:'Plant Extension E',  color:'#fd79a8' },
 };
 
 function plantCard(p, i) {
   const m      = PLANT_META[p.plant] || { desc:p.label||'', color:'#2979ff' };
-  // ambil jumlah mixing dari config jika sudah ter-cache, fallback ke p.jumlah atau '...'
-  const cfg    = S.cache[p.plant + '_config'] || {};
-  const jumlah = p.jumlah || cfg[p.plant] || '…';
-  const mixTag = jumlah !== '…' ? `${jumlah} Mixing` : 'Memuat…';
+  const gl     = S.cache[p.plant + '_groupList'] || [];
+  const mixTag = gl.length ? gl.length + ' Mixing' : 'Memuat…';
   return `<div class="plant-card" onclick="navTo('detail','${p.plant}')" style="animation-delay:${i*0.06}s">
     <div class="plant-card-top">
       <div class="plant-card-corner" style="background:${m.color};box-shadow:0 0 8px ${m.color}"></div>
@@ -1199,46 +665,56 @@ function plantCard(p, i) {
   </div>`;
 }
 
+// ── DETAIL PAGE ──────────────────────────────────────────
+
 async function renderDetailPage() {
   try {
-    if (!S.cache[S.plant + '_config']) {
-      const cfg = await apiGet({ action: 'getConfig', plant: S.plant });
-      S.cache[S.plant + '_config'] = cfg.config;
+    // ★ Load drives sekaligus build groupList
+    if (!S.cache[S.plant + '_drives']) {
+      const data   = await apiGet({ action: 'getDrives', plant: S.plant });
+      const drives = Array.isArray(data.drives) ? data.drives : (Array.isArray(data) ? data : []);
+      S.cache[S.plant + '_drives'] = drives;
+    }
+    if (!S.cache[S.plant + '_groupList']) {
+      const seen = [], groups = [];
+      (S.cache[S.plant + '_drives'] || []).forEach(d => {
+        const g = String(d.group || '').trim();
+        if (g && !seen.includes(g)) { seen.push(g); groups.push(g); }
+      });
+      S.cache[S.plant + '_groupList'] = groups;
     }
   } catch(e) {}
-  const cfg = S.cache[S.plant + '_config'] || {};
-  // Coba berbagai kemungkinan key dari spreadsheet
-  const jumlah = cfg[S.plant]
-    || cfg[S.plant.toLowerCase()]
-    || cfg[S.plant.toUpperCase()]
-    || Object.values(cfg)[0]
-    || 17;
-  renderSidebar(jumlah);
+  renderSidebar();
   switchTab(S.tab, true);
 }
 
-function renderSidebar(jumlah) {
-  const drives   = S.cache[S.plant + '_drives'] || [];
+// ★ renderSidebar — nama & jumlah dari groupList spreadsheet
+function renderSidebar() {
+  const drives    = S.cache[S.plant + '_drives']    || [];
+  const groupList = S.cache[S.plant + '_groupList'] || [];
+
+  // faultMap by group label
   const faultMap = {};
-  drives.forEach(d => { if (d.status === 'fault') faultMap[d.mixing] = (faultMap[d.mixing] || 0) + 1; });
+  drives.forEach(d => {
+    const g = String(d.group || '').trim();
+    if (d.status === 'fault' && g) faultMap[g] = (faultMap[g] || 0) + 1;
+  });
+
   let html = '';
-  for (let i = 1; i <= jumlah; i++) {
-    const active   = S.mixing === i ? 'active' : '';
-    const hasFault = faultMap[i] ? 'has-fault' : '';
-    const faultDot = faultMap[i] ? '<div class="sb-fault"></div>' : '';
- const pad   = String(i).padStart(2, '0');
-const label = `${S.plant}.${pad}.MX.01`;
-html += `<div class="sb-item ${active} ${hasFault}" onclick="selectMixing(${i})">${label} ${faultDot}</div>`;
-  }
+  groupList.forEach((label, i) => {
+    const idx      = i + 1;
+    const active   = S.mixing === idx ? 'active' : '';
+    const hasFault = faultMap[label] ? 'has-fault' : '';
+    const faultDot = faultMap[label] ? '<div class="sb-fault"></div>' : '';
+    html += `<div class="sb-item ${active} ${hasFault}" onclick="selectMixing(${idx})">${esc(label)} ${faultDot}</div>`;
+  });
   id('sb-items').innerHTML = html;
 }
 
 function selectMixing(num) {
   S.mixing = num;
   updateBC();
-  const cfg    = S.cache[S.plant + '_config'] || {};
-  const jumlah = cfg[S.plant] || cfg[S.plant.toLowerCase()] || cfg[S.plant.toUpperCase()] || Object.values(cfg)[0] || 17;
-  renderSidebar(jumlah);
+  renderSidebar();
   if (S.tab === 'drive') renderDriveTab();
 }
 
@@ -1254,20 +730,35 @@ function switchTab(tab, force) {
   if (tab === 'pm')      renderPMTab();
 }
 
+// ── DRIVE TAB ──────────────────────────────────────────
+
 async function renderDriveTab() {
-  id('drive-title').textContent = S.plant + ' — Mixing ' + S.mixing;
+  // ★ Judul pakai nama group dari spreadsheet
+  const mixLabel = _getCurGroupLabel();
+  id('drive-title').textContent = mixLabel;
   id('drive-content').innerHTML = loadingHTML('Memuat data drive...');
   try {
     if (!S.cache[S.plant + '_drives']) {
-      const data = await apiGet({ action: 'getDrives', plant: S.plant });
-      S.cache[S.plant + '_drives'] = data.drives;
+      const data   = await apiGet({ action: 'getDrives', plant: S.plant });
+      const drives = Array.isArray(data.drives) ? data.drives : (Array.isArray(data) ? data : []);
+      S.cache[S.plant + '_drives'] = drives;
+      // rebuild groupList jika belum ada
+      if (!S.cache[S.plant + '_groupList']) {
+        const seen = [], groups = [];
+        drives.forEach(d => { const g = String(d.group||'').trim(); if(g && !seen.includes(g)){seen.push(g);groups.push(g);} });
+        S.cache[S.plant + '_groupList'] = groups;
+      }
     }
-    const all    = S.cache[S.plant + '_drives'];
-    const drives = all.filter(d => d.mixing === S.mixing);
+    const all       = S.cache[S.plant + '_drives'];
+    const groupList = S.cache[S.plant + '_groupList'] || [];
+    const curGroup  = groupList[S.mixing - 1] || '';
+
+    // ★ Filter by group name
+    const drives = all.filter(d => String(d.group || '').trim() === curGroup);
     const ok     = drives.filter(d => d.status === 'ok').length;
     const fault  = drives.filter(d => d.status === 'fault').length;
-    const maint  = drives.filter(d => d.status === 'maint').length;
-    const kosong = drives.filter(d => d.status === 'kosong').length;
+    const maint  = drives.filter(d => d.status === 'maint' || d.status === 'maintenance').length;
+    const kosong = drives.filter(d => !d.status || d.status === 'kosong').length;
 
     id('drive-meta').textContent = `${drives.length} drives · ${ok} OK · ${fault} Fault · ${kosong} Kosong · ${maint} Maint`;
     id('drive-pills').innerHTML  = `
@@ -1278,11 +769,10 @@ async function renderDriveTab() {
       <div class="pill maint"><div class="pill-d"></div>Maint ${maint}</div>`;
 
     if (!drives.length) {
-      id('drive-content').innerHTML = `<div class="state-box"><div style="font-size:28px">📭</div><h3>Tidak ada data</h3><p>Mixing ${S.mixing} belum ada data drive.</p></div>`;
-      return;
+      id('drive-content').innerHTML = `<div class="state-box"><div style="font-size:28px">📭</div><h3>Tidak ada data</h3><p>${esc(curGroup)} belum ada data drive.</p></div>`;
+      renderSidebar(); return;
     }
 
-    // ── PISAH GRUP: INU / DSU / OTHER ──
     function getDriveType(driveId) {
       const s = String(driveId || '').toUpperCase();
       if (s.includes('.INU.') || s.includes('-INU') || s.includes('_INU')) return 'INU';
@@ -1293,30 +783,27 @@ async function renderDriveTab() {
     drives.forEach(d => { groups[getDriveType(d.drive_id)].push(d); });
 
     const groupConfig = [
-      { key: 'INU',   label: '⚡ Inverter Unit (INU)',    color: '#2979ff' },
-      { key: 'DSU',   label: '🔌 DC Supply Unit (DSU)',   color: '#9c27b0' },
-      { key: 'OTHER', label: '📦 Lainnya',                color: '#5a7a99' },
+      { key:'INU',   label:'⚡ Inverter Unit (INU)',  color:'#2979ff' },
+      { key:'DSU',   label:'🔌 DC Supply Unit (DSU)', color:'#9c27b0' },
+      { key:'OTHER', label:'📦 Lainnya',              color:'#5a7a99' },
     ];
 
     let html = '';
     groupConfig.forEach(({ key, label, color }) => {
       const grp = groups[key];
       if (!grp.length) return;
-      html += `
-        <div class="drive-group">
-          <div class="drive-group-header">
-            <div class="drive-group-label" style="border-color:${color};color:${color}">${label}</div>
-            <div class="drive-group-line"></div>
-            <div class="drive-group-count">${grp.length} unit</div>
-          </div>
-          <div class="cards-grid">${grp.map(inuCard).join('')}</div>
-        </div>`;
+      html += `<div class="drive-group">
+        <div class="drive-group-header">
+          <div class="drive-group-label" style="border-color:${color};color:${color}">${label}</div>
+          <div class="drive-group-line"></div>
+          <div class="drive-group-count">${grp.length} unit</div>
+        </div>
+        <div class="cards-grid">${grp.map(inuCard).join('')}</div>
+      </div>`;
     });
 
     id('drive-content').innerHTML = html;
-    const cfg2   = S.cache[S.plant + '_config'] || {};
-    const jumlah2 = cfg2[S.plant] || cfg2[S.plant.toLowerCase()] || cfg2[S.plant.toUpperCase()] || Object.values(cfg2)[0] || 17;
-    renderSidebar(jumlah2);
+    renderSidebar();
   } catch(err) {
     id('drive-content').innerHTML = errHTML(err.message, renderDriveTab);
     id('drive-meta').textContent  = 'Gagal memuat';
@@ -1325,8 +812,7 @@ async function renderDriveTab() {
 
 function inuCard(d) {
   const st   = d.status || 'kosong';
-  const stTx = { ok:'OK', fault:'Fault', maint:'Maintenance', kosong:'Kosong' }[st] || st;
-  // ★ DIUBAH: tombol foto sekarang panggil requestViewPhoto (butuh login dulu)
+  const stTx = { ok:'OK', fault:'Fault', maint:'Maintenance', maintenance:'Maintenance', kosong:'Kosong' }[st] || st;
   const photoHtml = d.photo_url
     ? `<button class="inu-photo-btn" onclick="event.stopPropagation();requestViewPhoto('${esc(d.photo_url)}')">📷 Lihat Foto</button>`
     : '';
@@ -1341,15 +827,17 @@ function inuCard(d) {
   </div>`;
 }
 
+// ── HISTORI TAB ──────────────────────────────────────────
+
 async function renderHistoriTab() {
   id('histori-content').innerHTML = loadingHTML('Memuat histori...');
   try {
     if (!S.cache[S.plant + '_histori']) {
       const data = await apiGet({ action: 'getHistori', plant: S.plant });
-      S.cache[S.plant + '_histori'] = data.histori;
+      S.cache[S.plant + '_histori'] = data.histori || data;
     }
     const rows = S.cache[S.plant + '_histori'];
-    if (!rows.length) { id('histori-content').innerHTML = `<div class="state-box"><div style="font-size:28px">📋</div><h3>Belum ada histori</h3></div>`; return; }
+    if (!rows || !rows.length) { id('histori-content').innerHTML = `<div class="state-box"><div style="font-size:28px">📋</div><h3>Belum ada histori</h3></div>`; return; }
     id('histori-content').innerHTML = `<div class="hist-table-wrap"><table class="hist-table">
       <thead><tr><th>Waktu</th><th>Drive ID</th><th>Nama</th><th>Group</th><th>Status</th><th>Keterangan</th></tr></thead>
       <tbody>${rows.map(r => `<tr>
@@ -1363,15 +851,17 @@ async function renderHistoriTab() {
   } catch(err) { id('histori-content').innerHTML = errHTML(err.message, renderHistoriTab); }
 }
 
+// ── PM TAB ──────────────────────────────────────────
+
 async function renderPMTab() {
   id('pm-content').innerHTML = loadingHTML('Memuat jadwal PM...');
   try {
     if (!S.cache[S.plant + '_pm']) {
       const data = await apiGet({ action: 'getJadwalPM', plant: S.plant });
-      S.cache[S.plant + '_pm'] = data.jadwal;
+      S.cache[S.plant + '_pm'] = data.jadwal || data;
     }
     const jadwal = S.cache[S.plant + '_pm'];
-    if (!jadwal.length) { id('pm-content').innerHTML = `<div class="state-box"><div style="font-size:28px">🔧</div><h3>Belum ada jadwal PM</h3></div>`; return; }
+    if (!jadwal || !jadwal.length) { id('pm-content').innerHTML = `<div class="state-box"><div style="font-size:28px">🔧</div><h3>Belum ada jadwal PM</h3></div>`; return; }
     id('pm-content').innerHTML = `<div class="pm-grid">${jadwal.map(pmCard).join('')}</div>`;
   } catch(err) { id('pm-content').innerHTML = errHTML(err.message, renderPMTab); }
 }
@@ -1391,9 +881,7 @@ function pmCard(p) {
   </div>`;
 }
 
-// ══════════════════════════════════════════════════════════
-// EDIT MODAL
-// ══════════════════════════════════════════════════════════
+// ── EDIT MODAL ──────────────────────────────────────────
 
 function openModal(driveId, status, keterangan, merk, spesifikasi, photoUrl) {
   S.editDrive = driveId;
@@ -1405,7 +893,6 @@ function openModal(driveId, status, keterangan, merk, spesifikasi, photoUrl) {
   id('modal-photo').value  = photoUrl    || '';
   id('modal').classList.add('open');
 }
-
 function closeModal() { id('modal').classList.remove('open'); S.editDrive = null; }
 
 async function saveStatus() {
@@ -1426,9 +913,10 @@ async function saveStatus() {
       updatedBy  : 'web-user'
     });
     delete S.cache[S.plant + '_drives'];
+    delete S.cache[S.plant + '_groupList'];
     delete S.cache[S.plant + '_histori'];
     closeModal();
-    await renderDriveTab();
+    await renderDetailPage();
   } catch(err) { alert('Gagal menyimpan: ' + err.message); }
   finally { btn.disabled = false; btn.textContent = 'Simpan'; }
 }
@@ -1436,14 +924,12 @@ async function saveStatus() {
 id('modal').addEventListener('click', e => { if(e.target === id('modal')) closeModal(); });
 id('login-overlay').addEventListener('click', e => { if(e.target === id('login-overlay')) closeLoginModal(); });
 
-// ══════════════════════════════════════════════════════════
-// REFRESH & UTILS
-// ══════════════════════════════════════════════════════════
+// ── REFRESH & UTILS ──────────────────────────────────────────
 
 async function doRefresh() {
   const btn = id('btn-refresh');
   btn.classList.add('loading');
-  if (S.plant) ['drives','histori','pm','config'].forEach(k => delete S.cache[S.plant + '_' + k]);
+  if (S.plant) ['drives','groupList','histori','pm'].forEach(k => delete S.cache[S.plant + '_' + k]);
   if (S.page === 'detail') await renderDetailPage();
   else await renderPlantPage();
   btn.classList.remove('loading');
@@ -1461,26 +947,18 @@ function errHTML(msg, fn) {
 setInterval(() => { id('clock').textContent = new Date().toTimeString().slice(0,8); }, 1000);
 id('clock').textContent = new Date().toTimeString().slice(0,8);
 
-// ── LIGHT / DARK MODE ──
 function toggleTheme() {
   const isLight = document.body.classList.toggle('light');
-  const btn = id('btn-theme');
-  btn.textContent = isLight ? '☀️ Light' : '🌙 Dark';
-  const modeEl = id('stat-mode');
-  if (modeEl) modeEl.textContent = isLight ? 'LIGHT' : 'DARK';
+  id('btn-theme').textContent = isLight ? '☀️ Light' : '🌙 Dark';
+  const modeEl = id('stat-mode'); if (modeEl) modeEl.textContent = isLight ? 'LIGHT' : 'DARK';
   document.querySelector('.running-bar').style.background = isLight ? '#dde6f0' : '';
   localStorage.setItem('theme', isLight ? 'light' : 'dark');
 }
-// restore saved theme
 if (localStorage.getItem('theme') === 'light') {
   document.body.classList.add('light');
-  document.addEventListener('DOMContentLoaded', () => {
-    const btn = id('btn-theme');
-    if (btn) btn.textContent = '☀️ Light';
-  });
+  document.addEventListener('DOMContentLoaded', () => { const btn = id('btn-theme'); if(btn) btn.textContent = '☀️ Light'; });
 }
 
-// ── PDF HISTORI ──
 async function printHistoriPDF() {
   const rows = S.cache[S.plant + '_histori'];
   if (!rows || !rows.length) { alert('Tidak ada data histori untuk dicetak.'); return; }
@@ -1490,19 +968,10 @@ async function printHistoriPDF() {
   doc.text(`Histori Drive — ${S.plant}`, 14, 16);
   doc.setFontSize(9); doc.setFont('helvetica','normal');
   doc.text(`Dicetak: ${new Date().toLocaleString('id-ID')}`, 14, 22);
-  doc.autoTable({
-    startY: 27,
-    head: [['Waktu','Drive ID','Nama','Group','Status','Keterangan']],
-    body: rows.map(r => [r.timestamp, r.drive_id, r.drive_nama||'—', r.group||'—', r.status.toUpperCase(), r.keterangan||'—']),
-    styles:{ fontSize:8, cellPadding:2 },
-    headStyles:{ fillColor:[21,101,192], textColor:255, fontStyle:'bold' },
-    alternateRowStyles:{ fillColor:[240,244,248] },
-    theme:'grid'
-  });
+  doc.autoTable({ startY:27, head:[['Waktu','Drive ID','Nama','Group','Status','Keterangan']], body:rows.map(r=>[r.timestamp,r.drive_id,r.drive_nama||'—',r.group||'—',r.status.toUpperCase(),r.keterangan||'—']), styles:{fontSize:8,cellPadding:2}, headStyles:{fillColor:[21,101,192],textColor:255,fontStyle:'bold'}, alternateRowStyles:{fillColor:[240,244,248]}, theme:'grid' });
   doc.save(`Histori_${S.plant}_${new Date().toISOString().slice(0,10)}.pdf`);
 }
 
-// ── PDF JADWAL PM ──
 async function printPMPDF() {
   const jadwal = S.cache[S.plant + '_pm'];
   if (!jadwal || !jadwal.length) { alert('Tidak ada data jadwal PM untuk dicetak.'); return; }
@@ -1512,110 +981,56 @@ async function printPMPDF() {
   doc.text(`Jadwal Preventive Maintenance — ${S.plant}`, 14, 16);
   doc.setFontSize(9); doc.setFont('helvetica','normal');
   doc.text(`Dicetak: ${new Date().toLocaleString('id-ID')}`, 14, 22);
-  doc.autoTable({
-    startY: 27,
-    head: [['ID PM','Judul','Drive ID','Tanggal','Teknisi','Status','Catatan']],
-    body: jadwal.map(p => [p.id||'—', p.judul||'—', p.drive_id||'—', p.tanggal||'—', p.teknisi||'—', p.status||'—', p.catatan||'—']),
-    styles:{ fontSize:8, cellPadding:2 },
-    headStyles:{ fillColor:[0,150,136], textColor:255, fontStyle:'bold' },
-    alternateRowStyles:{ fillColor:[240,248,245] },
-    theme:'grid'
-  });
+  doc.autoTable({ startY:27, head:[['ID PM','Judul','Drive ID','Tanggal','Teknisi','Status','Catatan']], body:jadwal.map(p=>[p.id||'—',p.judul||'—',p.drive_id||'—',p.tanggal||'—',p.teknisi||'—',p.status||'—',p.catatan||'—']), styles:{fontSize:8,cellPadding:2}, headStyles:{fillColor:[0,150,136],textColor:255,fontStyle:'bold'}, alternateRowStyles:{fillColor:[240,248,245]}, theme:'grid' });
   doc.save(`JadwalPM_${S.plant}_${new Date().toISOString().slice(0,10)}.pdf`);
 }
-/*
-  ═══════════════════════════════════════════════════════
-  PATCH JS — Tambahkan kode ini SEBELUM baris navTo('plant');
-  di bagian paling bawah <script> utama kamu.
-  ═══════════════════════════════════════════════════════
-*/
 
-// ── MOBILE SIDEBAR: inject scroll wrapper + tombol panah ──
+// ── MOBILE SIDEBAR ──────────────────────────────────────────
+
 function initMobileSidebar() {
   if (window.innerWidth > 768) return;
-
   const sidebar = document.getElementById('sidebar');
   if (!sidebar || sidebar.dataset.mobileInit === '1') return;
   sidebar.dataset.mobileInit = '1';
-
-  // Ambil .sb-section (isinya sb-items)
   const section = sidebar.querySelector('.sb-section');
   if (!section) return;
-
-  // Buat wrapper
-  const wrapper = document.createElement('div');
-  wrapper.className = 'sb-scroll-wrapper';
-
-  // Tombol kiri
-  const btnLeft = document.createElement('button');
-  btnLeft.className = 'sb-arrow sb-arrow-left';
-  btnLeft.innerHTML = '‹';
-  btnLeft.setAttribute('aria-label', 'Scroll kiri');
-
-  // Tombol kanan
-  const btnRight = document.createElement('button');
-  btnRight.className = 'sb-arrow sb-arrow-right';
-  btnRight.innerHTML = '›';
-  btnRight.setAttribute('aria-label', 'Scroll kanan');
-
-  // Scroll inner container
-  const inner = document.createElement('div');
-  inner.className = 'sb-scroll-inner';
-
-  // Pindahkan .sb-section ke dalam inner
+  const wrapper  = document.createElement('div'); wrapper.className = 'sb-scroll-wrapper';
+  const btnLeft  = document.createElement('button'); btnLeft.className = 'sb-arrow sb-arrow-left'; btnLeft.innerHTML = '‹'; btnLeft.setAttribute('aria-label','Scroll kiri');
+  const btnRight = document.createElement('button'); btnRight.className = 'sb-arrow sb-arrow-right'; btnRight.innerHTML = '›'; btnRight.setAttribute('aria-label','Scroll kanan');
+  const inner    = document.createElement('div'); inner.className = 'sb-scroll-inner';
   inner.appendChild(section);
-
-  // Rakit wrapper
-  wrapper.appendChild(btnLeft);
-  wrapper.appendChild(inner);
-  wrapper.appendChild(btnRight);
+  wrapper.appendChild(btnLeft); wrapper.appendChild(inner); wrapper.appendChild(btnRight);
   sidebar.appendChild(wrapper);
-
-  // Scroll per klik panah (lebar ~3 pill sekaligus)
   const SCROLL_STEP = 120;
-  btnLeft.addEventListener('click',  () => { inner.scrollBy({ left: -SCROLL_STEP, behavior: 'smooth' }); });
-  btnRight.addEventListener('click', () => { inner.scrollBy({ left:  SCROLL_STEP, behavior: 'smooth' }); });
-
-  // Auto-scroll ke active item saat ganti mixing
+  btnLeft.addEventListener('click',  () => inner.scrollBy({ left: -SCROLL_STEP, behavior:'smooth' }));
+  btnRight.addEventListener('click', () => inner.scrollBy({ left:  SCROLL_STEP, behavior:'smooth' }));
   observeActiveItem(inner);
 }
-
-// Auto scroll ke pill aktif agar selalu terlihat
 function observeActiveItem(inner) {
   const mo = new MutationObserver(() => {
     const active = inner.querySelector('.sb-item.active');
-    if (active) {
-      active.scrollIntoView({ inline: 'center', block: 'nearest', behavior: 'smooth' });
-    }
+    if (active) active.scrollIntoView({ inline:'center', block:'nearest', behavior:'smooth' });
   });
-  mo.observe(inner, { subtree: true, attributes: true, attributeFilter: ['class'] });
+  mo.observe(inner, { subtree:true, attributes:true, attributeFilter:['class'] });
 }
-
-// Hook ke renderSidebar agar wrapper diinit ulang setiap re-render
 const _origRenderSidebar = renderSidebar;
-window.renderSidebar = function(jumlah) {
-  // Reset flag agar bisa re-init setelah innerHTML berubah
+window.renderSidebar = function() {
   const sidebar = document.getElementById('sidebar');
   if (sidebar) delete sidebar.dataset.mobileInit;
-
-  _origRenderSidebar(jumlah);
-
-  // Init setelah DOM update
+  _origRenderSidebar();
   requestAnimationFrame(() => {
     initMobileSidebar();
-    // Scroll ke active item
-    const inner = document.querySelector('.sb-scroll-inner');
+    const inner  = document.querySelector('.sb-scroll-inner');
     const active = inner && inner.querySelector('.sb-item.active');
-    if (active) active.scrollIntoView({ inline: 'center', block: 'nearest', behavior: 'smooth' });
+    if (active) active.scrollIntoView({ inline:'center', block:'nearest', behavior:'smooth' });
   });
 };
-
-// Inisialisasi pertama saat halaman load
 window.addEventListener('resize', () => {
   const sidebar = document.getElementById('sidebar');
   if (sidebar) delete sidebar.dataset.mobileInit;
   initMobileSidebar();
 });
+
 navTo('plant');
 </script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
