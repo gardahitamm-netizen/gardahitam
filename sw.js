@@ -6,7 +6,7 @@ const CACHE_VERSION = 'garda-hitam-v1';
 const STATIC_ASSETS = [
   '/',
   '/index.html',
-  '/drive-monitoring.html',
+  '/drives.html',
   '/manifest.json',
   '/icon-192.png',
   '/icon-512.png',
