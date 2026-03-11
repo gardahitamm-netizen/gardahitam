@@ -1,0 +1,1544 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<base target="_top">
+<link href="https://fonts.googleapis.com/css2?family=Exo+2:wght@300;400;600;700;900&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
+<style>
+/* =====================================================
+   FUTURISTIC ENGINEER — GT Radial Industrial HMI
+   Palet: Carbon Black + Electric Orange + Steel Gray
+   Vibe: SCADA panel, aerospace cockpit, precision MFG
+   ===================================================== */
+:root {
+  --bg-void:      #080C10;
+  --bg-panel:     #0C1118;
+  --bg-card:      #101820;
+  --bg-row-alt:   #0E1520;
+  --orange:       #FF6D00;
+  --orange-dim:   #E65100;
+  --orange-glow:  rgba(255,109,0,0.18);
+  --orange-faint: rgba(255,109,0,0.07);
+  --steel:        #B0BEC5;
+  --steel-dim:    #607D8B;
+  --steel-dark:   #263238;
+  --green-ok:     #00E676;
+  --amber-warn:   #FFD740;
+  --red-err:      #FF1744;
+  --blue-info:    #40C4FF;
+  --text-bright:  #ECEFF1;
+  --text-mid:     #90A4AE;
+  --text-dim:     #546E7A;
+  --border-faint: rgba(176,190,197,0.1);
+  --border-mid:   rgba(176,190,197,0.22);
+  --border-orange:rgba(255,109,0,0.45);
+}
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+body {
+  font-family: 'Exo 2', sans-serif;
+  font-size: 14px;
+  background: var(--bg-void);
+  color: var(--text-bright);
+  min-height: 100vh;
+  overflow-x: hidden;
+  margin: 0;
+  padding: 20px 20px 72px;
+}
+
+/* === BACKGROUND TEXTURE === */
+body::before {
+  content: '';
+  position: fixed; inset: 0;
+  background-image:
+    linear-gradient(rgba(255,109,0,0.025) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255,109,0,0.025) 1px, transparent 1px);
+  background-size: 48px 48px;
+  pointer-events: none; z-index: 0;
+}
+
+/* === TOP ACCENT LINE === */
+body::after {
+  content: '';
+  position: fixed; top: 0; left: 0;
+  width: 100%; height: 2px;
+  background: linear-gradient(90deg,
+    transparent 0%, var(--orange-dim) 20%,
+    var(--orange) 50%, var(--orange-dim) 80%, transparent 100%);
+  z-index: 9999;
+  box-shadow: 0 0 12px var(--orange);
+}
+
+/* === LOGO === */
+#logo-img {
+  position: fixed;
+  top: 12px; right: 18px;
+  height: 58px; width: auto;
+  object-fit: contain;
+  filter: drop-shadow(0 2px 12px rgba(255,109,0,0.35));
+  z-index: 100;
+}
+@media (max-width:600px) { #logo-img { height:38px; right:8px; top:8px; } }
+
+/* === CLOCK === */
+#clock {
+  position: fixed; top: 18px; left: 16px;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 13px; font-weight: 700;
+  color: var(--orange);
+  text-shadow: 0 0 10px rgba(255,109,0,0.6);
+  letter-spacing: 1.5px;
+  z-index: 1000;
+}
+
+/* === HEADER === */
+.page-header {
+  text-align: center;
+  padding: 28px 0 18px;
+  position: relative; z-index: 1;
+}
+.page-header h2 {
+  font-family: 'Exo 2', sans-serif;
+  font-size: 28px; font-weight: 900;
+  letter-spacing: 6px;
+  text-transform: uppercase;
+  color: var(--text-bright);
+  line-height: 1;
+}
+.page-header h2 span {
+  color: var(--orange);
+  text-shadow: 0 0 20px rgba(255,109,0,0.5);
+}
+.header-line {
+  display: flex; align-items: center; justify-content: center;
+  gap: 12px; margin-top: 8px;
+}
+.header-line::before, .header-line::after {
+  content: '';
+  flex: 1; max-width: 180px; height: 1px;
+  background: linear-gradient(90deg, transparent, var(--orange));
+}
+.header-line::after {
+  background: linear-gradient(90deg, var(--orange), transparent);
+}
+.header-badge {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 10px; letter-spacing: 3px;
+  color: var(--orange-dim); text-transform: uppercase;
+}
+
+/* === TOP BAR === */
+.top-bar {
+  display: flex; align-items: center; gap: 8px;
+  margin-bottom: 14px;
+  min-width: 1000px;
+  position: relative; z-index: 1;
+}
+
+/* Base tombol toolbar */
+.tb-btn {
+  display: inline-flex; align-items: center; justify-content: center; gap: 6px;
+  height: 44px; padding: 0 16px;
+  background: var(--bg-card);
+  border: 1px solid var(--border-mid);
+  border-radius: 4px;
+  cursor: pointer;
+  font-family: 'Exo 2', sans-serif;
+  font-size: 13px; font-weight: 700;
+  letter-spacing: 1.5px; text-transform: uppercase;
+  color: var(--text-mid);
+  transition: all 0.18s;
+  white-space: nowrap;
+  position: relative; overflow: hidden;
+}
+.tb-btn::after {
+  content: '';
+  position: absolute; bottom: 0; left: 0;
+  width: 0; height: 2px;
+  background: var(--orange);
+  transition: width 0.2s;
+}
+.tb-btn:hover { color: var(--orange); border-color: var(--border-orange); opacity: 1; }
+.tb-btn:hover::after { width: 100%; }
+.tb-btn svg { width: 18px; height: 18px; transition: fill 0.18s; }
+
+#toggleInputBtn { width: 44px; padding: 0; }
+#toggleInputBtn svg { fill: var(--steel-dim); }
+#toggleInputBtn:hover svg { fill: var(--orange); }
+
+#printBtn { color: var(--text-mid); }
+#printBtn svg { fill: var(--steel-dim); }
+#printBtn:hover svg { fill: var(--orange); }
+
+#waBtn { color: var(--green-ok); border-color: rgba(0,230,118,0.25); }
+#waBtn::after { background: var(--green-ok); }
+#waBtn svg { fill: var(--green-ok); }
+#waBtn:hover { border-color: rgba(0,230,118,0.6); box-shadow: 0 0 12px rgba(0,230,118,0.15); }
+
+/* === TOMBOL TOGGLE DELETE === */
+#toggleDeleteBtn {
+  color: var(--red-err);
+  border-color: rgba(255,23,68,0.25);
+}
+#toggleDeleteBtn::after { background: var(--red-err); }
+#toggleDeleteBtn svg { fill: var(--red-err); }
+#toggleDeleteBtn:hover {
+  border-color: rgba(255,23,68,0.6);
+  box-shadow: 0 0 12px rgba(255,23,68,0.15);
+}
+/* Saat mode delete aktif */
+#toggleDeleteBtn.active {
+  background: rgba(255,23,68,0.12);
+  border-color: rgba(255,23,68,0.7);
+  color: var(--red-err);
+  box-shadow: 0 0 14px rgba(255,23,68,0.25);
+}
+#toggleDeleteBtn.active::after { width: 100%; background: var(--red-err); }
+
+/* === INPUT SECTION === */
+#inputSection {
+  background: var(--bg-panel);
+  border: 1px solid var(--border-orange);
+  border-radius: 6px;
+  padding: 14px 16px 10px;
+  margin-bottom: 14px;
+  position: relative; z-index: 1;
+}
+#inputSection::before {
+  content: 'INPUT JOB BARU';
+  position: absolute; top: -10px; left: 14px;
+  background: var(--bg-panel);
+  padding: 0 8px;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 10px; letter-spacing: 2px;
+  color: var(--orange);
+}
+.form-scroll { overflow-x: auto; }
+.form-container {
+  display: flex; flex-wrap: nowrap; gap: 8px;
+  align-items: center; margin-bottom: 10px; min-width: 900px;
+}
+
+input, textarea, select {
+  font-family: 'Exo 2', sans-serif;
+  font-size: 16px; font-weight: 600;
+  padding: 9px 12px;
+  background: var(--bg-card);
+  color: var(--text-bright);
+  border: 1px solid var(--border-mid);
+  border-radius: 4px;
+  transition: border-color 0.2s, box-shadow 0.2s;
+}
+input::placeholder, textarea::placeholder {
+  color: var(--text-dim); font-weight: 400;
+}
+input:focus, textarea:focus, select:focus {
+  outline: none;
+  border-color: var(--orange);
+  box-shadow: 0 0 0 3px var(--orange-faint);
+}
+select option { background: var(--bg-card); }
+
+#id    { flex: 0 0 200px; }
+#nama  { flex: 1; min-width: 160px; }
+#tugas { flex: 3; min-width: 280px; height: 44px; resize: vertical; }
+#mesin { flex: 0 0 90px; }
+#status{ flex: 0 0 130px; }
+
+/* Tombol form */
+button {
+  font-family: 'Exo 2', sans-serif;
+  font-size: 14px; font-weight: 700;
+  letter-spacing: 1.5px; text-transform: uppercase;
+  padding: 10px 18px;
+  background: var(--bg-card);
+  color: var(--orange);
+  border: 1px solid var(--border-orange);
+  border-radius: 4px;
+  cursor: pointer;
+  transition: all 0.18s;
+}
+button:hover {
+  background: var(--orange-faint);
+  box-shadow: 0 0 12px var(--orange-glow);
+  opacity: 1;
+}
+#inputSection hr { border: none; border-top: 1px solid var(--border-faint); margin: 10px 0 0; }
+
+/* === TABLE === */
+.table-wrapper {
+  overflow-x: auto;
+  border-radius: 6px;
+  border: 1px solid var(--border-mid);
+  position: relative; z-index: 1;
+  box-shadow: 0 4px 40px rgba(0,0,0,0.5), 0 0 0 1px var(--border-faint);
+}
+
+table {
+  width: 100%; font-size: 16px;
+  border-collapse: collapse;
+  background: var(--bg-card);
+  table-layout: fixed; min-width: 1000px;
+}
+
+thead tr {
+  background: var(--bg-panel);
+  border-bottom: 2px solid var(--orange-dim);
+}
+
+th {
+  padding: 12px 10px;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 11px; font-weight: 700;
+  letter-spacing: 2.5px; text-transform: uppercase;
+  color: var(--orange);
+  border: none;
+  border-right: 1px solid var(--border-faint);
+  white-space: nowrap;
+}
+th:last-child { border-right: none; }
+
+td {
+  padding: 12px 10px;
+  border-bottom: 1px solid var(--border-faint);
+  border-right: 1px solid var(--border-faint);
+  vertical-align: top;
+  color: var(--text-bright);
+  font-weight: 400; font-size: 16px;
+  transition: background 0.12s;
+}
+td:last-child { border-right: none; }
+tr:last-child td { border-bottom: none; }
+
+tr:nth-child(even) td { background: var(--bg-row-alt); }
+tr:hover td {
+  background: rgba(255,109,0,0.05) !important;
+  color: #fff;
+}
+
+/* === KOLOM DELETE — kolom ke-1 saat mode delete aktif === */
+th.col-delete, td.col-delete {
+  width: 44px !important;
+  text-align: center;
+  padding: 8px 4px;
+}
+
+/* Tanpa delete mode: kolom normal */
+th:nth-child(1), td:nth-child(1) { width: 180px; }
+th:nth-child(2), td:nth-child(2) { width: 120px; word-break: break-word; }
+th:nth-child(3), td:nth-child(3) { width: auto; white-space: pre-wrap; }
+th:nth-child(4), td:nth-child(4) { width: 80px; }
+th:nth-child(5), td:nth-child(5) { width: 150px; text-align: center; }
+th:nth-child(6), td:nth-child(6) { width: 110px; color: var(--text-mid); }
+th:nth-child(7), td:nth-child(7) { width: 80px; text-align: center; color: var(--green-ok); }
+th:nth-child(8), td:nth-child(8) { width: 80px; text-align: center; color: var(--amber-warn); }
+
+/* Saat delete mode: geser kolom (tambah 1 kolom di depan) */
+table.delete-mode th:nth-child(1), table.delete-mode td:nth-child(1) { width: 44px; }
+table.delete-mode th:nth-child(2), table.delete-mode td:nth-child(2) { width: 170px; }
+table.delete-mode th:nth-child(3), table.delete-mode td:nth-child(3) { width: 110px; word-break: break-word; }
+table.delete-mode th:nth-child(4), table.delete-mode td:nth-child(4) { width: auto; white-space: pre-wrap; }
+table.delete-mode th:nth-child(5), table.delete-mode td:nth-child(5) { width: 75px; }
+table.delete-mode th:nth-child(6), table.delete-mode td:nth-child(6) { width: 145px; text-align: center; }
+table.delete-mode th:nth-child(7), table.delete-mode td:nth-child(7) { width: 105px; color: var(--text-mid); }
+table.delete-mode th:nth-child(8), table.delete-mode td:nth-child(8) { width: 75px; text-align: center; color: var(--green-ok); }
+table.delete-mode th:nth-child(9), table.delete-mode td:nth-child(9) { width: 75px; text-align: center; color: var(--amber-warn); }
+
+/* === TOMBOL ✕ HAPUS ROW === */
+.btn-delete-row {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 26px; height: 26px;
+  border-radius: 50%;
+  background: rgba(255,23,68,0.08);
+  border: 1px solid rgba(255,23,68,0.35);
+  color: var(--red-err);
+  font-size: 13px;
+  font-weight: 900;
+  cursor: pointer;
+  transition: all 0.18s;
+  line-height: 1;
+  padding: 0;
+  letter-spacing: 0;
+  /* override global button style */
+  text-transform: none !important;
+}
+.btn-delete-row:hover {
+  background: rgba(255,23,68,0.22);
+  border-color: var(--red-err);
+  box-shadow: 0 0 10px rgba(255,23,68,0.35);
+  transform: scale(1.15);
+  color: #fff;
+}
+
+/* Animasi "pulse" saat mode delete aktif */
+@keyframes deletePulse {
+  0%, 100% { box-shadow: 0 0 0 0 rgba(255,23,68,0.4); }
+  50%       { box-shadow: 0 0 0 5px rgba(255,23,68,0); }
+}
+table.delete-mode .btn-delete-row {
+  animation: deletePulse 1.8s ease-in-out infinite;
+}
+
+/* === STATUS BADGE === */
+.status-select {
+  width: 140px; font-size: 14px; font-weight: 700;
+  font-family: 'JetBrains Mono', monospace;
+  padding: 5px 8px; border-radius: 3px;
+  border: 1px solid transparent;
+  letter-spacing: 0.5px; text-transform: uppercase;
+  cursor: pointer; transition: all 0.2s;
+}
+.pending {
+  background: rgba(64,196,255,0.08);
+  color: var(--blue-info);
+  border-color: rgba(64,196,255,0.3);
+}
+.proses {
+  background: rgba(255,215,64,0.08);
+  color: var(--amber-warn);
+  border-color: rgba(255,215,64,0.3);
+}
+.selesai {
+  background: rgba(0,230,118,0.08);
+  color: var(--green-ok);
+  border-color: rgba(0,230,118,0.3);
+}
+
+/* === MODALS === */
+.modal {
+  display: none; position: fixed; inset: 0;
+  background: rgba(0,0,0,0.75);
+  backdrop-filter: blur(6px);
+  justify-content: center; align-items: center;
+  z-index: 9999;
+}
+.modal-box {
+  background: var(--bg-panel);
+  border: 1px solid var(--border-orange);
+  padding: 26px 24px;
+  border-radius: 6px;
+  text-align: center;
+  min-width: 300px; max-width: 440px;
+  box-shadow: 0 0 60px rgba(255,109,0,0.12), 0 24px 80px rgba(0,0,0,0.7);
+  color: var(--text-bright);
+  position: relative;
+}
+.modal-box::before {
+  content: '';
+  position: absolute; top: 0; left: 0;
+  width: 100%; height: 2px;
+  background: linear-gradient(90deg, transparent, var(--orange), transparent);
+}
+.modal-box h3 {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 13px; letter-spacing: 3px;
+  text-transform: uppercase;
+  color: var(--orange); margin-bottom: 16px;
+}
+.modal button { margin: 5px; }
+.modal input[type="text"],
+.modal input[type="password"],
+.modal textarea {
+  background: var(--bg-card);
+  color: var(--text-bright);
+  border: 1px solid var(--border-mid);
+  border-radius: 4px;
+  width: 100%;
+}
+.modal p { color: var(--text-mid); font-size: 16px; }
+
+/* === MODAL KONFIRMASI HAPUS ROW === */
+#deleteRowModal .modal-box {
+  border-color: rgba(255,23,68,0.45);
+  box-shadow: 0 0 60px rgba(255,23,68,0.1), 0 24px 80px rgba(0,0,0,0.7);
+}
+#deleteRowModal .modal-box::before {
+  background: linear-gradient(90deg, transparent, var(--red-err), transparent);
+}
+#deleteRowModal h3 { color: var(--red-err); }
+#deleteRowModal p  { font-size: 14px; }
+#confirmDeleteRowBtn {
+  background: rgba(255,23,68,0.08) !important;
+  color: var(--red-err) !important;
+  border-color: rgba(255,23,68,0.45) !important;
+  min-width: 100px;
+}
+#confirmDeleteRowBtn:hover {
+  background: rgba(255,23,68,0.18) !important;
+  box-shadow: 0 0 12px rgba(255,23,68,0.3) !important;
+}
+#cancelDeleteRowBtn {
+  color: var(--text-mid) !important;
+  border-color: var(--border-mid) !important;
+  min-width: 100px;
+}
+
+/* === MODAL WA === */
+#waModal {
+  display: none; position: fixed; inset: 0;
+  background: rgba(0,0,0,0.8);
+  backdrop-filter: blur(8px);
+  justify-content: center; align-items: center;
+  z-index: 9999;
+}
+#waModal .modal-box {
+  border-color: rgba(0,230,118,0.4);
+  box-shadow: 0 0 60px rgba(0,230,118,0.08), 0 24px 80px rgba(0,0,0,0.7);
+  min-width: 360px; max-width: 480px; width: 92%;
+}
+#waModal .modal-box::before {
+  background: linear-gradient(90deg, transparent, var(--green-ok), transparent);
+}
+#waModal h3 {
+  color: var(--green-ok);
+  display: flex; align-items: center; justify-content: center; gap: 8px;
+}
+.wa-preview-label {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 10px; letter-spacing: 2px;
+  color: var(--text-dim); text-align: left;
+  margin-bottom: 5px; text-transform: uppercase;
+}
+.wa-preview {
+  background: var(--bg-void);
+  border: 1px solid rgba(0,230,118,0.2);
+  border-radius: 4px; padding: 10px 14px;
+  margin-bottom: 14px; font-size: 13px;
+  font-family: 'JetBrains Mono', monospace;
+  text-align: left; white-space: pre-wrap;
+  color: #A5D6B7; max-height: 160px; overflow-y: auto;
+  line-height: 1.7;
+}
+.wa-input-label {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 10px; letter-spacing: 2px;
+  color: var(--text-dim); text-align: left;
+  margin-bottom: 5px; text-transform: uppercase;
+}
+#waPhoneInput {
+  font-size: 18px; font-family: 'JetBrains Mono', monospace;
+  padding: 10px 14px; width: 100%; margin-bottom: 4px;
+  border: 1px solid rgba(0,230,118,0.25);
+  background: var(--bg-void);
+  color: var(--green-ok); border-radius: 4px;
+}
+#waPhoneInput:focus {
+  outline: none; border-color: var(--green-ok);
+  box-shadow: 0 0 0 3px rgba(0,230,118,0.1);
+}
+.wa-hint { font-size: 11px; color: var(--text-dim); text-align: left; margin-bottom: 14px; }
+#waPhoneError { color: var(--red-err); font-size: 12px; margin-bottom: 10px; text-align: left; display: none; }
+.wa-btn-row { display: flex; justify-content: center; gap: 10px; margin-top: 6px; }
+.wa-send-btn {
+  background: rgba(0,230,118,0.08); color: var(--green-ok);
+  border: 1px solid rgba(0,230,118,0.4); border-radius: 4px;
+  padding: 10px 22px; cursor: pointer;
+  font-family: 'Exo 2', sans-serif; font-size: 14px;
+  font-weight: 700; letter-spacing: 1.5px; text-transform: uppercase;
+  display: inline-flex; align-items: center; gap: 7px;
+  transition: all 0.18s;
+}
+.wa-send-btn:hover { background: rgba(0,230,118,0.15); box-shadow: 0 0 14px rgba(0,230,118,0.2); opacity: 1; }
+.wa-cancel-btn {
+  background: rgba(255,23,68,0.07); color: var(--red-err);
+  border: 1px solid rgba(255,23,68,0.35); border-radius: 4px;
+  padding: 10px 18px; cursor: pointer;
+  font-family: 'Exo 2', sans-serif; font-size: 14px;
+  font-weight: 700; letter-spacing: 1.5px; text-transform: uppercase;
+  transition: all 0.18s;
+}
+.wa-cancel-btn:hover { background: rgba(255,23,68,0.14); opacity: 1; }
+
+/* === RUNNING TEXT BAR === */
+#runningTextBar {
+  position: fixed; bottom: 0; left: 0;
+  width: 100%; height: 44px;
+  background: var(--bg-panel);
+  border-top: 1px solid var(--border-orange);
+  display: flex; align-items: center;
+  z-index: 2000;
+  box-shadow: 0 -4px 20px rgba(255,109,0,0.08);
+  overflow: hidden;
+}
+#editRunningBtn {
+  flex-shrink: 0; width: 44px; height: 44px;
+  background: transparent; border: none;
+  border-right: 1px solid var(--border-faint);
+  cursor: pointer; display: flex;
+  align-items: center; justify-content: center;
+  transition: background 0.2s;
+}
+#editRunningBtn:hover { background: var(--orange-faint); opacity: 1; }
+#editRunningBtn svg { width: 16px; height: 16px; fill: var(--orange-dim); }
+#marqueeWrapper {
+  flex: 1; overflow: hidden; height: 100%;
+  display: flex; align-items: center;
+}
+#marqueeTrack {
+  display: inline-flex; white-space: nowrap;
+  animation: marqueeScroll 30s linear infinite;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 13px; letter-spacing: 1.5px;
+  color: var(--orange-dim);
+}
+#marqueeTrack span { padding-right: 80px; }
+@keyframes marqueeScroll {
+  0%   { transform: translateX(100vw); }
+  100% { transform: translateX(-50%); }
+}
+#marqueeWrapper:hover #marqueeTrack { animation-play-state: paused; }
+
+/* Edit Running Modal */
+#editRunningModal {
+  display: none; position: fixed; inset: 0;
+  background: rgba(0,0,0,0.75); backdrop-filter: blur(5px);
+  justify-content: center; align-items: center;
+  z-index: 9999;
+}
+#editRunningModal .modal-box { min-width: 360px; max-width: 520px; width: 90%; }
+#editRunningModal textarea {
+  width: 100%; height: 80px; font-size: 15px;
+  padding: 10px; resize: vertical; box-sizing: border-box;
+}
+#editRunningModal h3 { margin-top: 0; }
+
+/* === SCROLLBAR === */
+::-webkit-scrollbar { width: 6px; height: 6px; }
+::-webkit-scrollbar-track { background: var(--bg-void); }
+::-webkit-scrollbar-thumb { background: var(--orange-dim); border-radius: 3px; }
+::-webkit-scrollbar-thumb:hover { background: var(--orange); }
+
+/* === PRINT === */
+.print-header {
+  display: none; text-align: center;
+  font-size: 12px; color: #555; margin-bottom: 8px;
+}
+@media print {
+  body { background: #fff !important; color: #000 !important; padding: 10px; }
+  body::before, body::after, #logo-img, #clock, .top-bar,
+  #inputSection, #runningTextBar, #confirmModal, #alertModal,
+  #loginModal, #editRunningModal, #waModal,
+  #deleteRowModal,
+  .btn-delete-row, td.col-delete, th.col-delete { display: none !important; }
+  .page-header h2 { color: #000 !important; font-size: 20px; letter-spacing: 2px; text-shadow: none; }
+  .page-header h2 span { color: #E65100 !important; }
+  .print-header { display: block !important; }
+  .header-badge { color: #555 !important; }
+  .header-line::before, .header-line::after { background: #ccc !important; }
+  table { background: white !important; font-size: 12px; border-collapse: collapse; }
+  th { background: #E65100 !important; color: white !important; font-size: 11px; padding: 6px 8px; border: 1px solid #ccc !important; }
+  td { background: white !important; color: #000 !important; padding: 5px 8px; border: 1px solid #ccc !important; }
+  tr:nth-child(even) td { background: #f5f5f5 !important; }
+  .status-select { font-size: 11px; background: transparent !important; color: #000 !important; border: 1px solid #999 !important; pointer-events: none; }
+  .table-wrapper { border: none !important; box-shadow: none !important; }
+}
+
+/* =====================================================
+   LIGHT MODE VARIABLES
+   ===================================================== */
+body.light-mode {
+  --bg-void:       #F0F2F5;
+  --bg-panel:      #FFFFFF;
+  --bg-card:       #FAFBFC;
+  --bg-row-alt:    #F5F7FA;
+  --orange:        #E65100;
+  --orange-dim:    #BF360C;
+  --orange-glow:   rgba(230,81,0,0.12);
+  --orange-faint:  rgba(230,81,0,0.06);
+  --steel:         #455A64;
+  --steel-dim:     #607D8B;
+  --steel-dark:    #ECEFF1;
+  --green-ok:      #00897B;
+  --amber-warn:    #F57F17;
+  --red-err:       #C62828;
+  --blue-info:     #1565C0;
+  --text-bright:   #1A2332;
+  --text-mid:      #455A64;
+  --text-dim:      #90A4AE;
+  --border-faint:  rgba(69,90,100,0.1);
+  --border-mid:    rgba(69,90,100,0.22);
+  --border-orange: rgba(230,81,0,0.4);
+}
+
+body.light-mode { background: var(--bg-void); color: var(--text-bright); }
+body.light-mode::before {
+  background-image:
+    linear-gradient(rgba(230,81,0,0.04) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(230,81,0,0.04) 1px, transparent 1px);
+}
+body.light-mode #logo-img { filter: drop-shadow(0 2px 10px rgba(230,81,0,0.2)); }
+body.light-mode .table-wrapper { box-shadow: 0 2px 20px rgba(0,0,0,0.12), 0 0 0 1px var(--border-faint); }
+body.light-mode .pending { background: rgba(21,101,192,0.1); color: var(--blue-info); border-color: rgba(21,101,192,0.35); }
+body.light-mode .proses  { background: rgba(245,127,23,0.1); color: var(--amber-warn); border-color: rgba(245,127,23,0.35); }
+body.light-mode .selesai { background: rgba(0,137,123,0.1); color: var(--green-ok); border-color: rgba(0,137,123,0.35); }
+body.light-mode .modal-box { box-shadow: 0 0 40px rgba(230,81,0,0.08), 0 16px 60px rgba(0,0,0,0.15); }
+body.light-mode #waModal .modal-box { box-shadow: 0 0 40px rgba(0,137,123,0.08), 0 16px 60px rgba(0,0,0,0.15); }
+body.light-mode .wa-preview { background: #F0F8F5; border-color: rgba(0,137,123,0.25); color: #2D6A5E; }
+body.light-mode #waPhoneInput { background: #F0F8F5; color: var(--green-ok); border-color: rgba(0,137,123,0.3); }
+body.light-mode #inputSection { background: var(--bg-panel); border-color: var(--border-orange); }
+body.light-mode #runningTextBar { background: var(--bg-panel); border-top-color: var(--border-orange); box-shadow: 0 -2px 12px rgba(0,0,0,0.08); }
+body.light-mode #editRunningBtn { border-right-color: var(--border-faint); }
+body.light-mode #marqueeTrack { color: var(--orange-dim); }
+body.light-mode #clock { color: var(--orange-dim); text-shadow: none; }
+body.light-mode h2 { color: var(--orange-dim); text-shadow: none; }
+body.light-mode h2 span { color: var(--orange); text-shadow: none; }
+
+/* ===== THEME TOGGLE ===== */
+#themeToggleBtn {
+  position: fixed;
+  bottom: 54px; right: 14px;
+  z-index: 3000;
+  display: inline-flex; align-items: center; justify-content: center;
+  width: 36px; height: 36px;
+  border-radius: 50%;
+  background: var(--bg-panel);
+  border: 1px solid var(--border-mid);
+  cursor: pointer;
+  opacity: 0.45;
+  transition: opacity 0.25s, box-shadow 0.25s, border-color 0.25s, transform 0.2s;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.35);
+  padding: 0;
+}
+#themeToggleBtn:hover {
+  opacity: 1;
+  border-color: var(--border-orange);
+  box-shadow: 0 0 14px var(--orange-glow), 0 4px 14px rgba(0,0,0,0.4);
+  transform: scale(1.08);
+}
+#themeToggleBtn .toggle-icon { font-size: 16px; line-height: 1; pointer-events: none; }
+#themeToggleBtn #themeLabel { display: none; }
+
+/* Smooth transition */
+body, body * {
+  transition: background-color 0.3s ease, color 0.2s ease,
+              border-color 0.2s ease, box-shadow 0.2s ease;
+}
+body::after, #marqueeTrack { transition: none !important; }
+
+
+/* ===== INLINE EDIT ROW ===== */
+tr.editing td {
+  background: rgba(255,109,0,0.06) !important;
+  outline: none;
+}
+tr.editing td:first-child { border-left: 2px solid var(--orange); }
+tr.editing td:last-child  { border-right: 2px solid var(--orange); }
+tr.editing td {
+  border-top: 1px solid var(--border-orange) !important;
+  border-bottom: 1px solid var(--border-orange) !important;
+}
+.inline-input {
+  width: 100%;
+  background: var(--bg-void);
+  color: var(--text-bright);
+  border: 1px solid var(--orange);
+  border-radius: 3px;
+  padding: 5px 8px;
+  font-family: 'Exo 2', sans-serif;
+  font-size: 14px; font-weight: 400;
+  box-sizing: border-box;
+  resize: vertical; min-height: 32px;
+}
+.inline-input:focus { outline: none; box-shadow: 0 0 0 2px var(--orange-glow); }
+tr.editing td:first-child::after { content: ' ✏'; font-size: 11px; color: var(--orange); opacity: 0.7; }
+.inline-save-bar { display: flex; gap: 6px; margin-top: 6px; }
+.inline-btn {
+  font-family: 'Exo 2', sans-serif;
+  font-size: 11px; font-weight: 700;
+  letter-spacing: 1px; text-transform: uppercase;
+  padding: 4px 10px; border-radius: 3px;
+  cursor: pointer; border: 1px solid; transition: all 0.15s;
+}
+.inline-btn-save  { color: var(--green-ok); border-color: rgba(0,230,118,0.4); background: rgba(0,230,118,0.07); }
+.inline-btn-save:hover  { background: rgba(0,230,118,0.15); }
+.inline-btn-cancel { color: var(--text-dim); border-color: var(--border-mid); background: transparent; }
+.inline-btn-cancel:hover { color: var(--text-mid); }
+@media print { .inline-input, .inline-save-bar { display: none !important; } }
+
+</style>
+</head>
+<body>
+
+<!-- Floating theme toggle -->
+<button id="themeToggleBtn" onclick="toggleTheme()" title="Toggle Dark / Light Mode">
+  <span class="toggle-icon" id="themeIcon">☀️</span>
+  <span id="themeLabel">Light</span>
+</button>
+
+<img id="logo-img" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAeAAAAEOCAYAAABRmsRnAAABCGlDQ1BJQ0MgUHJvZmlsZQAAeJxjYGA8wQAELAYMDLl5JUVB7k4KEZFRCuwPGBiBEAwSk4sLGHADoKpv1yBqL+viUYcLcKakFicD6Q9ArFIEtBxopAiQLZIOYWuA2EkQtg2IXV5SUAJkB4DYRSFBzkB2CpCtkY7ETkJiJxcUgdT3ANk2uTmlyQh3M/Ck5oUGA2kOIJZhKGYIYnBncAL5H6IkfxEDg8VXBgbmCQixpJkMDNtbGRgkbiHEVBYwMPC3MDBsO48QQ4RJQWJRIliIBYiZ0tIYGD4tZ2DgjWRgEL7AwMAVDQsIHG5TALvNnSEfCNMZchhSgSKeDHkMyQx6QJYRgwGDIYMZAKbWPz9HbOBQAAEAAElEQVR4nOydd5gdV3n/P+ecmbllu3ovlouMi9xtbBwIBpwQCCWUhNAJvQRCDfCjQwwJJRAwODY19BoMAYNtjHu3Zcu2ZPW6qttun5lz3t8fc+dqV1pJu1rJlqz5PM8+s3f3zsyZuXPnO+979t6jiIiMjIyMjIyMx4Z6vDuQkZGRkZFxOsoEOCMjIyMj43EgE+CMjIyMjIzHgUyAMzIyMjIyHgcyAc7IyMjIyHgcyAQ4IyMjIyPjcSAT4IyMg6UeW+TwZWRkHDTe4z2AjCcem7cgq9bsYtsuun+bsKPbJS6M2bpfh0nRqixVQ7kK4IVNGrqLlJLJT1EUBVCCQEoBagU5hCuBPTCBPwFfzGfpMYFCTYJtAAAAAElFTkSuQmCC" alt="GT Radial Logo">
+
+<div class="print-header" id="printHeader"></div>
+<div id="clock"></div>
+
+<div class="page-header">
+  <h2>PEMBAGIAN <span>JOB</span> HARIAN</h2>
+  <div class="header-line">
+    <span class="header-badge">GT RADIAL &bull; GAJAH TUNGGAL &bull; PRODUCTION MONITORING SYSTEM</span>
+  </div>
+</div>
+
+<div class="top-bar">
+  <!-- Tombol toggle input -->
+  <button class="tb-btn" id="toggleInputBtn" onclick="toggleInput()">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16">
+      <path d="M12.146.854a.5.5 0 0 1 .708 0l2.292 2.292a.5.5 0 0 1 0 .708L4.207 14.793 0 16l1.207-4.207L12.146.854z"/>
+    </svg>
+  </button>
+
+  <!-- TOMBOL TOGGLE DELETE — setelah pensil -->
+  <button class="tb-btn" id="toggleDeleteBtn" onclick="toggleDeleteMode()" style="width:44px;padding:0;">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" style="width:18px;height:18px;">
+      <path d="M6 19c0 1.1.9 2 2 2h8c1.1 0 2-.9 2-2V7H6v12zM19 4h-3.5l-1-1h-5l-1 1H5v2h14V4z"/>
+    </svg>
+  </button>
+
+  <!-- Tombol cetak -->
+  <button class="tb-btn" id="printBtn" onclick="printTable()">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+      <path d="M19 8H5c-1.66 0-3 1.34-3 3v6h4v4h12v-4h4v-6c0-1.66-1.34-3-3-3zm-3 11H8v-5h8v5zm3-7c-.55 0-1-.45-1-1s.45-1 1-1 1 .45 1 1-.45 1-1 1zm-1-9H6v4h12V3z"/>
+    </svg>
+    Cetak
+  </button>
+
+  <!-- Tombol WhatsApp -->
+  <button class="tb-btn" id="waBtn" onclick="openWaModal()">
+    <svg viewBox="0 0 32 32" fill="none">
+      <path d="M23.5 8.5C21.6 6.6 19.1 5.5 16.4 5.5C10.8 5.5 6.3 10 6.3 15.6C6.3 17.4 6.8 19.2 7.7 20.8L6.2 26.5L12.1 25C13.6 25.8 15.2 26.3 16.8 26.3H16.9C22.5 26.3 27 21.8 27 16.2C27 13.5 25.9 11 24 9.1L23.5 8.5ZM16.4 24.6H16.3C14.9 24.6 13.5 24.2 12.3 23.4L12 23.2L8.7 24.1L9.6 20.9L9.4 20.6C8.5 19.3 8.1 17.8 8.1 16.2C8.1 11.3 12.1 7.3 17 7.3C19.4 7.3 21.6 8.2 23.3 9.9C24.9 11.6 25.9 13.8 25.9 16.2C25.9 21.1 21.9 24.6 16.4 24.6ZM21.9 18.1C21.6 17.9 20.2 17.2 20 17.1C19.7 17 19.6 16.9 19.4 17.2C19.2 17.5 18.7 18.1 18.6 18.3C18.4 18.5 18.3 18.5 18 18.3C17.7 18.2 16.8 17.9 15.7 16.9C14.9 16.2 14.3 15.3 14.2 15C14.1 14.7 14.2 14.6 14.4 14.4C14.5 14.3 14.7 14.1 14.9 13.9C15 13.8 15.1 13.6 15.2 13.5C15.3 13.3 15.2 13.1 15.2 13C15.1 12.8 14.6 11.5 14.3 10.9C14.1 10.4 13.9 10.5 13.7 10.5H13.2C13 10.5 12.7 10.6 12.4 10.9C12.2 11.2 11.4 11.9 11.4 13.2C11.4 14.5 12.4 15.8 12.6 16C12.7 16.2 14.5 19 17.4 20.1C18.1 20.4 18.7 20.5 19.2 20.6C19.9 20.8 20.5 20.8 21 20.7C21.5 20.6 22.6 20 22.9 19.3C23.1 18.6 23.1 18.1 23 18C22.9 17.9 22.6 17.8 21.9 18.1Z" fill="currentColor"/>
+    </svg>
+    Kirim WA
+  </button>
+</div>
+
+<!-- Input section -->
+<div id="inputSection" style="display:none;">
+  <div class="form-scroll">
+    <div class="form-container">
+      <input type="text" id="id" placeholder="Nomor ID">
+      <input type="text" id="nama" placeholder="Nama">
+      <textarea id="tugas" placeholder="Tugas"></textarea>
+      <input type="text" id="mesin" placeholder="Mesin">
+      <select id="status">
+        <option>Pending</option>
+        <option>Proses</option>
+        <option>Selesai</option>
+      </select>
+      <button type="button" onclick="addTask()">Tambah</button>
+      <button type="button" onclick="archiveTasks()">Archive</button>
+    </div>
+  </div>
+  <hr>
+</div>
+
+<div class="table-wrapper">
+  <table id="mainTable">
+    <thead>
+      <tr id="theadRow">
+        <th>ID / No. Mesin</th>
+        <th>Nama</th>
+        <th>Tugas</th>
+        <th>Mesin</th>
+        <th>Status</th>
+        <th>Tanggal</th>
+        <th>Mulai</th>
+        <th>Selesai</th>
+      </tr>
+    </thead>
+    <tbody id="data"></tbody>
+  </table>
+</div>
+
+<!-- Modal Konfirmasi Archive -->
+<div id="confirmModal" class="modal">
+  <div class="modal-box">
+    <h3>⚠ Konfirmasi Archive</h3>
+    <p>Semua job hari ini akan dipindah ke arsip. Lanjutkan?</p>
+    <br>
+    <button onclick="confirmArchive()">Ya, Archive</button>
+    <button onclick="closeModal()" style="color:var(--text-mid);border-color:var(--border-mid);">Batal</button>
+  </div>
+</div>
+
+<!-- Modal Alert -->
+<div id="alertModal" class="modal">
+  <div class="modal-box">
+    <p id="alertText"></p>
+    <br>
+    <button onclick="closeAlert()">OK</button>
+  </div>
+</div>
+
+<!-- Modal Login -->
+<div id="loginModal" class="modal">
+  <div class="modal-box">
+    <h3>🔐 Autentikasi</h3>
+    <input type="text" id="loginUser" placeholder="Username" style="margin-bottom:10px;font-size:16px;padding:10px;"><br>
+    <input type="password" id="loginPass" placeholder="Password" style="margin-bottom:16px;font-size:16px;padding:10px;"><br>
+    <button onclick="doLogin()">Login</button>
+    <button onclick="closeLogin()" style="color:var(--text-mid);border-color:var(--border-mid);">Batal</button>
+  </div>
+</div>
+
+<!-- =====================================================
+     MODAL KONFIRMASI HAPUS ROW (BARU)
+     ===================================================== -->
+<div id="deleteRowModal" class="modal">
+  <div class="modal-box">
+    <h3>🗑 Hapus Job?</h3>
+    <p id="deleteRowDesc" style="margin-bottom:8px;font-size:15px;color:var(--text-bright);"></p>
+    <p style="font-size:13px;color:var(--text-dim);margin-bottom:18px;">Tindakan ini tidak dapat dibatalkan.</p>
+    <div style="display:flex;justify-content:center;gap:12px;">
+      <button id="confirmDeleteRowBtn">Ya, Hapus</button>
+      <button id="cancelDeleteRowBtn">Batal</button>
+    </div>
+  </div>
+</div>
+
+<!-- Modal WA -->
+<div id="waModal">
+  <div class="modal-box">
+    <h3>
+      <svg width="22" height="22" viewBox="0 0 32 32" fill="none">
+        <path d="M16.4 24.6H16.3C14.9 24.6 13.5 24.2 12.3 23.4L12 23.2L8.7 24.1L9.6 20.9L9.4 20.6C8.5 19.3 8.1 17.8 8.1 16.2C8.1 11.3 12.1 7.3 17 7.3C19.4 7.3 21.6 8.2 23.3 9.9C24.9 11.6 25.9 13.8 25.9 16.2C25.9 21.1 21.9 24.6 16.4 24.6Z" fill="currentColor"/>
+      </svg>
+      Kirim WhatsApp
+    </h3>
+    <div class="wa-preview-label">▸ Isi Pesan</div>
+    <div class="wa-preview" id="waPreviewText"></div>
+    <div class="wa-input-label">▸ Nomor Tujuan</div>
+    <input type="text" id="waPhoneInput" placeholder="081234567890" maxlength="15" oninput="validateWaPhone(this)">
+    <div class="wa-hint">Format: 08xxxxxxxx → otomatis dikonversi ke +628xx</div>
+    <div id="waPhoneError">✕ Nomor tidak valid. Gunakan format 08xxxxxxxxxx</div>
+    <div class="wa-btn-row">
+      <button class="wa-send-btn" onclick="sendWhatsApp()">
+        <svg width="16" height="16" viewBox="0 0 32 32" fill="none">
+          <path d="M16.4 24.6H16.3C14.9 24.6 13.5 24.2 12.3 23.4L12 23.2L8.7 24.1L9.6 20.9L9.4 20.6C8.5 19.3 8.1 17.8 8.1 16.2C8.1 11.3 12.1 7.3 17 7.3C19.4 7.3 21.6 8.2 23.3 9.9C24.9 11.6 25.9 13.8 25.9 16.2C25.9 21.1 21.9 24.6 16.4 24.6Z" fill="currentColor"/>
+        </svg>
+        Kirim
+      </button>
+      <button class="wa-cancel-btn" onclick="closeWaModal()">Batal</button>
+    </div>
+  </div>
+</div>
+
+<!-- Running Text Bar -->
+<div id="runningTextBar">
+  <button id="editRunningBtn" title="Edit Running Text" onclick="openEditRunning()">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16">
+      <path d="M12.146.854a.5.5 0 0 1 .708 0l2.292 2.292a.5.5 0 0 1 0 .708L4.207 14.793 0 16l1.207-4.207L12.146.854z"/>
+    </svg>
+  </button>
+  <div id="marqueeWrapper">
+    <div id="marqueeTrack">
+      <span id="marqueeText1">Memuat info...</span>
+      <span id="marqueeText2">Memuat info...</span>
+    </div>
+  </div>
+</div>
+
+<!-- Modal Edit Running Text -->
+<div id="editRunningModal">
+  <div class="modal-box">
+    <h3>✏ Edit Running Text</h3>
+    <textarea id="runningTextInput" placeholder="Masukkan teks berjalan..."></textarea>
+    <div style="margin-top:12px;">
+      <button onclick="saveRunningText()" style="color:var(--green-ok);border-color:rgba(0,230,118,0.4);">Simpan</button>
+      <button onclick="closeEditRunning()" style="color:var(--red-err);border-color:rgba(255,23,68,0.35);">Batal</button>
+    </div>
+  </div>
+</div>
+
+<script>
+/* ===== THEME TOGGLE ===== */
+(function() {
+  var saved = localStorage.getItem('pjh_theme');
+  if (saved === 'light') { document.body.classList.add('light-mode'); }
+})();
+
+function toggleTheme() {
+  var body  = document.body;
+  var icon  = document.getElementById('themeIcon');
+  var label = document.getElementById('themeLabel');
+  if (body.classList.contains('light-mode')) {
+    body.classList.remove('light-mode');
+    icon.textContent  = '☀️';
+    label.textContent = 'Light';
+    localStorage.setItem('pjh_theme', 'dark');
+  } else {
+    body.classList.add('light-mode');
+    icon.textContent  = '🌙';
+    label.textContent = 'Dark';
+    localStorage.setItem('pjh_theme', 'light');
+  }
+}
+document.addEventListener('DOMContentLoaded', function() {
+  var icon  = document.getElementById('themeIcon');
+  var label = document.getElementById('themeLabel');
+  if (document.body.classList.contains('light-mode')) {
+    icon.textContent  = '🌙';
+    label.textContent = 'Dark';
+  }
+});
+
+/* ===== LOGIN ===== */
+let isLoggedIn  = false;
+let loginExpire = 0;
+// Simpan aksi yang menunggu setelah login berhasil
+let pendingAction = null;
+
+function requireLogin(callback) {
+  var now = new Date().getTime();
+  if (isLoggedIn && now <= loginExpire) {
+    callback();
+    return;
+  }
+  pendingAction = callback;
+  document.getElementById("loginUser").value = "";
+  document.getElementById("loginPass").value = "";
+  document.getElementById("loginModal").style.display = "flex";
+}
+
+function toggleInput() {
+  requireLogin(function() {
+    var section = document.getElementById("inputSection");
+    section.style.display = (section.style.display === "none") ? "block" : "none";
+  });
+}
+
+function doLogin() {
+  var user = document.getElementById("loginUser").value;
+  var pass = document.getElementById("loginPass").value;
+  if (user === "admin" && pass === "1234") {
+    isLoggedIn   = true;
+    loginExpire  = new Date().getTime() + (5 * 60 * 1000);
+    closeLogin();
+    if (pendingAction) {
+      var cb = pendingAction;
+      pendingAction = null;
+      cb();
+    }
+  } else {
+    showAlert("Login gagal!");
+    document.getElementById("loginPass").value = "";
+    pendingAction = null;
+  }
+}
+function closeLogin() {
+  document.getElementById("loginModal").style.display = "none";
+}
+
+/* ===== CLOCK ===== */
+function updateClock() {
+  var now = new Date();
+  var days = ["Minggu","Senin","Selasa","Rabu","Kamis","Jumat","Sabtu"];
+  var monthNames = ["Jan","Feb","Mar","Apr","Mei","Jun","Jul","Agu","Sep","Okt","Nov","Des"];
+  var d = String(now.getDate()).padStart(2,'0');
+  var h = String(now.getHours()).padStart(2,'0');
+  var m = String(now.getMinutes()).padStart(2,'0');
+  var s = String(now.getSeconds()).padStart(2,'0');
+  document.getElementById('clock').innerText =
+    days[now.getDay()] + ", " + d + " " + monthNames[now.getMonth()] + " " + now.getFullYear() +
+    " - " + h + ":" + m + ":" + s;
+}
+setInterval(updateClock, 1000);
+updateClock();
+
+/* ===== STATUS COLOR ===== */
+function getStatusClass(status) {
+  if (status === "Selesai") return "selesai";
+  if (status === "Proses")  return "proses";
+  return "pending";
+}
+
+/* ===== DATA ===== */
+var allTasks   = [];
+var deleteMode = false;
+
+function loadData(force) {
+  // Jangan reload saat sedang inline edit, kecuali dipaksa (force=true)
+  if (!force && currentEditingRow) return;
+  google.script.run.withSuccessHandler(function(tasks) {
+    allTasks = tasks;
+    renderTable();
+  }).getTasks();
+}
+
+function renderTable() {
+  var table   = document.getElementById("mainTable");
+  var thead   = document.getElementById("theadRow");
+  var tbody   = document.getElementById("data");
+
+  if (deleteMode) {
+    // Tambah class delete-mode ke table
+    table.classList.add("delete-mode");
+    // Sisipkan header kolom ✕ di posisi pertama jika belum ada
+    if (!thead.querySelector("th.col-delete")) {
+      var thDel = document.createElement("th");
+      thDel.className = "col-delete";
+      thDel.innerHTML = "✕";
+      thead.insertBefore(thDel, thead.firstChild);
+    }
+  } else {
+    table.classList.remove("delete-mode");
+    // Hapus header kolom ✕ jika ada
+    var existing = thead.querySelector("th.col-delete");
+    if (existing) thead.removeChild(existing);
+  }
+
+  var html = "";
+  allTasks.forEach(function(task) {
+    var sc = getStatusClass(task.status);
+
+    if (deleteMode) {
+      // Kolom ✕ di depan
+      html += "<tr>";
+      html += "<td class=\"col-delete\">" +
+              "<button class=\"btn-delete-row\" onclick=\"askDeleteRow('" + task.id + "','" + (task.nama||'').replace(/'/g,"\\'") + "')\" title=\"Hapus baris ini\">✕</button>" +
+              "</td>";
+    } else {
+      html += "<tr>";
+    }
+
+    html += "<td>" + task.id + "</td>";
+    html += "<td>" + task.nama + "</td>";
+    html += "<td>" + task.tugas + "</td>";
+    html += "<td>" + task.mesin + "</td>";
+    html += "<td><select class=\"status-select " + sc + "\" data-id=\"" + task.id +
+            "\" onchange=\"changeStatus(this)\">" +
+            "<option" + (task.status==="Pending"?" selected":"") + ">Pending</option>" +
+            "<option" + (task.status==="Proses"?" selected":"") + ">Proses</option>" +
+            "<option" + (task.status==="Selesai"?" selected":"") + ">Selesai</option>" +
+            "</select></td>";
+    html += "<td>" + task.tanggal + "</td>";
+    html += "<td>" + (task.jamMulai  || "<span style='color:var(--text-dim);font-size:11px;'>—</span>") + "</td>";
+    html += "<td>" + (task.jamSelesai|| "<span style='color:var(--text-dim);font-size:11px;'>—</span>") + "</td>";
+    html += "</tr>";
+  });
+  tbody.innerHTML = html;
+}
+
+/* ===================================================
+   TOGGLE DELETE MODE
+   =================================================== */
+function toggleDeleteMode() {
+  requireLogin(function() {
+    deleteMode = !deleteMode;
+    var btn = document.getElementById("toggleDeleteBtn");
+    if (deleteMode) {
+      btn.classList.add("active");
+      btn.title = "Klik lagi untuk sembunyikan tombol hapus";
+    } else {
+      btn.classList.remove("active");
+      btn.title = "Tampilkan tombol hapus row";
+    }
+    renderTable();
+  });
+}
+
+/* ===================================================
+   HAPUS ROW — konfirmasi dulu
+   =================================================== */
+var pendingDeleteId = null;
+
+function askDeleteRow(id, nama) {
+  pendingDeleteId = id;
+  document.getElementById("deleteRowDesc").textContent =
+    "ID: " + id + (nama ? "  —  " + nama : "");
+  document.getElementById("deleteRowModal").style.display = "flex";
+}
+
+document.getElementById("confirmDeleteRowBtn").addEventListener("click", function() {
+  if (!pendingDeleteId) return;
+  var idToDelete = pendingDeleteId;
+  pendingDeleteId = null;
+  document.getElementById("deleteRowModal").style.display = "none";
+
+  google.script.run
+    .withSuccessHandler(function(result) {
+      if (result && result.error) {
+        showAlert("Gagal menghapus: " + result.error);
+      } else {
+        loadData();
+      }
+    })
+    .withFailureHandler(function(err) {
+      showAlert("Error: " + (err.message || err));
+    })
+    .deleteTask(idToDelete);
+});
+
+document.getElementById("cancelDeleteRowBtn").addEventListener("click", function() {
+  pendingDeleteId = null;
+  document.getElementById("deleteRowModal").style.display = "none";
+});
+
+/* ===== ADD TASK ===== */
+function addTask() {
+  var id     = document.getElementById("id").value;
+  var nama   = document.getElementById("nama").value;
+  var tugas  = document.getElementById("tugas").value;
+  var mesin  = document.getElementById("mesin").value;
+  var status = document.getElementById("status").value;
+  if (!id || !nama || !tugas || !mesin) {
+    showAlert("ID, Nama, Tugas dan Mesin harus diisi!");
+    return;
+  }
+  google.script.run.withSuccessHandler(function() {
+    document.getElementById("id").value    = "";
+    document.getElementById("nama").value  = "";
+    document.getElementById("tugas").value = "";
+    document.getElementById("mesin").value = "";
+    loadData();
+    document.getElementById("inputSection").style.display = "none";
+  }).addTask(id, nama, tugas, mesin, status);
+}
+
+/* ===== CHANGE STATUS ===== */
+function changeStatus(select) {
+  requireLogin(function() {
+    var id        = select.getAttribute("data-id");
+    var newStatus = select.value;
+    google.script.run.withSuccessHandler(function() { loadData(true); }).updateTaskStatus(id, newStatus);
+  });
+}
+
+
+/* ===== ARCHIVE ===== */
+function archiveTasks() { document.getElementById("confirmModal").style.display = "flex"; }
+function confirmArchive() {
+  closeModal();
+  google.script.run.withSuccessHandler(function(msg) {
+    showAlert(msg);
+    loadData();
+    document.getElementById("inputSection").style.display = "none";
+  }).moveTasksToHistory();
+}
+function closeModal() { document.getElementById("confirmModal").style.display = "none"; }
+
+/* ===== ALERT ===== */
+function showAlert(text) {
+  document.getElementById("alertText").innerText = text;
+  document.getElementById("alertModal").style.display = "flex";
+}
+function closeAlert() { document.getElementById("alertModal").style.display = "none"; }
+
+/* ===== PRINT ===== */
+function printTable() {
+  var now = new Date();
+  var days = ["Minggu","Senin","Selasa","Rabu","Kamis","Jumat","Sabtu"];
+  var monthNames = ["Jan","Feb","Mar","Apr","Mei","Jun","Jul","Agu","Sep","Okt","Nov","Des"];
+  var d  = String(now.getDate()).padStart(2,'0');
+  var h  = String(now.getHours()).padStart(2,'0');
+  var m  = String(now.getMinutes()).padStart(2,'0');
+  var tanggal = days[now.getDay()] + ", " + d + " " + monthNames[now.getMonth()] + " " + now.getFullYear();
+  document.getElementById("printHeader").innerText =
+    "Dicetak pada: " + tanggal + " pukul " + h + ":" + m;
+  window.print();
+}
+
+/* ===== WHATSAPP ===== */
+function convertToWaNumber(input) {
+  var num = input.trim().replace(/[\s\-]/g, "");
+  if (num.startsWith("+62")) return num;
+  if (num.startsWith("62"))  return "+" + num;
+  if (num.startsWith("0"))   return "+62" + num.substring(1);
+  return null;
+}
+function validateWaPhone(input) {
+  var val  = input.value.trim().replace(/[\s\-]/g, "");
+  var errEl = document.getElementById("waPhoneError");
+  var valid = /^(0|62|\+62)[0-9]{8,12}$/.test(val);
+  if (!input.value.trim()) {
+    errEl.style.display = "none"; input.style.borderColor = "#ccc";
+  } else if (valid) {
+    errEl.style.display = "none"; input.style.borderColor = "#1565C0";
+  } else {
+    errEl.style.display = "block"; input.style.borderColor = "#e53935";
+  }
+}
+function openWaModal() {
+  if (allTasks.length === 0) { showAlert("Tidak ada data di tabel!"); return; }
+  var now = new Date();
+  var days = ["Minggu","Senin","Selasa","Rabu","Kamis","Jumat","Sabtu"];
+  var monthNames = ["Jan","Feb","Mar","Apr","Mei","Jun","Jul","Agu","Sep","Okt","Nov","Des"];
+  var tanggal = days[now.getDay()] + ", " + String(now.getDate()).padStart(2,'0') +
+                " " + monthNames[now.getMonth()] + " " + now.getFullYear();
+  var pesan = "📋 *Pembagian Job Harian*\n📅 " + tanggal + "\n━━━━━━━━━━━━━━━━━━━━\n\n";
+  allTasks.forEach(function(task, i) {
+    pesan += (i+1) + ". *" + task.nama + "*\n";
+    pesan += "   🔧 Mesin : " + task.mesin + "\n";
+    pesan += "   📌 Tugas : " + task.tugas + "\n\n";
+  });
+  pesan += "━━━━━━━━━━━━━━━━━━━━\nMohon dikerjakan sesuai jadwal. Terima kasih! 🙏";
+  document.getElementById("waPreviewText").innerText = pesan;
+  document.getElementById("waPhoneInput").value = "";
+  document.getElementById("waPhoneInput").style.borderColor = "#ccc";
+  document.getElementById("waPhoneError").style.display = "none";
+  document.getElementById("waModal").style.display = "flex";
+  setTimeout(function() { document.getElementById("waPhoneInput").focus(); }, 150);
+}
+function closeWaModal() { document.getElementById("waModal").style.display = "none"; }
+function sendWhatsApp() {
+  var inputVal = document.getElementById("waPhoneInput").value.trim();
+  if (!inputVal) { showAlert("Masukkan nomor WhatsApp terlebih dahulu!"); return; }
+  var waNumber = convertToWaNumber(inputVal);
+  if (!waNumber) {
+    document.getElementById("waPhoneError").style.display = "block";
+    document.getElementById("waPhoneInput").style.borderColor = "#e53935";
+    document.getElementById("waPhoneInput").focus();
+    return;
+  }
+  var pesan = document.getElementById("waPreviewText").innerText;
+  var url = "https://wa.me/" + waNumber.replace("+","") + "?text=" + encodeURIComponent(pesan);
+  window.open(url, "_blank");
+  closeWaModal();
+}
+document.getElementById("waPhoneInput").addEventListener("keydown", function(e) {
+  if (e.key === "Enter") sendWhatsApp();
+});
+document.getElementById("waModal").addEventListener("click", function(e) {
+  if (e.target === this) closeWaModal();
+});
+
+/* ===== RUNNING TEXT ===== */
+var currentRunningText = "Memuat info...";
+function setMarqueeText(text) {
+  currentRunningText = text;
+  document.getElementById("marqueeText1").textContent = text;
+  document.getElementById("marqueeText2").textContent = text;
+  var track = document.getElementById("marqueeTrack");
+  track.style.animation = "none";
+  track.offsetHeight;
+  track.style.animation = "";
+}
+function loadRunningText() {
+  google.script.run
+    .withSuccessHandler(function(text) { setMarqueeText(text); })
+    .withFailureHandler(function() { setMarqueeText("Selamat bekerja! Tetap semangat dan utamakan keselamatan kerja."); })
+    .getRunningText();
+}
+function openEditRunning() {
+  requireLogin(function() {
+    document.getElementById("runningTextInput").value = currentRunningText;
+    document.getElementById("editRunningModal").style.display = "flex";
+  });
+}
+function closeEditRunning() { document.getElementById("editRunningModal").style.display = "none"; }
+function saveRunningText() {
+  var newText = document.getElementById("runningTextInput").value.trim();
+  if (!newText) { showAlert("Teks tidak boleh kosong!"); return; }
+  google.script.run
+    .withSuccessHandler(function() { setMarqueeText(newText); closeEditRunning(); })
+    .withFailureHandler(function() { showAlert("Gagal menyimpan teks. Coba lagi."); })
+    .saveRunningText(newText);
+}
+
+/* ===================================================
+   INLINE EDIT ROW — double klik row untuk edit semua cell
+   =================================================== */
+var currentEditingRow = null;
+var originalRowData   = null;
+
+// =====================================================
+// INLINE EDIT TRIGGER:
+//   PC/Desktop  → double klik
+//   HP/Touch    → long press 600ms (dengan vibrate feedback)
+// =====================================================
+var _lpTimer      = null;   // timer long press
+var _lpTarget     = null;   // target row long press
+var _lpMoved      = false;  // flag: jari bergerak = bukan long press
+var _editCooldown = false;  // flag: blokir event spurious setelah aktifasi edit
+
+// Panggil ini setiap kali mode edit baru saja diaktifkan
+// agar event touchend/click yang "sisa" dari gesture tidak langsung menutup edit
+function _activateEdit(tr) {
+  _editCooldown = true;
+  setTimeout(function() { _editCooldown = false; }, 400);
+  startInlineEdit(tr);
+}
+
+var tbody = document.getElementById("data");
+
+// --- PC: double klik ---
+tbody.addEventListener("dblclick", function(e) {
+  if (window.matchMedia("(pointer: coarse)").matches) return;
+  var tr = e.target.closest("tr");
+  if (!tr) return;
+  if (e.target.closest(".btn-delete-row")) return;
+  if (e.target.tagName === "SELECT") return;
+  requireLogin(function() { _activateEdit(tr); });
+});
+
+// --- HP/Touch: long press ---
+tbody.addEventListener("touchstart", function(e) {
+  var tr = e.target.closest("tr");
+  if (!tr) return;
+  if (e.target.closest(".btn-delete-row")) return;
+  if (e.target.tagName === "SELECT") return;
+  _lpMoved  = false;
+  _lpTarget = tr;
+  _lpTimer  = setTimeout(function() {
+    if (_lpMoved) return;
+    if (navigator.vibrate) navigator.vibrate(60);
+    requireLogin(function() { _activateEdit(_lpTarget); });
+  }, 600);
+}, { passive: true });
+
+tbody.addEventListener("touchmove", function() {
+  _lpMoved = true;
+  clearTimeout(_lpTimer);
+}, { passive: true });
+
+tbody.addEventListener("touchend", function() {
+  clearTimeout(_lpTimer);
+}, { passive: true });
+
+tbody.addEventListener("touchcancel", function() {
+  clearTimeout(_lpTimer);
+}, { passive: true });
+
+// Blokir click spurious di seluruh dokumen selama cooldown
+document.addEventListener("click", function(e) {
+  if (_editCooldown) { e.stopPropagation(); }
+}, true); // capture phase agar paling awal
+
+function startInlineEdit(tr) {
+  // Jika ada row lain yang sedang diedit, batalkan dulu
+  if (currentEditingRow && currentEditingRow !== tr) {
+    cancelInlineEdit();
+  }
+  if (tr.classList.contains("editing")) return;
+
+  currentEditingRow = tr;
+
+  // Tentukan indeks kolom berdasarkan deleteMode
+  var offset = deleteMode ? 1 : 0;
+  var cells  = tr.children;
+
+  // Simpan data asli untuk cancel
+  originalRowData = {
+    id       : cells[offset + 0].innerText.replace(/\s*✏$/, "").trim(),
+    nama     : cells[offset + 1].innerText.trim(),
+    tugas    : cells[offset + 2].childNodes[0] ? cells[offset + 2].childNodes[0].textContent.trim() : "",
+    mesin    : cells[offset + 3].innerText.trim(),
+    jamMulai : cells[offset + 6] ? cells[offset + 6].innerText.trim().replace("—","") : "",
+    jamSelesai: cells[offset + 7] ? cells[offset + 7].innerText.trim().replace("—","") : ""
+  };
+
+  tr.classList.add("editing");
+
+  // Kolom ID — input text
+  cells[offset + 0].innerHTML =
+    "<input class='inline-input' id='ie-id' value='" + escHtml(originalRowData.id) + "'>" +
+    "<div class='inline-save-bar'>" +
+      "<button class='inline-btn inline-btn-save' onclick='saveInlineEdit()'>✓ Simpan</button>" +
+      "<button class='inline-btn inline-btn-cancel' onclick='cancelInlineEdit()'>✕ Batal</button>" +
+    "</div>";
+
+  // Kolom Nama — input text
+  cells[offset + 1].innerHTML =
+    "<input class='inline-input' id='ie-nama' value='" + escHtml(originalRowData.nama) + "'>";
+
+  // Kolom Tugas — textarea
+  cells[offset + 2].innerHTML =
+    "<textarea class='inline-input' id='ie-tugas' rows='3'>" + escHtml(originalRowData.tugas) + "</textarea>";
+
+  // Kolom Mesin — input text
+  cells[offset + 3].innerHTML =
+    "<input class='inline-input' id='ie-mesin' value='" + escHtml(originalRowData.mesin) + "'>";
+
+  // Kolom Jam Mulai — input time
+  if (cells[offset + 6]) cells[offset + 6].innerHTML =
+    "<input class='inline-input' id='ie-jam-mulai' type='time' value='" + escHtml(originalRowData.jamMulai) + "'>";
+
+  // Kolom Jam Selesai — input time
+  if (cells[offset + 7]) cells[offset + 7].innerHTML =
+    "<input class='inline-input' id='ie-jam-selesai' type='time' value='" + escHtml(originalRowData.jamSelesai) + "'>";
+
+  // Kolom Status & Tanggal — biarkan (status sudah punya dropdown sendiri)
+
+  // Fokus ke input pertama
+  setTimeout(function() {
+    var inp = document.getElementById("ie-id");
+    if (inp) inp.focus();
+  }, 50);
+
+  // Keyboard: Enter = simpan, Escape = batal
+  tr.addEventListener("keydown", handleInlineKeydown);
+}
+
+function handleInlineKeydown(e) {
+  if (e.key === "Escape") { e.preventDefault(); cancelInlineEdit(); }
+  // Enter di luar textarea → simpan
+  if (e.key === "Enter" && e.target.tagName !== "TEXTAREA") {
+    e.preventDefault(); saveInlineEdit();
+  }
+}
+
+function saveInlineEdit() {
+  if (!currentEditingRow) return;
+
+  var newId       = (document.getElementById("ie-id")         || {value: originalRowData.id        }).value.trim();
+  var newNama     = (document.getElementById("ie-nama")       || {value: originalRowData.nama      }).value.trim();
+  var newTugas    = (document.getElementById("ie-tugas")      || {value: originalRowData.tugas     }).value.trim();
+  var newMesin    = (document.getElementById("ie-mesin")      || {value: originalRowData.mesin     }).value.trim();
+  var newJamMulai = (document.getElementById("ie-jam-mulai")  || {value: originalRowData.jamMulai  }).value.trim();
+  var newJamSelesai=(document.getElementById("ie-jam-selesai")|| {value: originalRowData.jamSelesai}).value.trim();
+
+  if (!newId || !newNama || !newTugas || !newMesin) {
+    showAlert("Semua kolom harus diisi!");
+    return;
+  }
+
+  var oldId = originalRowData.id;
+  finishInlineEdit();
+
+  // Panggil GAS untuk update semua field sekaligus
+  google.script.run
+    .withSuccessHandler(function(result) {
+      if (result && result.error) { showAlert("Gagal simpan: " + result.error); }
+      loadData(true); // force reload setelah simpan
+    })
+    .withFailureHandler(function(err) {
+      showAlert("Error: " + (err.message || err));
+      loadData(true);
+    })
+    .updateTaskAll(oldId, newId, newNama, newTugas, newMesin, newJamMulai, newJamSelesai);
+}
+
+function cancelInlineEdit() {
+  finishInlineEdit();
+  loadData(true); // force reload setelah cancel
+}
+
+function finishInlineEdit() {
+  if (!currentEditingRow) return;
+  currentEditingRow.removeEventListener("keydown", handleInlineKeydown);
+  currentEditingRow.classList.remove("editing");
+  currentEditingRow = null;
+  originalRowData   = null;
+}
+
+// Klik di luar TIDAK auto-simpan — user harus klik ✓ Simpan atau tekan Enter
+
+function escHtml(str) {
+  return String(str || "")
+    .replace(/&/g,"&amp;")
+    .replace(/</g,"&lt;")
+    .replace(/>/g,"&gt;")
+    .replace(/"/g,"&quot;")
+    .replace(/'/g,"&#39;");
+}
+
+/* ===== INIT ===== */
+window.onload = function() {
+  loadRunningText();
+  loadData();
+  setInterval(function() { loadData(); loadRunningText(); }, 60000);
+};
+</script>
+</body>
+</html>
