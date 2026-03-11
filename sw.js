@@ -8,8 +8,8 @@ const STATIC_ASSETS = [
   '/index.html',
   '/drive-monitoring.html',
   '/manifest.json',
-  '/icons/icon-192.png',
-  '/icons/icon-512.png',
+  '/icon-192.png',
+  '/icon-512.png',
   // Font Google (opsional — kalau offline font fallback ke system font)
   'https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap',
 ];
