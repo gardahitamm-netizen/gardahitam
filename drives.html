@@ -881,7 +881,26 @@ async function renderPlantPage() {
     const data = await apiGet({ action: 'getPlants' });
     id('stat-total').textContent = data.plants.length;
     id('stat-sync').textContent  = new Date().toTimeString().slice(0,5);
+
+    // Render cards dulu (tag mixing masih Memuat)
     el.innerHTML = `<div class="plant-grid">${data.plants.map((p,i) => plantCard(p,i)).join('')}</div>`;
+
+    // Fetch config semua plant paralel, lalu update tag jumlah mixing tiap card
+    await Promise.all(data.plants.map(async (p) => {
+      try {
+        if (!S.cache[p.plant + '_config']) {
+          const res = await apiGet({ action: 'getConfig', plant: p.plant });
+          S.cache[p.plant + '_config'] = res.config;
+        }
+        const cfg    = S.cache[p.plant + '_config'] || {};
+        const jumlah = cfg[p.plant]
+          || cfg[p.plant.toLowerCase()]
+          || cfg[p.plant.toUpperCase()]
+          || Object.values(cfg)[0];
+        const tagEl = document.getElementById('mix-tag-' + p.plant);
+        if (tagEl && jumlah) tagEl.textContent = jumlah + ' Mixing';
+      } catch(e) {}
+    }));
   } catch(err) { el.innerHTML = errHTML(err.message, renderPlantPage); }
 }
 
@@ -909,7 +928,7 @@ function plantCard(p, i) {
       <div class="plant-card-desc">${m.desc}</div>
     </div>
     <div class="plant-card-bottom">
-      <span class="plant-card-tag">${mixTag}</span>
+      <span class="plant-card-tag" id="mix-tag-${p.plant}">${mixTag}</span>
       <span class="plant-card-arr">→</span>
     </div>
   </div>`;
