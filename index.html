@@ -1,16 +1,13 @@
 <!DOCTYPE html>
 <html lang="id">
 <head>
+<link rel="manifest" href="/gardahitam/manifest.json">
+<meta name="theme-color" content="#0b0f1a">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="Garda Hitam">
+<link rel="apple-touch-icon" href="/gardahitam/icon-192.png">
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <!-- PWA -->
-<link rel="manifest" href="/manifest.json">
-<meta name="theme-color" content="#0b0f1a">
-<meta name="mobile-web-app-capable" content="yes">
-<meta name="apple-mobile-web-app-capable" content="yes">
-<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-<meta name="apple-mobile-web-app-title" content="Garda Hitam">
-<link rel="apple-touch-icon" href="/icon-192.png">
 <title>Garda Hitam — Pusat Kendali</title>
 <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=Orbitron:wght@400;700;900&family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
 <style>
@@ -736,9 +733,7 @@ document.querySelectorAll('.reveal').forEach(el => obs.observe(el));
   <script>
   if ('serviceWorker' in navigator) {
     window.addEventListener('load', () => {
-      navigator.serviceWorker.register('/sw.js')
-        .then(reg => console.log('[SW] Registered:', reg.scope))
-        .catch(err => console.log('[SW] Error:', err));
+      navigator.serviceWorker.register('/gardahitam/sw.js');
     });
   }
 </script>
