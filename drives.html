@@ -1226,7 +1226,9 @@ function renderSidebar(jumlah) {
     const active   = S.mixing === i ? 'active' : '';
     const hasFault = faultMap[i] ? 'has-fault' : '';
     const faultDot = faultMap[i] ? '<div class="sb-fault"></div>' : '';
-    html += `<div class="sb-item ${active} ${hasFault}" onclick="selectMixing(${i})">Mixing ${i} ${faultDot}</div>`;
+ const pad   = String(i).padStart(2, '0');
+const label = `${S.plant}.${pad}.MX.01`;
+html += `<div class="sb-item ${active} ${hasFault}" onclick="selectMixing(${i})">${label} ${faultDot}</div>`;
   }
   id('sb-items').innerHTML = html;
 }
