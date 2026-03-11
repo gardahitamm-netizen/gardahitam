@@ -3,6 +3,14 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <!-- PWA -->
+<link rel="manifest" href="/gardahitam/manifest.json">
+<meta name="theme-color" content="#0b0f1a">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="Garda Hitam">
+<link rel="apple-touch-icon" href="/gardahitam/icon-192.png">
 <title>Drive Monitoring — Garda Hitam</title>
 <style>
 @import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap');
@@ -47,6 +55,7 @@ body.light .running-bar{ background:#dde6f0; border-color:#c8d8e8; }
 
 *{margin:0;padding:0;box-sizing:border-box;}
 html, body { width:100%; height:100%; overflow:hidden; }
+@media (max-width: 768px) { html, body { overflow: auto; } }
 body {
   font-family:'Plus Jakarta Sans',sans-serif;
   background:var(--bg); color:var(--text);
@@ -558,24 +567,33 @@ body {
   .topbar-title { font-size: 11px; }
   .topbar-sub { display: none; }
   .topbar-divider { display: none; }
-  .ticker-wrap { font-size: 10px; }
-  #btn-home { font-size: 10px; padding: 5px 8px; }
+  .running-inner { font-size: 9px; }
+  .btn-back { font-size: 10px; padding: 5px 8px; }
+  .btn-theme { font-size: 10px; padding: 5px 8px; }
+  .btn-sm { font-size: 10px; padding: 5px 8px; }
+  .topbar-clock { font-size: 11px; padding: 3px 7px; }
+
+  /* ── BREADCRUMB ── */
+  .breadcrumb { padding: 6px 12px; font-size: 10px; }
 
   /* ── PLANT PAGE ── */
-  .plant-wrap { padding: 0 12px 20px; }
-  .plant-hero { padding: 20px 0 12px; }
-  .plant-hero h1 { font-size: 22px; }
-  .plant-hero p  { font-size: 12px; }
-  .plant-hero-grid { gap: 8px; }
-  .plant-stat-box { min-width: 80px; padding: 8px 12px; }
-  .plant-stat-val { font-size: 20px; }
-  .plant-grid { grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); gap: 10px; }
-  .plant-card { padding: 14px 12px 10px; }
-  .plant-card-name { font-size: 18px; }
+  .plant-wrap { padding: 0; }
+  .plant-hero { padding: 18px 14px 16px; }
+  .plant-hero-title { font-size: 20px; }
+  .plant-hero-sub { font-size: 11px; margin-bottom: 14px; }
+  .plant-stats-row { gap: 7px; }
+  .plant-stat-box { min-width: 72px; padding: 7px 10px; }
+  .plant-stat-val { font-size: 16px; }
+  .plant-stat-label { font-size: 8px; }
+  .plant-section { padding: 16px 12px; }
+  .plant-grid { grid-template-columns: repeat(auto-fill, minmax(140px, 1fr)); gap: 9px; }
+  .plant-card-top { padding: 14px 12px 10px; }
+  .plant-card-name { font-size: 17px; }
   .plant-card-desc { font-size: 10px; }
+  .plant-card-bottom { padding: 8px 12px; }
 
-  /* ── DETAIL PAGE: sidebar jadi horizontal scroll row ── */
-  .main-layout { flex-direction: column; }
+  /* ── DETAIL: sidebar jadi horizontal pill row ── */
+  .main-layout { flex-direction: column; overflow: hidden; }
 
   .sidebar {
     width: 100% !important;
@@ -586,73 +604,94 @@ body {
     overflow-y: hidden !important;
     border-right: none !important;
     border-bottom: 1px solid var(--border) !important;
-    padding: 6px 8px !important;
-    gap: 4px !important;
+    padding: 6px 10px !important;
+    gap: 5px !important;
     flex-shrink: 0 !important;
   }
-  .sb-label { display: none; }
-  .sb-section { padding: 0 !important; display: flex; gap: 4px; }
-  .sb-head { display: none; }
-  .sb-item {
+  .sb-section {
+    padding: 0 !important;
+    display: flex !important;
+    flex-direction: row !important;
+    gap: 5px !important;
     flex-shrink: 0;
-    padding: 6px 14px !important;
+  }
+  .sb-head { display: none !important; }
+  .sb-item {
+    flex-shrink: 0 !important;
+    padding: 5px 13px !important;
     border-radius: 20px !important;
     font-size: 11px !important;
-    white-space: nowrap;
-    border: 1px solid var(--border);
+    white-space: nowrap !important;
+    border: 1px solid var(--border) !important;
     border-left: 1px solid var(--border) !important;
     justify-content: center !important;
   }
   .sb-item.active {
-    background: var(--blue) !important;
-    border-color: var(--blue) !important;
+    background: var(--accent) !important;
+    border-color: var(--accent) !important;
     color: #fff !important;
   }
-  .sb-fault { display: none; }
+  .sb-fault { display: none !important; }
 
-  /* Content area penuh */
-  .content-area { min-width: 0; width: 100%; }
-  .content-pad  { padding: 14px 12px; }
-
-  /* ── DRIVE CARDS ── */
-  .cards-grid { grid-template-columns: 1fr !important; gap: 8px; }
-  .inu-card   { padding: 12px 14px; }
-  .inu-id     { font-size: 9px; }
-  .inu-name   { font-size: 15px; }
-
-  /* ── TABS ── */
-  .tabs    { padding: 0 12px; }
-  .tab-btn { font-size: 11px; padding: 10px 12px; }
+  /* ── CONTENT AREA ── */
+  .content-area { min-width: 0; width: 100%; flex: 1; overflow-y: auto; }
+  .content-tabs { padding: 0 10px; }
+  .ctab { padding: 10px 12px; font-size: 11px; }
+  .tab-content { padding: 14px 12px !important; }
 
   /* ── DRIVE HEADER ── */
-  .drive-header h2 { font-size: 16px; }
-  .drive-header p  { font-size: 11px; }
+  .drive-title { font-size: 14px; }
+  .drive-meta  { font-size: 10px; }
   .pills { gap: 5px; }
-  .pill  { font-size: 10px; padding: 4px 10px; }
+  .pill  { font-size: 10px; padding: 3px 9px; }
+
+  /* ── DRIVE CARDS: 1 kolom ── */
+  .cards-grid { grid-template-columns: 1fr !important; gap: 8px; }
+  .inu-card   { padding: 12px 13px; }
+  .inu-tag    { font-size: 9px; }
+  .inu-name   { font-size: 14px; }
+  .inu-spec   { font-size: 10px; }
+
+  /* ── DRIVE GROUP HEADER ── */
+  .drive-group-label { font-size: 9px; padding: 3px 10px; }
+  .drive-group-count { font-size: 9px; }
 
   /* ── HISTORI TABLE ── */
   .hist-table-wrap { overflow-x: auto; -webkit-overflow-scrolling: touch; }
-  .hist-table { min-width: 480px; }
+  .hist-table { min-width: 500px; font-size: 11px; }
+  .tab-action-bar { margin-bottom: 10px; }
 
   /* ── PM GRID ── */
   .pm-grid { grid-template-columns: 1fr !important; }
 
-  /* ── MODAL ── */
-  .modal     { margin: 12px; padding: 18px; max-width: 100% !important; }
-  .login-box { margin: 12px; padding: 20px; max-width: 100% !important; }
-
-  /* ── BREADCRUMB ── */
-  .bc-item { font-size: 10px; }
-
-  /* ── PDF BUTTON ── */
-  .btn-pdf { font-size: 10px; padding: 4px 10px; }
+  /* ── MODAL: bottom sheet style ── */
+  .modal-overlay { align-items: flex-end; }
+  .modal {
+    border-radius: 18px 18px 0 0 !important;
+    max-width: 100% !important;
+    margin: 0 !important;
+    padding: 20px 18px !important;
+    max-height: 90vh;
+    overflow-y: auto;
+  }
+  .login-overlay { align-items: flex-end; }
+  .login-box {
+    border-radius: 18px 18px 0 0 !important;
+    max-width: 100% !important;
+    margin: 0 !important;
+    padding: 22px 18px 20px !important;
+  }
 }
 
-/* Layar sangat kecil */
+/* Layar sangat kecil < 380px */
 @media (max-width: 380px) {
   .plant-grid { grid-template-columns: 1fr 1fr; }
-  .plant-card-name { font-size: 16px; }
-  .topbar-title { font-size: 10px; max-width: 100px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+  .plant-card-name { font-size: 15px; }
+  .topbar-title {
+    font-size: 10px; max-width: 90px;
+    overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
+  }
+  .topbar-clock { display: none; }
 }
 </style>
 </head>
@@ -1368,5 +1407,14 @@ navTo('plant');
 </script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.8.2/jspdf.plugin.autotable.min.js"></script>
+<script>
+  if ('serviceWorker' in navigator) {
+    window.addEventListener('load', () => {
+      navigator.serviceWorker.register('/gardahitam/sw.js')
+        .then(reg => console.log('[SW] Registered:', reg.scope))
+        .catch(err => console.log('[SW] Error:', err));
+    });
+  }
+</script>
 </body>
 </html>
