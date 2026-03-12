@@ -2,7 +2,7 @@
 <html lang="id">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 <link rel="manifest" href="/gardahitam/manifest.json">
 <meta name="theme-color" content="#0b0f1a">
 <meta name="mobile-web-app-capable" content="yes">
@@ -28,6 +28,11 @@
   --kosong:  #5a7a99;
   --accent:  #2979ff;
   --teal:    #00b8d4;
+  --topbar-h: 50px;
+  --rbar-h:   30px;
+  --bc-h:     32px;
+  --sb-h:     48px;
+  --tabs-h:   44px;
 }
 body.light {
   --bg:#f0f4f8;--surf:#ffffff;--surf2:#e8eef5;--surf3:#dde6f0;
@@ -43,11 +48,25 @@ body.light input, body.light select{ background:#e8eef5 !important; border-color
 body.light .running-bar{ background:#dde6f0; border-color:#c8d8e8; }
 
 *{margin:0;padding:0;box-sizing:border-box;}
-html, body { width:100%; height:100%; overflow:hidden; }
-@media (max-width: 768px) { html, body { overflow: auto; } }
-body { font-family:'Plus Jakarta Sans',sans-serif; background:var(--bg); color:var(--text); display:flex; flex-direction:column; }
+html, body {
+  width:100%; height:100%;
+  overflow: hidden;
+}
+body {
+  font-family:'Plus Jakarta Sans',sans-serif;
+  background:var(--bg);
+  color:var(--text);
+  display:flex;
+  flex-direction:column;
+}
 
-.topbar{ display:flex; align-items:center; gap:10px; padding:0 20px; height:50px; background:#080d18; border-bottom:1px solid var(--border); flex-shrink:0; z-index:200; }
+/* ─── TOPBAR ─── */
+.topbar{
+  display:flex; align-items:center; gap:10px;
+  padding:0 20px; height:var(--topbar-h);
+  background:#080d18; border-bottom:1px solid var(--border);
+  flex-shrink:0; z-index:200;
+}
 .topbar-pulse{ width:8px; height:8px; border-radius:50%; background:var(--ok); box-shadow:0 0 10px var(--ok); animation:pulse 2s infinite; }
 @keyframes pulse{0%,100%{opacity:1;transform:scale(1)}50%{opacity:.5;transform:scale(.8)}}
 .btn-back{ display:flex; align-items:center; gap:5px; font-family:'JetBrains Mono',monospace; font-size:11px; padding:5px 12px; border-radius:5px; cursor:pointer; border:1px solid var(--border); background:var(--surf2); color:var(--muted); text-decoration:none; transition:all .2s; flex-shrink:0; }
@@ -64,13 +83,12 @@ body { font-family:'Plus Jakarta Sans',sans-serif; background:var(--bg); color:v
 .btn-theme{ display:flex;align-items:center;gap:5px; font-family:'JetBrains Mono',monospace;font-size:11px; padding:5px 10px;border-radius:5px;cursor:pointer; border:1px solid var(--border);background:var(--surf2);color:var(--muted); transition:all .2s; flex-shrink:0; }
 .btn-theme:hover{ border-color:var(--teal); color:var(--teal); }
 
-.breadcrumb{ display:flex;align-items:center;gap:5px; padding:8px 20px;font-family:'JetBrains Mono',monospace; font-size:11px;color:var(--muted); border-bottom:1px solid var(--border);background:#09101d; flex-shrink:0; }
-.bc-link{cursor:pointer;transition:color .15s;text-decoration:none;color:var(--muted);}
-.bc-link:hover{color:var(--accent);}
-.bc-cur{color:var(--text);}
-.bc-sep{color:var(--border);}
-
-.running-bar{ flex-shrink:0; overflow:hidden; white-space:nowrap; background:#08111e; border-bottom:1px solid var(--border); padding:5px 0; position:relative; }
+/* ─── RUNNING BAR ─── */
+.running-bar{
+  flex-shrink:0; overflow:hidden; white-space:nowrap;
+  background:#08111e; border-bottom:1px solid var(--border);
+  padding:5px 0; position:relative; height:var(--rbar-h);
+}
 .running-bar::before,.running-bar::after{ content:''; position:absolute; top:0; bottom:0; width:40px; z-index:2; }
 .running-bar::before{ left:0; background:linear-gradient(to right, #08111e, transparent); }
 .running-bar::after { right:0; background:linear-gradient(to left, #08111e, transparent); }
@@ -79,13 +97,43 @@ body { font-family:'Plus Jakarta Sans',sans-serif; background:var(--bg); color:v
 .running-inner .rb-label{ color:var(--teal); font-weight:700; }
 @keyframes marquee{ from{transform:translateX(100vw)} to{transform:translateX(-100%)} }
 
-#pages-wrapper { flex:1; overflow:hidden; display:flex; flex-direction:column; min-height:0; }
-.page { display:none; flex:1; overflow:hidden; flex-direction:column; min-height:0; }
-.page.active { display:flex; animation:fadeUp .2s ease; }
+/* ─── BREADCRUMB ─── */
+.breadcrumb{
+  display:flex; align-items:center; gap:5px;
+  padding:0 20px; height:var(--bc-h);
+  font-family:'JetBrains Mono',monospace;
+  font-size:11px; color:var(--muted);
+  border-bottom:1px solid var(--border); background:#09101d;
+  flex-shrink:0;
+}
+.bc-link{cursor:pointer;transition:color .15s;text-decoration:none;color:var(--muted);}
+.bc-link:hover{color:var(--accent);}
+.bc-cur{color:var(--text);}
+.bc-sep{color:var(--border);}
+
+/* ─── PAGES WRAPPER ─── */
+#pages-wrapper {
+  flex: 1;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  min-height: 0;
+}
+.page {
+  display: none;
+  flex: 1;
+  overflow: hidden;
+  flex-direction: column;
+  min-height: 0;
+}
+.page.active {
+  display: flex;
+  animation: fadeUp .2s ease;
+}
 @keyframes fadeUp{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:translateY(0)}}
 
-/* ── PLANT PAGE ── */
-.plant-wrap { padding:0; overflow-y:auto; width:100%; }
+/* ─── PLANT PAGE ─── */
+.plant-wrap { flex:1; overflow-y:auto; width:100%; }
 .plant-hero { position:relative; overflow:hidden; padding:36px 28px 28px; background:linear-gradient(135deg,#070c18 0%,#0c1628 50%,#0a1220 100%); border-bottom:1px solid var(--border); }
 .plant-hero::before { content:'';position:absolute;inset:0; background:radial-gradient(ellipse 60% 80% at 70% 50%, rgba(41,121,255,.07) 0%, transparent 70%), radial-gradient(ellipse 40% 60% at 20% 80%, rgba(0,184,212,.05) 0%, transparent 60%); }
 .plant-hero-grid { position:absolute;inset:0;opacity:.04; background-image:linear-gradient(var(--border) 1px,transparent 1px),linear-gradient(90deg,var(--border) 1px,transparent 1px); background-size:40px 40px; }
@@ -121,9 +169,19 @@ body { font-family:'Plus Jakarta Sans',sans-serif; background:var(--bg); color:v
 .plant-card:nth-child(1){animation-delay:.05s}.plant-card:nth-child(2){animation-delay:.10s}.plant-card:nth-child(3){animation-delay:.15s}
 .plant-card:nth-child(4){animation-delay:.20s}.plant-card:nth-child(5){animation-delay:.25s}.plant-card:nth-child(6){animation-delay:.30s}.plant-card:nth-child(7){animation-delay:.35s}
 
-/* ── MAIN LAYOUT ── */
-.main-layout { display:flex; flex:1; overflow:hidden; min-height:0; width:100%; }
-.sidebar{ width:190px;min-width:190px;flex-shrink:0; background:#080d18;border-right:1px solid var(--border); overflow-y:auto;display:flex;flex-direction:column; }
+/* ─── DETAIL PAGE LAYOUT (DESKTOP) ─── */
+.main-layout {
+  display: flex;
+  flex: 1;
+  overflow: hidden;
+  min-height: 0;
+  width: 100%;
+}
+.sidebar{
+  width:190px; min-width:190px; flex-shrink:0;
+  background:#080d18; border-right:1px solid var(--border);
+  overflow-y:auto; display:flex; flex-direction:column;
+}
 .sb-section{padding:10px 0;}
 .sb-head{ font-family:'JetBrains Mono',monospace;font-size:9px; font-weight:600;letter-spacing:1.5px;text-transform:uppercase; color:var(--muted);padding:0 14px 6px; }
 .sb-item{ padding:8px 14px;font-size:11px;cursor:pointer; transition:all .15s;display:flex;align-items:center; justify-content:space-between;color:var(--muted); border-left:2px solid transparent; font-family:'JetBrains Mono',monospace; letter-spacing:.3px; }
@@ -133,17 +191,33 @@ body { font-family:'Plus Jakarta Sans',sans-serif; background:var(--bg); color:v
 .sb-item.has-fault.active{border-left-color:var(--fault);}
 .sb-right{display:flex;align-items:center;gap:4px;flex-shrink:0;}
 .sb-fault{width:5px;height:5px;border-radius:50%;background:var(--fault);}
-
-/* ★ Badge kosong di sidebar */
 .sb-kosong-badge{display:inline-block;background:rgba(90,122,153,.25);color:var(--kosong);border:1px solid rgba(90,122,153,.35);border-radius:8px;font-size:9px;padding:1px 5px;font-family:'JetBrains Mono',monospace;line-height:1.4;font-weight:700;}
 
-.content-area { flex:1; overflow-y:auto; display:flex; flex-direction:column; min-width:0; min-height:0; }
-.content-tabs{ display:flex;gap:0; border-bottom:1px solid var(--border); background:#09101d;padding:0 20px; flex-shrink:0; position:sticky; top:0; z-index:10; }
-.ctab{ padding:12px 18px;font-size:12px;font-weight:600; cursor:pointer;color:var(--muted);border-bottom:2px solid transparent; transition:all .15s;white-space:nowrap; }
+.content-area {
+  flex: 1;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+  min-height: 0;
+}
+.content-tabs{
+  display:flex; gap:0;
+  border-bottom:1px solid var(--border);
+  background:#09101d; padding:0 20px;
+  flex-shrink:0;
+  overflow-x: auto;
+  scrollbar-width: none;
+}
+.content-tabs::-webkit-scrollbar { display: none; }
+.ctab{ padding:12px 18px;font-size:12px;font-weight:600; cursor:pointer;color:var(--muted);border-bottom:2px solid transparent; transition:all .15s;white-space:nowrap; flex-shrink:0; }
 .ctab:hover{color:var(--text);}
 .ctab.active{color:var(--accent);border-bottom-color:var(--accent);}
-.tab-content{display:none;padding:20px;}
-.tab-content.active{display:block;animation:fadeUp .2s ease;}
+.tab-content{ display:none; padding:20px; flex:1; overflow-y:auto; min-height:0; }
+.tab-content.active{ display:flex; flex-direction:column; animation:fadeUp .2s ease; }
+
+/* Inner scrollable content of each tab */
+.tab-inner { flex: 1; }
 
 .drive-header{margin-bottom:16px;}
 .drive-title{font-size:16px;font-weight:700;font-family:'JetBrains Mono',monospace;margin-bottom:3px;}
@@ -213,7 +287,7 @@ body { font-family:'Plus Jakarta Sans',sans-serif; background:var(--bg); color:v
 .pm-card-meta{font-size:11px;color:var(--muted);display:flex;flex-direction:column;gap:3px;}
 .pm-card-status{margin-top:10px;}
 
-/* ── SUMMARY KOSONG ── */
+/* ─── SUMMARY KOSONG ─── */
 .summary-stats{display:flex;gap:12px;flex-wrap:wrap;margin-bottom:20px;}
 .sum-stat{background:var(--surf);border:1px solid var(--border);border-radius:10px;padding:14px 18px;min-width:120px;}
 .sum-stat-label{font-family:'JetBrains Mono',monospace;font-size:9px;letter-spacing:1.5px;text-transform:uppercase;color:var(--muted);margin-bottom:6px;}
@@ -240,9 +314,10 @@ body { font-family:'Plus Jakarta Sans',sans-serif; background:var(--bg); color:v
 .sum-bar-fill{height:100%;border-radius:3px;background:var(--kosong);transition:width .4s ease;}
 .sum-pct-txt{font-family:'JetBrains Mono',monospace;font-size:10px;color:var(--muted);}
 
+/* ─── MODALS ─── */
 .modal-overlay{ display:none;position:fixed;inset:0; background:rgba(0,0,0,.7);backdrop-filter:blur(4px); z-index:500;align-items:center;justify-content:center; }
 .modal-overlay.open{display:flex;}
-.modal{ background:var(--surf);border:1px solid var(--border); border-radius:14px;padding:24px;width:100%;max-width:420px; animation:modalIn .2s ease; }
+.modal{ background:var(--surf);border:1px solid var(--border); border-radius:14px;padding:24px;width:100%;max-width:420px; animation:modalIn .2s ease; margin:16px; }
 @keyframes modalIn{from{opacity:0;transform:scale(.95)}to{opacity:1;transform:scale(1)}}
 .modal-title{font-size:15px;font-weight:700;margin-bottom:4px;}
 .modal-sub{font-size:12px;color:var(--muted);margin-bottom:20px;}
@@ -262,7 +337,7 @@ body { font-family:'Plus Jakarta Sans',sans-serif; background:var(--bg); color:v
 
 .login-overlay{ display:none; position:fixed; inset:0; background:rgba(0,0,0,.75); backdrop-filter:blur(6px); z-index:600; align-items:center; justify-content:center; }
 .login-overlay.open{ display:flex; }
-.login-box{ background:var(--surf); border:1px solid var(--border); border-radius:16px; padding:28px 28px 24px; width:100%; max-width:360px; animation:modalIn .2s ease; position:relative; overflow:hidden; }
+.login-box{ background:var(--surf); border:1px solid var(--border); border-radius:16px; padding:28px 28px 24px; width:100%; max-width:360px; animation:modalIn .2s ease; position:relative; overflow:hidden; margin:16px; }
 .login-box::before{ content:''; position:absolute; top:0; left:0; right:0; height:3px; background:linear-gradient(90deg, var(--accent), var(--teal)); }
 .login-icon{ width:44px; height:44px; border-radius:10px; background:rgba(41,121,255,.12); border:1px solid rgba(41,121,255,.2); display:flex; align-items:center; justify-content:center; font-size:20px; margin-bottom:16px; }
 .login-title{ font-size:16px; font-weight:700; margin-bottom:3px; }
@@ -290,7 +365,7 @@ body { font-family:'Plus Jakarta Sans',sans-serif; background:var(--bg); color:v
 .state-box p{font-size:12px;text-align:center;max-width:340px;}
 .btn-retry{ background:rgba(41,121,255,.12);border:1px solid rgba(41,121,255,.25);color:var(--accent);padding:6px 16px;border-radius:6px;font-size:12px;cursor:pointer;font-family:'JetBrains Mono',monospace; }
 
-.tab-action-bar{ display:flex; justify-content:flex-end; margin-bottom:14px; }
+.tab-action-bar{ display:flex; justify-content:flex-end; margin-bottom:14px; flex-shrink: 0; }
 .btn-pdf{ display:flex;align-items:center;gap:5px; font-family:'JetBrains Mono',monospace;font-size:11px; padding:5px 14px;border-radius:5px;cursor:pointer; border:1px solid rgba(255,71,87,.3);background:rgba(255,71,87,.07);color:#ff4757; transition:all .2s; }
 .btn-pdf:hover{ background:rgba(255,71,87,.15); border-color:#ff4757; }
 
@@ -298,85 +373,267 @@ body { font-family:'Plus Jakarta Sans',sans-serif; background:var(--bg); color:v
 ::-webkit-scrollbar-track{background:transparent;}
 ::-webkit-scrollbar-thumb{background:var(--border);border-radius:4px;}
 
+/* ═══════════════════════════════════════════
+   MOBILE LAYOUT — Android-first
+   Layout: [TOPBAR] [RUNBAR] [BREADCRUMB]
+           [MIXING TABS — horizontal scroll]
+           [CONTENT TABS — horizontal scroll]
+           [CONTENT — vertical scroll]
+   ═══════════════════════════════════════════ */
 @media (max-width: 768px) {
-  html, body { overflow: hidden !important; height: 100% !important; width: 100% !important; }
-  .topbar { padding: 0 10px; gap: 6px; height: 44px; flex-shrink: 0; }
-  .topbar-title { font-size: 11px; }
-  .topbar-sub { display: none; }
-  .topbar-divider { display: none; }
-  .btn-back { font-size: 10px; padding: 4px 8px; }
-  .btn-theme { font-size: 10px; padding: 4px 8px; }
-  .btn-sm { font-size: 10px; padding: 4px 8px; }
-  .topbar-clock { font-size: 11px; padding: 2px 7px; }
-  .running-bar { flex-shrink: 0; }
-  .running-inner { font-size: 9px; }
-  .breadcrumb { padding: 5px 10px; font-size: 10px; flex-shrink: 0; }
-  #pages-wrapper { flex: 1; overflow: hidden; display: flex; flex-direction: column; min-height: 0; }
-  .page { flex: 1; overflow: hidden; display: none; flex-direction: column; min-height: 0; }
-  .page.active { display: flex; }
-  .plant-wrap { flex: 1; overflow-y: auto; -webkit-overflow-scrolling: touch; }
-  .plant-hero { padding: 16px 12px 14px; }
-  .plant-hero-title { font-size: 18px; }
-  .plant-hero-sub { font-size: 10px; margin-bottom: 12px; }
-  .plant-stats-row { gap: 6px; }
-  .plant-stat-box { min-width: 68px; padding: 6px 9px; }
-  .plant-stat-val { font-size: 15px; }
-  .plant-stat-label { font-size: 8px; }
-  .plant-section { padding: 14px 10px; }
-  .plant-grid { grid-template-columns: repeat(auto-fill, minmax(140px, 1fr)); gap: 8px; }
-  .plant-card-top { padding: 12px 10px 9px; }
-  .plant-card-name { font-size: 16px; }
-  .plant-card-desc { font-size: 10px; }
-  .plant-card-bottom { padding: 7px 10px; }
-  .main-layout { display: flex !important; flex-direction: column !important; flex: 1 !important; overflow: hidden !important; min-height: 0 !important; }
-  .sidebar { width: 100% !important; min-width: unset !important; height: auto !important; flex-shrink: 0 !important; border-right: none !important; border-bottom: 1px solid var(--border) !important; background: #080d18 !important; display: block !important; overflow: visible !important; padding: 0 !important; position: relative !important; }
-  .sb-scroll-wrapper { display: flex !important; align-items: center !important; height: 48px !important; position: relative !important; }
-  .sb-arrow { flex-shrink: 0 !important; width: 32px !important; height: 100% !important; display: flex !important; align-items: center !important; justify-content: center !important; cursor: pointer !important; color: var(--muted) !important; font-size: 16px !important; background: #080d18 !important; border: none !important; z-index: 5 !important; transition: color .15s !important; user-select: none !important; -webkit-user-select: none !important; padding: 0 !important; }
-  .sb-arrow:active { color: var(--accent) !important; }
-  .sb-arrow-left { border-right: 1px solid var(--border) !important; }
-  .sb-arrow-right { border-left: 1px solid var(--border) !important; }
-  .sb-scroll-inner { flex: 1 !important; display: flex !important; flex-direction: row !important; align-items: center !important; gap: 5px !important; overflow-x: auto !important; overflow-y: hidden !important; padding: 7px 8px !important; scrollbar-width: none !important; -webkit-overflow-scrolling: touch !important; scroll-behavior: smooth !important; }
-  .sb-scroll-inner::-webkit-scrollbar { display: none !important; }
-  .sb-section { padding: 0 !important; display: flex !important; flex-direction: row !important; gap: 5px !important; flex-shrink: 0 !important; align-items: center !important; }
+
+  /* Reset html/body — allow flex column, no overflow */
+  html, body {
+    overflow: hidden !important;
+    height: 100% !important;
+    width: 100% !important;
+    position: fixed !important;
+    top: 0 !important;
+    left: 0 !important;
+  }
+
+  /* Topbar adjustments */
+  .topbar {
+    height: 44px !important;
+    padding: 0 10px !important;
+    gap: 6px !important;
+  }
+  .topbar-title { font-size: 11px !important; }
+  .topbar-sub { display: none !important; }
+  .topbar-divider { display: none !important; }
+  .btn-back { font-size: 10px !important; padding: 4px 8px !important; }
+  .btn-theme { font-size: 10px !important; padding: 4px 8px !important; }
+  .btn-sm { font-size: 10px !important; padding: 4px 8px !important; }
+  .topbar-clock { font-size: 10px !important; padding: 2px 6px !important; display: none !important; }
+
+  /* Running bar slim */
+  .running-bar { height: 24px !important; }
+  .running-inner { font-size: 9px !important; }
+
+  /* Breadcrumb slim */
+  .breadcrumb { padding: 0 10px !important; font-size: 10px !important; height: 28px !important; }
+
+  /* Pages wrapper fills remaining space */
+  #pages-wrapper {
+    flex: 1 !important;
+    overflow: hidden !important;
+    display: flex !important;
+    flex-direction: column !important;
+    min-height: 0 !important;
+  }
+
+  .page {
+    flex: 1 !important;
+    overflow: hidden !important;
+    min-height: 0 !important;
+  }
+
+  /* Plant page — scrollable */
+  #page-plant {
+    overflow: hidden !important;
+  }
+  .plant-wrap {
+    height: 100% !important;
+    overflow-y: auto !important;
+    -webkit-overflow-scrolling: touch !important;
+  }
+  .plant-hero { padding: 16px 12px 14px !important; }
+  .plant-hero-title { font-size: 18px !important; }
+  .plant-hero-sub { font-size: 10px !important; margin-bottom: 12px !important; }
+  .plant-stats-row { gap: 6px !important; }
+  .plant-stat-box { min-width: 68px !important; padding: 6px 9px !important; }
+  .plant-stat-val { font-size: 15px !important; }
+  .plant-stat-label { font-size: 8px !important; }
+  .plant-section { padding: 14px 10px !important; }
+  .plant-grid { grid-template-columns: repeat(auto-fill, minmax(140px, 1fr)) !important; gap: 8px !important; }
+  .plant-card-top { padding: 12px 10px 9px !important; }
+  .plant-card-name { font-size: 16px !important; }
+  .plant-card-desc { font-size: 10px !important; }
+  .plant-card-bottom { padding: 7px 10px !important; }
+
+  /* ── DETAIL PAGE MOBILE LAYOUT ──
+     Stack: [mixing-pill-bar] [content-tabs] [scrollable-content]
+  */
+  #page-detail {
+    flex-direction: column !important;
+    overflow: hidden !important;
+  }
+
+  /* Sidebar becomes horizontal pill bar at TOP */
+  .main-layout {
+    flex-direction: column !important;
+    overflow: hidden !important;
+    flex: 1 !important;
+    min-height: 0 !important;
+  }
+
+  .sidebar {
+    width: 100% !important;
+    min-width: unset !important;
+    height: auto !important;
+    flex-shrink: 0 !important;
+    border-right: none !important;
+    border-bottom: 1px solid var(--border) !important;
+    background: #080d18 !important;
+    overflow: visible !important;
+    padding: 0 !important;
+  }
+
+  /* Horizontal scrollable pill row */
+  .sb-section {
+    padding: 6px 0 !important;
+    display: flex !important;
+    flex-direction: row !important;
+    align-items: center !important;
+    overflow-x: auto !important;
+    overflow-y: hidden !important;
+    scrollbar-width: none !important;
+    -webkit-overflow-scrolling: touch !important;
+    gap: 6px !important;
+    padding-left: 10px !important;
+    padding-right: 10px !important;
+  }
+  .sb-section::-webkit-scrollbar { display: none !important; }
+
   .sb-head { display: none !important; }
-  .sb-item { flex-shrink: 0 !important; padding: 5px 10px !important; border-radius: 20px !important; font-size: 10px !important; white-space: nowrap !important; border: 1px solid var(--border) !important; border-left: 1px solid var(--border) !important; justify-content: center !important; line-height: 1 !important; color: var(--muted) !important; background: transparent !important; }
-  .sb-item.active { background: var(--accent) !important; border-color: var(--accent) !important; color: #fff !important; }
-  .sb-item.has-fault { color: #f87171 !important; border-color: rgba(255,71,87,.35) !important; }
-  .sb-item.has-fault.active { background: var(--fault) !important; border-color: var(--fault) !important; color: #fff !important; }
+
+  .sb-item {
+    flex-shrink: 0 !important;
+    padding: 6px 12px !important;
+    border-radius: 20px !important;
+    font-size: 10px !important;
+    white-space: nowrap !important;
+    border: 1px solid var(--border) !important;
+    border-left-width: 1px !important;
+    border-left-color: var(--border) !important;
+    justify-content: center !important;
+    line-height: 1.2 !important;
+    color: var(--muted) !important;
+    background: rgba(255,255,255,.03) !important;
+    /* CRITICAL: prevent layout shift on click */
+    display: inline-flex !important;
+    align-items: center !important;
+    gap: 4px !important;
+    touch-action: manipulation !important;
+    -webkit-tap-highlight-color: transparent !important;
+    user-select: none !important;
+    -webkit-user-select: none !important;
+  }
+  .sb-item.active {
+    background: var(--accent) !important;
+    border-color: var(--accent) !important;
+    color: #fff !important;
+    border-left-color: var(--accent) !important;
+  }
+  .sb-item.has-fault {
+    color: #f87171 !important;
+    border-color: rgba(255,71,87,.35) !important;
+  }
+  .sb-item.has-fault.active {
+    background: var(--fault) !important;
+    border-color: var(--fault) !important;
+    color: #fff !important;
+  }
   .sb-fault { display: none !important; }
-  .content-area { flex: 1 !important; min-height: 0 !important; overflow-y: auto !important; -webkit-overflow-scrolling: touch !important; display: flex !important; flex-direction: column !important; width: 100% !important; }
-  .content-tabs { position: sticky !important; top: 0 !important; z-index: 10 !important; padding: 0 8px !important; flex-shrink: 0 !important; background: #09101d !important; overflow-x: auto !important; }
-  .ctab { padding: 10px 11px; font-size: 11px; }
-  .tab-content { padding: 12px 10px !important; }
-  .drive-title { font-size: 13px; }
-  .drive-meta { font-size: 10px; }
-  .pills { gap: 4px; flex-wrap: wrap; }
-  .pill { font-size: 10px; padding: 3px 8px; }
-  .cards-grid { grid-template-columns: 1fr !important; gap: 8px; }
-  .inu-card { padding: 12px 13px; }
-  .inu-tag { font-size: 9px; }
-  .inu-name { font-size: 14px; }
-  .inu-spec { font-size: 10px; }
-  .drive-group-label { font-size: 9px; padding: 3px 10px; }
-  .drive-group-count { font-size: 9px; }
-  .hist-table-wrap { overflow-x: auto; -webkit-overflow-scrolling: touch; }
-  .hist-table { min-width: 500px; font-size: 11px; }
-  .tab-action-bar { margin-bottom: 10px; }
+  .sb-right { gap: 3px !important; }
+
+  /* Content area — fills remaining space, column flex */
+  .content-area {
+    flex: 1 !important;
+    min-height: 0 !important;
+    overflow: hidden !important;
+    display: flex !important;
+    flex-direction: column !important;
+    width: 100% !important;
+  }
+
+  /* Content tabs row — sticky, horizontal scroll */
+  .content-tabs {
+    position: sticky !important;
+    top: 0 !important;
+    z-index: 10 !important;
+    padding: 0 6px !important;
+    flex-shrink: 0 !important;
+    background: #09101d !important;
+    overflow-x: auto !important;
+    display: flex !important;
+    -webkit-overflow-scrolling: touch !important;
+    border-bottom: 1px solid var(--border) !important;
+  }
+  .ctab {
+    padding: 10px 12px !important;
+    font-size: 11px !important;
+    flex-shrink: 0 !important;
+  }
+
+  /* Tab content — fills remaining, scrolls vertically */
+  .tab-content {
+    flex: 1 !important;
+    overflow-y: auto !important;
+    -webkit-overflow-scrolling: touch !important;
+    padding: 12px 10px !important;
+    display: none !important;
+    flex-direction: column !important;
+    min-height: 0 !important;
+  }
+  .tab-content.active {
+    display: flex !important;
+  }
+
+  /* Drive tab content */
+  .drive-title { font-size: 13px !important; }
+  .drive-meta { font-size: 10px !important; }
+  .pills { gap: 4px !important; flex-wrap: wrap !important; }
+  .pill { font-size: 10px !important; padding: 3px 8px !important; }
+  .cards-grid { grid-template-columns: 1fr !important; gap: 8px !important; }
+  .inu-card { padding: 12px 13px !important; }
+  .inu-tag { font-size: 9px !important; }
+  .inu-name { font-size: 14px !important; }
+  .inu-spec { font-size: 10px !important; }
+  .drive-group-label { font-size: 9px !important; padding: 3px 10px !important; }
+  .drive-group-count { font-size: 9px !important; }
+
+  /* Histori tab */
+  .hist-table-wrap { overflow-x: auto !important; -webkit-overflow-scrolling: touch !important; }
+  .hist-table { min-width: 500px !important; font-size: 11px !important; }
+
+  /* PM tab */
   .pm-grid { grid-template-columns: 1fr !important; }
-  .summary-stats { gap: 8px; }
-  .sum-stat { min-width: 80px; padding: 10px 12px; }
-  .sum-stat-val { font-size: 18px; }
-  .sum-table { min-width: 400px; }
-  .modal-overlay { align-items: flex-end; }
-  .modal { border-radius: 18px 18px 0 0 !important; max-width: 100% !important; margin: 0 !important; padding: 20px 16px !important; max-height: 90vh; overflow-y: auto; }
-  .login-overlay { align-items: flex-end; }
-  .login-box { border-radius: 18px 18px 0 0 !important; max-width: 100% !important; margin: 0 !important; padding: 20px 16px 18px !important; }
+
+  /* Summary tab */
+  .summary-stats { gap: 8px !important; }
+  .sum-stat { min-width: 80px !important; padding: 10px 12px !important; }
+  .sum-stat-val { font-size: 18px !important; }
+  .sum-table { min-width: 400px !important; }
+
+  /* Action bar */
+  .tab-action-bar { margin-bottom: 10px !important; }
+
+  /* Modals — slide up from bottom */
+  .modal-overlay { align-items: flex-end !important; padding: 0 !important; }
+  .modal {
+    border-radius: 18px 18px 0 0 !important;
+    max-width: 100% !important;
+    margin: 0 !important;
+    padding: 20px 16px 28px !important;
+    max-height: 92vh !important;
+    overflow-y: auto !important;
+    width: 100% !important;
+  }
+  .login-overlay { align-items: flex-end !important; padding: 0 !important; }
+  .login-box {
+    border-radius: 18px 18px 0 0 !important;
+    max-width: 100% !important;
+    margin: 0 !important;
+    padding: 20px 16px 28px !important;
+    width: 100% !important;
+  }
 }
+
 @media (max-width: 380px) {
-  .plant-grid { grid-template-columns: 1fr 1fr; }
-  .plant-card-name { font-size: 14px; }
-  .topbar-title { font-size: 10px; max-width: 80px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
-  .topbar-clock { display: none; }
+  .plant-grid { grid-template-columns: 1fr 1fr !important; }
+  .plant-card-name { font-size: 14px !important; }
+  .topbar-title { font-size: 10px !important; max-width: 80px !important; overflow: hidden !important; text-overflow: ellipsis !important; white-space: nowrap !important; }
 }
 </style>
 </head>
@@ -402,7 +659,7 @@ body { font-family:'Plus Jakarta Sans',sans-serif; background:var(--bg); color:v
     <span><span class="rb-label">⚠️ PERHATIAN:</span> Pastikan status drive selalu diperbarui setelah pengecekan lapangan</span>
     <span><span class="rb-label">🔧 PM:</span> Jadwal Preventive Maintenance wajib dilaksanakan sesuai tanggal yang telah ditentukan</span>
     <span><span class="rb-label">✅ SOP:</span> Setiap perubahan status drive harus disertai keterangan yang jelas dan akurat</span>
-    <span><span class="rb-label">📊 GARDA HITAM:</span> Drive Monitoring System — KECO WATERBANG</span>
+    <span><span class="rb-label">📊 GARDA HITAM:</span> Drive Monitoring System — Garda Hitam</span>
   </div>
 </div>
 
@@ -425,7 +682,7 @@ body { font-family:'Plus Jakarta Sans',sans-serif; background:var(--bg); color:v
         <div class="plant-hero-grid"></div>
         <div class="plant-hero-badge">🔌 Garda Hitam System</div>
         <div class="plant-hero-title">Drive Monitoring</div>
-        <div class="plant-hero-sub">KECO WATERBANG — Pilih plant untuk memantau kondisi drive secara real-time</div>
+        <div class="plant-hero-sub">Garda Hitam — Pilih plant untuk memantau kondisi drive secara real-time</div>
         <div class="plant-stats-row">
           <div class="plant-stat-box"><div class="plant-stat-label">Total Plant</div><div class="plant-stat-val accent" id="stat-total">—</div></div>
           <div class="plant-stat-box"><div class="plant-stat-label">System Status</div><div class="plant-stat-val ok">ONLINE</div></div>
@@ -446,19 +703,23 @@ body { font-family:'Plus Jakarta Sans',sans-serif; background:var(--bg); color:v
   <!-- PAGE: DETAIL -->
   <div class="page" id="page-detail">
     <div class="main-layout">
+
+      <!-- SIDEBAR = horizontal pill bar on mobile, vertical on desktop -->
       <div class="sidebar" id="sidebar">
-        <div class="sb-section">
+        <div class="sb-section" id="sb-section-inner">
           <div class="sb-head">Mixing</div>
           <div id="sb-items"></div>
         </div>
       </div>
+
       <div class="content-area">
         <div class="content-tabs">
           <div class="ctab active" id="ctab-drive"   onclick="switchTab('drive')">⚡ Drive</div>
           <div class="ctab"        id="ctab-histori" onclick="switchTab('histori')">📋 Histori</div>
           <div class="ctab"        id="ctab-pm"      onclick="switchTab('pm')">🔧 Jadwal PM</div>
-          <div class="ctab"        id="ctab-summary" onclick="switchTab('summary')">⬜ Summary Kosong</div>
+          <div class="ctab"        id="ctab-summary" onclick="switchTab('summary')">⬜ Summary</div>
         </div>
+
         <div class="tab-content active" id="tab-drive">
           <div class="drive-header">
             <div class="drive-title" id="drive-title"></div>
@@ -467,19 +728,22 @@ body { font-family:'Plus Jakarta Sans',sans-serif; background:var(--bg); color:v
           </div>
           <div id="drive-content"></div>
         </div>
+
         <div class="tab-content" id="tab-histori">
-          <div class="tab-action-bar"><button class="btn-pdf" onclick="printHistoriPDF()">🖨️ Cetak PDF Histori</button></div>
+          <div class="tab-action-bar"><button class="btn-pdf" onclick="printHistoriPDF()">🖨️ Cetak PDF</button></div>
           <div id="histori-content"></div>
         </div>
+
         <div class="tab-content" id="tab-pm">
-          <div class="tab-action-bar"><button class="btn-pdf" onclick="printPMPDF()">🖨️ Cetak PDF Jadwal PM</button></div>
+          <div class="tab-action-bar"><button class="btn-pdf" onclick="printPMPDF()">🖨️ Cetak PDF</button></div>
           <div id="pm-content"></div>
         </div>
-        <!-- ★ TAB SUMMARY KOSONG -->
+
         <div class="tab-content" id="tab-summary">
           <div id="summary-content"></div>
         </div>
       </div>
+
     </div>
   </div>
 
@@ -499,7 +763,7 @@ body { font-family:'Plus Jakarta Sans',sans-serif; background:var(--bg); color:v
       <button class="btn-login-cancel" onclick="closeLoginModal()">Batal</button>
       <button class="btn-login" id="btn-login-submit" onclick="submitLogin()">
         <div class="btn-spin"></div>
-        <span class="btn-login-label">Masuk & Edit</span>
+        <span class="btn-login-label">Masuk &amp; Edit</span>
       </button>
     </div>
   </div>
@@ -509,7 +773,7 @@ body { font-family:'Plus Jakarta Sans',sans-serif; background:var(--bg); color:v
 <div class="modal-overlay" id="modal">
   <div class="modal">
     <div class="modal-title">Edit Status Drive</div>
-    <div class="modal-sub">Perubahan akan otomatis tersimpan ke spreadsheet & log histori</div>
+    <div class="modal-sub">Perubahan akan otomatis tersimpan ke spreadsheet &amp; log histori</div>
     <div class="modal-id" id="modal-drive-id"></div>
     <div class="form-group"><label class="form-label">Status Saat Ini</label>
       <select class="form-select" id="modal-status">
@@ -546,7 +810,7 @@ const S = {
   pendingAction:'edit'
 };
 
-// ── LOGIN ──────────────────────────────────────────────────
+/* ── LOGIN ─────────────────────────────────────────── */
 
 function requestEdit(driveId, status, keterangan, merk, spesifikasi, photoUrl) {
   S.pendingAction    = 'edit';
@@ -608,7 +872,7 @@ document.addEventListener('DOMContentLoaded', () => {
   });
 });
 
-// ── API ──────────────────────────────────────────────────
+/* ── API ─────────────────────────────────────────── */
 
 async function apiGet(params) {
   const res  = await fetch(API + '?' + new URLSearchParams(params));
@@ -617,7 +881,7 @@ async function apiGet(params) {
   return data;
 }
 
-// ── NAVIGASI ──────────────────────────────────────────────
+/* ── NAVIGASI ─────────────────────────────────────── */
 
 function navTo(page, plant) {
   if (plant) S.plant = plant;
@@ -648,7 +912,7 @@ function updateBC() {
   s3.style.display = b3.style.display = 'none';
 }
 
-// ── PLANT PAGE ──────────────────────────────────────────
+/* ── PLANT PAGE ─────────────────────────────────── */
 
 async function renderPlantPage() {
   const el = id('plant-content');
@@ -704,7 +968,7 @@ function plantCard(p, i) {
   </div>`;
 }
 
-// ── DETAIL PAGE ──────────────────────────────────────────
+/* ── DETAIL PAGE ──────────────────────────────────── */
 
 async function renderDetailPage() {
   try {
@@ -726,14 +990,13 @@ async function renderDetailPage() {
   switchTab(S.tab, true);
 }
 
-// ── SIDEBAR dengan badge kosong ──────────────────────────────
+/* ── SIDEBAR ─────────────────────────────────────── */
 
 function renderSidebar() {
   const drives    = S.cache[S.plant + '_drives']    || [];
   const groupList = S.cache[S.plant + '_groupList'] || [];
   const summary   = S.cache[S.plant + '_summary']   || [];
 
-  // map kosong per group label dari summary cache
   const kosongMap = {};
   summary.forEach(s => { kosongMap[s.group] = s.kosong; });
 
@@ -757,6 +1020,15 @@ function renderSidebar() {
     </div>`;
   });
   id('sb-items').innerHTML = html;
+
+  // On mobile: scroll active item into view
+  requestAnimationFrame(() => {
+    const section = id('sb-items') && id('sb-items').closest('.sb-section');
+    const activeEl = section && section.querySelector('.sb-item.active');
+    if (activeEl) {
+      activeEl.scrollIntoView({ inline: 'center', block: 'nearest', behavior: 'smooth' });
+    }
+  });
 }
 
 function selectMixing(num) {
@@ -779,7 +1051,7 @@ function switchTab(tab, force) {
   if (tab === 'summary') renderSummaryTab();
 }
 
-// ── DRIVE TAB ──────────────────────────────────────────
+/* ── DRIVE TAB ───────────────────────────────────── */
 
 async function renderDriveTab() {
   const mixLabel = _getCurGroupLabel();
@@ -873,7 +1145,7 @@ function inuCard(d) {
   </div>`;
 }
 
-// ── HISTORI TAB ──────────────────────────────────────────
+/* ── HISTORI TAB ─────────────────────────────────── */
 
 async function renderHistoriTab() {
   id('histori-content').innerHTML = loadingHTML('Memuat histori...');
@@ -897,7 +1169,7 @@ async function renderHistoriTab() {
   } catch(err) { id('histori-content').innerHTML = errHTML(err.message, renderHistoriTab); }
 }
 
-// ── PM TAB ──────────────────────────────────────────
+/* ── PM TAB ──────────────────────────────────────── */
 
 async function renderPMTab() {
   id('pm-content').innerHTML = loadingHTML('Memuat jadwal PM...');
@@ -927,7 +1199,7 @@ function pmCard(p) {
   </div>`;
 }
 
-// ── SUMMARY KOSONG TAB ★ BARU ────────────────────────────────
+/* ── SUMMARY TAB ─────────────────────────────────── */
 
 async function renderSummaryTab() {
   id('summary-content').innerHTML = loadingHTML('Memuat summary kosong...');
@@ -956,7 +1228,7 @@ async function renderSummaryTab() {
           <div class="summary-panel-title">⬜ Mixing dengan Drive Kosong</div>
           <div class="summary-panel-count">${adaKosong.length} dari ${rows.length} mixing</div>
         </div>
-        <table class="sum-table">
+        <div style="overflow-x:auto"><table class="sum-table">
           <thead><tr><th>Mixing</th><th>Jumlah Kosong</th><th>Total Drive</th><th>Proporsi</th></tr></thead>
           <tbody>
             ${adaKosong.map(r => {
@@ -969,14 +1241,14 @@ async function renderSummaryTab() {
               </tr>`;
             }).join('')}
           </tbody>
-        </table>
+        </table></div>
       </div>
       <div class="summary-panel">
         <div class="summary-panel-head">
           <div class="summary-panel-title">📋 Semua Mixing</div>
           <div class="summary-panel-count">${rows.length} mixing</div>
         </div>
-        <table class="sum-table">
+        <div style="overflow-x:auto"><table class="sum-table">
           <thead><tr><th>Mixing</th><th>OK</th><th>Kosong</th><th>Fault</th><th>Maint</th><th>Total</th></tr></thead>
           <tbody>
             ${rows.map(r => `<tr class="${r.kosong > 0 ? 'has-kosong' : ''}">
@@ -988,18 +1260,18 @@ async function renderSummaryTab() {
               <td class="sum-zero">${r.total}</td>
             </tr>`).join('')}
           </tbody>
-        </table>
+        </table></div>
       </div>`;
     }
 
     id('summary-content').innerHTML = html;
-    renderSidebar(); // refresh sidebar biar badge kosong muncul
+    renderSidebar();
   } catch(err) {
     id('summary-content').innerHTML = errHTML(err.message, renderSummaryTab);
   }
 }
 
-// ── EDIT MODAL ──────────────────────────────────────────
+/* ── EDIT MODAL ──────────────────────────────────── */
 
 function openModal(driveId, status, keterangan, merk, spesifikasi, photoUrl) {
   S.editDrive = driveId;
@@ -1033,7 +1305,7 @@ async function saveStatus() {
     delete S.cache[S.plant + '_drives'];
     delete S.cache[S.plant + '_groupList'];
     delete S.cache[S.plant + '_histori'];
-    delete S.cache[S.plant + '_summary']; // ★ clear summary cache juga
+    delete S.cache[S.plant + '_summary'];
     closeModal();
     await renderDetailPage();
   } catch(err) { alert('Gagal menyimpan: ' + err.message); }
@@ -1043,7 +1315,7 @@ async function saveStatus() {
 id('modal').addEventListener('click', e => { if(e.target === id('modal')) closeModal(); });
 id('login-overlay').addEventListener('click', e => { if(e.target === id('login-overlay')) closeLoginModal(); });
 
-// ── REFRESH & UTILS ──────────────────────────────────────────
+/* ── REFRESH & UTILS ─────────────────────────────── */
 
 async function doRefresh() {
   const btn = id('btn-refresh');
@@ -1070,12 +1342,13 @@ function toggleTheme() {
   const isLight = document.body.classList.toggle('light');
   id('btn-theme').textContent = isLight ? '☀️ Light' : '🌙 Dark';
   const modeEl = id('stat-mode'); if (modeEl) modeEl.textContent = isLight ? 'LIGHT' : 'DARK';
-  document.querySelector('.running-bar').style.background = isLight ? '#dde6f0' : '';
   localStorage.setItem('theme', isLight ? 'light' : 'dark');
 }
 if (localStorage.getItem('theme') === 'light') {
   document.body.classList.add('light');
-  document.addEventListener('DOMContentLoaded', () => { const btn = id('btn-theme'); if(btn) btn.textContent = '☀️ Light'; });
+  document.addEventListener('DOMContentLoaded', () => {
+    const btn = id('btn-theme'); if(btn) btn.textContent = '☀️ Light';
+  });
 }
 
 async function printHistoriPDF() {
@@ -1103,52 +1376,6 @@ async function printPMPDF() {
   doc.autoTable({ startY:27, head:[['ID PM','Judul','Drive ID','Tanggal','Teknisi','Status','Catatan']], body:jadwal.map(p=>[p.id||'—',p.judul||'—',p.drive_id||'—',p.tanggal||'—',p.teknisi||'—',p.status||'—',p.catatan||'—']), styles:{fontSize:8,cellPadding:2}, headStyles:{fillColor:[0,150,136],textColor:255,fontStyle:'bold'}, alternateRowStyles:{fillColor:[240,248,245]}, theme:'grid' });
   doc.save(`JadwalPM_${S.plant}_${new Date().toISOString().slice(0,10)}.pdf`);
 }
-
-// ── MOBILE SIDEBAR ──────────────────────────────────────────
-
-function initMobileSidebar() {
-  if (window.innerWidth > 768) return;
-  const sidebar = document.getElementById('sidebar');
-  if (!sidebar || sidebar.dataset.mobileInit === '1') return;
-  sidebar.dataset.mobileInit = '1';
-  const section = sidebar.querySelector('.sb-section');
-  if (!section) return;
-  const wrapper  = document.createElement('div'); wrapper.className = 'sb-scroll-wrapper';
-  const btnLeft  = document.createElement('button'); btnLeft.className = 'sb-arrow sb-arrow-left'; btnLeft.innerHTML = '‹'; btnLeft.setAttribute('aria-label','Scroll kiri');
-  const btnRight = document.createElement('button'); btnRight.className = 'sb-arrow sb-arrow-right'; btnRight.innerHTML = '›'; btnRight.setAttribute('aria-label','Scroll kanan');
-  const inner    = document.createElement('div'); inner.className = 'sb-scroll-inner';
-  inner.appendChild(section);
-  wrapper.appendChild(btnLeft); wrapper.appendChild(inner); wrapper.appendChild(btnRight);
-  sidebar.appendChild(wrapper);
-  const SCROLL_STEP = 120;
-  btnLeft.addEventListener('click',  () => inner.scrollBy({ left: -SCROLL_STEP, behavior:'smooth' }));
-  btnRight.addEventListener('click', () => inner.scrollBy({ left:  SCROLL_STEP, behavior:'smooth' }));
-  observeActiveItem(inner);
-}
-function observeActiveItem(inner) {
-  const mo = new MutationObserver(() => {
-    const active = inner.querySelector('.sb-item.active');
-    if (active) active.scrollIntoView({ inline:'center', block:'nearest', behavior:'smooth' });
-  });
-  mo.observe(inner, { subtree:true, attributes:true, attributeFilter:['class'] });
-}
-const _origRenderSidebar = renderSidebar;
-window.renderSidebar = function() {
-  const sidebar = document.getElementById('sidebar');
-  if (sidebar) delete sidebar.dataset.mobileInit;
-  _origRenderSidebar();
-  requestAnimationFrame(() => {
-    initMobileSidebar();
-    const inner  = document.querySelector('.sb-scroll-inner');
-    const active = inner && inner.querySelector('.sb-item.active');
-    if (active) active.scrollIntoView({ inline:'center', block:'nearest', behavior:'smooth' });
-  });
-};
-window.addEventListener('resize', () => {
-  const sidebar = document.getElementById('sidebar');
-  if (sidebar) delete sidebar.dataset.mobileInit;
-  initMobileSidebar();
-});
 
 navTo('plant');
 </script>
