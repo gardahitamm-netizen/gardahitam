@@ -24,7 +24,6 @@
   --teal:    #06b6d4;
 }
 
-/* ── LIGHT MODE ── */
 body.light {
   --bg:#f0f4f8; --surf:#ffffff; --surf2:#e8eef5; --surf3:#dde6f0;
   --border:#c8d8e8; --text:#1a2a3a; --muted:#6a8aaa;
@@ -40,86 +39,43 @@ body.light .tag-table tr:hover td { background:rgba(59,130,246,.05); }
 body.light .plant-hero    { background:linear-gradient(135deg,#d8e8f8,#e8f0fc,#ddeeff); }
 body.light .plant-hero-grid { opacity:.07; }
 body.light input, body.light select { background:#e8eef5 !important; border-color:#c8d8e8 !important; color:#1a2a3a !important; }
+body.light .file-card { background:#f8fafc; border-color:#c8d8e8; }
+body.light .file-card:hover { background:#eef4fb; }
 
 *{margin:0;padding:0;box-sizing:border-box;}
 html,body{width:100%;height:100%;overflow:hidden;}
 body{font-family:'Plus Jakarta Sans',sans-serif;background:var(--bg);color:var(--text);display:flex;flex-direction:column;}
 
 /* ── TOPBAR ── */
-.topbar{
-  display:flex;align-items:center;gap:8px;
-  padding:0 20px;height:50px;
-  background:#08111e;border-bottom:1px solid var(--border);
-  flex-shrink:0;z-index:200;
-}
-.topbar-dot{
-  width:8px;height:8px;border-radius:50%;
-  background:var(--accent);box-shadow:0 0 10px var(--accent);
-  animation:blink 2s infinite;flex-shrink:0;
-}
+.topbar{display:flex;align-items:center;gap:8px;padding:0 20px;height:50px;background:#08111e;border-bottom:1px solid var(--border);flex-shrink:0;z-index:200;}
+.topbar-dot{width:8px;height:8px;border-radius:50%;background:var(--accent);box-shadow:0 0 10px var(--accent);animation:blink 2s infinite;flex-shrink:0;}
 @keyframes blink{0%,100%{opacity:1}50%{opacity:.3}}
-.btn-back{
-  display:flex;align-items:center;gap:5px;
-  font-family:'JetBrains Mono',monospace;font-size:11px;
-  padding:5px 12px;border-radius:5px;cursor:pointer;
-  border:1px solid var(--border);background:var(--surf2);
-  color:var(--muted);text-decoration:none;transition:all .2s;flex-shrink:0;
-}
+.btn-back{display:flex;align-items:center;gap:5px;font-family:'JetBrains Mono',monospace;font-size:11px;padding:5px 12px;border-radius:5px;cursor:pointer;border:1px solid var(--border);background:var(--surf2);color:var(--muted);text-decoration:none;transition:all .2s;flex-shrink:0;}
 .btn-back:hover{border-color:#e8a020;color:#e8a020;}
 .topbar-divider{width:1px;height:20px;background:var(--border);flex-shrink:0;}
 .topbar-title{font-family:'JetBrains Mono',monospace;font-weight:700;font-size:13px;color:#fff;}
 .topbar-sep{color:var(--border);}
 .topbar-sub{font-family:'JetBrains Mono',monospace;font-size:11px;color:var(--muted);}
 .topbar-r{margin-left:auto;display:flex;align-items:center;gap:8px;}
-.topbar-clock{
-  font-family:'JetBrains Mono',monospace;font-size:12px;color:var(--teal);
-  background:rgba(6,182,212,.08);border:1px solid rgba(6,182,212,.15);
-  padding:3px 10px;border-radius:4px;
-}
-.btn-sm{
-  display:flex;align-items:center;gap:5px;
-  font-family:'JetBrains Mono',monospace;font-size:11px;
-  padding:5px 12px;border-radius:5px;cursor:pointer;
-  border:1px solid var(--border);background:var(--surf2);color:var(--muted);
-  transition:all .2s;
-}
+.topbar-clock{font-family:'JetBrains Mono',monospace;font-size:12px;color:var(--teal);background:rgba(6,182,212,.08);border:1px solid rgba(6,182,212,.15);padding:3px 10px;border-radius:4px;}
+.btn-sm{display:flex;align-items:center;gap:5px;font-family:'JetBrains Mono',monospace;font-size:11px;padding:5px 12px;border-radius:5px;cursor:pointer;border:1px solid var(--border);background:var(--surf2);color:var(--muted);transition:all .2s;}
 .btn-sm:hover{border-color:var(--accent);color:var(--accent);}
 .btn-sm.loading{opacity:.5;pointer-events:none;}
-.btn-theme{
-  display:flex;align-items:center;gap:5px;
-  font-family:'JetBrains Mono',monospace;font-size:11px;
-  padding:5px 10px;border-radius:5px;cursor:pointer;
-  border:1px solid var(--border);background:var(--surf2);color:var(--muted);
-  transition:all .2s;flex-shrink:0;
-}
+.btn-theme{display:flex;align-items:center;gap:5px;font-family:'JetBrains Mono',monospace;font-size:11px;padding:5px 10px;border-radius:5px;cursor:pointer;border:1px solid var(--border);background:var(--surf2);color:var(--muted);transition:all .2s;flex-shrink:0;}
 .btn-theme:hover{border-color:var(--teal);color:var(--teal);}
 
 /* ── RUNNING TEXT ── */
-.running-bar{
-  flex-shrink:0;overflow:hidden;white-space:nowrap;
-  background:#06101d;border-bottom:1px solid var(--border);
-  padding:5px 0;position:relative;
-}
-.running-bar::before,.running-bar::after{
-  content:'';position:absolute;top:0;bottom:0;width:40px;z-index:2;
-}
+.running-bar{flex-shrink:0;overflow:hidden;white-space:nowrap;background:#06101d;border-bottom:1px solid var(--border);padding:5px 0;position:relative;}
+.running-bar::before,.running-bar::after{content:'';position:absolute;top:0;bottom:0;width:40px;z-index:2;}
 .running-bar::before{left:0;background:linear-gradient(to right,#06101d,transparent);}
 .running-bar::after{right:0;background:linear-gradient(to left,#06101d,transparent);}
-.running-inner{
-  display:inline-block;animation:marquee 40s linear infinite;
-  font-family:'JetBrains Mono',monospace;font-size:10px;color:var(--muted);letter-spacing:.5px;
-}
+.running-inner{display:inline-block;animation:marquee 40s linear infinite;font-family:'JetBrains Mono',monospace;font-size:10px;color:var(--muted);letter-spacing:.5px;}
 .running-inner span{margin:0 40px;}
 .running-inner .rb-lbl{color:var(--accent);font-weight:700;}
 @keyframes marquee{from{transform:translateX(100vw)}to{transform:translateX(-100%)}}
 
 /* ── BREADCRUMB ── */
-.breadcrumb{
-  display:flex;align-items:center;gap:5px;
-  padding:8px 20px;font-family:'JetBrains Mono',monospace;
-  font-size:11px;color:var(--muted);
-  border-bottom:1px solid var(--border);background:#09101d;flex-shrink:0;
-}
+.breadcrumb{display:flex;align-items:center;gap:5px;padding:8px 20px;font-family:'JetBrains Mono',monospace;font-size:11px;color:var(--muted);border-bottom:1px solid var(--border);background:#09101d;flex-shrink:0;}
 .bc-link{cursor:pointer;transition:color .15s;text-decoration:none;color:var(--muted);}
 .bc-link:hover{color:var(--accent);}
 .bc-cur{color:var(--text);}
@@ -131,7 +87,7 @@ body{font-family:'Plus Jakarta Sans',sans-serif;background:var(--bg);color:var(-
 .page.active{display:flex;animation:fadeUp .25s ease;}
 @keyframes fadeUp{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:translateY(0)}}
 
-/* ── LOADING / ERROR ── */
+/* ── STATE BOX ── */
 .state-box{display:flex;flex-direction:column;align-items:center;justify-content:center;padding:80px 20px;gap:14px;color:var(--muted);}
 .state-box .sp{width:30px;height:30px;border:2px solid var(--border);border-top-color:var(--accent);border-radius:50%;animation:spin .7s linear infinite;}
 @keyframes spin{to{transform:rotate(360deg)}}
@@ -140,149 +96,58 @@ body{font-family:'Plus Jakarta Sans',sans-serif;background:var(--bg);color:var(-
 .btn-retry{background:rgba(59,130,246,.12);border:1px solid rgba(59,130,246,.25);color:var(--accent);padding:6px 16px;border-radius:6px;font-size:12px;cursor:pointer;font-family:'JetBrains Mono',monospace;}
 
 /* ══════════════════════════════════
-   PLANT PAGE — HERO
+   PLANT PAGE
 ══════════════════════════════════ */
 .plant-wrap{padding:0;overflow-y:auto;width:100%;}
-
-.plant-hero{
-  position:relative;overflow:hidden;
-  padding:34px 28px 26px;
-  background:linear-gradient(135deg,#060b17 0%,#0b1628 50%,#090f1e 100%);
-  border-bottom:1px solid var(--border);
-}
-.plant-hero::before{
-  content:'';position:absolute;inset:0;
-  background:
-    radial-gradient(ellipse 55% 80% at 75% 50%,rgba(59,130,246,.08) 0%,transparent 70%),
-    radial-gradient(ellipse 35% 50% at 15% 90%,rgba(139,92,246,.06) 0%,transparent 60%);
-}
-.plant-hero-grid{
-  position:absolute;inset:0;opacity:.035;
-  background-image:
-    linear-gradient(var(--border) 1px,transparent 1px),
-    linear-gradient(90deg,var(--border) 1px,transparent 1px);
-  background-size:36px 36px;
-}
-/* Diagonal accent line */
-.plant-hero::after{
-  content:'';position:absolute;
-  top:-20px;right:180px;width:1px;height:200px;
-  background:linear-gradient(to bottom,transparent,rgba(59,130,246,.15),transparent);
-  transform:rotate(20deg);
-}
-
-.plant-hero-badge{
-  display:inline-flex;align-items:center;gap:6px;
-  font-family:'JetBrains Mono',monospace;font-size:9px;font-weight:700;
-  letter-spacing:2px;text-transform:uppercase;
-  color:var(--purple);border:1px solid rgba(139,92,246,.25);
-  background:rgba(139,92,246,.07);padding:4px 12px;border-radius:20px;
-  margin-bottom:14px;position:relative;
-}
+.plant-hero{position:relative;overflow:hidden;padding:34px 28px 26px;background:linear-gradient(135deg,#060b17 0%,#0b1628 50%,#090f1e 100%);border-bottom:1px solid var(--border);}
+.plant-hero::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse 55% 80% at 75% 50%,rgba(59,130,246,.08) 0%,transparent 70%),radial-gradient(ellipse 35% 50% at 15% 90%,rgba(139,92,246,.06) 0%,transparent 60%);}
+.plant-hero-grid{position:absolute;inset:0;opacity:.035;background-image:linear-gradient(var(--border) 1px,transparent 1px),linear-gradient(90deg,var(--border) 1px,transparent 1px);background-size:36px 36px;}
+.plant-hero::after{content:'';position:absolute;top:-20px;right:180px;width:1px;height:200px;background:linear-gradient(to bottom,transparent,rgba(59,130,246,.15),transparent);transform:rotate(20deg);}
+.plant-hero-badge{display:inline-flex;align-items:center;gap:6px;font-family:'JetBrains Mono',monospace;font-size:9px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:var(--purple);border:1px solid rgba(139,92,246,.25);background:rgba(139,92,246,.07);padding:4px 12px;border-radius:20px;margin-bottom:14px;position:relative;}
 .plant-hero-badge::before{content:'';width:5px;height:5px;border-radius:50%;background:var(--purple);box-shadow:0 0 8px var(--purple);animation:blink 2s infinite;}
-.plant-hero-title{
-  font-family:'JetBrains Mono',monospace;font-size:24px;font-weight:700;color:#fff;
-  margin-bottom:5px;position:relative;text-shadow:0 0 40px rgba(139,92,246,.2);
-}
+.plant-hero-title{font-family:'JetBrains Mono',monospace;font-size:24px;font-weight:700;color:#fff;margin-bottom:5px;position:relative;text-shadow:0 0 40px rgba(139,92,246,.2);}
 .plant-hero-title span{color:var(--purple);}
 .plant-hero-sub{font-size:12px;color:var(--muted);position:relative;margin-bottom:20px;}
-
 .plant-stats-row{display:flex;gap:10px;flex-wrap:wrap;position:relative;}
-.plant-stat-box{
-  background:rgba(255,255,255,.03);border:1px solid var(--border);
-  border-radius:8px;padding:10px 16px;min-width:110px;
-}
+.plant-stat-box{background:rgba(255,255,255,.03);border:1px solid var(--border);border-radius:8px;padding:10px 16px;min-width:110px;}
 .plant-stat-label{font-family:'JetBrains Mono',monospace;font-size:9px;color:var(--muted);letter-spacing:1px;text-transform:uppercase;margin-bottom:4px;}
 .plant-stat-val{font-family:'JetBrains Mono',monospace;font-size:18px;font-weight:700;color:#fff;}
-.plant-stat-val.ok{color:var(--ok);}
-.plant-stat-val.acc{color:var(--accent);}
-.plant-stat-val.pur{color:var(--purple);}
-.plant-stat-val.tel{color:var(--teal);}
-
-/* Plant cards */
+.plant-stat-val.ok{color:var(--ok);}.plant-stat-val.acc{color:var(--accent);}.plant-stat-val.pur{color:var(--purple);}.plant-stat-val.tel{color:var(--teal);}
 .plant-section{padding:22px 28px;}
 .plant-section-head{display:flex;align-items:center;gap:10px;margin-bottom:16px;}
 .plant-section-label{font-family:'JetBrains Mono',monospace;font-size:10px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:var(--muted);}
 .plant-section-line{flex:1;height:1px;background:linear-gradient(to right,var(--border),transparent);}
-
 .plant-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:14px;}
-
-.plant-card{
-  background:var(--surf);border:1px solid var(--border);
-  border-radius:12px;padding:0;cursor:pointer;
-  transition:all .25s;position:relative;overflow:hidden;
-  animation:cardIn .4s ease both;
-}
+.plant-card{background:var(--surf);border:1px solid var(--border);border-radius:12px;padding:0;cursor:pointer;transition:all .25s;position:relative;overflow:hidden;animation:cardIn .4s ease both;}
 @keyframes cardIn{from{opacity:0;transform:translateY(16px)}to{opacity:1;transform:translateY(0)}}
-.plant-card:nth-child(1){animation-delay:.04s}
-.plant-card:nth-child(2){animation-delay:.09s}
-.plant-card:nth-child(3){animation-delay:.14s}
-.plant-card:nth-child(4){animation-delay:.19s}
-.plant-card:nth-child(5){animation-delay:.24s}
-.plant-card:nth-child(6){animation-delay:.29s}
-.plant-card:nth-child(7){animation-delay:.34s}
-
-.plant-card-top{
-  padding:16px 18px 12px;
-  background:linear-gradient(135deg,var(--surf) 0%,var(--surf2) 100%);
-  position:relative;
-}
-.plant-card-stripe{
-  position:absolute;top:0;left:0;right:0;height:2px;
-  transform:scaleX(0);transform-origin:left;transition:transform .35s;
-}
+.plant-card:nth-child(1){animation-delay:.04s}.plant-card:nth-child(2){animation-delay:.09s}.plant-card:nth-child(3){animation-delay:.14s}.plant-card:nth-child(4){animation-delay:.19s}.plant-card:nth-child(5){animation-delay:.24s}.plant-card:nth-child(6){animation-delay:.29s}.plant-card:nth-child(7){animation-delay:.34s}
+.plant-card-top{padding:16px 18px 12px;background:linear-gradient(135deg,var(--surf) 0%,var(--surf2) 100%);position:relative;}
+.plant-card-stripe{position:absolute;top:0;left:0;right:0;height:2px;transform:scaleX(0);transform-origin:left;transition:transform .35s;}
 .plant-card:hover .plant-card-stripe{transform:scaleX(1);}
-
-.plant-card-dot{
-  position:absolute;top:12px;right:12px;
-  width:6px;height:6px;border-radius:50%;
-  animation:blink 3s infinite;
-}
+.plant-card-dot{position:absolute;top:12px;right:12px;width:6px;height:6px;border-radius:50%;animation:blink 3s infinite;}
 .plant-card-seq{font-family:'JetBrains Mono',monospace;font-size:9px;color:var(--muted);letter-spacing:1.5px;margin-bottom:7px;}
 .plant-card-name{font-family:'JetBrains Mono',monospace;font-size:19px;font-weight:700;margin-bottom:2px;}
 .plant-card-desc{font-size:11px;color:var(--muted);}
-
-.plant-card-bottom{
-  padding:9px 18px;border-top:1px solid var(--border);
-  display:flex;align-items:center;justify-content:space-between;
-  background:rgba(0,0,0,.12);
-}
-.plant-card-tag{
-  font-family:'JetBrains Mono',monospace;font-size:9px;
-  padding:2px 8px;border-radius:4px;border:1px solid;
-}
+.plant-card-bottom{padding:9px 18px;border-top:1px solid var(--border);display:flex;align-items:center;justify-content:space-between;background:rgba(0,0,0,.12);}
+.plant-card-tag{font-family:'JetBrains Mono',monospace;font-size:9px;padding:2px 8px;border-radius:4px;border:1px solid;}
 .plant-card-arr{font-size:12px;transition:all .2s;color:var(--border);}
 .plant-card:hover{transform:translateY(-3px);box-shadow:0 14px 32px rgba(0,0,0,.5),0 0 0 1px rgba(139,92,246,.12);}
 .plant-card:hover .plant-card-arr{transform:translateX(3px);}
 
 /* ══════════════════════════════════
-   UNIT PAGE
+   UNIT PAGE (list subfolder MCG1, MCG2)
 ══════════════════════════════════ */
 .unit-page{padding:0;overflow-y:auto;width:100%;}
-.unit-hero{
-  position:relative;overflow:hidden;
-  padding:26px 28px 22px;
-  background:linear-gradient(135deg,#060b17,#0b1628);
-  border-bottom:1px solid var(--border);
-}
-.unit-hero::before{
-  content:'';position:absolute;inset:0;
-  background:radial-gradient(ellipse 50% 100% at 80% 50%,rgba(59,130,246,.06),transparent 70%);
-}
+.unit-hero{position:relative;overflow:hidden;padding:26px 28px 22px;background:linear-gradient(135deg,#060b17,#0b1628);border-bottom:1px solid var(--border);}
+.unit-hero::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse 50% 100% at 80% 50%,rgba(59,130,246,.06),transparent 70%);}
 .unit-hero-grid{position:absolute;inset:0;opacity:.03;background-image:linear-gradient(var(--border) 1px,transparent 1px),linear-gradient(90deg,var(--border) 1px,transparent 1px);background-size:32px 32px;}
 .unit-hero-back{position:relative;display:inline-flex;align-items:center;gap:6px;font-family:'JetBrains Mono',monospace;font-size:10px;color:var(--muted);cursor:pointer;margin-bottom:12px;transition:color .2s;}
 .unit-hero-back:hover{color:var(--accent);}
 .unit-hero-title{font-family:'JetBrains Mono',monospace;font-size:20px;font-weight:700;color:#fff;position:relative;margin-bottom:3px;}
 .unit-hero-sub{font-size:11px;color:var(--muted);position:relative;}
-
 .unit-section{padding:20px 28px;}
 .unit-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(185px,1fr));gap:12px;}
-.unit-card{
-  background:var(--surf);border:1px solid var(--border);
-  border-radius:10px;padding:16px 18px;cursor:pointer;
-  transition:all .2s;position:relative;overflow:hidden;
-  animation:cardIn .35s ease both;
-}
+.unit-card{background:var(--surf);border:1px solid var(--border);border-radius:10px;padding:16px 18px;cursor:pointer;transition:all .2s;position:relative;overflow:hidden;animation:cardIn .35s ease both;}
 .unit-card::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,var(--accent),var(--purple));transform:scaleX(0);transform-origin:left;transition:transform .3s;}
 .unit-card:hover{border-color:rgba(59,130,246,.35);background:var(--surf2);transform:translateY(-2px);box-shadow:0 8px 20px rgba(0,0,0,.4);}
 .unit-card:hover::before{transform:scaleX(1);}
@@ -290,55 +155,48 @@ body{font-family:'Plus Jakarta Sans',sans-serif;background:var(--bg);color:var(-
 .unit-badge{font-family:'JetBrains Mono',monospace;font-size:9px;padding:2px 7px;border-radius:4px;background:rgba(16,185,129,.1);color:var(--ok);border:1px solid rgba(16,185,129,.2);}
 
 /* ══════════════════════════════════
-   DETAIL PAGE
+   FILE PAGE (list file Excel di dalam subfolder)
+══════════════════════════════════ */
+.file-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:12px;}
+.file-card{
+  background:var(--surf);border:1px solid var(--border);
+  border-radius:10px;padding:16px 18px;cursor:pointer;
+  transition:all .2s;position:relative;overflow:hidden;
+  animation:cardIn .35s ease both;
+  display:flex;align-items:center;gap:12px;
+}
+.file-card::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,var(--teal),var(--accent));transform:scaleX(0);transform-origin:left;transition:transform .3s;}
+.file-card:hover{border-color:rgba(6,182,212,.35);background:var(--surf2);transform:translateY(-2px);box-shadow:0 8px 20px rgba(0,0,0,.4);}
+.file-card:hover::before{transform:scaleX(1);}
+.file-icon{font-size:22px;flex-shrink:0;}
+.file-info{min-width:0;}
+.file-name{font-family:'JetBrains Mono',monospace;font-size:11px;font-weight:600;color:#fff;margin-bottom:4px;word-break:break-all;line-height:1.4;}
+.file-badge{font-family:'JetBrains Mono',monospace;font-size:9px;padding:2px 7px;border-radius:4px;background:rgba(6,182,212,.1);color:var(--teal);border:1px solid rgba(6,182,212,.2);}
+
+/* ══════════════════════════════════
+   DETAIL PAGE (tabel tag)
 ══════════════════════════════════ */
 .detail-page{display:flex;flex:1;overflow:hidden;min-height:0;}
-.sidebar{
-  width:190px;min-width:190px;flex-shrink:0;
-  background:#080d18;border-right:1px solid var(--border);
-  overflow-y:auto;display:flex;flex-direction:column;
-}
+.sidebar{width:200px;min-width:200px;flex-shrink:0;background:#080d18;border-right:1px solid var(--border);overflow-y:auto;display:flex;flex-direction:column;}
 .sb-head{font-family:'JetBrains Mono',monospace;font-size:9px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;color:var(--muted);padding:12px 14px 6px;}
-.sb-item{
-  padding:9px 14px;font-size:12px;cursor:pointer;transition:all .15s;
-  display:flex;align-items:center;justify-content:space-between;
-  color:var(--muted);border-left:2px solid transparent;
-}
+.sb-item{padding:9px 14px;font-size:11px;cursor:pointer;transition:all .15s;display:flex;align-items:center;color:var(--muted);border-left:2px solid transparent;font-family:'JetBrains Mono',monospace;word-break:break-all;line-height:1.4;}
 .sb-item:hover{background:var(--surf);color:var(--text);}
 .sb-item.active{background:var(--surf);color:#fff;border-left-color:var(--accent);}
 
 .detail-main{flex:1;overflow-y:auto;padding:22px 24px;min-width:0;background:var(--bg);}
-.detail-title{font-family:'JetBrains Mono',monospace;font-size:17px;font-weight:700;margin-bottom:3px;}
-.detail-meta{font-size:11px;color:var(--muted);margin-bottom:14px;}
-
-.table-tabs{display:flex;gap:6px;margin-bottom:18px;flex-wrap:wrap;}
-.tab-btn{
-  padding:5px 13px;border-radius:6px;font-size:11px;cursor:pointer;
-  font-family:'JetBrains Mono',monospace;border:1px solid var(--border);
-  background:var(--surf);color:var(--muted);transition:all .15s;
-}
-.tab-btn:hover{border-color:var(--accent);color:var(--text);}
-.tab-btn.active{background:rgba(59,130,246,.12);border-color:var(--accent);color:var(--accent);}
+.detail-title{font-family:'JetBrains Mono',monospace;font-size:16px;font-weight:700;margin-bottom:3px;}
+.detail-meta{font-size:11px;color:var(--muted);margin-bottom:18px;}
 
 .tag-table-wrap{overflow-x:auto;}
 .tag-table{width:100%;border-collapse:collapse;font-size:12px;font-family:'JetBrains Mono',monospace;}
-.tag-table th{
-  text-align:left;padding:9px 14px;
-  font-size:9px;letter-spacing:1.2px;text-transform:uppercase;
-  color:var(--muted);border-bottom:1px solid var(--border);
-  background:var(--surf);white-space:nowrap;
-}
+.tag-table th{text-align:left;padding:9px 14px;font-size:9px;letter-spacing:1.2px;text-transform:uppercase;color:var(--muted);border-bottom:1px solid var(--border);background:var(--surf);white-space:nowrap;}
 .tag-table td{padding:9px 14px;border-bottom:1px solid rgba(30,45,69,.5);color:var(--text);vertical-align:middle;}
 .tag-table tr:hover td{background:rgba(59,130,246,.03);}
 .row-num{color:var(--muted);font-size:10px;width:34px;}
 .tag-name{font-weight:600;color:#fff;}
 .tag-addr{color:var(--accent);}
 .tag-comment{color:var(--muted);font-size:11px;}
-.type-badge{
-  display:inline-block;padding:2px 7px;border-radius:4px;font-size:10px;
-  background:rgba(139,92,246,.12);color:var(--purple);
-  border:1px solid rgba(139,92,246,.2);
-}
+.type-badge{display:inline-block;padding:2px 7px;border-radius:4px;font-size:10px;background:rgba(139,92,246,.12);color:var(--purple);border:1px solid rgba(139,92,246,.2);}
 .spare-comment{color:rgba(74,85,104,.5);font-style:italic;}
 
 ::-webkit-scrollbar{width:4px;height:4px;}
@@ -382,7 +240,9 @@ body{font-family:'Plus Jakarta Sans',sans-serif;background:var(--bg);color:var(-
   <span class="bc-sep" id="bcs2" style="display:none">›</span>
   <span id="bc2" style="display:none"></span>
   <span class="bc-sep" id="bcs3" style="display:none">›</span>
-  <span id="bc3" class="bc-cur" style="display:none"></span>
+  <span id="bc3" style="display:none"></span>
+  <span class="bc-sep" id="bcs4" style="display:none">›</span>
+  <span id="bc4" class="bc-cur" style="display:none"></span>
 </div>
 
 <!-- PAGES WRAPPER -->
@@ -397,22 +257,10 @@ body{font-family:'Plus Jakarta Sans',sans-serif;background:var(--bg);color:var(-
         <div class="plant-hero-title">Control <span>Troubleshooting</span></div>
         <div class="plant-hero-sub">KECO WATERBANG — Pilih plant untuk memantau status PLC Input/Output Tags</div>
         <div class="plant-stats-row">
-          <div class="plant-stat-box">
-            <div class="plant-stat-label">Total Plant</div>
-            <div class="plant-stat-val acc" id="stat-total">—</div>
-          </div>
-          <div class="plant-stat-box">
-            <div class="plant-stat-label">PLC Status</div>
-            <div class="plant-stat-val ok">ONLINE</div>
-          </div>
-          <div class="plant-stat-box">
-            <div class="plant-stat-label">Last Sync</div>
-            <div class="plant-stat-val tel" id="stat-sync">—</div>
-          </div>
-          <div class="plant-stat-box">
-            <div class="plant-stat-label">Mode</div>
-            <div class="plant-stat-val pur" id="stat-mode">DARK</div>
-          </div>
+          <div class="plant-stat-box"><div class="plant-stat-label">Total Plant</div><div class="plant-stat-val acc" id="stat-total">—</div></div>
+          <div class="plant-stat-box"><div class="plant-stat-label">PLC Status</div><div class="plant-stat-val ok">ONLINE</div></div>
+          <div class="plant-stat-box"><div class="plant-stat-label">Last Sync</div><div class="plant-stat-val tel" id="stat-sync">—</div></div>
+          <div class="plant-stat-box"><div class="plant-stat-label">Mode</div><div class="plant-stat-val pur" id="stat-mode">DARK</div></div>
         </div>
       </div>
       <div class="plant-section">
@@ -425,7 +273,7 @@ body{font-family:'Plus Jakarta Sans',sans-serif;background:var(--bg);color:var(-
     </div>
   </div>
 
-  <!-- PAGE: UNIT -->
+  <!-- PAGE: UNIT (subfolder MCG1, MCG2, dst) -->
   <div class="page" id="page-unit">
     <div class="unit-page">
       <div class="unit-hero">
@@ -436,7 +284,7 @@ body{font-family:'Plus Jakarta Sans',sans-serif;background:var(--bg);color:var(-
       </div>
       <div class="unit-section">
         <div class="plant-section-head">
-          <div class="plant-section-label">📋 Unit List</div>
+          <div class="plant-section-label">📁 Unit / Mixer</div>
           <div class="plant-section-line"></div>
         </div>
         <div id="unit-content"></div>
@@ -444,14 +292,32 @@ body{font-family:'Plus Jakarta Sans',sans-serif;background:var(--bg);color:var(-
     </div>
   </div>
 
-  <!-- PAGE: DETAIL -->
+  <!-- PAGE: FILE (list file Excel di subfolder) -->
+  <div class="page" id="page-file">
+    <div class="unit-page">
+      <div class="unit-hero">
+        <div class="unit-hero-grid"></div>
+        <div class="unit-hero-back" id="file-back-btn">← Kembali</div>
+        <div class="unit-hero-title" id="file-title">—</div>
+        <div class="unit-hero-sub" id="file-sub">Pilih file untuk melihat PLC Tags</div>
+      </div>
+      <div class="unit-section">
+        <div class="plant-section-head">
+          <div class="plant-section-label">📋 I/O List Files</div>
+          <div class="plant-section-line"></div>
+        </div>
+        <div id="file-content"></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- PAGE: DETAIL (tabel tag) -->
   <div class="page" id="page-detail">
     <div class="detail-page">
       <div class="sidebar" id="sidebar"></div>
       <div class="detail-main">
         <div class="detail-title" id="det-title"></div>
         <div class="detail-meta"  id="det-meta"></div>
-        <div class="table-tabs"   id="table-tabs"></div>
         <div id="det-content"></div>
       </div>
     </div>
@@ -462,9 +328,16 @@ body{font-family:'Plus Jakarta Sans',sans-serif;background:var(--bg);color:var(-
 <script>
 const API = 'https://script.google.com/macros/s/AKfycbwO5p1690DagKDHz0A1s1R4IjWSL89lLGc8SdrZD_u-Ojn4wiRlZg_OyvuaT0QfI3-9Sw/exec';
 
-let state = {
-  page:'plant', plant:null, unit:null, unitLabel:null,
-  tableIndex:1, tagsCache:{}, unitsCache:{},
+const S = {
+  page      : 'plant',
+  plant     : null,
+  unit      : null,      // folder ID subfolder (MCG1, MCG2)
+  unitLabel : null,      // nama subfolder
+  fileId    : null,      // file ID Excel yang dipilih
+  fileLabel : null,      // nama file
+  filesCache: {},        // cache list file per unit
+  tagsCache : {},        // cache tag per fileId
+  unitsCache: {},        // cache list unit per plant
 };
 
 async function apiFetch(params) {
@@ -475,70 +348,100 @@ async function apiFetch(params) {
   return data;
 }
 
-function navTo(page, plant, unit, unitLabel) {
-  if (plant)     state.plant     = plant;
-  if (unit)      state.unit      = unit;
-  if (unitLabel) state.unitLabel = unitLabel;
-  state.page = page;
+// ── NAVIGASI ──────────────────────────────────────────────
+
+function navTo(page, opts) {
+  opts = opts || {};
+  if (opts.plant)     S.plant     = opts.plant;
+  if (opts.unit)      S.unit      = opts.unit;
+  if (opts.unitLabel) S.unitLabel = opts.unitLabel;
+  if (opts.fileId)    S.fileId    = opts.fileId;
+  if (opts.fileLabel) S.fileLabel = opts.fileLabel;
+  S.page = page;
+
   document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
   document.getElementById('page-' + page).classList.add('active');
+
   updateBreadcrumb();
   updateTopbar();
+
   if (page === 'plant')  renderPlantPage();
   if (page === 'unit')   renderUnitPage();
+  if (page === 'file')   renderFilePage();
   if (page === 'detail') renderDetailPage();
 }
 
 function updateBreadcrumb() {
-  const s2=document.getElementById('bcs2'),b2=document.getElementById('bc2');
-  const s3=document.getElementById('bcs3'),b3=document.getElementById('bc3');
-  if (state.plant) {
-    s2.style.display=b2.style.display='';
-    b2.className = state.page==='unit' ? 'bc-cur' : 'bc-link';
-    b2.textContent = state.plant;
-    b2.onclick = state.page!=='unit' ? () => navTo('unit') : null;
-  } else { s2.style.display=b2.style.display='none'; }
-  if (state.unit && state.page==='detail') {
-    s3.style.display=b3.style.display='';
-    b3.textContent = state.unitLabel || state.unit;
-  } else { s3.style.display=b3.style.display='none'; }
+  const s2=id('bcs2'),b2=id('bc2');
+  const s3=id('bcs3'),b3=id('bc3');
+  const s4=id('bcs4'),b4=id('bc4');
+
+  // Plant level
+  if (S.plant) {
+    s2.style.display = b2.style.display = '';
+    b2.textContent = S.plant;
+    if (S.page !== 'unit') {
+      b2.className = 'bc-link'; b2.onclick = () => navTo('unit');
+    } else {
+      b2.className = 'bc-cur'; b2.onclick = null;
+    }
+  } else { s2.style.display = b2.style.display = 'none'; }
+
+  // Unit level
+  if (S.unitLabel && S.page !== 'unit') {
+    s3.style.display = b3.style.display = '';
+    b3.textContent = S.unitLabel;
+    if (S.page !== 'file') {
+      b3.className = 'bc-link'; b3.onclick = () => navTo('file');
+    } else {
+      b3.className = 'bc-cur'; b3.onclick = null;
+    }
+  } else { s3.style.display = b3.style.display = 'none'; }
+
+  // File level
+  if (S.fileLabel && S.page === 'detail') {
+    s4.style.display = b4.style.display = '';
+    b4.textContent = S.fileLabel;
+    b4.className = 'bc-cur';
+  } else { s4.style.display = b4.style.display = 'none'; }
 }
 
 function updateTopbar() {
-  const sub = document.getElementById('topbar-sub');
-  if (state.page==='detail')     sub.textContent = state.plant + ' — ' + (state.unitLabel||state.unit);
-  else if (state.page==='unit')  sub.textContent = state.plant + ' — Pilih Unit';
-  else                           sub.textContent = 'PLC Input / Output Tags';
+  const sub = id('topbar-sub');
+  if      (S.page === 'detail') sub.textContent = S.fileLabel || S.fileId;
+  else if (S.page === 'file')   sub.textContent = S.plant + ' — ' + S.unitLabel;
+  else if (S.page === 'unit')   sub.textContent = S.plant + ' — Pilih Unit';
+  else                          sub.textContent = 'PLC Input / Output Tags';
 }
 
-// ── PLANT PAGE ──
+// ── PLANT PAGE ──────────────────────────────────────────
+
 const PLANT_META = {
+  MCG:{ desc:'Mixing Plant Golf',    color:'#f59e0b', tag:'PLC · GOLF'    },
   MCA:{ desc:'Mixing Plant Alpha',   color:'#3b82f6', tag:'PLC · ALPHA'   },
   MCC:{ desc:'Mixing Plant Charlie', color:'#06b6d4', tag:'PLC · CHARLIE' },
   MCD:{ desc:'Mixing Plant Delta',   color:'#10b981', tag:'PLC · DELTA'   },
-  MCG:{ desc:'Mixing Plant Golf',    color:'#f59e0b', tag:'PLC · GOLF'    },
   MCH:{ desc:'Mixing Plant Hotel',   color:'#f87171', tag:'PLC · HOTEL'   },
   MCI:{ desc:'Mixing Plant India',   color:'#a78bfa', tag:'PLC · INDIA'   },
   'PLANT E':{ desc:'Plant Extension E', color:'#fb7185', tag:'PLC · PLANT E' },
 };
 
 async function renderPlantPage() {
-  const el = document.getElementById('plant-content');
+  const el = id('plant-content');
   el.innerHTML = loadingHTML('Memuat daftar plant...');
   try {
     const data = await apiFetch({ action: 'getPlants' });
-    document.getElementById('stat-total').textContent = data.plants.length;
-    document.getElementById('stat-sync').textContent  = new Date().toTimeString().slice(0,5);
+    id('stat-total').textContent = data.plants.length;
+    id('stat-sync').textContent  = new Date().toTimeString().slice(0,5);
     el.innerHTML = `<div class="plant-grid">${data.plants.map((p,i) => plantCard(p,i)).join('')}</div>`;
-  } catch(err) { el.innerHTML = errorHTML(err.message, () => renderPlantPage()); }
+  } catch(err) { el.innerHTML = errorHTML(err.message, renderPlantPage); }
 }
 
 function plantCard(p, i) {
-  const m = PLANT_META[p.plant] || { desc:p.label||'Mixing Plant', color:'#3b82f6', tag:'PLC' };
-  const stripeBg = `linear-gradient(90deg,${m.color},${m.color}66)`;
-  return `<div class="plant-card" onclick="navTo('unit','${p.plant}')">
+  const m = PLANT_META[p.plant] || { desc:'Mixing Plant', color:'#3b82f6', tag:'PLC' };
+  return `<div class="plant-card" onclick="navTo('unit',{plant:'${p.plant}'})">
     <div class="plant-card-top">
-      <div class="plant-card-stripe" style="background:${stripeBg}"></div>
+      <div class="plant-card-stripe" style="background:linear-gradient(90deg,${m.color},${m.color}66)"></div>
       <div class="plant-card-dot" style="background:${m.color};box-shadow:0 0 8px ${m.color}"></div>
       <div class="plant-card-seq">PLANT ID · ${String(i+1).padStart(2,'0')}</div>
       <div class="plant-card-name" style="color:${m.color}">${p.plant}</div>
@@ -551,148 +454,180 @@ function plantCard(p, i) {
   </div>`;
 }
 
-// ── UNIT PAGE ──
+// ── UNIT PAGE (subfolder MCG1, MCG2, dst) ──────────────────
+
 async function renderUnitPage() {
-  document.getElementById('unit-title').textContent = state.plant + ' — Pilih Unit';
-  document.getElementById('unit-sub').textContent   = 'Pilih unit / mixer untuk melihat PLC Tags';
-  const el = document.getElementById('unit-content');
+  id('unit-title').textContent = S.plant + ' — Pilih Unit';
+  id('unit-sub').textContent   = 'Pilih unit / mixer untuk melihat I/O List';
+  const el = id('unit-content');
   el.innerHTML = loadingHTML('Memuat daftar unit...');
   try {
-    const data = await apiFetch({ action: 'getUnits', plant: state.plant });
-    state.unitsCache[state.plant] = data.units;
-    el.innerHTML = `<div class="unit-grid">${data.units.map((u,i) => unitCard(u,i)).join('')}</div>`;
-  } catch(err) { el.innerHTML = errorHTML(err.message, () => renderUnitPage()); }
+    if (!S.unitsCache[S.plant]) {
+      const data = await apiFetch({ action: 'getUnits', plant: S.plant });
+      S.unitsCache[S.plant] = data.units;
+    }
+    const units = S.unitsCache[S.plant];
+    if (!units.length) {
+      el.innerHTML = `<div class="state-box"><div style="font-size:28px">📁</div><h3>Tidak ada unit</h3><p>Folder ${S.plant} kosong.</p></div>`;
+      return;
+    }
+    el.innerHTML = `<div class="unit-grid">${units.map((u,i) => unitCard(u,i)).join('')}</div>`;
+  } catch(err) { el.innerHTML = errorHTML(err.message, renderUnitPage); }
 }
 
 function unitCard(u, i) {
-  return `<div class="unit-card" onclick="navTo('detail','${u.plant}','${u.unit}','${u.label}')" style="animation-delay:${i*0.05}s">
-    <div class="unit-card-name">${u.label || u.unit}</div>
+  return `<div class="unit-card" onclick="navTo('file',{unit:'${u.unit}',unitLabel:'${esc(u.label)}'})" style="animation-delay:${i*0.05}s">
+    <div class="unit-card-name">${esc(u.label)}</div>
     <span class="unit-badge">● Active</span>
   </div>`;
 }
 
-// ── DETAIL PAGE ──
-async function renderDetailPage() {
-  renderSidebar();
-  document.getElementById('det-title').textContent = state.plant + ' — ' + (state.unitLabel||state.unit);
-  document.getElementById('det-meta').textContent  = 'Memuat data...';
-  document.getElementById('table-tabs').innerHTML  = '';
-  document.getElementById('det-content').innerHTML = loadingHTML('Mengambil tag dari spreadsheet...');
-  const cacheKey = state.plant + '|' + state.unit;
+// ── FILE PAGE (list file Excel) ──────────────────────────────
+
+async function renderFilePage() {
+  id('file-title').textContent = S.plant + ' — ' + S.unitLabel;
+  id('file-sub').textContent   = 'Pilih file I/O List untuk melihat PLC Tags';
+  id('file-back-btn').onclick  = () => navTo('unit');
+
+  const el = id('file-content');
+  el.innerHTML = loadingHTML('Memuat daftar file...');
   try {
-    let data = state.tagsCache[cacheKey];
-    if (!data) {
-      data = await apiFetch({ action: 'getTags', plant: state.plant, unit: state.unit });
-      state.tagsCache[cacheKey] = data;
+    const cacheKey = S.unit;
+    if (!S.filesCache[cacheKey]) {
+      const data = await apiFetch({ action: 'getTags', plant: S.plant, unit: S.unit });
+      S.filesCache[cacheKey] = data.files;
     }
-    const totalTags = data.tables.reduce((s,t) => s + t.rows.length, 0);
-    document.getElementById('det-meta').textContent =
-      `Total ${totalTags} tags · ${data.tables.length} table · ${state.plant} ${data.label||state.unit}`;
-    renderTableTabs(data.tables);
-    state.tableIndex = 1;
-    renderTagTable(data.tables[0]);
+    const files = S.filesCache[cacheKey];
+    if (!files || !files.length) {
+      el.innerHTML = `<div class="state-box"><div style="font-size:28px">📭</div><h3>Tidak ada file</h3><p>Tidak ada file Excel di folder ${esc(S.unitLabel)}.</p></div>`;
+      return;
+    }
+    el.innerHTML = `<div class="file-grid">${files.map((f,i) => fileCard(f,i)).join('')}</div>`;
+
+    // Render sidebar juga dengan list file
+    renderSidebar(files);
+  } catch(err) { el.innerHTML = errorHTML(err.message, renderFilePage); }
+}
+
+function fileCard(f, i) {
+  return `<div class="file-card" onclick="navTo('detail',{fileId:'${f.fileId}',fileLabel:'${esc(f.name)}'})" style="animation-delay:${i*0.04}s">
+    <div class="file-icon">📄</div>
+    <div class="file-info">
+      <div class="file-name">${esc(f.name)}</div>
+      <span class="file-badge">I/O List</span>
+    </div>
+  </div>`;
+}
+
+// ── DETAIL PAGE (tabel tag) ──────────────────────────────────
+
+async function renderDetailPage() {
+  id('det-title').textContent = S.fileLabel || '—';
+  id('det-meta').textContent  = 'Memuat data tag...';
+  id('det-content').innerHTML = loadingHTML('Membaca file dari Google Drive...');
+
+  // Sidebar: list file di unit yang sama
+  const files = S.filesCache[S.unit] || [];
+  renderSidebar(files);
+
+  try {
+    if (!S.tagsCache[S.fileId]) {
+      const data = await apiFetch({ action: 'getTags', plant: S.plant, unit: S.unit, fileId: S.fileId });
+      S.tagsCache[S.fileId] = data;
+    }
+    const data = S.tagsCache[S.fileId];
+    const rows = data.tables && data.tables[0] ? data.tables[0].rows : [];
+
+    id('det-meta').textContent = `${rows.length} tags · ${S.plant} ${S.unitLabel} — ${S.fileLabel}`;
+    renderTagTable(rows);
   } catch(err) {
-    document.getElementById('det-content').innerHTML = errorHTML(err.message, () => renderDetailPage());
-    document.getElementById('det-meta').textContent  = 'Gagal memuat data';
+    id('det-content').innerHTML = errorHTML(err.message, renderDetailPage);
+    id('det-meta').textContent  = 'Gagal memuat';
   }
 }
 
-function renderSidebar() {
-  const units = state.unitsCache[state.plant] || [];
-  if (!units.length) { document.getElementById('sidebar').innerHTML = '<div class="sb-head">UNIT</div>'; return; }
-  document.getElementById('sidebar').innerHTML =
-    `<div class="sb-head">Unit List</div>` +
-    units.map(u => {
-      const active = u.unit === state.unit ? 'active' : '';
-      return `<div class="sb-item ${active}" onclick="switchUnit('${u.unit}','${u.label}')">${u.label||u.unit}</div>`;
+function renderSidebar(files) {
+  if (!files || !files.length) {
+    id('sidebar').innerHTML = `<div class="sb-head">${esc(S.unitLabel||'FILES')}</div>`;
+    return;
+  }
+  id('sidebar').innerHTML =
+    `<div class="sb-head">${esc(S.unitLabel||'FILES')}</div>` +
+    files.map(f => {
+      const active = f.fileId === S.fileId ? 'active' : '';
+      return `<div class="sb-item ${active}" onclick="navTo('detail',{fileId:'${f.fileId}',fileLabel:'${esc(f.name)}'})">
+        ${esc(f.name)}
+      </div>`;
     }).join('');
 }
 
-function switchUnit(unitId, label) {
-  state.unit=unitId; state.unitLabel=label;
-  updateBreadcrumb(); updateTopbar();
-  renderDetailPage();
-}
-
-function renderTableTabs(tables) {
-  document.getElementById('table-tabs').innerHTML = tables.map(t => `
-    <div class="tab-btn ${t.tableIndex===state.tableIndex?'active':''}" id="tab-${t.tableIndex}" onclick="switchTable(${t.tableIndex})">
-      Table ${t.tableIndex} <span style="color:var(--muted);font-size:10px;margin-left:3px">${t.rows.length}</span>
-    </div>`).join('');
-}
-
-function switchTable(idx) {
-  state.tableIndex = idx;
-  const data = state.tagsCache[state.plant+'|'+state.unit];
-  if (!data) return;
-  document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
-  document.getElementById('tab-'+idx).classList.add('active');
-  const table = data.tables.find(t => t.tableIndex===idx);
-  if (table) renderTagTable(table);
-}
-
-function renderTagTable(table) {
-  if (!table || !table.rows.length) {
-    document.getElementById('det-content').innerHTML =
-      `<div class="state-box"><div style="font-size:28px">📭</div><h3>Tidak ada data</h3><p>Table ini kosong.</p></div>`;
+function renderTagTable(rows) {
+  if (!rows || !rows.length) {
+    id('det-content').innerHTML = `<div class="state-box"><div style="font-size:28px">📭</div><h3>Tidak ada data</h3><p>File ini kosong atau format tidak dikenali.</p></div>`;
     return;
   }
-  const rows = table.rows.map((r,i) => {
-    const isSpare = r.comment.toLowerCase()==='spare' || !r.comment;
+  const tbody = rows.map((r,i) => {
+    const isSpare = !r.comment || r.comment.toLowerCase() === 'spare';
     return `<tr>
       <td class="row-num">${i+1}</td>
       <td class="tag-name">${esc(r.name)}</td>
-      <td><span class="type-badge">${esc(r.type)}</span></td>
-      <td class="tag-addr">${esc(r.address)}</td>
+      <td><span class="type-badge">${esc(r.type)||'—'}</span></td>
+      <td class="tag-addr">${esc(r.address)||'—'}</td>
       <td class="tag-comment ${isSpare?'spare-comment':''}">${esc(r.comment)||'—'}</td>
     </tr>`;
   }).join('');
-  document.getElementById('det-content').innerHTML = `
+
+  id('det-content').innerHTML = `
     <div class="tag-table-wrap">
       <table class="tag-table">
         <thead><tr><th>#</th><th>NAME</th><th>DATA TYPE</th><th>ADDRESS</th><th>COMMENT</th></tr></thead>
-        <tbody>${rows}</tbody>
+        <tbody>${tbody}</tbody>
       </table>
     </div>`;
 }
 
-// ── THEME ──
+// ── THEME ──────────────────────────────────────────
+
 function toggleTheme() {
   const isLight = document.body.classList.toggle('light');
-  document.getElementById('btn-theme').textContent = isLight ? '☀️ Light' : '🌙 Dark';
-  const modeEl = document.getElementById('stat-mode');
-  if (modeEl) modeEl.textContent = isLight ? 'LIGHT' : 'DARK';
+  id('btn-theme').textContent = isLight ? '☀️ Light' : '🌙 Dark';
+  const m = id('stat-mode'); if (m) m.textContent = isLight ? 'LIGHT' : 'DARK';
   localStorage.setItem('ioplc_theme', isLight ? 'light' : 'dark');
 }
 if (localStorage.getItem('ioplc_theme') === 'light') {
   document.body.classList.add('light');
   document.addEventListener('DOMContentLoaded', () => {
-    const b=document.getElementById('btn-theme'); if(b) b.textContent='☀️ Light';
-    const m=document.getElementById('stat-mode'); if(m) m.textContent='LIGHT';
+    const b=id('btn-theme'); if(b) b.textContent='☀️ Light';
+    const m=id('stat-mode'); if(m) m.textContent='LIGHT';
   });
 }
 
-// ── REFRESH ──
+// ── REFRESH ──────────────────────────────────────────
+
 async function doRefresh() {
-  const btn = document.getElementById('btn-refresh');
+  const btn = id('btn-refresh');
   btn.classList.add('loading'); btn.textContent='⟳ Loading...';
-  if (state.page==='detail')     { delete state.tagsCache[state.plant+'|'+state.unit]; await renderDetailPage(); }
-  else if (state.page==='unit')  { delete state.unitsCache[state.plant]; await renderUnitPage(); }
-  else                           { await renderPlantPage(); }
+  // Clear cache sesuai halaman
+  if (S.page === 'detail') { delete S.tagsCache[S.fileId]; await renderDetailPage(); }
+  else if (S.page === 'file')  { delete S.filesCache[S.unit]; await renderFilePage(); }
+  else if (S.page === 'unit')  { delete S.unitsCache[S.plant]; await renderUnitPage(); }
+  else await renderPlantPage();
   btn.classList.remove('loading'); btn.textContent='⟳ Refresh';
 }
 
-// ── UTILS ──
+// ── UTILS ──────────────────────────────────────────
+
+function id(i) { return document.getElementById(i); }
+function esc(s){ return String(s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;'); }
 function loadingHTML(msg) { return `<div class="state-box"><div class="sp"></div><p>${msg}</p></div>`; }
 function errorHTML(msg, fn) {
   const rid='r'+Date.now();
-  setTimeout(()=>{ const b=document.getElementById(rid); if(b) b.onclick=fn; },50);
+  setTimeout(()=>{ const b=id(rid); if(b) b.onclick=fn; },50);
   return `<div class="state-box"><div style="font-size:28px">⚠️</div><h3>Gagal memuat</h3><p>${esc(msg)}</p><button class="btn-retry" id="${rid}">Coba Lagi</button></div>`;
 }
-function esc(s){ return String(s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;'); }
 
-setInterval(()=>{ document.getElementById('clock').textContent=new Date().toTimeString().slice(0,8); },1000);
-document.getElementById('clock').textContent = new Date().toTimeString().slice(0,8);
+setInterval(()=>{ id('clock').textContent=new Date().toTimeString().slice(0,8); },1000);
+id('clock').textContent = new Date().toTimeString().slice(0,8);
 
 navTo('plant');
 </script>
