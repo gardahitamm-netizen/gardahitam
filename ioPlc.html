@@ -228,7 +228,7 @@ body{font-family:'Plus Jakarta Sans',sans-serif;background:var(--bg);color:var(-
     <span><span class="rb-lbl">⚙️ SOP:</span> Setiap identifikasi fault pada PLC Tag wajib dilaporkan ke tim kontrol dalam 15 menit</span>
     <span><span class="rb-lbl">🔍 INFO:</span> Pastikan address tag sesuai dengan konfigurasi hardware PLC di lapangan</span>
     <span><span class="rb-lbl">⚠️ PERINGATAN:</span> Jangan modifikasi parameter PLC tanpa izin supervisor dan checklist K3</span>
-    <span><span class="rb-lbl">📊 GARDA HITAM:</span> Control Troubleshooting System — KECO WATERBANG</span>
+    <span><span class="rb-lbl">📊 GARDA HITAM:</span> Control Troubleshooting System — GARDA HITAM</span>
   </div>
 </div>
 
@@ -255,7 +255,7 @@ body{font-family:'Plus Jakarta Sans',sans-serif;background:var(--bg);color:var(-
         <div class="plant-hero-grid"></div>
         <div class="plant-hero-badge">🔌 PLC Monitoring System</div>
         <div class="plant-hero-title">Control <span>Troubleshooting</span></div>
-        <div class="plant-hero-sub">KECO WATERBANG — Pilih plant untuk memantau status PLC Input/Output Tags</div>
+        <div class="plant-hero-sub">GARDA HITAM — Pilih plant untuk memantau status PLC Input/Output Tags</div>
         <div class="plant-stats-row">
           <div class="plant-stat-box"><div class="plant-stat-label">Total Plant</div><div class="plant-stat-val acc" id="stat-total">—</div></div>
           <div class="plant-stat-box"><div class="plant-stat-label">PLC Status</div><div class="plant-stat-val ok">ONLINE</div></div>
@@ -417,13 +417,13 @@ function updateTopbar() {
 // ── PLANT PAGE ──────────────────────────────────────────
 
 const PLANT_META = {
-  MCG:{ desc:'Mixing Plant Golf',    color:'#f59e0b', tag:'PLC · GOLF'    },
-  MCA:{ desc:'Mixing Plant Alpha',   color:'#3b82f6', tag:'PLC · ALPHA'   },
-  MCC:{ desc:'Mixing Plant Charlie', color:'#06b6d4', tag:'PLC · CHARLIE' },
-  MCD:{ desc:'Mixing Plant Delta',   color:'#10b981', tag:'PLC · DELTA'   },
-  MCH:{ desc:'Mixing Plant Hotel',   color:'#f87171', tag:'PLC · HOTEL'   },
-  MCI:{ desc:'Mixing Plant India',   color:'#a78bfa', tag:'PLC · INDIA'   },
-  'PLANT E':{ desc:'Plant Extension E', color:'#fb7185', tag:'PLC · PLANT E' },
+  MCG:{ desc:'Mixing Plant G',    color:'#f59e0b', tag:'PLC ·I/O List'    },
+  MCA:{ desc:'Mixing Plant A',   color:'#3b82f6', tag:'PLC ·I/O List'   },
+  MCC:{ desc:'Mixing Plant C', color:'#06b6d4', tag:'PLC ·I/O List' },
+  MCD:{ desc:'Mixing Plant D',   color:'#10b981', tag:'PLC ·I/O List'   },
+  MCH:{ desc:'Mixing Plant H',   color:'#f87171', tag:'PLC ·I/O List'   },
+  MCI:{ desc:'Mixing Plant I',   color:'#a78bfa', tag:'PLC ·I/O List'   },
+  'PLANT E':{ desc:'Plant E', color:'#fb7185', tag:'PLC · PLANT E' },
 };
 
 async function renderPlantPage() {
