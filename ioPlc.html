@@ -2,7 +2,7 @@
 <html lang="id">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 <title>Control Troubleshooting — Garda Hitam</title>
 <style>
 @import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap');
@@ -29,14 +29,14 @@ body.light {
   --border:#c8d8e8; --text:#1a2a3a; --muted:#6a8aaa;
   --accent:#1565c0; --teal:#0088a8; --purple:#6d28d9;
 }
-body.light .topbar        { background:#e0eaf5; }
-body.light .running-bar   { background:#dde6f0; border-color:#c8d8e8; }
-body.light .breadcrumb    { background:#e8f0f8; }
-body.light .sidebar       { background:#e8eef5; }
-body.light .detail-main   { background:#f0f4f8; }
-body.light .tag-table th  { background:#dde6f0; }
+body.light .topbar { background:#e0eaf5; }
+body.light .running-bar { background:#dde6f0; border-color:#c8d8e8; }
+body.light .breadcrumb { background:#e8f0f8; }
+body.light .sidebar { background:#e8eef5; }
+body.light .detail-main { background:#f0f4f8; }
+body.light .tag-table th { background:#dde6f0; }
 body.light .tag-table tr:hover td { background:rgba(59,130,246,.05); }
-body.light .plant-hero    { background:linear-gradient(135deg,#d8e8f8,#e8f0fc,#ddeeff); }
+body.light .plant-hero { background:linear-gradient(135deg,#d8e8f8,#e8f0fc,#ddeeff); }
 body.light .plant-hero-grid { opacity:.07; }
 body.light input, body.light select { background:#e8eef5 !important; border-color:#c8d8e8 !important; color:#1a2a3a !important; }
 body.light .file-card { background:#f8fafc; border-color:#c8d8e8; }
@@ -55,7 +55,7 @@ body{font-family:'Plus Jakarta Sans',sans-serif;background:var(--bg);color:var(-
 .topbar-divider{width:1px;height:20px;background:var(--border);flex-shrink:0;}
 .topbar-title{font-family:'JetBrains Mono',monospace;font-weight:700;font-size:13px;color:#fff;}
 .topbar-sep{color:var(--border);}
-.topbar-sub{font-family:'JetBrains Mono',monospace;font-size:11px;color:var(--muted);}
+.topbar-sub{font-family:'JetBrains Mono',monospace;font-size:11px;color:var(--muted);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:200px;}
 .topbar-r{margin-left:auto;display:flex;align-items:center;gap:8px;}
 .topbar-clock{font-family:'JetBrains Mono',monospace;font-size:12px;color:var(--teal);background:rgba(6,182,212,.08);border:1px solid rgba(6,182,212,.15);padding:3px 10px;border-radius:4px;}
 .btn-sm{display:flex;align-items:center;gap:5px;font-family:'JetBrains Mono',monospace;font-size:11px;padding:5px 12px;border-radius:5px;cursor:pointer;border:1px solid var(--border);background:var(--surf2);color:var(--muted);transition:all .2s;}
@@ -75,11 +75,12 @@ body{font-family:'Plus Jakarta Sans',sans-serif;background:var(--bg);color:var(-
 @keyframes marquee{from{transform:translateX(100vw)}to{transform:translateX(-100%)}}
 
 /* ── BREADCRUMB ── */
-.breadcrumb{display:flex;align-items:center;gap:5px;padding:8px 20px;font-family:'JetBrains Mono',monospace;font-size:11px;color:var(--muted);border-bottom:1px solid var(--border);background:#09101d;flex-shrink:0;}
-.bc-link{cursor:pointer;transition:color .15s;text-decoration:none;color:var(--muted);}
+.breadcrumb{display:flex;align-items:center;gap:5px;padding:8px 20px;font-family:'JetBrains Mono',monospace;font-size:11px;color:var(--muted);border-bottom:1px solid var(--border);background:#09101d;flex-shrink:0;overflow-x:auto;scrollbar-width:none;white-space:nowrap;}
+.breadcrumb::-webkit-scrollbar{display:none;}
+.bc-link{cursor:pointer;transition:color .15s;text-decoration:none;color:var(--muted);flex-shrink:0;}
 .bc-link:hover{color:var(--accent);}
-.bc-cur{color:var(--text);}
-.bc-sep{color:var(--border);}
+.bc-cur{color:var(--text);flex-shrink:0;}
+.bc-sep{color:var(--border);flex-shrink:0;}
 
 /* ── PAGES ── */
 #pages-wrapper{flex:1;overflow:hidden;display:flex;flex-direction:column;min-height:0;}
@@ -99,8 +100,8 @@ body{font-family:'Plus Jakarta Sans',sans-serif;background:var(--bg);color:var(-
    PLANT PAGE
 ══════════════════════════════════ */
 .plant-wrap{padding:0;overflow-y:auto;width:100%;}
-.plant-hero{position:relative;overflow:hidden;padding:34px 28px 26px;background:linear-gradient(135deg,#060b17 0%,#0b1628 50%,#090f1e 100%);border-bottom:1px solid var(--border);}
-.plant-hero::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse 55% 80% at 75% 50%,rgba(59,130,246,.08) 0%,transparent 70%),radial-gradient(ellipse 35% 50% at 15% 90%,rgba(139,92,246,.06) 0%,transparent 60%);}
+.plant-hero{position:relative;overflow:hidden;padding:34px 28px 26px;background:linear-gradient(135deg,#060b17,#0b1628,#090f1e);border-bottom:1px solid var(--border);}
+.plant-hero::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse 55% 80% at 75% 50%,rgba(59,130,246,.08),transparent 70%),radial-gradient(ellipse 35% 50% at 15% 90%,rgba(139,92,246,.06),transparent 60%);}
 .plant-hero-grid{position:absolute;inset:0;opacity:.035;background-image:linear-gradient(var(--border) 1px,transparent 1px),linear-gradient(90deg,var(--border) 1px,transparent 1px);background-size:36px 36px;}
 .plant-hero::after{content:'';position:absolute;top:-20px;right:180px;width:1px;height:200px;background:linear-gradient(to bottom,transparent,rgba(59,130,246,.15),transparent);transform:rotate(20deg);}
 .plant-hero-badge{display:inline-flex;align-items:center;gap:6px;font-family:'JetBrains Mono',monospace;font-size:9px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:var(--purple);border:1px solid rgba(139,92,246,.25);background:rgba(139,92,246,.07);padding:4px 12px;border-radius:20px;margin-bottom:14px;position:relative;}
@@ -121,7 +122,7 @@ body{font-family:'Plus Jakarta Sans',sans-serif;background:var(--bg);color:var(-
 .plant-card{background:var(--surf);border:1px solid var(--border);border-radius:12px;padding:0;cursor:pointer;transition:all .25s;position:relative;overflow:hidden;animation:cardIn .4s ease both;}
 @keyframes cardIn{from{opacity:0;transform:translateY(16px)}to{opacity:1;transform:translateY(0)}}
 .plant-card:nth-child(1){animation-delay:.04s}.plant-card:nth-child(2){animation-delay:.09s}.plant-card:nth-child(3){animation-delay:.14s}.plant-card:nth-child(4){animation-delay:.19s}.plant-card:nth-child(5){animation-delay:.24s}.plant-card:nth-child(6){animation-delay:.29s}.plant-card:nth-child(7){animation-delay:.34s}
-.plant-card-top{padding:16px 18px 12px;background:linear-gradient(135deg,var(--surf) 0%,var(--surf2) 100%);position:relative;}
+.plant-card-top{padding:16px 18px 12px;background:linear-gradient(135deg,var(--surf),var(--surf2));position:relative;}
 .plant-card-stripe{position:absolute;top:0;left:0;right:0;height:2px;transform:scaleX(0);transform-origin:left;transition:transform .35s;}
 .plant-card:hover .plant-card-stripe{transform:scaleX(1);}
 .plant-card-dot{position:absolute;top:12px;right:12px;width:6px;height:6px;border-radius:50%;animation:blink 3s infinite;}
@@ -134,9 +135,7 @@ body{font-family:'Plus Jakarta Sans',sans-serif;background:var(--bg);color:var(-
 .plant-card:hover{transform:translateY(-3px);box-shadow:0 14px 32px rgba(0,0,0,.5),0 0 0 1px rgba(139,92,246,.12);}
 .plant-card:hover .plant-card-arr{transform:translateX(3px);}
 
-/* ══════════════════════════════════
-   UNIT PAGE (list subfolder MCG1, MCG2)
-══════════════════════════════════ */
+/* ── UNIT PAGE ── */
 .unit-page{padding:0;overflow-y:auto;width:100%;}
 .unit-hero{position:relative;overflow:hidden;padding:26px 28px 22px;background:linear-gradient(135deg,#060b17,#0b1628);border-bottom:1px solid var(--border);}
 .unit-hero::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse 50% 100% at 80% 50%,rgba(59,130,246,.06),transparent 70%);}
@@ -154,17 +153,9 @@ body{font-family:'Plus Jakarta Sans',sans-serif;background:var(--bg);color:var(-
 .unit-card-name{font-family:'JetBrains Mono',monospace;font-size:13px;font-weight:600;margin-bottom:8px;color:#fff;}
 .unit-badge{font-family:'JetBrains Mono',monospace;font-size:9px;padding:2px 7px;border-radius:4px;background:rgba(16,185,129,.1);color:var(--ok);border:1px solid rgba(16,185,129,.2);}
 
-/* ══════════════════════════════════
-   FILE PAGE (list file Excel di dalam subfolder)
-══════════════════════════════════ */
+/* ── FILE PAGE ── */
 .file-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:12px;}
-.file-card{
-  background:var(--surf);border:1px solid var(--border);
-  border-radius:10px;padding:16px 18px;cursor:pointer;
-  transition:all .2s;position:relative;overflow:hidden;
-  animation:cardIn .35s ease both;
-  display:flex;align-items:center;gap:12px;
-}
+.file-card{background:var(--surf);border:1px solid var(--border);border-radius:10px;padding:16px 18px;cursor:pointer;transition:all .2s;position:relative;overflow:hidden;animation:cardIn .35s ease both;display:flex;align-items:center;gap:12px;}
 .file-card::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,var(--teal),var(--accent));transform:scaleX(0);transform-origin:left;transition:transform .3s;}
 .file-card:hover{border-color:rgba(6,182,212,.35);background:var(--surf2);transform:translateY(-2px);box-shadow:0 8px 20px rgba(0,0,0,.4);}
 .file-card:hover::before{transform:scaleX(1);}
@@ -173,9 +164,7 @@ body{font-family:'Plus Jakarta Sans',sans-serif;background:var(--bg);color:var(-
 .file-name{font-family:'JetBrains Mono',monospace;font-size:11px;font-weight:600;color:#fff;margin-bottom:4px;word-break:break-all;line-height:1.4;}
 .file-badge{font-family:'JetBrains Mono',monospace;font-size:9px;padding:2px 7px;border-radius:4px;background:rgba(6,182,212,.1);color:var(--teal);border:1px solid rgba(6,182,212,.2);}
 
-/* ══════════════════════════════════
-   DETAIL PAGE (tabel tag)
-══════════════════════════════════ */
+/* ── DETAIL PAGE ── */
 .detail-page{display:flex;flex:1;overflow:hidden;min-height:0;}
 .sidebar{width:200px;min-width:200px;flex-shrink:0;background:#080d18;border-right:1px solid var(--border);overflow-y:auto;display:flex;flex-direction:column;}
 .sb-head{font-family:'JetBrains Mono',monospace;font-size:9px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;color:var(--muted);padding:12px 14px 6px;}
@@ -202,6 +191,162 @@ body{font-family:'Plus Jakarta Sans',sans-serif;background:var(--bg);color:var(-
 ::-webkit-scrollbar{width:4px;height:4px;}
 ::-webkit-scrollbar-track{background:transparent;}
 ::-webkit-scrollbar-thumb{background:var(--border);border-radius:4px;}
+
+/* ══════════════════════════════════
+   MOBILE LAYOUT — Android-optimized
+   ══════════════════════════════════ */
+@media (max-width: 768px) {
+
+  html, body { overflow:hidden !important; height:100% !important; position:fixed !important; top:0 !important; left:0 !important; }
+
+  /* ── TOPBAR slim ── */
+  .topbar { height:44px !important; padding:0 10px !important; gap:6px !important; }
+  .topbar-title { font-size:11px !important; }
+  .topbar-sub { display:none !important; }
+  .topbar-divider { display:none !important; }
+  .btn-back { font-size:10px !important; padding:4px 8px !important; }
+  .btn-theme { font-size:10px !important; padding:4px 8px !important; }
+  .btn-sm { font-size:10px !important; padding:4px 8px !important; }
+  .topbar-clock { display:none !important; }
+
+  /* ── RUNNING BAR slim ── */
+  .running-bar { height:22px !important; }
+  .running-inner { font-size:9px !important; }
+
+  /* ── BREADCRUMB ── */
+  .breadcrumb { padding:0 10px !important; font-size:10px !important; height:26px !important; }
+
+  /* ── PLANT PAGE ── */
+  #page-plant { overflow:hidden !important; }
+  .plant-wrap { height:100% !important; overflow-y:auto !important; -webkit-overflow-scrolling:touch !important; }
+  .plant-hero { padding:16px 12px 14px !important; }
+  .plant-hero-title { font-size:18px !important; }
+  .plant-hero-sub { font-size:10px !important; margin-bottom:12px !important; }
+  .plant-stats-row { gap:6px !important; }
+  .plant-stat-box { min-width:64px !important; padding:6px 9px !important; }
+  .plant-stat-val { font-size:14px !important; }
+  .plant-stat-label { font-size:8px !important; }
+  .plant-section { padding:14px 10px !important; }
+  .plant-grid { grid-template-columns:repeat(2,1fr) !important; gap:8px !important; }
+  .plant-card-top { padding:12px 10px 9px !important; }
+  .plant-card-name { font-size:16px !important; }
+  .plant-card-desc { font-size:10px !important; }
+  .plant-card-bottom { padding:7px 10px !important; }
+
+  /* ── UNIT PAGE ── */
+  .unit-page { height:100% !important; overflow-y:auto !important; -webkit-overflow-scrolling:touch !important; }
+  .unit-hero { padding:14px 12px 12px !important; }
+  .unit-hero-title { font-size:16px !important; }
+  .unit-section { padding:12px 10px !important; }
+  .unit-grid { grid-template-columns:repeat(2,1fr) !important; gap:8px !important; }
+  .unit-card { padding:12px 12px !important; }
+  .unit-card-name { font-size:11px !important; margin-bottom:6px !important; }
+
+  /* ── FILE PAGE ── */
+  .file-grid { grid-template-columns:1fr !important; gap:8px !important; }
+  .file-card { padding:12px 14px !important; }
+  .file-name { font-size:10px !important; }
+
+  /* ══════════════════════════════════════════
+     DETAIL PAGE — Mobile 3-zone layout:
+     Zone 1: File pill bar (horizontal scroll)
+     Zone 2: Header (title + meta)
+     Zone 3: Scrollable tag table
+     ══════════════════════════════════════════ */
+  #page-detail { overflow:hidden !important; }
+
+  .detail-page {
+    flex-direction:column !important;
+    overflow:hidden !important;
+    flex:1 !important;
+    min-height:0 !important;
+  }
+
+  /* ZONE 1 — Sidebar becomes horizontal file pill bar */
+  .sidebar {
+    width:100% !important;
+    min-width:unset !important;
+    height:auto !important;
+    flex-shrink:0 !important;
+    border-right:none !important;
+    border-bottom:1px solid var(--border) !important;
+    background:#06090f !important;
+    overflow:visible !important;
+    /* Row layout */
+    flex-direction:row !important;
+  }
+  .sb-head { display:none !important; }
+  .sb-item {
+    flex-shrink:0 !important;
+    padding:7px 12px !important;
+    font-size:10px !important;
+    white-space:nowrap !important;
+    border-radius:0 !important;
+    border:none !important;
+    border-left:none !important;
+    border-bottom:2px solid transparent !important;
+    color:var(--muted) !important;
+    background:transparent !important;
+    display:inline-flex !important;
+    align-items:center !important;
+    touch-action:manipulation !important;
+    -webkit-tap-highlight-color:transparent !important;
+    user-select:none !important;
+    -webkit-user-select:none !important;
+    transition: all .15s !important;
+    word-break:normal !important;
+    line-height:1.2 !important;
+  }
+  .sb-item:active { opacity:.7 !important; }
+  .sb-item.active {
+    color:var(--accent) !important;
+    border-bottom-color:var(--accent) !important;
+    background:rgba(59,130,246,.06) !important;
+  }
+
+  /* Make sidebar scrollable horizontally */
+  .sidebar {
+    display:flex !important;
+    flex-direction:row !important;
+    overflow-x:auto !important;
+    overflow-y:hidden !important;
+    scrollbar-width:none !important;
+    -webkit-overflow-scrolling:touch !important;
+    padding:0 !important;
+  }
+  .sidebar::-webkit-scrollbar { display:none !important; }
+
+  /* ZONE 2+3 — Detail main fills rest */
+  .detail-main {
+    flex:1 !important;
+    overflow-y:auto !important;
+    -webkit-overflow-scrolling:touch !important;
+    padding:12px 10px !important;
+    min-height:0 !important;
+  }
+  .detail-title { font-size:13px !important; margin-bottom:2px !important; }
+  .detail-meta { font-size:10px !important; margin-bottom:12px !important; }
+
+  /* TAG TABLE — Responsive on mobile */
+  .tag-table-wrap { overflow-x:auto !important; -webkit-overflow-scrolling:touch !important; border-radius:8px !important; border:1px solid var(--border) !important; }
+  .tag-table { min-width:480px !important; font-size:11px !important; }
+  .tag-table th { padding:8px 10px !important; font-size:8px !important; }
+  .tag-table td { padding:8px 10px !important; }
+  .row-num { width:28px !important; }
+  .tag-name { font-size:11px !important; }
+  .tag-addr { font-size:11px !important; }
+  .tag-comment { font-size:10px !important; }
+  .type-badge { font-size:9px !important; padding:1px 5px !important; }
+
+  /* Sticky table header on mobile */
+  .tag-table thead { position:sticky !important; top:0 !important; z-index:5 !important; }
+}
+
+@media (max-width: 380px) {
+  .plant-grid { grid-template-columns:1fr 1fr !important; }
+  .unit-grid  { grid-template-columns:1fr !important; }
+  .topbar-title { font-size:10px !important; max-width:80px !important; overflow:hidden !important; text-overflow:ellipsis !important; white-space:nowrap !important; }
+}
 </style>
 </head>
 <body>
@@ -273,7 +418,7 @@ body{font-family:'Plus Jakarta Sans',sans-serif;background:var(--bg);color:var(-
     </div>
   </div>
 
-  <!-- PAGE: UNIT (subfolder MCG1, MCG2, dst) -->
+  <!-- PAGE: UNIT -->
   <div class="page" id="page-unit">
     <div class="unit-page">
       <div class="unit-hero">
@@ -292,7 +437,7 @@ body{font-family:'Plus Jakarta Sans',sans-serif;background:var(--bg);color:var(-
     </div>
   </div>
 
-  <!-- PAGE: FILE (list file Excel di subfolder) -->
+  <!-- PAGE: FILE -->
   <div class="page" id="page-file">
     <div class="unit-page">
       <div class="unit-hero">
@@ -331,13 +476,13 @@ const API = 'https://script.google.com/macros/s/AKfycbyb42w69ObzQPjbCG_iQvXa7106
 const S = {
   page      : 'plant',
   plant     : null,
-  unit      : null,      // folder ID subfolder (MCG1, MCG2)
-  unitLabel : null,      // nama subfolder
-  fileId    : null,      // file ID Excel yang dipilih
-  fileLabel : null,      // nama file
-  filesCache: {},        // cache list file per unit
-  tagsCache : {},        // cache tag per fileId
-  unitsCache: {},        // cache list unit per plant
+  unit      : null,
+  unitLabel : null,
+  fileId    : null,
+  fileLabel : null,
+  filesCache: {},
+  tagsCache : {},
+  unitsCache: {},
 };
 
 async function apiFetch(params) {
@@ -348,8 +493,7 @@ async function apiFetch(params) {
   return data;
 }
 
-// ── NAVIGASI ──────────────────────────────────────────────
-
+/* ── NAVIGASI ── */
 function navTo(page, opts) {
   opts = opts || {};
   if (opts.plant)     S.plant     = opts.plant;
@@ -376,29 +520,20 @@ function updateBreadcrumb() {
   const s3=id('bcs3'),b3=id('bc3');
   const s4=id('bcs4'),b4=id('bc4');
 
-  // Plant level
   if (S.plant) {
     s2.style.display = b2.style.display = '';
     b2.textContent = S.plant;
-    if (S.page !== 'unit') {
-      b2.className = 'bc-link'; b2.onclick = () => navTo('unit');
-    } else {
-      b2.className = 'bc-cur'; b2.onclick = null;
-    }
+    if (S.page !== 'unit') { b2.className = 'bc-link'; b2.onclick = () => navTo('unit'); }
+    else { b2.className = 'bc-cur'; b2.onclick = null; }
   } else { s2.style.display = b2.style.display = 'none'; }
 
-  // Unit level
   if (S.unitLabel && S.page !== 'unit') {
     s3.style.display = b3.style.display = '';
     b3.textContent = S.unitLabel;
-    if (S.page !== 'file') {
-      b3.className = 'bc-link'; b3.onclick = () => navTo('file');
-    } else {
-      b3.className = 'bc-cur'; b3.onclick = null;
-    }
+    if (S.page !== 'file') { b3.className = 'bc-link'; b3.onclick = () => navTo('file'); }
+    else { b3.className = 'bc-cur'; b3.onclick = null; }
   } else { s3.style.display = b3.style.display = 'none'; }
 
-  // File level
   if (S.fileLabel && S.page === 'detail') {
     s4.style.display = b4.style.display = '';
     b4.textContent = S.fileLabel;
@@ -414,16 +549,15 @@ function updateTopbar() {
   else                          sub.textContent = 'PLC Input / Output Tags';
 }
 
-// ── PLANT PAGE ──────────────────────────────────────────
-
+/* ── PLANT PAGE ── */
 const PLANT_META = {
-  MCG:{ desc:'Mixing Plant G',    color:'#f59e0b', tag:'PLC ·I/O List'    },
-  MCA:{ desc:'Mixing Plant A',   color:'#3b82f6', tag:'PLC ·I/O List'   },
-  MCC:{ desc:'Mixing Plant C', color:'#06b6d4', tag:'PLC ·I/O List' },
-  MCD:{ desc:'Mixing Plant D',   color:'#10b981', tag:'PLC ·I/O List'   },
-  MCH:{ desc:'Mixing Plant H',   color:'#f87171', tag:'PLC ·I/O List'   },
-  MCI:{ desc:'Mixing Plant I',   color:'#a78bfa', tag:'PLC ·I/O List'   },
-  'PLANT E':{ desc:'Plant E', color:'#fb7185', tag:'PLC · PLANT E' },
+  MCG:{ desc:'Mixing Plant G',    color:'#f59e0b', tag:'PLC · I/O List' },
+  MCA:{ desc:'Mixing Plant A',    color:'#3b82f6', tag:'PLC · I/O List' },
+  MCC:{ desc:'Mixing Plant C',    color:'#06b6d4', tag:'PLC · I/O List' },
+  MCD:{ desc:'Mixing Plant D',    color:'#10b981', tag:'PLC · I/O List' },
+  MCH:{ desc:'Mixing Plant H',    color:'#f87171', tag:'PLC · I/O List' },
+  MCI:{ desc:'Mixing Plant I',    color:'#a78bfa', tag:'PLC · I/O List' },
+  'PLANT E':{ desc:'Plant E',     color:'#fb7185', tag:'PLC · PLANT E'  },
 };
 
 async function renderPlantPage() {
@@ -454,8 +588,7 @@ function plantCard(p, i) {
   </div>`;
 }
 
-// ── UNIT PAGE (subfolder MCG1, MCG2, dst) ──────────────────
-
+/* ── UNIT PAGE ── */
 async function renderUnitPage() {
   id('unit-title').textContent = S.plant + ' — Pilih Unit';
   id('unit-sub').textContent   = 'Pilih unit / mixer untuk melihat I/O List';
@@ -482,8 +615,7 @@ function unitCard(u, i) {
   </div>`;
 }
 
-// ── FILE PAGE (list file Excel) ──────────────────────────────
-
+/* ── FILE PAGE ── */
 async function renderFilePage() {
   id('file-title').textContent = S.plant + ' — ' + S.unitLabel;
   id('file-sub').textContent   = 'Pilih file I/O List untuk melihat PLC Tags';
@@ -503,8 +635,6 @@ async function renderFilePage() {
       return;
     }
     el.innerHTML = `<div class="file-grid">${files.map((f,i) => fileCard(f,i)).join('')}</div>`;
-
-    // Render sidebar juga dengan list file
     renderSidebar(files);
   } catch(err) { el.innerHTML = errorHTML(err.message, renderFilePage); }
 }
@@ -519,14 +649,12 @@ function fileCard(f, i) {
   </div>`;
 }
 
-// ── DETAIL PAGE (tabel tag) ──────────────────────────────────
-
+/* ── DETAIL PAGE ── */
 async function renderDetailPage() {
   id('det-title').textContent = S.fileLabel || '—';
   id('det-meta').textContent  = 'Memuat data tag...';
   id('det-content').innerHTML = loadingHTML('Membaca file dari Google Drive...');
 
-  // Sidebar: list file di unit yang sama
   const files = S.filesCache[S.unit] || [];
   renderSidebar(files);
 
@@ -548,17 +676,25 @@ async function renderDetailPage() {
 
 function renderSidebar(files) {
   if (!files || !files.length) {
-    id('sidebar').innerHTML = `<div class="sb-head">${esc(S.unitLabel||'FILES')}</div>`;
+    id('sidebar').innerHTML = ``;
     return;
   }
   id('sidebar').innerHTML =
-    `<div class="sb-head">${esc(S.unitLabel||'FILES')}</div>` +
     files.map(f => {
       const active = f.fileId === S.fileId ? 'active' : '';
       return `<div class="sb-item ${active}" onclick="navTo('detail',{fileId:'${f.fileId}',fileLabel:'${esc(f.name)}'})">
         ${esc(f.name)}
       </div>`;
     }).join('');
+
+  // Scroll active item into view on mobile
+  requestAnimationFrame(() => {
+    const sidebar = id('sidebar');
+    const activeEl = sidebar && sidebar.querySelector('.sb-item.active');
+    if (activeEl) {
+      activeEl.scrollIntoView({ inline: 'center', block: 'nearest', behavior: 'smooth' });
+    }
+  });
 }
 
 function renderTagTable(rows) {
@@ -580,14 +716,13 @@ function renderTagTable(rows) {
   id('det-content').innerHTML = `
     <div class="tag-table-wrap">
       <table class="tag-table">
-        <thead><tr><th>#</th><th>NAME</th><th>DATA TYPE</th><th>ADDRESS</th><th>COMMENT</th></tr></thead>
+        <thead><tr><th>#</th><th>NAME</th><th>TYPE</th><th>ADDRESS</th><th>COMMENT</th></tr></thead>
         <tbody>${tbody}</tbody>
       </table>
     </div>`;
 }
 
-// ── THEME ──────────────────────────────────────────
-
+/* ── THEME ── */
 function toggleTheme() {
   const isLight = document.body.classList.toggle('light');
   id('btn-theme').textContent = isLight ? '☀️ Light' : '🌙 Dark';
@@ -602,12 +737,10 @@ if (localStorage.getItem('ioplc_theme') === 'light') {
   });
 }
 
-// ── REFRESH ──────────────────────────────────────────
-
+/* ── REFRESH ── */
 async function doRefresh() {
   const btn = id('btn-refresh');
   btn.classList.add('loading'); btn.textContent='⟳ Loading...';
-  // Clear cache sesuai halaman
   if (S.page === 'detail') { delete S.tagsCache[S.fileId]; await renderDetailPage(); }
   else if (S.page === 'file')  { delete S.filesCache[S.unit]; await renderFilePage(); }
   else if (S.page === 'unit')  { delete S.unitsCache[S.plant]; await renderUnitPage(); }
@@ -615,8 +748,7 @@ async function doRefresh() {
   btn.classList.remove('loading'); btn.textContent='⟳ Refresh';
 }
 
-// ── UTILS ──────────────────────────────────────────
-
+/* ── UTILS ── */
 function id(i) { return document.getElementById(i); }
 function esc(s){ return String(s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;'); }
 function loadingHTML(msg) { return `<div class="state-box"><div class="sp"></div><p>${msg}</p></div>`; }
