@@ -114,7 +114,6 @@ body.light .inu-spec{ color:#3a5a80; }
 body.light .inu-tag{ color:#3a5a80; }
 body.light .hist-ts{ color:#3a5a80; }
 body.light .drive-meta{ color:#3a5a80; }
-/* ── LIGHT MODE untuk filter bar histori ── */
 body.light .hist-filter-bar{ background:#eaf2fc; border-color:#b8ccec; }
 body.light .hist-filter-select{ background:#ffffff !important; border-color:#b8ccec !important; color:#0d1a2e !important; }
 body.light .hist-filter-label{ color:#3a5a80; }
@@ -123,6 +122,14 @@ body.light .btn-reset-filter{ color:#3a5a80; border-color:#b8ccec; background:#f
 body.light .btn-reset-filter:hover{ border-color:#d91a34; color:#d91a34; background:#fff0f2; }
 body.light .hist-month-section-head{ background:#dde8f8; border-color:#b8ccec; color:#0d1a2e; }
 body.light .hist-month-section-head .hms-count{ color:#3a5a80; }
+body.light .pm-modal{ background:#f5f8ff; }
+body.light .pm-modal-header{ background:linear-gradient(135deg,#ffffff,#eaf4ff); }
+body.light .pm-modal-footer{ background:#f5f8ff; }
+body.light .pm-desc-box{ background:#eaf1fb; border-color:#b8ccec; color:#0d1a2e; }
+body.light .pm-note-item{ background:#eaf1fb; border-color:#b8ccec; }
+body.light .pm-note-input{ background:#eaf1fb; border-color:#b8ccec; color:#0d1a2e; }
+body.light .pm-meta-chip{ background:#dde8f8; border-color:#b8ccec; }
+body.light .ts-modal{ background:#f5f8ff; }
 
 *{margin:0;padding:0;box-sizing:border-box;}
 html,body{width:100%;height:100%;overflow:hidden;}
@@ -176,61 +183,72 @@ body{font-family:'Plus Jakarta Sans',sans-serif;background:var(--bg);color:var(-
 .search-clear:hover{border-color:var(--fault);color:var(--fault);}
 .search-count{font-family:'JetBrains Mono',monospace;font-size:10px;color:var(--muted);flex-shrink:0;white-space:nowrap;}
 
-/* ════════════════════════════════════════
-   HISTORI FILTER BAR — Filter Bulan/Tahun
-════════════════════════════════════════ */
-.hist-filter-bar{
-  display:flex;align-items:center;gap:10px;padding:10px 16px;
-  background:var(--surf2);border-bottom:1px solid var(--border);
-  flex-shrink:0;flex-wrap:wrap;
-}
-.hist-filter-label{
-  font-family:'JetBrains Mono',monospace;font-size:10px;
-  color:var(--muted);letter-spacing:1px;text-transform:uppercase;
-  flex-shrink:0;
-}
+/* HISTORI FILTER BAR */
+.hist-filter-bar{display:flex;align-items:center;gap:10px;padding:10px 16px;background:var(--surf2);border-bottom:1px solid var(--border);flex-shrink:0;flex-wrap:wrap;}
+.hist-filter-label{font-family:'JetBrains Mono',monospace;font-size:10px;color:var(--muted);letter-spacing:1px;text-transform:uppercase;flex-shrink:0;}
 .hist-filter-group{display:flex;align-items:center;gap:6px;flex-shrink:0;}
-.hist-filter-select{
-  background:var(--surf3);border:1px solid var(--border);color:var(--text);
-  padding:6px 10px;border-radius:6px;font-size:11px;
-  font-family:'JetBrains Mono',monospace;outline:none;
-  cursor:pointer;transition:border-color .2s;
-}
+.hist-filter-select{background:var(--surf3);border:1px solid var(--border);color:var(--text);padding:6px 10px;border-radius:6px;font-size:11px;font-family:'JetBrains Mono',monospace;outline:none;cursor:pointer;transition:border-color .2s;}
 .hist-filter-select:focus{border-color:var(--accent);}
 .hist-filter-select option{background:var(--surf2);}
-.hist-period-badge{
-  display:flex;align-items:center;gap:5px;
-  background:var(--teal-bg);border:1px solid var(--teal-bd);
-  color:var(--teal);font-family:'JetBrains Mono',monospace;
-  font-size:10px;font-weight:700;padding:5px 12px;border-radius:20px;
-  flex-shrink:0;transition:all .2s;
-}
+.hist-period-badge{display:flex;align-items:center;gap:5px;background:var(--teal-bg);border:1px solid var(--teal-bd);color:var(--teal);font-family:'JetBrains Mono',monospace;font-size:10px;font-weight:700;padding:5px 12px;border-radius:20px;flex-shrink:0;transition:all .2s;}
 .hist-filter-sep{color:var(--border);font-size:14px;flex-shrink:0;}
-.btn-reset-filter{
-  display:flex;align-items:center;gap:4px;
-  font-family:'JetBrains Mono',monospace;font-size:10px;
-  padding:5px 12px;border-radius:6px;cursor:pointer;
-  border:1px solid var(--border);background:transparent;
-  color:var(--muted);transition:all .15s;flex-shrink:0;
-}
+.btn-reset-filter{display:flex;align-items:center;gap:4px;font-family:'JetBrains Mono',monospace;font-size:10px;padding:5px 12px;border-radius:6px;cursor:pointer;border:1px solid var(--border);background:transparent;color:var(--muted);transition:all .15s;flex-shrink:0;}
 .btn-reset-filter:hover{border-color:var(--fault);color:var(--fault);}
 .btn-reset-filter.hidden{display:none;}
-.hist-filter-result{
-  margin-left:auto;font-family:'JetBrains Mono',monospace;
-  font-size:10px;color:var(--muted);flex-shrink:0;
-}
+.hist-filter-result{margin-left:auto;font-family:'JetBrains Mono',monospace;font-size:10px;color:var(--muted);flex-shrink:0;}
 
-/* ── Pengelompokan per bulan dalam tabel ── */
-.hist-month-section-head{
-  display:flex;align-items:center;gap:10px;
-  padding:8px 12px;background:rgba(77,159,255,.06);
-  border-bottom:1px solid var(--border);
-  border-top:2px solid rgba(77,159,255,.2);
-}
-.hist-month-section-head:not(:first-child){margin-top:0;}
+/* Pengelompokan per bulan */
+.hist-month-section-head{display:flex;align-items:center;gap:10px;padding:8px 12px;background:rgba(77,159,255,.06);border-bottom:1px solid var(--border);border-top:2px solid rgba(77,159,255,.2);}
 .hms-icon{font-size:13px;}
 .hms-title{font-family:'JetBrains Mono',monospace;font-size:11px;font-weight:700;color:var(--accent);}
 .hms-count{font-family:'JetBrains Mono',monospace;font-size:10px;color:var(--muted);margin-left:auto;}
+
+/* ══ TIMESTAMP EDIT BUTTON ══ */
+.hist-ts-wrap{display:flex;align-items:center;gap:5px;}
+.btn-edit-ts{display:inline-flex;align-items:center;font-family:'JetBrains Mono',monospace;font-size:9px;padding:2px 6px;border-radius:4px;cursor:pointer;border:1px solid var(--border);background:transparent;color:var(--muted);transition:all .15s;opacity:0;flex-shrink:0;}
+tr:hover .btn-edit-ts{opacity:1;}
+.btn-edit-ts:hover{border-color:var(--teal);color:var(--teal);background:var(--teal-bg);}
+
+/* ══ PM DETAIL MODAL ══ */
+.pm-modal-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,.75);backdrop-filter:blur(5px);z-index:500;align-items:center;justify-content:center;padding:16px;}
+.pm-modal-overlay.open{display:flex;}
+.pm-modal{background:var(--surf);border:1px solid var(--border);border-radius:16px;width:100%;max-width:560px;max-height:90vh;overflow:hidden;display:flex;flex-direction:column;animation:modalIn .2s ease;}
+.pm-modal-header{padding:20px 24px 16px;border-bottom:1px solid var(--border);flex-shrink:0;background:linear-gradient(135deg,var(--surf),var(--surf2));position:relative;}
+.pm-modal-header::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;background:linear-gradient(90deg,var(--accent),var(--teal));}
+.pm-modal-id{font-family:'JetBrains Mono',monospace;font-size:10px;color:var(--muted);margin-bottom:6px;}
+.pm-modal-title-text{font-size:18px;font-weight:700;color:var(--text);margin-bottom:4px;}
+.pm-modal-drive{font-family:'JetBrains Mono',monospace;font-size:12px;color:var(--teal);margin-bottom:12px;}
+.pm-modal-meta-row{display:flex;gap:8px;flex-wrap:wrap;}
+.pm-meta-chip{display:flex;align-items:center;gap:5px;font-size:11px;color:var(--muted);background:var(--surf3);border:1px solid var(--border);padding:4px 10px;border-radius:20px;}
+.pm-modal-body{flex:1;overflow-y:auto;padding:20px 24px;}
+.pm-section{margin-bottom:20px;}
+.pm-section-label{font-family:'JetBrains Mono',monospace;font-size:9px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:var(--muted);margin-bottom:8px;display:flex;align-items:center;gap:6px;}
+.pm-section-label::after{content:'';flex:1;height:1px;background:var(--border);}
+.pm-desc-box{background:var(--surf2);border:1px solid var(--border);border-radius:8px;padding:12px 14px;font-size:12px;color:var(--text);line-height:1.6;min-height:60px;white-space:pre-wrap;}
+.pm-notes-list{display:flex;flex-direction:column;gap:8px;}
+.pm-note-item{background:var(--surf2);border:1px solid var(--border);border-radius:8px;padding:10px 14px;}
+.pm-note-ts{font-family:'JetBrains Mono',monospace;font-size:9px;color:var(--muted);margin-bottom:4px;}
+.pm-note-text{font-size:12px;color:var(--text);line-height:1.5;}
+.pm-empty-notes{font-family:'JetBrains Mono',monospace;font-size:11px;color:var(--muted);padding:10px 0;}
+.pm-add-note{display:flex;gap:8px;margin-top:10px;align-items:flex-end;}
+.pm-note-input{flex:1;background:var(--surf2);border:1px solid var(--border);color:var(--text);padding:9px 12px;border-radius:8px;font-size:12px;font-family:'Plus Jakarta Sans',sans-serif;outline:none;transition:border-color .2s;resize:vertical;min-height:60px;}
+.pm-note-input:focus{border-color:var(--accent);}
+.btn-add-note{padding:9px 16px;border-radius:8px;font-size:12px;cursor:pointer;background:var(--teal-bg);border:1px solid var(--teal-bd);color:var(--teal);font-weight:600;transition:all .15s;flex-shrink:0;}
+.btn-add-note:hover{background:rgba(0,224,248,.2);}
+.pm-modal-footer{padding:16px 24px;border-top:1px solid var(--border);display:flex;gap:8px;justify-content:flex-end;align-items:center;flex-shrink:0;background:var(--surf);}
+.btn-edit-pm{padding:8px 20px;border-radius:8px;font-size:12px;cursor:pointer;background:var(--accent-bg);border:1px solid var(--accent-bd);color:var(--accent);font-weight:600;transition:all .15s;}
+.btn-edit-pm:hover{background:rgba(77,159,255,.25);}
+.pm-card{cursor:pointer;transition:all .2s;}
+.pm-card:hover{border-color:var(--accent-bd);transform:translateY(-1px);box-shadow:0 4px 16px rgba(0,0,0,.3);}
+.pm-card-hint{font-size:10px;font-family:'JetBrains Mono',monospace;color:var(--muted);margin-top:8px;opacity:0;transition:opacity .2s;}
+.pm-card:hover .pm-card-hint{opacity:1;}
+.pm-edit-section{background:var(--surf2);border:1px solid var(--accent-bd);border-radius:10px;padding:16px;margin-top:4px;}
+.pm-edit-section-title{font-family:'JetBrains Mono',monospace;font-size:9px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:var(--accent);margin-bottom:12px;}
+
+/* ══ EDIT TIMESTAMP MODAL ══ */
+.ts-modal-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,.7);backdrop-filter:blur(4px);z-index:510;align-items:center;justify-content:center;}
+.ts-modal-overlay.open{display:flex;}
+.ts-modal{background:var(--surf);border:1px solid var(--border);border-radius:14px;padding:24px;width:100%;max-width:400px;animation:modalIn .2s ease;margin:16px;}
 
 /* Plant page */
 .plant-wrap{flex:1;overflow-y:auto;width:100%;}
@@ -293,7 +311,6 @@ body{font-family:'Plus Jakarta Sans',sans-serif;background:var(--bg);color:var(-
 .tab-content{display:none;padding:20px;flex:1;overflow-y:auto;min-height:0;flex-direction:column;}
 .tab-content.active{display:flex;flex-direction:column;animation:fadeUp .2s ease;}
 
-/* Tab histori — override padding karena ada filter bar di atas */
 #tab-histori.active{padding:0;display:flex;flex-direction:column;}
 .histori-scroll-area{flex:1;overflow-y:auto;min-height:0;padding:16px 20px 20px;}
 
@@ -546,6 +563,15 @@ body.light .inu-photo-btn:hover{color:#003850;}
   .modal { border-radius:18px 18px 0 0 !important; max-width:100% !important; margin:0 !important; padding:20px 16px 32px !important; max-height:92vh !important; overflow-y:auto !important; width:100% !important; }
   .login-overlay { align-items:flex-end !important; padding:0 !important; }
   .login-box { border-radius:18px 18px 0 0 !important; max-width:100% !important; margin:0 !important; padding:20px 16px 32px !important; width:100% !important; max-height:90vh !important; overflow-y:auto !important; }
+  /* PM & TS modal mobile */
+  .pm-modal-overlay { padding:0 !important; align-items:flex-end !important; }
+  .pm-modal { border-radius:18px 18px 0 0 !important; max-width:100% !important; max-height:92vh !important; }
+  .pm-modal-header { padding:16px 16px 12px !important; }
+  .pm-modal-body { padding:14px 16px !important; }
+  .pm-modal-footer { padding:12px 16px !important; }
+  .ts-modal-overlay { align-items:flex-end !important; padding:0 !important; }
+  .ts-modal { border-radius:18px 18px 0 0 !important; max-width:100% !important; margin:0 !important; padding:20px 16px 32px !important; }
+  .btn-edit-ts { opacity:.6 !important; }
 }
 
 @media (max-width: 380px) {
@@ -650,24 +676,19 @@ body.light .inu-photo-btn:hover{color:#003850;}
           <div class="no-results" id="drive-no-results"><span style="font-size:28px">🔍</span><span>Tidak ada hasil untuk "<span id="drive-search-query"></span>"</span></div>
         </div>
 
-        <!-- ═══════════════════════════════════════════════
-             TAB HISTORI — dengan filter bar bulan/tahun
-        ═══════════════════════════════════════════════ -->
+        <!-- TAB HISTORI -->
         <div class="tab-content" id="tab-histori">
-          <!-- Filter Bar -->
           <div class="hist-filter-bar" id="hist-filter-bar">
             <span class="hist-filter-label">📅 Filter:</span>
             <div class="hist-filter-group">
               <select class="hist-filter-select" id="hist-filter-bulan" onchange="applyHistoriFilter()">
                 <option value="">Semua Bulan</option>
-                <!-- Diisi oleh JS -->
               </select>
             </div>
             <span class="hist-filter-sep">/</span>
             <div class="hist-filter-group">
               <select class="hist-filter-select" id="hist-filter-tahun" onchange="applyHistoriFilter()">
                 <option value="">Semua Tahun</option>
-                <!-- Diisi oleh JS -->
               </select>
             </div>
             <div class="hist-period-badge" id="hist-period-badge" style="display:none">
@@ -676,11 +697,9 @@ body.light .inu-photo-btn:hover{color:#003850;}
             <button class="btn-reset-filter hidden" id="btn-reset-histori-filter" onclick="resetHistoriFilter()">✕ Reset</button>
             <span class="hist-filter-result" id="hist-filter-result"></span>
           </div>
-          <!-- Action Bar (PDF) -->
           <div style="display:flex;justify-content:flex-end;padding:10px 16px 0;flex-shrink:0;">
             <button class="btn-pdf" onclick="printHistoriPDF()">🖨️ Cetak PDF</button>
           </div>
-          <!-- Scroll area -->
           <div class="histori-scroll-area">
             <div id="histori-content"></div>
             <div class="no-results" id="histori-no-results">
@@ -703,12 +722,14 @@ body.light .inu-photo-btn:hover{color:#003850;}
   </div>
 </div>
 
-<!-- LOGIN MODAL -->
+<!-- ════════════════════════════════════
+     LOGIN MODAL (Drive + Timestamp + PM)
+════════════════════════════════════ -->
 <div class="login-overlay" id="login-overlay">
   <div class="login-box">
     <div class="login-icon">🔐</div>
     <div class="login-title">Login Diperlukan</div>
-    <div class="login-sub">Untuk mengedit drive, masukkan kredensial akun mixing ini.</div>
+    <div class="login-sub" id="login-sub-text">Untuk mengedit, masukkan kredensial akun mixing ini.</div>
     <div class="login-area-badge"><span>📍</span><span id="login-area-label">—</span></div>
     <div class="login-field"><label>Username</label><input type="text" id="login-username" placeholder="Masukkan username" autocomplete="off"></div>
     <div class="login-field"><label>Password</label><input type="password" id="login-password" placeholder="Masukkan password"></div>
@@ -723,7 +744,7 @@ body.light .inu-photo-btn:hover{color:#003850;}
   </div>
 </div>
 
-<!-- EDIT MODAL -->
+<!-- EDIT DRIVE MODAL -->
 <div class="modal-overlay" id="modal">
   <div class="modal">
     <div class="modal-title">Edit Status Drive</div>
@@ -752,15 +773,94 @@ body.light .inu-photo-btn:hover{color:#003850;}
   </div>
 </div>
 
+<!-- ════════════════════════════════════
+     EDIT TIMESTAMP MODAL
+════════════════════════════════════ -->
+<div class="ts-modal-overlay" id="ts-modal-overlay">
+  <div class="ts-modal">
+    <div class="modal-title">✏️ Edit Waktu Histori</div>
+    <div class="modal-sub">Koreksi tanggal dan waktu pencatatan histori ini</div>
+    <div class="modal-id" id="ts-modal-row-info" style="font-size:11px;line-height:1.6;"></div>
+    <div class="form-group">
+      <label class="form-label">Tanggal &amp; Waktu Baru</label>
+      <input class="form-input" id="ts-input-datetime" type="text" placeholder="Contoh: 31/3/2026, 15.49.28">
+      <div class="form-hint">Format: dd/mm/yyyy, HH.mm.ss — sesuai format data yang ada</div>
+    </div>
+    <div class="form-group">
+      <label class="form-label">Alasan Koreksi</label>
+      <input class="form-input" id="ts-input-alasan" type="text" placeholder="Contoh: Input salah, koreksi waktu shift...">
+    </div>
+    <div class="modal-actions">
+      <button class="btn-cancel" onclick="closeTsModal()">Batal</button>
+      <button class="btn-save" id="btn-save-ts" onclick="saveTsEdit()">Simpan Koreksi</button>
+    </div>
+  </div>
+</div>
+
+<!-- ════════════════════════════════════
+     PM DETAIL MODAL
+════════════════════════════════════ -->
+<div class="pm-modal-overlay" id="pm-modal-overlay">
+  <div class="pm-modal">
+    <div class="pm-modal-header">
+      <div class="pm-modal-id" id="pm-modal-id">—</div>
+      <div class="pm-modal-title-text" id="pm-modal-title">—</div>
+      <div class="pm-modal-drive" id="pm-modal-drive">—</div>
+      <div class="pm-modal-meta-row" id="pm-modal-meta"></div>
+    </div>
+    <div class="pm-modal-body">
+      <!-- Deskripsi / Catatan utama -->
+      <div class="pm-section">
+        <div class="pm-section-label">📋 Deskripsi</div>
+        <div class="pm-desc-box" id="pm-modal-desc">—</div>
+      </div>
+      <!-- Form Edit PM (tersembunyi, muncul setelah login) -->
+      <div id="pm-edit-section" style="display:none">
+        <div class="pm-edit-section">
+          <div class="pm-edit-section-title">✏️ Edit Data PM</div>
+          <div class="form-group"><label class="form-label">Judul PM</label><input class="form-input" id="pm-edit-judul" type="text"></div>
+          <div style="display:flex;gap:10px">
+            <div class="form-group" style="flex:1;margin-bottom:0"><label class="form-label">Tanggal</label><input class="form-input" id="pm-edit-tanggal" type="text" placeholder="dd/mm/yyyy"></div>
+            <div class="form-group" style="flex:1;margin-bottom:0"><label class="form-label">Teknisi</label><input class="form-input" id="pm-edit-teknisi" type="text"></div>
+          </div>
+          <div class="form-group" style="margin-top:14px"><label class="form-label">Status</label>
+            <select class="form-select" id="pm-edit-status">
+              <option value="Pending">⏳ Pending</option>
+              <option value="Dalam Proses">🔄 Dalam Proses</option>
+              <option value="Selesai">✅ Selesai</option>
+              <option value="KERJAKAN">🔧 KERJAKAN</option>
+            </select>
+          </div>
+          <div class="form-group"><label class="form-label">Drive ID</label><input class="form-input" id="pm-edit-drive" type="text"></div>
+          <div class="form-group" style="margin-bottom:0"><label class="form-label">Catatan / Deskripsi</label><textarea class="form-input" id="pm-edit-catatan" rows="3" style="resize:vertical;"></textarea></div>
+          <div style="display:flex;gap:8px;margin-top:14px;justify-content:flex-end">
+            <button class="btn-cancel" onclick="cancelPMEdit()" style="font-size:12px;padding:7px 16px">Batal</button>
+            <button class="btn-save" id="btn-save-pm" onclick="savePMEdit()" style="font-size:12px;padding:7px 18px">Simpan Perubahan</button>
+          </div>
+        </div>
+      </div>
+      <!-- Tambah Note -->
+      <div class="pm-section" style="margin-top:4px">
+        <div class="pm-section-label">📝 Notes / Catatan Lapangan</div>
+        <div class="pm-notes-list" id="pm-notes-list"></div>
+        <div class="pm-add-note" id="pm-add-note-area">
+          <textarea class="pm-note-input" id="pm-note-input" placeholder="Tambahkan catatan lapangan... (Enter untuk simpan)"></textarea>
+          <button class="btn-add-note" onclick="addPMNote()">➕ Tambah</button>
+        </div>
+      </div>
+    </div>
+    <div class="pm-modal-footer">
+      <button class="btn-cancel" onclick="closePMModal()" style="font-size:12px;padding:7px 16px">Tutup</button>
+      <button class="btn-edit-pm" id="btn-open-pm-edit" onclick="requestPMEdit()">✏️ Edit PM</button>
+    </div>
+  </div>
+</div>
+
 <script>
 const API       = 'https://script.google.com/macros/s/AKfycbwzgZWGlYmCmIQAQC8cQIKTN-9D2IyK2rthKGCP9wyo69pMKIug9-trvX8cL_jjOy--7A/exec';
 const LOGIN_API = 'https://script.google.com/macros/s/AKfycbzlhK15JovW0NpWxk5_aVE_IOmwGlEPgjssYzJjPGfQSZUKfMhQu_LqcU5hItI5HR91PQ/exec';
 
-// ══════════════════════════════════════════════
-// NAMA BULAN INDONESIA
-// ══════════════════════════════════════════════
 const NAMA_BULAN = ['','Januari','Februari','Maret','April','Mei','Juni','Juli','Agustus','September','Oktober','November','Desember'];
-// Tahun awal sistem = 2026, bulan awal = April (4)
 const TAHUN_AWAL = 2026;
 const BULAN_AWAL = 4;
 
@@ -769,7 +869,13 @@ const S = {
   cache:{}, editDrive:null,
   pendingDriveData:null, pendingPhotoUrl:null, pendingAction:'edit',
   searchQuery:'',
-  histFilter:{ bulan:'', tahun:'' }
+  histFilter:{ bulan:'', tahun:'' },
+  // Untuk edit timestamp
+  pendingTsData: null,   // { rowIndex, driveId, currentTs }
+  // Untuk PM
+  currentPM: null,       // PM object yang sedang dibuka
+  pmNotes: [],           // notes lokal untuk PM yang sedang dibuka
+  pmEditAuthed: false    // apakah sudah login untuk edit PM
 };
 
 // ══════════════════════════════════════════════
@@ -780,71 +886,47 @@ function buildHistoriFilterOptions(rows) {
   const tahunSel  = id('hist-filter-tahun');
   const now       = new Date();
   const nowYear   = now.getFullYear();
-  const nowMonth  = now.getMonth() + 1;
 
-  // Kumpulkan bulan/tahun yang ada di data
-  const pairsInData = new Set();
-  (rows || []).forEach(r => {
-    const parsed = parseTimestamp(r.timestamp);
-    if (parsed) pairsInData.add(parsed.year + '-' + parsed.month);
-  });
-
-  // Tahun: dari 2026 sampai tahun sekarang (atau +1 jika perlu)
   const tahunOptions = [];
   for (let y = TAHUN_AWAL; y <= nowYear + 1; y++) tahunOptions.push(y);
 
-  // Bulan: 1-12
-  const bulanOptions = [];
-  for (let m = 1; m <= 12; m++) bulanOptions.push(m);
-
-  // Reset & isi tahun
   tahunSel.innerHTML = '<option value="">Semua Tahun</option>';
   tahunOptions.forEach(y => {
     const opt = document.createElement('option');
-    opt.value = y;
-    opt.textContent = y;
+    opt.value = y; opt.textContent = y;
     tahunSel.appendChild(opt);
   });
 
-  // Reset & isi bulan
   bulanSel.innerHTML = '<option value="">Semua Bulan</option>';
-  bulanOptions.forEach(m => {
+  for (let m = 1; m <= 12; m++) {
     const opt = document.createElement('option');
-    opt.value = m;
-    opt.textContent = NAMA_BULAN[m];
+    opt.value = m; opt.textContent = NAMA_BULAN[m];
     bulanSel.appendChild(opt);
-  });
+  }
 
-  // Terapkan nilai yang tersimpan di state
   bulanSel.value = S.histFilter.bulan;
   tahunSel.value = S.histFilter.tahun;
 }
 
 // ══════════════════════════════════════════════
-// PARSE TIMESTAMP — format fleksibel:
-//   "31/3/2026, 15.49.28"  ← format dari data
-//   "2026-03-31 15:49:28"  ← ISO
+// PARSE TIMESTAMP
 // ══════════════════════════════════════════════
 function parseTimestamp(ts) {
   if (!ts) return null;
-  // Format: dd/mm/yyyy, HH.mm.ss  atau dd/m/yyyy, HH.mm.ss
   let m = String(ts).match(/^(\d{1,2})\/(\d{1,2})\/(\d{4})/);
   if (m) return { day: +m[1], month: +m[2], year: +m[3] };
-  // Format ISO: yyyy-mm-dd
   m = String(ts).match(/^(\d{4})-(\d{2})-(\d{2})/);
   if (m) return { day: +m[3], month: +m[2], year: +m[1] };
   return null;
 }
 
 // ══════════════════════════════════════════════
-// APPLY FILTER HISTORI (bulan + tahun + search)
+// APPLY FILTER HISTORI
 // ══════════════════════════════════════════════
 function applyHistoriFilter() {
   S.histFilter.bulan = id('hist-filter-bulan').value;
   S.histFilter.tahun = id('hist-filter-tahun').value;
   const hasFilter = S.histFilter.bulan || S.histFilter.tahun;
-
-  // Badge periode
   const badge = id('hist-period-badge');
   const badgeText = id('hist-period-text');
   const resetBtn = id('btn-reset-histori-filter');
@@ -864,8 +946,6 @@ function applyHistoriFilter() {
     badge.style.display = 'none';
     resetBtn.classList.add('hidden');
   }
-
-  // Re-render tabel dengan filter terbaru
   renderHistoriTableWithFilter();
 }
 
@@ -880,7 +960,7 @@ function resetHistoriFilter() {
 }
 
 // ══════════════════════════════════════════════
-// RENDER TABEL HISTORI — dengan group per bulan
+// RENDER TABEL HISTORI
 // ══════════════════════════════════════════════
 function renderHistoriTableWithFilter() {
   const rows = S.cache[S.plant + '_histori'];
@@ -890,7 +970,6 @@ function renderHistoriTableWithFilter() {
   const filterTahun = S.histFilter.tahun ? +S.histFilter.tahun : null;
   const q = S.searchQuery;
 
-  // Filter baris
   const filtered = rows.filter(r => {
     const parsed = parseTimestamp(r.timestamp);
     if (filterBulan && (!parsed || parsed.month !== filterBulan)) return false;
@@ -902,11 +981,10 @@ function renderHistoriTableWithFilter() {
     return true;
   });
 
-  // Update hasil count
   const resultEl = id('hist-filter-result');
   const hasFilter = filterBulan || filterTahun;
   if (hasFilter || q) {
-    resultEl.textContent = filtered.length + ' data' + (hasFilter || q ? ' ditemukan' : '');
+    resultEl.textContent = filtered.length + ' data ditemukan';
   } else {
     resultEl.textContent = rows.length + ' total data';
   }
@@ -922,24 +1000,19 @@ function renderHistoriTableWithFilter() {
   }
   noRes.classList.remove('visible');
 
-  // Kelompokkan per bulan-tahun
-  const groups = {}; // key: "YYYY-MM"
+  const groups = {};
   const groupOrder = [];
-  filtered.forEach(r => {
+  filtered.forEach((r, idx) => {
     const parsed = parseTimestamp(r.timestamp);
     const key = parsed ? (parsed.year + '-' + String(parsed.month).padStart(2,'0')) : '0000-00';
     if (!groups[key]) { groups[key] = []; groupOrder.push(key); }
-    groups[key].push(r);
+    groups[key].push({ ...r, _origIdx: rows.indexOf(r) });
   });
 
-  // Apakah tampilkan header grup?
-  // Jika filter ke satu bulan spesifik: tidak perlu grup
-  // Jika semua bulan atau hanya filter tahun: tampilkan per bulan
   const showGroups = !(filterBulan && filterTahun);
-
   let html = '';
+
   if (showGroups && groupOrder.length > 1) {
-    // Tampilkan per-bulan dengan header pemisah
     groupOrder.forEach(key => {
       const grpRows = groups[key];
       const [yr, mo] = key.split('-').map(Number);
@@ -961,7 +1034,6 @@ function renderHistoriTableWithFilter() {
         </div>`;
     });
   } else {
-    // Satu tabel penuh (filter ke bulan+tahun spesifik, atau total data sedikit)
     const label = filterBulan && filterTahun
       ? NAMA_BULAN[filterBulan] + ' ' + filterTahun
       : filterTahun ? 'Tahun ' + filterTahun
@@ -975,12 +1047,13 @@ function renderHistoriTableWithFilter() {
           <span class="hms-count">${filtered.length} data</span>
         </div>`;
     }
+    const allWithIdx = filtered.map(r => ({ ...r, _origIdx: rows.indexOf(r) }));
     html += `<div class="hist-table-wrap"><table class="hist-table">
       <thead><tr>
         <th>Waktu</th><th>Drive ID</th><th>Nama</th>
         <th>Group</th><th>Status</th><th>Keterangan</th>
       </tr></thead>
-      <tbody>${filtered.map(histRow).join('')}</tbody>
+      <tbody>${allWithIdx.map(histRow).join('')}</tbody>
     </table></div>`;
   }
 
@@ -988,8 +1061,14 @@ function renderHistoriTableWithFilter() {
 }
 
 function histRow(r) {
+  const origIdx = r._origIdx !== undefined ? r._origIdx : -1;
   return `<tr>
-    <td class="hist-ts">${esc(r.timestamp)}</td>
+    <td>
+      <div class="hist-ts-wrap">
+        <span class="hist-ts">${esc(r.timestamp)}</span>
+        <button class="btn-edit-ts" onclick="event.stopPropagation();requestEditTimestamp(${origIdx},'${esc(r.drive_id)}','${esc(r.timestamp)}')" title="Edit waktu">✏️</button>
+      </div>
+    </td>
     <td class="hist-id">${esc(r.drive_id)}</td>
     <td>${esc(r.drive_nama)}</td>
     <td>${esc(r.group)}</td>
@@ -998,9 +1077,275 @@ function histRow(r) {
   </tr>`;
 }
 
-// ══════════════════════════════════════════════════════
+// ══════════════════════════════════════════════
+// EDIT TIMESTAMP — request login dulu
+// ══════════════════════════════════════════════
+function requestEditTimestamp(rowIdx, driveId, currentTs) {
+  S.pendingAction = 'editTimestamp';
+  S.pendingTsData = { rowIdx, driveId, currentTs };
+  S.pendingDriveData = null;
+  S.pendingPhotoUrl = null;
+
+  id('login-sub-text').textContent = 'Untuk mengedit waktu histori, masukkan kredensial akun mixing ini.';
+  id('login-area-label').textContent = _getCurGroupLabel();
+  id('login-username').value = '';
+  id('login-password').value = '';
+  id('login-err').style.display = 'none';
+  const btn = id('btn-login-submit');
+  btn.classList.remove('loading'); btn.disabled = false;
+  id('login-overlay').classList.add('open');
+  setTimeout(() => id('login-username').focus(), 100);
+}
+
+function openTsModal() {
+  const d = S.pendingTsData;
+  if (!d) return;
+  const rows = S.cache[S.plant + '_histori'] || [];
+  const row = rows[d.rowIdx] || {};
+  id('ts-modal-row-info').innerHTML =
+    `<b>Drive ID:</b> ${esc(d.driveId)}<br>` +
+    `<b>Status:</b> ${esc(row.status || '—')}<br>` +
+    `<b>Waktu saat ini:</b> ${esc(d.currentTs)}`;
+  id('ts-input-datetime').value = d.currentTs || '';
+  id('ts-input-alasan').value = '';
+  id('btn-save-ts').disabled = false;
+  id('btn-save-ts').textContent = 'Simpan Koreksi';
+  id('ts-modal-overlay').classList.add('open');
+  setTimeout(() => id('ts-input-datetime').focus(), 100);
+}
+
+function closeTsModal() {
+  id('ts-modal-overlay').classList.remove('open');
+  S.pendingTsData = null;
+}
+
+async function saveTsEdit() {
+  const newTs   = id('ts-input-datetime').value.trim();
+  const alasan  = id('ts-input-alasan').value.trim();
+  const d       = S.pendingTsData;
+  const btn     = id('btn-save-ts');
+
+  if (!newTs) { alert('⚠️ Waktu baru tidak boleh kosong.'); return; }
+  if (!d) return;
+
+  btn.disabled = true; btn.textContent = 'Menyimpan...';
+
+  try {
+    await apiGet({
+      action: 'updateHistoriTimestamp',
+      plant: S.plant,
+      row_index: d.rowIdx,
+      drive_id: d.driveId,
+      old_timestamp: d.currentTs,
+      new_timestamp: newTs,
+      alasan: alasan || '—',
+      updatedBy: 'web-user'
+    });
+
+    // Update cache lokal
+    const rows = S.cache[S.plant + '_histori'] || [];
+    if (rows[d.rowIdx]) rows[d.rowIdx].timestamp = newTs;
+
+    closeTsModal();
+    renderHistoriTableWithFilter();
+  } catch(err) {
+    alert('Gagal menyimpan: ' + err.message);
+  } finally {
+    btn.disabled = false; btn.textContent = 'Simpan Koreksi';
+  }
+}
+
+// ══════════════════════════════════════════════
+// PM DETAIL MODAL
+// ══════════════════════════════════════════════
+function openPMModal(pm) {
+  S.currentPM = pm;
+  S.pmEditAuthed = false;
+
+  // Reset notes dari cache atau array kosong
+  const cacheKey = S.plant + '_pm_notes_' + (pm.id || '');
+  S.pmNotes = S.cache[cacheKey] ? [...S.cache[cacheKey]] : [];
+
+  id('pm-modal-id').textContent = pm.id || '—';
+  id('pm-modal-title').textContent = pm.judul || '—';
+  id('pm-modal-drive').textContent = '🔌 ' + (pm.drive_id || '—');
+
+  // Meta chips
+  const stClass = {Selesai:'ok','Dalam Proses':'maint',Pending:'fault',KERJAKAN:'maint'}[pm.status] || 'kosong';
+  id('pm-modal-meta').innerHTML = `
+    <span class="pm-meta-chip">📅 ${pm.tanggal || '—'}</span>
+    <span class="pm-meta-chip">👤 ${esc(pm.teknisi || '—')}</span>
+    <span class="status-tag st-${stClass}" style="font-size:11px;padding:4px 10px">${esc(pm.status || '—')}</span>`;
+
+  // Deskripsi
+  id('pm-modal-desc').textContent = pm.catatan || pm.deskripsi || '(Tidak ada deskripsi)';
+
+  // Sembunyikan edit section
+  id('pm-edit-section').style.display = 'none';
+  id('btn-open-pm-edit').style.display = '';
+
+  // Notes
+  renderPMNotes();
+
+  id('pm-note-input').value = '';
+  id('pm-modal-overlay').classList.add('open');
+}
+
+function closePMModal() {
+  id('pm-modal-overlay').classList.remove('open');
+  S.currentPM = null;
+  S.pmEditAuthed = false;
+}
+
+function renderPMNotes() {
+  const list = id('pm-notes-list');
+  if (!S.pmNotes.length) {
+    list.innerHTML = '<div class="pm-empty-notes">Belum ada catatan lapangan.</div>';
+    return;
+  }
+  list.innerHTML = S.pmNotes.map((n, i) => `
+    <div class="pm-note-item">
+      <div class="pm-note-ts">📝 ${esc(n.ts)} · ${esc(n.by || 'Teknisi')}</div>
+      <div class="pm-note-text">${esc(n.text)}</div>
+    </div>`).join('');
+}
+
+function addPMNote() {
+  const input = id('pm-note-input');
+  const text = input.value.trim();
+  if (!text) { input.focus(); return; }
+
+  const note = {
+    ts: new Date().toLocaleString('id-ID'),
+    by: 'Web User',
+    text
+  };
+  S.pmNotes.push(note);
+
+  // Simpan ke cache lokal
+  const pm = S.currentPM;
+  if (pm) {
+    const cacheKey = S.plant + '_pm_notes_' + (pm.id || '');
+    S.cache[cacheKey] = [...S.pmNotes];
+    // Coba simpan ke API (opsional, jika ada endpoint)
+    try {
+      apiGet({
+        action: 'addPMNote',
+        plant: S.plant,
+        pm_id: pm.id,
+        note_text: text,
+        note_ts: note.ts,
+        note_by: note.by
+      }).catch(() => {}); // silent fail
+    } catch(e) {}
+  }
+
+  input.value = '';
+  renderPMNotes();
+  // Scroll ke bawah notes
+  const listEl = id('pm-notes-list');
+  if (listEl) listEl.scrollIntoView({ behavior: 'smooth', block: 'end' });
+}
+
+// Tambah note juga bisa dengan Enter
+document.addEventListener('DOMContentLoaded', () => {
+  const noteInput = id('pm-note-input');
+  if (noteInput) {
+    noteInput.addEventListener('keydown', e => {
+      if (e.key === 'Enter' && !e.shiftKey) {
+        e.preventDefault();
+        addPMNote();
+      }
+    });
+  }
+});
+
+// Request edit PM — butuh login
+function requestPMEdit() {
+  if (S.pmEditAuthed) {
+    showPMEditForm();
+    return;
+  }
+  S.pendingAction = 'editPM';
+  S.pendingDriveData = null;
+  S.pendingPhotoUrl = null;
+  id('login-sub-text').textContent = 'Untuk mengedit data PM, masukkan kredensial akun mixing ini.';
+  id('login-area-label').textContent = _getCurGroupLabel();
+  id('login-username').value = '';
+  id('login-password').value = '';
+  id('login-err').style.display = 'none';
+  const btn = id('btn-login-submit');
+  btn.classList.remove('loading'); btn.disabled = false;
+  id('login-overlay').classList.add('open');
+  setTimeout(() => id('login-username').focus(), 100);
+}
+
+function showPMEditForm() {
+  const pm = S.currentPM;
+  if (!pm) return;
+  id('pm-edit-judul').value    = pm.judul || '';
+  id('pm-edit-tanggal').value  = pm.tanggal || '';
+  id('pm-edit-teknisi').value  = pm.teknisi || '';
+  id('pm-edit-status').value   = pm.status || 'Pending';
+  id('pm-edit-drive').value    = pm.drive_id || '';
+  id('pm-edit-catatan').value  = pm.catatan || pm.deskripsi || '';
+  id('pm-edit-section').style.display = '';
+  id('btn-open-pm-edit').style.display = 'none';
+  // Scroll ke form edit
+  id('pm-edit-section').scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+}
+
+function cancelPMEdit() {
+  id('pm-edit-section').style.display = 'none';
+  id('btn-open-pm-edit').style.display = '';
+}
+
+async function savePMEdit() {
+  const pm  = S.currentPM;
+  const btn = id('btn-save-pm');
+  if (!pm) return;
+
+  const updatedPM = {
+    id:        pm.id,
+    judul:     id('pm-edit-judul').value.trim(),
+    tanggal:   id('pm-edit-tanggal').value.trim(),
+    teknisi:   id('pm-edit-teknisi').value.trim(),
+    status:    id('pm-edit-status').value,
+    drive_id:  id('pm-edit-drive').value.trim(),
+    catatan:   id('pm-edit-catatan').value.trim(),
+  };
+
+  btn.disabled = true; btn.textContent = 'Menyimpan...';
+
+  try {
+    await apiGet({
+      action: 'updateJadwalPM',
+      plant: S.plant,
+      ...updatedPM,
+      updatedBy: 'web-user'
+    });
+
+    // Update cache lokal
+    S.currentPM = { ...pm, ...updatedPM };
+    const jadwal = S.cache[S.plant + '_pm'] || [];
+    const idx = jadwal.findIndex(p => p.id === pm.id);
+    if (idx >= 0) jadwal[idx] = S.currentPM;
+
+    // Refresh tampilan modal
+    openPMModal(S.currentPM);
+    // Refresh grid PM di belakang
+    renderPMTab();
+
+  } catch(err) {
+    alert('Gagal menyimpan: ' + err.message);
+  } finally {
+    btn.disabled = false; btn.textContent = 'Simpan Perubahan';
+  }
+}
+
+// ══════════════════════════════════════════════
 // SEARCH
-// ══════════════════════════════════════════════════════
+// ══════════════════════════════════════════════
 function onSearch(val) {
   S.searchQuery = val.trim().toLowerCase();
   const clearBtn = id('search-clear');
@@ -1080,6 +1425,7 @@ function showSearchBar(show) {
 function requestEdit(driveId, status, keterangan, merk, spesifikasi, photoUrl) {
   S.pendingAction = 'edit';
   S.pendingDriveData = { driveId, status, keterangan, merk, spesifikasi, photoUrl };
+  id('login-sub-text').textContent = 'Untuk mengedit drive, masukkan kredensial akun mixing ini.';
   id('login-area-label').textContent = _getCurGroupLabel();
   id('login-username').value = ''; id('login-password').value = '';
   id('login-err').style.display = 'none';
@@ -1087,8 +1433,10 @@ function requestEdit(driveId, status, keterangan, merk, spesifikasi, photoUrl) {
   id('login-overlay').classList.add('open');
   setTimeout(() => id('login-username').focus(), 100);
 }
+
 function requestViewPhoto(photoUrl) {
   S.pendingAction = 'photo'; S.pendingPhotoUrl = photoUrl; S.pendingDriveData = null;
+  id('login-sub-text').textContent = 'Untuk melihat foto, masukkan kredensial akun mixing ini.';
   id('login-area-label').textContent = _getCurGroupLabel();
   id('login-username').value = ''; id('login-password').value = '';
   id('login-err').style.display = 'none';
@@ -1096,10 +1444,13 @@ function requestViewPhoto(photoUrl) {
   id('login-overlay').classList.add('open');
   setTimeout(() => id('login-username').focus(), 100);
 }
+
 function closeLoginModal() {
   id('login-overlay').classList.remove('open');
-  S.pendingDriveData = null; S.pendingPhotoUrl = null; S.pendingAction = 'edit';
+  S.pendingDriveData = null; S.pendingPhotoUrl = null;
+  S.pendingAction = 'edit'; S.pendingTsData = null;
 }
+
 async function submitLogin() {
   const username = id('login-username').value.trim(), password = id('login-password').value.trim();
   const errEl = id('login-err'), btn = id('btn-login-submit');
@@ -1109,17 +1460,21 @@ async function submitLogin() {
     const res = await fetch(LOGIN_API+'?'+new URLSearchParams({username,password,mixing:S.plant}));
     const result = await res.json();
     if (result.success) {
-      const action=S.pendingAction, photoUrl=S.pendingPhotoUrl, d=S.pendingDriveData;
+      const action=S.pendingAction, photoUrl=S.pendingPhotoUrl, d=S.pendingDriveData, tsD=S.pendingTsData;
       closeLoginModal();
-      if (action==='photo'&&photoUrl) window.open(photoUrl,'_blank');
-      else if (d) openModal(d.driveId,d.status,d.keterangan,d.merk,d.spesifikasi,d.photoUrl);
+      if (action==='photo' && photoUrl) window.open(photoUrl,'_blank');
+      else if (action==='edit' && d) openModal(d.driveId,d.status,d.keterangan,d.merk,d.spesifikasi,d.photoUrl);
+      else if (action==='editTimestamp' && tsD) openTsModal();
+      else if (action==='editPM') { S.pmEditAuthed = true; showPMEditForm(); }
     } else { errEl.textContent='❌ '+(result.message||'Username atau password salah.'); errEl.style.display='block'; }
   } catch(err) { errEl.textContent='⚠️ Tidak dapat terhubung ke server.'; errEl.style.display='block'; }
   finally { btn.classList.remove('loading'); btn.disabled=false; }
 }
+
 document.addEventListener('DOMContentLoaded', () => {
   ['login-username','login-password'].forEach(fid => {
-    id(fid).addEventListener('keydown', e => { if(e.key==='Enter') submitLogin(); });
+    const el = id(fid);
+    if (el) el.addEventListener('keydown', e => { if(e.key==='Enter') submitLogin(); });
   });
 });
 
@@ -1145,10 +1500,12 @@ function navTo(page, plant) {
   if (page==='plant')  { showSearchBar(false); renderPlantPage(); }
   if (page==='detail') { S.mixing=1; S.tab='drive'; showSearchBar(true); renderDetailPage(); }
 }
+
 function _getCurGroupLabel() {
   const gl = S.cache[S.plant+'_groupList']||[];
   return gl[S.mixing-1]||(S.plant+' — Mixing '+S.mixing);
 }
+
 function updateBC() {
   const s2=id('bcs2'),b2=id('bc2'),s3=id('bcs3'),b3=id('bc3');
   if (S.plant&&S.page==='detail') {
@@ -1195,6 +1552,7 @@ const PLANT_META = {
   MCH:{desc:'Mixing Center H',color:'#ff6b81'},MCI:{desc:'Mixing Center I',color:'#c084fc'},
   'PLANT E':{desc:'Plant Extension E',color:'#f472b6'},
 };
+
 function plantCard(p,i) {
   const m=PLANT_META[p.plant]||{desc:p.label||'',color:'#4d9fff'};
   const gl=S.cache[p.plant+'_groupList']||[];
@@ -1374,9 +1732,7 @@ async function renderHistoriTab() {
       id('histori-content').innerHTML = `<div class="state-box"><div style="font-size:28px">📋</div><h3>Belum ada histori</h3></div>`;
       return;
     }
-    // Bangun dropdown filter dari data
     buildHistoriFilterOptions(rows);
-    // Render tabel dengan filter saat ini
     renderHistoriTableWithFilter();
   } catch(err) {
     id('histori-content').innerHTML = errHTML(err.message, renderHistoriTab);
@@ -1384,21 +1740,47 @@ async function renderHistoriTab() {
 }
 
 // ══════════════════════════════════════════════
-// RENDER PM TAB
+// RENDER PM TAB — PM card sekarang bisa diklik
 // ══════════════════════════════════════════════
 async function renderPMTab() {
   id('pm-content').innerHTML=loadingHTML('Memuat jadwal PM...');
   try {
-    if (!S.cache[S.plant+'_pm']) { const data=await apiGet({action:'getJadwalPM',plant:S.plant}); S.cache[S.plant+'_pm']=data.jadwal||data; }
+    if (!S.cache[S.plant+'_pm']) {
+      const data=await apiGet({action:'getJadwalPM',plant:S.plant});
+      S.cache[S.plant+'_pm']=data.jadwal||data;
+    }
     const jadwal=S.cache[S.plant+'_pm'];
-    if (!jadwal||!jadwal.length) { id('pm-content').innerHTML=`<div class="state-box"><div style="font-size:28px">🔧</div><h3>Belum ada jadwal PM</h3></div>`; return; }
-    id('pm-content').innerHTML=`<div class="pm-grid">${jadwal.map(pmCard).join('')}</div>`;
+    if (!jadwal||!jadwal.length) {
+      id('pm-content').innerHTML=`<div class="state-box"><div style="font-size:28px">🔧</div><h3>Belum ada jadwal PM</h3></div>`;
+      return;
+    }
+    id('pm-content').innerHTML=`<div class="pm-grid">${jadwal.map((p,i)=>pmCard(p,i)).join('')}</div>`;
     if (S.searchQuery) applyPMSearch(S.searchQuery);
   } catch(err) { id('pm-content').innerHTML=errHTML(err.message,renderPMTab); }
 }
-function pmCard(p) {
-  const stClass={Selesai:'ok',Pending:'maint','Dalam Proses':'fault'}[p.status]||'kosong';
-  return `<div class="pm-card"><div class="pm-card-id">${esc(p.id)}</div><div class="pm-card-judul">${esc(p.judul)}</div><div class="pm-card-drive">${esc(p.drive_id)}</div><div class="pm-card-meta"><span>📅 ${p.tanggal||'—'}</span><span>👤 ${esc(p.teknisi)||'—'}</span>${p.catatan?`<span>📝 ${esc(p.catatan)}</span>`:''}</div><div class="pm-card-status"><span class="status-tag st-${stClass}">${esc(p.status)}</span></div></div>`;
+
+function pmCard(p, i) {
+  const stClass={Selesai:'ok',Pending:'maint','Dalam Proses':'fault',KERJAKAN:'maint'}[p.status]||'kosong';
+  // Simpan data PM ke dataset untuk diklik
+  const idx = i;
+  return `<div class="pm-card" onclick="openPMModalFromGrid(${idx})">
+    <div class="pm-card-id">${esc(p.id)}</div>
+    <div class="pm-card-judul">${esc(p.judul)}</div>
+    <div class="pm-card-drive">${esc(p.drive_id)}</div>
+    <div class="pm-card-meta">
+      <span>📅 ${p.tanggal||'—'}</span>
+      <span>👤 ${esc(p.teknisi)||'—'}</span>
+      ${p.catatan?`<span>📝 ${esc(p.catatan).substring(0,60)}${p.catatan.length>60?'…':''}</span>`:''}
+    </div>
+    <div class="pm-card-status"><span class="status-tag st-${stClass}">${esc(p.status)}</span></div>
+    <div class="pm-card-hint">🔍 Klik untuk detail &amp; edit</div>
+  </div>`;
+}
+
+function openPMModalFromGrid(idx) {
+  const jadwal = S.cache[S.plant+'_pm'] || [];
+  const pm = jadwal[idx];
+  if (pm) openPMModal(pm);
 }
 
 // ══════════════════════════════════════════════
@@ -1429,7 +1811,7 @@ async function renderSummaryTab() {
 }
 
 // ══════════════════════════════════════════════
-// EDIT MODAL
+// EDIT DRIVE MODAL
 // ══════════════════════════════════════════════
 function openModal(driveId,status,keterangan,merk,spesifikasi,photoUrl){
   S.editDrive=driveId;
@@ -1441,7 +1823,9 @@ function openModal(driveId,status,keterangan,merk,spesifikasi,photoUrl){
   id('modal-photo').value=photoUrl||'';
   id('modal').classList.add('open');
 }
+
 function closeModal(){ id('modal').classList.remove('open'); S.editDrive=null; }
+
 async function saveStatus(){
   const status=id('modal-status').value, btn=id('btn-save');
   btn.disabled=true; btn.textContent='Menyimpan...';
@@ -1453,8 +1837,12 @@ async function saveStatus(){
   } catch(err){ alert('Gagal menyimpan: '+err.message); }
   finally{ btn.disabled=false; btn.textContent='Simpan'; }
 }
+
+// Close modals on overlay click
 id('modal').addEventListener('click',e=>{if(e.target===id('modal'))closeModal();});
 id('login-overlay').addEventListener('click',e=>{if(e.target===id('login-overlay'))closeLoginModal();});
+id('ts-modal-overlay').addEventListener('click',e=>{if(e.target===id('ts-modal-overlay'))closeTsModal();});
+id('pm-modal-overlay').addEventListener('click',e=>{if(e.target===id('pm-modal-overlay'))closePMModal();});
 
 // ══════════════════════════════════════════════
 // REFRESH
@@ -1495,29 +1883,24 @@ if(localStorage.getItem('theme')==='light'){
 }
 
 // ══════════════════════════════════════════════
-// PRINT PDF — Histori (gunakan data yang sudah difilter)
+// PRINT PDF
 // ══════════════════════════════════════════════
 async function printHistoriPDF(){
   const allRows = S.cache[S.plant+'_histori'];
   if(!allRows||!allRows.length){alert('Tidak ada data histori untuk dicetak.');return;}
-
   const filterBulan = S.histFilter.bulan ? +S.histFilter.bulan : null;
   const filterTahun = S.histFilter.tahun ? +S.histFilter.tahun : null;
-
   const rows = allRows.filter(r => {
     const parsed = parseTimestamp(r.timestamp);
     if (filterBulan && (!parsed || parsed.month !== filterBulan)) return false;
     if (filterTahun && (!parsed || parsed.year  !== filterTahun)) return false;
     return true;
   });
-
   if(!rows.length){alert('Tidak ada data histori untuk periode yang dipilih.');return;}
-
   let periodLabel = 'Semua Periode';
   if (filterBulan && filterTahun) periodLabel = NAMA_BULAN[filterBulan] + ' ' + filterTahun;
   else if (filterBulan) periodLabel = NAMA_BULAN[filterBulan] + ' (Semua Tahun)';
   else if (filterTahun) periodLabel = 'Tahun ' + filterTahun;
-
   const {jsPDF}=window.jspdf, doc=new jsPDF({orientation:'landscape'});
   doc.setFontSize(14);doc.setFont('helvetica','bold');
   doc.text(`Histori Drive — ${S.plant}`,14,16);
