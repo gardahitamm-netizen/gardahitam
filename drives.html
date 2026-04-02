@@ -14,9 +14,6 @@
 <style>
 @import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap');
 
-/* ══════════════════════════════════════
-   DARK MODE (default) — vivid palette
-══════════════════════════════════════ */
 :root {
   --bg:      #0b0f1a;
   --surf:    #121929;
@@ -36,8 +33,6 @@
   --topbar-h: 50px;
   --rbar-h:   30px;
   --bc-h:     32px;
-
-  /* vivid variants used in pills / badges */
   --ok-bg:    rgba(0,240,160,.12);
   --ok-bd:    rgba(0,240,160,.35);
   --fault-bg: rgba(255,61,85,.12);
@@ -52,9 +47,6 @@
   --teal-bd:  rgba(0,224,248,.25);
 }
 
-/* ══════════════════════════════════════
-   LIGHT MODE — warm white, vivid colors
-══════════════════════════════════════ */
 body.light {
   --bg:       #f5f8ff;
   --surf:     #ffffff;
@@ -71,7 +63,6 @@ body.light {
   --accent:   #1060d0;
   --teal:     #007aaa;
   --card-title:#0d1a2e;
-
   --ok-bg:    rgba(0,149,79,.1);
   --ok-bd:    rgba(0,149,79,.4);
   --fault-bg: rgba(217,26,52,.1);
@@ -123,6 +114,15 @@ body.light .inu-spec{ color:#3a5a80; }
 body.light .inu-tag{ color:#3a5a80; }
 body.light .hist-ts{ color:#3a5a80; }
 body.light .drive-meta{ color:#3a5a80; }
+/* ── LIGHT MODE untuk filter bar histori ── */
+body.light .hist-filter-bar{ background:#eaf2fc; border-color:#b8ccec; }
+body.light .hist-filter-select{ background:#ffffff !important; border-color:#b8ccec !important; color:#0d1a2e !important; }
+body.light .hist-filter-label{ color:#3a5a80; }
+body.light .hist-period-badge{ background:#dde8f8; color:#1060d0; border-color:#b8ccec; }
+body.light .btn-reset-filter{ color:#3a5a80; border-color:#b8ccec; background:#f0f6ff; }
+body.light .btn-reset-filter:hover{ border-color:#d91a34; color:#d91a34; background:#fff0f2; }
+body.light .hist-month-section-head{ background:#dde8f8; border-color:#b8ccec; color:#0d1a2e; }
+body.light .hist-month-section-head .hms-count{ color:#3a5a80; }
 
 *{margin:0;padding:0;box-sizing:border-box;}
 html,body{width:100%;height:100%;overflow:hidden;}
@@ -175,6 +175,62 @@ body{font-family:'Plus Jakarta Sans',sans-serif;background:var(--bg);color:var(-
 .search-clear.visible{display:block;}
 .search-clear:hover{border-color:var(--fault);color:var(--fault);}
 .search-count{font-family:'JetBrains Mono',monospace;font-size:10px;color:var(--muted);flex-shrink:0;white-space:nowrap;}
+
+/* ════════════════════════════════════════
+   HISTORI FILTER BAR — Filter Bulan/Tahun
+════════════════════════════════════════ */
+.hist-filter-bar{
+  display:flex;align-items:center;gap:10px;padding:10px 16px;
+  background:var(--surf2);border-bottom:1px solid var(--border);
+  flex-shrink:0;flex-wrap:wrap;
+}
+.hist-filter-label{
+  font-family:'JetBrains Mono',monospace;font-size:10px;
+  color:var(--muted);letter-spacing:1px;text-transform:uppercase;
+  flex-shrink:0;
+}
+.hist-filter-group{display:flex;align-items:center;gap:6px;flex-shrink:0;}
+.hist-filter-select{
+  background:var(--surf3);border:1px solid var(--border);color:var(--text);
+  padding:6px 10px;border-radius:6px;font-size:11px;
+  font-family:'JetBrains Mono',monospace;outline:none;
+  cursor:pointer;transition:border-color .2s;
+}
+.hist-filter-select:focus{border-color:var(--accent);}
+.hist-filter-select option{background:var(--surf2);}
+.hist-period-badge{
+  display:flex;align-items:center;gap:5px;
+  background:var(--teal-bg);border:1px solid var(--teal-bd);
+  color:var(--teal);font-family:'JetBrains Mono',monospace;
+  font-size:10px;font-weight:700;padding:5px 12px;border-radius:20px;
+  flex-shrink:0;transition:all .2s;
+}
+.hist-filter-sep{color:var(--border);font-size:14px;flex-shrink:0;}
+.btn-reset-filter{
+  display:flex;align-items:center;gap:4px;
+  font-family:'JetBrains Mono',monospace;font-size:10px;
+  padding:5px 12px;border-radius:6px;cursor:pointer;
+  border:1px solid var(--border);background:transparent;
+  color:var(--muted);transition:all .15s;flex-shrink:0;
+}
+.btn-reset-filter:hover{border-color:var(--fault);color:var(--fault);}
+.btn-reset-filter.hidden{display:none;}
+.hist-filter-result{
+  margin-left:auto;font-family:'JetBrains Mono',monospace;
+  font-size:10px;color:var(--muted);flex-shrink:0;
+}
+
+/* ── Pengelompokan per bulan dalam tabel ── */
+.hist-month-section-head{
+  display:flex;align-items:center;gap:10px;
+  padding:8px 12px;background:rgba(77,159,255,.06);
+  border-bottom:1px solid var(--border);
+  border-top:2px solid rgba(77,159,255,.2);
+}
+.hist-month-section-head:not(:first-child){margin-top:0;}
+.hms-icon{font-size:13px;}
+.hms-title{font-family:'JetBrains Mono',monospace;font-size:11px;font-weight:700;color:var(--accent);}
+.hms-count{font-family:'JetBrains Mono',monospace;font-size:10px;color:var(--muted);margin-left:auto;}
 
 /* Plant page */
 .plant-wrap{flex:1;overflow-y:auto;width:100%;}
@@ -237,6 +293,10 @@ body{font-family:'Plus Jakarta Sans',sans-serif;background:var(--bg);color:var(-
 .tab-content{display:none;padding:20px;flex:1;overflow-y:auto;min-height:0;flex-direction:column;}
 .tab-content.active{display:flex;flex-direction:column;animation:fadeUp .2s ease;}
 
+/* Tab histori — override padding karena ada filter bar di atas */
+#tab-histori.active{padding:0;display:flex;flex-direction:column;}
+.histori-scroll-area{flex:1;overflow-y:auto;min-height:0;padding:16px 20px 20px;}
+
 .drive-header{margin-bottom:16px;flex-shrink:0;}
 .drive-title{font-size:16px;font-weight:700;font-family:'JetBrains Mono',monospace;margin-bottom:3px;color:var(--text);}
 .drive-meta{font-size:11px;color:var(--muted);margin-bottom:14px;}
@@ -294,6 +354,7 @@ body.light .inu-photo-btn:hover{color:#003850;}
 .hist-ts{font-family:'JetBrains Mono',monospace;font-size:10px;color:var(--muted);}
 .hist-id{font-family:'JetBrains Mono',monospace;font-size:11px;color:var(--teal);}
 .hist-table tr.search-hidden{display:none;}
+.hist-table tr.filter-hidden{display:none;}
 
 .status-tag{display:inline-block;padding:2px 8px;border-radius:4px;font-family:'JetBrains Mono',monospace;font-size:10px;font-weight:700;}
 .st-ok{background:var(--ok-bg);color:var(--ok);border:1px solid var(--ok-bd);}
@@ -450,6 +511,12 @@ body.light .inu-photo-btn:hover{color:#003850;}
   .ctab { flex:1 !important; padding:10px 6px !important; font-size:10px !important; flex-shrink:0 !important; text-align:center !important; min-width:64px !important; }
   .tab-content { flex:1 !important; overflow-y:auto !important; -webkit-overflow-scrolling:touch !important; padding:12px 10px !important; display:none !important; flex-direction:column !important; min-height:0 !important; }
   .tab-content.active { display:flex !important; }
+  #tab-histori.active { padding:0 !important; }
+  .histori-scroll-area { padding:10px !important; }
+  .hist-filter-bar { padding:8px 10px !important; gap:6px !important; flex-wrap:wrap !important; }
+  .hist-filter-label { font-size:9px !important; }
+  .hist-filter-select { font-size:10px !important; padding:5px 7px !important; }
+  .hist-period-badge { font-size:9px !important; padding:4px 9px !important; }
   .drive-header { margin-bottom:10px !important; }
   .drive-title { font-size:13px !important; }
   .drive-meta { font-size:10px !important; margin-bottom:8px !important; }
@@ -572,6 +639,7 @@ body.light .inu-photo-btn:hover{color:#003850;}
           <span class="search-count" id="search-count"></span>
           <button class="search-clear" id="search-clear" onclick="clearSearch()">✕ Clear</button>
         </div>
+
         <div class="tab-content active" id="tab-drive">
           <div class="drive-header">
             <div class="drive-title" id="drive-title"></div>
@@ -581,11 +649,47 @@ body.light .inu-photo-btn:hover{color:#003850;}
           <div id="drive-content"></div>
           <div class="no-results" id="drive-no-results"><span style="font-size:28px">🔍</span><span>Tidak ada hasil untuk "<span id="drive-search-query"></span>"</span></div>
         </div>
+
+        <!-- ═══════════════════════════════════════════════
+             TAB HISTORI — dengan filter bar bulan/tahun
+        ═══════════════════════════════════════════════ -->
         <div class="tab-content" id="tab-histori">
-          <div class="tab-action-bar"><button class="btn-pdf" onclick="printHistoriPDF()">🖨️ Cetak PDF</button></div>
-          <div id="histori-content"></div>
-          <div class="no-results" id="histori-no-results"><span style="font-size:28px">🔍</span><span>Tidak ada hasil untuk "<span id="histori-search-query"></span>"</span></div>
+          <!-- Filter Bar -->
+          <div class="hist-filter-bar" id="hist-filter-bar">
+            <span class="hist-filter-label">📅 Filter:</span>
+            <div class="hist-filter-group">
+              <select class="hist-filter-select" id="hist-filter-bulan" onchange="applyHistoriFilter()">
+                <option value="">Semua Bulan</option>
+                <!-- Diisi oleh JS -->
+              </select>
+            </div>
+            <span class="hist-filter-sep">/</span>
+            <div class="hist-filter-group">
+              <select class="hist-filter-select" id="hist-filter-tahun" onchange="applyHistoriFilter()">
+                <option value="">Semua Tahun</option>
+                <!-- Diisi oleh JS -->
+              </select>
+            </div>
+            <div class="hist-period-badge" id="hist-period-badge" style="display:none">
+              <span>📋</span><span id="hist-period-text">—</span>
+            </div>
+            <button class="btn-reset-filter hidden" id="btn-reset-histori-filter" onclick="resetHistoriFilter()">✕ Reset</button>
+            <span class="hist-filter-result" id="hist-filter-result"></span>
+          </div>
+          <!-- Action Bar (PDF) -->
+          <div style="display:flex;justify-content:flex-end;padding:10px 16px 0;flex-shrink:0;">
+            <button class="btn-pdf" onclick="printHistoriPDF()">🖨️ Cetak PDF</button>
+          </div>
+          <!-- Scroll area -->
+          <div class="histori-scroll-area">
+            <div id="histori-content"></div>
+            <div class="no-results" id="histori-no-results">
+              <span style="font-size:28px">🔍</span>
+              <span>Tidak ada hasil untuk "<span id="histori-search-query"></span>"</span>
+            </div>
+          </div>
         </div>
+
         <div class="tab-content" id="tab-pm">
           <div class="tab-action-bar"><button class="btn-pdf" onclick="printPMPDF()">🖨️ Cetak PDF</button></div>
           <div id="pm-content"></div>
@@ -652,17 +756,254 @@ body.light .inu-photo-btn:hover{color:#003850;}
 const API       = 'https://script.google.com/macros/s/AKfycbwzgZWGlYmCmIQAQC8cQIKTN-9D2IyK2rthKGCP9wyo69pMKIug9-trvX8cL_jjOy--7A/exec';
 const LOGIN_API = 'https://script.google.com/macros/s/AKfycbzlhK15JovW0NpWxk5_aVE_IOmwGlEPgjssYzJjPGfQSZUKfMhQu_LqcU5hItI5HR91PQ/exec';
 
+// ══════════════════════════════════════════════
+// NAMA BULAN INDONESIA
+// ══════════════════════════════════════════════
+const NAMA_BULAN = ['','Januari','Februari','Maret','April','Mei','Juni','Juli','Agustus','September','Oktober','November','Desember'];
+// Tahun awal sistem = 2026, bulan awal = April (4)
+const TAHUN_AWAL = 2026;
+const BULAN_AWAL = 4;
+
 const S = {
   page:'plant', plant:null, mixing:1, tab:'drive',
   cache:{}, editDrive:null,
   pendingDriveData:null, pendingPhotoUrl:null, pendingAction:'edit',
-  searchQuery:''
+  searchQuery:'',
+  histFilter:{ bulan:'', tahun:'' }
 };
 
+// ══════════════════════════════════════════════
+// POPULATE FILTER DROPDOWN
+// ══════════════════════════════════════════════
+function buildHistoriFilterOptions(rows) {
+  const bulanSel  = id('hist-filter-bulan');
+  const tahunSel  = id('hist-filter-tahun');
+  const now       = new Date();
+  const nowYear   = now.getFullYear();
+  const nowMonth  = now.getMonth() + 1;
+
+  // Kumpulkan bulan/tahun yang ada di data
+  const pairsInData = new Set();
+  (rows || []).forEach(r => {
+    const parsed = parseTimestamp(r.timestamp);
+    if (parsed) pairsInData.add(parsed.year + '-' + parsed.month);
+  });
+
+  // Tahun: dari 2026 sampai tahun sekarang (atau +1 jika perlu)
+  const tahunOptions = [];
+  for (let y = TAHUN_AWAL; y <= nowYear + 1; y++) tahunOptions.push(y);
+
+  // Bulan: 1-12
+  const bulanOptions = [];
+  for (let m = 1; m <= 12; m++) bulanOptions.push(m);
+
+  // Reset & isi tahun
+  tahunSel.innerHTML = '<option value="">Semua Tahun</option>';
+  tahunOptions.forEach(y => {
+    const opt = document.createElement('option');
+    opt.value = y;
+    opt.textContent = y;
+    tahunSel.appendChild(opt);
+  });
+
+  // Reset & isi bulan
+  bulanSel.innerHTML = '<option value="">Semua Bulan</option>';
+  bulanOptions.forEach(m => {
+    const opt = document.createElement('option');
+    opt.value = m;
+    opt.textContent = NAMA_BULAN[m];
+    bulanSel.appendChild(opt);
+  });
+
+  // Terapkan nilai yang tersimpan di state
+  bulanSel.value = S.histFilter.bulan;
+  tahunSel.value = S.histFilter.tahun;
+}
+
+// ══════════════════════════════════════════════
+// PARSE TIMESTAMP — format fleksibel:
+//   "31/3/2026, 15.49.28"  ← format dari data
+//   "2026-03-31 15:49:28"  ← ISO
+// ══════════════════════════════════════════════
+function parseTimestamp(ts) {
+  if (!ts) return null;
+  // Format: dd/mm/yyyy, HH.mm.ss  atau dd/m/yyyy, HH.mm.ss
+  let m = String(ts).match(/^(\d{1,2})\/(\d{1,2})\/(\d{4})/);
+  if (m) return { day: +m[1], month: +m[2], year: +m[3] };
+  // Format ISO: yyyy-mm-dd
+  m = String(ts).match(/^(\d{4})-(\d{2})-(\d{2})/);
+  if (m) return { day: +m[3], month: +m[2], year: +m[1] };
+  return null;
+}
+
+// ══════════════════════════════════════════════
+// APPLY FILTER HISTORI (bulan + tahun + search)
+// ══════════════════════════════════════════════
+function applyHistoriFilter() {
+  S.histFilter.bulan = id('hist-filter-bulan').value;
+  S.histFilter.tahun = id('hist-filter-tahun').value;
+  const hasFilter = S.histFilter.bulan || S.histFilter.tahun;
+
+  // Badge periode
+  const badge = id('hist-period-badge');
+  const badgeText = id('hist-period-text');
+  const resetBtn = id('btn-reset-histori-filter');
+
+  if (hasFilter) {
+    let label = '';
+    if (S.histFilter.bulan && S.histFilter.tahun)
+      label = NAMA_BULAN[+S.histFilter.bulan] + ' ' + S.histFilter.tahun;
+    else if (S.histFilter.bulan)
+      label = NAMA_BULAN[+S.histFilter.bulan] + ' (Semua Tahun)';
+    else
+      label = 'Tahun ' + S.histFilter.tahun;
+    badgeText.textContent = label;
+    badge.style.display = 'flex';
+    resetBtn.classList.remove('hidden');
+  } else {
+    badge.style.display = 'none';
+    resetBtn.classList.add('hidden');
+  }
+
+  // Re-render tabel dengan filter terbaru
+  renderHistoriTableWithFilter();
+}
+
+function resetHistoriFilter() {
+  S.histFilter.bulan = '';
+  S.histFilter.tahun = '';
+  id('hist-filter-bulan').value = '';
+  id('hist-filter-tahun').value = '';
+  id('hist-period-badge').style.display = 'none';
+  id('btn-reset-histori-filter').classList.add('hidden');
+  renderHistoriTableWithFilter();
+}
+
+// ══════════════════════════════════════════════
+// RENDER TABEL HISTORI — dengan group per bulan
+// ══════════════════════════════════════════════
+function renderHistoriTableWithFilter() {
+  const rows = S.cache[S.plant + '_histori'];
+  if (!rows) return;
+
+  const filterBulan = S.histFilter.bulan ? +S.histFilter.bulan : null;
+  const filterTahun = S.histFilter.tahun ? +S.histFilter.tahun : null;
+  const q = S.searchQuery;
+
+  // Filter baris
+  const filtered = rows.filter(r => {
+    const parsed = parseTimestamp(r.timestamp);
+    if (filterBulan && (!parsed || parsed.month !== filterBulan)) return false;
+    if (filterTahun && (!parsed || parsed.year  !== filterTahun)) return false;
+    if (q) {
+      const text = (r.timestamp + ' ' + r.drive_id + ' ' + r.drive_nama + ' ' + r.group + ' ' + r.status + ' ' + r.keterangan).toLowerCase();
+      if (!text.includes(q)) return false;
+    }
+    return true;
+  });
+
+  // Update hasil count
+  const resultEl = id('hist-filter-result');
+  const hasFilter = filterBulan || filterTahun;
+  if (hasFilter || q) {
+    resultEl.textContent = filtered.length + ' data' + (hasFilter || q ? ' ditemukan' : '');
+  } else {
+    resultEl.textContent = rows.length + ' total data';
+  }
+
+  const noRes = id('histori-no-results');
+  const contentEl = id('histori-content');
+
+  if (!filtered.length) {
+    contentEl.innerHTML = '';
+    id('histori-search-query').textContent = q || (hasFilter ? 'periode ini' : '');
+    noRes.classList.add('visible');
+    return;
+  }
+  noRes.classList.remove('visible');
+
+  // Kelompokkan per bulan-tahun
+  const groups = {}; // key: "YYYY-MM"
+  const groupOrder = [];
+  filtered.forEach(r => {
+    const parsed = parseTimestamp(r.timestamp);
+    const key = parsed ? (parsed.year + '-' + String(parsed.month).padStart(2,'0')) : '0000-00';
+    if (!groups[key]) { groups[key] = []; groupOrder.push(key); }
+    groups[key].push(r);
+  });
+
+  // Apakah tampilkan header grup?
+  // Jika filter ke satu bulan spesifik: tidak perlu grup
+  // Jika semua bulan atau hanya filter tahun: tampilkan per bulan
+  const showGroups = !(filterBulan && filterTahun);
+
+  let html = '';
+  if (showGroups && groupOrder.length > 1) {
+    // Tampilkan per-bulan dengan header pemisah
+    groupOrder.forEach(key => {
+      const grpRows = groups[key];
+      const [yr, mo] = key.split('-').map(Number);
+      const bulanLabel = mo ? (NAMA_BULAN[mo] + ' ' + yr) : 'Tidak diketahui';
+      html += `
+        <div class="hist-month-section-head">
+          <span class="hms-icon">📅</span>
+          <span class="hms-title">${bulanLabel}</span>
+          <span class="hms-count">${grpRows.length} data</span>
+        </div>
+        <div class="hist-table-wrap">
+          <table class="hist-table">
+            <thead><tr>
+              <th>Waktu</th><th>Drive ID</th><th>Nama</th>
+              <th>Group</th><th>Status</th><th>Keterangan</th>
+            </tr></thead>
+            <tbody>${grpRows.map(histRow).join('')}</tbody>
+          </table>
+        </div>`;
+    });
+  } else {
+    // Satu tabel penuh (filter ke bulan+tahun spesifik, atau total data sedikit)
+    const label = filterBulan && filterTahun
+      ? NAMA_BULAN[filterBulan] + ' ' + filterTahun
+      : filterTahun ? 'Tahun ' + filterTahun
+      : filterBulan ? NAMA_BULAN[filterBulan]
+      : 'Semua Data';
+    if (filterBulan || filterTahun) {
+      html += `
+        <div class="hist-month-section-head">
+          <span class="hms-icon">📅</span>
+          <span class="hms-title">${label}</span>
+          <span class="hms-count">${filtered.length} data</span>
+        </div>`;
+    }
+    html += `<div class="hist-table-wrap"><table class="hist-table">
+      <thead><tr>
+        <th>Waktu</th><th>Drive ID</th><th>Nama</th>
+        <th>Group</th><th>Status</th><th>Keterangan</th>
+      </tr></thead>
+      <tbody>${filtered.map(histRow).join('')}</tbody>
+    </table></div>`;
+  }
+
+  contentEl.innerHTML = html;
+}
+
+function histRow(r) {
+  return `<tr>
+    <td class="hist-ts">${esc(r.timestamp)}</td>
+    <td class="hist-id">${esc(r.drive_id)}</td>
+    <td>${esc(r.drive_nama)}</td>
+    <td>${esc(r.group)}</td>
+    <td><span class="status-tag st-${r.status}">${r.status.toUpperCase()}</span></td>
+    <td>${esc(r.keterangan)}</td>
+  </tr>`;
+}
+
+// ══════════════════════════════════════════════════════
+// SEARCH
+// ══════════════════════════════════════════════════════
 function onSearch(val) {
   S.searchQuery = val.trim().toLowerCase();
   const clearBtn = id('search-clear');
-  const countEl  = id('search-count');
   clearBtn.classList.toggle('visible', val.length > 0);
   applySearch();
 }
@@ -678,7 +1019,7 @@ function clearSearch() {
 function applySearch() {
   const q = S.searchQuery;
   if (S.tab === 'drive')   applyDriveSearch(q);
-  if (S.tab === 'histori') applyHistoriSearch(q);
+  if (S.tab === 'histori') renderHistoriTableWithFilter();
   if (S.tab === 'pm')      applyPMSearch(q);
 }
 
@@ -700,27 +1041,6 @@ function applyDriveSearch(q) {
   if (q && total > 0) {
     id('search-count').textContent = visible + ' / ' + total;
     id('drive-search-query').textContent = q;
-    noRes.classList.toggle('visible', visible === 0);
-  } else {
-    id('search-count').textContent = '';
-    noRes.classList.remove('visible');
-  }
-}
-
-function applyHistoriSearch(q) {
-  const rows = document.querySelectorAll('#histori-content .hist-table tbody tr');
-  let visible = 0;
-  rows.forEach(row => {
-    const text = row.textContent.toLowerCase();
-    const match = !q || text.includes(q);
-    row.classList.toggle('search-hidden', !match);
-    if (match) visible++;
-  });
-  const noRes = id('histori-no-results');
-  const total = rows.length;
-  if (q && total > 0) {
-    id('search-count').textContent = visible + ' / ' + total;
-    id('histori-search-query').textContent = q;
     noRes.classList.toggle('visible', visible === 0);
   } else {
     id('search-count').textContent = '';
@@ -754,6 +1074,9 @@ function showSearchBar(show) {
   if (!show) clearSearch();
 }
 
+// ══════════════════════════════════════════════
+// LOGIN
+// ══════════════════════════════════════════════
 function requestEdit(driveId, status, keterangan, merk, spesifikasi, photoUrl) {
   S.pendingAction = 'edit';
   S.pendingDriveData = { driveId, status, keterangan, merk, spesifikasi, photoUrl };
@@ -800,6 +1123,9 @@ document.addEventListener('DOMContentLoaded', () => {
   });
 });
 
+// ══════════════════════════════════════════════
+// API
+// ══════════════════════════════════════════════
 async function apiGet(params) {
   const res = await fetch(API+'?'+new URLSearchParams(params));
   const data = await res.json();
@@ -807,6 +1133,9 @@ async function apiGet(params) {
   return data;
 }
 
+// ══════════════════════════════════════════════
+// NAVIGASI
+// ══════════════════════════════════════════════
 function navTo(page, plant) {
   if (plant) S.plant = plant;
   S.page = page;
@@ -831,6 +1160,9 @@ function updateBC() {
   s3.style.display=b3.style.display='none';
 }
 
+// ══════════════════════════════════════════════
+// RENDER PLANT PAGE
+// ══════════════════════════════════════════════
 async function renderPlantPage() {
   const el=id('plant-content');
   el.innerHTML=loadingHTML('Memuat plant...');
@@ -856,6 +1188,7 @@ async function renderPlantPage() {
     }));
   } catch(err) { el.innerHTML=errHTML(err.message,renderPlantPage); }
 }
+
 const PLANT_META = {
   MCA:{desc:'Mixing Center A',color:'#4d9fff'},MCC:{desc:'Mixing Center C',color:'#00e0f8'},
   MCD:{desc:'Mixing Center D',color:'#00f0a0'},MCG:{desc:'Mixing Center G',color:'#ffb820'},
@@ -880,6 +1213,9 @@ function plantCard(p,i) {
   </div>`;
 }
 
+// ══════════════════════════════════════════════
+// RENDER DETAIL PAGE
+// ══════════════════════════════════════════════
 async function renderDetailPage() {
   try {
     if (!S.cache[S.plant+'_drives']) {
@@ -936,6 +1272,7 @@ function selectMixing(num) {
   clearSearch();
   if (S.tab==='drive') renderDriveTab();
 }
+
 function switchTab(tab,force) {
   if (S.tab===tab&&!force) return;
   S.tab=tab;
@@ -946,9 +1283,9 @@ function switchTab(tab,force) {
   showSearchBar(tab !== 'summary');
   clearSearch();
   const placeholders = {
-    drive: 'Cari drive, merk, status, keterangan...',
+    drive:   'Cari drive, merk, status, keterangan...',
     histori: 'Cari drive ID, status, keterangan, waktu...',
-    pm: 'Cari judul PM, drive ID, teknisi, status...'
+    pm:      'Cari judul PM, drive ID, teknisi, status...'
   };
   const sb = id('search-bar');
   if (sb && placeholders[tab]) sb.placeholder = placeholders[tab];
@@ -958,6 +1295,9 @@ function switchTab(tab,force) {
   if(tab==='summary') renderSummaryTab();
 }
 
+// ══════════════════════════════════════════════
+// RENDER DRIVE TAB
+// ══════════════════════════════════════════════
 async function renderDriveTab() {
   const mixLabel=_getCurGroupLabel();
   id('drive-title').textContent=mixLabel;
@@ -1003,6 +1343,7 @@ async function renderDriveTab() {
     if (S.searchQuery) applyDriveSearch(S.searchQuery);
   } catch(err) { id('drive-content').innerHTML=errHTML(err.message,renderDriveTab); id('drive-meta').textContent='Gagal memuat'; }
 }
+
 function inuCard(d) {
   const st=d.status||'kosong';
   const stTx={ok:'OK',fault:'Fault',maint:'Maintenance',maintenance:'Maintenance',kosong:'Kosong'}[st]||st;
@@ -1018,16 +1359,33 @@ function inuCard(d) {
   </div>`;
 }
 
+// ══════════════════════════════════════════════
+// RENDER HISTORI TAB
+// ══════════════════════════════════════════════
 async function renderHistoriTab() {
-  id('histori-content').innerHTML=loadingHTML('Memuat histori...');
+  id('histori-content').innerHTML = loadingHTML('Memuat histori...');
   try {
-    if (!S.cache[S.plant+'_histori']) { const data=await apiGet({action:'getHistori',plant:S.plant}); S.cache[S.plant+'_histori']=data.histori||data; }
-    const rows=S.cache[S.plant+'_histori'];
-    if (!rows||!rows.length) { id('histori-content').innerHTML=`<div class="state-box"><div style="font-size:28px">📋</div><h3>Belum ada histori</h3></div>`; return; }
-    id('histori-content').innerHTML=`<div class="hist-table-wrap"><table class="hist-table"><thead><tr><th>Waktu</th><th>Drive ID</th><th>Nama</th><th>Group</th><th>Status</th><th>Keterangan</th></tr></thead><tbody>${rows.map(r=>`<tr><td class="hist-ts">${r.timestamp}</td><td class="hist-id">${esc(r.drive_id)}</td><td>${esc(r.drive_nama)}</td><td>${esc(r.group)}</td><td><span class="status-tag st-${r.status}">${r.status.toUpperCase()}</span></td><td>${esc(r.keterangan)}</td></tr>`).join('')}</tbody></table></div>`;
-    if (S.searchQuery) applyHistoriSearch(S.searchQuery);
-  } catch(err) { id('histori-content').innerHTML=errHTML(err.message,renderHistoriTab); }
+    if (!S.cache[S.plant + '_histori']) {
+      const data = await apiGet({ action: 'getHistori', plant: S.plant });
+      S.cache[S.plant + '_histori'] = data.histori || data;
+    }
+    const rows = S.cache[S.plant + '_histori'];
+    if (!rows || !rows.length) {
+      id('histori-content').innerHTML = `<div class="state-box"><div style="font-size:28px">📋</div><h3>Belum ada histori</h3></div>`;
+      return;
+    }
+    // Bangun dropdown filter dari data
+    buildHistoriFilterOptions(rows);
+    // Render tabel dengan filter saat ini
+    renderHistoriTableWithFilter();
+  } catch(err) {
+    id('histori-content').innerHTML = errHTML(err.message, renderHistoriTab);
+  }
 }
+
+// ══════════════════════════════════════════════
+// RENDER PM TAB
+// ══════════════════════════════════════════════
 async function renderPMTab() {
   id('pm-content').innerHTML=loadingHTML('Memuat jadwal PM...');
   try {
@@ -1043,6 +1401,9 @@ function pmCard(p) {
   return `<div class="pm-card"><div class="pm-card-id">${esc(p.id)}</div><div class="pm-card-judul">${esc(p.judul)}</div><div class="pm-card-drive">${esc(p.drive_id)}</div><div class="pm-card-meta"><span>📅 ${p.tanggal||'—'}</span><span>👤 ${esc(p.teknisi)||'—'}</span>${p.catatan?`<span>📝 ${esc(p.catatan)}</span>`:''}</div><div class="pm-card-status"><span class="status-tag st-${stClass}">${esc(p.status)}</span></div></div>`;
 }
 
+// ══════════════════════════════════════════════
+// RENDER SUMMARY TAB
+// ══════════════════════════════════════════════
 async function renderSummaryTab() {
   id('summary-content').innerHTML=loadingHTML('Memuat summary...');
   try {
@@ -1067,6 +1428,9 @@ async function renderSummaryTab() {
   } catch(err) { id('summary-content').innerHTML=errHTML(err.message,renderSummaryTab); }
 }
 
+// ══════════════════════════════════════════════
+// EDIT MODAL
+// ══════════════════════════════════════════════
 function openModal(driveId,status,keterangan,merk,spesifikasi,photoUrl){
   S.editDrive=driveId;
   id('modal-drive-id').textContent=driveId;
@@ -1092,6 +1456,9 @@ async function saveStatus(){
 id('modal').addEventListener('click',e=>{if(e.target===id('modal'))closeModal();});
 id('login-overlay').addEventListener('click',e=>{if(e.target===id('login-overlay'))closeLoginModal();});
 
+// ══════════════════════════════════════════════
+// REFRESH
+// ══════════════════════════════════════════════
 async function doRefresh(){
   const btn=id('btn-refresh'); btn.classList.add('loading');
   if(S.plant)['drives','groupList','histori','pm','summary'].forEach(k=>delete S.cache[S.plant+'_'+k]);
@@ -1099,14 +1466,20 @@ async function doRefresh(){
   if(S.page==='detail') await renderDetailPage(); else await renderPlantPage();
   btn.classList.remove('loading');
 }
+
+// ══════════════════════════════════════════════
+// UTILITIES
+// ══════════════════════════════════════════════
 function id(i){return document.getElementById(i);}
 function esc(s){return String(s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');}
 function loadingHTML(msg){return`<div class="state-box"><div class="sp"></div><p>${msg}</p></div>`;}
 function errHTML(msg,fn){const rid='r'+Date.now();setTimeout(()=>{const b=id(rid);if(b)b.onclick=fn;},50);return`<div class="state-box"><div style="font-size:28px">⚠️</div><h3>Gagal memuat</h3><p>${esc(msg)}</p><button class="btn-retry" id="${rid}">Coba Lagi</button></div>`;}
 
+// Clock
 setInterval(()=>{id('clock').textContent=new Date().toTimeString().slice(0,8);},1000);
 id('clock').textContent=new Date().toTimeString().slice(0,8);
 
+// Theme
 function toggleTheme(){
   const isLight=document.body.classList.toggle('light');
   id('btn-theme').textContent=isLight?'☀️ Light':'🌙 Dark';
@@ -1121,15 +1494,50 @@ if(localStorage.getItem('theme')==='light'){
   });
 }
 
+// ══════════════════════════════════════════════
+// PRINT PDF — Histori (gunakan data yang sudah difilter)
+// ══════════════════════════════════════════════
 async function printHistoriPDF(){
-  const rows=S.cache[S.plant+'_histori'];
-  if(!rows||!rows.length){alert('Tidak ada data histori untuk dicetak.');return;}
+  const allRows = S.cache[S.plant+'_histori'];
+  if(!allRows||!allRows.length){alert('Tidak ada data histori untuk dicetak.');return;}
+
+  const filterBulan = S.histFilter.bulan ? +S.histFilter.bulan : null;
+  const filterTahun = S.histFilter.tahun ? +S.histFilter.tahun : null;
+
+  const rows = allRows.filter(r => {
+    const parsed = parseTimestamp(r.timestamp);
+    if (filterBulan && (!parsed || parsed.month !== filterBulan)) return false;
+    if (filterTahun && (!parsed || parsed.year  !== filterTahun)) return false;
+    return true;
+  });
+
+  if(!rows.length){alert('Tidak ada data histori untuk periode yang dipilih.');return;}
+
+  let periodLabel = 'Semua Periode';
+  if (filterBulan && filterTahun) periodLabel = NAMA_BULAN[filterBulan] + ' ' + filterTahun;
+  else if (filterBulan) periodLabel = NAMA_BULAN[filterBulan] + ' (Semua Tahun)';
+  else if (filterTahun) periodLabel = 'Tahun ' + filterTahun;
+
   const {jsPDF}=window.jspdf, doc=new jsPDF({orientation:'landscape'});
-  doc.setFontSize(14);doc.setFont('helvetica','bold');doc.text(`Histori Drive — ${S.plant}`,14,16);
-  doc.setFontSize(9);doc.setFont('helvetica','normal');doc.text(`Dicetak: ${new Date().toLocaleString('id-ID')}`,14,22);
-  doc.autoTable({startY:27,head:[['Waktu','Drive ID','Nama','Group','Status','Keterangan']],body:rows.map(r=>[r.timestamp,r.drive_id,r.drive_nama||'—',r.group||'—',r.status.toUpperCase(),r.keterangan||'—']),styles:{fontSize:8,cellPadding:2},headStyles:{fillColor:[21,101,192],textColor:255,fontStyle:'bold'},alternateRowStyles:{fillColor:[240,244,248]},theme:'grid'});
-  doc.save(`Histori_${S.plant}_${new Date().toISOString().slice(0,10)}.pdf`);
+  doc.setFontSize(14);doc.setFont('helvetica','bold');
+  doc.text(`Histori Drive — ${S.plant}`,14,16);
+  doc.setFontSize(10);doc.setFont('helvetica','normal');
+  doc.text(`Periode: ${periodLabel}`,14,22);
+  doc.setFontSize(9);
+  doc.text(`Dicetak: ${new Date().toLocaleString('id-ID')} · Total: ${rows.length} data`,14,27);
+  doc.autoTable({
+    startY:32,
+    head:[['Waktu','Drive ID','Nama','Group','Status','Keterangan']],
+    body:rows.map(r=>[r.timestamp,r.drive_id,r.drive_nama||'—',r.group||'—',r.status.toUpperCase(),r.keterangan||'—']),
+    styles:{fontSize:8,cellPadding:2},
+    headStyles:{fillColor:[21,101,192],textColor:255,fontStyle:'bold'},
+    alternateRowStyles:{fillColor:[240,244,248]},
+    theme:'grid'
+  });
+  const safePeriod = periodLabel.replace(/[^a-zA-Z0-9_\-]/g,'_');
+  doc.save(`Histori_${S.plant}_${safePeriod}_${new Date().toISOString().slice(0,10)}.pdf`);
 }
+
 async function printPMPDF(){
   const jadwal=S.cache[S.plant+'_pm'];
   if(!jadwal||!jadwal.length){alert('Tidak ada data jadwal PM untuk dicetak.');return;}
