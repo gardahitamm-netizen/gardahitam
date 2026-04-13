@@ -43,7 +43,6 @@ body {
   min-height: 100vh;
   overflow-x: hidden;
   margin: 0;
-  /* FIX 1: Tambah padding-bottom agar baris terakhir tidak terpotong running text bar */
   padding: 20px 20px 90px;
 }
 
@@ -275,7 +274,6 @@ button:hover {
   border: 1px solid var(--border-mid);
   position: relative; z-index: 1;
   box-shadow: 0 4px 40px rgba(0,0,0,0.5), 0 0 0 1px var(--border-faint);
-  /* FIX 2: Tambah margin-bottom agar baris terakhir tidak terpotong */
   margin-bottom: 16px;
 }
 
@@ -284,7 +282,6 @@ table {
   border-collapse: collapse;
   background: var(--bg-card);
   table-layout: fixed;
-  /* FIX 3: Naikkan min-width agar kolom Mesin dan Status punya ruang cukup */
   min-width: 1020px;
 }
 
@@ -313,7 +310,6 @@ td {
   color: var(--text-bright);
   font-weight: 400; font-size: 14px;
   transition: background 0.12s;
-  /* FIX 4: Pastikan overflow hidden di semua td */
   overflow: hidden;
 }
 td:last-child { border-right: none; }
@@ -324,14 +320,11 @@ tr:hover td {
   color: #fff;
 }
 
-/* === MERGE VISUAL === */
-td.merged-cell      {
+td.merged-cell {
   vertical-align: middle !important;
-  /* FIX: border kiri tidak ikut terpotong oleh baris nama di sebelahnya */
   border-left: 1px solid var(--border-faint) !important;
 }
 
-/* Garis pemisah antar group — orange di atas & bawah tiap row */
 tr.group-start td {
   border-top: 1px solid var(--border-orange) !important;
   border-bottom: 1px solid var(--border-orange) !important;
@@ -340,35 +333,23 @@ tr.group-start td {
 tr.group-divider td { padding: 0 !important; height: 0 !important; border: none !important; border-bottom: 1px solid var(--border-orange) !important; }
 tr.group-divider:hover td { background: transparent !important; }
 
-tr.merged-top:hover td,
-tr.merged-mid:hover td,
-tr.merged-bot:hover td {
-  background: rgba(255,109,0,0.05) !important;
-  color: #fff;
-}
-
 th.col-delete, td.col-delete {
   width: 44px !important;
   text-align: center;
   padding: 8px 4px;
 }
 
-/* Kolom ID — no wrap, ellipsis */
 th:nth-child(1), td:nth-child(1) {
   word-break: keep-all; white-space: nowrap;
   overflow: hidden; text-overflow: ellipsis;
 }
-/* Kolom Nama */
 th:nth-child(2), td:nth-child(2) { word-break: break-word; }
-/* Kolom Tugas */
 th:nth-child(3), td:nth-child(3) { white-space: pre-wrap; word-break: break-word; }
-/* FIX 5: Kolom Mesin — wrap agar tidak overflow */
 th:nth-child(4), td:nth-child(4) {
   word-break: break-word;
   white-space: normal;
   overflow: hidden;
 }
-/* FIX 6: Kolom Status — center, pastikan select muat */
 th:nth-child(5), td:nth-child(5) { text-align: center; padding: 8px 6px; }
 th:nth-child(6), td:nth-child(6) { color: var(--text-mid); }
 th:nth-child(7), td:nth-child(7) { text-align: center; color: var(--green-ok); }
@@ -415,9 +396,7 @@ table.delete-mode .btn-delete-row {
   animation: deletePulse 1.8s ease-in-out infinite;
 }
 
-/* === STATUS BADGE ===
-   FIX 7: width 100% + max-width agar tidak overflow kolom
-   ======================================================= */
+/* === STATUS BADGE === */
 .status-select {
   width: 100%;
   max-width: 148px;
@@ -427,7 +406,6 @@ table.delete-mode .btn-delete-row {
   border: 1px solid transparent;
   letter-spacing: 0.5px; text-transform: uppercase;
   cursor: pointer; transition: all 0.2s;
-  /* Pastikan tidak overflow */
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
@@ -446,6 +424,31 @@ table.delete-mode .btn-delete-row {
   background: rgba(0,230,118,0.08);
   color: var(--green-ok);
   border-color: rgba(0,230,118,0.3);
+}
+
+/* === LOADING OVERLAY === */
+#loadingOverlay {
+  display: none;
+  position: fixed; inset: 0;
+  background: rgba(8,12,16,0.75);
+  backdrop-filter: blur(3px);
+  z-index: 8000;
+  justify-content: center; align-items: center;
+  flex-direction: column; gap: 14px;
+}
+#loadingOverlay.show { display: flex; }
+.loader-ring {
+  width: 44px; height: 44px;
+  border: 3px solid var(--border-faint);
+  border-top-color: var(--orange);
+  border-radius: 50%;
+  animation: spin 0.7s linear infinite;
+}
+@keyframes spin { to { transform: rotate(360deg); } }
+.loader-text {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 11px; letter-spacing: 2px;
+  color: var(--orange-dim); text-transform: uppercase;
 }
 
 /* === MODALS === */
@@ -657,7 +660,7 @@ table.delete-mode .btn-delete-row {
   body::before, body::after, #logo-img, #clock, .top-bar,
   #inputSection, #runningTextBar, #confirmModal, #alertModal,
   #loginModal, #editRunningModal, #waModal,
-  #deleteRowModal,
+  #deleteRowModal, #loadingOverlay,
   .btn-delete-row, td.col-delete, th.col-delete { display: none !important; }
   .page-header h2 { color: #000 !important; font-size: 20px; letter-spacing: 2px; text-shadow: none; }
   .page-header h2 span { color: #E65100 !important; }
@@ -799,17 +802,22 @@ tr.editing td:first-child::after { content: ' ✏'; font-size: 11px; color: var(
 #autoScrollBtn.active::after { width: 100%; }
 
 @media print { #autoScrollBtn { display: none !important; } }
-
 </style>
 </head>
 <body>
+
+<!-- Loading Overlay -->
+<div id="loadingOverlay">
+  <div class="loader-ring"></div>
+  <div class="loader-text">Memuat data...</div>
+</div>
 
 <button id="themeToggleBtn" onclick="toggleTheme()" title="Toggle Dark / Light Mode">
   <span class="toggle-icon" id="themeIcon">☀️</span>
   <span id="themeLabel">Light</span>
 </button>
 
-<img id="logo-img" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAeAAAAEOCAYAAABRmsRnAAABCGlDQ1BJQ0MgUHJvZmlsZQAAeJxjYGA8wQAELAYMDLl5JUVB7k4KEZFRCuwPGBiBEAwSk4sLGHADoKpv1yBqL+viUYcLcKakFicD6Q9ArFIEtBxopAiQLZIOYWuA2EkQtg2IXV5SUAJkB4DYRSFBzkB2CpCtkY7ETkJiJxcUgdT3ANk2uTmlyQh3M/Ck5oUGA2kOIJZhKGYIYnBncAL5H6IkfxEDg8VXBgbmCQixpJkMDNtbGRgkbiHEVBYwMPC3MDBsO48QQ4RJQWJRIliIBYiZ0tIYGD4tZ2DgjWRgEL7AwMAVDQsIHG5TALvNnSEfCNMZchhSgSKeDHkMyQx6QJYRgwGDIYMZAKbWPz9HbOBQAAEAAElEQVR4nOydd5gdV3n/P+ecmbllu3ovlouMi9xtbBwIBpwQCCWUhNAJvQRCDfCjQwwJJRAwODY19BoMAYNtjHu3Zcu2ZPW6qttun5lz3t8fc+dqV1pJu1rJlqz5PM8+s3f3zsyZuXPnO+978t6jiIiMjIyMjIyMx4Z6vDuQkZGRkZFxOsoEOCMjIyMj43EgE+CMjIyMjIzHgUyAMzIyMjIyHgcyAc7IyMjIyHgcyAQ4IyMjIyPjcSAT4IyMg6UeW+TwZWRkHDTe4z2AjCcem7cgq9bsYtsuun+bsKPbJS6M2bpfh0nRqixVQ7kK4IVNGrqLlJLJT1EUBVCCQEoBagU5hCuBPTCBPwFfzGfpMYFCTYJtAAAAAElFTkSuQmCC" alt="GT Radial Logo">
+<img id="logo-img" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAeAAAAEOCAYAAABRmsRnAAABCGlDQ1BJQ0MgUHJvZmlsZQAAeJxjYGA8wQAELAYMDLl5JUVB7k4KEZFRCuwPGBiBEAwSk4sLGHADoKpv1yBqL+viUYcLcKakFicD6Q9ArFIEtBxopAiQLZIOYWuA2EkQtg2IXV5SUAJkB4DYRSFBzkB2CpCtkY7ETkJiJxcUgdT3ANk2uTmlyQh3M/Ck5oUGA2kOIJZhKGYIYnBncAL5H6IkfxEDg8VXBgbmCQixpJkMDNtbGRgkbiHEVBYwMPC3MDBsO48QQ4RJQWJRIliIBYiZ0tIYGD4tZ2DgjWRgEL7AwMAVDQsIHG5TALvNnSEfCNMZchhSgSKeDHkMyQx6QJYRgwGDIYMZAKbWPz9HbOBQAAEAAElEQVR4nOydd5gdV3n/P+ecmbllu3ovlouMi9xtbBwIBpwQCCWUhNAJvQRCDfCjQwwJJRAwODY19BoMAYNtjHu3Zcu2ZPW6qttun5lz3t8fc+dqV1pJu1rJlqz5PM8+s3f3zsyZuXPnO+977l3ARERERERERERERERERERERERERERERERERERERERERERERERERERERER + "AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==" alt="GT Radial Logo" onerror="this.style.display='none'">
 
 <div class="print-header" id="printHeader"></div>
 <div id="clock"></div>
@@ -882,7 +890,6 @@ tr.editing td:first-child::after { content: ' ✏'; font-size: 11px; color: var(
 <div class="table-wrapper">
   <table id="mainTable">
     <colgroup>
-      <!-- FIX 8: Sesuaikan lebar kolom — Mesin 110px, Status 160px -->
       <col style="width:200px;min-width:180px;">
       <col style="width:120px;min-width:100px;">
       <col style="width:auto;min-width:200px;">
@@ -1007,6 +1014,38 @@ tr.editing td:first-child::after { content: ' ✏'; font-size: 11px; color: var(
 </div>
 
 <script>
+/* =====================================================
+   ⚙️ KONFIGURASI — GANTI URL DI BAWAH INI
+   Setelah deploy Apps Script, paste URL-nya di sini
+   ===================================================== */
+const GAS_URL = "https://script.google.com/macros/s/AKfycbwy8IbrOY69b4GaVuQA7nvi1_wk3d8Xd8CLb2GTnB2zehfMYi_zC89uX8pTTpyj9F7Zww/exec";
+
+/* ===== API HELPER ===== */
+async function api(action, params) {
+  showLoading(true);
+  try {
+    const url = new URL(GAS_URL);
+    url.searchParams.set("action", action);
+    if (params) {
+      Object.entries(params).forEach(function([k, v]) {
+        url.searchParams.set(k, (v === null || v === undefined) ? "" : v);
+      });
+    }
+    const res = await fetch(url.toString());
+    if (!res.ok) throw new Error("HTTP " + res.status);
+    return await res.json();
+  } catch (err) {
+    showAlert("Gagal menghubungi server: " + (err.message || err));
+    return { error: err.message };
+  } finally {
+    showLoading(false);
+  }
+}
+
+function showLoading(state) {
+  document.getElementById("loadingOverlay").classList.toggle("show", state);
+}
+
 /* ===== THEME ===== */
 (function() {
   var saved = localStorage.getItem('pjh_theme');
@@ -1094,15 +1133,16 @@ function getStatusClass(status) {
 
 /* ===== DATA ===== */
 var allTasks   = [];
-var allGroups  = [];  // groups terakhir yang di-render, untuk lookup inline edit
+var allGroups  = [];
 var deleteMode = false;
 
 function loadData(force) {
   if (!force && currentEditingRow) return;
-  google.script.run.withSuccessHandler(function(tasks) {
-    allTasks = tasks;
+  api("getTasks").then(function(res) {
+    if (res.error) { showAlert("Error getTasks: " + res.error); return; }
+    allTasks = res.data || [];
     renderTable();
-  }).getTasks();
+  });
 }
 
 /* ===================================================
@@ -1136,15 +1176,13 @@ function renderTable() {
     }
     groups[groups.length - 1].push(task);
   });
-  allGroups = groups; // simpan global untuk inline edit
+  allGroups = groups;
 
   var html = "";
   groups.forEach(function(group, groupIdx) {
-    var span = group.length;
-    var task = group[0]; // cukup 1 baris per group di HTML
+    var task = group[0];
     var sc   = getStatusClass(task.status);
     var allNamaDisplay = group.map(function(t){ return t.nama; }).join(", ");
-
     var rowClass = "group-row group-start";
 
     html += "<tr class='" + rowClass + "' data-groupid='" + String(task.id).replace(/'/g,"&#39;") + "' data-groupidx='" + groupIdx + "'>";
@@ -1156,22 +1194,22 @@ function renderTable() {
               "')\" title='Hapus group ini'>✕</button></td>";
     }
 
-    html += "<td>" + task.id + "</td>";
-    html += "<td class='nama-col'>" + allNamaDisplay + "</td>";
-    html += "<td>" + task.tugas + "</td>";
-    html += "<td>" + task.mesin + "</td>";
+    html += "<td>" + escHtml(String(task.id)) + "</td>";
+    html += "<td class='nama-col'>" + escHtml(allNamaDisplay) + "</td>";
+    html += "<td>" + escHtml(task.tugas) + "</td>";
+    html += "<td>" + escHtml(task.mesin) + "</td>";
     html += "<td style='text-align:center;padding:8px 6px;'>" +
-            "<select class='status-select " + sc + "' data-id='" + task.id +
-            "' data-prev='" + task.status + "' onchange='changeStatus(this)'>" +
+            "<select class='status-select " + sc + "' data-id='" + escHtml(String(task.id)) +
+            "' data-prev='" + escHtml(task.status) + "' onchange='changeStatus(this)'>" +
             "<option" + (task.status==="Pending"?" selected":"") + ">Pending</option>" +
             "<option" + (task.status==="Proses"?" selected":"") + ">Proses</option>" +
             "<option" + (task.status==="Selesai"?" selected":"") + ">Selesai</option>" +
             "</select></td>";
-    html += "<td>" + task.tanggal + "</td>";
+    html += "<td>" + escHtml(task.tanggal) + "</td>";
     html += "<td style='text-align:center;color:var(--green-ok);'>" +
-            (task.jamMulai || "<span style='color:var(--text-dim);font-size:11px;'>&#8212;</span>") + "</td>";
+            (task.jamMulai ? escHtml(task.jamMulai) : "<span style='color:var(--text-dim);font-size:11px;'>&#8212;</span>") + "</td>";
     html += "<td style='text-align:center;color:var(--amber-warn);'>" +
-            (task.jamSelesai || "<span style='color:var(--text-dim);font-size:11px;'>&#8212;</span>") + "</td>";
+            (task.jamSelesai ? escHtml(task.jamSelesai) : "<span style='color:var(--text-dim);font-size:11px;'>&#8212;</span>") + "</td>";
     html += "</tr>";
   });
   tbody.innerHTML = html;
@@ -1186,10 +1224,8 @@ function toggleDeleteMode() {
     var btn = document.getElementById("toggleDeleteBtn");
     if (deleteMode) {
       btn.classList.add("active");
-      btn.title = "Klik lagi untuk sembunyikan tombol hapus";
     } else {
       btn.classList.remove("active");
-      btn.title = "Tampilkan tombol hapus row";
     }
     renderTable();
   });
@@ -1212,13 +1248,10 @@ document.getElementById("confirmDeleteRowBtn").addEventListener("click", functio
   var idToDelete = pendingDeleteId;
   pendingDeleteId = null;
   document.getElementById("deleteRowModal").style.display = "none";
-  google.script.run
-    .withSuccessHandler(function(result) {
-      if (result && result.error) { showAlert("Gagal menghapus: " + result.error); }
-      else { loadData(); }
-    })
-    .withFailureHandler(function(err) { showAlert("Error: " + (err.message || err)); })
-    .deleteTask(idToDelete);
+  api("deleteTask", { id: idToDelete }).then(function(res) {
+    if (res && res.error) { showAlert("Gagal menghapus: " + res.error); }
+    else { loadData(true); }
+  });
 });
 
 document.getElementById("cancelDeleteRowBtn").addEventListener("click", function() {
@@ -1237,31 +1270,33 @@ function addTask() {
     showAlert("ID, Nama, Tugas dan Mesin harus diisi!");
     return;
   }
-  google.script.run
-    .withSuccessHandler(function() {
-      document.getElementById("id").value    = "";
-      document.getElementById("nama").value  = "";
-      document.getElementById("tugas").value = "";
-      document.getElementById("mesin").value = "";
-      loadData();
-      document.getElementById("inputSection").style.display = "none";
-    })
-    .withFailureHandler(function(err) { showAlert("Error: " + (err.message || err)); })
-    .addTask(id, nama, tugas, mesin, status);
+  api("addTask", { id: id, nama: nama, tugas: tugas, mesin: mesin, status: status }).then(function(res) {
+    if (res.error) { showAlert("Error: " + res.error); return; }
+    document.getElementById("id").value    = "";
+    document.getElementById("nama").value  = "";
+    document.getElementById("tugas").value = "";
+    document.getElementById("mesin").value = "";
+    loadData(true);
+    document.getElementById("inputSection").style.display = "none";
+  });
 }
 
 /* ===== CHANGE STATUS ===== */
 function changeStatus(select) {
-  if (currentEditingRow) { 
-    // Kembalikan value select ke nilai semula agar tidak berubah di UI
+  if (currentEditingRow) {
     select.value = select.getAttribute("data-prev") || select.value;
-    return; 
+    return;
   }
   requireLogin(function() {
     var id        = select.getAttribute("data-id");
     var newStatus = select.value;
     select.setAttribute("data-prev", newStatus);
-    google.script.run.withSuccessHandler(function() { loadData(true); }).updateTaskStatus(id, newStatus);
+    // Update warna badge langsung
+    select.className = "status-select " + getStatusClass(newStatus);
+    api("updateTaskStatus", { id: id, status: newStatus }).then(function(res) {
+      if (res.error) { showAlert("Gagal update status: " + res.error); }
+      loadData(true);
+    });
   });
 }
 
@@ -1269,11 +1304,11 @@ function changeStatus(select) {
 function archiveTasks() { document.getElementById("confirmModal").style.display = "flex"; }
 function confirmArchive() {
   closeModal();
-  google.script.run.withSuccessHandler(function(msg) {
-    showAlert(msg);
-    loadData();
+  api("moveTasksToHistory").then(function(res) {
+    showAlert(res.message || res.error || "Done");
+    loadData(true);
     document.getElementById("inputSection").style.display = "none";
-  }).moveTasksToHistory();
+  });
 }
 function closeModal() { document.getElementById("confirmModal").style.display = "none"; }
 
@@ -1382,10 +1417,11 @@ function setMarqueeText(text) {
   track.style.animation = "none"; track.offsetHeight; track.style.animation = "";
 }
 function loadRunningText() {
-  google.script.run
-    .withSuccessHandler(function(text) { setMarqueeText(text); })
-    .withFailureHandler(function() { setMarqueeText("Selamat bekerja! Tetap semangat dan utamakan keselamatan kerja."); })
-    .getRunningText();
+  api("getRunningText").then(function(res) {
+    setMarqueeText(res.data || "Selamat bekerja! Tetap semangat dan utamakan keselamatan kerja.");
+  }).catch(function() {
+    setMarqueeText("Selamat bekerja! Tetap semangat dan utamakan keselamatan kerja.");
+  });
 }
 function openEditRunning() {
   requireLogin(function() {
@@ -1397,10 +1433,11 @@ function closeEditRunning() { document.getElementById("editRunningModal").style.
 function saveRunningText() {
   var newText = document.getElementById("runningTextInput").value.trim();
   if (!newText) { showAlert("Teks tidak boleh kosong!"); return; }
-  google.script.run
-    .withSuccessHandler(function() { setMarqueeText(newText); closeEditRunning(); })
-    .withFailureHandler(function() { showAlert("Gagal menyimpan teks. Coba lagi."); })
-    .saveRunningText(newText);
+  api("saveRunningText", { text: newText }).then(function(res) {
+    if (res.error) { showAlert("Gagal menyimpan teks. Coba lagi."); return; }
+    setMarqueeText(newText);
+    closeEditRunning();
+  });
 }
 
 /* ===================================================
@@ -1411,16 +1448,13 @@ var originalRowData   = null;
 
 var _lpTimer = null, _lpTarget = null, _lpMoved = false;
 
-
 var tbody = document.getElementById("data");
 
-// Cari baris pertama dalam group - cari ke atas sampai ketemu group-start atau merged-top
 function getGroupFirstRow(tr) {
-  if (tr.classList.contains("merged-top") || tr.classList.contains("group-start")) return tr;
+  if (tr.classList.contains("group-start")) return tr;
   var prev = tr.previousElementSibling;
   while (prev) {
-    if (prev.classList.contains("merged-top") || prev.classList.contains("group-start")) return prev;
-    // Jangan lewati group-start dari group lain
+    if (prev.classList.contains("group-start")) return prev;
     if (prev.classList.contains("group-row")) { prev = prev.previousElementSibling; continue; }
     break;
   }
@@ -1454,25 +1488,19 @@ tbody.addEventListener("touchmove",   function() { _lpMoved = true; clearTimeout
 tbody.addEventListener("touchend",    function() { clearTimeout(_lpTimer); }, { passive: true });
 tbody.addEventListener("touchcancel", function() { clearTimeout(_lpTimer); }, { passive: true });
 
-
-
 function startInlineEdit(tr) {
-  if (currentEditingRow && currentEditingRow !== tr) { return; } // blokir diam-diam
+  if (currentEditingRow && currentEditingRow !== tr) { return; }
   if (tr.classList.contains("editing")) return;
-
-  // Pastikan ini baris pertama group (harus punya semua cells)
-  if (!tr.classList.contains("merged-top") && !tr.classList.contains("group-start")) return;
+  if (!tr.classList.contains("group-start")) return;
 
   var offset = deleteMode ? 1 : 0;
   var cells  = tr.children;
-  // Baris pertama group harus punya minimal 8 cells (+ 1 jika delete mode)
   var expectedMin = 8 + offset;
   if (cells.length < expectedMin) return;
 
   currentEditingRow = tr;
 
-  // Lookup group berdasarkan index, bukan ID — agar tidak ambil group lain yang kebetulan sama IDnya
-  var groupIdx  = parseInt(tr.getAttribute("data-groupidx"), 10);
+  var groupIdx   = parseInt(tr.getAttribute("data-groupidx"), 10);
   var groupTasks = (!isNaN(groupIdx) && allGroups[groupIdx]) ? allGroups[groupIdx] : null;
   if (!groupTasks || !groupTasks.length) { currentEditingRow = null; return; }
 
@@ -1519,29 +1547,29 @@ function startInlineEdit(tr) {
 }
 
 function handleInlineKeydown(e) {
-  // Hanya Escape untuk batal — simpan hanya via tombol Simpan
   if (e.key === "Escape") { e.preventDefault(); cancelInlineEdit(); }
 }
 
 function saveInlineEdit() {
   if (!currentEditingRow) return;
-  var newId        = (document.getElementById("ie-id")         || {value: originalRowData.id        }).value.trim();
-  var newNama      = (document.getElementById("ie-nama")       || {value: originalRowData.nama      }).value.trim();
-  var newTugas     = (document.getElementById("ie-tugas")      || {value: originalRowData.tugas     }).value.trim();
-  var newMesin     = (document.getElementById("ie-mesin")      || {value: originalRowData.mesin     }).value.trim();
-  var newJamMulai  = (document.getElementById("ie-jam-mulai")  || {value: originalRowData.jamMulai  }).value.trim();
-  var newJamSelesai= (document.getElementById("ie-jam-selesai")|| {value: originalRowData.jamSelesai}).value.trim();
+  var newId         = (document.getElementById("ie-id")          || {value: originalRowData.id        }).value.trim();
+  var newNama       = (document.getElementById("ie-nama")        || {value: originalRowData.nama      }).value.trim();
+  var newTugas      = (document.getElementById("ie-tugas")       || {value: originalRowData.tugas     }).value.trim();
+  var newMesin      = (document.getElementById("ie-mesin")       || {value: originalRowData.mesin     }).value.trim();
+  var newJamMulai   = (document.getElementById("ie-jam-mulai")   || {value: originalRowData.jamMulai  }).value.trim();
+  var newJamSelesai = (document.getElementById("ie-jam-selesai") || {value: originalRowData.jamSelesai}).value.trim();
 
   if (!newId || !newNama || !newTugas || !newMesin) { showAlert("Semua kolom harus diisi!"); return; }
   var oldId = originalRowData.id;
   finishInlineEdit();
-  google.script.run
-    .withSuccessHandler(function(result) {
-      if (result && result.error) { showAlert("Gagal simpan: " + result.error); }
-      loadData(true);
-    })
-    .withFailureHandler(function(err) { showAlert("Error: " + (err.message || err)); loadData(true); })
-    .updateTaskAll(oldId, newId, newNama, newTugas, newMesin, newJamMulai, newJamSelesai);
+  api("updateTaskAll", {
+    oldId: oldId, newId: newId, newNama: newNama,
+    newTugas: newTugas, newMesin: newMesin,
+    newJamMulai: newJamMulai, newJamSelesai: newJamSelesai
+  }).then(function(res) {
+    if (res && res.error) showAlert("Gagal simpan: " + res.error);
+    loadData(true);
+  });
 }
 
 function cancelInlineEdit() { finishInlineEdit(); loadData(true); }
@@ -1560,25 +1588,22 @@ function escHtml(str) {
 }
 
 /* ===================================================
-   AUTO SCROLL — loop scroll ke bawah lalu balik ke atas
+   AUTO SCROLL
    =================================================== */
 var _asActive   = false;
 var _asRaf      = null;
-var _asDir      = 1;      // 1 = ke bawah, -1 = ke atas
-var _asSpeed    = 1.2;    // pixel per frame
-var _asPausedAt = 0;      // timestamp saat di ujung, untuk jeda
-var _asPauseDur = 1800;   // ms jeda di atas/bawah sebelum balik
+var _asDir      = 1;
+var _asSpeed    = 1.2;
+var _asPausedAt = 0;
+var _asPauseDur = 1800;
 
 function toggleAutoScroll() {
   _asActive = !_asActive;
   var btn = document.getElementById("autoScrollBtn");
   if (_asActive) {
     btn.classList.add("active");
-    btn.title = "Klik untuk stop auto scroll";
-    _asDir = 1;
-    _asPausedAt = 0;
+    _asDir = 1; _asPausedAt = 0;
     _asRaf = requestAnimationFrame(_asStep);
-    // Pause auto scroll kalau user sentuh/scroll manual
     window.addEventListener("wheel",      _asPauseOnInteract, { passive: true });
     window.addEventListener("touchstart", _asPauseOnInteract, { passive: true });
   } else {
@@ -1591,12 +1616,10 @@ function _asStop() {
   if (_asRaf) { cancelAnimationFrame(_asRaf); _asRaf = null; }
   var btn = document.getElementById("autoScrollBtn");
   btn.classList.remove("active");
-  btn.title = "Auto Scroll";
   window.removeEventListener("wheel",      _asPauseOnInteract);
   window.removeEventListener("touchstart", _asPauseOnInteract);
 }
 
-// Pause sementara saat user scroll/sentuh manual, lanjut lagi 3 detik kemudian
 var _asResumeTimer = null;
 function _asPauseOnInteract() {
   if (!_asActive) return;
@@ -1609,31 +1632,23 @@ function _asPauseOnInteract() {
 
 function _asStep(ts) {
   if (!_asActive) return;
-
   var maxScroll = document.documentElement.scrollHeight - window.innerHeight;
   if (maxScroll <= 0) { _asRaf = requestAnimationFrame(_asStep); return; }
-
   var cur = window.scrollY;
-
-  // Di ujung bawah — jeda lalu balik ke atas
   if (_asDir === 1 && cur >= maxScroll - 1) {
     if (_asPausedAt === 0) _asPausedAt = ts;
     if (ts - _asPausedAt >= _asPauseDur) { _asDir = -1; _asPausedAt = 0; }
     _asRaf = requestAnimationFrame(_asStep); return;
   }
-
-  // Di ujung atas — jeda lalu scroll ke bawah lagi
   if (_asDir === -1 && cur <= 1) {
     if (_asPausedAt === 0) _asPausedAt = ts;
     if (ts - _asPausedAt >= _asPauseDur) { _asDir = 1; _asPausedAt = 0; }
     _asRaf = requestAnimationFrame(_asStep); return;
   }
-
   window.scrollBy(0, _asSpeed * _asDir);
   _asRaf = requestAnimationFrame(_asStep);
 }
 
-// Stop auto scroll kalau ada edit terbuka
 var _origStartInlineEdit = startInlineEdit;
 startInlineEdit = function(tr) {
   if (_asActive) _asStop();
