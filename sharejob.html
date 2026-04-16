@@ -187,9 +187,6 @@ body::after {
 }
 #toggleDeleteBtn.active::after { width: 100%; background: var(--red-err); }
 
-/* =====================================================
-   FILTER BAR
-   ===================================================== */
 .hist-filter-bar {
   display: flex;
   align-items: center;
@@ -234,7 +231,6 @@ body::after {
 .hist-filter-select:focus { border-color: var(--orange); }
 .hist-filter-select option { background: var(--bg-card); }
 
-/* Status filter khusus warna */
 #filterStatus option[value="Pending"] { color: var(--blue-info); }
 #filterStatus option[value="Proses"]  { color: var(--amber-warn); }
 #filterStatus option[value="Selesai"] { color: var(--green-ok); }
@@ -287,7 +283,6 @@ body::after {
   flex-shrink: 0;
 }
 
-/* Month section header */
 .hist-month-section-head {
   display: flex;
   align-items: center;
@@ -311,7 +306,6 @@ body::after {
   margin-left: auto;
 }
 
-/* === INPUT SECTION === */
 #inputSection {
   background: var(--bg-panel);
   border: 1px solid var(--border-orange);
@@ -392,7 +386,6 @@ button:hover {
 }
 #inputSection hr { border: none; border-top: 1px solid var(--border-faint); margin: 10px 0 0; }
 
-/* === TABLE === */
 .table-wrapper {
   overflow-x: auto;
   border-radius: 6px;
@@ -458,32 +451,6 @@ th.col-delete, td.col-delete {
   padding: 8px 4px;
 }
 
-th:nth-child(1), td:nth-child(1) {
-  word-break: keep-all; white-space: nowrap;
-  overflow: hidden; text-overflow: ellipsis;
-}
-th:nth-child(2), td:nth-child(2) { word-break: break-word; }
-th:nth-child(3), td:nth-child(3) { white-space: pre-wrap; word-break: break-word; }
-th:nth-child(4), td:nth-child(4) {
-  word-break: break-word;
-  white-space: normal;
-  overflow: hidden;
-}
-th:nth-child(5), td:nth-child(5) { text-align: center; padding: 8px 6px; }
-th:nth-child(6), td:nth-child(6) { color: var(--text-mid); }
-th:nth-child(7), td:nth-child(7) { text-align: center; color: var(--green-ok); }
-th:nth-child(8), td:nth-child(8) { text-align: center; color: var(--amber-warn); }
-
-table.delete-mode th:nth-child(1), table.delete-mode td:nth-child(1) { width: 44px; }
-table.delete-mode th:nth-child(2), table.delete-mode td:nth-child(2) { width: 170px; }
-table.delete-mode th:nth-child(3), table.delete-mode td:nth-child(3) { width: 110px; word-break: break-word; }
-table.delete-mode th:nth-child(4), table.delete-mode td:nth-child(4) { width: auto; white-space: pre-wrap; }
-table.delete-mode th:nth-child(5), table.delete-mode td:nth-child(5) { width: 75px; }
-table.delete-mode th:nth-child(6), table.delete-mode td:nth-child(6) { width: 160px; text-align: center; padding: 8px 4px; }
-table.delete-mode th:nth-child(7), table.delete-mode td:nth-child(7) { width: 105px; color: var(--text-mid); }
-table.delete-mode th:nth-child(8), table.delete-mode td:nth-child(8) { width: 75px; text-align: center; color: var(--green-ok); }
-table.delete-mode th:nth-child(9), table.delete-mode td:nth-child(9) { width: 75px; text-align: center; color: var(--amber-warn); }
-
 .btn-delete-row {
   display: inline-flex;
   align-items: center; justify-content: center;
@@ -507,15 +474,15 @@ table.delete-mode th:nth-child(9), table.delete-mode td:nth-child(9) { width: 75
   color: #fff;
 }
 
-@keyframes deletePulse {
-  0%, 100% { box-shadow: 0 0 0 0 rgba(255,23,68,0.4); }
-  50%       { box-shadow: 0 0 0 5px rgba(255,23,68,0); }
-}
 table.delete-mode .btn-delete-row {
   animation: deletePulse 1.8s ease-in-out infinite;
 }
 
-/* === STATUS BADGE === */
+@keyframes deletePulse {
+  0%, 100% { box-shadow: 0 0 0 0 rgba(255,23,68,0.4); }
+  50%       { box-shadow: 0 0 0 5px rgba(255,23,68,0); }
+}
+
 .status-select {
   width: 100%;
   max-width: 148px;
@@ -545,7 +512,6 @@ table.delete-mode .btn-delete-row {
   border-color: rgba(0,230,118,0.3);
 }
 
-/* === LOADING OVERLAY === */
 #loadingOverlay {
   display: none;
   position: fixed; inset: 0;
@@ -570,7 +536,6 @@ table.delete-mode .btn-delete-row {
   color: var(--orange-dim); text-transform: uppercase;
 }
 
-/* === MODALS === */
 .modal {
   display: none; position: fixed; inset: 0;
   background: rgba(0,0,0,0.75);
@@ -713,7 +678,6 @@ table.delete-mode .btn-delete-row {
 }
 .wa-cancel-btn:hover { background: rgba(255,23,68,0.14); opacity: 1; }
 
-/* === RUNNING TEXT BAR === */
 #runningTextBar {
   position: fixed; bottom: 0; left: 0;
   width: 100%; height: 44px;
@@ -770,1288 +734,334 @@ table.delete-mode .btn-delete-row {
 ::-webkit-scrollbar-thumb { background: var(--orange-dim); border-radius: 3px; }
 ::-webkit-scrollbar-thumb:hover { background: var(--orange); }
 
-/* === PRINT STYLES — AUTO SCALE 90% === */
-.print-header {
-  display: none; text-align: center;
-  font-size: 12px; color: #555; margin-bottom: 8px;
-}
+.print-header { display: none; text-align: center; font-size: 12px; color: #555; margin-bottom: 8px; }
 
 @media print {
-  @page {
-    size: auto;
-    margin: 8mm;
-  }
-  @page :first {
-    size: portrait;
-  }
-
-  html {
-    zoom: 90%;
-    -webkit-print-color-adjust: exact;
-    print-color-adjust: exact;
-  }
-
+  @page { size: portrait; margin: 8mm; }
+  html { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
   body {
-    background: #fff !important;
-    color: #000 !important;
-    padding: 5px;
-    zoom: 90%;
+    background: #fff !important; color: #000 !important; padding: 5px;
   }
-
-  body::before, body::after, #logo-img, #clock, .top-bar,
-  #inputSection, #runningTextBar, #confirmModal, #alertModal,
-  #loginModal, #editRunningModal, #waModal,
-  #deleteRowModal, #loadingOverlay,
-  .btn-delete-row, td.col-delete, th.col-delete,
-  .hist-filter-bar { display: none !important; }
-
-  .page-header h2 { color: #000 !important; font-size: 20px; letter-spacing: 2px; text-shadow: none; }
+  body::before, body::after, #logo-img, #clock, .top-bar, #inputSection, #runningTextBar,
+  .modal, #loadingOverlay, .btn-delete-row, td.col-delete, th.col-delete, .hist-filter-bar,
+  #themeToggleBtn { display: none !important; }
+  .page-header h2 { color: #000 !important; font-size: 20px; }
   .page-header h2 span { color: #E65100 !important; }
   .print-header { display: block !important; }
   .header-badge { color: #555 !important; }
   .header-line::before, .header-line::after { background: #ccc !important; }
-
   table {
-    background: white !important;
-    font-size: 11px;
-    border-collapse: collapse;
-    width: 100% !important;
-    min-width: unset !important;
-    table-layout: auto !important;
+    background: white !important; font-size: 11px; width: 100% !important;
+    border-collapse: collapse; page-break-inside: auto;
   }
+  thead { display: table-header-group; }
+  tr { page-break-inside: avoid; break-inside: avoid; }
+  tr.print-page-break { page-break-after: always; break-after: page; }
   th {
-    background: #E65100 !important;
-    color: white !important;
-    font-size: 10px;
-    padding: 5px 7px;
-    border: 1px solid #ccc !important;
-    white-space: nowrap;
+    background: #E65100 !important; color: white !important;
+    font-size: 10px; padding: 5px 7px; border: 1px solid #ccc !important;
   }
   td {
-    background: white !important;
-    color: #000 !important;
-    padding: 4px 7px;
-    border: 1px solid #ccc !important;
-    font-size: 11px;
-    overflow: visible !important;
-    white-space: normal !important;
-    word-break: break-word !important;
+    background: white !important; color: #000 !important;
+    padding: 4px 7px; border: 1px solid #ccc !important;
+    font-size: 11px; word-break: break-word;
   }
   tr:nth-child(even) td { background: #f5f5f5 !important; }
-  tr.group-start td {
-    border-top: 2px solid #E65100 !important;
-    border-bottom: 1px solid #ccc !important;
-  }
   .status-select {
-    font-size: 10px;
-    background: transparent !important;
-    color: #000 !important;
-    border: 1px solid #999 !important;
+    font-size: 10px; background: transparent !important;
+    color: #000 !important; border: 1px solid #999 !important;
     pointer-events: none;
-    max-width: none !important;
   }
   .table-wrapper { border: none !important; box-shadow: none !important; overflow: visible !important; }
-
   tr.filter-hidden { display: none !important; }
-
-  .print-filter-info {
-    display: block !important;
-    font-size: 11px;
-    color: #555;
-    margin-bottom: 6px;
-    font-family: monospace;
-  }
 }
-
-/* === LIGHT MODE === */
-body.light-mode {
-  --bg-void:       #F0F2F5;
-  --bg-panel:      #FFFFFF;
-  --bg-card:       #FAFBFC;
-  --bg-row-alt:    #F5F7FA;
-  --orange:        #E65100;
-  --orange-dim:    #BF360C;
-  --orange-glow:   rgba(230,81,0,0.12);
-  --orange-faint:  rgba(230,81,0,0.06);
-  --steel:         #455A64;
-  --steel-dim:     #607D8B;
-  --steel-dark:    #ECEFF1;
-  --green-ok:      #00897B;
-  --amber-warn:    #F57F17;
-  --red-err:       #C62828;
-  --blue-info:     #1565C0;
-  --text-bright:   #1A2332;
-  --text-mid:      #455A64;
-  --text-dim:      #90A4AE;
-  --border-faint:  rgba(69,90,100,0.1);
-  --border-mid:    rgba(69,90,100,0.22);
-  --border-orange: rgba(230,81,0,0.4);
-  --teal:          #007aaa;
-  --teal-bg:       rgba(0,122,170,0.08);
-  --teal-bd:       rgba(0,122,170,0.3);
-}
-body.light-mode { background: var(--bg-void); color: var(--text-bright); }
-body.light-mode::before {
-  background-image:
-    linear-gradient(rgba(230,81,0,0.04) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(230,81,0,0.04) 1px, transparent 1px);
-}
-body.light-mode #logo-img { filter: drop-shadow(0 2px 10px rgba(230,81,0,0.2)); }
-body.light-mode .table-wrapper { box-shadow: 0 2px 20px rgba(0,0,0,0.12), 0 0 0 1px var(--border-faint); }
-body.light-mode .pending { background: rgba(21,101,192,0.1); color: var(--blue-info); border-color: rgba(21,101,192,0.35); }
-body.light-mode .proses  { background: rgba(245,127,23,0.1); color: var(--amber-warn); border-color: rgba(245,127,23,0.35); }
-body.light-mode .selesai { background: rgba(0,137,123,0.1); color: var(--green-ok); border-color: rgba(0,137,123,0.35); }
-body.light-mode .modal-box { box-shadow: 0 0 40px rgba(230,81,0,0.08), 0 16px 60px rgba(0,0,0,0.15); }
-body.light-mode #waModal .modal-box { box-shadow: 0 0 40px rgba(0,137,123,0.08), 0 16px 60px rgba(0,0,0,0.15); }
-body.light-mode .wa-preview { background: #F0F8F5; border-color: rgba(0,137,123,0.25); color: #2D6A5E; }
-body.light-mode #waPhoneInput { background: #F0F8F5; color: var(--green-ok); border-color: rgba(0,137,123,0.3); }
-body.light-mode #inputSection { background: var(--bg-panel); border-color: var(--border-orange); }
-body.light-mode #runningTextBar { background: var(--bg-panel); border-top-color: var(--border-orange); box-shadow: 0 -2px 12px rgba(0,0,0,0.08); }
-body.light-mode #editRunningBtn { border-right-color: var(--border-faint); }
-body.light-mode #marqueeTrack { color: var(--orange-dim); }
-body.light-mode #clock { color: var(--orange-dim); text-shadow: none; }
-body.light-mode h2 { color: var(--orange-dim); text-shadow: none; }
-body.light-mode h2 span { color: var(--orange); text-shadow: none; }
-body.light-mode .hist-filter-bar { background: #eaf2fc; border-color: #b8ccec; }
-body.light-mode .hist-filter-select { background: #ffffff !important; border-color: #b8ccec !important; color: #0d1a2e !important; }
-body.light-mode .hist-filter-label { color: #3a5a80; }
-body.light-mode .hist-period-badge { background: rgba(0,122,170,0.1); border-color: rgba(0,122,170,0.3); color: #007aaa; }
-body.light-mode .btn-reset-filter { color: #3a5a80; border-color: #b8ccec; }
-body.light-mode .hist-month-section-head { background: rgba(230,81,0,0.04); border-top-color: rgba(230,81,0,0.2); }
 
 #themeToggleBtn {
-  position: fixed;
-  bottom: 54px; right: 14px;
-  z-index: 3000;
+  position: fixed; bottom: 54px; right: 14px; z-index: 3000;
   display: inline-flex; align-items: center; justify-content: center;
-  width: 36px; height: 36px;
-  border-radius: 50%;
-  background: var(--bg-panel);
-  border: 1px solid var(--border-mid);
-  cursor: pointer;
-  opacity: 0.45;
-  transition: opacity 0.25s, box-shadow 0.25s, border-color 0.25s, transform 0.2s;
+  width: 36px; height: 36px; border-radius: 50%;
+  background: var(--bg-panel); border: 1px solid var(--border-mid);
+  cursor: pointer; opacity: 0.45; transition: all 0.25s;
   box-shadow: 0 2px 8px rgba(0,0,0,0.35);
-  padding: 0;
 }
-#themeToggleBtn:hover {
-  opacity: 1;
-  border-color: var(--border-orange);
-  box-shadow: 0 0 14px var(--orange-glow), 0 4px 14px rgba(0,0,0,0.4);
-  transform: scale(1.08);
-}
-#themeToggleBtn .toggle-icon { font-size: 16px; line-height: 1; pointer-events: none; }
-#themeToggleBtn #themeLabel { display: none; }
+#themeToggleBtn:hover { opacity: 1; border-color: var(--border-orange); transform: scale(1.08); }
+#themeToggleBtn .toggle-icon { font-size: 16px; }
 
-body, body * {
-  transition: background-color 0.3s ease, color 0.2s ease,
-              border-color 0.2s ease, box-shadow 0.2s ease;
+body.light-mode {
+  --bg-void: #F0F2F5; --bg-panel: #FFFFFF; --bg-card: #FAFBFC;
+  --orange: #E65100; --orange-dim: #BF360C; --text-bright: #1A2332;
+  --text-mid: #455A64; --border-faint: rgba(69,90,100,0.1);
 }
-body::after, #marqueeTrack { transition: none !important; }
+body.light-mode .status-select.pending { background: rgba(21,101,192,0.1); }
+body.light-mode .status-select.proses { background: rgba(245,127,23,0.1); }
+body.light-mode .status-select.selesai { background: rgba(0,137,123,0.1); }
 
-/* === INLINE EDIT === */
-tr.editing td {
-  background: rgba(255,109,0,0.06) !important;
-  outline: none;
-}
-tr.editing td:first-child { border-left: 2px solid var(--orange); }
-tr.editing td:last-child  { border-right: 2px solid var(--orange); }
-tr.editing td {
-  border-top: 1px solid var(--border-orange) !important;
-  border-bottom: 1px solid var(--border-orange) !important;
-}
-.inline-input {
-  width: 100%;
-  background: var(--bg-void);
-  color: var(--text-bright);
-  border: 1px solid var(--orange);
-  border-radius: 3px;
-  padding: 5px 8px;
-  font-family: 'Exo 2', sans-serif;
-  font-size: 14px; font-weight: 400;
-  box-sizing: border-box;
-  resize: vertical; min-height: 32px;
-}
-.inline-input:focus { outline: none; box-shadow: 0 0 0 2px var(--orange-glow); }
-tr.editing td:first-child::after { content: ' ✏'; font-size: 11px; color: var(--orange); opacity: 0.7; }
-.inline-save-bar { display: flex; gap: 6px; margin-top: 6px; }
-.inline-btn {
-  font-family: 'Exo 2', sans-serif;
-  font-size: 11px; font-weight: 700;
-  letter-spacing: 1px; text-transform: uppercase;
-  padding: 4px 10px; border-radius: 3px;
-  cursor: pointer; border: 1px solid; transition: all 0.15s;
-}
-.inline-btn-save  { color: var(--green-ok); border-color: rgba(0,230,118,0.4); background: rgba(0,230,118,0.07); }
-.inline-btn-save:hover  { background: rgba(0,230,118,0.15); }
-.inline-btn-cancel { color: var(--text-dim); border-color: var(--border-mid); background: transparent; }
-.inline-btn-cancel:hover { color: var(--text-mid); }
-
-#autoScrollBtn { color: var(--text-mid); }
-#autoScrollBtn svg { fill: var(--steel-dim); transition: fill 0.18s; }
-#autoScrollBtn:hover svg { fill: var(--orange); }
-#autoScrollBtn.active {
-  color: var(--orange);
-  border-color: var(--border-orange);
-  background: var(--orange-faint);
-  box-shadow: 0 0 12px var(--orange-glow);
-}
-#autoScrollBtn.active svg { fill: var(--orange); }
-#autoScrollBtn.active::after { width: 100%; }
-
-@media print { #autoScrollBtn { display: none !important; } }
+#autoScrollBtn.active { color: var(--orange); border-color: var(--border-orange); background: var(--orange-faint); }
 </style>
 </head>
 <body>
 
-<!-- Loading Overlay -->
-<div id="loadingOverlay">
-  <div class="loader-ring"></div>
-  <div class="loader-text">Memuat data...</div>
-</div>
-
-<button id="themeToggleBtn" onclick="toggleTheme()" title="Toggle Dark / Light Mode">
-  <span class="toggle-icon" id="themeIcon">☀️</span>
-  <span id="themeLabel">Light</span>
-</button>
-
+<div id="loadingOverlay"><div class="loader-ring"></div><div class="loader-text">Memuat data...</div></div>
+<button id="themeToggleBtn" onclick="toggleTheme()"><span class="toggle-icon" id="themeIcon">☀️</span></button>
 <img id="logo-img" src="" alt="GT Radial Logo" onerror="this.style.display='none'">
-
 <div class="print-header" id="printHeader"></div>
 <div id="clock"></div>
-
-<div class="page-header">
-  <h2>PEMBAGIAN <span>JOB</span> HARIAN</h2>
-  <div class="header-line">
-    <span class="header-badge">GT RADIAL &bull; GAJAH TUNGGAL &bull; PRODUCTION MONITORING SYSTEM</span>
-  </div>
-</div>
+<div class="page-header"><h2>PEMBAGIAN <span>JOB</span> HARIAN</h2><div class="header-line"><span class="header-badge">GT RADIAL &bull; GAJAH TUNGGAL &bull; PRODUCTION MONITORING SYSTEM</span></div></div>
 
 <div class="top-bar">
-  <button class="tb-btn" id="toggleInputBtn" onclick="toggleInput()">
-    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16">
-      <path d="M12.146.854a.5.5 0 0 1 .708 0l2.292 2.292a.5.5 0 0 1 0 .708L4.207 14.793 0 16l1.207-4.207L12.146.854z"/>
-    </svg>
-  </button>
-
-  <button class="tb-btn" id="toggleDeleteBtn" onclick="toggleDeleteMode()" style="width:44px;padding:0;">
-    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" style="width:18px;height:18px;">
-      <path d="M6 19c0 1.1.9 2 2 2h8c1.1 0 2-.9 2-2V7H6v12zM19 4h-3.5l-1-1h-5l-1 1H5v2h14V4z"/>
-    </svg>
-  </button>
-
-  <button class="tb-btn" id="printBtn" onclick="doPrint()">
-    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor">
-      <path d="M19 8H5c-1.66 0-3 1.34-3 3v6h4v4h12v-4h4v-6c0-1.66-1.34-3-3-3zm-3 11H8v-5h8v5zm3-7c-.55 0-1-.45-1-1s.45-1 1-1 1 .45 1 1-.45 1-1 1zm-1-9H6v4h12V3z"/>
-    </svg>
-    Cetak
-  </button>
-
-  <button class="tb-btn" id="waBtn" onclick="openWaModal()">
-    <svg viewBox="0 0 32 32" fill="none">
-      <path d="M23.5 8.5C21.6 6.6 19.1 5.5 16.4 5.5C10.8 5.5 6.3 10 6.3 15.6C6.3 17.4 6.8 19.2 7.7 20.8L6.2 26.5L12.1 25C13.6 25.8 15.2 26.3 16.8 26.3H16.9C22.5 26.3 27 21.8 27 16.2C27 13.5 25.9 11 24 9.1L23.5 8.5ZM16.4 24.6H16.3C14.9 24.6 13.5 24.2 12.3 23.4L12 23.2L8.7 24.1L9.6 20.9L9.4 20.6C8.5 19.3 8.1 17.8 8.1 16.2C8.1 11.3 12.1 7.3 17 7.3C19.4 7.3 21.6 8.2 23.3 9.9C24.9 11.6 25.9 13.8 25.9 16.2C25.9 21.1 21.9 24.6 16.4 24.6ZM21.9 18.1C21.6 17.9 20.2 17.2 20 17.1C19.7 17 19.6 16.9 19.4 17.2C19.2 17.5 18.7 18.1 18.6 18.3C18.4 18.5 18.3 18.5 18 18.3C17.7 18.2 16.8 17.9 15.7 16.9C14.9 16.2 14.3 15.3 14.2 15C14.1 14.7 14.2 14.6 14.4 14.4C14.5 14.3 14.7 14.1 14.9 13.9C15 13.8 15.1 13.6 15.2 13.5C15.3 13.3 15.2 13.1 15.2 13C15.1 12.8 14.6 11.5 14.3 10.9C14.1 10.4 13.9 10.5 13.7 10.5H13.2C13 10.5 12.7 10.6 12.4 10.9C12.2 11.2 11.4 11.9 11.4 13.2C11.4 14.5 12.4 15.8 12.6 16C12.7 16.2 14.5 19 17.4 20.1C18.1 20.4 18.7 20.5 19.2 20.6C19.9 20.8 20.5 20.8 21 20.7C21.5 20.6 22.6 20 22.9 19.3C23.1 18.6 23.1 18.1 23 18C22.9 17.9 22.6 17.8 21.9 18.1Z" fill="currentColor"/>
-    </svg>
-    Kirim WA
-  </button>
-
-  <button class="tb-btn" id="autoScrollBtn" onclick="toggleAutoScroll()" title="Auto Scroll">
-    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" style="width:18px;height:18px;">
-      <path d="M12 4l-1.41 1.41L16.17 11H4v2h12.17l-5.58 5.59L12 20l8-8z"/>
-    </svg>
-    Auto Scroll
-  </button>
+  <button class="tb-btn" id="toggleInputBtn" onclick="toggleInput()"><svg viewBox="0 0 16 16"><path d="M12.146.854a.5.5 0 0 1 .708 0l2.292 2.292a.5.5 0 0 1 0 .708L4.207 14.793 0 16l1.207-4.207L12.146.854z"/></svg></button>
+  <button class="tb-btn" id="toggleDeleteBtn" onclick="toggleDeleteMode()" style="width:44px;padding:0;"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M6 19c0 1.1.9 2 2 2h8c1.1 0 2-.9 2-2V7H6v12zM19 4h-3.5l-1-1h-5l-1 1H5v2h14V4z"/></svg></button>
+  <button class="tb-btn" id="printBtn" onclick="doPrint()"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M19 8H5c-1.66 0-3 1.34-3 3v6h4v4h12v-4h4v-6c0-1.66-1.34-3-3-3zm-3 11H8v-5h8v5zm3-7c-.55 0-1-.45-1-1s.45-1 1-1 1 .45 1 1-.45 1-1 1zm-1-9H6v4h12V3z"/></svg> Cetak</button>
+  <button class="tb-btn" id="waBtn" onclick="openWaModal()"><svg viewBox="0 0 32 32" fill="none"><path d="M23.5 8.5C21.6 6.6 19.1 5.5 16.4 5.5C10.8 5.5 6.3 10 6.3 15.6C6.3 17.4 6.8 19.2 7.7 20.8L6.2 26.5L12.1 25C13.6 25.8 15.2 26.3 16.8 26.3H16.9C22.5 26.3 27 21.8 27 16.2C27 13.5 25.9 11 24 9.1L23.5 8.5Z" fill="currentColor"/></svg> Kirim WA</button>
+  <button class="tb-btn" id="autoScrollBtn" onclick="toggleAutoScroll()"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 4l-1.41 1.41L16.17 11H4v2h12.17l-5.58 5.59L12 20l8-8z"/></svg> Auto Scroll</button>
 </div>
 
-<!-- Input section -->
-<div id="inputSection" style="display:none;">
-  <div class="form-scroll">
-    <div class="form-container">
-      <input type="text" id="id" placeholder="Nomor ID">
-      <div class="nama-wrap">
-        <textarea id="nama" placeholder="Nama (1 nama per baris)"></textarea>
-        <span class="nama-hint">↵ ENTER = nama baru | otomatis jadi baris terpisah</span>
-      </div>
-      <textarea id="tugas" placeholder="Tugas"></textarea>
-      <input type="text" id="mesin" placeholder="Mesin">
-      <select id="status">
-        <option>Pending</option>
-        <option>Proses</option>
-        <option>Selesai</option>
-      </select>
-      <button type="button" onclick="addTask()">Tambah</button>
-      <button type="button" onclick="archiveTasks()">Archive</button>
-    </div>
-  </div>
-  <hr>
-</div>
+<div id="inputSection" style="display:none;"><div class="form-scroll"><div class="form-container"><input type="text" id="id" placeholder="Nomor ID"><div class="nama-wrap"><textarea id="nama" placeholder="Nama (1 nama per baris)"></textarea><span class="nama-hint">↵ ENTER = nama baru</span></div><textarea id="tugas" placeholder="Tugas"></textarea><input type="text" id="mesin" placeholder="Mesin"><select id="status"><option>Pending</option><option>Proses</option><option>Selesai</option></select><button type="button" onclick="addTask()">Tambah</button><button type="button" onclick="archiveTasks()">Archive</button></div></div><hr></div>
 
-<!-- FILTER BAR dengan tambahan filter Status -->
-<div class="hist-filter-bar" id="histFilterBar">
-  <span class="hist-filter-label">📅 Filter:</span>
-  <div class="hist-filter-group">
-    <select class="hist-filter-select" id="filterBulan" onchange="applyFilter()">
-      <option value="">Semua Bulan</option>
-    </select>
-  </div>
-  <span class="hist-filter-sep">/</span>
-  <div class="hist-filter-group">
-    <select class="hist-filter-select" id="filterTahun" onchange="applyFilter()">
-      <option value="">Semua Tahun</option>
-    </select>
-  </div>
-  <span class="hist-filter-sep">|</span>
-  <div class="hist-filter-group">
-    <select class="hist-filter-select" id="filterStatus" onchange="applyFilter()">
-      <option value="">Semua Status</option>
-      <option value="Pending">⏳ Pending</option>
-      <option value="Proses">🔄 Proses</option>
-      <option value="Selesai">✅ Selesai</option>
-    </select>
-  </div>
-  <div class="hist-period-badge" id="periodBadge" style="display:none;">
-    <span>📋</span><span id="periodText">—</span>
-  </div>
-  <button class="btn-reset-filter hidden" id="btnResetFilter" onclick="resetFilter()">✕ Reset</button>
-  <span class="hist-filter-result" id="filterResult"></span>
-</div>
+<div class="hist-filter-bar"><span class="hist-filter-label">📅 Filter:</span><div class="hist-filter-group"><select class="hist-filter-select" id="filterBulan" onchange="applyFilter()"><option value="">Semua Bulan</option></select></div><span class="hist-filter-sep">/</span><div class="hist-filter-group"><select class="hist-filter-select" id="filterTahun" onchange="applyFilter()"><option value="">Semua Tahun</option></select></div><span class="hist-filter-sep">|</span><div class="hist-filter-group"><select class="hist-filter-select" id="filterStatus" onchange="applyFilter()"><option value="">Semua Status</option><option value="Pending">⏳ Pending</option><option value="Proses">🔄 Proses</option><option value="Selesai">✅ Selesai</option></select></div><div class="hist-period-badge" style="display:none;"><span>📋</span><span id="periodText">—</span></div><button class="btn-reset-filter hidden" id="btnResetFilter" onclick="resetFilter()">✕ Reset</button><span class="hist-filter-result" id="filterResult"></span></div>
 
-<div class="table-wrapper">
-  <table id="mainTable">
-    <colgroup>
-      <col style="width:200px;min-width:180px;">
-      <col style="width:120px;min-width:100px;">
-      <col style="width:auto;min-width:200px;">
-      <col style="width:110px;min-width:100px;">
-      <col style="width:160px;min-width:150px;">
-      <col style="width:95px;min-width:90px;">
-      <col style="width:65px;min-width:60px;">
-      <col style="width:65px;min-width:60px;">
-    </colgroup>
-    <thead>
-      <tr id="theadRow">
-        <th>ID / No. Mesin</th>
-        <th>Nama</th>
-        <th>Tugas</th>
-        <th>Mesin</th>
-        <th>Status</th>
-        <th>Tanggal</th>
-        <th>Mulai</th>
-        <th>Selesai</th>
-      </tr>
-    </thead>
-    <tbody id="data"></tbody>
-  </table>
-</div>
+<div class="table-wrapper"><table id="mainTable"><colgroup><col style="width:200px;"><col style="width:120px;"><col style="width:auto;"><col style="width:110px;"><col style="width:160px;"><col style="width:95px;"><col style="width:65px;"><col style="width:65px;"></colgroup><thead><tr id="theadRow"><th>ID / No. Mesin</th><th>Nama</th><th>Tugas</th><th>Mesin</th><th>Status</th><th>Tanggal</th><th>Mulai</th><th>Selesai</th></tr></thead><tbody id="data"></tbody></table></div>
 
-<!-- Modal Konfirmasi Archive -->
-<div id="confirmModal" class="modal">
-  <div class="modal-box">
-    <h3>⚠ Konfirmasi Archive</h3>
-    <p>Semua job hari ini akan dipindah ke arsip. Lanjutkan?</p>
-    <br>
-    <button onclick="confirmArchive()">Ya, Archive</button>
-    <button onclick="closeModal()" style="color:var(--text-mid);border-color:var(--border-mid);">Batal</button>
-  </div>
-</div>
-
-<!-- Modal Alert -->
-<div id="alertModal" class="modal">
-  <div class="modal-box">
-    <p id="alertText"></p>
-    <br>
-    <button onclick="closeAlert()">OK</button>
-  </div>
-</div>
-
-<!-- Modal Login -->
-<div id="loginModal" class="modal">
-  <div class="modal-box">
-    <h3>🔐 Autentikasi</h3>
-    <input type="text" id="loginUser" placeholder="Username" style="margin-bottom:10px;font-size:16px;padding:10px;"><br>
-    <input type="password" id="loginPass" placeholder="Password" style="margin-bottom:16px;font-size:16px;padding:10px;"><br>
-    <button onclick="doLogin()">Login</button>
-    <button onclick="closeLogin()" style="color:var(--text-mid);border-color:var(--border-mid);">Batal</button>
-  </div>
-</div>
-
-<!-- Modal Konfirmasi Hapus Row -->
-<div id="deleteRowModal" class="modal">
-  <div class="modal-box">
-    <h3>🗑 Hapus Job?</h3>
-    <p id="deleteRowDesc" style="margin-bottom:8px;font-size:15px;color:var(--text-bright);"></p>
-    <p style="font-size:13px;color:var(--text-dim);margin-bottom:18px;">Tindakan ini tidak dapat dibatalkan.</p>
-    <div style="display:flex;justify-content:center;gap:12px;">
-      <button id="confirmDeleteRowBtn">Ya, Hapus</button>
-      <button id="cancelDeleteRowBtn">Batal</button>
-    </div>
-  </div>
-</div>
-
-<!-- Modal WA -->
-<div id="waModal">
-  <div class="modal-box">
-    <h3>
-      <svg width="22" height="22" viewBox="0 0 32 32" fill="none">
-        <path d="M16.4 24.6H16.3C14.9 24.6 13.5 24.2 12.3 23.4L12 23.2L8.7 24.1L9.6 20.9L9.4 20.6C8.5 19.3 8.1 17.8 8.1 16.2C8.1 11.3 12.1 7.3 17 7.3C19.4 7.3 21.6 8.2 23.3 9.9C24.9 11.6 25.9 13.8 25.9 16.2C25.9 21.1 21.9 24.6 16.4 24.6Z" fill="currentColor"/>
-      </svg>
-      Kirim WhatsApp
-    </h3>
-    <div class="wa-preview-label">▸ Isi Pesan</div>
-    <div class="wa-preview" id="waPreviewText"></div>
-    <div class="wa-input-label">▸ Nomor Tujuan</div>
-    <input type="text" id="waPhoneInput" placeholder="081234567890" maxlength="15" oninput="validateWaPhone(this)">
-    <div class="wa-hint">Format: 08xxxxxxxx → otomatis dikonversi ke +628xx</div>
-    <div id="waPhoneError">✕ Nomor tidak valid. Gunakan format 08xxxxxxxxxx</div>
-    <div class="wa-btn-row">
-      <button class="wa-send-btn" onclick="sendWhatsApp()">
-        <svg width="16" height="16" viewBox="0 0 32 32" fill="none">
-          <path d="M16.4 24.6H16.3C14.9 24.6 13.5 24.2 12.3 23.4L12 23.2L8.7 24.1L9.6 20.9L9.4 20.6C8.5 19.3 8.1 17.8 8.1 16.2C8.1 11.3 12.1 7.3 17 7.3C19.4 7.3 21.6 8.2 23.3 9.9C24.9 11.6 25.9 13.8 25.9 16.2C25.9 21.1 21.9 24.6 16.4 24.6Z" fill="currentColor"/>
-        </svg>
-        Kirim
-      </button>
-      <button class="wa-cancel-btn" onclick="closeWaModal()">Batal</button>
-    </div>
-  </div>
-</div>
-
-<!-- Running Text Bar -->
-<div id="runningTextBar">
-  <button id="editRunningBtn" title="Edit Running Text" onclick="openEditRunning()">
-    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16">
-      <path d="M12.146.854a.5.5 0 0 1 .708 0l2.292 2.292a.5.5 0 0 1 0 .708L4.207 14.793 0 16l1.207-4.207L12.146.854z"/>
-    </svg>
-  </button>
-  <div id="marqueeWrapper">
-    <div id="marqueeTrack">
-      <span id="marqueeText1">Memuat info...</span>
-      <span id="marqueeText2">Memuat info...</span>
-    </div>
-  </div>
-</div>
-
-<!-- Modal Edit Running Text -->
-<div id="editRunningModal">
-  <div class="modal-box">
-    <h3>✏ Edit Running Text</h3>
-    <textarea id="runningTextInput" placeholder="Masukkan teks berjalan..."></textarea>
-    <div style="margin-top:12px;">
-      <button onclick="saveRunningText()" style="color:var(--green-ok);border-color:rgba(0,230,118,0.4);">Simpan</button>
-      <button onclick="closeEditRunning()" style="color:var(--red-err);border-color:rgba(255,23,68,0.35);">Batal</button>
-    </div>
-  </div>
-</div>
+<div id="confirmModal" class="modal"><div class="modal-box"><h3>⚠ Konfirmasi Archive</h3><p>Semua job hari ini akan dipindah ke arsip. Lanjutkan?</p><br><button onclick="confirmArchive()">Ya, Archive</button><button onclick="closeModal()" style="color:var(--text-mid);border-color:var(--border-mid);">Batal</button></div></div>
+<div id="alertModal" class="modal"><div class="modal-box"><p id="alertText"></p><br><button onclick="closeAlert()">OK</button></div></div>
+<div id="deleteRowModal" class="modal"><div class="modal-box"><h3>🗑 Hapus Job?</h3><p id="deleteRowDesc" style="margin-bottom:8px;"></p><p style="font-size:13px;color:var(--text-dim);margin-bottom:18px;">Tindakan tidak dapat dibatalkan.</p><div style="display:flex;justify-content:center;gap:12px;"><button id="confirmDeleteRowBtn">Ya, Hapus</button><button id="cancelDeleteRowBtn">Batal</button></div></div></div>
+<div id="waModal"><div class="modal-box"><h3><svg width="22" height="22" viewBox="0 0 32 32" fill="none"><path d="M16.4 24.6H16.3C14.9 24.6 13.5 24.2 12.3 23.4L12 23.2L8.7 24.1L9.6 20.9L9.4 20.6C8.5 19.3 8.1 17.8 8.1 16.2C8.1 11.3 12.1 7.3 17 7.3C19.4 7.3 21.6 8.2 23.3 9.9C24.9 11.6 25.9 13.8 25.9 16.2C25.9 21.1 21.9 24.6 16.4 24.6Z" fill="currentColor"/></svg> Kirim WhatsApp</h3><div class="wa-preview-label">▸ Isi Pesan</div><div class="wa-preview" id="waPreviewText"></div><div class="wa-input-label">▸ Nomor Tujuan</div><input type="text" id="waPhoneInput" placeholder="081234567890" maxlength="15" oninput="validateWaPhone(this)"><div class="wa-hint">Format: 08xxxxxxxx → otomatis +628xx</div><div id="waPhoneError">✕ Nomor tidak valid.</div><div class="wa-btn-row"><button class="wa-send-btn" onclick="sendWhatsApp()">Kirim</button><button class="wa-cancel-btn" onclick="closeWaModal()">Batal</button></div></div></div>
+<div id="runningTextBar"><button id="editRunningBtn" onclick="openEditRunning()"><svg viewBox="0 0 16 16"><path d="M12.146.854a.5.5 0 0 1 .708 0l2.292 2.292a.5.5 0 0 1 0 .708L4.207 14.793 0 16l1.207-4.207L12.146.854z"/></svg></button><div id="marqueeWrapper"><div id="marqueeTrack"><span id="marqueeText1">Memuat info...</span><span id="marqueeText2">Memuat info...</span></div></div></div>
+<div id="editRunningModal"><div class="modal-box"><h3>✏ Edit Running Text</h3><textarea id="runningTextInput" placeholder="Masukkan teks berjalan..."></textarea><div style="margin-top:12px;"><button onclick="saveRunningText()" style="color:var(--green-ok);">Simpan</button><button onclick="closeEditRunning()" style="color:var(--red-err);">Batal</button></div></div></div>
 
 <script>
-/* =====================================================
-   KONFIGURASI
-   ===================================================== */
 const GAS_URL = "https://script.google.com/macros/s/AKfycbwy8IbrOY69b4GaVuQA7nvi1_wk3d8Xd8CLb2GTnB2zehfMYi_zC89uX8pTTpyj9F7Zww/exec";
-
 const NAMA_BULAN = ['','Januari','Februari','Maret','April','Mei','Juni','Juli','Agustus','September','Oktober','November','Desember'];
 const TAHUN_AWAL = 2024;
 
-/* ===== API HELPER ===== */
+let allTasks = [], allGroups = [], deleteMode = false, currentEditingRow = null, originalRowData = null;
+
+function parseDateForSort(tanggalStr) {
+  if (!tanggalStr) return 0;
+  let str = String(tanggalStr).trim();
+  let parts = str.match(/(\d{1,2})[/-](\d{1,2})[/-](\d{4})/);
+  if (parts) return new Date(parts[3], parts[2]-1, parts[1]).getTime();
+  parts = str.match(/(\d{4})-(\d{2})-(\d{2})/);
+  if (parts) return new Date(parts[1], parts[2]-1, parts[3]).getTime();
+  return 0;
+}
+
 async function api(action, params) {
   showLoading(true);
   try {
     const url = new URL(GAS_URL);
     url.searchParams.set("action", action);
-    if (params) {
-      Object.entries(params).forEach(function([k, v]) {
-        url.searchParams.set(k, (v === null || v === undefined) ? "" : v);
-      });
-    }
+    if (params) Object.entries(params).forEach(([k,v]) => url.searchParams.set(k, v===null||v===undefined?"":v));
     const res = await fetch(url.toString());
     if (!res.ok) throw new Error("HTTP " + res.status);
     return await res.json();
-  } catch (err) {
-    showAlert("Gagal menghubungi server: " + (err.message || err));
-    return { error: err.message };
-  } finally {
-    showLoading(false);
-  }
+  } catch (err) { showAlert("Gagal: "+err.message); return { error: err.message }; }
+  finally { showLoading(false); }
 }
+function showLoading(state) { document.getElementById("loadingOverlay").classList.toggle("show", state); }
+function showAlert(text) { document.getElementById("alertText").innerText = text; document.getElementById("alertModal").style.display = "flex"; }
+function closeAlert() { document.getElementById("alertModal").style.display = "none"; }
+function closeModal() { document.getElementById("confirmModal").style.display = "none"; }
 
-function showLoading(state) {
-  document.getElementById("loadingOverlay").classList.toggle("show", state);
-}
+function toggleInput() { let s = document.getElementById("inputSection"); s.style.display = s.style.display === "none" ? "block" : "none"; }
 
-/* ===== THEME ===== */
-(function() {
-  var saved = localStorage.getItem('pjh_theme');
-  if (saved === 'light') { document.body.classList.add('light-mode'); }
-})();
-function toggleTheme() {
-  var body  = document.body;
-  var icon  = document.getElementById('themeIcon');
-  var label = document.getElementById('themeLabel');
-  if (body.classList.contains('light-mode')) {
-    body.classList.remove('light-mode');
-    icon.textContent  = '☀️'; label.textContent = 'Light';
-    localStorage.setItem('pjh_theme', 'dark');
-  } else {
-    body.classList.add('light-mode');
-    icon.textContent  = '🌙'; label.textContent = 'Dark';
-    localStorage.setItem('pjh_theme', 'light');
-  }
-}
-document.addEventListener('DOMContentLoaded', function() {
-  var icon  = document.getElementById('themeIcon');
-  var label = document.getElementById('themeLabel');
-  if (document.body.classList.contains('light-mode')) {
-    icon.textContent = '🌙'; label.textContent = 'Dark';
-  }
-});
-
-/* ===== LOGIN ===== */
-let isLoggedIn  = false;
-let loginExpire = 0;
-let pendingAction = null;
-
-function requireLogin(callback) {
-  var now = new Date().getTime();
-  if (isLoggedIn && now <= loginExpire) { callback(); return; }
-  pendingAction = callback;
-  document.getElementById("loginUser").value = "";
-  document.getElementById("loginPass").value = "";
-  document.getElementById("loginModal").style.display = "flex";
-}
-function toggleInput() {
-  requireLogin(function() {
-    var section = document.getElementById("inputSection");
-    section.style.display = (section.style.display === "none") ? "block" : "none";
-  });
-}
-function doLogin() {
-  var user = document.getElementById("loginUser").value;
-  var pass = document.getElementById("loginPass").value;
-  if (user === "admin" && pass === "1234") {
-    isLoggedIn  = true;
-    loginExpire = new Date().getTime() + (5 * 60 * 1000);
-    closeLogin();
-    if (pendingAction) { var cb = pendingAction; pendingAction = null; cb(); }
-  } else {
-    showAlert("Login gagal!");
-    document.getElementById("loginPass").value = "";
-    pendingAction = null;
-  }
-}
-function closeLogin() { document.getElementById("loginModal").style.display = "none"; }
-
-/* ===== CLOCK ===== */
-function updateClock() {
-  var now = new Date();
-  var days = ["Minggu","Senin","Selasa","Rabu","Kamis","Jumat","Sabtu"];
-  var monthNames = ["Jan","Feb","Mar","Apr","Mei","Jun","Jul","Agu","Sep","Okt","Nov","Des"];
-  var d = String(now.getDate()).padStart(2,'0');
-  var h = String(now.getHours()).padStart(2,'0');
-  var m = String(now.getMinutes()).padStart(2,'0');
-  var s = String(now.getSeconds()).padStart(2,'0');
-  document.getElementById('clock').innerText =
-    days[now.getDay()] + ", " + d + " " + monthNames[now.getMonth()] + " " + now.getFullYear() +
-    " - " + h + ":" + m + ":" + s;
-}
-setInterval(updateClock, 1000);
-updateClock();
-
-/* ===== STATUS COLOR ===== */
-function getStatusClass(status) {
-  if (status === "Selesai") return "selesai";
-  if (status === "Proses")  return "proses";
-  return "pending";
-}
-
-/* ===================================================
-   PARSE TANGGAL
-   =================================================== */
-function parseTanggal(str) {
-  if (!str) return null;
-  str = String(str).trim();
-  var m1 = str.match(/^(\d{1,2})\/(\d{1,2})\/(\d{4})/);
-  if (m1) return { day: +m1[1], month: +m1[2], year: +m1[3] };
-  var m2 = str.match(/^(\d{4})-(\d{2})-(\d{2})/);
-  if (m2) return { day: +m2[3], month: +m2[2], year: +m2[1] };
-  var m3 = str.match(/^(\d{1,2})-(\d{1,2})-(\d{4})/);
-  if (m3) return { day: +m3[1], month: +m3[2], year: +m3[3] };
-  return null;
-}
-
-/* ===================================================
-   FILTER STATE — sekarang include status
-   =================================================== */
-var filterState = { bulan: '', tahun: '', status: '' };
-
+let filterState = { bulan: '', tahun: '', status: '' };
 function buildFilterOptions() {
-  var bulanSel = document.getElementById('filterBulan');
-  var tahunSel = document.getElementById('filterTahun');
-  var now      = new Date();
-  var nowYear  = now.getFullYear();
-
+  let bulanSel = document.getElementById('filterBulan'), tahunSel = document.getElementById('filterTahun'), nowYear = new Date().getFullYear();
   tahunSel.innerHTML = '<option value="">Semua Tahun</option>';
-  for (var y = TAHUN_AWAL; y <= nowYear + 1; y++) {
-    var opt = document.createElement('option');
-    opt.value = y; opt.textContent = y;
-    tahunSel.appendChild(opt);
-  }
-
+  for (let y = TAHUN_AWAL; y <= nowYear+1; y++) tahunSel.appendChild(new Option(y, y));
   bulanSel.innerHTML = '<option value="">Semua Bulan</option>';
-  for (var m = 1; m <= 12; m++) {
-    var opt2 = document.createElement('option');
-    opt2.value = m; opt2.textContent = NAMA_BULAN[m];
-    bulanSel.appendChild(opt2);
-  }
-
-  bulanSel.value = filterState.bulan;
-  tahunSel.value = filterState.tahun;
-  if (document.getElementById('filterStatus')) {
-    document.getElementById('filterStatus').value = filterState.status;
-  }
+  for (let m=1; m<=12; m++) bulanSel.appendChild(new Option(NAMA_BULAN[m], m));
+  bulanSel.value = filterState.bulan; tahunSel.value = filterState.tahun;
+  document.getElementById('filterStatus').value = filterState.status;
 }
-
 function applyFilter() {
-  filterState.bulan  = document.getElementById('filterBulan').value;
-  filterState.tahun  = document.getElementById('filterTahun').value;
+  filterState.bulan = document.getElementById('filterBulan').value;
+  filterState.tahun = document.getElementById('filterTahun').value;
   filterState.status = document.getElementById('filterStatus').value;
-
-  var hasFilter = filterState.bulan || filterState.tahun || filterState.status;
-  var badge     = document.getElementById('periodBadge');
-  var resetBtn  = document.getElementById('btnResetFilter');
-
-  if (hasFilter) {
-    var label = '';
-    if (filterState.bulan && filterState.tahun)
-      label = NAMA_BULAN[+filterState.bulan] + ' ' + filterState.tahun;
-    else if (filterState.bulan)
-      label = NAMA_BULAN[+filterState.bulan] + ' (Semua Tahun)';
-    else if (filterState.tahun)
-      label = 'Tahun ' + filterState.tahun;
-    else
-      label = '';
-    if (filterState.status) {
-      label = label ? label + ' · ' + filterState.status : filterState.status;
-    }
+  let has = filterState.bulan || filterState.tahun || filterState.status;
+  let badge = document.getElementById('periodBadge'), resetBtn = document.getElementById('btnResetFilter');
+  if (has) {
+    let label = '';
+    if (filterState.bulan && filterState.tahun) label = NAMA_BULAN[+filterState.bulan] + ' ' + filterState.tahun;
+    else if (filterState.bulan) label = NAMA_BULAN[+filterState.bulan] + ' (Semua Tahun)';
+    else if (filterState.tahun) label = 'Tahun ' + filterState.tahun;
+    if (filterState.status) label = label ? label + ' · ' + filterState.status : filterState.status;
     document.getElementById('periodText').textContent = label || 'Filter Aktif';
-    badge.style.display = 'flex';
-    resetBtn.classList.remove('hidden');
-  } else {
-    badge.style.display = 'none';
-    resetBtn.classList.add('hidden');
-  }
-
+    badge.style.display = 'flex'; resetBtn.classList.remove('hidden');
+  } else { badge.style.display = 'none'; resetBtn.classList.add('hidden'); }
   applyFilterToRows();
 }
-
-function resetFilter() {
-  filterState.bulan = ''; filterState.tahun = ''; filterState.status = '';
-  document.getElementById('filterBulan').value  = '';
-  document.getElementById('filterTahun').value  = '';
-  document.getElementById('filterStatus').value = '';
-  document.getElementById('periodBadge').style.display = 'none';
-  document.getElementById('btnResetFilter').classList.add('hidden');
-  applyFilterToRows();
-}
-
+function resetFilter() { filterState = { bulan: '', tahun: '', status: '' }; document.getElementById('filterBulan').value = ''; document.getElementById('filterTahun').value = ''; document.getElementById('filterStatus').value = ''; applyFilter(); }
 function applyFilterToRows() {
-  var filterBulan  = filterState.bulan  ? +filterState.bulan : null;
-  var filterTahun  = filterState.tahun  ? +filterState.tahun : null;
-  var filterStatus = filterState.status || null;
-  var rows         = document.querySelectorAll('#data tr.group-row');
-  var visibleCount = 0;
-
-  rows.forEach(function(tr) {
-    var tanggalStr = tr.getAttribute('data-tanggal') || '';
-    var rowStatus  = tr.getAttribute('data-status')  || '';
-    var parsed     = parseTanggal(tanggalStr);
-    var show       = true;
-    if (filterBulan  && (!parsed || parsed.month !== filterBulan)) show = false;
-    if (filterTahun  && (!parsed || parsed.year  !== filterTahun)) show = false;
-    if (filterStatus && rowStatus !== filterStatus) show = false;
-
-    if (show) {
-      tr.classList.remove('filter-hidden');
-      visibleCount++;
-    } else {
-      tr.classList.add('filter-hidden');
-    }
+  let rows = document.querySelectorAll('#data tr.group-row'), visible = 0;
+  rows.forEach(tr => {
+    let tanggal = tr.getAttribute('data-tanggal') || '', status = tr.getAttribute('data-status') || '', parsed = parseTanggal(tanggal);
+    let show = true;
+    if (filterState.bulan && (!parsed || parsed.month != filterState.bulan)) show = false;
+    if (filterState.tahun && (!parsed || parsed.year != filterState.tahun)) show = false;
+    if (filterState.status && status !== filterState.status) show = false;
+    tr.classList.toggle('filter-hidden', !show);
+    if (show) visible++;
   });
-
-  var resultEl  = document.getElementById('filterResult');
-  var hasFilter = filterBulan || filterTahun || filterStatus;
-  if (hasFilter) {
-    resultEl.textContent = visibleCount + ' job ditemukan';
-  } else {
-    resultEl.textContent = rows.length + ' total job';
-  }
+  document.getElementById('filterResult').textContent = (filterState.bulan||filterState.tahun||filterState.status) ? visible + ' job ditemukan' : visible + ' total job';
 }
+function parseTanggal(str) { if(!str) return null; let m = str.match(/^(\d{1,2})\/(\d{1,2})\/(\d{4})/); if(m) return {day:+m[1],month:+m[2],year:+m[3]}; m = str.match(/^(\d{4})-(\d{2})-(\d{2})/); if(m) return {day:+m[3],month:+m[2],year:+m[1]}; return null; }
 
-/* ===================================================
-   DATA
-   =================================================== */
-var allTasks   = [];
-var allGroups  = [];
-var deleteMode = false;
-
-function loadData(force) {
-  if (!force && currentEditingRow) return;
-  api("getTasks").then(function(res) {
-    if (res.error) { showAlert("Error getTasks: " + res.error); return; }
-    allTasks = res.data || [];
-    renderTable();
-    buildFilterOptions();
-    applyFilter();
-  });
+async function loadData() {
+  if (currentEditingRow) return;
+  let res = await api("getTasks");
+  if (res.error) { showAlert("Error: "+res.error); return; }
+  allTasks = (res.data || []).sort((a,b) => parseDateForSort(b.tanggal) - parseDateForSort(a.tanggal));
+  renderTable();
+  buildFilterOptions(); applyFilter();
 }
+function getStatusClass(s) { return s === "Selesai" ? "selesai" : s === "Proses" ? "proses" : "pending"; }
+function escHtml(str) { return String(str||"").replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;").replace(/"/g,"&quot;").replace(/'/g,"&#39;"); }
 
-/* ===================================================
-   RENDER TABLE
-   =================================================== */
 function renderTable() {
-  var table  = document.getElementById("mainTable");
-  var thead  = document.getElementById("theadRow");
-  var tbody  = document.getElementById("data");
-
-  if (deleteMode) {
-    table.classList.add("delete-mode");
-    if (!thead.querySelector("th.col-delete")) {
-      var thDel = document.createElement("th");
-      thDel.className = "col-delete";
-      thDel.innerHTML = "✕";
-      thead.insertBefore(thDel, thead.firstChild);
-    }
-  } else {
-    table.classList.remove("delete-mode");
-    var existing = thead.querySelector("th.col-delete");
-    if (existing) thead.removeChild(existing);
-  }
-
-  var groups = [];
-  var lastId = null;
-  allTasks.forEach(function(task) {
-    if (String(task.id) !== lastId) {
-      groups.push([]);
-      lastId = String(task.id);
-    }
-    groups[groups.length - 1].push(task);
-  });
+  let table = document.getElementById("mainTable"), thead = document.getElementById("theadRow"), tbody = document.getElementById("data");
+  if (deleteMode) { table.classList.add("delete-mode"); if(!thead.querySelector("th.col-delete")){ let th=document.createElement("th"); th.className="col-delete"; th.innerHTML="✕"; thead.insertBefore(th,thead.firstChild); } }
+  else { table.classList.remove("delete-mode"); let ex=thead.querySelector("th.col-delete"); if(ex) thead.removeChild(ex); }
+  let groups = [], lastId=null;
+  allTasks.forEach(t => { if(String(t.id) !== lastId) { groups.push([]); lastId=String(t.id); } groups[groups.length-1].push(t); });
   allGroups = groups;
-
-  var html = "";
-  groups.forEach(function(group, groupIdx) {
-    var task = group[0];
-    var sc   = getStatusClass(task.status);
-    var allNamaDisplay = group.map(function(t){ return t.nama; }).join(", ");
-    var rowClass = "group-row group-start";
-
-    html += "<tr class='" + rowClass + "' data-groupid='" + String(task.id).replace(/'/g,"&#39;") + "' data-groupidx='" + groupIdx + "' data-status='" + escHtml(task.status) + "' data-tanggal='" + escHtml(task.tanggal||'') + "'>";
-
-    if (deleteMode) {
-      html += "<td class='col-delete'>" +
-              "<button class='btn-delete-row' onclick=\"askDeleteRow('" +
-              task.id + "','" + (task.nama||'').replace(/'/g,"\\'") +
-              "')\" title='Hapus group ini'>✕</button></td>";
-    }
-
-    html += "<td>" + escHtml(String(task.id)) + "</td>";
-    html += "<td class='nama-col'>" + escHtml(allNamaDisplay) + "</td>";
-    html += "<td>" + escHtml(task.tugas) + "</td>";
-    html += "<td>" + escHtml(task.mesin) + "</td>";
-    html += "<td style='text-align:center;padding:8px 6px;'>" +
-            "<select class='status-select " + sc + "' data-id='" + escHtml(String(task.id)) +
-            "' data-prev='" + escHtml(task.status) + "' onchange='changeStatus(this)'>" +
-            "<option" + (task.status==="Pending"?" selected":"") + ">Pending</option>" +
-            "<option" + (task.status==="Proses"?" selected":"") + ">Proses</option>" +
-            "<option" + (task.status==="Selesai"?" selected":"") + ">Selesai</option>" +
-            "</select></td>";
-    html += "<td>" + escHtml(task.tanggal) + "</td>";
-    html += "<td style='text-align:center;color:var(--green-ok);'>" +
-            (task.jamMulai ? escHtml(task.jamMulai) : "<span style='color:var(--text-dim);font-size:11px;'>&#8212;</span>") + "</td>";
-    html += "<td style='text-align:center;color:var(--amber-warn);'>" +
-            (task.jamSelesai ? escHtml(task.jamSelesai) : "<span style='color:var(--text-dim);font-size:11px;'>&#8212;</span>") + "</td>";
-    html += "</tr>";
+  let html = "";
+  groups.forEach((group, idx) => {
+    let task = group[0], sc = getStatusClass(task.status), allNama = group.map(t=>t.nama).join(", ");
+    html += `<tr class="group-row group-start" data-groupid="${escHtml(task.id)}" data-groupidx="${idx}" data-status="${escHtml(task.status)}" data-tanggal="${escHtml(task.tanggal||'')}">`;
+    if (deleteMode) html += `<td class='col-delete'><button class='btn-delete-row' onclick="askDeleteRow('${task.id}','${escHtml(task.nama)}')" title='Hapus group'>✕</button></td>`;
+    html += `<td>${escHtml(task.id)}</td><td class='nama-col'>${escHtml(allNama)}</td><td>${escHtml(task.tugas)}</td><td>${escHtml(task.mesin)}</td>`;
+    html += `<td style='text-align:center;'><select class='status-select ${sc}' data-id='${escHtml(task.id)}' data-prev='${escHtml(task.status)}' onchange='changeStatus(this)'>`+
+            `<option${task.status==="Pending"?" selected":""}>Pending</option><option${task.status==="Proses"?" selected":""}>Proses</option><option${task.status==="Selesai"?" selected":""}>Selesai</option></select></td>`;
+    html += `<td>${escHtml(task.tanggal)}</td><td style='text-align:center;'>${task.jamMulai ? escHtml(task.jamMulai) : "—"}</td><td style='text-align:center;'>${task.jamSelesai ? escHtml(task.jamSelesai) : "—"}</td></tr>`;
   });
   tbody.innerHTML = html;
 }
 
-/* ===================================================
-   TOGGLE DELETE MODE
-   =================================================== */
-function toggleDeleteMode() {
-  requireLogin(function() {
-    deleteMode = !deleteMode;
-    var btn = document.getElementById("toggleDeleteBtn");
-    if (deleteMode) {
-      btn.classList.add("active");
-    } else {
-      btn.classList.remove("active");
-    }
-    renderTable();
-    applyFilterToRows();
-  });
+function toggleDeleteMode() { deleteMode = !deleteMode; document.getElementById("toggleDeleteBtn").classList.toggle("active", deleteMode); renderTable(); applyFilterToRows(); }
+let pendingDeleteId = null;
+function askDeleteRow(id, nama) { pendingDeleteId = id; document.getElementById("deleteRowDesc").textContent = "ID: "+id+(nama?" — "+nama:""); document.getElementById("deleteRowModal").style.display = "flex"; }
+document.getElementById("confirmDeleteRowBtn").onclick = async () => { if(pendingDeleteId){ await api("deleteTask",{id:pendingDeleteId}); pendingDeleteId=null; document.getElementById("deleteRowModal").style.display="none"; loadData(); } };
+document.getElementById("cancelDeleteRowBtn").onclick = () => { pendingDeleteId=null; document.getElementById("deleteRowModal").style.display="none"; };
+
+async function addTask() {
+  let id=document.getElementById("id").value.trim(), nama=document.getElementById("nama").value, tugas=document.getElementById("tugas").value.trim(), mesin=document.getElementById("mesin").value.trim(), status=document.getElementById("status").value;
+  if(!id||!nama.trim()||!tugas||!mesin){ showAlert("ID, Nama, Tugas dan Mesin harus diisi!"); return; }
+  let res = await api("addTask",{id,nama,tugas,mesin,status});
+  if(res.error) showAlert("Error: "+res.error);
+  else { document.getElementById("id").value=""; document.getElementById("nama").value=""; document.getElementById("tugas").value=""; document.getElementById("mesin").value=""; loadData(); document.getElementById("inputSection").style.display="none"; }
 }
-
-/* ===================================================
-   HAPUS ROW
-   =================================================== */
-var pendingDeleteId = null;
-
-function askDeleteRow(id, nama) {
-  pendingDeleteId = id;
-  document.getElementById("deleteRowDesc").textContent =
-    "ID: " + id + (nama ? "  —  " + nama : "");
-  document.getElementById("deleteRowModal").style.display = "flex";
+async function changeStatus(select) {
+  if(currentEditingRow) return;
+  let id=select.getAttribute("data-id"), newStatus=select.value;
+  select.className="status-select "+getStatusClass(newStatus);
+  let tr=select.closest("tr"); if(tr) tr.setAttribute("data-status",newStatus);
+  await api("updateTaskStatus",{id,status:newStatus});
+  loadData();
 }
+function archiveTasks() { document.getElementById("confirmModal").style.display="flex"; }
+async function confirmArchive() { closeModal(); await api("moveTasksToHistory"); showAlert("Data diarsipkan"); loadData(); document.getElementById("inputSection").style.display="none"; }
 
-document.getElementById("confirmDeleteRowBtn").addEventListener("click", function() {
-  if (!pendingDeleteId) return;
-  var idToDelete = pendingDeleteId;
-  pendingDeleteId = null;
-  document.getElementById("deleteRowModal").style.display = "none";
-  api("deleteTask", { id: idToDelete }).then(function(res) {
-    if (res && res.error) { showAlert("Gagal menghapus: " + res.error); }
-    else { loadData(true); }
-  });
-});
+function updateClock() { let now=new Date(); let days=["Minggu","Senin","Selasa","Rabu","Kamis","Jumat","Sabtu"]; let monthNames=["Jan","Feb","Mar","Apr","Mei","Jun","Jul","Agu","Sep","Okt","Nov","Des"]; document.getElementById('clock').innerText = days[now.getDay()]+", "+String(now.getDate()).padStart(2,'0')+" "+monthNames[now.getMonth()]+" "+now.getFullYear()+" - "+String(now.getHours()).padStart(2,'0')+":"+String(now.getMinutes()).padStart(2,'0')+":"+String(now.getSeconds()).padStart(2,'0'); }
+setInterval(updateClock,1000); updateClock();
 
-document.getElementById("cancelDeleteRowBtn").addEventListener("click", function() {
-  pendingDeleteId = null;
-  document.getElementById("deleteRowModal").style.display = "none";
-});
-
-/* ===== ADD TASK ===== */
-function addTask() {
-  var id     = document.getElementById("id").value.trim();
-  var nama   = document.getElementById("nama").value;
-  var tugas  = document.getElementById("tugas").value.trim();
-  var mesin  = document.getElementById("mesin").value.trim();
-  var status = document.getElementById("status").value;
-  if (!id || !nama.trim() || !tugas || !mesin) {
-    showAlert("ID, Nama, Tugas dan Mesin harus diisi!");
-    return;
-  }
-  api("addTask", { id: id, nama: nama, tugas: tugas, mesin: mesin, status: status }).then(function(res) {
-    if (res.error) { showAlert("Error: " + res.error); return; }
-    document.getElementById("id").value    = "";
-    document.getElementById("nama").value  = "";
-    document.getElementById("tugas").value = "";
-    document.getElementById("mesin").value = "";
-    loadData(true);
-    document.getElementById("inputSection").style.display = "none";
-  });
-}
-
-/* ===== CHANGE STATUS ===== */
-function changeStatus(select) {
-  if (currentEditingRow) {
-    select.value = select.getAttribute("data-prev") || select.value;
-    return;
-  }
-  requireLogin(function() {
-    var id        = select.getAttribute("data-id");
-    var newStatus = select.value;
-    select.setAttribute("data-prev", newStatus);
-    select.className = "status-select " + getStatusClass(newStatus);
-    var tr = select.closest("tr");
-    if (tr) tr.setAttribute("data-status", newStatus);
-    api("updateTaskStatus", { id: id, status: newStatus }).then(function(res) {
-      if (res.error) { showAlert("Gagal update status: " + res.error); }
-      loadData(true);
-    });
-  });
-}
-
-/* ===== ARCHIVE ===== */
-function archiveTasks() { document.getElementById("confirmModal").style.display = "flex"; }
-function confirmArchive() {
-  closeModal();
-  api("moveTasksToHistory").then(function(res) {
-    showAlert(res.message || res.error || "Done");
-    loadData(true);
-    document.getElementById("inputSection").style.display = "none";
-  });
-}
-function closeModal() { document.getElementById("confirmModal").style.display = "none"; }
-
-/* ===== ALERT ===== */
-function showAlert(text) {
-  document.getElementById("alertText").innerText = text;
-  document.getElementById("alertModal").style.display = "flex";
-}
-function closeAlert() { document.getElementById("alertModal").style.display = "none"; }
-
-/* =====================================================
-   CETAK — ZOOM 90%
-   ===================================================== */
-function doPrint() {
-  applyFilterToRows();
-
-  var rows    = document.querySelectorAll('#data tr.group-row');
-  var visible = Array.from(rows).filter(function(tr) {
-    return !tr.classList.contains('filter-hidden');
-  });
-
-  if (visible.length === 0) {
-    showAlert("Tidak ada data untuk dicetak. Ubah filter terlebih dahulu.");
-    return;
-  }
-
-  var now = new Date();
-  var days = ["Minggu","Senin","Selasa","Rabu","Kamis","Jumat","Sabtu"];
-  var monthNames = ["Jan","Feb","Mar","Apr","Mei","Jun","Jul","Agu","Sep","Okt","Nov","Des"];
-  var d  = String(now.getDate()).padStart(2,'0');
-  var h  = String(now.getHours()).padStart(2,'0');
-  var m  = String(now.getMinutes()).padStart(2,'0');
-  var tanggal = days[now.getDay()] + ", " + d + " " + monthNames[now.getMonth()] + " " + now.getFullYear();
-
-  var filterBulan = filterState.bulan ? +filterState.bulan : null;
-  var filterTahun = filterState.tahun ? +filterState.tahun : null;
-  var periodLabel = 'Semua Periode';
-  if (filterBulan && filterTahun)
-    periodLabel = NAMA_BULAN[filterBulan] + ' ' + filterTahun;
-  else if (filterBulan)
-    periodLabel = NAMA_BULAN[filterBulan] + ' (Semua Tahun)';
-  else if (filterTahun)
-    periodLabel = 'Tahun ' + filterTahun;
-  if (filterState.status) {
-    periodLabel += ' · Status: ' + filterState.status;
-  }
-
-  document.getElementById("printHeader").innerHTML =
-    "Dicetak pada: " + tanggal + " pukul " + h + ":" + m +
-    " &nbsp;|&nbsp; <span style='color:#E65100;font-weight:bold;'>Filter: " +
-    periodLabel + "</span>" +
-    " &nbsp;|&nbsp; <b>" + visible.length + " job</b>";
-
-  window.print();
-}
-
-/* ===== WHATSAPP ===== */
-function convertToWaNumber(input) {
-  var num = input.trim().replace(/[\s\-]/g, "");
-  if (num.startsWith("+62")) return num;
-  if (num.startsWith("62"))  return "+" + num;
-  if (num.startsWith("0"))   return "+62" + num.substring(1);
-  return null;
-}
-function validateWaPhone(input) {
-  var val  = input.value.trim().replace(/[\s\-]/g, "");
-  var errEl = document.getElementById("waPhoneError");
-  var valid = /^(0|62|\+62)[0-9]{8,12}$/.test(val);
-  if (!input.value.trim()) {
-    errEl.style.display = "none"; input.style.borderColor = "#ccc";
-  } else if (valid) {
-    errEl.style.display = "none"; input.style.borderColor = "#1565C0";
-  } else {
-    errEl.style.display = "block"; input.style.borderColor = "#e53935";
-  }
-}
-function openWaModal() {
-  if (allTasks.length === 0) { showAlert("Tidak ada data di tabel!"); return; }
-  var now = new Date();
-  var days = ["Minggu","Senin","Selasa","Rabu","Kamis","Jumat","Sabtu"];
-  var monthNames = ["Jan","Feb","Mar","Apr","Mei","Jun","Jul","Agu","Sep","Okt","Nov","Des"];
-  var tanggal = days[now.getDay()] + ", " + String(now.getDate()).padStart(2,'0') +
-                " " + monthNames[now.getMonth()] + " " + now.getFullYear();
-
-  var groups = [];
-  var lastId = null;
-  allTasks.forEach(function(task) {
-    if (String(task.id) !== lastId) { groups.push([]); lastId = String(task.id); }
-    groups[groups.length - 1].push(task);
-  });
-
-  var pesan = "📋 *Pembagian Job Harian*\n📅 " + tanggal + "\n━━━━━━━━━━━━━━━━━━━━\n\n";
-  groups.forEach(function(group, i) {
-    var namaList = group.map(function(t){ return t.nama; }).join(", ");
-    pesan += (i+1) + ". *" + namaList + "*\n";
-    pesan += "   🔧 Mesin : " + group[0].mesin + "\n";
-    pesan += "   📌 Tugas : " + group[0].tugas + "\n\n";
-  });
-  pesan += "━━━━━━━━━━━━━━━━━━━━\nMohon dikerjakan sesuai jadwal. Terima kasih! 🙏";
-
-  document.getElementById("waPreviewText").innerText = pesan;
-  document.getElementById("waPhoneInput").value = "";
-  document.getElementById("waPhoneInput").style.borderColor = "#ccc";
-  document.getElementById("waPhoneError").style.display = "none";
-  document.getElementById("waModal").style.display = "flex";
-  setTimeout(function() { document.getElementById("waPhoneInput").focus(); }, 150);
-}
-function closeWaModal() { document.getElementById("waModal").style.display = "none"; }
-function sendWhatsApp() {
-  var inputVal = document.getElementById("waPhoneInput").value.trim();
-  if (!inputVal) { showAlert("Masukkan nomor WhatsApp terlebih dahulu!"); return; }
-  var waNumber = convertToWaNumber(inputVal);
-  if (!waNumber) {
-    document.getElementById("waPhoneError").style.display = "block";
-    document.getElementById("waPhoneInput").style.borderColor = "#e53935";
-    document.getElementById("waPhoneInput").focus();
-    return;
-  }
-  var pesan = document.getElementById("waPreviewText").innerText;
-  var url = "https://wa.me/" + waNumber.replace("+","") + "?text=" + encodeURIComponent(pesan);
-  window.open(url, "_blank");
-  closeWaModal();
-}
-document.getElementById("waPhoneInput").addEventListener("keydown", function(e) {
-  if (e.key === "Enter") sendWhatsApp();
-});
-document.getElementById("waModal").addEventListener("click", function(e) {
-  if (e.target === this) closeWaModal();
-});
-
-/* ===== RUNNING TEXT ===== */
-var currentRunningText = "Memuat info...";
-function setMarqueeText(text) {
-  currentRunningText = text;
-  document.getElementById("marqueeText1").textContent = text;
-  document.getElementById("marqueeText2").textContent = text;
-  var track = document.getElementById("marqueeTrack");
-  track.style.animation = "none"; track.offsetHeight; track.style.animation = "";
-}
-function loadRunningText() {
-  api("getRunningText").then(function(res) {
-    setMarqueeText(res.data || "Selamat bekerja! Tetap semangat dan utamakan keselamatan kerja.");
-  }).catch(function() {
-    setMarqueeText("Selamat bekerja! Tetap semangat dan utamakan keselamatan kerja.");
-  });
-}
-function openEditRunning() {
-  requireLogin(function() {
-    document.getElementById("runningTextInput").value = currentRunningText;
-    document.getElementById("editRunningModal").style.display = "flex";
-  });
-}
-function closeEditRunning() { document.getElementById("editRunningModal").style.display = "none"; }
-function saveRunningText() {
-  var newText = document.getElementById("runningTextInput").value.trim();
-  if (!newText) { showAlert("Teks tidak boleh kosong!"); return; }
-  api("saveRunningText", { text: newText }).then(function(res) {
-    if (res.error) { showAlert("Gagal menyimpan teks. Coba lagi."); return; }
-    setMarqueeText(newText);
-    closeEditRunning();
-  });
-}
-
-/* ===================================================
-   INLINE EDIT ROW
-   =================================================== */
-var currentEditingRow = null;
-var originalRowData   = null;
-
-var _lpTimer = null, _lpTarget = null, _lpMoved = false;
-
-var tbody = document.getElementById("data");
-
-function getGroupFirstRow(tr) {
-  if (tr.classList.contains("group-start")) return tr;
-  var prev = tr.previousElementSibling;
-  while (prev) {
-    if (prev.classList.contains("group-start")) return prev;
-    if (prev.classList.contains("group-row")) { prev = prev.previousElementSibling; continue; }
-    break;
-  }
-  return tr;
-}
-
-tbody.addEventListener("dblclick", function(e) {
-  if (window.matchMedia("(pointer: coarse)").matches) return;
-  var tr = e.target.closest("tr.group-row");
-  if (!tr) return;
-  if (e.target.closest(".btn-delete-row")) return;
-  if (e.target.tagName === "SELECT") return;
-  var firstRow = getGroupFirstRow(tr);
-  requireLogin(function() { startInlineEdit(firstRow); });
-});
-
-tbody.addEventListener("touchstart", function(e) {
-  var tr = e.target.closest("tr.group-row");
-  if (!tr) return;
-  if (e.target.closest(".btn-delete-row")) return;
-  if (e.target.tagName === "SELECT") return;
-  _lpMoved = false; _lpTarget = getGroupFirstRow(tr);
-  _lpTimer = setTimeout(function() {
-    if (_lpMoved) return;
-    if (navigator.vibrate) navigator.vibrate(60);
-    requireLogin(function() { startInlineEdit(_lpTarget); });
-  }, 600);
-}, { passive: true });
-
-tbody.addEventListener("touchmove",   function() { _lpMoved = true; clearTimeout(_lpTimer); }, { passive: true });
-tbody.addEventListener("touchend",    function() { clearTimeout(_lpTimer); }, { passive: true });
-tbody.addEventListener("touchcancel", function() { clearTimeout(_lpTimer); }, { passive: true });
+function getGroupFirstRow(tr) { if(tr.classList.contains("group-start")) return tr; let prev=tr.previousElementSibling; while(prev){ if(prev.classList.contains("group-start")) return prev; if(prev.classList.contains("group-row")) prev=prev.previousElementSibling; else break; } return tr; }
+let _lpTimer=null,_lpTarget=null,_lpMoved=false;
+document.getElementById("data").addEventListener("dblclick",e=>{ if(window.matchMedia("(pointer: coarse)").matches) return; let tr=e.target.closest("tr.group-row"); if(!tr||e.target.closest(".btn-delete-row")||e.target.tagName==="SELECT") return; startInlineEdit(getGroupFirstRow(tr)); });
+document.getElementById("data").addEventListener("touchstart",e=>{ let tr=e.target.closest("tr.group-row"); if(!tr||e.target.closest(".btn-delete-row")||e.target.tagName==="SELECT") return; _lpMoved=false; _lpTarget=getGroupFirstRow(tr); _lpTimer=setTimeout(()=>{ if(!_lpMoved){ if(navigator.vibrate) navigator.vibrate(60); startInlineEdit(_lpTarget); } },600); },{passive:true});
+document.getElementById("data").addEventListener("touchmove",()=>{ _lpMoved=true; clearTimeout(_lpTimer); },{passive:true});
+document.getElementById("data").addEventListener("touchend",()=>clearTimeout(_lpTimer));
 
 function startInlineEdit(tr) {
-  if (currentEditingRow && currentEditingRow !== tr) { return; }
-  if (tr.classList.contains("editing")) return;
-  if (!tr.classList.contains("group-start")) return;
-
-  var offset = deleteMode ? 1 : 0;
-  var cells  = tr.children;
-  var expectedMin = 8 + offset;
-  if (cells.length < expectedMin) return;
-
+  if(currentEditingRow && currentEditingRow!==tr) return;
+  if(tr.classList.contains("editing")) return;
+  let offset = deleteMode ? 1 : 0;
+  let cells = tr.children;
+  if(cells.length < 8+offset) return;
   currentEditingRow = tr;
-
-  var groupIdx   = parseInt(tr.getAttribute("data-groupidx"), 10);
-  var groupTasks = (!isNaN(groupIdx) && allGroups[groupIdx]) ? allGroups[groupIdx] : null;
-  if (!groupTasks || !groupTasks.length) { currentEditingRow = null; return; }
-
-  var firstTask = groupTasks[0];
-  var allNama   = groupTasks.map(function(t){ return t.nama; }).join("\n");
-
-  originalRowData = {
-    id        : String(firstTask.id),
-    nama      : allNama,
-    tugas     : firstTask.tugas      || "",
-    mesin     : firstTask.mesin      || "",
-    jamMulai  : firstTask.jamMulai   || "",
-    jamSelesai: firstTask.jamSelesai || ""
-  };
-
+  let groupIdx = parseInt(tr.getAttribute("data-groupidx"),10);
+  let groupTasks = (!isNaN(groupIdx) && allGroups[groupIdx]) ? allGroups[groupIdx] : null;
+  if(!groupTasks) { currentEditingRow=null; return; }
+  let first = groupTasks[0], allNama = groupTasks.map(t=>t.nama).join("\n");
+  originalRowData = { id:String(first.id), nama:allNama, tugas:first.tugas||"", mesin:first.mesin||"", jamMulai:first.jamMulai||"", jamSelesai:first.jamSelesai||"" };
   tr.classList.add("editing");
-
-  cells[offset + 0].innerHTML =
-    "<input class='inline-input' id='ie-id' value='" + escHtml(String(originalRowData.id)) + "'>" +
-    "<div class='inline-save-bar'>" +
-      "<button class='inline-btn inline-btn-save' onclick='saveInlineEdit()'>✓ Simpan</button>" +
-      "<button class='inline-btn inline-btn-cancel' onclick='cancelInlineEdit()'>✕ Batal</button>" +
-    "</div>";
-
-  cells[offset + 1].innerHTML =
-    "<textarea class='inline-input' id='ie-nama' rows='3' style='font-size:13px;'>" +
-    escHtml(originalRowData.nama) + "</textarea>" +
-    "<span style='font-size:9px;color:var(--text-dim);font-family:monospace;'>↵ Enter = nama baru</span>";
-
-  cells[offset + 2].innerHTML =
-    "<textarea class='inline-input' id='ie-tugas' rows='3'>" + escHtml(originalRowData.tugas) + "</textarea>";
-
-  cells[offset + 3].innerHTML =
-    "<input class='inline-input' id='ie-mesin' value='" + escHtml(originalRowData.mesin) + "'>";
-
-  cells[offset + 6].innerHTML =
-    "<input class='inline-input' id='ie-jam-mulai' type='time' value='" + escHtml(originalRowData.jamMulai) + "'>";
-
-  cells[offset + 7].innerHTML =
-    "<input class='inline-input' id='ie-jam-selesai' type='time' value='" + escHtml(originalRowData.jamSelesai) + "'>";
-
-  setTimeout(function() { var inp = document.getElementById("ie-id"); if (inp) inp.focus(); }, 50);
-  tr.addEventListener("keydown", handleInlineKeydown);
+  cells[offset+0].innerHTML = `<input class='inline-input' id='ie-id' value='${escHtml(originalRowData.id)}'><div class='inline-save-bar'><button class='inline-btn inline-btn-save' onclick='saveInlineEdit()'>✓ Simpan</button><button class='inline-btn inline-btn-cancel' onclick='cancelInlineEdit()'>✕ Batal</button></div>`;
+  cells[offset+1].innerHTML = `<textarea class='inline-input' id='ie-nama' rows='3'>${escHtml(originalRowData.nama)}</textarea><span style='font-size:9px;color:var(--text-dim);'>↵ Enter = nama baru</span>`;
+  cells[offset+2].innerHTML = `<textarea class='inline-input' id='ie-tugas' rows='3'>${escHtml(originalRowData.tugas)}</textarea>`;
+  cells[offset+3].innerHTML = `<input class='inline-input' id='ie-mesin' value='${escHtml(originalRowData.mesin)}'>`;
+  cells[offset+6].innerHTML = `<input class='inline-input' id='ie-jam-mulai' type='time' value='${escHtml(originalRowData.jamMulai)}'>`;
+  cells[offset+7].innerHTML = `<input class='inline-input' id='ie-jam-selesai' type='time' value='${escHtml(originalRowData.jamSelesai)}'>`;
+  setTimeout(()=>document.getElementById("ie-id")?.focus(),50);
+  tr.addEventListener("keydown", function(e){ if(e.key==="Escape") cancelInlineEdit(); });
 }
-
-function handleInlineKeydown(e) {
-  if (e.key === "Escape") { e.preventDefault(); cancelInlineEdit(); }
-}
-
-function saveInlineEdit() {
-  if (!currentEditingRow) return;
-  var newId         = (document.getElementById("ie-id")          || {value: originalRowData.id        }).value.trim();
-  var newNama       = (document.getElementById("ie-nama")        || {value: originalRowData.nama      }).value.trim();
-  var newTugas      = (document.getElementById("ie-tugas")       || {value: originalRowData.tugas     }).value.trim();
-  var newMesin      = (document.getElementById("ie-mesin")       || {value: originalRowData.mesin     }).value.trim();
-  var newJamMulai   = (document.getElementById("ie-jam-mulai")   || {value: originalRowData.jamMulai  }).value.trim();
-  var newJamSelesai = (document.getElementById("ie-jam-selesai") || {value: originalRowData.jamSelesai}).value.trim();
-
-  if (!newId || !newNama || !newTugas || !newMesin) { showAlert("Semua kolom harus diisi!"); return; }
-  var oldId = originalRowData.id;
+async function saveInlineEdit() {
+  if(!currentEditingRow) return;
+  let newId = (document.getElementById("ie-id")||{value:originalRowData.id}).value.trim();
+  let newNama = (document.getElementById("ie-nama")||{value:originalRowData.nama}).value.trim();
+  let newTugas = (document.getElementById("ie-tugas")||{value:originalRowData.tugas}).value.trim();
+  let newMesin = (document.getElementById("ie-mesin")||{value:originalRowData.mesin}).value.trim();
+  let newJamMulai = (document.getElementById("ie-jam-mulai")||{value:originalRowData.jamMulai}).value.trim();
+  let newJamSelesai = (document.getElementById("ie-jam-selesai")||{value:originalRowData.jamSelesai}).value.trim();
+  if(!newId||!newNama||!newTugas||!newMesin){ showAlert("Semua kolom harus diisi!"); return; }
+  let oldId = originalRowData.id;
   finishInlineEdit();
-  api("updateTaskAll", {
-    oldId: oldId, newId: newId, newNama: newNama,
-    newTugas: newTugas, newMesin: newMesin,
-    newJamMulai: newJamMulai, newJamSelesai: newJamSelesai
-  }).then(function(res) {
-    if (res && res.error) showAlert("Gagal simpan: " + res.error);
-    loadData(true);
-  });
-}
-
-function cancelInlineEdit() { finishInlineEdit(); loadData(true); }
-
-function finishInlineEdit() {
-  if (!currentEditingRow) return;
-  currentEditingRow.removeEventListener("keydown", handleInlineKeydown);
-  currentEditingRow.classList.remove("editing");
-  currentEditingRow = null; originalRowData = null;
-}
-
-function escHtml(str) {
-  return String(str || "")
-    .replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;")
-    .replace(/"/g,"&quot;").replace(/'/g,"&#39;");
-}
-
-/* ===================================================
-   AUTO SCROLL
-   =================================================== */
-var _asActive   = false;
-var _asRaf      = null;
-var _asDir      = 1;
-var _asSpeed    = 1.2;
-var _asPausedAt = 0;
-var _asPauseDur = 1800;
-
-function toggleAutoScroll() {
-  _asActive = !_asActive;
-  var btn = document.getElementById("autoScrollBtn");
-  if (_asActive) {
-    btn.classList.add("active");
-    _asDir = 1; _asPausedAt = 0;
-    _asRaf = requestAnimationFrame(_asStep);
-    window.addEventListener("wheel",      _asPauseOnInteract, { passive: true });
-    window.addEventListener("touchstart", _asPauseOnInteract, { passive: true });
-  } else {
-    _asStop();
-  }
-}
-
-function _asStop() {
-  _asActive = false;
-  if (_asRaf) { cancelAnimationFrame(_asRaf); _asRaf = null; }
-  var btn = document.getElementById("autoScrollBtn");
-  btn.classList.remove("active");
-  window.removeEventListener("wheel",      _asPauseOnInteract);
-  window.removeEventListener("touchstart", _asPauseOnInteract);
-}
-
-var _asResumeTimer = null;
-function _asPauseOnInteract() {
-  if (!_asActive) return;
-  cancelAnimationFrame(_asRaf); _asRaf = null;
-  clearTimeout(_asResumeTimer);
-  _asResumeTimer = setTimeout(function() {
-    if (_asActive) { _asPausedAt = 0; _asRaf = requestAnimationFrame(_asStep); }
-  }, 3000);
-}
-
-function _asStep(ts) {
-  if (!_asActive) return;
-  var maxScroll = document.documentElement.scrollHeight - window.innerHeight;
-  if (maxScroll <= 0) { _asRaf = requestAnimationFrame(_asStep); return; }
-  var cur = window.scrollY;
-  if (_asDir === 1 && cur >= maxScroll - 1) {
-    if (_asPausedAt === 0) _asPausedAt = ts;
-    if (ts - _asPausedAt >= _asPauseDur) { _asDir = -1; _asPausedAt = 0; }
-    _asRaf = requestAnimationFrame(_asStep); return;
-  }
-  if (_asDir === -1 && cur <= 1) {
-    if (_asPausedAt === 0) _asPausedAt = ts;
-    if (ts - _asPausedAt >= _asPauseDur) { _asDir = 1; _asPausedAt = 0; }
-    _asRaf = requestAnimationFrame(_asStep); return;
-  }
-  window.scrollBy(0, _asSpeed * _asDir);
-  _asRaf = requestAnimationFrame(_asStep);
-}
-
-var _origStartInlineEdit = startInlineEdit;
-startInlineEdit = function(tr) {
-  if (_asActive) _asStop();
-  _origStartInlineEdit(tr);
-};
-
-/* ===== INIT ===== */
-window.onload = function() {
-  loadRunningText();
+  let res = await api("updateTaskAll",{ oldId, newId, newNama, newTugas, newMesin, newJamMulai, newJamSelesai });
+  if(res?.error) showAlert("Gagal simpan: "+res.error);
   loadData();
-  setInterval(function() { loadData(); loadRunningText(); }, 60000);
-};
+}
+function cancelInlineEdit() { finishInlineEdit(); loadData(); }
+function finishInlineEdit() { if(currentEditingRow){ currentEditingRow.classList.remove("editing"); currentEditingRow=null; originalRowData=null; } }
+
+let _asActive=false,_asRaf=null,_asDir=1;
+function toggleAutoScroll() { _asActive=!_asActive; let btn=document.getElementById("autoScrollBtn"); if(_asActive){ btn.classList.add("active"); _asDir=1; _asRaf=requestAnimationFrame(_asStep); window.addEventListener("wheel",_asPauseOnInteract,{passive:true}); window.addEventListener("touchstart",_asPauseOnInteract,{passive:true}); } else { if(_asRaf) cancelAnimationFrame(_asRaf); btn.classList.remove("active"); window.removeEventListener("wheel",_asPauseOnInteract); window.removeEventListener("touchstart",_asPauseOnInteract); } }
+let _asResumeTimer=null;
+function _asPauseOnInteract(){ if(!_asActive) return; if(_asRaf) cancelAnimationFrame(_asRaf); clearTimeout(_asResumeTimer); _asResumeTimer=setTimeout(()=>{ if(_asActive) _asRaf=requestAnimationFrame(_asStep); },3000); }
+function _asStep(ts){ if(!_asActive) return; let max=document.documentElement.scrollHeight-window.innerHeight; if(max<=0){ _asRaf=requestAnimationFrame(_asStep); return; } let cur=window.scrollY; if((_asDir===1 && cur>=max-1)||(_asDir===-1 && cur<=1)){ _asDir*=-1; _asRaf=requestAnimationFrame(_asStep); return; } window.scrollBy(0,1.2*_asDir); _asRaf=requestAnimationFrame(_asStep); }
+
+function doPrint() {
+  applyFilterToRows();
+  let visible = Array.from(document.querySelectorAll('#data tr.group-row')).filter(tr=>!tr.classList.contains('filter-hidden'));
+  if(visible.length===0){ showAlert("Tidak ada data untuk dicetak."); return; }
+  visible.forEach((tr,idx)=>{ if((idx+1)%10===0 && idx!==visible.length-1) tr.classList.add('print-page-break'); });
+  let now=new Date(); let d=String(now.getDate()).padStart(2,'0');
+  let periodLabel = '';
+  if(filterState.bulan && filterState.tahun) periodLabel = NAMA_BULAN[+filterState.bulan]+' '+filterState.tahun;
+  else if(filterState.bulan) periodLabel = NAMA_BULAN[+filterState.bulan]+' (Semua Tahun)';
+  else if(filterState.tahun) periodLabel = 'Tahun '+filterState.tahun;
+  if(filterState.status) periodLabel += ' · Status: '+filterState.status;
+  document.getElementById("printHeader").innerHTML = `Dicetak: ${d}/${now.getMonth()+1}/${now.getFullYear()} ${now.getHours()}:${now.getMinutes()} &nbsp;| Filter: ${periodLabel||'Semua'} &nbsp;| ${visible.length} job (max 10 per halaman)`;
+  window.print();
+  setTimeout(()=>{ visible.forEach(tr=>tr.classList.remove('print-page-break')); },500);
+}
+
+function convertToWaNumber(i){ let n=i.trim().replace(/[\s\-]/g,""); if(n.startsWith("+62")) return n; if(n.startsWith("62")) return "+"+n; if(n.startsWith("0")) return "+62"+n.substring(1); return null; }
+function validateWaPhone(inp){ let v=inp.value.trim().replace(/[\s\-]/g,""); let err=document.getElementById("waPhoneError"); let valid=/^(0|62|\+62)[0-9]{8,12}$/.test(v); if(!inp.value.trim()) err.style.display="none"; else if(valid) err.style.display="none"; else err.style.display="block"; }
+function openWaModal(){
+  if(allTasks.length===0){ showAlert("Tidak ada data"); return; }
+  let now=new Date(); let tgl=String(now.getDate()).padStart(2,'0')+"/"+String(now.getMonth()+1).padStart(2,'0')+"/"+now.getFullYear();
+  let groups=[], last=null;
+  allTasks.forEach(t=>{ if(String(t.id)!==last){ groups.push([]); last=String(t.id); } groups[groups.length-1].push(t); });
+  let pesan = "📋 *Pembagian Job Harian*\n📅 "+tgl+"\n━━━━━━━━━━━━━━━━━━━━\n\n";
+  groups.forEach((g,i)=>{ let nama=g.map(x=>x.nama).join(", "); pesan+=(i+1)+". *"+nama+"*\n   🔧 Mesin : "+g[0].mesin+"\n   📌 Tugas : "+g[0].tugas+"\n\n"; });
+  pesan+="━━━━━━━━━━━━━━━━━━━━\nMohon dikerjakan sesuai jadwal. Terima kasih!";
+  document.getElementById("waPreviewText").innerText=pesan; document.getElementById("waPhoneInput").value=""; document.getElementById("waPhoneError").style.display="none"; document.getElementById("waModal").style.display="flex";
+}
+function closeWaModal(){ document.getElementById("waModal").style.display="none"; }
+function sendWhatsApp(){ let inp=document.getElementById("waPhoneInput").value.trim(); if(!inp){ showAlert("Masukkan nomor WA"); return; } let num=convertToWaNumber(inp); if(!num){ document.getElementById("waPhoneError").style.display="block"; return; } let msg=document.getElementById("waPreviewText").innerText; window.open("https://wa.me/"+num.replace("+","")+"?text="+encodeURIComponent(msg),"_blank"); closeWaModal(); }
+
+let currentRunningText="Memuat info...";
+function setMarqueeText(t){ currentRunningText=t; document.getElementById("marqueeText1").textContent=t; document.getElementById("marqueeText2").textContent=t; let trk=document.getElementById("marqueeTrack"); trk.style.animation="none"; trk.offsetHeight; trk.style.animation=""; }
+async function loadRunningText(){ let res=await api("getRunningText"); setMarqueeText(res.data||"Selamat bekerja! Tetap semangat dan utamakan keselamatan kerja."); }
+function openEditRunning(){ document.getElementById("runningTextInput").value=currentRunningText; document.getElementById("editRunningModal").style.display="flex"; }
+function closeEditRunning(){ document.getElementById("editRunningModal").style.display="none"; }
+async function saveRunningText(){ let txt=document.getElementById("runningTextInput").value.trim(); if(!txt){ showAlert("Teks tidak boleh kosong!"); return; } await api("saveRunningText",{text:txt}); setMarqueeText(txt); closeEditRunning(); }
+
+function toggleTheme(){ document.body.classList.toggle("light-mode"); localStorage.setItem('pjh_theme', document.body.classList.contains("light-mode")?'light':'dark'); let icon=document.getElementById("themeIcon"); icon.textContent=document.body.classList.contains("light-mode")?"🌙":"☀️"; }
+if(localStorage.getItem('pjh_theme')==='light') document.body.classList.add("light-mode");
+document.getElementById("themeIcon").textContent=document.body.classList.contains("light-mode")?"🌙":"☀️";
+
+window.onload = ()=>{ loadRunningText(); loadData(); setInterval(()=>{ if(!currentEditingRow) loadData(); loadRunningText(); },30000); };
 </script>
 </body>
 </html>
