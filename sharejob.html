@@ -6,9 +6,6 @@
 <base target="_top">
 <link href="https://fonts.googleapis.com/css2?family=Exo+2:wght@300;400;600;700;900&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
 <style>
-/* =====================================================
-   FUTURISTIC ENGINEER — GT Radial Industrial HMI
-   ===================================================== */
 :root {
   --bg-void:      #080C10;
   --bg-panel:     #0C1118;
@@ -191,7 +188,7 @@ body::after {
 #toggleDeleteBtn.active::after { width: 100%; background: var(--red-err); }
 
 /* =====================================================
-   FILTER BAR — STYLE DARI DRIVES.HTML
+   FILTER BAR
    ===================================================== */
 .hist-filter-bar {
   display: flex;
@@ -236,6 +233,11 @@ body::after {
 }
 .hist-filter-select:focus { border-color: var(--orange); }
 .hist-filter-select option { background: var(--bg-card); }
+
+/* Status filter khusus warna */
+#filterStatus option[value="Pending"] { color: var(--blue-info); }
+#filterStatus option[value="Proses"]  { color: var(--amber-warn); }
+#filterStatus option[value="Selesai"] { color: var(--green-ok); }
 
 .hist-filter-sep {
   color: var(--border-mid);
@@ -448,7 +450,6 @@ tr.group-start td {
   border-bottom: 1px solid var(--border-orange) !important;
 }
 
-/* filter-hidden rows */
 tr.filter-hidden { display: none; }
 
 th.col-delete, td.col-delete {
@@ -769,7 +770,7 @@ table.delete-mode .btn-delete-row {
 ::-webkit-scrollbar-thumb { background: var(--orange-dim); border-radius: 3px; }
 ::-webkit-scrollbar-thumb:hover { background: var(--orange); }
 
-/* === PRINT STYLES — AUTO SCALE 70% PORTRAIT & LANDSCAPE === */
+/* === PRINT STYLES — AUTO SCALE 90% === */
 .print-header {
   display: none; text-align: center;
   font-size: 12px; color: #555; margin-bottom: 8px;
@@ -780,13 +781,12 @@ table.delete-mode .btn-delete-row {
     size: auto;
     margin: 8mm;
   }
-  /* Portrait default */
   @page :first {
     size: portrait;
   }
 
   html {
-    zoom: 70%;
+    zoom: 90%;
     -webkit-print-color-adjust: exact;
     print-color-adjust: exact;
   }
@@ -795,7 +795,7 @@ table.delete-mode .btn-delete-row {
     background: #fff !important;
     color: #000 !important;
     padding: 5px;
-    zoom: 70%;
+    zoom: 90%;
   }
 
   body::before, body::after, #logo-img, #clock, .top-bar,
@@ -852,10 +852,8 @@ table.delete-mode .btn-delete-row {
   }
   .table-wrapper { border: none !important; box-shadow: none !important; overflow: visible !important; }
 
-  /* Sembunyikan baris yang tidak sesuai filter */
   tr.filter-hidden { display: none !important; }
 
-  /* Header filter info di print */
   .print-filter-info {
     display: block !important;
     font-size: 11px;
@@ -1042,7 +1040,6 @@ tr.editing td:first-child::after { content: ' ✏'; font-size: 11px; color: var(
     </svg>
   </button>
 
-  <!-- CETAK langsung print dengan filter aktif -->
   <button class="tb-btn" id="printBtn" onclick="doPrint()">
     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor">
       <path d="M19 8H5c-1.66 0-3 1.34-3 3v6h4v4h12v-4h4v-6c0-1.66-1.34-3-3-3zm-3 11H8v-5h8v5zm3-7c-.55 0-1-.45-1-1s.45-1 1-1 1 .45 1 1-.45 1-1 1zm-1-9H6v4h12V3z"/>
@@ -1088,9 +1085,7 @@ tr.editing td:first-child::after { content: ' ✏'; font-size: 11px; color: var(
   <hr>
 </div>
 
-<!-- =====================================================
-     FILTER BAR — STYLE DARI DRIVES.HTML
-     ===================================================== -->
+<!-- FILTER BAR dengan tambahan filter Status -->
 <div class="hist-filter-bar" id="histFilterBar">
   <span class="hist-filter-label">📅 Filter:</span>
   <div class="hist-filter-group">
@@ -1102,6 +1097,15 @@ tr.editing td:first-child::after { content: ' ✏'; font-size: 11px; color: var(
   <div class="hist-filter-group">
     <select class="hist-filter-select" id="filterTahun" onchange="applyFilter()">
       <option value="">Semua Tahun</option>
+    </select>
+  </div>
+  <span class="hist-filter-sep">|</span>
+  <div class="hist-filter-group">
+    <select class="hist-filter-select" id="filterStatus" onchange="applyFilter()">
+      <option value="">Semua Status</option>
+      <option value="Pending">⏳ Pending</option>
+      <option value="Proses">🔄 Proses</option>
+      <option value="Selesai">✅ Selesai</option>
     </select>
   </div>
   <div class="hist-period-badge" id="periodBadge" style="display:none;">
@@ -1358,27 +1362,24 @@ function getStatusClass(status) {
 }
 
 /* ===================================================
-   PARSE TANGGAL — MENDUKUNG DD/MM/YYYY & YYYY-MM-DD
+   PARSE TANGGAL
    =================================================== */
 function parseTanggal(str) {
   if (!str) return null;
   str = String(str).trim();
-  // DD/MM/YYYY
   var m1 = str.match(/^(\d{1,2})\/(\d{1,2})\/(\d{4})/);
   if (m1) return { day: +m1[1], month: +m1[2], year: +m1[3] };
-  // YYYY-MM-DD
   var m2 = str.match(/^(\d{4})-(\d{2})-(\d{2})/);
   if (m2) return { day: +m2[3], month: +m2[2], year: +m2[1] };
-  // DD-MM-YYYY
   var m3 = str.match(/^(\d{1,2})-(\d{1,2})-(\d{4})/);
   if (m3) return { day: +m3[1], month: +m3[2], year: +m3[3] };
   return null;
 }
 
 /* ===================================================
-   FILTER STATE
+   FILTER STATE — sekarang include status
    =================================================== */
-var filterState = { bulan: '', tahun: '' };
+var filterState = { bulan: '', tahun: '', status: '' };
 
 function buildFilterOptions() {
   var bulanSel = document.getElementById('filterBulan');
@@ -1386,7 +1387,6 @@ function buildFilterOptions() {
   var now      = new Date();
   var nowYear  = now.getFullYear();
 
-  // Tahun
   tahunSel.innerHTML = '<option value="">Semua Tahun</option>';
   for (var y = TAHUN_AWAL; y <= nowYear + 1; y++) {
     var opt = document.createElement('option');
@@ -1394,7 +1394,6 @@ function buildFilterOptions() {
     tahunSel.appendChild(opt);
   }
 
-  // Bulan
   bulanSel.innerHTML = '<option value="">Semua Bulan</option>';
   for (var m = 1; m <= 12; m++) {
     var opt2 = document.createElement('option');
@@ -1402,16 +1401,19 @@ function buildFilterOptions() {
     bulanSel.appendChild(opt2);
   }
 
-  // Restore nilai tersimpan
   bulanSel.value = filterState.bulan;
   tahunSel.value = filterState.tahun;
+  if (document.getElementById('filterStatus')) {
+    document.getElementById('filterStatus').value = filterState.status;
+  }
 }
 
 function applyFilter() {
-  filterState.bulan = document.getElementById('filterBulan').value;
-  filterState.tahun = document.getElementById('filterTahun').value;
+  filterState.bulan  = document.getElementById('filterBulan').value;
+  filterState.tahun  = document.getElementById('filterTahun').value;
+  filterState.status = document.getElementById('filterStatus').value;
 
-  var hasFilter = filterState.bulan || filterState.tahun;
+  var hasFilter = filterState.bulan || filterState.tahun || filterState.status;
   var badge     = document.getElementById('periodBadge');
   var resetBtn  = document.getElementById('btnResetFilter');
 
@@ -1421,9 +1423,14 @@ function applyFilter() {
       label = NAMA_BULAN[+filterState.bulan] + ' ' + filterState.tahun;
     else if (filterState.bulan)
       label = NAMA_BULAN[+filterState.bulan] + ' (Semua Tahun)';
-    else
+    else if (filterState.tahun)
       label = 'Tahun ' + filterState.tahun;
-    document.getElementById('periodText').textContent = label;
+    else
+      label = '';
+    if (filterState.status) {
+      label = label ? label + ' · ' + filterState.status : filterState.status;
+    }
+    document.getElementById('periodText').textContent = label || 'Filter Aktif';
     badge.style.display = 'flex';
     resetBtn.classList.remove('hidden');
   } else {
@@ -1435,26 +1442,30 @@ function applyFilter() {
 }
 
 function resetFilter() {
-  filterState.bulan = ''; filterState.tahun = '';
-  document.getElementById('filterBulan').value = '';
-  document.getElementById('filterTahun').value = '';
+  filterState.bulan = ''; filterState.tahun = ''; filterState.status = '';
+  document.getElementById('filterBulan').value  = '';
+  document.getElementById('filterTahun').value  = '';
+  document.getElementById('filterStatus').value = '';
   document.getElementById('periodBadge').style.display = 'none';
   document.getElementById('btnResetFilter').classList.add('hidden');
   applyFilterToRows();
 }
 
 function applyFilterToRows() {
-  var filterBulan = filterState.bulan ? +filterState.bulan : null;
-  var filterTahun = filterState.tahun ? +filterState.tahun : null;
-  var rows        = document.querySelectorAll('#data tr.group-row');
+  var filterBulan  = filterState.bulan  ? +filterState.bulan : null;
+  var filterTahun  = filterState.tahun  ? +filterState.tahun : null;
+  var filterStatus = filterState.status || null;
+  var rows         = document.querySelectorAll('#data tr.group-row');
   var visibleCount = 0;
 
   rows.forEach(function(tr) {
     var tanggalStr = tr.getAttribute('data-tanggal') || '';
+    var rowStatus  = tr.getAttribute('data-status')  || '';
     var parsed     = parseTanggal(tanggalStr);
     var show       = true;
-    if (filterBulan && (!parsed || parsed.month !== filterBulan)) show = false;
-    if (filterTahun && (!parsed || parsed.year  !== filterTahun)) show = false;
+    if (filterBulan  && (!parsed || parsed.month !== filterBulan)) show = false;
+    if (filterTahun  && (!parsed || parsed.year  !== filterTahun)) show = false;
+    if (filterStatus && rowStatus !== filterStatus) show = false;
 
     if (show) {
       tr.classList.remove('filter-hidden');
@@ -1464,8 +1475,8 @@ function applyFilterToRows() {
     }
   });
 
-  var resultEl = document.getElementById('filterResult');
-  var hasFilter = filterBulan || filterTahun;
+  var resultEl  = document.getElementById('filterResult');
+  var hasFilter = filterBulan || filterTahun || filterStatus;
   if (hasFilter) {
     resultEl.textContent = visibleCount + ' job ditemukan';
   } else {
@@ -1486,7 +1497,6 @@ function loadData(force) {
     if (res.error) { showAlert("Error getTasks: " + res.error); return; }
     allTasks = res.data || [];
     renderTable();
-    // Setelah render, bangun filter options lalu apply filter
     buildFilterOptions();
     applyFilter();
   });
@@ -1669,15 +1679,13 @@ function showAlert(text) {
 function closeAlert() { document.getElementById("alertModal").style.display = "none"; }
 
 /* =====================================================
-   CETAK LANGSUNG — AUTO SCALE 70%
+   CETAK — ZOOM 90%
    ===================================================== */
 function doPrint() {
-  // Pastikan filter sudah diterapkan
   applyFilterToRows();
 
-  // Hitung baris visible
-  var rows       = document.querySelectorAll('#data tr.group-row');
-  var visible    = Array.from(rows).filter(function(tr) {
+  var rows    = document.querySelectorAll('#data tr.group-row');
+  var visible = Array.from(rows).filter(function(tr) {
     return !tr.classList.contains('filter-hidden');
   });
 
@@ -1686,7 +1694,6 @@ function doPrint() {
     return;
   }
 
-  // Set print header
   var now = new Date();
   var days = ["Minggu","Senin","Selasa","Rabu","Kamis","Jumat","Sabtu"];
   var monthNames = ["Jan","Feb","Mar","Apr","Mei","Jun","Jul","Agu","Sep","Okt","Nov","Des"];
@@ -1695,7 +1702,6 @@ function doPrint() {
   var m  = String(now.getMinutes()).padStart(2,'0');
   var tanggal = days[now.getDay()] + ", " + d + " " + monthNames[now.getMonth()] + " " + now.getFullYear();
 
-  // Deskripsi filter
   var filterBulan = filterState.bulan ? +filterState.bulan : null;
   var filterTahun = filterState.tahun ? +filterState.tahun : null;
   var periodLabel = 'Semua Periode';
@@ -1705,6 +1711,9 @@ function doPrint() {
     periodLabel = NAMA_BULAN[filterBulan] + ' (Semua Tahun)';
   else if (filterTahun)
     periodLabel = 'Tahun ' + filterTahun;
+  if (filterState.status) {
+    periodLabel += ' · Status: ' + filterState.status;
+  }
 
   document.getElementById("printHeader").innerHTML =
     "Dicetak pada: " + tanggal + " pukul " + h + ":" + m +
