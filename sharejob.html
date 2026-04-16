@@ -2,7 +2,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 <base target="_top">
 <link href="https://fonts.googleapis.com/css2?family=Exo+2:wght@300;400;600;700;900&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
 <style>
@@ -41,9 +41,9 @@ body {
   background: var(--bg-void);
   color: var(--text-bright);
   min-height: 100vh;
-  overflow-x: hidden;
+  overflow-x: auto;
   margin: 0;
-  padding: 20px 20px 90px;
+  padding: 20px 16px 90px;
 }
 
 body::before {
@@ -123,9 +123,11 @@ body::after {
 }
 
 .top-bar {
-  display: flex; align-items: center; gap: 8px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
   margin-bottom: 14px;
-  min-width: 965px;
+  flex-wrap: wrap;
   position: relative; z-index: 1;
 }
 
@@ -303,7 +305,7 @@ body::after {
 .form-scroll { overflow-x: auto; }
 .form-container {
   display: flex; flex-wrap: nowrap; gap: 8px;
-  align-items: flex-start; margin-bottom: 10px; min-width: 900px;
+  align-items: flex-start; margin-bottom: 10px; min-width: 700px;
 }
 
 input, textarea, select {
@@ -373,11 +375,12 @@ button:hover {
 }
 
 table {
-  width: 100%; font-size: 14px;
+  width: 100%;
+  font-size: 14px;
   border-collapse: collapse;
   background: var(--bg-card);
-  table-layout: fixed;
-  min-width: 1020px;
+  table-layout: auto;
+  min-width: 800px;
 }
 
 thead tr {
@@ -386,10 +389,10 @@ thead tr {
 }
 
 th {
-  padding: 12px 10px;
+  padding: 12px 8px;
   font-family: 'JetBrains Mono', monospace;
   font-size: 11px; font-weight: 700;
-  letter-spacing: 2.5px; text-transform: uppercase;
+  letter-spacing: 2px; text-transform: uppercase;
   color: var(--orange);
   border: none;
   border-right: 1px solid var(--border-faint);
@@ -398,14 +401,15 @@ th {
 th:last-child { border-right: none; }
 
 td {
-  padding: 10px 10px;
+  padding: 8px 8px;
   border-bottom: 1px solid var(--border-faint);
   border-right: 1px solid var(--border-faint);
   vertical-align: top;
   color: var(--text-bright);
-  font-weight: 400; font-size: 14px;
+  font-weight: 400;
+  font-size: 13px;
   transition: background 0.12s;
-  overflow: hidden;
+  word-break: break-word;
 }
 td:last-child { border-right: none; }
 tr:last-child td { border-bottom: none; }
@@ -425,7 +429,7 @@ tr.filter-hidden { display: none; }
 th.col-delete, td.col-delete {
   width: 44px !important;
   text-align: center;
-  padding: 8px 4px;
+  padding: 6px 4px;
 }
 
 .btn-delete-row {
@@ -462,10 +466,10 @@ table.delete-mode .btn-delete-row {
 
 .status-select {
   width: 100%;
-  max-width: 148px;
-  font-size: 12px; font-weight: 700;
+  max-width: 130px;
+  font-size: 11px; font-weight: 700;
   font-family: 'JetBrains Mono', monospace;
-  padding: 5px 6px; border-radius: 3px;
+  padding: 4px 6px; border-radius: 3px;
   border: 1px solid transparent;
   letter-spacing: 0.5px; text-transform: uppercase;
   cursor: pointer; transition: all 0.2s;
@@ -774,6 +778,31 @@ body.light-mode .status-select.proses { background: rgba(245,127,23,0.1); }
 body.light-mode .status-select.selesai { background: rgba(0,137,123,0.1); }
 
 #autoScrollBtn.active { color: var(--orange); border-color: var(--border-orange); background: var(--orange-faint); }
+
+.inline-input {
+  width: 100%;
+  background: var(--bg-void);
+  color: var(--text-bright);
+  border: 1px solid var(--orange);
+  border-radius: 3px;
+  padding: 5px 8px;
+  font-family: 'Exo 2', sans-serif;
+  font-size: 13px;
+  box-sizing: border-box;
+  resize: vertical;
+}
+.inline-save-bar { display: flex; gap: 6px; margin-top: 6px; }
+.inline-btn {
+  font-family: 'Exo 2', sans-serif;
+  font-size: 11px; font-weight: 700;
+  letter-spacing: 1px;
+  padding: 4px 10px;
+  border-radius: 3px;
+  cursor: pointer;
+  border: 1px solid;
+}
+.inline-btn-save  { color: var(--green-ok); border-color: rgba(0,230,118,0.4); background: rgba(0,230,118,0.07); }
+.inline-btn-cancel { color: var(--text-dim); border-color: var(--border-mid); background: transparent; }
 </style>
 </head>
 <body>
@@ -797,7 +826,7 @@ body.light-mode .status-select.selesai { background: rgba(0,137,123,0.1); }
 
 <div class="hist-filter-bar"><span class="hist-filter-label">📅 Filter:</span><div class="hist-filter-group"><select class="hist-filter-select" id="filterBulan" onchange="applyFilter()"><option value="">Semua Bulan</option></select></div><span class="hist-filter-sep">/</span><div class="hist-filter-group"><select class="hist-filter-select" id="filterTahun" onchange="applyFilter()"><option value="">Semua Tahun</option></select></div><span class="hist-filter-sep">|</span><div class="hist-filter-group"><select class="hist-filter-select" id="filterStatus" onchange="applyFilter()"><option value="">Semua Status</option><option value="Pending">⏳ Pending</option><option value="Proses">🔄 Proses</option><option value="Selesai">✅ Selesai</option></select></div><div class="hist-period-badge" style="display:none;"><span>📋</span><span id="periodText">—</span></div><button class="btn-reset-filter hidden" id="btnResetFilter" onclick="resetFilter()">✕ Reset</button><span class="hist-filter-result" id="filterResult"></span></div>
 
-<div class="table-wrapper"><table id="mainTable"><colgroup><col style="width:200px;"><col style="width:120px;"><col style="width:auto;"><col style="width:110px;"><col style="width:160px;"><col style="width:95px;"><col style="width:65px;"><col style="width:65px;"></colgroup><thead><tr id="theadRow"><th>ID / No. Mesin</th><th>Nama</th><th>Tugas</th><th>Mesin</th><th>Status</th><th>Tanggal</th><th>Mulai</th><th>Selesai</th></tr></thead><tbody id="data"></tbody></table></div>
+<div class="table-wrapper"><table id="mainTable"><colgroup><col style="width:160px;"><col style="min-width:140px;"><col style="min-width:180px;"><col style="width:100px;"><col style="width:130px;"><col style="width:110px;"><col style="width:80px;"><col style="width:80px;"></colgroup><thead><tr id="theadRow"><th>ID / No. Mesin</th><th>Nama</th><th>Tugas</th><th>Mesin</th><th>Status</th><th>Tanggal</th><th>Mulai</th><th>Selesai</th></table></thead><tbody id="data"></tbody></table></div>
 
 <div id="confirmModal" class="modal"><div class="modal-box"><h3>⚠ Konfirmasi Archive</h3><p>Semua job hari ini akan dipindah ke arsip. Lanjutkan?</p><br><button onclick="confirmArchive()">Ya, Archive</button><button onclick="closeModal()" style="color:var(--text-mid);border-color:var(--border-mid);">Batal</button></div></div>
 <div id="alertModal" class="modal"><div class="modal-box"><p id="alertText"></p><br><button onclick="closeAlert()">OK</button></div></div>
@@ -822,11 +851,10 @@ function parseDateForSort(tanggalStr) {
   if (parts) return new Date(parts[1], parts[2]-1, parts[3]).getTime();
   return 0;
 }
-
-function getStatusPriority(status) {
-  if (status === 'Pending') return 1;
-  if (status === 'Proses') return 2;
-  if (status === 'Selesai') return 3;
+function getStatusPriority(s) {
+  if (s === 'Pending') return 1;
+  if (s === 'Proses') return 2;
+  if (s === 'Selesai') return 3;
   return 2;
 }
 
@@ -846,7 +874,6 @@ function showLoading(state) { document.getElementById("loadingOverlay").classLis
 function showAlert(text) { document.getElementById("alertText").innerText = text; document.getElementById("alertModal").style.display = "flex"; }
 function closeAlert() { document.getElementById("alertModal").style.display = "none"; }
 function closeModal() { document.getElementById("confirmModal").style.display = "none"; }
-
 function toggleInput() { let s = document.getElementById("inputSection"); s.style.display = s.style.display === "none" ? "block" : "none"; }
 
 let filterState = { bulan: '', tahun: '', status: '' };
@@ -877,18 +904,17 @@ function applyFilter() {
   applyFilterToRows();
 }
 function resetFilter() { filterState = { bulan: '', tahun: '', status: '' }; document.getElementById('filterBulan').value = ''; document.getElementById('filterTahun').value = ''; document.getElementById('filterStatus').value = ''; applyFilter(); }
-
 function applyFilterToRows() {
   let rows = document.querySelectorAll('#data tr.group-row');
   let visible = 0;
   rows.forEach(tr => {
-    let rowYear = tr.getAttribute('data-year');
-    let rowMonth = tr.getAttribute('data-month');
-    let rowStatus = tr.getAttribute('data-status') || '';
+    let year = tr.getAttribute('data-year');
+    let month = tr.getAttribute('data-month');
+    let status = tr.getAttribute('data-status') || '';
     let show = true;
-    if (filterState.tahun && rowYear !== filterState.tahun) show = false;
-    if (filterState.bulan && rowMonth !== filterState.bulan) show = false;
-    if (filterState.status && rowStatus !== filterState.status) show = false;
+    if (filterState.tahun && year !== filterState.tahun) show = false;
+    if (filterState.bulan && month !== filterState.bulan) show = false;
+    if (filterState.status && status !== filterState.status) show = false;
     tr.classList.toggle('filter-hidden', !show);
     if (show) visible++;
   });
@@ -899,30 +925,26 @@ async function loadData() {
   if (currentEditingRow) return;
   let res = await api("getTasks");
   if (res.error) { showAlert("Error: "+res.error); return; }
-  // Sort: newest date first, then status priority (Pending -> Proses -> Selesai)
   allTasks = (res.data || []).sort((a,b) => {
-    const dateA = parseDateForSort(a.tanggal);
-    const dateB = parseDateForSort(b.tanggal);
+    let dateA = parseDateForSort(a.tanggal), dateB = parseDateForSort(b.tanggal);
     if (dateA !== dateB) return dateB - dateA;
     return getStatusPriority(a.status) - getStatusPriority(b.status);
   });
   renderTable();
   buildFilterOptions();
-  applyFilter(); // re-apply filter after fresh render
+  applyFilter();
 }
 function getStatusClass(s) { return s === "Selesai" ? "selesai" : s === "Proses" ? "proses" : "pending"; }
 function escHtml(str) { return String(str||"").replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;").replace(/"/g,"&quot;").replace(/'/g,"&#39;"); }
-
-function parseDateComponents(tanggalStr) {
-  if (!tanggalStr) return { year: '', month: '' };
-  let str = String(tanggalStr).trim();
+function parseDateComponents(tgl) {
+  if (!tgl) return { year: '', month: '' };
+  let str = String(tgl).trim();
   let m = str.match(/^(\d{1,2})\/(\d{1,2})\/(\d{4})/);
   if (m) return { year: m[3], month: m[2] };
   m = str.match(/^(\d{4})-(\d{2})-(\d{2})/);
   if (m) return { year: m[1], month: m[2] };
   return { year: '', month: '' };
 }
-
 function renderTable() {
   let table = document.getElementById("mainTable"), thead = document.getElementById("theadRow"), tbody = document.getElementById("data");
   if (deleteMode) { table.classList.add("delete-mode"); if(!thead.querySelector("th.col-delete")){ let th=document.createElement("th"); th.className="col-delete"; th.innerHTML="✕"; thead.insertBefore(th,thead.firstChild); } }
