@@ -283,29 +283,6 @@ body::after {
   flex-shrink: 0;
 }
 
-.hist-month-section-head {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  padding: 8px 12px;
-  background: rgba(255,109,0,0.05);
-  border-bottom: 1px solid var(--border-faint);
-  border-top: 2px solid rgba(255,109,0,0.2);
-  margin-bottom: 0;
-}
-.hms-icon { font-size: 13px; }
-.hms-title {
-  font-family: 'JetBrains Mono', monospace;
-  font-size: 11px; font-weight: 700;
-  color: var(--orange);
-}
-.hms-count {
-  font-family: 'JetBrains Mono', monospace;
-  font-size: 10px;
-  color: var(--text-dim);
-  margin-left: auto;
-}
-
 #inputSection {
   background: var(--bg-panel);
   border: 1px solid var(--border-orange);
@@ -846,6 +823,13 @@ function parseDateForSort(tanggalStr) {
   return 0;
 }
 
+function getStatusPriority(status) {
+  if (status === 'Pending') return 1;
+  if (status === 'Proses') return 2;
+  if (status === 'Selesai') return 3;
+  return 2;
+}
+
 async function api(action, params) {
   showLoading(true);
   try {
@@ -893,31 +877,51 @@ function applyFilter() {
   applyFilterToRows();
 }
 function resetFilter() { filterState = { bulan: '', tahun: '', status: '' }; document.getElementById('filterBulan').value = ''; document.getElementById('filterTahun').value = ''; document.getElementById('filterStatus').value = ''; applyFilter(); }
+
 function applyFilterToRows() {
-  let rows = document.querySelectorAll('#data tr.group-row'), visible = 0;
+  let rows = document.querySelectorAll('#data tr.group-row');
+  let visible = 0;
   rows.forEach(tr => {
-    let tanggal = tr.getAttribute('data-tanggal') || '', status = tr.getAttribute('data-status') || '', parsed = parseTanggal(tanggal);
+    let rowYear = tr.getAttribute('data-year');
+    let rowMonth = tr.getAttribute('data-month');
+    let rowStatus = tr.getAttribute('data-status') || '';
     let show = true;
-    if (filterState.bulan && (!parsed || parsed.month != filterState.bulan)) show = false;
-    if (filterState.tahun && (!parsed || parsed.year != filterState.tahun)) show = false;
-    if (filterState.status && status !== filterState.status) show = false;
+    if (filterState.tahun && rowYear !== filterState.tahun) show = false;
+    if (filterState.bulan && rowMonth !== filterState.bulan) show = false;
+    if (filterState.status && rowStatus !== filterState.status) show = false;
     tr.classList.toggle('filter-hidden', !show);
     if (show) visible++;
   });
   document.getElementById('filterResult').textContent = (filterState.bulan||filterState.tahun||filterState.status) ? visible + ' job ditemukan' : visible + ' total job';
 }
-function parseTanggal(str) { if(!str) return null; let m = str.match(/^(\d{1,2})\/(\d{1,2})\/(\d{4})/); if(m) return {day:+m[1],month:+m[2],year:+m[3]}; m = str.match(/^(\d{4})-(\d{2})-(\d{2})/); if(m) return {day:+m[3],month:+m[2],year:+m[1]}; return null; }
 
 async function loadData() {
   if (currentEditingRow) return;
   let res = await api("getTasks");
   if (res.error) { showAlert("Error: "+res.error); return; }
-  allTasks = (res.data || []).sort((a,b) => parseDateForSort(b.tanggal) - parseDateForSort(a.tanggal));
+  // Sort: newest date first, then status priority (Pending -> Proses -> Selesai)
+  allTasks = (res.data || []).sort((a,b) => {
+    const dateA = parseDateForSort(a.tanggal);
+    const dateB = parseDateForSort(b.tanggal);
+    if (dateA !== dateB) return dateB - dateA;
+    return getStatusPriority(a.status) - getStatusPriority(b.status);
+  });
   renderTable();
-  buildFilterOptions(); applyFilter();
+  buildFilterOptions();
+  applyFilter(); // re-apply filter after fresh render
 }
 function getStatusClass(s) { return s === "Selesai" ? "selesai" : s === "Proses" ? "proses" : "pending"; }
 function escHtml(str) { return String(str||"").replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;").replace(/"/g,"&quot;").replace(/'/g,"&#39;"); }
+
+function parseDateComponents(tanggalStr) {
+  if (!tanggalStr) return { year: '', month: '' };
+  let str = String(tanggalStr).trim();
+  let m = str.match(/^(\d{1,2})\/(\d{1,2})\/(\d{4})/);
+  if (m) return { year: m[3], month: m[2] };
+  m = str.match(/^(\d{4})-(\d{2})-(\d{2})/);
+  if (m) return { year: m[1], month: m[2] };
+  return { year: '', month: '' };
+}
 
 function renderTable() {
   let table = document.getElementById("mainTable"), thead = document.getElementById("theadRow"), tbody = document.getElementById("data");
@@ -928,18 +932,22 @@ function renderTable() {
   allGroups = groups;
   let html = "";
   groups.forEach((group, idx) => {
-    let task = group[0], sc = getStatusClass(task.status), allNama = group.map(t=>t.nama).join(", ");
-    html += `<tr class="group-row group-start" data-groupid="${escHtml(task.id)}" data-groupidx="${idx}" data-status="${escHtml(task.status)}" data-tanggal="${escHtml(task.tanggal||'')}">`;
+    let task = group[0];
+    let sc = getStatusClass(task.status);
+    let allNama = group.map(t=>t.nama).join(", ");
+    let tanggalDisplay = task.tanggal || "";
+    let { year, month } = parseDateComponents(tanggalDisplay);
+    html += `<tr class="group-row group-start" data-groupid="${escHtml(task.id)}" data-groupidx="${idx}" data-status="${escHtml(task.status)}" data-year="${escHtml(year)}" data-month="${escHtml(month)}">`;
     if (deleteMode) html += `<td class='col-delete'><button class='btn-delete-row' onclick="askDeleteRow('${task.id}','${escHtml(task.nama)}')" title='Hapus group'>✕</button></td>`;
     html += `<td>${escHtml(task.id)}</td><td class='nama-col'>${escHtml(allNama)}</td><td>${escHtml(task.tugas)}</td><td>${escHtml(task.mesin)}</td>`;
     html += `<td style='text-align:center;'><select class='status-select ${sc}' data-id='${escHtml(task.id)}' data-prev='${escHtml(task.status)}' onchange='changeStatus(this)'>`+
             `<option${task.status==="Pending"?" selected":""}>Pending</option><option${task.status==="Proses"?" selected":""}>Proses</option><option${task.status==="Selesai"?" selected":""}>Selesai</option></select></td>`;
-    html += `<td>${escHtml(task.tanggal)}</td><td style='text-align:center;'>${task.jamMulai ? escHtml(task.jamMulai) : "—"}</td><td style='text-align:center;'>${task.jamSelesai ? escHtml(task.jamSelesai) : "—"}</td></tr>`;
+    html += `<td>${escHtml(tanggalDisplay)}</td><td style='text-align:center;'>${task.jamMulai ? escHtml(task.jamMulai) : "—"}</td><td style='text-align:center;'>${task.jamSelesai ? escHtml(task.jamSelesai) : "—"}</td></tr>`;
   });
   tbody.innerHTML = html;
 }
 
-function toggleDeleteMode() { deleteMode = !deleteMode; document.getElementById("toggleDeleteBtn").classList.toggle("active", deleteMode); renderTable(); applyFilterToRows(); }
+function toggleDeleteMode() { deleteMode = !deleteMode; document.getElementById("toggleDeleteBtn").classList.toggle("active", deleteMode); renderTable(); applyFilter(); }
 let pendingDeleteId = null;
 function askDeleteRow(id, nama) { pendingDeleteId = id; document.getElementById("deleteRowDesc").textContent = "ID: "+id+(nama?" — "+nama:""); document.getElementById("deleteRowModal").style.display = "flex"; }
 document.getElementById("confirmDeleteRowBtn").onclick = async () => { if(pendingDeleteId){ await api("deleteTask",{id:pendingDeleteId}); pendingDeleteId=null; document.getElementById("deleteRowModal").style.display="none"; loadData(); } };
@@ -1023,7 +1031,7 @@ function doPrint() {
   applyFilterToRows();
   let visible = Array.from(document.querySelectorAll('#data tr.group-row')).filter(tr=>!tr.classList.contains('filter-hidden'));
   if(visible.length===0){ showAlert("Tidak ada data untuk dicetak."); return; }
-  visible.forEach((tr,idx)=>{ if((idx+1)%30===0 && idx!==visible.length-1) tr.classList.add('print-page-break'); });
+  visible.forEach((tr,idx)=>{ if((idx+1)%10===0 && idx!==visible.length-1) tr.classList.add('print-page-break'); });
   let now=new Date(); let d=String(now.getDate()).padStart(2,'0');
   let periodLabel = '';
   if(filterState.bulan && filterState.tahun) periodLabel = NAMA_BULAN[+filterState.bulan]+' '+filterState.tahun;
