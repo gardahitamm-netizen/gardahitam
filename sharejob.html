@@ -1023,7 +1023,7 @@ function doPrint() {
   applyFilterToRows();
   let visible = Array.from(document.querySelectorAll('#data tr.group-row')).filter(tr=>!tr.classList.contains('filter-hidden'));
   if(visible.length===0){ showAlert("Tidak ada data untuk dicetak."); return; }
-  visible.forEach((tr,idx)=>{ if((idx+1)%10===0 && idx!==visible.length-1) tr.classList.add('print-page-break'); });
+  visible.forEach((tr,idx)=>{ if((idx+1)%30===0 && idx!==visible.length-1) tr.classList.add('print-page-break'); });
   let now=new Date(); let d=String(now.getDate()).padStart(2,'0');
   let periodLabel = '';
   if(filterState.bulan && filterState.tahun) periodLabel = NAMA_BULAN[+filterState.bulan]+' '+filterState.tahun;
