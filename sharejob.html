@@ -187,6 +187,13 @@ body::after {
 }
 #toggleDeleteBtn.active::after { width: 100%; background: var(--red-err); }
 
+/* ===== REFRESH BUTTON ===== */
+#refreshBtn { color: var(--teal); border-color: var(--teal-bd); }
+#refreshBtn::after { background: var(--teal); }
+#refreshBtn svg { fill: var(--teal); }
+#refreshBtn:hover { border-color: var(--teal); box-shadow: 0 0 12px var(--teal-bg); }
+#refreshBtn.spinning svg { animation: spin 0.7s linear infinite; }
+
 /* =====================================================
    FILTER BAR
    ===================================================== */
@@ -233,6 +240,26 @@ body::after {
 }
 .hist-filter-select:focus { border-color: var(--orange); }
 .hist-filter-select option { background: var(--bg-card); }
+
+/* Date input filter */
+.hist-filter-date {
+  background: var(--bg-card);
+  border: 1px solid var(--border-mid);
+  color: var(--text-bright);
+  padding: 6px 10px;
+  border-radius: 6px;
+  font-size: 11px;
+  font-family: 'JetBrains Mono', monospace;
+  outline: none;
+  cursor: pointer;
+  transition: border-color 0.2s;
+  height: 32px;
+}
+.hist-filter-date:focus { border-color: var(--orange); }
+.hist-filter-date::-webkit-calendar-picker-indicator {
+  filter: invert(0.6) sepia(1) saturate(3) hue-rotate(10deg);
+  cursor: pointer;
+}
 
 #filterStatus option[value="Pending"] { color: var(--blue-info); }
 #filterStatus option[value="Proses"]  { color: var(--amber-warn); }
@@ -374,7 +401,7 @@ button:hover {
   position: relative; z-index: 1;
   box-shadow: 0 4px 40px rgba(0,0,0,0.5), 0 0 0 1px var(--border-faint);
   margin-bottom: 16px;
-  overflow: hidden; /* no horizontal scroll — table fits */
+  overflow: hidden;
 }
 
 table {
@@ -382,7 +409,7 @@ table {
   font-size: 13px;
   border-collapse: collapse;
   background: var(--bg-card);
-  table-layout: fixed; /* critical for fit */
+  table-layout: fixed;
 }
 
 thead tr {
@@ -412,7 +439,6 @@ td {
   font-weight: 400; font-size: 13px;
   transition: background 0.12s;
   overflow: hidden;
-  /* no text-overflow so content wraps, fitting the cell */
   word-break: break-word;
   white-space: normal;
 }
@@ -430,31 +456,16 @@ tr.group-start td {
 
 tr.filter-hidden { display: none; }
 
-/* Column widths — fitted, no scroll */
-/* delete col */
-th.col-delete, td.col-delete {
-  width: 36px;
-  text-align: center;
-  padding: 6px 2px;
-}
-/* col 1: ID */
+/* Column widths */
 table colgroup col:nth-child(1) { width: 14%; }
-/* col 2: Nama */
 table colgroup col:nth-child(2) { width: 14%; }
-/* col 3: Tugas */
 table colgroup col:nth-child(3) { width: 28%; }
-/* col 4: Mesin */
 table colgroup col:nth-child(4) { width: 8%; }
-/* col 5: Status */
 table colgroup col:nth-child(5) { width: 11%; }
-/* col 6: Tanggal */
 table colgroup col:nth-child(6) { width: 11%; }
-/* col 7: Mulai */
 table colgroup col:nth-child(7) { width: 7%; }
-/* col 8: Selesai */
 table colgroup col:nth-child(8) { width: 7%; }
 
-/* delete-mode: first col becomes delete button */
 table.delete-mode colgroup col:nth-child(1) { width: 36px; }
 table.delete-mode colgroup col:nth-child(2) { width: 13%; }
 table.delete-mode colgroup col:nth-child(3) { width: 13%; }
@@ -464,6 +475,13 @@ table.delete-mode colgroup col:nth-child(6) { width: 11%; }
 table.delete-mode colgroup col:nth-child(7) { width: 11%; }
 table.delete-mode colgroup col:nth-child(8) { width: 7%; }
 table.delete-mode colgroup col:nth-child(9) { width: 7%; }
+
+/* delete col */
+th.col-delete, td.col-delete {
+  width: 36px;
+  text-align: center;
+  padding: 6px 2px;
+}
 
 td:nth-child(5) { text-align: center; padding: 6px 4px; }
 td:nth-child(7), td:nth-child(8) { text-align: center; }
@@ -529,6 +547,33 @@ table.delete-mode .btn-delete-row {
   background: rgba(0,230,118,0.08);
   color: var(--green-ok);
   border-color: rgba(0,230,118,0.3);
+}
+
+/* Jam selesai readonly style in inline edit */
+.ie-readonly {
+  width: 100%;
+  background: var(--bg-panel);
+  color: var(--text-dim);
+  border: 1px solid var(--border-faint);
+  border-radius: 3px;
+  padding: 5px 8px;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 12px;
+  box-sizing: border-box;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+.ie-readonly-lock {
+  font-size: 10px;
+  opacity: 0.5;
+}
+.ie-readonly-hint {
+  font-size: 9px;
+  color: var(--text-dim);
+  font-family: 'JetBrains Mono', monospace;
+  margin-top: 2px;
+  opacity: 0.7;
 }
 
 /* === LOADING OVERLAY === */
@@ -756,7 +801,7 @@ table.delete-mode .btn-delete-row {
 ::-webkit-scrollbar-thumb { background: var(--orange-dim); border-radius: 3px; }
 ::-webkit-scrollbar-thumb:hover { background: var(--orange); }
 
-/* === PRINT STYLES — 10 ROWS PER PAGE === */
+/* === PRINT STYLES — 30 ROWS PER PAGE === */
 .print-header {
   display: none; text-align: center;
   font-size: 12px; color: #555; margin-bottom: 8px;
@@ -791,10 +836,8 @@ table.delete-mode .btn-delete-row {
   .header-badge { color: #555 !important; }
   .header-line::before, .header-line::after { background: #ccc !important; }
 
-  /* Hide the main table-wrapper; print tables are generated by JS */
   .table-wrapper { display: none !important; }
 
-  /* Print page tables */
   .print-page {
     display: block !important;
     page-break-after: always;
@@ -899,9 +942,11 @@ body.light-mode h2 { color: var(--orange-dim); text-shadow: none; }
 body.light-mode h2 span { color: var(--orange); text-shadow: none; }
 body.light-mode .hist-filter-bar { background: #eaf2fc; border-color: #b8ccec; }
 body.light-mode .hist-filter-select { background: #ffffff !important; border-color: #b8ccec !important; color: #0d1a2e !important; }
+body.light-mode .hist-filter-date { background: #ffffff !important; border-color: #b8ccec !important; color: #0d1a2e !important; }
 body.light-mode .hist-filter-label { color: #3a5a80; }
 body.light-mode .hist-period-badge { background: rgba(0,122,170,0.1); border-color: rgba(0,122,170,0.3); color: #007aaa; }
 body.light-mode .btn-reset-filter { color: #3a5a80; border-color: #b8ccec; }
+body.light-mode .ie-readonly { background: #f0f0f0; color: #888; border-color: #ddd; }
 
 #themeToggleBtn {
   position: fixed;
@@ -982,9 +1027,8 @@ tr.editing td {
 #autoScrollBtn.active svg { fill: var(--orange); }
 #autoScrollBtn.active::after { width: 100%; }
 
-/* Print pages container (hidden on screen, shown on print) */
+/* Print pages container */
 #printPagesContainer { display: none; }
-
 @media print {
   #printPagesContainer { display: block !important; }
 }
@@ -1026,6 +1070,14 @@ tr.editing td {
     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" style="width:18px;height:18px;">
       <path d="M6 19c0 1.1.9 2 2 2h8c1.1 0 2-.9 2-2V7H6v12zM19 4h-3.5l-1-1h-5l-1 1H5v2h14V4z"/>
     </svg>
+  </button>
+
+  <!-- TOMBOL REFRESH MANUAL -->
+  <button class="tb-btn" id="refreshBtn" onclick="manualRefresh()" title="Refresh Data">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" style="width:18px;height:18px;">
+      <path d="M17.65 6.35A7.958 7.958 0 0 0 12 4c-4.42 0-7.99 3.58-7.99 8s3.57 8 7.99 8c3.73 0 6.84-2.55 7.73-6h-2.08A5.99 5.99 0 0 1 12 18c-3.31 0-6-2.69-6-6s2.69-6 6-6c1.66 0 3.14.69 4.22 1.78L13 11h7V4l-2.35 2.35z"/>
+    </svg>
+    Refresh
   </button>
 
   <button class="tb-btn" id="printBtn" onclick="doPrint()">
@@ -1076,18 +1128,30 @@ tr.editing td {
 <!-- FILTER BAR -->
 <div class="hist-filter-bar" id="histFilterBar">
   <span class="hist-filter-label">📅 Filter:</span>
+
+  <!-- Filter Tanggal Spesifik -->
   <div class="hist-filter-group">
-    <select class="hist-filter-select" id="filterBulan" onchange="applyFilter()">
+    <span class="hist-filter-label" style="font-size:9px;">TGL</span>
+    <input type="date" class="hist-filter-date" id="filterTanggal" onchange="applyFilter()" title="Filter tanggal spesifik">
+  </div>
+
+  <span class="hist-filter-sep">|</span>
+
+  <!-- Filter Bulan -->
+  <div class="hist-filter-group">
+    <select class="hist-filter-select" id="filterBulan" onchange="onBulanTahunChange()">
       <option value="">Semua Bulan</option>
     </select>
   </div>
   <span class="hist-filter-sep">/</span>
   <div class="hist-filter-group">
-    <select class="hist-filter-select" id="filterTahun" onchange="applyFilter()">
+    <select class="hist-filter-select" id="filterTahun" onchange="onBulanTahunChange()">
       <option value="">Semua Tahun</option>
     </select>
   </div>
+
   <span class="hist-filter-sep">|</span>
+
   <div class="hist-filter-group">
     <select class="hist-filter-select" id="filterStatus" onchange="applyFilter()">
       <option value="">Semua Status</option>
@@ -1096,6 +1160,7 @@ tr.editing td {
       <option value="Selesai">✅ Selesai</option>
     </select>
   </div>
+
   <div class="hist-period-badge" id="periodBadge" style="display:none;">
     <span>📋</span><span id="periodText">—</span>
   </div>
@@ -1131,7 +1196,7 @@ tr.editing td {
   </table>
 </div>
 
-<!-- Print pages container (built by JS before printing) -->
+<!-- Print pages container -->
 <div id="printPagesContainer"></div>
 
 <!-- Modal Konfirmasi Archive -->
@@ -1230,7 +1295,6 @@ const GAS_URL = "https://script.google.com/macros/s/AKfycbwy8IbrOY69b4GaVuQA7nvi
 const NAMA_BULAN = ['','Januari','Februari','Maret','April','Mei','Juni','Juli','Agustus','September','Oktober','November','Desember'];
 const TAHUN_AWAL = 2024;
 
-/* Status sort order: Pending=0, Proses=1, Selesai=2 */
 const STATUS_ORDER = { 'Pending': 0, 'Proses': 1, 'Selesai': 2 };
 
 /* ===== API HELPER ===== */
@@ -1310,7 +1374,7 @@ function getStatusClass(status) {
 }
 
 /* ===================================================
-   PARSE TANGGAL → numeric timestamp for sorting
+   PARSE TANGGAL
    =================================================== */
 function parseTanggal(str) {
   if (!str) return null;
@@ -1330,15 +1394,23 @@ function tanggalToTimestamp(str) {
   return p.year * 10000 + p.month * 100 + p.day;
 }
 
+/* Format tanggal ke YYYY-MM-DD untuk dibanding dengan input[type=date] */
+function tanggalToYMD(str) {
+  var p = parseTanggal(str);
+  if (!p) return '';
+  return p.year + '-' +
+    String(p.month).padStart(2,'0') + '-' +
+    String(p.day).padStart(2,'0');
+}
+
 /* ===================================================
-   SORT tasks: terbaru di atas, sama tanggal → Pending > Proses > Selesai
+   SORT tasks
    =================================================== */
 function sortTasks(tasks) {
   return tasks.slice().sort(function(a, b) {
     var ta = tanggalToTimestamp(a.tanggal);
     var tb = tanggalToTimestamp(b.tanggal);
-    if (tb !== ta) return tb - ta; // terbaru di atas
-    // sama tanggal → sort by status
+    if (tb !== ta) return tb - ta;
     var sa = STATUS_ORDER[a.status] !== undefined ? STATUS_ORDER[a.status] : 99;
     var sb = STATUS_ORDER[b.status] !== undefined ? STATUS_ORDER[b.status] : 99;
     return sa - sb;
@@ -1348,7 +1420,7 @@ function sortTasks(tasks) {
 /* ===================================================
    FILTER STATE
    =================================================== */
-var filterState = { bulan: '', tahun: '', status: '' };
+var filterState = { tanggal: '', bulan: '', tahun: '', status: '' };
 
 function buildFilterOptions() {
   var bulanSel = document.getElementById('filterBulan');
@@ -1375,27 +1447,73 @@ function buildFilterOptions() {
   if (document.getElementById('filterStatus')) {
     document.getElementById('filterStatus').value = filterState.status;
   }
+  if (document.getElementById('filterTanggal')) {
+    document.getElementById('filterTanggal').value = filterState.tanggal;
+  }
 }
 
-function applyFilter() {
-  filterState.bulan  = document.getElementById('filterBulan').value;
-  filterState.tahun  = document.getElementById('filterTahun').value;
-  filterState.status = document.getElementById('filterStatus').value;
+/* Saat filter tanggal spesifik diisi → kosongkan bulan/tahun */
+function onTanggalChange() {
+  var val = document.getElementById('filterTanggal').value;
+  if (val) {
+    // Kosongkan bulan & tahun agar tidak konflik
+    document.getElementById('filterBulan').value = '';
+    document.getElementById('filterTahun').value = '';
+    filterState.bulan = '';
+    filterState.tahun = '';
+  }
+  applyFilter();
+}
 
-  var hasFilter = filterState.bulan || filterState.tahun || filterState.status;
+/* Saat bulan/tahun diubah → kosongkan tanggal spesifik */
+function onBulanTahunChange() {
+  var tanggalVal = document.getElementById('filterTanggal').value;
+  if (tanggalVal) {
+    document.getElementById('filterTanggal').value = '';
+    filterState.tanggal = '';
+  }
+  applyFilter();
+}
+
+/* Override onchange untuk filterTanggal */
+document.getElementById('filterTanggal').addEventListener('change', function() {
+  var val = this.value;
+  if (val) {
+    document.getElementById('filterBulan').value = '';
+    document.getElementById('filterTahun').value = '';
+    filterState.bulan = '';
+    filterState.tahun = '';
+  }
+  applyFilter();
+});
+
+function applyFilter() {
+  filterState.tanggal = document.getElementById('filterTanggal').value;
+  filterState.bulan   = document.getElementById('filterBulan').value;
+  filterState.tahun   = document.getElementById('filterTahun').value;
+  filterState.status  = document.getElementById('filterStatus').value;
+
+  var hasFilter = filterState.tanggal || filterState.bulan || filterState.tahun || filterState.status;
   var badge     = document.getElementById('periodBadge');
   var resetBtn  = document.getElementById('btnResetFilter');
 
   if (hasFilter) {
     var label = '';
-    if (filterState.bulan && filterState.tahun)
+    if (filterState.tanggal) {
+      // Format tanggal untuk display
+      var parts = filterState.tanggal.split('-');
+      if (parts.length === 3) {
+        label = parts[2] + ' ' + NAMA_BULAN[+parts[1]] + ' ' + parts[0];
+      } else {
+        label = filterState.tanggal;
+      }
+    } else if (filterState.bulan && filterState.tahun) {
       label = NAMA_BULAN[+filterState.bulan] + ' ' + filterState.tahun;
-    else if (filterState.bulan)
+    } else if (filterState.bulan) {
       label = NAMA_BULAN[+filterState.bulan] + ' (Semua Tahun)';
-    else if (filterState.tahun)
+    } else if (filterState.tahun) {
       label = 'Tahun ' + filterState.tahun;
-    else
-      label = '';
+    }
     if (filterState.status) {
       label = label ? label + ' · ' + filterState.status : filterState.status;
     }
@@ -1411,29 +1529,41 @@ function applyFilter() {
 }
 
 function resetFilter() {
-  filterState.bulan = ''; filterState.tahun = ''; filterState.status = '';
-  document.getElementById('filterBulan').value  = '';
-  document.getElementById('filterTahun').value  = '';
-  document.getElementById('filterStatus').value = '';
+  filterState.tanggal = '';
+  filterState.bulan = '';
+  filterState.tahun = '';
+  filterState.status = '';
+  document.getElementById('filterTanggal').value = '';
+  document.getElementById('filterBulan').value   = '';
+  document.getElementById('filterTahun').value   = '';
+  document.getElementById('filterStatus').value  = '';
   document.getElementById('periodBadge').style.display = 'none';
   document.getElementById('btnResetFilter').classList.add('hidden');
   applyFilterToRows();
 }
 
 function applyFilterToRows() {
-  var filterBulan  = filterState.bulan  ? +filterState.bulan : null;
-  var filterTahun  = filterState.tahun  ? +filterState.tahun : null;
-  var filterStatus = filterState.status || null;
-  var rows         = document.querySelectorAll('#data tr.group-row');
-  var visibleCount = 0;
+  var filterTanggal = filterState.tanggal || null;   // format YYYY-MM-DD
+  var filterBulan   = filterState.bulan  ? +filterState.bulan : null;
+  var filterTahun   = filterState.tahun  ? +filterState.tahun : null;
+  var filterStatus  = filterState.status || null;
+  var rows          = document.querySelectorAll('#data tr.group-row');
+  var visibleCount  = 0;
 
   rows.forEach(function(tr) {
     var tanggalStr = tr.getAttribute('data-tanggal') || '';
     var rowStatus  = tr.getAttribute('data-status')  || '';
     var parsed     = parseTanggal(tanggalStr);
     var show       = true;
-    if (filterBulan  && (!parsed || parsed.month !== filterBulan)) show = false;
-    if (filterTahun  && (!parsed || parsed.year  !== filterTahun)) show = false;
+
+    if (filterTanggal) {
+      // Bandingkan tanggal row dengan filter tanggal (YYYY-MM-DD)
+      var rowYMD = tanggalToYMD(tanggalStr);
+      if (rowYMD !== filterTanggal) show = false;
+    } else {
+      if (filterBulan && (!parsed || parsed.month !== filterBulan)) show = false;
+      if (filterTahun && (!parsed || parsed.year  !== filterTahun)) show = false;
+    }
     if (filterStatus && rowStatus !== filterStatus) show = false;
 
     if (show) {
@@ -1445,7 +1575,7 @@ function applyFilterToRows() {
   });
 
   var resultEl  = document.getElementById('filterResult');
-  var hasFilter = filterBulan || filterTahun || filterStatus;
+  var hasFilter = filterTanggal || filterBulan || filterTahun || filterStatus;
   if (hasFilter) {
     resultEl.textContent = visibleCount + ' job ditemukan';
   } else {
@@ -1464,12 +1594,32 @@ function loadData(force) {
   if (!force && currentEditingRow) return;
   api("getTasks").then(function(res) {
     if (res.error) { showAlert("Error getTasks: " + res.error); return; }
-    // Sort sebelum render: terbaru di atas, status Pending→Proses→Selesai
     allTasks = sortTasks(res.data || []);
     renderTable();
     buildFilterOptions();
     applyFilter();
   });
+}
+
+/* ===================================================
+   REFRESH MANUAL
+   =================================================== */
+function manualRefresh() {
+  if (currentEditingRow) {
+    showAlert("Selesaikan edit terlebih dahulu sebelum refresh!");
+    return;
+  }
+  var btn = document.getElementById('refreshBtn');
+  btn.classList.add('spinning');
+  btn.disabled = true;
+
+  loadData(true);
+
+  // Hentikan animasi setelah 1 detik
+  setTimeout(function() {
+    btn.classList.remove('spinning');
+    btn.disabled = false;
+  }, 1000);
 }
 
 /* ===================================================
@@ -1543,7 +1693,7 @@ function renderTable() {
 }
 
 /* ===================================================
-   TOGGLE DELETE MODE — no login required
+   TOGGLE DELETE MODE
    =================================================== */
 function toggleDeleteMode() {
   deleteMode = !deleteMode;
@@ -1557,7 +1707,7 @@ function toggleDeleteMode() {
   applyFilterToRows();
 }
 
-/* ===== TOGGLE INPUT — no login required ===== */
+/* ===== TOGGLE INPUT ===== */
 function toggleInput() {
   var section = document.getElementById("inputSection");
   section.style.display = (section.style.display === "none") ? "block" : "none";
@@ -1627,7 +1777,7 @@ function changeStatus(select) {
   if (tr) tr.setAttribute("data-status", newStatus);
   api("updateTaskStatus", { id: id, status: newStatus }).then(function(res) {
     if (res.error) { showAlert("Gagal update status: " + res.error); }
-    loadData(true); // auto refresh setelah update
+    loadData(true);
   });
 }
 
@@ -1651,7 +1801,7 @@ function showAlert(text) {
 function closeAlert() { document.getElementById("alertModal").style.display = "none"; }
 
 /* =====================================================
-   CETAK — 10 baris per halaman
+   CETAK — 30 baris per halaman
    ===================================================== */
 function doPrint() {
   applyFilterToRows();
@@ -1674,15 +1824,21 @@ function doPrint() {
   var m  = String(now.getMinutes()).padStart(2,'0');
   var tanggal = days[now.getDay()] + ", " + d + " " + monthNames[now.getMonth()] + " " + now.getFullYear();
 
-  var filterBulan = filterState.bulan ? +filterState.bulan : null;
-  var filterTahun = filterState.tahun ? +filterState.tahun : null;
   var periodLabel = 'Semua Periode';
-  if (filterBulan && filterTahun)
-    periodLabel = NAMA_BULAN[filterBulan] + ' ' + filterTahun;
-  else if (filterBulan)
-    periodLabel = NAMA_BULAN[filterBulan] + ' (Semua Tahun)';
-  else if (filterTahun)
-    periodLabel = 'Tahun ' + filterTahun;
+  if (filterState.tanggal) {
+    var parts = filterState.tanggal.split('-');
+    if (parts.length === 3) {
+      periodLabel = parts[2] + ' ' + NAMA_BULAN[+parts[1]] + ' ' + parts[0];
+    } else {
+      periodLabel = filterState.tanggal;
+    }
+  } else if (filterState.bulan && filterState.tahun) {
+    periodLabel = NAMA_BULAN[+filterState.bulan] + ' ' + filterState.tahun;
+  } else if (filterState.bulan) {
+    periodLabel = NAMA_BULAN[+filterState.bulan] + ' (Semua Tahun)';
+  } else if (filterState.tahun) {
+    periodLabel = 'Tahun ' + filterState.tahun;
+  }
   if (filterState.status) {
     periodLabel += ' · Status: ' + filterState.status;
   }
@@ -1693,7 +1849,6 @@ function doPrint() {
     periodLabel + "</span>" +
     " &nbsp;|&nbsp; <b>" + visible.length + " job</b>";
 
-  /* --- Build print pages: 10 rows per page --- */
   var ROWS_PER_PAGE = 30;
   var container = document.getElementById('printPagesContainer');
   container.innerHTML = '';
@@ -1705,7 +1860,6 @@ function doPrint() {
     var pageDiv = document.createElement('div');
     pageDiv.className = 'print-page';
 
-    // Page header
     var pageHeader = document.createElement('div');
     pageHeader.className = 'print-page-header';
     pageHeader.innerHTML =
@@ -1713,7 +1867,6 @@ function doPrint() {
       '<span>Halaman ' + (p+1) + ' / ' + totalPages + ' &nbsp;|&nbsp; Dicetak: ' + tanggal + ' ' + h + ':' + m + '</span>';
     pageDiv.appendChild(pageHeader);
 
-    // Table
     var tbl = document.createElement('table');
     tbl.innerHTML =
       '<thead><tr>' +
@@ -1732,7 +1885,6 @@ function doPrint() {
       var cells = tr.querySelectorAll('td');
       var offset = deleteMode ? 1 : 0;
 
-      // Extract data from cells
       var idVal       = cells[offset + 0] ? cells[offset + 0].textContent.trim() : '';
       var namaVal     = cells[offset + 1] ? cells[offset + 1].textContent.trim() : '';
       var tugasVal    = cells[offset + 2] ? cells[offset + 2].textContent.trim() : '';
@@ -1743,7 +1895,7 @@ function doPrint() {
       var selesaiVal  = cells[offset + 7] ? cells[offset + 7].textContent.trim() : '—';
 
       var pTr = document.createElement('tr');
-      pTr.className = (idx === 0 || true) ? 'group-start-print' : '';
+      pTr.className = 'group-start-print';
 
       var statusColor = statusVal === 'Selesai' ? '#2e7d32' : statusVal === 'Proses' ? '#e65100' : '#1565c0';
       var statusBg    = statusVal === 'Selesai' ? '#e8f5e9' : statusVal === 'Proses' ? '#fff3e0' : '#e3f2fd';
@@ -1875,7 +2027,8 @@ function saveRunningText() {
 }
 
 /* ===================================================
-   INLINE EDIT ROW — no login required
+   INLINE EDIT ROW
+   Jam Selesai = READ ONLY (tidak bisa diedit)
    =================================================== */
 var currentEditingRow = null;
 var originalRowData   = null;
@@ -1952,6 +2105,7 @@ function startInlineEdit(tr) {
 
   tr.classList.add("editing");
 
+  // Col ID + save/cancel buttons
   cells[offset + 0].innerHTML =
     "<input class='inline-input' id='ie-id' value='" + escHtml(String(originalRowData.id)) + "'>" +
     "<div class='inline-save-bar'>" +
@@ -1959,22 +2113,32 @@ function startInlineEdit(tr) {
       "<button class='inline-btn inline-btn-cancel' onclick='cancelInlineEdit()'>✕ Batal</button>" +
     "</div>";
 
+  // Col Nama
   cells[offset + 1].innerHTML =
     "<textarea class='inline-input' id='ie-nama' rows='3' style='font-size:13px;'>" +
     escHtml(originalRowData.nama) + "</textarea>" +
     "<span style='font-size:9px;color:var(--text-dim);font-family:monospace;'>↵ Enter = nama baru</span>";
 
+  // Col Tugas
   cells[offset + 2].innerHTML =
     "<textarea class='inline-input' id='ie-tugas' rows='3'>" + escHtml(originalRowData.tugas) + "</textarea>";
 
+  // Col Mesin
   cells[offset + 3].innerHTML =
     "<input class='inline-input' id='ie-mesin' value='" + escHtml(originalRowData.mesin) + "'>";
 
+  // Col Jam Mulai — bisa diedit
   cells[offset + 6].innerHTML =
     "<input class='inline-input' id='ie-jam-mulai' type='time' value='" + escHtml(originalRowData.jamMulai) + "'>";
 
+  // Col Jam Selesai — READ ONLY, tidak bisa diedit
+  var jamSelesaiDisplay = originalRowData.jamSelesai || '—';
   cells[offset + 7].innerHTML =
-    "<input class='inline-input' id='ie-jam-selesai' type='time' value='" + escHtml(originalRowData.jamSelesai) + "'>";
+    "<div class='ie-readonly'>" +
+      "<span class='ie-readonly-lock'>🔒</span>" +
+      "<span>" + escHtml(jamSelesaiDisplay) + "</span>" +
+    "</div>" +
+    "<div class='ie-readonly-hint'>Tidak dapat diedit</div>";
 
   setTimeout(function() { var inp = document.getElementById("ie-id"); if (inp) inp.focus(); }, 50);
   tr.addEventListener("keydown", handleInlineKeydown);
@@ -1991,7 +2155,8 @@ function saveInlineEdit() {
   var newTugas      = (document.getElementById("ie-tugas")       || {value: originalRowData.tugas     }).value.trim();
   var newMesin      = (document.getElementById("ie-mesin")       || {value: originalRowData.mesin     }).value.trim();
   var newJamMulai   = (document.getElementById("ie-jam-mulai")   || {value: originalRowData.jamMulai  }).value.trim();
-  var newJamSelesai = (document.getElementById("ie-jam-selesai") || {value: originalRowData.jamSelesai}).value.trim();
+  // Jam selesai TIDAK diubah — gunakan nilai asli
+  var newJamSelesai = originalRowData.jamSelesai;
 
   if (!newId || !newNama || !newTugas || !newMesin) { showAlert("Semua kolom harus diisi!"); return; }
   var oldId = originalRowData.id;
@@ -2002,7 +2167,7 @@ function saveInlineEdit() {
     newJamMulai: newJamMulai, newJamSelesai: newJamSelesai
   }).then(function(res) {
     if (res && res.error) showAlert("Gagal simpan: " + res.error);
-    loadData(true); // auto refresh setelah save
+    loadData(true);
   });
 }
 
@@ -2093,13 +2258,7 @@ startInlineEdit = function(tr) {
 window.onload = function() {
   loadRunningText();
   loadData();
-  // Auto refresh setiap 30 detik
-  setInterval(function() {
-    if (!currentEditingRow) {
-      loadData(true);
-    }
-    loadRunningText();
-  }, 30000);
+  // Auto refresh DIHAPUS — gunakan tombol Refresh manual
 };
 </script>
 </body>
