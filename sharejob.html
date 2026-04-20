@@ -1941,29 +1941,83 @@ function validateWaPhone(input) {
     errEl.style.display = "block"; input.style.borderColor = "#e53935";
   }
 }
+/* ===== WHATSAPP — sesuai filter aktif (sama seperti logika cetak) ===== */
 function openWaModal() {
-  if (allTasks.length === 0) { showAlert("Tidak ada data di tabel!"); return; }
+  // Ambil rows yang visible sesuai filter (sama seperti doPrint)
+  applyFilterToRows();
+  var rows    = document.querySelectorAll('#data tr.group-row');
+  var visible = Array.from(rows).filter(function(tr) {
+    return !tr.classList.contains('filter-hidden');
+  });
+
+  if (visible.length === 0) {
+    showAlert("Tidak ada data untuk dikirim. Ubah filter terlebih dahulu.");
+    return;
+  }
+
   var now = new Date();
   var days = ["Minggu","Senin","Selasa","Rabu","Kamis","Jumat","Sabtu"];
   var monthNames = ["Jan","Feb","Mar","Apr","Mei","Jun","Jul","Agu","Sep","Okt","Nov","Des"];
   var tanggal = days[now.getDay()] + ", " + String(now.getDate()).padStart(2,'0') +
                 " " + monthNames[now.getMonth()] + " " + now.getFullYear();
 
-  var groups = [];
-  var lastId = null;
-  allTasks.forEach(function(task) {
-    if (String(task.id) !== lastId) { groups.push([]); lastId = String(task.id); }
-    groups[groups.length - 1].push(task);
+  // Buat label filter (sama seperti doPrint)
+  var periodLabel = 'Semua Periode';
+  if (filterState.tanggal) {
+    var parts = filterState.tanggal.split('-');
+    if (parts.length === 3) {
+      periodLabel = parts[2] + ' ' + NAMA_BULAN[+parts[1]] + ' ' + parts[0];
+    } else {
+      periodLabel = filterState.tanggal;
+    }
+  } else if (filterState.bulan && filterState.tahun) {
+    periodLabel = NAMA_BULAN[+filterState.bulan] + ' ' + filterState.tahun;
+  } else if (filterState.bulan) {
+    periodLabel = NAMA_BULAN[+filterState.bulan] + ' (Semua Tahun)';
+  } else if (filterState.tahun) {
+    periodLabel = 'Tahun ' + filterState.tahun;
+  }
+  if (filterState.status) {
+    periodLabel += ' · ' + filterState.status;
+  }
+
+  // Bangun pesan dari visible rows (bukan allTasks)
+  var pesan = "📋 *Pembagian Job Harian*\n";
+  pesan += "📅 " + tanggal + "\n";
+  pesan += "🔍 Filter: " + periodLabel + "\n";
+  pesan += "━━━━━━━━━━━━━━━━━━━━\n\n";
+
+  visible.forEach(function(tr, i) {
+    var offset     = deleteMode ? 1 : 0;
+    var cells      = tr.children;
+    var idVal      = cells[offset + 0] ? cells[offset + 0].textContent.trim() : '';
+    var namaVal    = cells[offset + 1] ? cells[offset + 1].textContent.trim() : '';
+    var tugasVal   = cells[offset + 2] ? cells[offset + 2].textContent.trim() : '';
+    var mesinVal   = cells[offset + 3] ? cells[offset + 3].textContent.trim() : '';
+    var statusVal  = tr.getAttribute('data-status') || '';
+    var mulaiVal   = cells[offset + 6] ? cells[offset + 6].textContent.trim() : '—';
+    var selesaiVal = cells[offset + 7] ? cells[offset + 7].textContent.trim() : '—';
+
+    // Ikon status
+    var statusIcon = statusVal === 'Selesai' ? '✅' : statusVal === 'Proses' ? '🔄' : '⏳';
+
+    pesan += (i + 1) + ". *" + namaVal + "*\n";
+    pesan += "   🆔 ID     : " + idVal + "\n";
+    pesan += "   🔧 Mesin  : " + mesinVal + "\n";
+    pesan += "   📌 Tugas  : " + tugasVal + "\n";
+    pesan += "   " + statusIcon + " Status : " + statusVal + "\n";
+    if (mulaiVal && mulaiVal !== '—') {
+      pesan += "   🕐 Mulai  : " + mulaiVal + "\n";
+    }
+    if (selesaiVal && selesaiVal !== '—') {
+      pesan += "   🕑 Selesai: " + selesaiVal + "\n";
+    }
+    pesan += "\n";
   });
 
-  var pesan = "📋 *Pembagian Job Harian*\n📅 " + tanggal + "\n━━━━━━━━━━━━━━━━━━━━\n\n";
-  groups.forEach(function(group, i) {
-    var namaList = group.map(function(t){ return t.nama; }).join(", ");
-    pesan += (i+1) + ". *" + namaList + "*\n";
-    pesan += "   🔧 Mesin : " + group[0].mesin + "\n";
-    pesan += "   📌 Tugas : " + group[0].tugas + "\n\n";
-  });
-  pesan += "━━━━━━━━━━━━━━━━━━━━\nMohon dikerjakan sesuai jadwal. Terima kasih! 🙏";
+  pesan += "━━━━━━━━━━━━━━━━━━━━\n";
+  pesan += "Total: " + visible.length + " job\n";
+  pesan += "Mohon dikerjakan sesuai jadwal. Terima kasih! 🙏";
 
   document.getElementById("waPreviewText").innerText = pesan;
   document.getElementById("waPhoneInput").value = "";
@@ -1972,28 +2026,6 @@ function openWaModal() {
   document.getElementById("waModal").style.display = "flex";
   setTimeout(function() { document.getElementById("waPhoneInput").focus(); }, 150);
 }
-function closeWaModal() { document.getElementById("waModal").style.display = "none"; }
-function sendWhatsApp() {
-  var inputVal = document.getElementById("waPhoneInput").value.trim();
-  if (!inputVal) { showAlert("Masukkan nomor WhatsApp terlebih dahulu!"); return; }
-  var waNumber = convertToWaNumber(inputVal);
-  if (!waNumber) {
-    document.getElementById("waPhoneError").style.display = "block";
-    document.getElementById("waPhoneInput").style.borderColor = "#e53935";
-    document.getElementById("waPhoneInput").focus();
-    return;
-  }
-  var pesan = document.getElementById("waPreviewText").innerText;
-  var url = "https://wa.me/" + waNumber.replace("+","") + "?text=" + encodeURIComponent(pesan);
-  window.open(url, "_blank");
-  closeWaModal();
-}
-document.getElementById("waPhoneInput").addEventListener("keydown", function(e) {
-  if (e.key === "Enter") sendWhatsApp();
-});
-document.getElementById("waModal").addEventListener("click", function(e) {
-  if (e.target === this) closeWaModal();
-});
 
 /* ===== RUNNING TEXT ===== */
 var currentRunningText = "Memuat info...";
