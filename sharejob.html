@@ -6,6 +6,157 @@
 <base target="_top">
 <link href="https://fonts.googleapis.com/css2?family=Exo+2:wght@300;400;600;700;900&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
 <style>
+  /* ========== LOGIN SCREEN ========== */
+#loginScreen {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: var(--bg-void);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 10000;
+  backdrop-filter: blur(8px);
+}
+
+.login-container {
+  background: var(--bg-panel);
+  border: 1px solid var(--border-orange);
+  border-radius: 12px;
+  padding: 40px 32px;
+  width: 100%;
+  max-width: 400px;
+  box-shadow: 0 0 60px rgba(255,109,0,0.15);
+  animation: fadeInUp 0.4s ease;
+}
+
+.login-container h2 {
+  font-family: 'Exo 2', sans-serif;
+  font-size: 24px;
+  font-weight: 900;
+  letter-spacing: 2px;
+  text-align: center;
+  margin-bottom: 8px;
+}
+
+.login-container h2 span { color: var(--orange); }
+
+.login-sub {
+  text-align: center;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 10px;
+  color: var(--text-dim);
+  margin-bottom: 28px;
+  letter-spacing: 1px;
+}
+
+.login-input-group {
+  margin-bottom: 20px;
+}
+
+.login-input-group label {
+  display: block;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 10px;
+  letter-spacing: 1px;
+  color: var(--text-mid);
+  margin-bottom: 6px;
+  text-transform: uppercase;
+}
+
+.login-input-group input {
+  width: 100%;
+  padding: 12px 14px;
+  background: var(--bg-card);
+  border: 1px solid var(--border-mid);
+  border-radius: 6px;
+  color: var(--text-bright);
+  font-size: 14px;
+  font-family: 'Exo 2', sans-serif;
+  transition: all 0.2s;
+}
+
+.login-input-group input:focus {
+  outline: none;
+  border-color: var(--orange);
+  box-shadow: 0 0 0 3px var(--orange-faint);
+}
+
+.login-btn {
+  width: 100%;
+  padding: 12px;
+  background: var(--orange-faint);
+  border: 1px solid var(--border-orange);
+  border-radius: 6px;
+  color: var(--orange);
+  font-family: 'Exo 2', sans-serif;
+  font-size: 14px;
+  font-weight: 700;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition: all 0.2s;
+  margin-top: 8px;
+}
+
+.login-btn:hover {
+  background: var(--orange-glow);
+  box-shadow: 0 0 12px var(--orange-glow);
+}
+
+.login-error {
+  background: rgba(255,23,68,0.1);
+  border: 1px solid rgba(255,23,68,0.3);
+  border-radius: 6px;
+  padding: 10px;
+  margin-top: 16px;
+  color: var(--red-err);
+  font-size: 12px;
+  text-align: center;
+  display: none;
+}
+
+.login-error.show { display: block; }
+
+/* ========== HOME BUTTON ========== */
+#homeBtn {
+  position: fixed;
+  bottom: 54px;
+  left: 14px;
+  z-index: 3000;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  height: 36px;
+  padding: 0 16px;
+  background: var(--bg-panel);
+  border: 1px solid var(--border-mid);
+  border-radius: 20px;
+  cursor: pointer;
+  font-family: 'Exo 2', sans-serif;
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--text-mid);
+  transition: all 0.2s;
+}
+
+#homeBtn:hover {
+  border-color: var(--border-orange);
+  color: var(--orange);
+  background: var(--orange-faint);
+  transform: translateY(-1px);
+}
+
+#homeBtn svg {
+  width: 14px;
+  height: 14px;
+  fill: currentColor;
+}
+
+#homeBtn.hidden { display: none; }
 :root {
   --bg-void:      #080C10;
   --bg-panel:     #0C1118;
@@ -755,6 +906,35 @@ tr.editing td { border-top: 1px solid var(--border-orange) !important; border-bo
 </style>
 </head>
 <body>
+  <!-- LOGIN SCREEN -->
+<div id="loginScreen">
+  <div class="login-container">
+    <h2>SHARE <span>JOB</span></h2>
+    <div class="login-sub">PRODUCTION MONITORING SYSTEM</div>
+    
+    <div class="login-input-group">
+      <label>👤 USERNAME</label>
+      <input type="text" id="loginUsername" placeholder="Masukkan username" autocomplete="off">
+    </div>
+    
+    <div class="login-input-group">
+      <label>🔒 PASSWORD</label>
+      <input type="password" id="loginPassword" placeholder="Masukkan password" autocomplete="off">
+    </div>
+    
+    <button class="login-btn" onclick="doLogin()">LOGIN</button>
+    
+    <div id="loginError" class="login-error"></div>
+  </div>
+</div>
+
+<!-- HOME BUTTON -->
+<button id="homeBtn" class="hidden" onclick="goHome()">
+  <svg viewBox="0 0 24 24">
+    <path d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z"/>
+  </svg>
+  Home
+</button>
 
 <div id="loadingOverlay">
   <div class="loader-ring"></div>
@@ -1073,6 +1253,124 @@ var NAMA_BULAN = ['','Januari','Februari','Maret','April','Mei','Juni','Juli','A
 var TAHUN_AWAL = 2024;
 var STATUS_ORDER = { 'Pending': 0, 'Proses': 1, 'Selesai': 2 };
 
+  /* ===================================================
+   LOGIN SYSTEM
+   =================================================== */
+var currentUser = null;
+var userAllowedUnits = [];
+
+async function doLogin() {
+  var username = document.getElementById('loginUsername').value.trim();
+  var password = document.getElementById('loginPassword').value.trim();
+  var errorDiv = document.getElementById('loginError');
+  
+  if (!username || !password) {
+    errorDiv.textContent = 'Username dan password harus diisi!';
+    errorDiv.classList.add('show');
+    return;
+  }
+  
+  showLoading(true, 'Memverifikasi...');
+  
+  try {
+    var url = new URL(MASTER_GAS_URL);
+    url.searchParams.set('action', 'verifyUser');
+    url.searchParams.set('username', username);
+    url.searchParams.set('password', password);
+    
+    var res = await fetch(url.toString());
+    var result = await res.json();
+    
+    if (result.success) {
+      currentUser = { username: username, allowedUnits: result.units };
+      userAllowedUnits = result.units;
+      
+      // Filter UNIT_CONFIG berdasarkan yang diizinkan
+      var filteredUnits = UNIT_CONFIG.filter(function(u) {
+        return userAllowedUnits.includes(u.code);
+      });
+      
+      if (filteredUnits.length === 0) {
+        errorDiv.textContent = 'Anda tidak memiliki akses ke unit manapun!';
+        errorDiv.classList.add('show');
+        showLoading(false);
+        return;
+      }
+      
+      // Tampilkan unit selector dengan units yang diizinkan
+      renderUnitSelector(filteredUnits);
+      document.getElementById('loginScreen').style.display = 'none';
+      document.getElementById('unitSelectorScreen').style.display = 'block';
+      document.getElementById('homeBtn').classList.remove('hidden');
+      showLoading(false);
+      
+    } else {
+      errorDiv.textContent = result.error || 'Login gagal!';
+      errorDiv.classList.add('show');
+      showLoading(false);
+    }
+  } catch(err) {
+    errorDiv.textContent = 'Error: ' + err.message;
+    errorDiv.classList.add('show');
+    showLoading(false);
+  }
+}
+
+// Tekan Enter untuk login
+document.getElementById('loginPassword').addEventListener('keypress', function(e) {
+  if (e.key === 'Enter') doLogin();
+});
+document.getElementById('loginUsername').addEventListener('keypress', function(e) {
+  if (e.key === 'Enter') document.getElementById('loginPassword').focus();
+});
+
+/* ===================================================
+   HOME BUTTON - KEMBALI KE SELECTOR UNIT
+   =================================================== */
+function goHome() {
+  if (currentEditingRow) {
+    showAlert("Selesaikan edit terlebih dahulu!");
+    return;
+  }
+  
+  currentUnit = null;
+  document.documentElement.style.setProperty('--orange', '#FF6D00');
+  
+  document.getElementById('mainApp').style.display = 'none';
+  document.getElementById('activeUnitBar').style.display = 'none';
+  document.getElementById('inputSection').style.display = 'none';
+  document.getElementById('unitSelectorScreen').style.display = 'block';
+}
+
+/* ===================================================
+   UPDATE renderUnitSelector - TERIMA PARAMETER UNITS
+   =================================================== */
+function renderUnitSelector(unitsArray) {
+  var grid = document.getElementById('unitGrid');
+  grid.innerHTML = '';
+  
+  var unitsToRender = unitsArray || UNIT_CONFIG;
+  
+  unitsToRender.forEach(function(unit) {
+    var card = document.createElement('div');
+    card.className = 'unit-card';
+    card.style.setProperty('--unit-color', unit.color);
+
+    var badge = unit.active
+      ? '<span class="unit-card-badge active">Aktif</span>'
+      : '<span class="unit-card-badge dev">Dev</span>';
+
+    card.innerHTML =
+      badge +
+      '<div class="unit-card-icon">' + unit.icon + '</div>' +
+      '<div class="unit-card-code">' + escHtml(unit.code) + '</div>' +
+      '<div class="unit-card-name">' + escHtml(unit.name) + '</div>' +
+      '<span class="unit-card-arrow">↗</span>';
+
+    card.addEventListener('click', function() { selectUnit(unit); });
+    grid.appendChild(card);
+  });
+}
 /* ===================================================
    RENDER UNIT SELECTOR
    =================================================== */
