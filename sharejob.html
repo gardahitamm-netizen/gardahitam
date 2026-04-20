@@ -118,10 +118,8 @@ body::after {
 /* LOGIN SCREEN */
 #loginScreen {
   position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
+  top: 0; left: 0;
+  width: 100%; height: 100%;
   background: var(--bg-void);
   display: flex;
   justify-content: center;
@@ -143,8 +141,7 @@ body::after {
 
 .login-container h2 {
   font-family: 'Exo 2', sans-serif;
-  font-size: 24px;
-  font-weight: 900;
+  font-size: 24px; font-weight: 900;
   letter-spacing: 2px;
   text-align: center;
   margin-bottom: 8px;
@@ -161,15 +158,12 @@ body::after {
   letter-spacing: 1px;
 }
 
-.login-input-group {
-  margin-bottom: 20px;
-}
+.login-input-group { margin-bottom: 20px; }
 
 .login-input-group label {
   display: block;
   font-family: 'JetBrains Mono', monospace;
-  font-size: 10px;
-  letter-spacing: 1px;
+  font-size: 10px; letter-spacing: 1px;
   color: var(--text-mid);
   margin-bottom: 6px;
   text-transform: uppercase;
@@ -201,8 +195,7 @@ body::after {
   border-radius: 6px;
   color: var(--orange);
   font-family: 'Exo 2', sans-serif;
-  font-size: 14px;
-  font-weight: 700;
+  font-size: 14px; font-weight: 700;
   letter-spacing: 2px;
   text-transform: uppercase;
   cursor: pointer;
@@ -232,22 +225,18 @@ body::after {
 /* HOME BUTTON */
 #homeBtn {
   position: fixed;
-  bottom: 54px;
-  left: 14px;
+  bottom: 54px; left: 14px;
   z-index: 3000;
   display: inline-flex;
-  align-items: center;
-  justify-content: center;
+  align-items: center; justify-content: center;
   gap: 6px;
-  height: 36px;
-  padding: 0 16px;
+  height: 36px; padding: 0 16px;
   background: var(--bg-panel);
   border: 1px solid var(--border-mid);
   border-radius: 20px;
   cursor: pointer;
   font-family: 'Exo 2', sans-serif;
-  font-size: 12px;
-  font-weight: 600;
+  font-size: 12px; font-weight: 600;
   color: var(--text-mid);
   transition: all 0.2s;
 }
@@ -259,12 +248,7 @@ body::after {
   transform: translateY(-1px);
 }
 
-#homeBtn svg {
-  width: 14px;
-  height: 14px;
-  fill: currentColor;
-}
-
+#homeBtn svg { width: 14px; height: 14px; fill: currentColor; }
 #homeBtn.hidden { display: none; }
 
 /* UNIT SELECTOR */
@@ -279,8 +263,7 @@ body::after {
 .unit-selector-title {
   text-align: center;
   font-family: 'JetBrains Mono', monospace;
-  font-size: 11px;
-  letter-spacing: 3px;
+  font-size: 11px; letter-spacing: 3px;
   color: var(--text-dim);
   text-transform: uppercase;
   margin-bottom: 28px;
@@ -304,9 +287,7 @@ body::after {
   cursor: pointer;
   transition: all 0.2s;
   overflow: hidden;
-  display: flex;
-  flex-direction: column;
-  gap: 8px;
+  display: flex; flex-direction: column; gap: 8px;
   min-height: 120px;
 }
 
@@ -330,8 +311,7 @@ body::after {
 .unit-card-icon { font-size: 22px; line-height: 1; margin-bottom: 2px; }
 .unit-card-code {
   font-family: 'JetBrains Mono', monospace;
-  font-size: 20px;
-  font-weight: 700;
+  font-size: 20px; font-weight: 700;
   color: var(--unit-color, var(--orange));
   letter-spacing: 2px;
   text-transform: uppercase;
@@ -339,23 +319,16 @@ body::after {
 }
 .unit-card-name { font-size: 11px; color: var(--text-mid); letter-spacing: 0.5px; line-height: 1.4; }
 .unit-card-badge {
-  position: absolute;
-  top: 10px; right: 10px;
+  position: absolute; top: 10px; right: 10px;
   font-family: 'JetBrains Mono', monospace;
-  font-size: 9px;
-  letter-spacing: 1px;
-  padding: 2px 7px;
-  border-radius: 20px;
-  border: 1px solid;
+  font-size: 9px; letter-spacing: 1px;
+  padding: 2px 7px; border-radius: 20px; border: 1px solid;
   text-transform: uppercase;
 }
 .unit-card-badge.active { color: var(--green-ok); border-color: rgba(0,230,118,0.35); background: rgba(0,230,118,0.06); }
-.unit-card-badge.dev { color: var(--amber-warn); border-color: rgba(255,215,64,0.35); background: rgba(255,215,64,0.06); }
 .unit-card-arrow {
-  position: absolute;
-  bottom: 14px; right: 14px;
-  font-size: 16px;
-  color: var(--text-dim);
+  position: absolute; bottom: 14px; right: 14px;
+  font-size: 16px; color: var(--text-dim);
   transition: color 0.2s, transform 0.2s;
 }
 .unit-card:hover .unit-card-arrow { color: var(--unit-color, var(--orange)); transform: translate(2px, -2px); }
@@ -363,39 +336,23 @@ body::after {
 /* ACTIVE UNIT BAR */
 #activeUnitBar {
   display: none;
-  align-items: center;
-  gap: 10px;
+  align-items: center; gap: 10px;
   padding: 8px 14px;
-  background: var(--bg-panel);
-  border: 1px solid var(--border-orange);
-  border-radius: 6px;
-  margin-bottom: 14px;
+  background: var(--bg-panel); border: 1px solid var(--border-orange);
+  border-radius: 6px; margin-bottom: 14px;
   position: relative; z-index: 1;
 }
-.aub-label {
-  font-family: 'JetBrains Mono', monospace;
-  font-size: 10px; letter-spacing: 2px;
-  color: var(--text-dim); text-transform: uppercase;
-}
-.aub-unit {
-  font-family: 'JetBrains Mono', monospace;
-  font-size: 14px; font-weight: 700;
-  color: var(--orange);
-  letter-spacing: 2px;
-}
+.aub-label { font-family: 'JetBrains Mono', monospace; font-size: 10px; letter-spacing: 2px; color: var(--text-dim); text-transform: uppercase; }
+.aub-unit { font-family: 'JetBrains Mono', monospace; font-size: 14px; font-weight: 700; color: var(--orange); letter-spacing: 2px; }
 .aub-name { font-size: 12px; color: var(--text-mid); }
 .aub-change {
   margin-left: auto;
   font-family: 'JetBrains Mono', monospace;
   font-size: 10px; letter-spacing: 1px;
-  color: var(--text-dim);
-  cursor: pointer;
-  padding: 4px 10px;
-  border: 1px solid var(--border-faint);
-  border-radius: 4px;
-  transition: all 0.15s;
-  background: transparent;
-  text-transform: uppercase;
+  color: var(--text-dim); cursor: pointer;
+  padding: 4px 10px; border: 1px solid var(--border-faint);
+  border-radius: 4px; transition: all 0.15s;
+  background: transparent; text-transform: uppercase;
 }
 .aub-change:hover { border-color: var(--border-orange); color: var(--orange); background: var(--orange-faint); }
 
@@ -412,16 +369,13 @@ body::after {
 .tb-btn {
   display: inline-flex; align-items: center; justify-content: center; gap: 6px;
   height: 44px; padding: 0 16px;
-  background: var(--bg-card);
-  border: 1px solid var(--border-mid);
-  border-radius: 4px;
-  cursor: pointer;
+  background: var(--bg-card); border: 1px solid var(--border-mid);
+  border-radius: 4px; cursor: pointer;
   font-family: 'Exo 2', sans-serif;
   font-size: 13px; font-weight: 700;
   letter-spacing: 1.5px; text-transform: uppercase;
   color: var(--text-mid);
-  transition: all 0.18s;
-  white-space: nowrap;
+  transition: all 0.18s; white-space: nowrap;
   position: relative; overflow: hidden;
 }
 .tb-btn::after {
@@ -470,10 +424,7 @@ body::after {
   border-radius: 6px; margin-bottom: 14px; flex-wrap: wrap;
   position: relative; z-index: 1;
 }
-.hist-filter-label {
-  font-family: 'JetBrains Mono', monospace; font-size: 10px;
-  color: var(--text-dim); letter-spacing: 1px; text-transform: uppercase; flex-shrink: 0;
-}
+.hist-filter-label { font-family: 'JetBrains Mono', monospace; font-size: 10px; color: var(--text-dim); letter-spacing: 1px; text-transform: uppercase; flex-shrink: 0; }
 .hist-filter-group { display: flex; align-items: center; gap: 6px; flex-shrink: 0; }
 .hist-filter-select {
   background: var(--bg-card); border: 1px solid var(--border-mid);
@@ -506,10 +457,7 @@ body::after {
 }
 .btn-reset-filter:hover { border-color: var(--red-err); color: var(--red-err); }
 .btn-reset-filter.hidden { display: none; }
-.hist-filter-result {
-  margin-left: auto; font-family: 'JetBrains Mono', monospace;
-  font-size: 10px; color: var(--text-dim); flex-shrink: 0;
-}
+.hist-filter-result { margin-left: auto; font-family: 'JetBrains Mono', monospace; font-size: 10px; color: var(--text-dim); flex-shrink: 0; }
 
 #inputSection {
   background: var(--bg-panel); border: 1px solid var(--border-orange);
@@ -579,6 +527,42 @@ td:last-child { border-right: none; }
 tr:hover td { background: rgba(255,109,0,0.05) !important; }
 tr.group-start td { border-top: 1px solid var(--border-orange) !important; }
 tr.filter-hidden { display: none; }
+
+/* Double-click hint */
+tr.group-row { cursor: pointer; }
+tr.group-row:hover td::after { content: ''; }
+.dblclick-hint {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 9px; color: var(--text-dim);
+  display: block; margin-top: 3px;
+}
+
+/* Inline edit styles */
+.inline-input {
+  width: 100%; font-size: 13px; font-family: 'Exo 2', sans-serif;
+  padding: 5px 8px; background: var(--bg-void); color: var(--text-bright);
+  border: 1px solid var(--orange); border-radius: 3px;
+  box-shadow: 0 0 0 2px var(--orange-faint);
+}
+.inline-input:focus { outline: none; border-color: var(--teal); box-shadow: 0 0 0 2px var(--teal-bg); }
+.inline-save-bar {
+  display: flex; gap: 5px; margin-top: 6px;
+}
+.inline-btn {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 10px; font-weight: 700; letter-spacing: 0.5px;
+  padding: 4px 10px; border-radius: 3px; cursor: pointer;
+}
+.inline-btn-save {
+  background: rgba(0,230,118,0.1); color: var(--green-ok);
+  border: 1px solid rgba(0,230,118,0.4);
+}
+.inline-btn-save:hover { background: rgba(0,230,118,0.2); box-shadow: none; }
+.inline-btn-cancel {
+  background: rgba(255,23,68,0.08); color: var(--red-err);
+  border: 1px solid rgba(255,23,68,0.35);
+}
+.inline-btn-cancel:hover { background: rgba(255,23,68,0.15); box-shadow: none; }
 
 .status-select {
   width: 100%; font-size: 11px; font-weight: 700;
@@ -668,13 +652,22 @@ tr.filter-hidden { display: none; }
   display: inline-flex; align-items: center; justify-content: center;
   width: 36px; height: 36px; border-radius: 50%;
   background: var(--bg-panel); border: 1px solid var(--border-mid);
-  cursor: pointer;
-  padding: 0;
+  cursor: pointer; padding: 0;
 }
 #themeToggleBtn:hover { border-color: var(--border-orange); box-shadow: 0 0 14px var(--orange-glow); transform: scale(1.08); }
 
+/* =====================================================
+   FIX 1: Print pages container HARUS tersembunyi di layar
+   ===================================================== */
+#printPagesContainer {
+  display: none !important; /* ALWAYS hidden on screen */
+}
+
 .print-header { display: none; text-align: center; font-size: 12px; color: #555; margin-bottom: 8px; }
 
+/* =====================================================
+   FIX 2: Print styles yang benar
+   ===================================================== */
 @media print {
   @page { size: A4 landscape; margin: 8mm; }
   html { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
@@ -682,13 +675,12 @@ tr.filter-hidden { display: none; }
   body::before, body::after, #logo-img, #clock, .top-bar, #inputSection, #runningTextBar,
   #confirmModal, #alertModal, #deleteRowModal, #loadingOverlay, .btn-delete-row,
   td.col-delete, th.col-delete, .hist-filter-bar, #unitSelectorScreen, #activeUnitBar,
-  #homeBtn, #themeToggleBtn { display: none !important; }
-  .page-header h2 { color: #000 !important; font-size: 20px; letter-spacing: 2px; text-shadow: none; }
-  .page-header h2 span { color: #E65100 !important; }
+  #homeBtn, #themeToggleBtn, #mainApp, .page-header { display: none !important; }
+  
+  /* Show print container during print */
+  #printPagesContainer { display: block !important; }
+
   .print-header { display: block !important; }
-  .header-badge { color: #555 !important; }
-  .header-line::before, .header-line::after { background: #ccc !important; }
-  .table-wrapper { display: none !important; }
   .print-page { display: block !important; page-break-after: always; margin-bottom: 0; }
   .print-page:last-child { page-break-after: avoid; }
   .print-page-header { font-family: monospace; font-size: 11px; color: #555; margin-bottom: 6px; display: flex; justify-content: space-between; align-items: center; }
@@ -714,28 +706,22 @@ tr.filter-hidden { display: none; }
   <div class="login-container">
     <h2>SHARE <span>JOB</span></h2>
     <div class="login-sub">PRODUCTION MONITORING SYSTEM</div>
-    
     <div class="login-input-group">
       <label>👤 USERNAME</label>
       <input type="text" id="loginUsername" placeholder="Masukkan username" autocomplete="off">
     </div>
-    
     <div class="login-input-group">
       <label>🔒 PASSWORD</label>
       <input type="password" id="loginPassword" placeholder="Masukkan password" autocomplete="off">
     </div>
-    
     <button class="login-btn" onclick="doLogin()">LOGIN</button>
-    
     <div id="loginError" class="login-error"></div>
   </div>
 </div>
 
 <!-- HOME BUTTON -->
 <button id="homeBtn" class="hidden" onclick="goHome()">
-  <svg viewBox="0 0 24 24">
-    <path d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z"/>
-  </svg>
+  <svg viewBox="0 0 24 24"><path d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z"/></svg>
   Home
 </button>
 
@@ -872,8 +858,12 @@ tr.filter-hidden { display: none; }
       <tbody id="data"></tbody>
     </table>
   </div>
+  <div style="font-family:'JetBrains Mono',monospace;font-size:10px;color:var(--text-dim);text-align:center;margin-bottom:8px;">
+    💡 Double-klik pada baris untuk edit • Jam Selesai otomatis saat status → Selesai
+  </div>
 </div>
 
+<!-- FIX 1: Print container always hidden on screen, only shown during print via CSS -->
 <div id="printPagesContainer"></div>
 
 <!-- MODALS -->
@@ -918,7 +908,6 @@ var UNIT_CONFIG = [
   { code: "PLANTE", name: "Plant E", icon: "🏭", color: "#00E676", active: true }
 ];
 
-// GANTI DENGAN URL GAS ANDA
 var MASTER_GAS_URL = "https://script.google.com/macros/s/AKfycbxcpj6mYF6YHVhdNNhdn9mX2b_F9gi_2q8cJc_Co6QzjqDD_0qMdQGv4YxOBoLrJV0W/exec";
 
 // STATE
@@ -1009,6 +998,9 @@ function goHome() {
   currentUnit = null;
   document.documentElement.style.setProperty('--orange', '#FF6D00');
   
+  // FIX: Clear print container saat ganti unit/home
+  clearPrintContainer();
+  
   document.getElementById('mainApp').style.display = 'none';
   document.getElementById('activeUnitBar').style.display = 'none';
   document.getElementById('inputSection').style.display = 'none';
@@ -1026,6 +1018,11 @@ function changeUnit() {
     return;
   }
   goHome();
+}
+
+// FIX: Fungsi khusus bersihkan print container
+function clearPrintContainer() {
+  document.getElementById('printPagesContainer').innerHTML = '';
 }
 
 // =====================================================
@@ -1093,6 +1090,10 @@ function showMainApp(unit) {
   document.getElementById('aubName').textContent = unit.name;
   allTasks = []; allGroups = []; deleteMode = false;
   document.getElementById('toggleDeleteBtn').classList.remove('active');
+  
+  // FIX: Clear print container saat unit baru dipilih
+  clearPrintContainer();
+  
   buildFilterOptions();
   applyFilter();
   renderTable();
@@ -1268,6 +1269,32 @@ function renderTable() {
     html += "</tr>";
   });
   tbody.innerHTML = html;
+
+  // FIX: Pasang event double-click di tbody setelah render
+  attachDoubleClickEdit();
+}
+
+// =====================================================
+// FIX: DOUBLE CLICK EDIT - Event delegation di tbody
+// =====================================================
+function attachDoubleClickEdit() {
+  var tbody = document.getElementById("data");
+  // Remove old listener first to avoid stacking
+  tbody.removeEventListener('dblclick', handleTbodyDblClick);
+  tbody.addEventListener('dblclick', handleTbodyDblClick);
+}
+
+function handleTbodyDblClick(e) {
+  // Jangan trigger saat klik tombol delete, select status, atau sedang ada edit
+  if (e.target.closest('.btn-delete-row')) return;
+  if (e.target.tagName === 'SELECT') return;
+  if (e.target.tagName === 'BUTTON') return;
+  if (e.target.closest('.inline-save-bar')) return;
+  
+  var tr = e.target.closest('tr.group-row');
+  if (!tr) return;
+  
+  startInlineEdit(tr);
 }
 
 // =====================================================
@@ -1280,15 +1307,13 @@ function buildFilterOptions() {
   tahunSel.innerHTML = '<option value="">Semua Tahun</option>';
   for (var y = TAHUN_AWAL; y <= nowYear + 1; y++) {
     var o = document.createElement('option');
-    o.value = y;
-    o.textContent = y;
+    o.value = y; o.textContent = y;
     tahunSel.appendChild(o);
   }
   bulanSel.innerHTML = '<option value="">Semua Bulan</option>';
   for (var m = 1; m <= 12; m++) {
     var o2 = document.createElement('option');
-    o2.value = m;
-    o2.textContent = NAMA_BULAN[m];
+    o2.value = m; o2.textContent = NAMA_BULAN[m];
     bulanSel.appendChild(o2);
   }
   bulanSel.value = filterState.bulan;
@@ -1381,12 +1406,8 @@ function applyFilterToRows() {
     }
     if (fS && rs !== fS) show = false;
     
-    if (show) {
-      tr.classList.remove('filter-hidden');
-      visible++;
-    } else {
-      tr.classList.add('filter-hidden');
-    }
+    if (show) { tr.classList.remove('filter-hidden'); visible++; }
+    else { tr.classList.add('filter-hidden'); }
   });
   
   document.getElementById('filterResult').textContent = visible + ' job ditemukan';
@@ -1408,10 +1429,7 @@ function addTask() {
   }
   
   api("addTask", { id: id, nama: nama, tugas: tugas, mesin: mesin, status: status }).then(function(res) {
-    if (res.error) {
-      showAlert("Error: " + res.error);
-      return;
-    }
+    if (res.error) { showAlert("Error: " + res.error); return; }
     document.getElementById("id").value = "";
     document.getElementById("nama").value = "";
     document.getElementById("tugas").value = "";
@@ -1493,7 +1511,7 @@ function closeModal() {
 }
 
 // =====================================================
-// PRINT FUNCTION (CETAK PDF) - LENGKAP
+// FIX: PRINT FUNCTION - Tabel tidak nyangkut di layar
 // =====================================================
 function doPrint() {
   applyFilterToRows();
@@ -1519,8 +1537,10 @@ function doPrint() {
   
   document.getElementById("printHeader").innerHTML = "Dicetak: " + tanggal + " " + h + ":" + m + " | Filter: <b>" + periodLabel + "</b>" + unitLabel + " | <b>" + visible.length + " job</b>";
   
+  // FIX: Clear dulu sebelum isi baru
   var container = document.getElementById('printPagesContainer');
   container.innerHTML = '';
+  
   var ROWS = 30;
   var totalPages = Math.ceil(visible.length / ROWS);
   
@@ -1557,6 +1577,11 @@ function doPrint() {
   }
   
   window.print();
+  
+  // FIX: Clear setelah print selesai agar tidak tampil di layar
+  setTimeout(function() {
+    container.innerHTML = '';
+  }, 1000);
 }
 
 function getPeriodLabel() {
@@ -1574,7 +1599,7 @@ function getPeriodLabel() {
 }
 
 // =====================================================
-// WHATSAPP - LENGKAP
+// WHATSAPP
 // =====================================================
 function convertToWaNumber(input) {
   var num = input.trim().replace(/[\s\-]/g, "");
@@ -1607,10 +1632,7 @@ function openWaModal() {
     return !tr.classList.contains('filter-hidden');
   });
   
-  if (!visible.length) {
-    showAlert("Tidak ada data untuk dikirim.");
-    return;
-  }
+  if (!visible.length) { showAlert("Tidak ada data untuk dikirim."); return; }
   
   var now = new Date();
   var days = ["Minggu", "Senin", "Selasa", "Rabu", "Kamis", "Jumat", "Sabtu"];
@@ -1648,16 +1670,11 @@ function openWaModal() {
   setTimeout(function() { document.getElementById("waPhoneInput").focus(); }, 150);
 }
 
-function closeWaModal() {
-  document.getElementById("waModal").style.display = "none";
-}
+function closeWaModal() { document.getElementById("waModal").style.display = "none"; }
 
 function sendWhatsApp() {
   var inputVal = document.getElementById("waPhoneInput").value.trim();
-  if (!inputVal) {
-    showAlert("Masukkan nomor WhatsApp!");
-    return;
-  }
+  if (!inputVal) { showAlert("Masukkan nomor WhatsApp!"); return; }
   var waNumber = convertToWaNumber(inputVal);
   if (!waNumber) {
     document.getElementById("waPhoneError").style.display = "block";
@@ -1701,43 +1718,27 @@ function openEditRunning() {
   document.getElementById("editRunningModal").style.display = "flex";
 }
 
-function closeEditRunning() {
-  document.getElementById("editRunningModal").style.display = "none";
-}
+function closeEditRunning() { document.getElementById("editRunningModal").style.display = "none"; }
 
 function saveRunningText() {
   var newText = document.getElementById("runningTextInput").value.trim();
-  if (!newText) {
-    showAlert("Teks tidak boleh kosong!");
-    return;
-  }
+  if (!newText) { showAlert("Teks tidak boleh kosong!"); return; }
   api("saveRunningText", { text: newText }).then(function(res) {
-    if (res.error) {
-      showAlert("Gagal menyimpan teks.");
-      return;
-    }
+    if (res.error) { showAlert("Gagal menyimpan teks."); return; }
     setMarqueeText(newText);
     closeEditRunning();
   });
 }
 
 // =====================================================
-// INLINE EDIT
+// FIX: INLINE EDIT - Double click berfungsi + Jam Selesai bisa diedit
 // =====================================================
-var tbody = document.getElementById("data");
-
-function getGroupFirstRow(tr) {
-  if (tr.classList.contains("group-start")) return tr;
-  var prev = tr.previousElementSibling;
-  while (prev) {
-    if (prev.classList.contains("group-start")) return prev;
-    prev = prev.previousElementSibling;
-  }
-  return tr;
-}
-
 function startInlineEdit(tr) {
-  if (currentEditingRow && currentEditingRow !== tr) return;
+  // Jika ada baris lain sedang diedit, batalkan dulu
+  if (currentEditingRow && currentEditingRow !== tr) {
+    showAlert("Selesaikan edit baris sebelumnya terlebih dahulu!");
+    return;
+  }
   if (tr.classList.contains("editing")) return;
   if (!tr.classList.contains("group-start")) return;
   
@@ -1748,10 +1749,8 @@ function startInlineEdit(tr) {
   currentEditingRow = tr;
   var gi = parseInt(tr.getAttribute("data-groupidx"), 10);
   var gt = (!isNaN(gi) && allGroups[gi]) ? allGroups[gi] : null;
-  if (!gt || !gt.length) {
-    currentEditingRow = null;
-    return;
-  }
+  if (!gt || !gt.length) { currentEditingRow = null; return; }
+  
   var ft = gt[0];
   originalRowData = {
     id: String(ft.id),
@@ -1763,24 +1762,46 @@ function startInlineEdit(tr) {
   };
   
   tr.classList.add("editing");
-  cells[offset + 0].innerHTML = "<input class='inline-input' id='ie-id' value='" + escHtml(originalRowData.id) + "'><div class='inline-save-bar'><button class='inline-btn inline-btn-save' onclick='saveInlineEdit()'>✓ Simpan</button><button class='inline-btn inline-btn-cancel' onclick='cancelInlineEdit()'>✕ Batal</button></div>";
-  cells[offset + 1].innerHTML = "<textarea class='inline-input' id='ie-nama' rows='3' style='font-size:13px;'>" + escHtml(originalRowData.nama) + "</textarea><span style='font-size:9px;color:var(--text-dim);font-family:monospace;'>↵ Enter = nama baru</span>";
-  cells[offset + 2].innerHTML = "<textarea class='inline-input' id='ie-tugas' rows='3'>" + escHtml(originalRowData.tugas) + "</textarea>";
-  cells[offset + 3].innerHTML = "<input class='inline-input' id='ie-mesin' value='" + escHtml(originalRowData.mesin) + "'>";
-  cells[offset + 6].innerHTML = "<input class='inline-input' id='ie-jam-mulai' type='time' value='" + escHtml(originalRowData.jamMulai) + "'>";
-  cells[offset + 7].innerHTML = "<div class='ie-readonly'><span class='ie-readonly-lock'>🔒</span><span>" + escHtml(originalRowData.jamSelesai || '—') + "</span></div><div class='ie-readonly-hint'>Tidak dapat diedit</div>";
+  
+  // Kolom ID + save/cancel bar
+  cells[offset + 0].innerHTML = 
+    "<input class='inline-input' id='ie-id' value='" + escHtml(originalRowData.id) + "'>" +
+    "<div class='inline-save-bar'>" +
+    "<button class='inline-btn inline-btn-save' onclick='saveInlineEdit()'>✓ Simpan</button>" +
+    "<button class='inline-btn inline-btn-cancel' onclick='cancelInlineEdit()'>✕ Batal</button>" +
+    "</div>";
+  
+  // Nama
+  cells[offset + 1].innerHTML = 
+    "<textarea class='inline-input' id='ie-nama' rows='3' style='font-size:13px;'>" + escHtml(originalRowData.nama) + "</textarea>" +
+    "<span style='font-size:9px;color:var(--text-dim);font-family:monospace;'>↵ Enter = nama baru</span>";
+  
+  // Tugas
+  cells[offset + 2].innerHTML = 
+    "<textarea class='inline-input' id='ie-tugas' rows='3'>" + escHtml(originalRowData.tugas) + "</textarea>";
+  
+  // Mesin
+  cells[offset + 3].innerHTML = 
+    "<input class='inline-input' id='ie-mesin' value='" + escHtml(originalRowData.mesin) + "'>";
+  
+  // Jam Mulai
+  cells[offset + 6].innerHTML = 
+    "<input class='inline-input' id='ie-jam-mulai' type='time' value='" + escHtml(originalRowData.jamMulai) + "'>";
+  
+  // FIX: Jam Selesai BISA diedit (tidak readonly lagi)
+  cells[offset + 7].innerHTML = 
+    "<input class='inline-input' id='ie-jam-selesai' type='time' value='" + escHtml(originalRowData.jamSelesai) + "'>";
   
   setTimeout(function() {
     var inp = document.getElementById("ie-id");
     if (inp) inp.focus();
   }, 50);
   
-  tr.addEventListener("keydown", function(e) {
-    if (e.key === "Escape") {
-      e.preventDefault();
-      cancelInlineEdit();
-    }
-  });
+  // ESC untuk batal
+  tr._escHandler = function(e) {
+    if (e.key === "Escape") { e.preventDefault(); cancelInlineEdit(); }
+  };
+  document.addEventListener("keydown", tr._escHandler);
 }
 
 function saveInlineEdit() {
@@ -1796,6 +1817,8 @@ function saveInlineEdit() {
   var newTugas = get("ie-tugas", originalRowData.tugas);
   var newMesin = get("ie-mesin", originalRowData.mesin);
   var newJamMulai = get("ie-jam-mulai", originalRowData.jamMulai);
+  // FIX: Ambil jam selesai dari input baru
+  var newJamSelesai = get("ie-jam-selesai", originalRowData.jamSelesai);
   
   if (!newId || !newNama || !newTugas || !newMesin) {
     showAlert("Semua kolom harus diisi!");
@@ -1812,7 +1835,7 @@ function saveInlineEdit() {
     newTugas: newTugas,
     newMesin: newMesin,
     newJamMulai: newJamMulai,
-    newJamSelesai: originalRowData.jamSelesai
+    newJamSelesai: newJamSelesai  // FIX: kirim jam selesai yang bisa diedit
   }).then(function(res) {
     if (res && res.error) showAlert("Gagal simpan: " + res.error);
     loadData(true);
@@ -1826,6 +1849,11 @@ function cancelInlineEdit() {
 
 function finishInlineEdit() {
   if (!currentEditingRow) return;
+  // Hapus ESC listener
+  if (currentEditingRow._escHandler) {
+    document.removeEventListener("keydown", currentEditingRow._escHandler);
+    delete currentEditingRow._escHandler;
+  }
   currentEditingRow.classList.remove("editing");
   currentEditingRow = null;
   originalRowData = null;
@@ -1842,8 +1870,7 @@ function toggleAutoScroll() {
   var btn = document.getElementById("autoScrollBtn");
   if (_asActive) {
     btn.classList.add("active");
-    _asDir = 1;
-    _asPausedAt = 0;
+    _asDir = 1; _asPausedAt = 0;
     _asRaf = requestAnimationFrame(_asStep);
     window.addEventListener("wheel", _asPauseOnInteract, { passive: true });
     window.addEventListener("touchstart", _asPauseOnInteract, { passive: true });
@@ -1867,38 +1894,24 @@ function _asPauseOnInteract() {
   _asRaf = null;
   clearTimeout(_asResumeTimer);
   _asResumeTimer = setTimeout(function() {
-    if (_asActive) {
-      _asPausedAt = 0;
-      _asRaf = requestAnimationFrame(_asStep);
-    }
+    if (_asActive) { _asPausedAt = 0; _asRaf = requestAnimationFrame(_asStep); }
   }, 3000);
 }
 
 function _asStep(ts) {
   if (!_asActive) return;
   var max = document.documentElement.scrollHeight - window.innerHeight;
-  if (max <= 0) {
-    _asRaf = requestAnimationFrame(_asStep);
-    return;
-  }
+  if (max <= 0) { _asRaf = requestAnimationFrame(_asStep); return; }
   var cur = window.scrollY;
   if (_asDir === 1 && cur >= max - 1) {
     if (_asPausedAt === 0) _asPausedAt = ts;
-    if (ts - _asPausedAt >= _asPauseDur) {
-      _asDir = -1;
-      _asPausedAt = 0;
-    }
-    _asRaf = requestAnimationFrame(_asStep);
-    return;
+    if (ts - _asPausedAt >= _asPauseDur) { _asDir = -1; _asPausedAt = 0; }
+    _asRaf = requestAnimationFrame(_asStep); return;
   }
   if (_asDir === -1 && cur <= 1) {
     if (_asPausedAt === 0) _asPausedAt = ts;
-    if (ts - _asPausedAt >= _asPauseDur) {
-      _asDir = 1;
-      _asPausedAt = 0;
-    }
-    _asRaf = requestAnimationFrame(_asStep);
-    return;
+    if (ts - _asPausedAt >= _asPauseDur) { _asDir = 1; _asPausedAt = 0; }
+    _asRaf = requestAnimationFrame(_asStep); return;
   }
   window.scrollBy(0, _asSpeed * _asDir);
   _asRaf = requestAnimationFrame(_asStep);
