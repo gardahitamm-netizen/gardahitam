@@ -8,7 +8,7 @@
 @import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap');
 
 /* ══════════════════════════════════════
-   DARK MODE (default) — vivid palette
+   DARK MODE (default)
 ══════════════════════════════════════ */
 :root {
   --bg:      #0a0e1a;
@@ -42,39 +42,20 @@
 }
 
 /* ══════════════════════════════════════
-   LIGHT MODE — vivid on white
+   LIGHT MODE
 ══════════════════════════════════════ */
 body.light {
-  --bg:#f4f8ff;
-  --surf:#ffffff;
-  --surf2:#e8f0fc;
-  --surf3:#dce8f8;
-  --border:#b0c8e8;
-  --text:#0a1528;
-  --text-strong:#050d1c;
-  --muted:#2e5c8a;
-  --ok:      #008f58;
-  --fault:   #d41530;
-  --maint:   #b87000;
-  --kosong:  #1a68b0;
-  --accent:  #0d5cc8;
-  --purple:  #5c30c0;
-  --teal:    #006fa8;
-
-  --ok-bg:    rgba(0,143,88,.1);
-  --ok-bd:    rgba(0,143,88,.38);
-  --fault-bg: rgba(212,21,48,.1);
-  --fault-bd: rgba(212,21,48,.38);
-  --maint-bg: rgba(184,112,0,.1);
-  --maint-bd: rgba(184,112,0,.38);
-  --accent-bg:rgba(13,92,200,.1);
-  --accent-bd:rgba(13,92,200,.32);
-  --purple-bg:rgba(92,48,192,.1);
-  --purple-bd:rgba(92,48,192,.3);
-  --teal-bg:  rgba(0,111,168,.08);
-  --teal-bd:  rgba(0,111,168,.28);
+  --bg:#f4f8ff; --surf:#ffffff; --surf2:#e8f0fc; --surf3:#dce8f8;
+  --border:#b0c8e8; --text:#0a1528; --text-strong:#050d1c; --muted:#2e5c8a;
+  --ok:#008f58; --fault:#d41530; --maint:#b87000; --kosong:#1a68b0;
+  --accent:#0d5cc8; --purple:#5c30c0; --teal:#006fa8;
+  --ok-bg:rgba(0,143,88,.1); --ok-bd:rgba(0,143,88,.38);
+  --fault-bg:rgba(212,21,48,.1); --fault-bd:rgba(212,21,48,.38);
+  --maint-bg:rgba(184,112,0,.1); --maint-bd:rgba(184,112,0,.38);
+  --accent-bg:rgba(13,92,200,.1); --accent-bd:rgba(13,92,200,.32);
+  --purple-bg:rgba(92,48,192,.1); --purple-bd:rgba(92,48,192,.3);
+  --teal-bg:rgba(0,111,168,.08); --teal-bd:rgba(0,111,168,.28);
 }
-
 body.light .topbar { background:#dce8f8; border-color:#b0c8e8; }
 body.light .running-bar { background:#e6f0fc; border-color:#b0c8e8; }
 body.light .running-inner { color:#2e5c8a; }
@@ -104,7 +85,7 @@ body.light .tag-name { color:#0a1528; font-weight:700; }
 body.light .tag-addr { color:var(--accent); }
 body.light .tag-table td { color:#0a1528; }
 body.light .tag-comment { color:#2e5c8a; }
-body.light input, body.light select { background:#e8f0fc !important; border-color:#b0c8e8 !important; color:#0a1528 !important; }
+body.light input,body.light select { background:#e8f0fc !important; border-color:#b0c8e8 !important; color:#0a1528 !important; }
 body.light .search-bar { background:#e8f0fc; border-color:#b0c8e8; color:#0a1528; }
 body.light .search-bar::placeholder { color:#5580a8; }
 body.light .search-wrap { background:#f0f6ff; border-color:#b0c8e8; }
@@ -115,10 +96,90 @@ body.light .unit-badge { background:var(--ok-bg); color:var(--ok); border-color:
 body.light .file-badge { background:var(--teal-bg); color:var(--teal); border-color:var(--teal-bd); }
 body.light .btn-retry { background:var(--accent-bg); border-color:var(--accent-bd); color:var(--accent); }
 body.light .spare-comment { color:#8aaac8; }
+body.light .login-box { background:#f4f8ff; }
+body.light .login-card { background:#ffffff; border-color:#b0c8e8; }
+body.light .login-input { background:#e8f0fc; border-color:#b0c8e8; color:#0a1528; }
+body.light .login-input::placeholder { color:#5580a8; }
+body.light .login-label { color:#2e5c8a; }
+body.light .login-logo-sub { color:#2e5c8a; }
+body.light .login-footer { color:#5580a8; }
 
 *{margin:0;padding:0;box-sizing:border-box;}
 html,body{width:100%;height:100%;overflow:hidden;}
 body{font-family:'Plus Jakarta Sans',sans-serif;background:var(--bg);color:var(--text);display:flex;flex-direction:column;}
+
+/* ══════════════════════════════════════
+   LOGIN PAGE
+══════════════════════════════════════ */
+#page-login {
+  position:fixed;inset:0;z-index:9999;
+  display:flex;align-items:center;justify-content:center;
+  background:var(--bg);
+  background-image:radial-gradient(ellipse 60% 50% at 50% 0%,rgba(91,173,255,.08),transparent 70%);
+  flex-direction:column;
+}
+#page-login.hidden { display:none; }
+
+.login-box { width:100%;max-width:400px;padding:20px;animation:fadeUp .4s ease; }
+@keyframes fadeUp{from{opacity:0;transform:translateY(20px)}to{opacity:1;transform:translateY(0)}}
+
+.login-logo { text-align:center;margin-bottom:28px; }
+.login-logo-dot {
+  width:12px;height:12px;border-radius:50%;background:var(--accent);
+  box-shadow:0 0 16px var(--accent);margin:0 auto 14px;animation:blink 2s infinite;
+}
+.login-logo-title {
+  font-family:'JetBrains Mono',monospace;font-size:26px;font-weight:700;color:var(--text);
+}
+.login-logo-title span { color:var(--accent); }
+.login-logo-sub {
+  font-family:'JetBrains Mono',monospace;font-size:10px;color:var(--muted);
+  letter-spacing:2.5px;text-transform:uppercase;margin-top:5px;
+}
+.login-card {
+  background:var(--surf);border:1px solid var(--border);border-radius:16px;
+  padding:30px 26px;position:relative;overflow:hidden;
+}
+.login-card::before {
+  content:'';position:absolute;top:0;left:0;right:0;height:2px;
+  background:linear-gradient(90deg,var(--accent),var(--purple),var(--teal));
+}
+.login-field { margin-bottom:18px; }
+.login-label {
+  font-family:'JetBrains Mono',monospace;font-size:10px;color:var(--muted);
+  letter-spacing:1.2px;text-transform:uppercase;margin-bottom:7px;display:block;
+}
+.login-input {
+  width:100%;background:var(--surf2);border:1px solid var(--border);
+  color:var(--text);padding:13px 16px;border-radius:9px;
+  font-size:13px;font-family:'JetBrains Mono',monospace;
+  outline:none;transition:border-color .2s;
+}
+.login-input:focus { border-color:var(--accent); box-shadow:0 0 0 3px rgba(91,173,255,.1); }
+.login-input::placeholder { color:var(--muted); }
+.login-btn {
+  width:100%;padding:14px;border-radius:9px;border:none;
+  background:linear-gradient(135deg,var(--accent),var(--purple));
+  color:#fff;font-family:'JetBrains Mono',monospace;font-size:13px;font-weight:700;
+  cursor:pointer;transition:all .2s;margin-top:6px;letter-spacing:.5px;
+}
+.login-btn:hover { opacity:.88;transform:translateY(-1px);box-shadow:0 6px 20px rgba(91,173,255,.3); }
+.login-btn:disabled { opacity:.45;cursor:not-allowed;transform:none;box-shadow:none; }
+.login-err {
+  display:none;background:var(--fault-bg);border:1px solid var(--fault-bd);
+  color:var(--fault);border-radius:8px;padding:10px 14px;
+  font-family:'JetBrains Mono',monospace;font-size:11px;margin-top:12px;text-align:center;
+}
+.login-err.visible { display:block;animation:fadeUp .2s ease; }
+.login-loading {
+  display:none;text-align:center;padding:10px;
+  font-family:'JetBrains Mono',monospace;font-size:11px;color:var(--teal);
+}
+.login-loading.visible { display:block; }
+.login-footer {
+  text-align:center;margin-top:18px;font-family:'JetBrains Mono',monospace;
+  font-size:9px;color:var(--muted);letter-spacing:1.5px;text-transform:uppercase;
+}
 
 /* ── TOPBAR ── */
 .topbar{display:flex;align-items:center;gap:8px;padding:0 20px;height:50px;background:#07101d;border-bottom:1px solid var(--border);flex-shrink:0;z-index:200;}
@@ -132,9 +193,13 @@ body{font-family:'Plus Jakarta Sans',sans-serif;background:var(--bg);color:var(-
 .topbar-sub{font-family:'JetBrains Mono',monospace;font-size:11px;color:var(--muted);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:200px;}
 .topbar-r{margin-left:auto;display:flex;align-items:center;gap:8px;}
 .topbar-clock{font-family:'JetBrains Mono',monospace;font-size:12px;color:var(--teal);background:var(--teal-bg);border:1px solid var(--teal-bd);padding:3px 10px;border-radius:4px;}
+.topbar-user{font-family:'JetBrains Mono',monospace;font-size:10px;color:var(--muted);background:var(--surf2);border:1px solid var(--border);padding:3px 10px;border-radius:4px;white-space:nowrap;}
+.topbar-user span{color:var(--ok);font-weight:700;}
 .btn-sm{display:flex;align-items:center;gap:5px;font-family:'JetBrains Mono',monospace;font-size:11px;padding:5px 12px;border-radius:5px;cursor:pointer;border:1px solid var(--border);background:var(--surf2);color:var(--muted);transition:all .2s;}
 .btn-sm:hover{border-color:var(--accent);color:var(--accent);}
 .btn-sm.loading{opacity:.5;pointer-events:none;}
+.btn-logout{border-color:var(--fault-bd) !important;color:var(--fault) !important;}
+.btn-logout:hover{background:var(--fault-bg) !important;border-color:var(--fault) !important;}
 .btn-theme{display:flex;align-items:center;gap:5px;font-family:'JetBrains Mono',monospace;font-size:11px;padding:5px 10px;border-radius:5px;cursor:pointer;border:1px solid var(--border);background:var(--surf2);color:var(--muted);transition:all .2s;flex-shrink:0;}
 .btn-theme:hover{border-color:var(--teal);color:var(--teal);}
 
@@ -160,7 +225,6 @@ body{font-family:'Plus Jakarta Sans',sans-serif;background:var(--bg);color:var(-
 #pages-wrapper{flex:1;overflow:hidden;display:flex;flex-direction:column;min-height:0;}
 .page{display:none;flex:1;overflow:hidden;flex-direction:column;min-height:0;}
 .page.active{display:flex;animation:fadeUp .25s ease;}
-@keyframes fadeUp{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:translateY(0)}}
 
 /* ── SEARCH BAR ── */
 .search-wrap{display:flex;align-items:center;gap:8px;padding:10px 16px;background:var(--surf);border-bottom:1px solid var(--border);flex-shrink:0;}
@@ -180,13 +244,10 @@ body{font-family:'Plus Jakarta Sans',sans-serif;background:var(--bg);color:var(-
 .state-box h3{font-size:14px;color:var(--text);}
 .state-box p{font-size:12px;text-align:center;max-width:380px;}
 .btn-retry{background:var(--accent-bg);border:1px solid var(--accent-bd);color:var(--accent);padding:6px 16px;border-radius:6px;font-size:12px;cursor:pointer;font-family:'JetBrains Mono',monospace;}
-
 .no-results{display:none;flex-direction:column;align-items:center;padding:40px 20px;gap:8px;color:var(--muted);font-family:'JetBrains Mono',monospace;font-size:12px;}
 .no-results.visible{display:flex;}
 
-/* ══════════════════════════════════
-   PLANT PAGE
-══════════════════════════════════ */
+/* ── PLANT PAGE ── */
 .plant-wrap{padding:0;overflow-y:auto;width:100%;}
 .plant-hero{position:relative;overflow:hidden;padding:34px 28px 26px;background:linear-gradient(135deg,#050a16,#0a1626,#080e1c);border-bottom:1px solid var(--border);}
 .plant-hero::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse 55% 80% at 75% 50%,rgba(91,173,255,.09),transparent 70%),radial-gradient(ellipse 35% 50% at 15% 90%,rgba(167,139,255,.07),transparent 60%);}
@@ -211,8 +272,10 @@ body{font-family:'Plus Jakarta Sans',sans-serif;background:var(--bg);color:var(-
 .plant-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:14px;}
 .plant-card{background:var(--surf);border:1px solid var(--border);border-radius:12px;padding:0;cursor:pointer;transition:all .25s;position:relative;overflow:hidden;animation:cardIn .4s ease both;}
 @keyframes cardIn{from{opacity:0;transform:translateY(16px)}to{opacity:1;transform:translateY(0)}}
-.plant-card:nth-child(1){animation-delay:.04s}.plant-card:nth-child(2){animation-delay:.09s}.plant-card:nth-child(3){animation-delay:.14s}
-.plant-card:nth-child(4){animation-delay:.19s}.plant-card:nth-child(5){animation-delay:.24s}.plant-card:nth-child(6){animation-delay:.29s}.plant-card:nth-child(7){animation-delay:.34s}
+.plant-card:nth-child(1){animation-delay:.04s}.plant-card:nth-child(2){animation-delay:.09s}
+.plant-card:nth-child(3){animation-delay:.14s}.plant-card:nth-child(4){animation-delay:.19s}
+.plant-card:nth-child(5){animation-delay:.24s}.plant-card:nth-child(6){animation-delay:.29s}
+.plant-card:nth-child(7){animation-delay:.34s}
 .plant-card-top{padding:16px 18px 12px;background:linear-gradient(135deg,var(--surf),var(--surf2));position:relative;}
 .plant-card-stripe{position:absolute;top:0;left:0;right:0;height:2px;transform:scaleX(0);transform-origin:left;transition:transform .35s;}
 .plant-card:hover .plant-card-stripe{transform:scaleX(1);}
@@ -263,11 +326,9 @@ body{font-family:'Plus Jakarta Sans',sans-serif;background:var(--bg);color:var(-
 .sb-item{padding:9px 14px;font-size:11px;cursor:pointer;transition:all .15s;display:flex;align-items:center;color:var(--muted);border-left:2px solid transparent;font-family:'JetBrains Mono',monospace;word-break:break-all;line-height:1.4;}
 .sb-item:hover{background:var(--surf);color:var(--text);}
 .sb-item.active{background:var(--surf);color:var(--accent);border-left-color:var(--accent);}
-
 .detail-main{flex:1;overflow-y:auto;padding:22px 24px;min-width:0;background:var(--bg);}
 .detail-title{font-family:'JetBrains Mono',monospace;font-size:16px;font-weight:700;margin-bottom:3px;color:var(--text);}
 .detail-meta{font-size:11px;color:var(--muted);margin-bottom:18px;}
-
 .tag-table-wrap{overflow-x:auto;}
 .tag-table{width:100%;border-collapse:collapse;font-size:12px;font-family:'JetBrains Mono',monospace;}
 .tag-table th{text-align:left;padding:9px 14px;font-size:9px;letter-spacing:1.2px;text-transform:uppercase;color:var(--muted);border-bottom:1px solid var(--border);background:var(--surf);white-space:nowrap;}
@@ -285,12 +346,16 @@ body{font-family:'Plus Jakarta Sans',sans-serif;background:var(--bg);color:var(-
 ::-webkit-scrollbar-track{background:transparent;}
 ::-webkit-scrollbar-thumb{background:var(--border);border-radius:4px;}
 
+/* ══════════════════════════════════════
+   RESPONSIVE
+══════════════════════════════════════ */
 @media (max-width: 768px) {
   html, body { overflow:hidden !important; height:100% !important; position:fixed !important; top:0 !important; left:0 !important; }
   .topbar { height:44px !important; padding:0 10px !important; gap:6px !important; }
   .topbar-title { font-size:11px !important; }
   .topbar-sub { display:none !important; }
   .topbar-divider { display:none !important; }
+  .topbar-user { display:none !important; }
   .btn-back { font-size:10px !important; padding:4px 8px !important; }
   .btn-theme { font-size:10px !important; padding:4px 8px !important; }
   .btn-sm { font-size:10px !important; padding:4px 8px !important; }
@@ -340,16 +405,13 @@ body{font-family:'Plus Jakarta Sans',sans-serif;background:var(--bg);color:var(-
   .tag-table th { padding:8px 10px !important; font-size:8px !important; }
   .tag-table td { padding:8px 10px !important; }
   .row-num { width:28px !important; }
-  .tag-name { font-size:11px !important; }
-  .tag-addr { font-size:11px !important; }
-  .tag-comment { font-size:10px !important; }
-  .type-badge { font-size:9px !important; padding:1px 5px !important; }
-  .tag-table thead { position:sticky !important; top:0 !important; z-index:5 !important; }
   .search-wrap { padding:7px 10px !important; gap:6px !important; }
   .search-bar { font-size:11px !important; padding:6px 10px !important; }
   .search-count { font-size:9px !important; }
+  .login-box { padding:14px !important; }
+  .login-logo-title { font-size:22px !important; }
+  .login-card { padding:22px 18px !important; }
 }
-
 @media (max-width: 380px) {
   .plant-grid { grid-template-columns:1fr 1fr !important; }
   .unit-grid  { grid-template-columns:1fr !important; }
@@ -359,6 +421,41 @@ body{font-family:'Plus Jakarta Sans',sans-serif;background:var(--bg);color:var(-
 </head>
 <body>
 
+<!-- ══════════════════════════════════════
+     LOGIN PAGE (overlay, hidden setelah login)
+══════════════════════════════════════ -->
+<div id="page-login">
+  <div class="login-box">
+    <div class="login-logo">
+      <div class="login-logo-dot"></div>
+      <div class="login-logo-title">GARDA <span>HITAM</span></div>
+      <div class="login-logo-sub">Control Troubleshooting System</div>
+    </div>
+    <div class="login-card">
+      <div class="login-field">
+        <label class="login-label">Username</label>
+        <input class="login-input" id="inp-user" type="text"
+          placeholder="Masukkan username..." autocomplete="username">
+      </div>
+      <div class="login-field">
+        <label class="login-label">Password</label>
+        <input class="login-input" id="inp-pass" type="password"
+          placeholder="Masukkan password..." autocomplete="current-password"
+          onkeydown="if(event.key==='Enter')doLogin()">
+      </div>
+      <button class="login-btn" id="btn-login" onclick="doLogin()">🔐 LOGIN</button>
+      <div class="login-loading" id="login-loading">⟳ Memverifikasi...</div>
+      <div class="login-err" id="login-err"></div>
+    </div>
+    <div class="login-footer">GARDA HITAM · Authorized Access Only</div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════
+     MAIN APP (disembunyikan sebelum login)
+══════════════════════════════════════ -->
+<div id="app-wrapper" style="display:none;flex-direction:column;height:100%;width:100%;">
+
 <div class="topbar">
   <a href="index.html" class="btn-back">← Home</a>
   <div class="topbar-divider"></div>
@@ -367,8 +464,10 @@ body{font-family:'Plus Jakarta Sans',sans-serif;background:var(--bg);color:var(-
   <span class="topbar-sep">&nbsp;/&nbsp;</span>
   <span class="topbar-sub" id="topbar-sub">PLC Input / Output Tags</span>
   <div class="topbar-r">
+    <div class="topbar-user">👤 <span id="user-label">—</span></div>
     <div class="btn-theme" id="btn-theme" onclick="toggleTheme()">🌙 Dark</div>
     <div class="btn-sm" id="btn-refresh" onclick="doRefresh()">⟳ Refresh</div>
+    <div class="btn-sm btn-logout" onclick="doLogout()">⎋ Logout</div>
     <div class="topbar-clock" id="clock"></div>
   </div>
 </div>
@@ -461,7 +560,9 @@ body{font-family:'Plus Jakarta Sans',sans-serif;background:var(--bg);color:var(-
     <div class="detail-page">
       <div class="search-wrap" id="search-wrap">
         <span class="search-icon">🔍</span>
-        <input class="search-bar" id="search-bar" type="text" placeholder="Cari nama tag, address, comment, tipe..." autocomplete="off" oninput="onSearch(this.value)">
+        <input class="search-bar" id="search-bar" type="text"
+          placeholder="Cari nama tag, address, comment, tipe..."
+          autocomplete="off" oninput="onSearch(this.value)">
         <span class="search-count" id="search-count"></span>
         <button class="search-clear" id="search-clear" onclick="clearSearch()">✕ Clear</button>
       </div>
@@ -471,17 +572,143 @@ body{font-family:'Plus Jakarta Sans',sans-serif;background:var(--bg);color:var(-
           <div class="detail-title" id="det-title"></div>
           <div class="detail-meta"  id="det-meta"></div>
           <div id="det-content"></div>
-          <div class="no-results" id="tag-no-results"><span style="font-size:28px">🔍</span><span>Tidak ada tag untuk "<span id="tag-search-query"></span>"</span></div>
+          <div class="no-results" id="tag-no-results">
+            <span style="font-size:28px">🔍</span>
+            <span>Tidak ada tag untuk "<span id="tag-search-query"></span>"</span>
+          </div>
         </div>
       </div>
     </div>
   </div>
 
-</div>
+</div><!-- end pages-wrapper -->
+</div><!-- end app-wrapper -->
 
 <script>
+// ══════════════════════════════════════════════════════
+//  CONFIG
+// ══════════════════════════════════════════════════════
 const API = 'https://script.google.com/macros/s/AKfycbyb42w69ObzQPjbCG_iQvXa7106hZt0qAkBP17D8cQxrPYCoYakwgadBBUkmg9MZdXrrA/exec';
 
+// ══════════════════════════════════════════════════════
+//  SESSION MANAGEMENT
+// ══════════════════════════════════════════════════════
+function getSession() {
+  try { return JSON.parse(localStorage.getItem('gh_session')); } catch { return null; }
+}
+function setSession(data) {
+  localStorage.setItem('gh_session', JSON.stringify(data));
+}
+function clearSession() {
+  localStorage.removeItem('gh_session');
+}
+
+let SESSION = getSession();
+
+// ── Init: cek apakah sudah login ──
+(function initApp() {
+  if (SESSION) {
+    showApp();
+  } else {
+    showLogin();
+  }
+})();
+
+function showLogin() {
+  document.getElementById('page-login').classList.remove('hidden');
+  document.getElementById('app-wrapper').style.display = 'none';
+  // apply theme ke login juga
+  const isLight = localStorage.getItem('ioplc_theme') === 'light';
+  if (isLight) document.body.classList.add('light');
+}
+
+function showApp() {
+  document.getElementById('page-login').classList.add('hidden');
+  const aw = document.getElementById('app-wrapper');
+  aw.style.display = 'flex';
+  // Set user label
+  const ul = document.getElementById('user-label');
+  if (ul && SESSION) {
+    const plantLabel = SESSION.plant === 'ALL' ? 'ALL PLANT' : SESSION.plant;
+    ul.textContent = SESSION.username + ' [' + plantLabel + ']';
+  }
+  // Apply theme
+  const isLight = localStorage.getItem('ioplc_theme') === 'light';
+  if (isLight) {
+    document.body.classList.add('light');
+    const bt = document.getElementById('btn-theme');
+    if (bt) bt.textContent = '☀️ Light';
+    const sm = document.getElementById('stat-mode');
+    if (sm) sm.textContent = 'LIGHT';
+  }
+  // Start clock
+  setInterval(() => {
+    const c = document.getElementById('clock');
+    if (c) c.textContent = new Date().toTimeString().slice(0,8);
+  }, 1000);
+  const c = document.getElementById('clock');
+  if (c) c.textContent = new Date().toTimeString().slice(0,8);
+  // Nav to plant
+  navTo('plant');
+}
+
+// ── LOGIN ──
+async function doLogin() {
+  const username = document.getElementById('inp-user').value.trim();
+  const password = document.getElementById('inp-pass').value;
+  if (!username || !password) { showLoginErr('Username dan password wajib diisi'); return; }
+
+  setLoginLoading(true);
+  try {
+    const res  = await fetch(API + '?' + new URLSearchParams({ action:'login', username, password }));
+    const data = await res.json();
+    if (data.status === 'ok') {
+      SESSION = {
+        username : data.username,
+        plant    : data.plant,
+        role     : data.role,
+        token    : data.token,
+        loginAt  : Date.now()
+      };
+      setSession(SESSION);
+      showApp();
+    } else {
+      showLoginErr(data.message || 'Login gagal');
+    }
+  } catch(err) {
+    showLoginErr('Koneksi gagal, coba lagi');
+  }
+  setLoginLoading(false);
+}
+
+function setLoginLoading(on) {
+  document.getElementById('btn-login').disabled = on;
+  document.getElementById('login-loading').classList.toggle('visible', on);
+  if (on) document.getElementById('login-err').classList.remove('visible');
+}
+function showLoginErr(msg) {
+  const el = document.getElementById('login-err');
+  el.textContent = '⚠️ ' + msg;
+  el.classList.add('visible');
+}
+
+// ── LOGOUT ──
+function doLogout() {
+  clearSession();
+  SESSION = null;
+  S.plant = null; S.unit = null; S.unitLabel = null;
+  S.fileId = null; S.fileLabel = null;
+  S.filesCache = {}; S.tagsCache = {}; S.unitsCache = {};
+  // Reset login form
+  document.getElementById('inp-user').value = '';
+  document.getElementById('inp-pass').value = '';
+  document.getElementById('login-err').classList.remove('visible');
+  showLogin();
+}
+
+// ══════════════════════════════════════════════════════
+//  APP STATE
+// ══════════════════════════════════════════════════════
 const S = {
   page      : 'plant',
   plant     : null,
@@ -495,6 +722,9 @@ const S = {
   searchQuery: ''
 };
 
+// ══════════════════════════════════════════════════════
+//  API
+// ══════════════════════════════════════════════════════
 async function apiFetch(params) {
   const res = await fetch(API + '?' + new URLSearchParams(params).toString());
   if (!res.ok) throw new Error('HTTP ' + res.status);
@@ -503,12 +733,14 @@ async function apiFetch(params) {
   return data;
 }
 
+// ══════════════════════════════════════════════════════
+//  SEARCH
+// ══════════════════════════════════════════════════════
 function onSearch(val) {
   S.searchQuery = val.trim().toLowerCase();
   id('search-clear').classList.toggle('visible', val.length > 0);
   applyTagSearch(S.searchQuery);
 }
-
 function clearSearch() {
   id('search-bar').value = '';
   S.searchQuery = '';
@@ -516,12 +748,11 @@ function clearSearch() {
   id('search-count').textContent = '';
   applyTagSearch('');
 }
-
 function applyTagSearch(q) {
   const rows = document.querySelectorAll('#det-content .tag-table tbody tr');
   let visible = 0;
   rows.forEach(row => {
-    const text = row.textContent.toLowerCase();
+    const text  = row.textContent.toLowerCase();
     const match = !q || text.includes(q);
     row.classList.toggle('search-hidden', !match);
     if (match) visible++;
@@ -538,6 +769,9 @@ function applyTagSearch(q) {
   }
 }
 
+// ══════════════════════════════════════════════════════
+//  NAVIGATION
+// ══════════════════════════════════════════════════════
 function navTo(page, opts) {
   opts = opts || {};
   if (opts.plant)     S.plant     = opts.plant;
@@ -567,22 +801,22 @@ function updateBreadcrumb() {
   if (S.plant) {
     s2.style.display = b2.style.display = '';
     b2.textContent = S.plant;
-    if (S.page !== 'unit') { b2.className = 'bc-link'; b2.onclick = () => navTo('unit'); }
-    else { b2.className = 'bc-cur'; b2.onclick = null; }
-  } else { s2.style.display = b2.style.display = 'none'; }
+    if (S.page !== 'unit') { b2.className='bc-link'; b2.onclick=()=>navTo('unit'); }
+    else { b2.className='bc-cur'; b2.onclick=null; }
+  } else { s2.style.display=b2.style.display='none'; }
 
   if (S.unitLabel && S.page !== 'unit') {
     s3.style.display = b3.style.display = '';
     b3.textContent = S.unitLabel;
-    if (S.page !== 'file') { b3.className = 'bc-link'; b3.onclick = () => navTo('file'); }
-    else { b3.className = 'bc-cur'; b3.onclick = null; }
-  } else { s3.style.display = b3.style.display = 'none'; }
+    if (S.page !== 'file') { b3.className='bc-link'; b3.onclick=()=>navTo('file'); }
+    else { b3.className='bc-cur'; b3.onclick=null; }
+  } else { s3.style.display=b3.style.display='none'; }
 
   if (S.fileLabel && S.page === 'detail') {
     s4.style.display = b4.style.display = '';
-    b4.textContent = S.fileLabel;
-    b4.className = 'bc-cur';
-  } else { s4.style.display = b4.style.display = 'none'; }
+    b4.textContent  = S.fileLabel;
+    b4.className    = 'bc-cur';
+  } else { s4.style.display=b4.style.display='none'; }
 }
 
 function updateTopbar() {
@@ -593,21 +827,26 @@ function updateTopbar() {
   else                          sub.textContent = 'PLC Input / Output Tags';
 }
 
+// ══════════════════════════════════════════════════════
+//  PLANT PAGE
+// ══════════════════════════════════════════════════════
 const PLANT_META = {
-  MCG:{ desc:'Mixing Plant G',    color:'#ffb820', tag:'PLC · I/O List' },
-  MCA:{ desc:'Mixing Plant A',    color:'#5badff', tag:'PLC · I/O List' },
-  MCC:{ desc:'Mixing Plant C',    color:'#00e8f8', tag:'PLC · I/O List' },
-  MCD:{ desc:'Mixing Plant D',    color:'#00f0a0', tag:'PLC · I/O List' },
-  MCH:{ desc:'Mixing Plant H',    color:'#ff6b80', tag:'PLC · I/O List' },
-  MCI:{ desc:'Mixing Plant I',    color:'#c084fc', tag:'PLC · I/O List' },
-  'PLANT E':{ desc:'Plant E',     color:'#f472b6', tag:'PLC · PLANT E'  },
+  MCG:     { desc:'Mixing Plant G', color:'#ffb820', tag:'PLC · I/O List' },
+  MCA:     { desc:'Mixing Plant A', color:'#5badff', tag:'PLC · I/O List' },
+  MCC:     { desc:'Mixing Plant C', color:'#00e8f8', tag:'PLC · I/O List' },
+  MCD:     { desc:'Mixing Plant D', color:'#00f0a0', tag:'PLC · I/O List' },
+  MCH:     { desc:'Mixing Plant H', color:'#ff6b80', tag:'PLC · I/O List' },
+  MCI:     { desc:'Mixing Plant I', color:'#c084fc', tag:'PLC · I/O List' },
+  'PLANT E':{ desc:'Plant E',       color:'#f472b6', tag:'PLC · PLANT E'  },
 };
 
 async function renderPlantPage() {
   const el = id('plant-content');
   el.innerHTML = loadingHTML('Memuat daftar plant...');
   try {
-    const data = await apiFetch({ action: 'getPlants' });
+    // Kirim plant_access dari session agar backend filter sesuai akses user
+    const plantAccess = SESSION ? SESSION.plant : 'ALL';
+    const data = await apiFetch({ action:'getPlants', plant_access: plantAccess });
     id('stat-total').textContent = data.plants.length;
     id('stat-sync').textContent  = new Date().toTimeString().slice(0,5);
     el.innerHTML = `<div class="plant-grid">${data.plants.map((p,i) => plantCard(p,i)).join('')}</div>`;
@@ -631,6 +870,9 @@ function plantCard(p, i) {
   </div>`;
 }
 
+// ══════════════════════════════════════════════════════
+//  UNIT PAGE
+// ══════════════════════════════════════════════════════
 async function renderUnitPage() {
   id('unit-title').textContent = S.plant + ' — Pilih Unit';
   id('unit-sub').textContent   = 'Pilih unit / mixer untuk melihat I/O List';
@@ -638,7 +880,7 @@ async function renderUnitPage() {
   el.innerHTML = loadingHTML('Memuat daftar unit...');
   try {
     if (!S.unitsCache[S.plant]) {
-      const data = await apiFetch({ action: 'getUnits', plant: S.plant });
+      const data = await apiFetch({ action:'getUnits', plant:S.plant });
       S.unitsCache[S.plant] = data.units;
     }
     const units = S.unitsCache[S.plant];
@@ -657,17 +899,19 @@ function unitCard(u, i) {
   </div>`;
 }
 
+// ══════════════════════════════════════════════════════
+//  FILE PAGE
+// ══════════════════════════════════════════════════════
 async function renderFilePage() {
   id('file-title').textContent = S.plant + ' — ' + S.unitLabel;
   id('file-sub').textContent   = 'Pilih file I/O List untuk melihat PLC Tags';
   id('file-back-btn').onclick  = () => navTo('unit');
-
   const el = id('file-content');
   el.innerHTML = loadingHTML('Memuat daftar file...');
   try {
     const cacheKey = S.unit;
     if (!S.filesCache[cacheKey]) {
-      const data = await apiFetch({ action: 'getTags', plant: S.plant, unit: S.unit });
+      const data = await apiFetch({ action:'getTags', plant:S.plant, unit:S.unit });
       S.filesCache[cacheKey] = data.files;
     }
     const files = S.filesCache[cacheKey];
@@ -690,6 +934,9 @@ function fileCard(f, i) {
   </div>`;
 }
 
+// ══════════════════════════════════════════════════════
+//  DETAIL PAGE
+// ══════════════════════════════════════════════════════
 async function renderDetailPage() {
   id('det-title').textContent = S.fileLabel || '—';
   id('det-meta').textContent  = 'Memuat data tag...';
@@ -700,13 +947,12 @@ async function renderDetailPage() {
 
   try {
     if (!S.tagsCache[S.fileId]) {
-      const data = await apiFetch({ action: 'getTags', plant: S.plant, unit: S.unit, fileId: S.fileId });
+      const data = await apiFetch({ action:'getTags', plant:S.plant, unit:S.unit, fileId:S.fileId });
       S.tagsCache[S.fileId] = data;
     }
     const data = S.tagsCache[S.fileId];
     const rows = data.tables && data.tables[0] ? data.tables[0].rows : [];
-
-    id('det-meta').textContent = `${rows.length} tags · ${S.plant} ${S.unitLabel} — ${S.fileLabel}`;
+    id('det-meta').textContent  = `${rows.length} tags · ${S.plant} ${S.unitLabel} — ${S.fileLabel}`;
     id('search-count').textContent = rows.length + ' tags';
     renderTagTable(rows);
   } catch(err) {
@@ -718,6 +964,7 @@ async function renderDetailPage() {
 function renderSidebar(files) {
   if (!files || !files.length) { id('sidebar').innerHTML = ''; return; }
   id('sidebar').innerHTML =
+    '<div class="sb-head">FILES</div>' +
     files.map(f => {
       const active = f.fileId === S.fileId ? 'active' : '';
       return `<div class="sb-item ${active}" onclick="navTo('detail',{fileId:'${f.fileId}',fileLabel:'${esc(f.name)}'})">
@@ -726,11 +973,9 @@ function renderSidebar(files) {
     }).join('');
 
   requestAnimationFrame(() => {
-    const sidebar = id('sidebar');
+    const sidebar  = id('sidebar');
     const activeEl = sidebar && sidebar.querySelector('.sb-item.active');
-    if (activeEl) {
-      activeEl.scrollIntoView({ inline: 'center', block: 'nearest', behavior: 'smooth' });
-    }
+    if (activeEl) activeEl.scrollIntoView({ inline:'center', block:'nearest', behavior:'smooth' });
   });
 }
 
@@ -761,43 +1006,40 @@ function renderTagTable(rows) {
   if (S.searchQuery) applyTagSearch(S.searchQuery);
 }
 
+// ══════════════════════════════════════════════════════
+//  THEME
+// ══════════════════════════════════════════════════════
 function toggleTheme() {
   const isLight = document.body.classList.toggle('light');
   id('btn-theme').textContent = isLight ? '☀️ Light' : '🌙 Dark';
   const m = id('stat-mode'); if (m) m.textContent = isLight ? 'LIGHT' : 'DARK';
   localStorage.setItem('ioplc_theme', isLight ? 'light' : 'dark');
 }
-if (localStorage.getItem('ioplc_theme') === 'light') {
-  document.body.classList.add('light');
-  document.addEventListener('DOMContentLoaded', () => {
-    const b=id('btn-theme'); if(b) b.textContent='☀️ Light';
-    const m=id('stat-mode'); if(m) m.textContent='LIGHT';
-  });
-}
 
+// ══════════════════════════════════════════════════════
+//  REFRESH
+// ══════════════════════════════════════════════════════
 async function doRefresh() {
   const btn = id('btn-refresh');
   btn.classList.add('loading'); btn.textContent='⟳ Loading...';
-  if (S.page === 'detail') { delete S.tagsCache[S.fileId]; clearSearch(); await renderDetailPage(); }
-  else if (S.page === 'file')  { delete S.filesCache[S.unit]; await renderFilePage(); }
-  else if (S.page === 'unit')  { delete S.unitsCache[S.plant]; await renderUnitPage(); }
-  else await renderPlantPage();
+  if      (S.page === 'detail') { delete S.tagsCache[S.fileId]; clearSearch(); await renderDetailPage(); }
+  else if (S.page === 'file')   { delete S.filesCache[S.unit];  await renderFilePage(); }
+  else if (S.page === 'unit')   { delete S.unitsCache[S.plant]; await renderUnitPage(); }
+  else                          { await renderPlantPage(); }
   btn.classList.remove('loading'); btn.textContent='⟳ Refresh';
 }
 
+// ══════════════════════════════════════════════════════
+//  UTILS
+// ══════════════════════════════════════════════════════
 function id(i) { return document.getElementById(i); }
 function esc(s){ return String(s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;'); }
 function loadingHTML(msg) { return `<div class="state-box"><div class="sp"></div><p>${msg}</p></div>`; }
 function errorHTML(msg, fn) {
-  const rid='r'+Date.now();
-  setTimeout(()=>{ const b=id(rid); if(b) b.onclick=fn; },50);
+  const rid = 'r'+Date.now();
+  setTimeout(()=>{ const b=id(rid); if(b) b.onclick=fn; }, 50);
   return `<div class="state-box"><div style="font-size:28px">⚠️</div><h3>Gagal memuat</h3><p>${esc(msg)}</p><button class="btn-retry" id="${rid}">Coba Lagi</button></div>`;
 }
-
-setInterval(()=>{ id('clock').textContent=new Date().toTimeString().slice(0,8); },1000);
-id('clock').textContent = new Date().toTimeString().slice(0,8);
-
-navTo('plant');
 </script>
 </body>
 </html>
