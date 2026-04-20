@@ -1090,7 +1090,7 @@ tr.editing td { border-top: 1px solid var(--border-orange) !important; border-bo
           <th>Tanggal</th>
           <th>Mulai</th>
           <th>Selesai</th>
-        </tr>
+        </table>
       </thead>
       <tbody id="data"></tbody>
     </table>
@@ -1172,93 +1172,41 @@ tr.editing td { border-top: 1px solid var(--border-orange) !important; border-bo
 <script>
 /* =====================================================
    UNIT CONFIGURATION
-   Setiap unit hanya perlu GAS_URL yang SAMA (satu GAS untuk semua)
-   Parameter "unit" akan dikirim ke GAS untuk membedakan spreadsheet
    ===================================================== */
 var UNIT_CONFIG = [
-  {
-    code:  "MCA",
-    name:  "Mixing Center A",
-    icon:  "⚙️",
-    color: "#FF6D00",
-    active: true
-  },
-   {
-    code:  "MCC",
-    name:  "Mixing Center C",
-    icon:  "⚙️",
-    color: "#FF6D00",
-    active: true
-  },
-  {
-    code:  "MCD",
-    name:  "Mixing Centerr D",
-    icon:  "🔩",
-    color: "#00E0F8",
-    active: true
-  },
-  {
-    code:  "MCG",
-    name:  "Machine Center G",
-    icon:  "🛠️",
-    color: "#00E676",
-    active: true
-  },
-  {
-    code:  "MCH",
-    name:  "Machine Center H",
-    icon:  "🛠️",
-    color: "#00E676",
-    active: true
-  },
-  {
-    code:  "MCI",
-    name:  "Machine Center I",
-    icon:  "🛠️",
-    color: "#00E676",
-    active: true
-  },
-  {
-    code:  "PLANTE",
-    name:  "Plant E",
-    icon:  "🛠️",
-    color: "#00E676",
-    active: true
-  },
-
-  /*
-  ,{
-    code:  "UNIT_BARU",
-    name:  "Nama Lengkap Unit Baru",
-    icon:  "🔧",
-    color: "#FF4081",
-    active: true
-  }
-  */
+  { code: "MCA", name: "Mixing Center A", icon: "⚙️", color: "#FF6D00", active: true },
+  { code: "MCC", name: "Mixing Center C", icon: "⚙️", color: "#FF6D00", active: true },
+  { code: "MCD", name: "Mixing Center D", icon: "🔩", color: "#00E0F8", active: true },
+  { code: "MCG", name: "Machine Center G", icon: "🛠️", color: "#00E676", active: true },
+  { code: "MCH", name: "Machine Center H", icon: "🛠️", color: "#00E676", active: true },
+  { code: "MCI", name: "Machine Center I", icon: "🛠️", color: "#00E676", active: true },
+  { code: "PLANTE", name: "Plant E", icon: "🛠️", color: "#00E676", active: true }
 ];
 
 /* ===================================================
    SATU GAS URL UNTUK SEMUA UNIT
-   Ganti dengan URL GAS Web App Anda (yang punya SS_MAP)
    =================================================== */
-var MASTER_GAS_URL = "https://script.google.com/macros/s/AKfycbxcpj6mYF6YHVhdNNhdn9mX2b_F9gi_2q8cJc_Co6QzjqDD_0qMdQGv4YxOBoLrJV0W/exec";  
+var MASTER_GAS_URL = "https://script.google.com/macros/s/AKfycbxcpj6mYF6YHVhdNNhdn9mX2b_F9gi_2q8cJc_Co6QzjqDD_0qMdQGv4YxOBoLrJV0W/exec";
 
 /* ===================================================
-   State aktif
+   STATE
    =================================================== */
-var currentUnit   = null;   // object dari UNIT_CONFIG
-var GAS_URL       = MASTER_GAS_URL;  // URL tetap sama, hanya parameter unit yang berubah
-
+var currentUnit = null;
+var currentUser = null;
+var userAllowedUnits = [];
+var allTasks = [];
+var allGroups = [];
+var deleteMode = false;
+var currentEditingRow = null;
+var originalRowData = null;
+var filterState = { tanggal:'', bulan:'', tahun:'', status:'' };
 var NAMA_BULAN = ['','Januari','Februari','Maret','April','Mei','Juni','Juli','Agustus','September','Oktober','November','Desember'];
 var TAHUN_AWAL = 2024;
 var STATUS_ORDER = { 'Pending': 0, 'Proses': 1, 'Selesai': 2 };
 
-  /* ===================================================
+/* ===================================================
    LOGIN SYSTEM
    =================================================== */
-var currentUser = null;
-var userAllowedUnits = [];
-
 async function doLogin() {
   var username = document.getElementById('loginUsername').value.trim();
   var password = document.getElementById('loginPassword').value.trim();
@@ -1340,10 +1288,16 @@ function goHome() {
   document.getElementById('activeUnitBar').style.display = 'none';
   document.getElementById('inputSection').style.display = 'none';
   document.getElementById('unitSelectorScreen').style.display = 'block';
+  
+  // Reset ke unit selector dengan units yang diizinkan user
+  var filteredUnits = UNIT_CONFIG.filter(function(u) {
+    return userAllowedUnits.includes(u.code);
+  });
+  renderUnitSelector(filteredUnits);
 }
 
 /* ===================================================
-   UPDATE renderUnitSelector - TERIMA PARAMETER UNITS
+   RENDER UNIT SELECTOR (VERSION DENGAN PARAMETER)
    =================================================== */
 function renderUnitSelector(unitsArray) {
   var grid = document.getElementById('unitGrid');
@@ -1352,33 +1306,6 @@ function renderUnitSelector(unitsArray) {
   var unitsToRender = unitsArray || UNIT_CONFIG;
   
   unitsToRender.forEach(function(unit) {
-    var card = document.createElement('div');
-    card.className = 'unit-card';
-    card.style.setProperty('--unit-color', unit.color);
-
-    var badge = unit.active
-      ? '<span class="unit-card-badge active">Aktif</span>'
-      : '<span class="unit-card-badge dev">Dev</span>';
-
-    card.innerHTML =
-      badge +
-      '<div class="unit-card-icon">' + unit.icon + '</div>' +
-      '<div class="unit-card-code">' + escHtml(unit.code) + '</div>' +
-      '<div class="unit-card-name">' + escHtml(unit.name) + '</div>' +
-      '<span class="unit-card-arrow">↗</span>';
-
-    card.addEventListener('click', function() { selectUnit(unit); });
-    grid.appendChild(card);
-  });
-}
-/* ===================================================
-   RENDER UNIT SELECTOR
-   =================================================== */
-function renderUnitSelector() {
-  var grid = document.getElementById('unitGrid');
-  grid.innerHTML = '';
-
-  UNIT_CONFIG.forEach(function(unit) {
     var card = document.createElement('div');
     card.className = 'unit-card';
     card.style.setProperty('--unit-color', unit.color);
@@ -1421,7 +1348,7 @@ async function testGasConnection(unit) {
   try {
     var url = new URL(MASTER_GAS_URL);
     url.searchParams.set('action', 'getTasks');
-    url.searchParams.set('unit', unit.code);  // Kirim parameter unit!
+    url.searchParams.set('unit', unit.code);
     var res = await fetch(url.toString(), { method:'GET', redirect:'follow', mode:'cors', cache:'no-cache' });
     if (!res.ok) throw new Error('HTTP ' + res.status);
     var text = await res.text();
@@ -1434,7 +1361,7 @@ async function testGasConnection(unit) {
     var msg = err.message || String(err);
     var isCors = msg.toLowerCase().includes('failed to fetch') || msg.toLowerCase().includes('load failed') || msg.toLowerCase().includes('networkerror');
     if (isCors) {
-      showAlert('❌ CORS Error — Unit: ' + unit.code + '\n\nGAS memblokir akses dari GitHub Pages.\n\nCara fix:\n1. Buka script.google.com\n2. Klik Deploy → New Deployment\n3. Type: Web App\n4. Execute as: Me\n5. Who has access: Anyone\n6. Salin URL baru → ganti MASTER_GAS_URL\n\nURL saat ini:\n' + MASTER_GAS_URL.substring(0,80));
+      showAlert('❌ CORS Error — Unit: ' + unit.code + '\n\nGAS memblokir akses.\n\nCara fix:\n1. Buka script.google.com\n2. Klik Deploy → New Deployment\n3. Type: Web App\n4. Execute as: Me\n5. Who has access: Anyone\n6. Salin URL baru → ganti MASTER_GAS_URL');
     } else {
       showAlert('❌ Gagal terhubung ke ' + unit.code + '\n\n' + msg);
     }
@@ -1461,19 +1388,11 @@ function changeUnit() {
     showAlert("Selesaikan edit terlebih dahulu sebelum ganti unit!");
     return;
   }
-  currentUnit = null;
-  document.documentElement.style.setProperty('--orange', '#FF6D00');
-
-  document.getElementById('unitSelectorScreen').style.display = 'block';
-  document.getElementById('activeUnitBar').style.display      = 'none';
-  document.getElementById('mainApp').style.display            = 'none';
-  document.getElementById('inputSection').style.display       = 'none';
-
-  try { sessionStorage.removeItem('pjh_unit'); } catch(e) {}
+  goHome(); // reuse goHome logic
 }
 
 /* ===================================================
-   API HELPER — SEMUA REQUEST PAKAI PARAMETER unit
+   API HELPER
    =================================================== */
 async function api(action, params) {
   if (!currentUnit) {
@@ -1485,7 +1404,7 @@ async function api(action, params) {
   try {
     var url = new URL(MASTER_GAS_URL);
     url.searchParams.set("action", action);
-    url.searchParams.set("unit", currentUnit.code);  // WAJIB: kirim unit setiap request
+    url.searchParams.set("unit", currentUnit.code);
     
     if (params) {
       Object.entries(params).forEach(function([k,v]) {
@@ -1524,6 +1443,9 @@ function showLoading(state, text) {
   ol.classList.toggle("show", state);
   if (text) document.getElementById('loadingText').textContent = text;
 }
+
+/* ===== FUNGSI LAINNYA SAMA PERSIS DENGAN SEBELUMNYA ===== */
+/* (saya省略 sebagian karena keterbatasan karakter, tapi semua fungsi lainnya tetap sama) */
 
 /* ===== THEME ===== */
 (function() {
@@ -1596,8 +1518,6 @@ function sortTasks(tasks) {
 }
 
 /* ===== FILTER ===== */
-var filterState = { tanggal:'', bulan:'', tahun:'', status:'' };
-
 function buildFilterOptions() {
   var bulanSel = document.getElementById('filterBulan');
   var tahunSel = document.getElementById('filterTahun');
@@ -1692,10 +1612,6 @@ function applyFilterToRows() {
 }
 
 /* ===== DATA ===== */
-var allTasks  = [];
-var allGroups = [];
-var deleteMode = false;
-
 function loadData(force) {
   if (!force && currentEditingRow) return;
   if (!currentUnit) return;
@@ -2109,7 +2025,7 @@ startInlineEdit=function(tr){ if(_asActive)_asStop(); _origSIE(tr); };
 
 /* ===== INIT ===== */
 window.onload = function() {
-  renderUnitSelector();
+  // Jangan render unit selector dulu, tunggu login
   buildFilterOptions();
 };
 </script>
