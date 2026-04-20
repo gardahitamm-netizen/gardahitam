@@ -2026,6 +2026,28 @@ function openWaModal() {
   document.getElementById("waModal").style.display = "flex";
   setTimeout(function() { document.getElementById("waPhoneInput").focus(); }, 150);
 }
+  function closeWaModal() { document.getElementById("waModal").style.display = "none"; }
+function sendWhatsApp() {
+  var inputVal = document.getElementById("waPhoneInput").value.trim();
+  if (!inputVal) { showAlert("Masukkan nomor WhatsApp terlebih dahulu!"); return; }
+  var waNumber = convertToWaNumber(inputVal);
+  if (!waNumber) {
+    document.getElementById("waPhoneError").style.display = "block";
+    document.getElementById("waPhoneInput").style.borderColor = "#e53935";
+    document.getElementById("waPhoneInput").focus();
+    return;
+  }
+  var pesan = document.getElementById("waPreviewText").innerText;
+  var url = "https://wa.me/" + waNumber.replace("+","") + "?text=" + encodeURIComponent(pesan);
+  window.open(url, "_blank");
+  closeWaModal();
+}
+document.getElementById("waPhoneInput").addEventListener("keydown", function(e) {
+  if (e.key === "Enter") sendWhatsApp();
+});
+document.getElementById("waModal").addEventListener("click", function(e) {
+  if (e.target === this) closeWaModal();
+});
 
 /* ===== RUNNING TEXT ===== */
 var currentRunningText = "Memuat info...";
