@@ -998,14 +998,21 @@ tr.editing td { border-top: 1px solid var(--border-orange) !important; border-bo
 var UNIT_CONFIG = [
   {
     code:  "MCA",
-    name:  "Machine Center A",
+    name:  "Mixing Center A",
+    icon:  "⚙️",
+    color: "#FF6D00",
+    active: true
+  },
+   {
+    code:  "MCC",
+    name:  "Mixing Center C",
     icon:  "⚙️",
     color: "#FF6D00",
     active: true
   },
   {
     code:  "MCD",
-    name:  "Machine Center D",
+    name:  "Mixing Centerr D",
     icon:  "🔩",
     color: "#00E0F8",
     active: true
@@ -1018,12 +1025,27 @@ var UNIT_CONFIG = [
     active: true
   },
   {
-    code:  "IOPLC",
-    name:  "Input / Output PLC",
-    icon:  "🖥️",
-    color: "#FFD740",
+    code:  "MCH",
+    name:  "Machine Center H",
+    icon:  "🛠️",
+    color: "#00E676",
     active: true
-  }
+  },
+  {
+    code:  "MCI",
+    name:  "Machine Center I",
+    icon:  "🛠️",
+    color: "#00E676",
+    active: true
+  },
+  {
+    code:  "PLANTE",
+    name:  "Plant E",
+    icon:  "🛠️",
+    color: "#00E676",
+    active: true
+  },
+
   /*
   ,{
     code:  "UNIT_BARU",
