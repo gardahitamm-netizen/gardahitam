@@ -1007,7 +1007,7 @@ var UNIT_CONFIG = [
     name:  "Machine Center A",
     icon:  "⚙️",
     color: "#FF6D00",                 // warna aksen kartu
-    gasUrl: "https://script.google.com/macros/s/d/1rKZ-E0ZShs-Zvb2sFnqzj5XM2FKiZshSDPOk-LLuqCw/exec",
+    gasUrl: "https://script.google.com/macros/s/GANTI_DENGAN_GAS_URL_MCA/exec",
     active: true
   },
   {
@@ -1023,10 +1023,27 @@ var UNIT_CONFIG = [
     name:  "Machine Center G",
     icon:  "🛠️",
     color: "#00E676",
-    gasUrl: "https://script.google.com/macros/s/1c5xrHfcvJTDC0A2PSBmRkfpTMFkonGTUrL285Rs2eh8/exec",
+    gasUrl: "https://script.google.com/macros/s/AKfycbwy8IbrOY69b4GaVuQA7nvi1_wk3d8Xd8CLb2GTnB2zehfMYi_zC89uX8pTTpyj9F7Zww/exec",
     active: true
   },
- 
+  {
+    code:  "I/O PLC",
+    name:  "Input / Output PLC",
+    icon:  "🖥️",
+    color: "#FFD740",
+    gasUrl: "https://script.google.com/macros/s/GANTI_DENGAN_GAS_URL_IOPLC/exec",
+    active: true
+  }
+  /*
+  ,{
+    code:  "UNIT_BARU",
+    name:  "Nama Lengkap Unit",
+    icon:  "🔧",
+    color: "#FF4081",
+    gasUrl: "https://script.google.com/macros/s/XXXXXX/exec",
+    active: true
+  }
+  */
 ];
 
 /* ===================================================
@@ -1070,34 +1087,55 @@ function renderUnitSelector() {
 /* ===================================================
    PILIH UNIT
    =================================================== */
-function selectUnit(unit) {
+async function selectUnit(unit) {
   currentUnit = unit;
   GAS_URL     = unit.gasUrl;
-
-  // Simpan ke sessionStorage supaya tidak reset kalau refresh
   try { sessionStorage.setItem('pjh_unit', unit.code); } catch(e) {}
+  document.documentElement.style.setProperty('--orange', unit.color);
 
-  // Sembunyikan selector, tampilkan app
+  showLoading(true, 'Menghubungkan ke ' + unit.code + '...');
+  var connOk = await testGasConnection(unit);
+  showLoading(false);
+
+  if (connOk) {
+    showMainApp(unit);
+    loadData(true);
+    loadRunningText();
+  }
+}
+
+async function testGasConnection(unit) {
+  try {
+    var url = new URL(unit.gasUrl);
+    url.searchParams.set('action', 'getTasks');
+    var res = await fetch(url.toString(), { method:'GET', redirect:'follow', mode:'cors', cache:'no-cache' });
+    if (!res.ok) throw new Error('HTTP ' + res.status);
+    var text = await res.text();
+    JSON.parse(text);
+    showMainApp(unit);
+    return true;
+  } catch(err) {
+    var msg = err.message || String(err);
+    var isCors = msg.toLowerCase().includes('failed to fetch') || msg.toLowerCase().includes('load failed') || msg.toLowerCase().includes('networkerror');
+    if (isCors) {
+      showAlert('❌ CORS Error — Unit: ' + unit.code + '\n\nGAS memblokir akses dari GitHub Pages.\n\nCara fix:\n1. Buka script.google.com\n2. Klik Deploy → New Deployment\n3. Type: Web App\n4. Execute as: Me\n5. Who has access: Anyone\n6. Salin URL baru → tempel di UNIT_CONFIG\n\nURL saat ini:\n' + unit.gasUrl.substring(0,80));
+    } else {
+      showAlert('❌ Gagal terhubung ke ' + unit.code + '\n\n' + msg + '\n\nPastikan GAS URL benar dan sudah di-deploy.');
+    }
+    showMainApp(unit);
+    return false;
+  }
+}
+
+function showMainApp(unit) {
   document.getElementById('unitSelectorScreen').style.display = 'none';
   document.getElementById('activeUnitBar').style.display      = 'flex';
   document.getElementById('mainApp').style.display            = 'block';
-
   document.getElementById('aubCode').textContent = unit.code;
   document.getElementById('aubName').textContent = unit.name;
-
-  // Update warna top-line sesuai unit
-  document.documentElement.style.setProperty('--orange', unit.color);
-
-  // Reset state
-  allTasks   = [];
-  allGroups  = [];
-  deleteMode = false;
+  allTasks = []; allGroups = []; deleteMode = false;
   document.getElementById('toggleDeleteBtn').classList.remove('active');
-
-  buildFilterOptions();
-  applyFilter();
-  loadData(true);
-  loadRunningText();
+  buildFilterOptions(); applyFilter(); renderTable();
 }
 
 /* ===================================================
@@ -1138,12 +1176,28 @@ async function api(action, params) {
         url.searchParams.set(k, (v === null || v === undefined) ? "" : v);
       });
     }
-    var res = await fetch(url.toString());
-    if (!res.ok) throw new Error("HTTP " + res.status);
-    return await res.json();
+    var res = await fetch(url.toString(), {
+      method: 'GET',
+      redirect: 'follow',
+      mode: 'cors',
+      cache: 'no-cache'
+    });
+    if (!res.ok) throw new Error("HTTP " + res.status + " — cek GAS deployment sudah di-publish sebagai 'Anyone'");
+    var text = await res.text();
+    try {
+      return JSON.parse(text);
+    } catch(parseErr) {
+      console.error("Response bukan JSON:", text.substring(0, 300));
+      throw new Error("Response bukan JSON. Cek GAS URL sudah benar dan di-deploy ulang.\nPreview: " + text.substring(0, 120));
+    }
   } catch(err) {
-    showAlert("Gagal menghubungi server: " + (err.message || err));
-    return { error: err.message };
+    var msg = err.message || String(err);
+    /* Deteksi CORS / network error yang lebih spesifik */
+    if (msg.toLowerCase().includes('failed to fetch') || msg.toLowerCase().includes('networkerror') || msg.toLowerCase().includes('load failed')) {
+      msg = "CORS / Network Error.\n\nSolusi:\n1. Buka GAS Editor → Deploy → Manage Deployments\n2. Pastikan akses diset ke 'Anyone'\n3. Jika sudah, coba deploy ulang (New Deployment)\n\nUnit: " + (currentUnit ? currentUnit.code : "?") + "\nURL: " + GAS_URL.substring(0, 60) + "...";
+    }
+    showAlert("❌ Error [" + action + "]:\n" + msg);
+    return { error: msg };
   } finally {
     showLoading(false);
   }
