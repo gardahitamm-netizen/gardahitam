@@ -626,6 +626,21 @@ tr.filter-hidden { display: none; }
 .modal-box h3 { font-family: 'JetBrains Mono', monospace; font-size: 13px; letter-spacing: 3px; color: var(--orange); margin-bottom: 16px; }
 .modal button { margin: 5px; }
 
+#waModal .modal-box { border-color: rgba(0,230,118,0.4); }
+#waModal h3 { color: var(--green-ok); }
+.wa-preview-label { font-family: 'JetBrains Mono', monospace; font-size: 10px; letter-spacing: 2px; color: var(--text-dim); text-align: left; margin-bottom: 5px; text-transform: uppercase; }
+.wa-preview { background: var(--bg-void); border: 1px solid rgba(0,230,118,0.2); border-radius: 4px; padding: 10px 14px; margin-bottom: 14px; font-size: 13px; font-family: 'JetBrains Mono', monospace; text-align: left; white-space: pre-wrap; color: #A5D6B7; max-height: 160px; overflow-y: auto; line-height: 1.7; }
+.wa-input-label { font-family: 'JetBrains Mono', monospace; font-size: 10px; letter-spacing: 2px; color: var(--text-dim); text-align: left; margin-bottom: 5px; text-transform: uppercase; }
+#waPhoneInput { font-size: 18px; font-family: 'JetBrains Mono', monospace; padding: 10px 14px; width: 100%; margin-bottom: 4px; border: 1px solid rgba(0,230,118,0.25); background: var(--bg-void); color: var(--green-ok); border-radius: 4px; }
+#waPhoneInput:focus { outline: none; border-color: var(--green-ok); box-shadow: 0 0 0 3px rgba(0,230,118,0.1); }
+.wa-hint { font-size: 11px; color: var(--text-dim); text-align: left; margin-bottom: 14px; }
+#waPhoneError { color: var(--red-err); font-size: 12px; margin-bottom: 10px; text-align: left; display: none; }
+.wa-btn-row { display: flex; justify-content: center; gap: 10px; margin-top: 6px; }
+.wa-send-btn { background: rgba(0,230,118,0.08); color: var(--green-ok); border: 1px solid rgba(0,230,118,0.4); border-radius: 4px; padding: 10px 22px; cursor: pointer; font-family: 'Exo 2', sans-serif; font-size: 14px; font-weight: 700; letter-spacing: 1.5px; text-transform: uppercase; display: inline-flex; align-items: center; gap: 7px; transition: all 0.18s; }
+.wa-send-btn:hover { background: rgba(0,230,118,0.15); box-shadow: 0 0 14px rgba(0,230,118,0.2); opacity: 1; }
+.wa-cancel-btn { background: rgba(255,23,68,0.07); color: var(--red-err); border: 1px solid rgba(255,23,68,0.35); border-radius: 4px; padding: 10px 18px; cursor: pointer; font-family: 'Exo 2', sans-serif; font-size: 14px; font-weight: 700; letter-spacing: 1.5px; text-transform: uppercase; transition: all 0.18s; }
+.wa-cancel-btn:hover { background: rgba(255,23,68,0.14); opacity: 1; }
+
 #runningTextBar {
   position: fixed; bottom: 0; left: 0; width: 100%; height: 44px;
   background: var(--bg-panel); border-top: 1px solid var(--border-orange);
@@ -658,8 +673,32 @@ tr.filter-hidden { display: none; }
 }
 #themeToggleBtn:hover { border-color: var(--border-orange); box-shadow: 0 0 14px var(--orange-glow); transform: scale(1.08); }
 
-.print-header { display: none; }
-#printPagesContainer { display: none; }
+.print-header { display: none; text-align: center; font-size: 12px; color: #555; margin-bottom: 8px; }
+
+@media print {
+  @page { size: A4 landscape; margin: 8mm; }
+  html { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+  body { background: #fff !important; color: #000 !important; padding: 5px; }
+  body::before, body::after, #logo-img, #clock, .top-bar, #inputSection, #runningTextBar,
+  #confirmModal, #alertModal, #deleteRowModal, #loadingOverlay, .btn-delete-row,
+  td.col-delete, th.col-delete, .hist-filter-bar, #unitSelectorScreen, #activeUnitBar,
+  #homeBtn, #themeToggleBtn { display: none !important; }
+  .page-header h2 { color: #000 !important; font-size: 20px; letter-spacing: 2px; text-shadow: none; }
+  .page-header h2 span { color: #E65100 !important; }
+  .print-header { display: block !important; }
+  .header-badge { color: #555 !important; }
+  .header-line::before, .header-line::after { background: #ccc !important; }
+  .table-wrapper { display: none !important; }
+  .print-page { display: block !important; page-break-after: always; margin-bottom: 0; }
+  .print-page:last-child { page-break-after: avoid; }
+  .print-page-header { font-family: monospace; font-size: 11px; color: #555; margin-bottom: 6px; display: flex; justify-content: space-between; align-items: center; }
+  .print-page table { width: 100% !important; font-size: 11px; border-collapse: collapse; table-layout: auto !important; min-width: unset !important; background: white !important; }
+  .print-page th { background: #E65100 !important; color: white !important; font-size: 10px; padding: 5px 7px; border: 1px solid #ccc !important; white-space: nowrap; letter-spacing: 1px; }
+  .print-page td { background: white !important; color: #000 !important; padding: 4px 7px; border: 1px solid #ccc !important; font-size: 11px; overflow: visible !important; white-space: normal !important; word-break: break-word !important; }
+  .print-page tr:nth-child(even) td { background: #f5f5f5 !important; }
+  .print-page .group-start-print td { border-top: 2px solid #E65100 !important; }
+  .print-page .status-badge { font-size: 10px; padding: 2px 6px; border-radius: 3px; font-weight: 700; border: 1px solid #999; }
+}
 
 @keyframes fadeInUp {
   from { opacity: 0; transform: translateY(16px); }
@@ -841,14 +880,29 @@ tr.filter-hidden { display: none; }
 <div id="confirmModal" class="modal"><div class="modal-box"><h3>⚠ Konfirmasi Archive</h3><p>Semua job hari ini akan dipindah ke arsip. Lanjutkan?</p><br><button onclick="confirmArchive()">Ya, Archive</button><button onclick="closeModal()">Batal</button></div></div>
 <div id="alertModal" class="modal"><div class="modal-box"><p id="alertText"></p><br><button onclick="closeAlert()">OK</button></div></div>
 <div id="deleteRowModal" class="modal"><div class="modal-box"><h3>🗑 Hapus Job?</h3><p id="deleteRowDesc"></p><p style="font-size:13px;margin-bottom:18px;">Tindakan ini tidak dapat dibatalkan.</p><div style="display:flex;justify-content:center;gap:12px;"><button id="confirmDeleteRowBtn">Ya, Hapus</button><button id="cancelDeleteRowBtn">Batal</button></div></div></div>
-<div id="waModal" class="modal"><div class="modal-box"><h3>Kirim WhatsApp</h3><div class="wa-preview" id="waPreviewText"></div><input type="text" id="waPhoneInput" placeholder="081234567890"><div id="waPhoneError" style="color:red;display:none;">Nomor tidak valid</div><div class="wa-btn-row"><button class="wa-send-btn" onclick="sendWhatsApp()">Kirim</button><button class="wa-cancel-btn" onclick="closeWaModal()">Batal</button></div></div></div>
+
+<div id="waModal" class="modal">
+  <div class="modal-box">
+    <h3>📱 Kirim WhatsApp</h3>
+    <div class="wa-preview-label">▸ Preview Pesan</div>
+    <div class="wa-preview" id="waPreviewText"></div>
+    <div class="wa-input-label">▸ Nomor Tujuan</div>
+    <input type="text" id="waPhoneInput" placeholder="081234567890" maxlength="15" oninput="validateWaPhone(this)">
+    <div class="wa-hint">Format: 08xxxxxxxx → otomatis dikonversi ke +628xx</div>
+    <div id="waPhoneError" class="wa-error">✕ Nomor tidak valid.</div>
+    <div class="wa-btn-row">
+      <button class="wa-send-btn" onclick="sendWhatsApp()">📤 Kirim</button>
+      <button class="wa-cancel-btn" onclick="closeWaModal()">❌ Batal</button>
+    </div>
+  </div>
+</div>
 
 <!-- RUNNING TEXT -->
 <div id="runningTextBar">
   <button id="editRunningBtn" onclick="openEditRunning()"><svg viewBox="0 0 16 16"><path d="M12.146.854a.5.5 0 0 1 .708 0l2.292 2.292a.5.5 0 0 1 0 .708L4.207 14.793 0 16l1.207-4.207L12.146.854z"/></svg></button>
   <div id="marqueeWrapper"><div id="marqueeTrack"><span id="marqueeText1">Memuat info...</span><span id="marqueeText2">Memuat info...</span></div></div>
 </div>
-<div id="editRunningModal" class="modal"><div class="modal-box"><h3>✏ Edit Running Text</h3><textarea id="runningTextInput" rows="3"></textarea><div><button onclick="saveRunningText()">Simpan</button><button onclick="closeEditRunning()">Batal</button></div></div></div>
+<div id="editRunningModal" class="modal"><div class="modal-box"><h3>✏ Edit Running Text</h3><textarea id="runningTextInput" rows="3" style="width:100%;"></textarea><div style="margin-top:12px;"><button onclick="saveRunningText()">Simpan</button><button onclick="closeEditRunning()">Batal</button></div></div></div>
 
 <script>
 // =====================================================
@@ -1209,8 +1263,8 @@ function renderTable() {
       "<option" + (task.status === "Selesai" ? " selected" : "") + ">Selesai</option>" +
       "</select></td>";
     html += "<td>" + escHtml(task.tanggal) + "</td>";
-    html += "<td style='color:var(--green-ok);'>" + (task.jamMulai ? escHtml(task.jamMulai) : "—") + "</td>";
-    html += "<td style='color:var(--amber-warn);'>" + (task.jamSelesai ? escHtml(task.jamSelesai) : "—") + "</td>";
+    html += "<td style='color:var(--green-ok);'>" + (task.jamMulai ? escHtml(task.jamMulai) : "<span style='color:var(--text-dim);font-size:11px;'>—</span>") + "</td>";
+    html += "<td style='color:var(--amber-warn);'>" + (task.jamSelesai ? escHtml(task.jamSelesai) : "<span style='color:var(--text-dim);font-size:11px;'>—</span>") + "</td>";
     html += "</tr>";
   });
   tbody.innerHTML = html;
@@ -1439,7 +1493,7 @@ function closeModal() {
 }
 
 // =====================================================
-// PRINT FUNCTION
+// PRINT FUNCTION (CETAK PDF) - LENGKAP
 // =====================================================
 function doPrint() {
   applyFilterToRows();
@@ -1456,9 +1510,10 @@ function doPrint() {
   var now = new Date();
   var days = ["Minggu", "Senin", "Selasa", "Rabu", "Kamis", "Jumat", "Sabtu"];
   var mn = ["Jan", "Feb", "Mar", "Apr", "Mei", "Jun", "Jul", "Agu", "Sep", "Okt", "Nov", "Des"];
-  var tanggal = days[now.getDay()] + ", " + String(now.getDate()).padStart(2, '0') + " " + mn[now.getMonth()] + " " + now.getFullYear();
+  var d = String(now.getDate()).padStart(2, '0');
   var h = String(now.getHours()).padStart(2, '0');
   var m = String(now.getMinutes()).padStart(2, '0');
+  var tanggal = days[now.getDay()] + ", " + d + " " + mn[now.getMonth()] + " " + now.getFullYear();
   var periodLabel = getPeriodLabel();
   var unitLabel = currentUnit ? ' | Unit: ' + currentUnit.code : '';
   
@@ -1492,7 +1547,7 @@ function doPrint() {
       var sb = sv === 'Selesai' ? '#e8f5e9' : sv === 'Proses' ? '#fff3e0' : '#e3f2fd';
       var pTr = document.createElement('tr');
       pTr.className = 'group-start-print';
-      pTr.innerHTML = '<td>' + escHtml(get(0)) + '</td><td>' + escHtml(get(1)) + '</td><td>' + escHtml(get(2)) + '</td><td>' + escHtml(get(3)) + '</td><td><span class="status-badge" style="color:' + sc2 + ';background:' + sb + ';">' + escHtml(sv) + '</span></td><td>' + escHtml(get(5)) + '</td><td>' + escHtml(get(6) || '—') + '</td><td>' + escHtml(get(7) || '—') + '</td>';
+      pTr.innerHTML = '<td>' + escHtml(get(0)) + '</td><td>' + escHtml(get(1)) + '</td><td>' + escHtml(get(2)) + '</td><td>' + escHtml(get(3)) + '</td><td><span class="status-badge" style="color:' + sc2 + ';background:' + sb + ';border-color:' + sc2 + '">' + escHtml(sv) + '</span></td><td>' + escHtml(get(5)) + '</td><td>' + escHtml(get(6) || '—') + '</td><td>' + escHtml(get(7) || '—') + '</td>';
       tb.appendChild(pTr);
     });
     
@@ -1519,7 +1574,7 @@ function getPeriodLabel() {
 }
 
 // =====================================================
-// WHATSAPP
+// WHATSAPP - LENGKAP
 // =====================================================
 function convertToWaNumber(input) {
   var num = input.trim().replace(/[\s\-]/g, "");
@@ -1527,6 +1582,22 @@ function convertToWaNumber(input) {
   if (num.startsWith("62")) return "+" + num;
   if (num.startsWith("0")) return "+62" + num.substring(1);
   return null;
+}
+
+function validateWaPhone(input) {
+  var val = input.value.trim().replace(/[\s\-]/g, "");
+  var errEl = document.getElementById("waPhoneError");
+  var valid = /^(0|62|\+62)[0-9]{8,12}$/.test(val);
+  if (!input.value.trim()) {
+    errEl.style.display = "none";
+    input.style.borderColor = "#ccc";
+  } else if (valid) {
+    errEl.style.display = "none";
+    input.style.borderColor = "#1565C0";
+  } else {
+    errEl.style.display = "block";
+    input.style.borderColor = "#e53935";
+  }
 }
 
 function openWaModal() {
@@ -1571,7 +1642,10 @@ function openWaModal() {
   pesan += "━━━━━━━━━━━━━━━━━━━━\nTotal: " + visible.length + " job\nMohon dikerjakan sesuai jadwal. Terima kasih! 🙏";
   document.getElementById("waPreviewText").innerText = pesan;
   document.getElementById("waPhoneInput").value = "";
+  document.getElementById("waPhoneInput").style.borderColor = "#ccc";
+  document.getElementById("waPhoneError").style.display = "none";
   document.getElementById("waModal").style.display = "flex";
+  setTimeout(function() { document.getElementById("waPhoneInput").focus(); }, 150);
 }
 
 function closeWaModal() {
@@ -1587,12 +1661,17 @@ function sendWhatsApp() {
   var waNumber = convertToWaNumber(inputVal);
   if (!waNumber) {
     document.getElementById("waPhoneError").style.display = "block";
+    document.getElementById("waPhoneInput").focus();
     return;
   }
   var pesan = document.getElementById("waPreviewText").innerText;
   window.open("https://wa.me/" + waNumber.replace("+", "") + "?text=" + encodeURIComponent(pesan), "_blank");
   closeWaModal();
 }
+
+document.getElementById("waPhoneInput").addEventListener("keydown", function(e) {
+  if (e.key === "Enter") sendWhatsApp();
+});
 
 // =====================================================
 // RUNNING TEXT
@@ -1611,9 +1690,9 @@ function setMarqueeText(text) {
 
 function loadRunningText() {
   api("getRunningText").then(function(res) {
-    setMarqueeText(res.data || "Selamat bekerja! Tetap semangat!");
+    setMarqueeText(res.data || "Selamat bekerja! Tetap semangat dan utamakan keselamatan kerja.");
   }).catch(function() {
-    setMarqueeText("Selamat bekerja! Tetap semangat!");
+    setMarqueeText("Selamat bekerja! Tetap semangat dan utamakan keselamatan kerja.");
   });
 }
 
@@ -1685,11 +1764,11 @@ function startInlineEdit(tr) {
   
   tr.classList.add("editing");
   cells[offset + 0].innerHTML = "<input class='inline-input' id='ie-id' value='" + escHtml(originalRowData.id) + "'><div class='inline-save-bar'><button class='inline-btn inline-btn-save' onclick='saveInlineEdit()'>✓ Simpan</button><button class='inline-btn inline-btn-cancel' onclick='cancelInlineEdit()'>✕ Batal</button></div>";
-  cells[offset + 1].innerHTML = "<textarea class='inline-input' id='ie-nama' rows='3'>" + escHtml(originalRowData.nama) + "</textarea>";
+  cells[offset + 1].innerHTML = "<textarea class='inline-input' id='ie-nama' rows='3' style='font-size:13px;'>" + escHtml(originalRowData.nama) + "</textarea><span style='font-size:9px;color:var(--text-dim);font-family:monospace;'>↵ Enter = nama baru</span>";
   cells[offset + 2].innerHTML = "<textarea class='inline-input' id='ie-tugas' rows='3'>" + escHtml(originalRowData.tugas) + "</textarea>";
   cells[offset + 3].innerHTML = "<input class='inline-input' id='ie-mesin' value='" + escHtml(originalRowData.mesin) + "'>";
   cells[offset + 6].innerHTML = "<input class='inline-input' id='ie-jam-mulai' type='time' value='" + escHtml(originalRowData.jamMulai) + "'>";
-  cells[offset + 7].innerHTML = "<div class='ie-readonly'>🔒 " + escHtml(originalRowData.jamSelesai || '—') + "</div>";
+  cells[offset + 7].innerHTML = "<div class='ie-readonly'><span class='ie-readonly-lock'>🔒</span><span>" + escHtml(originalRowData.jamSelesai || '—') + "</span></div><div class='ie-readonly-hint'>Tidak dapat diedit</div>";
   
   setTimeout(function() {
     var inp = document.getElementById("ie-id");
@@ -1756,6 +1835,7 @@ function finishInlineEdit() {
 // AUTO SCROLL
 // =====================================================
 var _asActive = false, _asRaf = null, _asDir = 1, _asSpeed = 1.2, _asPausedAt = 0, _asPauseDur = 1800;
+var _asResumeTimer = null;
 
 function toggleAutoScroll() {
   _asActive = !_asActive;
@@ -1765,10 +1845,33 @@ function toggleAutoScroll() {
     _asDir = 1;
     _asPausedAt = 0;
     _asRaf = requestAnimationFrame(_asStep);
+    window.addEventListener("wheel", _asPauseOnInteract, { passive: true });
+    window.addEventListener("touchstart", _asPauseOnInteract, { passive: true });
   } else {
-    if (_asRaf) cancelAnimationFrame(_asRaf);
-    btn.classList.remove("active");
+    _asStop();
   }
+}
+
+function _asStop() {
+  _asActive = false;
+  if (_asRaf) cancelAnimationFrame(_asRaf);
+  _asRaf = null;
+  document.getElementById("autoScrollBtn").classList.remove("active");
+  window.removeEventListener("wheel", _asPauseOnInteract);
+  window.removeEventListener("touchstart", _asPauseOnInteract);
+}
+
+function _asPauseOnInteract() {
+  if (!_asActive) return;
+  if (_asRaf) cancelAnimationFrame(_asRaf);
+  _asRaf = null;
+  clearTimeout(_asResumeTimer);
+  _asResumeTimer = setTimeout(function() {
+    if (_asActive) {
+      _asPausedAt = 0;
+      _asRaf = requestAnimationFrame(_asStep);
+    }
+  }, 3000);
 }
 
 function _asStep(ts) {
