@@ -180,6 +180,14 @@ body{font-family:'Plus Jakarta Sans',sans-serif;background:var(--bg);color:var(-
   text-align:center;margin-top:18px;font-family:'JetBrains Mono',monospace;
   font-size:9px;color:var(--muted);letter-spacing:1.5px;text-transform:uppercase;
 }
+.login-back-home {
+  display:block;text-align:center;margin-top:14px;
+  font-family:'JetBrains Mono',monospace;font-size:10px;
+  color:var(--muted);text-decoration:none;letter-spacing:.5px;
+  transition:color .2s;
+}
+.login-back-home:hover { color:var(--accent); }
+body.light .login-back-home { color:#2e5c8a; }
 
 /* ── TOPBAR ── */
 .topbar{display:flex;align-items:center;gap:8px;padding:0 20px;height:50px;background:#07101d;border-bottom:1px solid var(--border);flex-shrink:0;z-index:200;}
@@ -448,6 +456,7 @@ body{font-family:'Plus Jakarta Sans',sans-serif;background:var(--bg);color:var(-
       <div class="login-err" id="login-err"></div>
     </div>
     <div class="login-footer">GARDA HITAM · Authorized Access Only</div>
+    <a href="index.html" class="login-back-home">← Kembali ke Home</a>
   </div>
 </div>
 
