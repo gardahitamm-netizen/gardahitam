@@ -1990,16 +1990,7 @@ function toggleTheme() {
 }
 
 function updateClock() {
-  var now = new Date();
-  var days = ["Minggu","Senin","Selasa","Rabu","Kamis","Jumat","Sabtu"];
-  var mn = ["Jan","Feb","Mar","Apr","Mei","Jun","Jul","Agu","Sep","Okt","Nov","Des"];
-  var d = String(now.getDate()).padStart(2,'0');
-  var h = String(now.getHours()).padStart(2,'0');
-  var m = String(now.getMinutes()).padStart(2,'0');
-  var s = String(now.getSeconds()).padStart(2,'0');
-  document.getElementById('clock').innerText = days[now.getDay()+', '+d+' '+mn[now.getMonth()]+' '+now.getFullYear()+' — '+h+':'+m+':'+s];
-}
-// Fix typo above
+ 
 function updateClock() {
   var now = new Date();
   var days = ["Minggu","Senin","Selasa","Rabu","Kamis","Jumat","Sabtu"];
