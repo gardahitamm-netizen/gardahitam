@@ -790,7 +790,13 @@ tr.filter-hidden { display: none; }
       <span>📋</span><span id="periodText">—</span>
     </div>
     <button class="btn-reset-filter hidden" id="btnResetFilter" onclick="resetFilter()">✕ Reset</button>
-    <span class="hist-filter-result" id="filterResult"></span>
+   <div style="flex:1;min-width:160px;position:relative;display:flex;align-items:center;">
+  <svg viewBox="0 0 24 24" style="position:absolute;left:8px;width:14px;height:14px;fill:var(--text-dim);pointer-events:none;"><path d="M15.5 14h-.79l-.28-.27A6.471 6.471 0 0 0 16 9.5 6.5 6.5 0 1 0 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"/></svg>
+  <input type="text" id="searchInput" placeholder="Cari nama, mesin, tugas..."
+    oninput="applyFilter()"
+    style="width:100%;padding:6px 10px 6px 28px;background:var(--bg-card);border:1px solid var(--border-mid);color:var(--text-bright);border-radius:6px;font-size:11px;font-family:'JetBrains Mono',monospace;outline:none;height:32px;">
+</div>
+<span class="hist-filter-result" id="filterResult"></span>
   </div>
 
   <!-- TABLE -->
@@ -1005,7 +1011,10 @@ async function doLogin() {
     btn.disabled = false;
   }
 }
-
+#searchInput:focus {
+  border-color: var(--orange) !important;
+  box-shadow: 0 0 0 3px var(--orange-faint);
+}
 function checkHardcodedAdmin(username, password) {
   // Admin credentials — only you know these; stored obfuscated
   var a = btoa('admin');
@@ -1536,6 +1545,8 @@ function resetFilter() {
   document.getElementById('filterBulan').value = '';
   document.getElementById('filterTahun').value = '';
   document.getElementById('filterStatus').value = '';
+  var searchEl = document.getElementById('searchInput');
+  if (searchEl) searchEl.value = '';
   document.getElementById('periodBadge').style.display = 'none';
   document.getElementById('btnResetFilter').classList.add('hidden');
   applyFilterToRows();
@@ -1546,6 +1557,9 @@ function applyFilterToRows() {
   var fB = filterState.bulan ? +filterState.bulan : null;
   var fY = filterState.tahun ? +filterState.tahun : null;
   var fS = filterState.status || null;
+  var searchEl = document.getElementById('searchInput');
+  var fQ = searchEl ? searchEl.value.trim().toLowerCase() : '';
+
   var rows = document.querySelectorAll('#data tr.group-row');
   var visible = 0;
   rows.forEach(function(tr) {
@@ -1553,18 +1567,32 @@ function applyFilterToRows() {
     var rs = tr.getAttribute('data-status') || '';
     var p = parseTanggal(ts);
     var show = true;
+
+    // Filter tanggal / bulan / tahun
     if (fT) { if (tanggalToYMD(ts) !== fT) show = false; }
     else {
       if (fB && (!p || p.month !== fB)) show = false;
       if (fY && (!p || p.year !== fY)) show = false;
     }
     if (fS && rs !== fS) show = false;
+
+    // Filter pencarian teks (nama, mesin, tugas)
+    if (show && fQ) {
+      var offset = (deleteMode && hasPermission('sharejob.delete')) ? 1 : 0;
+      var cells = tr.children;
+      var nama  = cells[offset + 1] ? cells[offset + 1].textContent.toLowerCase() : '';
+      var tugas = cells[offset + 2] ? cells[offset + 2].textContent.toLowerCase() : '';
+      var mesin = cells[offset + 3] ? cells[offset + 3].textContent.toLowerCase() : '';
+      if (nama.indexOf(fQ) === -1 && tugas.indexOf(fQ) === -1 && mesin.indexOf(fQ) === -1) {
+        show = false;
+      }
+    }
+
     if (show) { tr.classList.remove('filter-hidden'); visible++; }
     else { tr.classList.add('filter-hidden'); }
   });
   document.getElementById('filterResult').textContent = visible + ' job ditemukan';
 }
-
 // ═══════════════════════════════════════
 // CRUD OPERATIONS
 // ═══════════════════════════════════════
