@@ -89,7 +89,6 @@ body::after {
   z-index: 1000;
 }
 
-/* ── USER CHIP (top right, below logo) ── */
 #userChip {
   position: fixed;
   top: 80px; right: 18px;
@@ -110,9 +109,6 @@ body::after {
 #userChip .uc-logout { font-size: 10px; color: var(--text-dim); margin-left: 4px; transition: color 0.2s; }
 #userChip:hover .uc-logout { color: var(--red-err); }
 
-/* ═══════════════════════════════════════
-   LOGIN / AUTH SCREEN
-═══════════════════════════════════════ */
 #authScreen {
   position: fixed; inset: 0;
   background: var(--bg-void);
@@ -130,128 +126,58 @@ body::after {
   animation: fadeInUp 0.4s ease;
   position: relative; overflow: hidden;
 }
-
 .auth-box::before {
   content: '';
   position: absolute; top: 0; left: 0; right: 0; height: 3px;
   background: linear-gradient(90deg, transparent, var(--orange-dim), var(--orange), var(--orange-dim), transparent);
 }
-
-.auth-title {
-  font-family: 'Exo 2', sans-serif;
-  font-size: 24px; font-weight: 900;
-  text-align: center; margin-bottom: 6px;
-  letter-spacing: 2px;
-}
+.auth-title { font-family: 'Exo 2', sans-serif; font-size: 24px; font-weight: 900; text-align: center; margin-bottom: 6px; letter-spacing: 2px; }
 .auth-title span { color: var(--orange); }
+.auth-sub { text-align: center; font-family: 'JetBrains Mono', monospace; font-size: 10px; color: var(--text-dim); margin-bottom: 28px; letter-spacing: 1px; }
 
-.auth-sub {
-  text-align: center;
-  font-family: 'JetBrains Mono', monospace;
-  font-size: 10px; color: var(--text-dim);
-  margin-bottom: 28px; letter-spacing: 1px;
-}
-
-/* Guest mode banner */
 .auth-guest-banner {
   display: flex; align-items: center; gap: 8px;
   background: var(--teal-bg); border: 1px solid var(--teal-bd);
-  border-radius: 8px; padding: 10px 14px;
-  margin-bottom: 20px;
-  font-family: 'JetBrains Mono', monospace;
-  font-size: 10px; color: var(--teal);
-  letter-spacing: 0.5px;
+  border-radius: 8px; padding: 10px 14px; margin-bottom: 20px;
+  font-family: 'JetBrains Mono', monospace; font-size: 10px; color: var(--teal); letter-spacing: 0.5px;
 }
 .auth-guest-banner span { flex: 1; }
 .auth-guest-btn {
-  font-family: 'JetBrains Mono', monospace;
-  font-size: 10px; font-weight: 700;
-  padding: 5px 12px; border-radius: 6px;
-  border: 1px solid var(--teal-bd);
-  background: var(--teal-bg); color: var(--teal);
-  cursor: pointer; transition: all 0.2s;
+  font-family: 'JetBrains Mono', monospace; font-size: 10px; font-weight: 700;
+  padding: 5px 12px; border-radius: 6px; border: 1px solid var(--teal-bd);
+  background: var(--teal-bg); color: var(--teal); cursor: pointer; transition: all 0.2s;
   letter-spacing: 0.5px; text-transform: uppercase;
 }
 .auth-guest-btn:hover { background: rgba(0,224,248,0.2); border-color: var(--teal); }
 
 .auth-divider {
-  display: flex; align-items: center; gap: 10px;
-  margin-bottom: 20px;
-  font-family: 'JetBrains Mono', monospace;
-  font-size: 9px; color: var(--text-dim); letter-spacing: 1px;
+  display: flex; align-items: center; gap: 10px; margin-bottom: 20px;
+  font-family: 'JetBrains Mono', monospace; font-size: 9px; color: var(--text-dim); letter-spacing: 1px;
 }
-.auth-divider::before, .auth-divider::after {
-  content: ''; flex: 1; height: 1px; background: var(--border-mid);
-}
+.auth-divider::before, .auth-divider::after { content: ''; flex: 1; height: 1px; background: var(--border-mid); }
 
 .auth-field { margin-bottom: 16px; }
-.auth-field label {
-  display: block;
-  font-family: 'JetBrains Mono', monospace;
-  font-size: 10px; letter-spacing: 1px;
-  color: var(--text-mid); margin-bottom: 6px;
-  text-transform: uppercase;
-}
-.auth-field input {
-  width: 100%; padding: 11px 14px;
-  background: var(--bg-card);
-  border: 1px solid var(--border-mid);
-  border-radius: 6px; color: var(--text-bright);
-  font-size: 14px; font-family: 'Exo 2', sans-serif;
-  transition: all 0.2s;
-}
-.auth-field input:focus {
-  outline: none; border-color: var(--orange);
-  box-shadow: 0 0 0 3px var(--orange-faint);
-}
+.auth-field label { display: block; font-family: 'JetBrains Mono', monospace; font-size: 10px; letter-spacing: 1px; color: var(--text-mid); margin-bottom: 6px; text-transform: uppercase; }
+.auth-field input { width: 100%; padding: 11px 14px; background: var(--bg-card); border: 1px solid var(--border-mid); border-radius: 6px; color: var(--text-bright); font-size: 14px; font-family: 'Exo 2', sans-serif; transition: all 0.2s; }
+.auth-field input:focus { outline: none; border-color: var(--orange); box-shadow: 0 0 0 3px var(--orange-faint); }
 
 .auth-btn {
-  width: 100%; padding: 12px;
-  background: var(--orange-faint);
-  border: 1px solid var(--border-orange);
-  border-radius: 6px; color: var(--orange);
-  font-family: 'Exo 2', sans-serif;
-  font-size: 14px; font-weight: 700;
-  letter-spacing: 2px; text-transform: uppercase;
-  cursor: pointer; transition: all 0.2s;
+  width: 100%; padding: 12px; background: var(--orange-faint); border: 1px solid var(--border-orange);
+  border-radius: 6px; color: var(--orange); font-family: 'Exo 2', sans-serif; font-size: 14px; font-weight: 700;
+  letter-spacing: 2px; text-transform: uppercase; cursor: pointer; transition: all 0.2s;
   display: flex; align-items: center; justify-content: center; gap: 8px;
 }
 .auth-btn:hover { background: var(--orange-glow); box-shadow: 0 0 16px var(--orange-glow); }
 .auth-btn:disabled { opacity: 0.5; pointer-events: none; }
-.auth-btn .spin {
-  width: 14px; height: 14px;
-  border: 2px solid rgba(255,109,0,0.3);
-  border-top-color: var(--orange);
-  border-radius: 50%;
-  animation: spinAnim 0.6s linear infinite;
-  display: none;
-}
+.auth-btn .spin { width: 14px; height: 14px; border: 2px solid rgba(255,109,0,0.3); border-top-color: var(--orange); border-radius: 50%; animation: spinAnim 0.6s linear infinite; display: none; }
 .auth-btn.loading .spin { display: block; }
 .auth-btn.loading .btn-label { display: none; }
 
-.auth-error {
-  background: rgba(255,23,68,0.1);
-  border: 1px solid rgba(255,23,68,0.3);
-  border-radius: 6px; padding: 10px;
-  margin-top: 14px; color: var(--red-err);
-  font-size: 12px; text-align: center;
-  display: none;
-}
+.auth-error { background: rgba(255,23,68,0.1); border: 1px solid rgba(255,23,68,0.3); border-radius: 6px; padding: 10px; margin-top: 14px; color: var(--red-err); font-size: 12px; text-align: center; display: none; }
 .auth-error.show { display: block; }
 
-/* ── ROLE BADGES ── */
-.role-badges {
-  display: flex; gap: 8px;
-  margin-bottom: 20px; flex-wrap: wrap;
-}
-.role-badge {
-  display: flex; align-items: center; gap: 5px;
-  padding: 5px 12px; border-radius: 20px;
-  font-family: 'JetBrains Mono', monospace;
-  font-size: 9px; font-weight: 700;
-  border: 1px solid; letter-spacing: 0.5px;
-  text-transform: uppercase;
-}
+.role-badges { display: flex; gap: 8px; margin-bottom: 20px; flex-wrap: wrap; }
+.role-badge { display: flex; align-items: center; gap: 5px; padding: 5px 12px; border-radius: 20px; font-family: 'JetBrains Mono', monospace; font-size: 9px; font-weight: 700; border: 1px solid; letter-spacing: 0.5px; text-transform: uppercase; }
 .rb-admin { color: var(--role-admin); border-color: rgba(255,109,0,0.4); background: rgba(255,109,0,0.07); }
 .rb-supervisor { color: var(--role-supervisor); border-color: rgba(0,224,248,0.4); background: rgba(0,224,248,0.07); }
 .rb-teknisi { color: var(--role-teknisi); border-color: rgba(0,230,118,0.4); background: rgba(0,230,118,0.07); }
@@ -260,110 +186,33 @@ body::after {
 .rb-supervisor .rb-dot { background: var(--role-supervisor); }
 .rb-teknisi .rb-dot { background: var(--role-teknisi); }
 
-/* ── ACCESS DENIED OVERLAY ── */
-#accessDeniedOverlay {
-  display: none;
-  position: fixed; inset: 0;
-  background: rgba(8,12,16,0.85);
-  backdrop-filter: blur(6px);
-  z-index: 9000;
-  justify-content: center; align-items: center;
-}
+#accessDeniedOverlay { display: none; position: fixed; inset: 0; background: rgba(8,12,16,0.85); backdrop-filter: blur(6px); z-index: 9000; justify-content: center; align-items: center; }
 #accessDeniedOverlay.show { display: flex; }
-.ad-box {
-  background: var(--bg-panel);
-  border: 1px solid rgba(255,23,68,0.4);
-  border-radius: 12px; padding: 32px;
-  text-align: center; max-width: 360px;
-  box-shadow: 0 0 40px rgba(255,23,68,0.1);
-}
+.ad-box { background: var(--bg-panel); border: 1px solid rgba(255,23,68,0.4); border-radius: 12px; padding: 32px; text-align: center; max-width: 360px; box-shadow: 0 0 40px rgba(255,23,68,0.1); }
 .ad-icon { font-size: 36px; margin-bottom: 14px; }
 .ad-title { font-family: 'JetBrains Mono', monospace; font-size: 13px; color: var(--red-err); letter-spacing: 2px; margin-bottom: 10px; }
 .ad-desc { font-size: 13px; color: var(--text-mid); line-height: 1.6; margin-bottom: 20px; }
-.ad-role-info {
-  background: var(--bg-card); border: 1px solid var(--border-faint);
-  border-radius: 8px; padding: 12px; margin-bottom: 16px;
-  font-family: 'JetBrains Mono', monospace; font-size: 11px;
-  color: var(--text-dim); line-height: 1.8;
-}
+.ad-role-info { background: var(--bg-card); border: 1px solid var(--border-faint); border-radius: 8px; padding: 12px; margin-bottom: 16px; font-family: 'JetBrains Mono', monospace; font-size: 11px; color: var(--text-dim); line-height: 1.8; }
 .ad-role-info strong { color: var(--text-mid); }
 
-/* ── PAGE HEADER ── */
-.page-header {
-  text-align: center;
-  padding: 28px 0 18px;
-  position: relative; z-index: 1;
-}
-.page-header h2 {
-  font-family: 'Exo 2', sans-serif;
-  font-size: 28px; font-weight: 900;
-  letter-spacing: 6px; text-transform: uppercase;
-  color: var(--text-bright); line-height: 1;
-}
+.page-header { text-align: center; padding: 28px 0 18px; position: relative; z-index: 1; }
+.page-header h2 { font-family: 'Exo 2', sans-serif; font-size: 28px; font-weight: 900; letter-spacing: 6px; text-transform: uppercase; color: var(--text-bright); line-height: 1; }
 .page-header h2 span { color: var(--orange); text-shadow: 0 0 20px rgba(255,109,0,0.5); }
-.header-line {
-  display: flex; align-items: center; justify-content: center;
-  gap: 12px; margin-top: 8px;
-}
-.header-line::before, .header-line::after {
-  content: ''; flex: 1; max-width: 180px; height: 1px;
-  background: linear-gradient(90deg, transparent, var(--orange));
-}
+.header-line { display: flex; align-items: center; justify-content: center; gap: 12px; margin-top: 8px; }
+.header-line::before, .header-line::after { content: ''; flex: 1; max-width: 180px; height: 1px; background: linear-gradient(90deg, transparent, var(--orange)); }
 .header-line::after { background: linear-gradient(90deg, var(--orange), transparent); }
-.header-badge {
-  font-family: 'JetBrains Mono', monospace;
-  font-size: 10px; letter-spacing: 3px;
-  color: var(--orange-dim); text-transform: uppercase;
-}
+.header-badge { font-family: 'JetBrains Mono', monospace; font-size: 10px; letter-spacing: 3px; color: var(--orange-dim); text-transform: uppercase; }
 
-/* ── HOME BUTTON ── */
-#homeBtn {
-  position: fixed; bottom: 54px; left: 14px;
-  z-index: 3000;
-  display: inline-flex; align-items: center; justify-content: center; gap: 6px;
-  height: 36px; padding: 0 16px;
-  background: var(--bg-panel); border: 1px solid var(--border-mid);
-  border-radius: 20px; cursor: pointer;
-  font-family: 'Exo 2', sans-serif;
-  font-size: 12px; font-weight: 600; color: var(--text-mid);
-  transition: all 0.2s; text-decoration: none;
-}
-#homeBtn:hover {
-  border-color: var(--border-orange); color: var(--orange);
-  background: var(--orange-faint); transform: translateY(-1px);
-}
+#homeBtn { position: fixed; bottom: 54px; left: 14px; z-index: 3000; display: inline-flex; align-items: center; justify-content: center; gap: 6px; height: 36px; padding: 0 16px; background: var(--bg-panel); border: 1px solid var(--border-mid); border-radius: 20px; cursor: pointer; font-family: 'Exo 2', sans-serif; font-size: 12px; font-weight: 600; color: var(--text-mid); transition: all 0.2s; text-decoration: none; }
+#homeBtn:hover { border-color: var(--border-orange); color: var(--orange); background: var(--orange-faint); transform: translateY(-1px); }
 #homeBtn svg { width: 14px; height: 14px; fill: currentColor; }
 
-/* ── UNIT SELECTOR ── */
-#unitSelectorScreen {
-  position: relative; z-index: 1;
-  max-width: 820px; margin: 0 auto; padding-top: 10px;
-  display: none;
-}
-.unit-selector-title {
-  text-align: center;
-  font-family: 'JetBrains Mono', monospace;
-  font-size: 11px; letter-spacing: 3px;
-  color: var(--text-dim); text-transform: uppercase; margin-bottom: 28px;
-}
+#unitSelectorScreen { position: relative; z-index: 1; max-width: 820px; margin: 0 auto; padding-top: 10px; display: none; }
+.unit-selector-title { text-align: center; font-family: 'JetBrains Mono', monospace; font-size: 11px; letter-spacing: 3px; color: var(--text-dim); text-transform: uppercase; margin-bottom: 28px; }
 .unit-selector-title span { color: var(--orange); }
-.unit-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
-  gap: 14px; margin-bottom: 32px;
-}
-.unit-card {
-  position: relative; background: var(--bg-card);
-  border: 1px solid var(--border-mid); border-radius: 6px;
-  padding: 22px 18px 18px; cursor: pointer;
-  transition: all 0.2s; overflow: hidden;
-  display: flex; flex-direction: column; gap: 8px; min-height: 120px;
-}
-.unit-card::before {
-  content: ''; position: absolute; top: 0; left: 0;
-  width: 0; height: 2px;
-  background: var(--unit-color, var(--orange)); transition: width 0.25s;
-}
+.unit-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(180px, 1fr)); gap: 14px; margin-bottom: 32px; }
+.unit-card { position: relative; background: var(--bg-card); border: 1px solid var(--border-mid); border-radius: 6px; padding: 22px 18px 18px; cursor: pointer; transition: all 0.2s; overflow: hidden; display: flex; flex-direction: column; gap: 8px; min-height: 120px; }
+.unit-card::before { content: ''; position: absolute; top: 0; left: 0; width: 0; height: 2px; background: var(--unit-color, var(--orange)); transition: width 0.25s; }
 .unit-card:hover { border-color: var(--unit-color, var(--orange)); background: rgba(255,109,0,0.04); transform: translateY(-2px); box-shadow: 0 8px 30px rgba(0,0,0,0.4); }
 .unit-card:hover::before { width: 100%; }
 .unit-card-icon { font-size: 22px; line-height: 1; margin-bottom: 2px; }
@@ -374,40 +223,18 @@ body::after {
 .unit-card-arrow { position: absolute; bottom: 14px; right: 14px; font-size: 16px; color: var(--text-dim); transition: color 0.2s, transform 0.2s; }
 .unit-card:hover .unit-card-arrow { color: var(--unit-color, var(--orange)); transform: translate(2px, -2px); }
 
-/* ── ACTIVE UNIT BAR ── */
-#activeUnitBar {
-  display: none; align-items: center; gap: 10px;
-  padding: 8px 14px; background: var(--bg-panel);
-  border: 1px solid var(--border-orange); border-radius: 6px;
-  margin-bottom: 14px; position: relative; z-index: 1;
-}
+#activeUnitBar { display: none; align-items: center; gap: 10px; padding: 8px 14px; background: var(--bg-panel); border: 1px solid var(--border-orange); border-radius: 6px; margin-bottom: 14px; position: relative; z-index: 1; }
 .aub-label { font-family: 'JetBrains Mono', monospace; font-size: 10px; letter-spacing: 2px; color: var(--text-dim); text-transform: uppercase; }
 .aub-unit { font-family: 'JetBrains Mono', monospace; font-size: 14px; font-weight: 700; color: var(--orange); letter-spacing: 2px; }
 .aub-name { font-size: 12px; color: var(--text-mid); }
-.aub-role-chip {
-  font-family: 'JetBrains Mono', monospace; font-size: 9px; font-weight: 700;
-  padding: 3px 9px; border-radius: 12px; border: 1px solid;
-  letter-spacing: 0.5px; text-transform: uppercase;
-}
+.aub-role-chip { font-family: 'JetBrains Mono', monospace; font-size: 9px; font-weight: 700; padding: 3px 9px; border-radius: 12px; border: 1px solid; letter-spacing: 0.5px; text-transform: uppercase; }
 .aub-change { margin-left: auto; font-family: 'JetBrains Mono', monospace; font-size: 10px; letter-spacing: 1px; color: var(--text-dim); cursor: pointer; padding: 4px 10px; border: 1px solid var(--border-faint); border-radius: 4px; transition: all 0.15s; background: transparent; text-transform: uppercase; }
 .aub-change:hover { border-color: var(--border-orange); color: var(--orange); background: var(--orange-faint); }
 
-/* ── MAIN APP ── */
 #mainApp { display: none; }
 
-.top-bar {
-  display: flex; align-items: center; gap: 8px;
-  margin-bottom: 14px; position: relative; z-index: 1; flex-wrap: wrap;
-}
-.tb-btn {
-  display: inline-flex; align-items: center; justify-content: center; gap: 6px;
-  height: 44px; padding: 0 16px;
-  background: var(--bg-card); border: 1px solid var(--border-mid);
-  border-radius: 4px; cursor: pointer;
-  font-family: 'Exo 2', sans-serif; font-size: 13px; font-weight: 700;
-  letter-spacing: 1.5px; text-transform: uppercase; color: var(--text-mid);
-  transition: all 0.18s; white-space: nowrap; position: relative; overflow: hidden;
-}
+.top-bar { display: flex; align-items: center; gap: 8px; margin-bottom: 14px; position: relative; z-index: 1; flex-wrap: wrap; }
+.tb-btn { display: inline-flex; align-items: center; justify-content: center; gap: 6px; height: 44px; padding: 0 16px; background: var(--bg-card); border: 1px solid var(--border-mid); border-radius: 4px; cursor: pointer; font-family: 'Exo 2', sans-serif; font-size: 13px; font-weight: 700; letter-spacing: 1.5px; text-transform: uppercase; color: var(--text-mid); transition: all 0.18s; white-space: nowrap; position: relative; overflow: hidden; }
 .tb-btn::after { content: ''; position: absolute; bottom: 0; left: 0; width: 0; height: 2px; background: var(--orange); transition: width 0.2s; }
 .tb-btn:hover { color: var(--orange); border-color: var(--border-orange); }
 .tb-btn:hover::after { width: 100%; }
@@ -432,23 +259,11 @@ body::after {
 #refreshBtn.spinning svg { animation: spinAnim 0.7s linear infinite; }
 @keyframes spinAnim { to { transform: rotate(360deg); } }
 
-/* ── ROLE PERMISSION NOTICE ── */
-.perm-notice {
-  display: flex; align-items: center; gap: 10px;
-  padding: 10px 14px; border-radius: 6px; margin-bottom: 14px;
-  font-family: 'JetBrains Mono', monospace; font-size: 11px;
-  position: relative; z-index: 1;
-}
+.perm-notice { display: flex; align-items: center; gap: 10px; padding: 10px 14px; border-radius: 6px; margin-bottom: 14px; font-family: 'JetBrains Mono', monospace; font-size: 11px; position: relative; z-index: 1; }
 .pn-info { background: var(--teal-bg); border: 1px solid var(--teal-bd); color: var(--teal); }
 .pn-warn { background: rgba(255,215,64,0.08); border: 1px solid rgba(255,215,64,0.3); color: var(--amber-warn); }
 
-/* ── FILTER BAR ── */
-.hist-filter-bar {
-  display: flex; align-items: center; gap: 10px;
-  padding: 10px 16px; background: var(--bg-panel);
-  border: 1px solid var(--border-mid); border-radius: 6px;
-  margin-bottom: 14px; flex-wrap: wrap; position: relative; z-index: 1;
-}
+.hist-filter-bar { display: flex; align-items: center; gap: 10px; padding: 10px 16px; background: var(--bg-panel); border: 1px solid var(--border-mid); border-radius: 6px; margin-bottom: 14px; flex-wrap: wrap; position: relative; z-index: 1; }
 .hist-filter-label { font-family: 'JetBrains Mono', monospace; font-size: 10px; color: var(--text-dim); letter-spacing: 1px; text-transform: uppercase; flex-shrink: 0; }
 .hist-filter-group { display: flex; align-items: center; gap: 6px; flex-shrink: 0; }
 .hist-filter-select { background: var(--bg-card); border: 1px solid var(--border-mid); color: var(--text-bright); padding: 6px 10px; border-radius: 6px; font-size: 11px; font-family: 'JetBrains Mono', monospace; outline: none; cursor: pointer; }
@@ -460,19 +275,16 @@ body::after {
 .btn-reset-filter { display: flex; align-items: center; gap: 4px; font-family: 'JetBrains Mono', monospace; font-size: 10px; padding: 5px 12px; border-radius: 6px; cursor: pointer; border: 1px solid var(--border-mid); background: transparent; color: var(--text-mid); }
 .btn-reset-filter:hover { border-color: var(--red-err); color: var(--red-err); }
 .btn-reset-filter.hidden { display: none; }
-.hist-filter-result { margin-left: auto; font-family: 'JetBrains Mono', monospace; font-size: 10px; color: var(--text-dim); flex-shrink: 0; }
+.hist-filter-result { font-family: 'JetBrains Mono', monospace; font-size: 10px; color: var(--text-dim); flex-shrink: 0; }
 
-/* ── INPUT SECTION ── */
-#inputSection {
-  background: var(--bg-panel); border: 1px solid var(--border-orange);
-  border-radius: 6px; padding: 14px 16px 10px;
-  margin-bottom: 14px; position: relative; z-index: 1; display: none;
-}
-#inputSection::before {
-  content: 'INPUT JOB BARU'; position: absolute; top: -10px; left: 14px;
-  background: var(--bg-panel); padding: 0 8px;
-  font-family: 'JetBrains Mono', monospace; font-size: 10px; letter-spacing: 2px; color: var(--orange);
-}
+/* Search input */
+.search-wrap { flex: 1; min-width: 160px; position: relative; display: flex; align-items: center; }
+.search-wrap svg { position: absolute; left: 8px; width: 14px; height: 14px; fill: var(--text-dim); pointer-events: none; }
+#searchInput { width: 100%; padding: 6px 10px 6px 28px; background: var(--bg-card); border: 1px solid var(--border-mid); color: var(--text-bright); border-radius: 6px; font-size: 11px; font-family: 'JetBrains Mono', monospace; outline: none; height: 32px; }
+#searchInput:focus { border-color: var(--orange); box-shadow: 0 0 0 3px var(--orange-faint); }
+
+#inputSection { background: var(--bg-panel); border: 1px solid var(--border-orange); border-radius: 6px; padding: 14px 16px 10px; margin-bottom: 14px; position: relative; z-index: 1; display: none; }
+#inputSection::before { content: 'INPUT JOB BARU'; position: absolute; top: -10px; left: 14px; background: var(--bg-panel); padding: 0 8px; font-family: 'JetBrains Mono', monospace; font-size: 10px; letter-spacing: 2px; color: var(--orange); }
 .form-scroll { overflow-x: auto; }
 .form-container { display: flex; flex-wrap: nowrap; gap: 8px; align-items: flex-start; margin-bottom: 10px; min-width: 900px; }
 input, textarea, select { font-family: 'Exo 2', sans-serif; font-size: 16px; font-weight: 600; padding: 9px 12px; background: var(--bg-card); color: var(--text-bright); border: 1px solid var(--border-mid); border-radius: 4px; }
@@ -488,12 +300,7 @@ input:focus, textarea:focus, select:focus { outline: none; border-color: var(--o
 button { font-family: 'Exo 2', sans-serif; font-size: 14px; font-weight: 700; letter-spacing: 1.5px; text-transform: uppercase; padding: 10px 18px; background: var(--bg-card); color: var(--orange); border: 1px solid var(--border-orange); border-radius: 4px; cursor: pointer; }
 button:hover { background: var(--orange-faint); box-shadow: 0 0 12px var(--orange-glow); }
 
-/* ── TABLE ── */
-.table-wrapper {
-  border-radius: 6px; border: 1px solid var(--border-mid);
-  position: relative; z-index: 1;
-  box-shadow: 0 4px 40px rgba(0,0,0,0.5); margin-bottom: 16px; overflow: hidden;
-}
+.table-wrapper { border-radius: 6px; border: 1px solid var(--border-mid); position: relative; z-index: 1; box-shadow: 0 4px 40px rgba(0,0,0,0.5); margin-bottom: 16px; overflow: hidden; }
 table { width: 100%; font-size: 13px; border-collapse: collapse; background: var(--bg-card); table-layout: fixed; }
 thead tr { background: var(--bg-panel); border-bottom: 2px solid var(--orange-dim); }
 th { padding: 10px 8px; font-family: 'JetBrains Mono', monospace; font-size: 10px; font-weight: 700; letter-spacing: 2px; text-transform: uppercase; color: var(--orange); border-right: 1px solid var(--border-faint); }
@@ -504,18 +311,15 @@ tr:hover td { background: rgba(255,109,0,0.05) !important; }
 tr.group-row { cursor: pointer; }
 tr.filter-hidden { display: none; }
 
-/* ── STATUS SELECT ── */
 .status-select { width: 100%; font-size: 11px; font-weight: 700; font-family: 'JetBrains Mono', monospace; padding: 4px; border-radius: 3px; border: 1px solid transparent; text-transform: uppercase; cursor: pointer; }
 .pending { background: rgba(64,196,255,0.08); color: var(--blue-info); border-color: rgba(64,196,255,0.3); }
 .proses { background: rgba(255,215,64,0.08); color: var(--amber-warn); border-color: rgba(255,215,64,0.3); }
 .selesai { background: rgba(0,230,118,0.08); color: var(--green-ok); border-color: rgba(0,230,118,0.3); }
 .status-select:disabled { opacity: 0.6; cursor: not-allowed; }
 
-/* ── DELETE BTN ── */
 .btn-delete-row { display: inline-flex; align-items: center; justify-content: center; width: 24px; height: 24px; border-radius: 50%; background: rgba(255,23,68,0.08); border: 1px solid rgba(255,23,68,0.35); color: var(--red-err); font-size: 12px; font-weight: 900; cursor: pointer; }
 .btn-delete-row:hover { background: rgba(255,23,68,0.22); border-color: var(--red-err); transform: scale(1.15); }
 
-/* ── INLINE EDIT ── */
 .inline-input { width: 100%; font-size: 13px; font-family: 'Exo 2', sans-serif; padding: 5px 8px; background: var(--bg-void); color: var(--text-bright); border: 1px solid var(--orange); border-radius: 3px; box-shadow: 0 0 0 2px var(--orange-faint); }
 .inline-input:focus { outline: none; border-color: var(--teal); box-shadow: 0 0 0 2px var(--teal-bg); }
 .inline-save-bar { display: flex; gap: 5px; margin-top: 6px; }
@@ -525,19 +329,16 @@ tr.filter-hidden { display: none; }
 .inline-btn-cancel { background: rgba(255,23,68,0.08); color: var(--red-err); border: 1px solid rgba(255,23,68,0.35); }
 .inline-btn-cancel:hover { background: rgba(255,23,68,0.15); box-shadow: none; }
 
-/* ── LOADING ── */
 #loadingOverlay { display: none; position: fixed; inset: 0; background: rgba(8,12,16,0.75); backdrop-filter: blur(3px); z-index: 8000; justify-content: center; align-items: center; flex-direction: column; gap: 14px; }
 #loadingOverlay.show { display: flex; }
 .loader-ring { width: 44px; height: 44px; border: 3px solid var(--border-faint); border-top-color: var(--orange); border-radius: 50%; animation: spinAnim 0.7s linear infinite; }
 .loader-text { font-family: 'JetBrains Mono', monospace; font-size: 11px; letter-spacing: 2px; color: var(--orange-dim); text-transform: uppercase; }
 
-/* ── MODALS ── */
 .modal { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.75); backdrop-filter: blur(6px); justify-content: center; align-items: center; z-index: 9999; }
 .modal-box { background: var(--bg-panel); border: 1px solid var(--border-orange); padding: 26px 24px; border-radius: 6px; text-align: center; min-width: 300px; max-width: 440px; box-shadow: 0 0 60px rgba(255,109,0,0.12); }
 .modal-box h3 { font-family: 'JetBrains Mono', monospace; font-size: 13px; letter-spacing: 3px; color: var(--orange); margin-bottom: 16px; }
 .modal button { margin: 5px; }
 
-/* WA Modal */
 #waModal .modal-box { border-color: rgba(0,230,118,0.4); }
 #waModal h3 { color: var(--green-ok); }
 .wa-preview { background: var(--bg-void); border: 1px solid rgba(0,230,118,0.2); border-radius: 4px; padding: 10px 14px; margin-bottom: 14px; font-size: 13px; font-family: 'JetBrains Mono', monospace; text-align: left; white-space: pre-wrap; color: #A5D6B7; max-height: 160px; overflow-y: auto; line-height: 1.7; }
@@ -548,11 +349,10 @@ tr.filter-hidden { display: none; }
 #waPhoneError { color: var(--red-err); font-size: 12px; margin-bottom: 10px; text-align: left; display: none; }
 .wa-btn-row { display: flex; justify-content: center; gap: 10px; margin-top: 6px; }
 .wa-send-btn { background: rgba(0,230,118,0.08); color: var(--green-ok); border: 1px solid rgba(0,230,118,0.4); border-radius: 4px; padding: 10px 22px; cursor: pointer; font-family: 'Exo 2', sans-serif; font-size: 14px; font-weight: 700; letter-spacing: 1.5px; text-transform: uppercase; display: inline-flex; align-items: center; gap: 7px; transition: all 0.18s; }
-.wa-send-btn:hover { background: rgba(0,230,118,0.15); box-shadow: 0 0 14px rgba(0,230,118,0.2); opacity: 1; }
+.wa-send-btn:hover { background: rgba(0,230,118,0.15); box-shadow: 0 0 14px rgba(0,230,118,0.2); }
 .wa-cancel-btn { background: rgba(255,23,68,0.07); color: var(--red-err); border: 1px solid rgba(255,23,68,0.35); border-radius: 4px; padding: 10px 18px; cursor: pointer; font-family: 'Exo 2', sans-serif; font-size: 14px; font-weight: 700; letter-spacing: 1.5px; text-transform: uppercase; transition: all 0.18s; }
-.wa-cancel-btn:hover { background: rgba(255,23,68,0.14); opacity: 1; }
+.wa-cancel-btn:hover { background: rgba(255,23,68,0.14); }
 
-/* ── RUNNING TEXT ── */
 #runningTextBar { position: fixed; bottom: 0; left: 0; width: 100%; height: 44px; background: var(--bg-panel); border-top: 1px solid var(--border-orange); display: flex; align-items: center; z-index: 2000; }
 #editRunningBtn { flex-shrink: 0; width: 44px; height: 44px; background: transparent; border: none; border-right: 1px solid var(--border-faint); cursor: pointer; display: flex; align-items: center; justify-content: center; }
 #editRunningBtn:hover { background: var(--orange-faint); }
@@ -563,11 +363,9 @@ tr.filter-hidden { display: none; }
 @keyframes marqueeScroll { 0% { transform: translateX(100vw); } 100% { transform: translateX(-50%); } }
 #marqueeWrapper:hover #marqueeTrack { animation-play-state: paused; }
 
-/* ── THEME TOGGLE ── */
 #themeToggleBtn { position: fixed; bottom: 54px; right: 14px; z-index: 3000; display: inline-flex; align-items: center; justify-content: center; width: 36px; height: 36px; border-radius: 50%; background: var(--bg-panel); border: 1px solid var(--border-mid); cursor: pointer; padding: 0; }
 #themeToggleBtn:hover { border-color: var(--border-orange); box-shadow: 0 0 14px var(--orange-glow); transform: scale(1.08); }
 
-/* ── PRINT PAGES ── */
 #printPagesContainer { display: none !important; }
 .print-header { display: none; text-align: center; font-size: 12px; color: #555; margin-bottom: 8px; }
 
@@ -598,29 +396,20 @@ tr.filter-hidden { display: none; }
 </head>
 <body>
 
-<!-- ═══════════════════════════════════════
-     AUTH SCREEN
-═══════════════════════════════════════ -->
 <div id="authScreen">
   <div class="auth-box">
     <h2 class="auth-title">SHARE <span>JOB</span></h2>
     <div class="auth-sub">PRODUCTION MONITORING SYSTEM</div>
-
-    <!-- Guest mode -->
     <div class="auth-guest-banner">
       <span>👁 Mode Lihat: akses terbatas tanpa login</span>
       <button class="auth-guest-btn" onclick="loginAsGuest()">Masuk Tamu</button>
     </div>
-
     <div class="auth-divider">ATAU LOGIN AKUN</div>
-
-    <!-- Role info -->
     <div class="role-badges">
       <div class="role-badge rb-admin"><div class="rb-dot"></div>Admin</div>
       <div class="role-badge rb-supervisor"><div class="rb-dot"></div>Supervisor</div>
       <div class="role-badge rb-teknisi"><div class="rb-dot"></div>Teknisi</div>
     </div>
-
     <div class="auth-field">
       <label>👤 Username</label>
       <input type="text" id="authUsername" placeholder="Masukkan username" autocomplete="off">
@@ -637,7 +426,6 @@ tr.filter-hidden { display: none; }
   </div>
 </div>
 
-<!-- ACCESS DENIED OVERLAY -->
 <div id="accessDeniedOverlay">
   <div class="ad-box">
     <div class="ad-icon">🚫</div>
@@ -648,7 +436,6 @@ tr.filter-hidden { display: none; }
   </div>
 </div>
 
-<!-- USER CHIP -->
 <div id="userChip" onclick="confirmLogout()">
   <div class="uc-dot" id="ucDot"></div>
   <div>
@@ -658,7 +445,6 @@ tr.filter-hidden { display: none; }
   <span class="uc-logout" title="Logout">⏻</span>
 </div>
 
-<!-- FIXED ELEMENTS -->
 <div id="loadingOverlay">
   <div class="loader-ring"></div>
   <div class="loader-text" id="loadingText">Memuat data...</div>
@@ -672,7 +458,6 @@ tr.filter-hidden { display: none; }
 <div class="print-header" id="printHeader"></div>
 <div id="clock"></div>
 
-<!-- PAGE HEADER -->
 <div class="page-header">
   <h2>PEMBAGIAN <span>JOB</span> HARIAN</h2>
   <div class="header-line">
@@ -680,21 +465,16 @@ tr.filter-hidden { display: none; }
   </div>
 </div>
 
-<!-- HOME BUTTON -->
 <a id="homeBtn" href="/gardahitam/index.html">
   <svg viewBox="0 0 24 24"><path d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z"/></svg>
   Home
 </a>
 
-<!-- UNIT SELECTOR -->
 <div id="unitSelectorScreen">
-  <div class="unit-selector-title">
-    Pilih <span>Unit / Departemen</span> untuk melanjutkan
-  </div>
+  <div class="unit-selector-title">Pilih <span>Unit / Departemen</span> untuk melanjutkan</div>
   <div class="unit-grid" id="unitGrid"></div>
 </div>
 
-<!-- ACTIVE UNIT BAR -->
 <div id="activeUnitBar">
   <span class="aub-label">Unit aktif</span>
   <span class="aub-unit" id="aubCode">—</span>
@@ -703,14 +483,11 @@ tr.filter-hidden { display: none; }
   <button class="aub-change" onclick="changeUnit()">&#8634; Ganti Unit</button>
 </div>
 
-<!-- MAIN APP -->
 <div id="mainApp">
   <div class="top-bar">
-    <!-- Toggle Input: Supervisor & Admin -->
     <button class="tb-btn hidden" id="toggleInputBtn" onclick="toggleInput()">
       <svg viewBox="0 0 16 16"><path d="M12.146.854a.5.5 0 0 1 .708 0l2.292 2.292a.5.5 0 0 1 0 .708L4.207 14.793 0 16l1.207-4.207L12.146.854z"/></svg>
     </button>
-    <!-- Delete: Supervisor & Admin -->
     <button class="tb-btn hidden" id="toggleDeleteBtn" onclick="toggleDeleteMode()" style="width:44px;padding:0;">
       <svg viewBox="0 0 24 24" fill="currentColor"><path d="M6 19c0 1.1.9 2 2 2h8c1.1 0 2-.9 2-2V7H6v12zM19 4h-3.5l-1-1h-5l-1 1H5v2h14V4z"/></svg>
     </button>
@@ -732,10 +509,8 @@ tr.filter-hidden { display: none; }
     </button>
   </div>
 
-  <!-- PERMISSION NOTICE -->
   <div class="perm-notice pn-info hidden" id="permNotice"></div>
 
-  <!-- INPUT SECTION (Supervisor & Admin only) -->
   <div id="inputSection">
     <div class="form-scroll">
       <div class="form-container">
@@ -758,7 +533,6 @@ tr.filter-hidden { display: none; }
     <hr>
   </div>
 
-  <!-- FILTER BAR -->
   <div class="hist-filter-bar">
     <span class="hist-filter-label">📅 Filter:</span>
     <div class="hist-filter-group">
@@ -790,16 +564,13 @@ tr.filter-hidden { display: none; }
       <span>📋</span><span id="periodText">—</span>
     </div>
     <button class="btn-reset-filter hidden" id="btnResetFilter" onclick="resetFilter()">✕ Reset</button>
-   <div style="flex:1;min-width:160px;position:relative;display:flex;align-items:center;">
-  <svg viewBox="0 0 24 24" style="position:absolute;left:8px;width:14px;height:14px;fill:var(--text-dim);pointer-events:none;"><path d="M15.5 14h-.79l-.28-.27A6.471 6.471 0 0 0 16 9.5 6.5 6.5 0 1 0 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"/></svg>
-  <input type="text" id="searchInput" placeholder="Cari nama, mesin, tugas..."
-    oninput="applyFilter()"
-    style="width:100%;padding:6px 10px 6px 28px;background:var(--bg-card);border:1px solid var(--border-mid);color:var(--text-bright);border-radius:6px;font-size:11px;font-family:'JetBrains Mono',monospace;outline:none;height:32px;">
-</div>
-<span class="hist-filter-result" id="filterResult"></span>
+    <div class="search-wrap">
+      <svg viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27A6.471 6.471 0 0 0 16 9.5 6.5 6.5 0 1 0 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"/></svg>
+      <input type="text" id="searchInput" placeholder="Cari nama, mesin, tugas..." oninput="applyFilter()">
+    </div>
+    <span class="hist-filter-result" id="filterResult"></span>
   </div>
 
-  <!-- TABLE -->
   <div class="table-wrapper">
     <table id="mainTable">
       <colgroup><col><col><col><col><col><col><col><col></colgroup>
@@ -816,10 +587,8 @@ tr.filter-hidden { display: none; }
   </div>
 </div>
 
-<!-- PRINT CONTAINER (always hidden on screen) -->
 <div id="printPagesContainer"></div>
 
-<!-- MODALS -->
 <div id="confirmModal" class="modal"><div class="modal-box"><h3>⚠ Konfirmasi Archive</h3><p>Semua job hari ini akan dipindah ke arsip. Lanjutkan?</p><br><button onclick="confirmArchive()">Ya, Archive</button><button onclick="closeModal()">Batal</button></div></div>
 <div id="alertModal" class="modal"><div class="modal-box"><p id="alertText"></p><br><button onclick="closeAlert()">OK</button></div></div>
 <div id="deleteRowModal" class="modal"><div class="modal-box"><h3>🗑 Hapus Job?</h3><p id="deleteRowDesc"></p><p style="font-size:13px;margin-bottom:18px;">Tindakan ini tidak dapat dibatalkan.</p><div style="display:flex;justify-content:center;gap:12px;"><button id="confirmDeleteRowBtn">Ya, Hapus</button><button id="cancelDeleteRowBtn">Batal</button></div></div></div>
@@ -841,106 +610,73 @@ tr.filter-hidden { display: none; }
   </div>
 </div>
 
-<!-- RUNNING TEXT -->
 <div id="runningTextBar">
   <button id="editRunningBtn" onclick="openEditRunning()"><svg viewBox="0 0 16 16"><path d="M12.146.854a.5.5 0 0 1 .708 0l2.292 2.292a.5.5 0 0 1 0 .708L4.207 14.793 0 16l1.207-4.207L12.146.854z"/></svg></button>
   <div id="marqueeWrapper"><div id="marqueeTrack"><span id="marqueeText1">Memuat info...</span><span id="marqueeText2">Memuat info...</span></div></div>
 </div>
 <div id="editRunningModal" class="modal"><div class="modal-box"><h3>✏ Edit Running Text</h3><textarea id="runningTextInput" rows="3" style="width:100%;"></textarea><div style="margin-top:12px;"><button onclick="saveRunningText()">Simpan</button><button onclick="closeEditRunning()">Batal</button></div></div></div>
 
-<!-- ═══════════════════════════════════════
-     JAVASCRIPT
-═══════════════════════════════════════ -->
 <script>
 // ═══════════════════════════════════════
 // KONFIGURASI
 // ═══════════════════════════════════════
 var UNIT_CONFIG = [
-  { code: "MCA",   name: "Mixing Center A", icon: "⚙️", color: "#FF6D00", active: true },
-  { code: "MCC",   name: "Mixing Center C", icon: "⚙️", color: "#FF6D00", active: true },
-  { code: "MCD",   name: "Mixing Center D", icon: "🔩", color: "#00E0F8", active: true },
-  { code: "MCG",   name: "Machine Center G", icon: "🛠️", color: "#00E676", active: true },
-  { code: "MCH",   name: "Machine Center H", icon: "🛠️", color: "#00E676", active: true },
-  { code: "MCI",   name: "Machine Center I", icon: "🛠️", color: "#00E676", active: true },
-  { code: "PLANTE",name: "Plant E",          icon: "🏭", color: "#00E676", active: true }
+  { code: "MCA",    name: "Mixing Center A",  icon: "⚙️",  color: "#FF6D00", active: true },
+  { code: "MCC",    name: "Mixing Center C",  icon: "⚙️",  color: "#FF6D00", active: true },
+  { code: "MCD",    name: "Mixing Center D",  icon: "🔩",  color: "#00E0F8", active: true },
+  { code: "MCG",    name: "Machine Center G", icon: "🛠️", color: "#00E676", active: true },
+  { code: "MCH",    name: "Machine Center H", icon: "🛠️", color: "#00E676", active: true },
+  { code: "MCI",    name: "Machine Center I", icon: "🛠️", color: "#00E676", active: true },
+  { code: "PLANTE", name: "Plant E",          icon: "🏭",  color: "#00E676", active: true }
 ];
 
 var MASTER_GAS_URL = "https://script.google.com/macros/s/AKfycbxcpj6mYF6YHVhdNNhdn9mX2b_F9gi_2q8cJc_Co6QzjqDD_0qMdQGv4YxOBoLrJV0W/exec";
 
 // ═══════════════════════════════════════
-// ROLE-BASED ACCESS CONTROL
+// RBAC
 // ═══════════════════════════════════════
-var ROLES = {
-  ADMIN:      'admin',
-  SUPERVISOR: 'supervisor',
-  TEKNISI:    'teknisi',
-  GUEST:      'guest'
-};
+var ROLES = { ADMIN:'admin', SUPERVISOR:'supervisor', TEKNISI:'teknisi', GUEST:'guest' };
 
-// Permissions matrix
 var PERMISSIONS = {
-  // Share Job
-  'sharejob.add':       [ROLES.ADMIN, ROLES.SUPERVISOR],
-  'sharejob.edit':      [ROLES.ADMIN, ROLES.SUPERVISOR],
-  'sharejob.delete':    [ROLES.ADMIN, ROLES.SUPERVISOR],
-  'sharejob.archive':   [ROLES.ADMIN, ROLES.SUPERVISOR],
-  'sharejob.statusChange': [ROLES.ADMIN, ROLES.SUPERVISOR, ROLES.TEKNISI],
-  'sharejob.editRunningText': [ROLES.ADMIN],
-  // Drive Monitoring
-  'drive.view':         [ROLES.ADMIN, ROLES.SUPERVISOR, ROLES.TEKNISI, ROLES.GUEST],
-  'drive.edit':         [ROLES.ADMIN, ROLES.TEKNISI],
+  'sharejob.add':            ['admin','supervisor'],
+  'sharejob.edit':           ['admin','supervisor'],
+  'sharejob.delete':         ['admin','supervisor'],
+  'sharejob.archive':        ['admin','supervisor'],
+  'sharejob.statusChange':   ['admin','supervisor','teknisi'],
+  'sharejob.editRunningText':['admin'],
+  'drive.view':              ['admin','supervisor','teknisi','guest'],
+  'drive.edit':              ['admin','teknisi']
 };
 
 var ROLE_META = {
-  admin:      { label: 'ADMIN',      color: 'var(--role-admin)',      dot: '#FF6D00', icon: '👑' },
-  supervisor: { label: 'SUPERVISOR', color: 'var(--role-supervisor)', dot: '#00E0F8', icon: '🎯' },
-  teknisi:    { label: 'TEKNISI',    color: 'var(--role-teknisi)',    dot: '#00E676', icon: '🔧' },
-  guest:      { label: 'TAMU',       color: 'var(--text-dim)',        dot: '#546E7A', icon: '👁' }
+  admin:      { label:'ADMIN',      color:'var(--role-admin)',      dot:'#FF6D00', icon:'👑' },
+  supervisor: { label:'SUPERVISOR', color:'var(--role-supervisor)', dot:'#00E0F8', icon:'🎯' },
+  teknisi:    { label:'TEKNISI',    color:'var(--role-teknisi)',    dot:'#00E676', icon:'🔧' },
+  guest:      { label:'TAMU',       color:'var(--text-dim)',        dot:'#546E7A', icon:'👁' }
 };
 
 // ═══════════════════════════════════════
-// SESSION MANAGEMENT (localStorage)
+// SESSION
 // ═══════════════════════════════════════
 var SESSION_KEY = 'ghsj_session';
+var currentSession = null;
 
-var currentSession = null; // { username, role, allowedUnits, loginTime }
-
-function saveSession(sessionData) {
-  localStorage.setItem(SESSION_KEY, JSON.stringify(sessionData));
-  currentSession = sessionData;
-}
-
+function saveSession(s) { localStorage.setItem(SESSION_KEY, JSON.stringify(s)); currentSession = s; }
 function loadSession() {
-  try {
-    var data = localStorage.getItem(SESSION_KEY);
-    if (data) {
-      currentSession = JSON.parse(data);
-      return currentSession;
-    }
-  } catch(e) {}
+  try { var d = localStorage.getItem(SESSION_KEY); if (d) { currentSession = JSON.parse(d); return currentSession; } } catch(e) {}
   return null;
 }
+function clearSession() { localStorage.removeItem(SESSION_KEY); currentSession = null; }
 
-function clearSession() {
-  localStorage.removeItem(SESSION_KEY);
-  currentSession = null;
-}
-
-function hasPermission(permission) {
+function hasPermission(perm) {
   if (!currentSession) return false;
-  var role = currentSession.role;
-  var allowed = PERMISSIONS[permission];
-  if (!allowed) return false;
-  return allowed.indexOf(role) !== -1;
+  var allowed = PERMISSIONS[perm];
+  return allowed ? allowed.indexOf(currentSession.role) !== -1 : false;
 }
-
-function getRoleMeta() {
-  if (!currentSession) return ROLE_META.guest;
-  return ROLE_META[currentSession.role] || ROLE_META.guest;
-}
+function getRoleMeta() { return currentSession ? (ROLE_META[currentSession.role] || ROLE_META.guest) : ROLE_META.guest; }
 
 // ═══════════════════════════════════════
-// AUTH FUNCTIONS
+// AUTH
 // ═══════════════════════════════════════
 async function doLogin() {
   var username = document.getElementById('authUsername').value.trim();
@@ -954,81 +690,49 @@ async function doLogin() {
     return;
   }
 
-  btn.classList.add('loading');
-  btn.disabled = true;
+  btn.classList.add('loading'); btn.disabled = true;
   errorDiv.classList.remove('show');
 
   try {
     var url = new URL(MASTER_GAS_URL);
-    url.searchParams.set('action', 'verifyUser');
+    url.searchParams.set('action','verifyUser');
     url.searchParams.set('username', username);
     url.searchParams.set('password', password);
-
     var res = await fetch(url.toString());
     var result = await res.json();
 
     if (result.success) {
-      // GAS returns role + allowedUnits
       var role = (result.role || '').toLowerCase();
-
-      // Normalize role names
       if (role === 'admin') role = ROLES.ADMIN;
       else if (role === 'supervisor') role = ROLES.SUPERVISOR;
       else if (role === 'teknisi') role = ROLES.TEKNISI;
-      else role = ROLES.TEKNISI; // default
-
-      var session = {
-        username: username,
-        role: role,
-        allowedUnits: result.units || UNIT_CONFIG.map(u => u.code),
-        loginTime: Date.now()
-      };
-
+      else role = ROLES.TEKNISI;
+      var session = { username:username, role:role, allowedUnits: result.units || UNIT_CONFIG.map(function(u){return u.code;}), loginTime: Date.now() };
       saveSession(session);
       startApp(session);
-
     } else {
       errorDiv.textContent = result.error || 'Username atau password salah!';
       errorDiv.classList.add('show');
     }
   } catch(err) {
-    // Fallback: check hardcoded admin
     if (checkHardcodedAdmin(username, password)) {
-      var session = {
-        username: username,
-        role: ROLES.ADMIN,
-        allowedUnits: UNIT_CONFIG.map(u => u.code),
-        loginTime: Date.now()
-      };
-      saveSession(session);
-      startApp(session);
+      var session = { username:username, role:ROLES.ADMIN, allowedUnits: UNIT_CONFIG.map(function(u){return u.code;}), loginTime: Date.now() };
+      saveSession(session); startApp(session);
     } else {
       errorDiv.textContent = 'Tidak dapat terhubung. Cek koneksi internet.';
       errorDiv.classList.add('show');
     }
   } finally {
-    btn.classList.remove('loading');
-    btn.disabled = false;
+    btn.classList.remove('loading'); btn.disabled = false;
   }
 }
-#searchInput:focus {
-  border-color: var(--orange) !important;
-  box-shadow: 0 0 0 3px var(--orange-faint);
-}
+
 function checkHardcodedAdmin(username, password) {
-  // Admin credentials — only you know these; stored obfuscated
-  var a = btoa('admin');
-  var b = btoa('gh@dm1n2025');
-  return btoa(username) === a && btoa(password) === b;
+  return btoa(username) === btoa('admin') && btoa(password) === btoa('gh@dm1n2025');
 }
 
 function loginAsGuest() {
-  var session = {
-    username: 'Tamu',
-    role: ROLES.GUEST,
-    allowedUnits: UNIT_CONFIG.map(u => u.code),
-    loginTime: Date.now()
-  };
+  var session = { username:'Tamu', role:ROLES.GUEST, allowedUnits: UNIT_CONFIG.map(function(u){return u.code;}), loginTime: Date.now() };
   saveSession(session);
   startApp(session);
 }
@@ -1053,100 +757,65 @@ function setupUserChip(session) {
 }
 
 function setupRoleUI(session) {
-  var role = session.role;
-
-  // Toggle Input button (Supervisor + Admin)
   var showInput = hasPermission('sharejob.add');
-  document.getElementById('toggleInputBtn').classList.toggle('hidden', !showInput);
-
-  // Delete button (Supervisor + Admin)
   var showDelete = hasPermission('sharejob.delete');
+  document.getElementById('toggleInputBtn').classList.toggle('hidden', !showInput);
   document.getElementById('toggleDeleteBtn').classList.toggle('hidden', !showDelete);
-
-  // Edit running text button: admin only
   var editRunBtn = document.getElementById('editRunningBtn');
   if (editRunBtn) editRunBtn.style.opacity = hasPermission('sharejob.editRunningText') ? '1' : '0.3';
 
-  // Edit hint text
   var hint = document.getElementById('editHint');
   if (hint) {
-    if (role === ROLES.GUEST) {
-      hint.textContent = '👁 Mode Tamu: hanya bisa melihat data';
-    } else if (role === ROLES.TEKNISI) {
-      hint.textContent = '🔧 Teknisi: Anda bisa mengubah status job • Double-klik untuk edit status';
-    } else if (role === ROLES.SUPERVISOR) {
-      hint.textContent = '🎯 Supervisor: Anda bisa menambah, edit, dan hapus job • Double-klik untuk edit';
-    } else {
-      hint.textContent = '👑 Admin: Akses penuh • Double-klik pada baris untuk edit';
-    }
+    var role = session.role;
+    if (role === ROLES.GUEST) hint.textContent = '👁 Mode Tamu: hanya bisa melihat data';
+    else if (role === ROLES.TEKNISI) hint.textContent = '🔧 Teknisi: Anda bisa mengubah status job';
+    else if (role === ROLES.SUPERVISOR) hint.textContent = '🎯 Supervisor: Anda bisa menambah, edit, dan hapus job • Double-klik untuk edit';
+    else hint.textContent = '👑 Admin: Akses penuh • Double-klik pada baris untuk edit';
   }
-
-  // Permission notice
-  showPermNotice(role);
+  showPermNotice(session.role);
 }
 
 function showPermNotice(role) {
   var notice = document.getElementById('permNotice');
   if (!notice) return;
-
   var messages = {
-    guest:      { cls: 'pn-info', text: '👁 Mode Tamu — Anda hanya bisa melihat data. Login untuk mendapat akses lebih.' },
-    teknisi:    { cls: 'pn-warn', text: '🔧 Mode Teknisi — Anda dapat mengubah status job (Pending/Proses/Selesai).' },
-    supervisor: { cls: 'pn-info', text: '🎯 Mode Supervisor — Anda dapat menambah, mengedit, dan menghapus job. Drive monitoring: lihat saja.' },
-    admin:      { cls: 'pn-info', text: '👑 Mode Admin — Akses penuh ke semua fitur.' }
+    guest:      { cls:'pn-info', text:'👁 Mode Tamu — Anda hanya bisa melihat data. Login untuk mendapat akses lebih.' },
+    teknisi:    { cls:'pn-warn', text:'🔧 Mode Teknisi — Anda dapat mengubah status job (Pending/Proses/Selesai).' },
+    supervisor: { cls:'pn-info', text:'🎯 Mode Supervisor — Anda dapat menambah, mengedit, dan menghapus job.' }
   };
-
   var m = messages[role];
-  if (m && role !== ROLES.ADMIN) {
-    notice.className = 'perm-notice ' + m.cls;
-    notice.textContent = m.text;
-    notice.classList.remove('hidden');
-  } else {
-    notice.classList.add('hidden');
-  }
+  if (m) { notice.className = 'perm-notice ' + m.cls; notice.textContent = m.text; notice.classList.remove('hidden'); }
+  else notice.classList.add('hidden');
 }
 
 function showAccessDenied(action, roleNeeded) {
   var meta = getRoleMeta();
   document.getElementById('adDesc').textContent = 'Tindakan "' + action + '" tidak diizinkan untuk role Anda.';
-  document.getElementById('adRoleInfo').innerHTML =
-    '<strong>Role Anda:</strong> ' + meta.icon + ' ' + meta.label + '<br>' +
-    '<strong>Dibutuhkan:</strong> ' + roleNeeded;
+  document.getElementById('adRoleInfo').innerHTML = '<strong>Role Anda:</strong> ' + meta.icon + ' ' + meta.label + '<br><strong>Dibutuhkan:</strong> ' + roleNeeded;
   document.getElementById('accessDeniedOverlay').classList.add('show');
 }
-
-function closeAccessDenied() {
-  document.getElementById('accessDeniedOverlay').classList.remove('show');
-}
+function closeAccessDenied() { document.getElementById('accessDeniedOverlay').classList.remove('show'); }
 
 function confirmLogout() {
   document.getElementById('logoutUserName').textContent = currentSession ? currentSession.username : '—';
   document.getElementById('logoutModal').style.display = 'flex';
 }
-
-function closeLogoutModal() {
-  document.getElementById('logoutModal').style.display = 'none';
-}
+function closeLogoutModal() { document.getElementById('logoutModal').style.display = 'none'; }
 
 function doLogout() {
-  clearSession();
-  closeLogoutModal();
-  // Reset UI
-  currentUnit = null;
-  allTasks = []; allGroups = []; deleteMode = false;
+  clearSession(); closeLogoutModal();
+  currentUnit = null; allTasks = []; allGroups = []; deleteMode = false;
   document.getElementById('mainApp').style.display = 'none';
   document.getElementById('activeUnitBar').style.display = 'none';
   document.getElementById('unitSelectorScreen').style.display = 'none';
   document.getElementById('userChip').style.display = 'none';
   clearPrintContainer();
-  // Show auth screen
   document.getElementById('authScreen').style.display = 'flex';
   document.getElementById('authUsername').value = '';
   document.getElementById('authPassword').value = '';
   document.getElementById('authError').classList.remove('show');
 }
 
-// Active unit bar role chip styling
 function updateAubRoleChip() {
   if (!currentSession) return;
   var meta = getRoleMeta();
@@ -1161,31 +830,22 @@ function updateAubRoleChip() {
 // STATE
 // ═══════════════════════════════════════
 var currentUnit = null;
-var userAllowedUnits = [];
-var allTasks = [];
-var allGroups = [];
+var allTasks = [], allGroups = [];
 var deleteMode = false;
-var currentEditingRow = null;
-var originalRowData = null;
+var currentEditingRow = null, originalRowData = null;
 var filterState = { tanggal:'', bulan:'', tahun:'', status:'' };
 var NAMA_BULAN = ['','Januari','Februari','Maret','April','Mei','Juni','Juli','Agustus','September','Oktober','November','Desember'];
 var TAHUN_AWAL = 2024;
-var STATUS_ORDER = { 'Pending': 0, 'Proses': 1, 'Selesai': 2 };
+var STATUS_ORDER = { 'Pending':0, 'Proses':1, 'Selesai':2 };
 
 // ═══════════════════════════════════════
 // NAVIGATION
 // ═══════════════════════════════════════
 function showUnitSelector() {
-  var session = currentSession;
-  if (!session) return;
-
-  var filteredUnits = UNIT_CONFIG.filter(function(u) {
-    return session.allowedUnits.includes(u.code);
-  });
-
-  if (!filteredUnits.length) filteredUnits = UNIT_CONFIG; // fallback
-
-  renderUnitSelector(filteredUnits);
+  if (!currentSession) return;
+  var filtered = UNIT_CONFIG.filter(function(u) { return currentSession.allowedUnits.indexOf(u.code) !== -1; });
+  if (!filtered.length) filtered = UNIT_CONFIG;
+  renderUnitSelector(filtered);
   document.getElementById('unitSelectorScreen').style.display = 'block';
   document.getElementById('mainApp').style.display = 'none';
   document.getElementById('activeUnitBar').style.display = 'none';
@@ -1194,28 +854,20 @@ function showUnitSelector() {
 function goHome() {
   if (currentEditingRow) { showAlert("Selesaikan edit terlebih dahulu!"); return; }
   currentUnit = null;
-  document.documentElement.style.setProperty('--orange', '#FF6D00');
+  document.documentElement.style.setProperty('--orange','#FF6D00');
   clearPrintContainer();
   document.getElementById('mainApp').style.display = 'none';
   document.getElementById('activeUnitBar').style.display = 'none';
   document.getElementById('inputSection').style.display = 'none';
-  document.getElementById('unitSelectorScreen').style.display = 'block';
   showUnitSelector();
 }
+function changeUnit() { if (currentEditingRow) { showAlert("Selesaikan edit terlebih dahulu!"); return; } goHome(); }
+function clearPrintContainer() { document.getElementById('printPagesContainer').innerHTML = ''; }
 
-function changeUnit() {
-  if (currentEditingRow) { showAlert("Selesaikan edit terlebih dahulu!"); return; }
-  goHome();
-}
-
-function clearPrintContainer() {
-  document.getElementById('printPagesContainer').innerHTML = '';
-}
-
-function renderUnitSelector(unitsArray) {
+function renderUnitSelector(arr) {
   var grid = document.getElementById('unitGrid');
   grid.innerHTML = '';
-  (unitsArray || UNIT_CONFIG).forEach(function(unit) {
+  arr.forEach(function(unit) {
     var card = document.createElement('div');
     card.className = 'unit-card';
     card.style.setProperty('--unit-color', unit.color);
@@ -1233,29 +885,22 @@ async function selectUnit(unit) {
   currentUnit = unit;
   document.documentElement.style.setProperty('--orange', unit.color);
   showLoading(true, 'Menghubungkan ke ' + unit.code + '...');
-  var connOk = await testGasConnection(unit);
+  var ok = await testGasConnection(unit);
   showLoading(false);
-  if (connOk) {
-    showMainApp(unit);
-    loadData(true);
-    loadRunningText();
-  }
+  if (ok) { showMainApp(unit); loadData(true); loadRunningText(); }
 }
 
 async function testGasConnection(unit) {
   try {
     var url = new URL(MASTER_GAS_URL);
-    url.searchParams.set('action', 'getTasks');
+    url.searchParams.set('action','getTasks');
     url.searchParams.set('unit', unit.code);
     var res = await fetch(url.toString());
     if (!res.ok) throw new Error('HTTP ' + res.status);
     var json = await res.json();
-    if (json.error && json.error.includes("Unit tidak dikenal")) throw new Error("Unit " + unit.code + " tidak terdaftar di GAS");
+    if (json.error && json.error.indexOf('Unit tidak dikenal') !== -1) throw new Error('Unit ' + unit.code + ' tidak terdaftar di GAS');
     return true;
-  } catch(err) {
-    showAlert('❌ Gagal terhubung ke ' + unit.code + '\n\n' + err.message);
-    return false;
-  }
+  } catch(err) { showAlert('❌ Gagal terhubung ke ' + unit.code + '\n\n' + err.message); return false; }
 }
 
 function showMainApp(unit) {
@@ -1271,51 +916,41 @@ function showMainApp(unit) {
   buildFilterOptions();
   applyFilter();
   renderTable();
-  // Re-apply role UI after unit selection
   if (currentSession) setupRoleUI(currentSession);
 }
 
 // ═══════════════════════════════════════
-// API HELPER
+// API
 // ═══════════════════════════════════════
 async function api(action, params) {
-  if (!currentUnit) { showAlert("Belum ada unit yang dipilih!"); return { error: "No unit" }; }
+  if (!currentUnit) { showAlert("Belum ada unit yang dipilih!"); return { error:"No unit" }; }
   showLoading(true);
   try {
     var url = new URL(MASTER_GAS_URL);
     url.searchParams.set("action", action);
     url.searchParams.set("unit", currentUnit.code);
     if (params) {
-      Object.entries(params).forEach(function([k,v]) {
-        url.searchParams.set(k, (v === null || v === undefined) ? "" : v);
+      Object.keys(params).forEach(function(k) {
+        url.searchParams.set(k, params[k] === null || params[k] === undefined ? "" : params[k]);
       });
     }
     var res = await fetch(url.toString());
     if (!res.ok) throw new Error("HTTP " + res.status);
     var text = await res.text();
     try { return JSON.parse(text); } catch(e) { throw new Error("Response bukan JSON."); }
-  } catch(err) {
-    showAlert("❌ Error: " + err.message);
-    return { error: err.message };
-  } finally {
-    showLoading(false);
-  }
+  } catch(err) { showAlert("❌ Error: " + err.message); return { error: err.message }; }
+  finally { showLoading(false); }
 }
 
 function showLoading(state, text) {
-  var ol = document.getElementById("loadingOverlay");
-  ol.classList.toggle("show", state);
+  document.getElementById("loadingOverlay").classList.toggle("show", state);
   if (text) document.getElementById('loadingText').textContent = text;
 }
-
-function showAlert(text) {
-  document.getElementById("alertText").innerText = text;
-  document.getElementById("alertModal").style.display = "flex";
-}
+function showAlert(text) { document.getElementById("alertText").innerText = text; document.getElementById("alertModal").style.display = "flex"; }
 function closeAlert() { document.getElementById("alertModal").style.display = "none"; }
 
 // ═══════════════════════════════════════
-// LOAD & RENDER DATA
+// DATA
 // ═══════════════════════════════════════
 function loadData(force) {
   if (!force && currentEditingRow) return;
@@ -1350,42 +985,25 @@ function parseTanggal(str) {
   if (!str) return null;
   str = String(str).trim();
   var m1 = str.match(/^(\d{1,2})\/(\d{1,2})\/(\d{4})/);
-  if (m1) return { day: +m1[1], month: +m1[2], year: +m1[3] };
+  if (m1) return { day:+m1[1], month:+m1[2], year:+m1[3] };
   var m2 = str.match(/^(\d{4})-(\d{2})-(\d{2})/);
-  if (m2) return { day: +m2[3], month: +m2[2], year: +m2[1] };
+  if (m2) return { day:+m2[3], month:+m2[2], year:+m2[1] };
   return null;
 }
-
-function tanggalToTimestamp(str) {
-  var p = parseTanggal(str);
-  if (!p) return 0;
-  return p.year * 10000 + p.month * 100 + p.day;
-}
-
-function tanggalToYMD(str) {
-  var p = parseTanggal(str);
-  if (!p) return '';
-  return p.year + '-' + String(p.month).padStart(2, '0') + '-' + String(p.day).padStart(2, '0');
-}
-
-function getStatusClass(s) {
-  if (s === "Selesai") return "selesai";
-  if (s === "Proses") return "proses";
-  return "pending";
-}
+function tanggalToTimestamp(str) { var p = parseTanggal(str); return p ? p.year*10000 + p.month*100 + p.day : 0; }
+function tanggalToYMD(str) { var p = parseTanggal(str); return p ? p.year+'-'+String(p.month).padStart(2,'0')+'-'+String(p.day).padStart(2,'0') : ''; }
+function getStatusClass(s) { if (s==="Selesai") return "selesai"; if (s==="Proses") return "proses"; return "pending"; }
 
 function renderTable() {
   var table = document.getElementById("mainTable");
   var thead = document.getElementById("theadRow");
   var tbody = document.getElementById("data");
-
-  // Delete mode — only if permission
   var canDelete = hasPermission('sharejob.delete');
+
   if (deleteMode && canDelete) {
     table.classList.add("delete-mode");
     if (!thead.querySelector("th.col-delete")) {
-      var thD = document.createElement("th");
-      thD.className = "col-delete"; thD.innerHTML = "✕";
+      var thD = document.createElement("th"); thD.className = "col-delete"; thD.innerHTML = "✕";
       thead.insertBefore(thD, thead.firstChild);
     }
   } else {
@@ -1397,39 +1015,32 @@ function renderTable() {
   var groups = [], lastId = null;
   allTasks.forEach(function(task) {
     if (String(task.id) !== lastId) { groups.push([]); lastId = String(task.id); }
-    groups[groups.length - 1].push(task);
+    groups[groups.length-1].push(task);
   });
   allGroups = groups;
 
   var canChangeStatus = hasPermission('sharejob.statusChange');
-
   var html = "";
   groups.forEach(function(group, gi) {
     var task = group[0];
     var sc = getStatusClass(task.status);
-    var allNama = group.map(function(t) { return t.nama; }).join(", ");
-    html += "<tr class='group-row group-start' data-groupid='" + escHtml(String(task.id)) + "' data-groupidx='" + gi + "' data-status='" + escHtml(task.status) + "' data-tanggal='" + escHtml(task.tanggal || '') + "'>";
-
+    var allNama = group.map(function(t){return t.nama;}).join(", ");
+    html += "<tr class='group-row group-start' data-groupid='" + escHtml(String(task.id)) + "' data-groupidx='" + gi + "' data-status='" + escHtml(task.status) + "' data-tanggal='" + escHtml(task.tanggal||'') + "'>";
     if (deleteMode && canDelete) {
-      html += "<td class='col-delete'><button class='btn-delete-row' onclick=\"askDeleteRow('" + task.id + "','" + (task.nama || '').replace(/'/g, "\\'") + "')\">✕</button></td>";
+      html += "<td class='col-delete'><button class='btn-delete-row' onclick=\"askDeleteRow('" + task.id + "','" + (task.nama||'').replace(/'/g,"\\'") + "')\">✕</button></td>";
     }
-
     html += "<td>" + escHtml(String(task.id)) + "</td>";
     html += "<td>" + escHtml(allNama) + "</td>";
     html += "<td>" + escHtml(task.tugas) + "</td>";
     html += "<td>" + escHtml(task.mesin) + "</td>";
-
-    // Status select: disabled for guest
-    var disabledAttr = canChangeStatus ? '' : ' disabled title="Login sebagai Teknisi/Supervisor/Admin untuk mengubah status"';
+    var disabledAttr = canChangeStatus ? '' : ' disabled';
     html += "<td><select class='status-select " + sc + "' data-id='" + escHtml(String(task.id)) + "' data-prev='" + escHtml(task.status) + "' onchange='changeStatus(this)'" + disabledAttr + ">" +
-      "<option" + (task.status === "Pending" ? " selected" : "") + ">Pending</option>" +
-      "<option" + (task.status === "Proses" ? " selected" : "") + ">Proses</option>" +
-      "<option" + (task.status === "Selesai" ? " selected" : "") + ">Selesai</option>" +
+      "<option" + (task.status==="Pending"?" selected":"") + ">Pending</option>" +
+      "<option" + (task.status==="Proses"?" selected":"") + ">Proses</option>" +
+      "<option" + (task.status==="Selesai"?" selected":"") + ">Selesai</option>" +
       "</select></td>";
-
     html += "<td>" + escHtml(task.tanggal) + "</td>";
     html += "<td style='color:var(--green-ok);'>" + (task.jamMulai ? escHtml(task.jamMulai) : "<span style='color:var(--text-dim);font-size:11px;'>—</span>") + "</td>";
-    // Jam Selesai: READ ONLY — tidak bisa diedit langsung
     html += "<td style='color:var(--amber-warn);'>" + (task.jamSelesai ? escHtml(task.jamSelesai) : "<span style='color:var(--text-dim);font-size:11px;'>—</span>") + "</td>";
     html += "</tr>";
   });
@@ -1437,11 +1048,6 @@ function renderTable() {
   attachDoubleClickEdit();
 }
 
-// ═══════════════════════════════════════
-// DOUBLE-CLICK INLINE EDIT
-// Supervisor & Admin: edit semua field
-// Teknisi: tidak bisa dblclick edit (hanya ubah status via select)
-// ═══════════════════════════════════════
 function attachDoubleClickEdit() {
   var tbody = document.getElementById("data");
   tbody.removeEventListener('dblclick', handleTbodyDblClick);
@@ -1455,18 +1061,11 @@ function handleTbodyDblClick(e) {
   if (e.target.closest('.inline-save-bar')) return;
   var tr = e.target.closest('tr.group-row');
   if (!tr) return;
-
-  // Check permission: only Supervisor & Admin can inline-edit
   if (!hasPermission('sharejob.edit')) {
     var role = currentSession ? currentSession.role : 'guest';
-    if (role === ROLES.TEKNISI) {
-      showAccessDenied('Edit Job', 'Supervisor atau Admin');
-    } else if (role === ROLES.GUEST) {
-      showAccessDenied('Edit Job', 'Teknisi / Supervisor / Admin');
-    }
+    showAccessDenied('Edit Job', role === ROLES.TEKNISI ? 'Supervisor atau Admin' : 'Teknisi / Supervisor / Admin');
     return;
   }
-
   startInlineEdit(tr);
 }
 
@@ -1476,16 +1075,14 @@ function handleTbodyDblClick(e) {
 function buildFilterOptions() {
   var bulanSel = document.getElementById('filterBulan');
   var tahunSel = document.getElementById('filterTahun');
-  var now = new Date(), nowYear = now.getFullYear();
+  var nowYear = new Date().getFullYear();
   tahunSel.innerHTML = '<option value="">Semua Tahun</option>';
-  for (var y = TAHUN_AWAL; y <= nowYear + 1; y++) {
-    var o = document.createElement('option');
-    o.value = y; o.textContent = y; tahunSel.appendChild(o);
+  for (var y = TAHUN_AWAL; y <= nowYear+1; y++) {
+    var o = document.createElement('option'); o.value = y; o.textContent = y; tahunSel.appendChild(o);
   }
   bulanSel.innerHTML = '<option value="">Semua Bulan</option>';
   for (var m = 1; m <= 12; m++) {
-    var o2 = document.createElement('option');
-    o2.value = m; o2.textContent = NAMA_BULAN[m]; bulanSel.appendChild(o2);
+    var o2 = document.createElement('option'); o2.value = m; o2.textContent = NAMA_BULAN[m]; bulanSel.appendChild(o2);
   }
   bulanSel.value = filterState.bulan;
   tahunSel.value = filterState.tahun;
@@ -1504,33 +1101,26 @@ document.getElementById('filterTanggal').addEventListener('change', function() {
 
 function onBulanTahunChange() {
   if (document.getElementById('filterTanggal').value) {
-    document.getElementById('filterTanggal').value = '';
-    filterState.tanggal = '';
+    document.getElementById('filterTanggal').value = ''; filterState.tanggal = '';
   }
   applyFilter();
 }
 
 function applyFilter() {
   filterState.tanggal = document.getElementById('filterTanggal').value;
-  filterState.bulan = document.getElementById('filterBulan').value;
-  filterState.tahun = document.getElementById('filterTahun').value;
-  filterState.status = document.getElementById('filterStatus').value;
+  filterState.bulan   = document.getElementById('filterBulan').value;
+  filterState.tahun   = document.getElementById('filterTahun').value;
+  filterState.status  = document.getElementById('filterStatus').value;
   var hasFilter = filterState.tanggal || filterState.bulan || filterState.tahun || filterState.status;
   var badge = document.getElementById('periodBadge');
   var resetBtn = document.getElementById('btnResetFilter');
   if (hasFilter) {
     var label = '';
-    if (filterState.tanggal) {
-      var parts = filterState.tanggal.split('-');
-      label = parts.length === 3 ? parts[2] + ' ' + NAMA_BULAN[+parts[1]] + ' ' + parts[0] : filterState.tanggal;
-    } else if (filterState.bulan && filterState.tahun) {
-      label = NAMA_BULAN[+filterState.bulan] + ' ' + filterState.tahun;
-    } else if (filterState.bulan) {
-      label = NAMA_BULAN[+filterState.bulan] + ' (Semua Tahun)';
-    } else if (filterState.tahun) {
-      label = 'Tahun ' + filterState.tahun;
-    }
-    if (filterState.status) label = label ? label + ' · ' + filterState.status : filterState.status;
+    if (filterState.tanggal) { var pts = filterState.tanggal.split('-'); label = pts.length===3 ? pts[2]+' '+NAMA_BULAN[+pts[1]]+' '+pts[0] : filterState.tanggal; }
+    else if (filterState.bulan && filterState.tahun) label = NAMA_BULAN[+filterState.bulan]+' '+filterState.tahun;
+    else if (filterState.bulan) label = NAMA_BULAN[+filterState.bulan]+' (Semua Tahun)';
+    else if (filterState.tahun) label = 'Tahun '+filterState.tahun;
+    if (filterState.status) label = label ? label+' · '+filterState.status : filterState.status;
     document.getElementById('periodText').textContent = label || 'Filter Aktif';
     badge.style.display = 'flex'; resetBtn.classList.remove('hidden');
   } else {
@@ -1540,13 +1130,12 @@ function applyFilter() {
 }
 
 function resetFilter() {
-  filterState = { tanggal: '', bulan: '', tahun: '', status: '' };
+  filterState = { tanggal:'', bulan:'', tahun:'', status:'' };
   document.getElementById('filterTanggal').value = '';
   document.getElementById('filterBulan').value = '';
   document.getElementById('filterTahun').value = '';
   document.getElementById('filterStatus').value = '';
-  var searchEl = document.getElementById('searchInput');
-  if (searchEl) searchEl.value = '';
+  var s = document.getElementById('searchInput'); if (s) s.value = '';
   document.getElementById('periodBadge').style.display = 'none';
   document.getElementById('btnResetFilter').classList.add('hidden');
   applyFilterToRows();
@@ -1568,7 +1157,6 @@ function applyFilterToRows() {
     var p = parseTanggal(ts);
     var show = true;
 
-    // Filter tanggal / bulan / tahun
     if (fT) { if (tanggalToYMD(ts) !== fT) show = false; }
     else {
       if (fB && (!p || p.month !== fB)) show = false;
@@ -1576,16 +1164,13 @@ function applyFilterToRows() {
     }
     if (fS && rs !== fS) show = false;
 
-    // Filter pencarian teks (nama, mesin, tugas)
     if (show && fQ) {
       var offset = (deleteMode && hasPermission('sharejob.delete')) ? 1 : 0;
       var cells = tr.children;
-      var nama  = cells[offset + 1] ? cells[offset + 1].textContent.toLowerCase() : '';
-      var tugas = cells[offset + 2] ? cells[offset + 2].textContent.toLowerCase() : '';
-      var mesin = cells[offset + 3] ? cells[offset + 3].textContent.toLowerCase() : '';
-      if (nama.indexOf(fQ) === -1 && tugas.indexOf(fQ) === -1 && mesin.indexOf(fQ) === -1) {
-        show = false;
-      }
+      var nama  = cells[offset+1] ? cells[offset+1].textContent.toLowerCase() : '';
+      var tugas = cells[offset+2] ? cells[offset+2].textContent.toLowerCase() : '';
+      var mesin = cells[offset+3] ? cells[offset+3].textContent.toLowerCase() : '';
+      if (nama.indexOf(fQ) === -1 && tugas.indexOf(fQ) === -1 && mesin.indexOf(fQ) === -1) show = false;
     }
 
     if (show) { tr.classList.remove('filter-hidden'); visible++; }
@@ -1593,21 +1178,19 @@ function applyFilterToRows() {
   });
   document.getElementById('filterResult').textContent = visible + ' job ditemukan';
 }
+
 // ═══════════════════════════════════════
-// CRUD OPERATIONS
+// CRUD
 // ═══════════════════════════════════════
 function addTask() {
-  if (!hasPermission('sharejob.add')) {
-    showAccessDenied('Tambah Job', 'Supervisor atau Admin');
-    return;
-  }
+  if (!hasPermission('sharejob.add')) { showAccessDenied('Tambah Job','Supervisor atau Admin'); return; }
   var id = document.getElementById("id").value.trim();
   var nama = document.getElementById("nama").value;
   var tugas = document.getElementById("tugas").value.trim();
   var mesin = document.getElementById("mesin").value.trim();
   var status = document.getElementById("status").value;
   if (!id || !nama.trim() || !tugas || !mesin) { showAlert("ID, Nama, Tugas dan Mesin harus diisi!"); return; }
-  api("addTask", { id, nama, tugas, mesin, status }).then(function(res) {
+  api("addTask", { id:id, nama:nama, tugas:tugas, mesin:mesin, status:status }).then(function(res) {
     if (res.error) { showAlert("Error: " + res.error); return; }
     document.getElementById("id").value = "";
     document.getElementById("nama").value = "";
@@ -1621,8 +1204,7 @@ function addTask() {
 function changeStatus(select) {
   if (!hasPermission('sharejob.statusChange')) {
     select.value = select.getAttribute("data-prev") || select.value;
-    showAccessDenied('Ubah Status', 'Teknisi / Supervisor / Admin');
-    return;
+    showAccessDenied('Ubah Status','Teknisi / Supervisor / Admin'); return;
   }
   if (currentEditingRow) { select.value = select.getAttribute("data-prev") || select.value; return; }
   var id = select.getAttribute("data-id");
@@ -1631,38 +1213,28 @@ function changeStatus(select) {
   select.className = "status-select " + getStatusClass(newStatus);
   var tr = select.closest("tr");
   if (tr) tr.setAttribute("data-status", newStatus);
-  api("updateTaskStatus", { id, status: newStatus }).then(function(res) {
+  api("updateTaskStatus", { id:id, status:newStatus }).then(function(res) {
     if (res.error) showAlert("Gagal update status: " + res.error);
     loadData(true);
   });
 }
 
 function toggleDeleteMode() {
-  if (!hasPermission('sharejob.delete')) {
-    showAccessDenied('Hapus Job', 'Supervisor atau Admin');
-    return;
-  }
+  if (!hasPermission('sharejob.delete')) { showAccessDenied('Hapus Job','Supervisor atau Admin'); return; }
   deleteMode = !deleteMode;
   document.getElementById("toggleDeleteBtn").classList.toggle("active", deleteMode);
   renderTable(); applyFilterToRows();
 }
 
 function toggleInput() {
-  if (!hasPermission('sharejob.add')) {
-    showAccessDenied('Tambah Job', 'Supervisor atau Admin');
-    return;
-  }
+  if (!hasPermission('sharejob.add')) { showAccessDenied('Tambah Job','Supervisor atau Admin'); return; }
   var s = document.getElementById("inputSection");
   s.style.display = s.style.display === "none" ? "block" : "none";
 }
 
 var pendingDeleteId = null;
-
 function askDeleteRow(id, nama) {
-  if (!hasPermission('sharejob.delete')) {
-    showAccessDenied('Hapus Job', 'Supervisor atau Admin');
-    return;
-  }
+  if (!hasPermission('sharejob.delete')) { showAccessDenied('Hapus Job','Supervisor atau Admin'); return; }
   pendingDeleteId = id;
   document.getElementById("deleteRowDesc").textContent = "ID: " + id + (nama ? " — " + nama : "");
   document.getElementById("deleteRowModal").style.display = "flex";
@@ -1672,25 +1244,19 @@ document.getElementById("confirmDeleteRowBtn").addEventListener("click", functio
   if (!pendingDeleteId) return;
   var id = pendingDeleteId; pendingDeleteId = null;
   document.getElementById("deleteRowModal").style.display = "none";
-  api("deleteTask", { id }).then(function(res) {
+  api("deleteTask", { id:id }).then(function(res) {
     if (res && res.error) showAlert("Gagal menghapus: " + res.error);
     else loadData(true);
   });
 });
-
 document.getElementById("cancelDeleteRowBtn").addEventListener("click", function() {
-  pendingDeleteId = null;
-  document.getElementById("deleteRowModal").style.display = "none";
+  pendingDeleteId = null; document.getElementById("deleteRowModal").style.display = "none";
 });
 
 function archiveTasks() {
-  if (!hasPermission('sharejob.archive')) {
-    showAccessDenied('Archive Job', 'Supervisor atau Admin');
-    return;
-  }
+  if (!hasPermission('sharejob.archive')) { showAccessDenied('Archive Job','Supervisor atau Admin'); return; }
   document.getElementById("confirmModal").style.display = "flex";
 }
-
 function confirmArchive() {
   closeModal();
   api("moveTasksToHistory").then(function(res) {
@@ -1699,56 +1265,31 @@ function confirmArchive() {
     document.getElementById("inputSection").style.display = "none";
   });
 }
-
 function closeModal() { document.getElementById("confirmModal").style.display = "none"; }
 
 // ═══════════════════════════════════════
-// INLINE EDIT (Supervisor & Admin hanya)
-// Jam Selesai TIDAK bisa diedit manual (otomatis dari GAS)
+// INLINE EDIT
 // ═══════════════════════════════════════
 function startInlineEdit(tr) {
   if (currentEditingRow && currentEditingRow !== tr) { showAlert("Selesaikan edit baris sebelumnya!"); return; }
   if (tr.classList.contains("editing")) return;
   if (!tr.classList.contains("group-start")) return;
-
   var offset = (deleteMode && hasPermission('sharejob.delete')) ? 1 : 0;
   var cells = tr.children;
   if (cells.length < 8 + offset) return;
-
   currentEditingRow = tr;
   var gi = parseInt(tr.getAttribute("data-groupidx"), 10);
   var gt = (!isNaN(gi) && allGroups[gi]) ? allGroups[gi] : null;
   if (!gt || !gt.length) { currentEditingRow = null; return; }
-
   var ft = gt[0];
-  originalRowData = {
-    id: String(ft.id),
-    nama: gt.map(function(t) { return t.nama; }).join("\n"),
-    tugas: ft.tugas || "",
-    mesin: ft.mesin || "",
-    jamMulai: ft.jamMulai || ""
-    // jamSelesai intentionally NOT editable — set automatically by GAS on status=Selesai
-  };
-
+  originalRowData = { id:String(ft.id), nama:gt.map(function(t){return t.nama;}).join("\n"), tugas:ft.tugas||"", mesin:ft.mesin||"", jamMulai:ft.jamMulai||"" };
   tr.classList.add("editing");
-
-  // Col 0 (offset+0): ID + save/cancel
-  cells[offset + 0].innerHTML =
-    "<input class='inline-input' id='ie-id' value='" + escHtml(originalRowData.id) + "'>" +
-    "<div class='inline-save-bar'>" +
-    "<button class='inline-btn inline-btn-save' onclick='saveInlineEdit()'>✓ Simpan</button>" +
-    "<button class='inline-btn inline-btn-cancel' onclick='cancelInlineEdit()'>✕ Batal</button>" +
-    "</div>";
-
-  cells[offset + 1].innerHTML = "<textarea class='inline-input' id='ie-nama' rows='3' style='font-size:13px;'>" + escHtml(originalRowData.nama) + "</textarea><span style='font-size:9px;color:var(--text-dim);font-family:monospace;'>↵ Enter = nama baru</span>";
-  cells[offset + 2].innerHTML = "<textarea class='inline-input' id='ie-tugas' rows='3'>" + escHtml(originalRowData.tugas) + "</textarea>";
-  cells[offset + 3].innerHTML = "<input class='inline-input' id='ie-mesin' value='" + escHtml(originalRowData.mesin) + "'>";
-  cells[offset + 6].innerHTML = "<input class='inline-input' id='ie-jam-mulai' type='time' value='" + escHtml(originalRowData.jamMulai) + "'>";
-  // Col 7 (Jam Selesai): READ ONLY — tampilkan tapi tidak bisa diedit
-  // (already rendered as plain text above, not replaced here)
-
+  cells[offset+0].innerHTML = "<input class='inline-input' id='ie-id' value='" + escHtml(originalRowData.id) + "'><div class='inline-save-bar'><button class='inline-btn inline-btn-save' onclick='saveInlineEdit()'>✓ Simpan</button><button class='inline-btn inline-btn-cancel' onclick='cancelInlineEdit()'>✕ Batal</button></div>";
+  cells[offset+1].innerHTML = "<textarea class='inline-input' id='ie-nama' rows='3' style='font-size:13px;'>" + escHtml(originalRowData.nama) + "</textarea>";
+  cells[offset+2].innerHTML = "<textarea class='inline-input' id='ie-tugas' rows='3'>" + escHtml(originalRowData.tugas) + "</textarea>";
+  cells[offset+3].innerHTML = "<input class='inline-input' id='ie-mesin' value='" + escHtml(originalRowData.mesin) + "'>";
+  cells[offset+6].innerHTML = "<input class='inline-input' id='ie-jam-mulai' type='time' value='" + escHtml(originalRowData.jamMulai) + "'>";
   setTimeout(function() { var inp = document.getElementById("ie-id"); if (inp) inp.focus(); }, 50);
-
   tr._escHandler = function(e) { if (e.key === "Escape") { e.preventDefault(); cancelInlineEdit(); } };
   document.addEventListener("keydown", tr._escHandler);
 }
@@ -1761,28 +1302,18 @@ function saveInlineEdit() {
   var newTugas = get("ie-tugas", originalRowData.tugas);
   var newMesin = get("ie-mesin", originalRowData.mesin);
   var newJamMulai = get("ie-jam-mulai", originalRowData.jamMulai);
-
   if (!newId || !newNama || !newTugas || !newMesin) { showAlert("Semua kolom harus diisi!"); return; }
   var oldId = originalRowData.id;
   finishInlineEdit();
-  api("updateTaskAll", {
-    oldId, newId, newNama, newTugas, newMesin,
-    newJamMulai,
-    newJamSelesai: '' // Never passed — GAS controls jamSelesai
-  }).then(function(res) {
+  api("updateTaskAll", { oldId:oldId, newId:newId, newNama:newNama, newTugas:newTugas, newMesin:newMesin, newJamMulai:newJamMulai, newJamSelesai:'' }).then(function(res) {
     if (res && res.error) showAlert("Gagal simpan: " + res.error);
     loadData(true);
   });
 }
-
 function cancelInlineEdit() { finishInlineEdit(); loadData(true); }
-
 function finishInlineEdit() {
   if (!currentEditingRow) return;
-  if (currentEditingRow._escHandler) {
-    document.removeEventListener("keydown", currentEditingRow._escHandler);
-    delete currentEditingRow._escHandler;
-  }
+  if (currentEditingRow._escHandler) { document.removeEventListener("keydown", currentEditingRow._escHandler); delete currentEditingRow._escHandler; }
   currentEditingRow.classList.remove("editing");
   currentEditingRow = null; originalRowData = null;
 }
@@ -1793,41 +1324,35 @@ function finishInlineEdit() {
 function doPrint() {
   applyFilterToRows();
   var rows = document.querySelectorAll('#data tr.group-row');
-  var visible = Array.from(rows).filter(function(tr) { return !tr.classList.contains('filter-hidden'); });
+  var visible = Array.from(rows).filter(function(tr){return !tr.classList.contains('filter-hidden');});
   if (!visible.length) { showAlert("Tidak ada data untuk dicetak."); return; }
-
   var now = new Date();
   var days = ["Minggu","Senin","Selasa","Rabu","Kamis","Jumat","Sabtu"];
-  var mn   = ["Jan","Feb","Mar","Apr","Mei","Jun","Jul","Agu","Sep","Okt","Nov","Des"];
+  var mn = ["Jan","Feb","Mar","Apr","Mei","Jun","Jul","Agu","Sep","Okt","Nov","Des"];
   var d = String(now.getDate()).padStart(2,'0');
   var h = String(now.getHours()).padStart(2,'0');
   var m = String(now.getMinutes()).padStart(2,'0');
-  var tanggal = days[now.getDay()] + ", " + d + " " + mn[now.getMonth()] + " " + now.getFullYear();
+  var tanggal = days[now.getDay()]+", "+d+" "+mn[now.getMonth()]+" "+now.getFullYear();
   var periodLabel = getPeriodLabel();
-  var unitLabel = currentUnit ? ' | Unit: ' + currentUnit.code : '';
-
-  document.getElementById("printHeader").innerHTML = "Dicetak: " + tanggal + " " + h + ":" + m + " | Filter: <b>" + periodLabel + "</b>" + unitLabel + " | <b>" + visible.length + " job</b>";
-
+  var unitLabel = currentUnit ? ' | Unit: '+currentUnit.code : '';
+  document.getElementById("printHeader").innerHTML = "Dicetak: "+tanggal+" "+h+":"+m+" | Filter: <b>"+periodLabel+"</b>"+unitLabel+" | <b>"+visible.length+" job</b>";
   var container = document.getElementById('printPagesContainer');
   container.innerHTML = '';
-  var ROWS = 30, totalPages = Math.ceil(visible.length / ROWS);
+  var ROWS = 30, totalPages = Math.ceil(visible.length/ROWS);
   var off = (deleteMode && hasPermission('sharejob.delete')) ? 1 : 0;
-
   for (var p = 0; p < totalPages; p++) {
-    var pageRows = visible.slice(p * ROWS, (p + 1) * ROWS);
-    var pageDiv = document.createElement('div');
-    pageDiv.className = 'print-page';
-    var ph = document.createElement('div');
-    ph.className = 'print-page-header';
-    ph.innerHTML = '<span><strong>PEMBAGIAN JOB HARIAN</strong> | ' + (currentUnit ? currentUnit.code + ' - ' + currentUnit.name : '') + ' | Filter: ' + periodLabel + '</span><span>Halaman ' + (p+1) + '/' + totalPages + ' | ' + tanggal + ' ' + h + ':' + m + '</span>';
+    var pageRows = visible.slice(p*ROWS, (p+1)*ROWS);
+    var pageDiv = document.createElement('div'); pageDiv.className = 'print-page';
+    var ph = document.createElement('div'); ph.className = 'print-page-header';
+    ph.innerHTML = '<span><strong>PEMBAGIAN JOB HARIAN</strong> | '+(currentUnit?currentUnit.code+' - '+currentUnit.name:'')+' | Filter: '+periodLabel+'</span><span>Halaman '+(p+1)+'/'+totalPages+' | '+tanggal+' '+h+':'+m+'</span>';
     pageDiv.appendChild(ph);
     var tbl = document.createElement('table');
     tbl.innerHTML = '<thead><tr><th>ID</th><th>Nama</th><th>Tugas</th><th>Mesin</th><th>Status</th><th>Tanggal</th><th>Mulai</th><th>Selesai</th></tr></thead>';
     var tb = document.createElement('tbody');
     pageRows.forEach(function(tr) {
       var cells = tr.querySelectorAll('td');
-      var get = function(i) { return cells[off + i] ? cells[off + i].textContent.trim() : ''; };
-      var sv = tr.getAttribute('data-status') || '';
+      var get = function(i) { return cells[off+i] ? cells[off+i].textContent.trim() : ''; };
+      var sv = tr.getAttribute('data-status')||'';
       var sc2 = sv==='Selesai'?'#2e7d32':sv==='Proses'?'#e65100':'#1565c0';
       var sb = sv==='Selesai'?'#e8f5e9':sv==='Proses'?'#fff3e0':'#e3f2fd';
       var pTr = document.createElement('tr'); pTr.className = 'group-start-print';
@@ -1837,12 +1362,12 @@ function doPrint() {
     tbl.appendChild(tb); pageDiv.appendChild(tbl); container.appendChild(pageDiv);
   }
   window.print();
-  setTimeout(function() { container.innerHTML = ''; }, 1000);
+  setTimeout(function(){container.innerHTML='';}, 1000);
 }
 
 function getPeriodLabel() {
   var f = filterState;
-  if (f.tanggal) { var p = f.tanggal.split('-'); return p.length===3 ? p[2]+' '+NAMA_BULAN[+p[1]]+' '+p[0] : f.tanggal; }
+  if (f.tanggal) { var p = f.tanggal.split('-'); return p.length===3?p[2]+' '+NAMA_BULAN[+p[1]]+' '+p[0]:f.tanggal; }
   if (f.bulan && f.tahun) return NAMA_BULAN[+f.bulan]+' '+f.tahun;
   if (f.bulan) return NAMA_BULAN[+f.bulan]+' (Semua Tahun)';
   if (f.tahun) return 'Tahun '+f.tahun;
@@ -1853,14 +1378,14 @@ function getPeriodLabel() {
 // WHATSAPP
 // ═══════════════════════════════════════
 function convertToWaNumber(input) {
-  var num = input.trim().replace(/[\s\-]/g, "");
+  var num = input.trim().replace(/[\s\-]/g,"");
   if (num.startsWith("+62")) return num;
-  if (num.startsWith("62")) return "+" + num;
-  if (num.startsWith("0")) return "+62" + num.substring(1);
+  if (num.startsWith("62")) return "+"+num;
+  if (num.startsWith("0")) return "+62"+num.substring(1);
   return null;
 }
 function validateWaPhone(input) {
-  var val = input.value.trim().replace(/[\s\-]/g, "");
+  var val = input.value.trim().replace(/[\s\-]/g,"");
   var errEl = document.getElementById("waPhoneError");
   var valid = /^(0|62|\+62)[0-9]{8,12}$/.test(val);
   if (!input.value.trim()) { errEl.style.display="none"; input.style.borderColor="#ccc"; }
@@ -1870,7 +1395,7 @@ function validateWaPhone(input) {
 function openWaModal() {
   applyFilterToRows();
   var rows = document.querySelectorAll('#data tr.group-row');
-  var visible = Array.from(rows).filter(function(tr) { return !tr.classList.contains('filter-hidden'); });
+  var visible = Array.from(rows).filter(function(tr){return !tr.classList.contains('filter-hidden');});
   if (!visible.length) { showAlert("Tidak ada data untuk dikirim."); return; }
   var now = new Date();
   var days = ["Minggu","Senin","Selasa","Rabu","Kamis","Jumat","Sabtu"];
@@ -1884,8 +1409,8 @@ function openWaModal() {
   var off = (deleteMode && hasPermission('sharejob.delete')) ? 1 : 0;
   visible.forEach(function(tr, i) {
     var cells = tr.children;
-    var get = function(i2) { return cells[off+i2] ? cells[off+i2].textContent.trim() : ''; };
-    var sv = tr.getAttribute('data-status') || '';
+    var get = function(i2){return cells[off+i2]?cells[off+i2].textContent.trim():'';};
+    var sv = tr.getAttribute('data-status')||'';
     var si = sv==='Selesai'?'✅':sv==='Proses'?'🔄':'⏳';
     pesan += (i+1)+". *"+get(1)+"*\n";
     pesan += "   🆔 ID     : "+get(0)+"\n";
@@ -1903,7 +1428,7 @@ function openWaModal() {
   document.getElementById("waPhoneInput").style.borderColor = "#ccc";
   document.getElementById("waPhoneError").style.display = "none";
   document.getElementById("waModal").style.display = "flex";
-  setTimeout(function() { document.getElementById("waPhoneInput").focus(); }, 150);
+  setTimeout(function(){document.getElementById("waPhoneInput").focus();},150);
 }
 function closeWaModal() { document.getElementById("waModal").style.display = "none"; }
 function sendWhatsApp() {
@@ -1912,10 +1437,10 @@ function sendWhatsApp() {
   var waNumber = convertToWaNumber(inputVal);
   if (!waNumber) { document.getElementById("waPhoneError").style.display="block"; return; }
   var pesan = document.getElementById("waPreviewText").innerText;
-  window.open("https://wa.me/"+waNumber.replace("+","")+"?text="+encodeURIComponent(pesan), "_blank");
+  window.open("https://wa.me/"+waNumber.replace("+","")+"?text="+encodeURIComponent(pesan),"_blank");
   closeWaModal();
 }
-document.getElementById("waPhoneInput").addEventListener("keydown", function(e) { if(e.key==="Enter") sendWhatsApp(); });
+document.getElementById("waPhoneInput").addEventListener("keydown", function(e){if(e.key==="Enter") sendWhatsApp();});
 
 // ═══════════════════════════════════════
 // RUNNING TEXT
@@ -1929,17 +1454,14 @@ function setMarqueeText(text) {
   track.style.animation = "none"; track.offsetHeight; track.style.animation = "";
 }
 function loadRunningText() {
-  api("getRunningText").then(function(res) {
+  api("getRunningText").then(function(res){
     setMarqueeText(res.data || "Selamat bekerja! Tetap semangat dan utamakan keselamatan kerja.");
-  }).catch(function() {
+  }).catch(function(){
     setMarqueeText("Selamat bekerja! Tetap semangat dan utamakan keselamatan kerja.");
   });
 }
 function openEditRunning() {
-  if (!hasPermission('sharejob.editRunningText')) {
-    showAccessDenied('Edit Running Text', 'Admin');
-    return;
-  }
+  if (!hasPermission('sharejob.editRunningText')) { showAccessDenied('Edit Running Text','Admin'); return; }
   document.getElementById("runningTextInput").value = currentRunningText;
   document.getElementById("editRunningModal").style.display = "flex";
 }
@@ -1947,7 +1469,7 @@ function closeEditRunning() { document.getElementById("editRunningModal").style.
 function saveRunningText() {
   var newText = document.getElementById("runningTextInput").value.trim();
   if (!newText) { showAlert("Teks tidak boleh kosong!"); return; }
-  api("saveRunningText", { text: newText }).then(function(res) {
+  api("saveRunningText", { text:newText }).then(function(res){
     if (res.error) { showAlert("Gagal menyimpan teks."); return; }
     setMarqueeText(newText); closeEditRunning();
   });
@@ -1961,8 +1483,7 @@ function toggleAutoScroll() {
   _asActive = !_asActive;
   var btn = document.getElementById("autoScrollBtn");
   if (_asActive) {
-    btn.classList.add("active");
-    _asDir=1; _asPausedAt=0;
+    btn.classList.add("active"); _asDir=1; _asPausedAt=0;
     _asRaf=requestAnimationFrame(_asStep);
     window.addEventListener("wheel",_asPauseOnInteract,{passive:true});
     window.addEventListener("touchstart",_asPauseOnInteract,{passive:true});
@@ -1976,8 +1497,7 @@ function _asStep(ts) { if(!_asActive)return; var max=document.documentElement.sc
 // THEME & CLOCK
 // ═══════════════════════════════════════
 (function() {
-  var saved = localStorage.getItem('pjh_theme');
-  if (saved === 'light') document.body.classList.add('light-mode');
+  if (localStorage.getItem('pjh_theme') === 'light') document.body.classList.add('light-mode');
 })();
 
 function toggleTheme() {
@@ -1989,8 +1509,6 @@ function toggleTheme() {
   }
 }
 
-function updateClock() {
- 
 function updateClock() {
   var now = new Date();
   var days = ["Minggu","Senin","Selasa","Rabu","Kamis","Jumat","Sabtu"];
@@ -2013,26 +1531,16 @@ function escHtml(str) {
   return String(str||"").replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;").replace(/"/g,"&quot;").replace(/'/g,"&#39;");
 }
 
-// Enter key on auth form
-document.getElementById('authPassword').addEventListener('keypress', function(e) {
-  if (e.key === 'Enter') doLogin();
-});
-document.getElementById('authUsername').addEventListener('keypress', function(e) {
-  if (e.key === 'Enter') doLogin();
-});
+document.getElementById('authPassword').addEventListener('keypress', function(e){ if(e.key==='Enter') doLogin(); });
+document.getElementById('authUsername').addEventListener('keypress', function(e){ if(e.key==='Enter') doLogin(); });
 
 // ═══════════════════════════════════════
-// INIT — check existing session
+// INIT
 // ═══════════════════════════════════════
 window.onload = function() {
   buildFilterOptions();
-
   var existingSession = loadSession();
-  if (existingSession) {
-    // Resume session
-    startApp(existingSession);
-  }
-  // Otherwise auth screen stays visible (default)
+  if (existingSession) startApp(existingSession);
 };
 </script>
 </body>
