@@ -1647,27 +1647,48 @@ async function renderDriveTab() {
 
 // CHANGED: inuCard — ID lebih besar & kontras, serial number punya label keterangan, tampilkan role (master/follower)
 function inuCard(d) {
-  const st=d.status||'kosong';
-  const stTx={ok:'OK',fault:'Fault',maint:'Maintenance',maintenance:'Maintenance',kosong:'Kosong'}[st]||st;
-  const photoHtml=d.photo_url?`<button class="inu-photo-btn" onclick="event.stopPropagation();requestViewPhoto('${esc(d.photo_url)}')">📷 Lihat Foto</button>`:'';
-  // CHANGED: serial number dengan label keterangan jelas
+  const st = d.status || 'kosong';
+  const stTx = {ok:'OK', fault:'Fault', maint:'Maintenance', maintenance:'Maintenance', kosong:'Kosong'}[st] || st;
+  
+  // Serial number bisa dari kolom serial_number atau spesifikasi
   const sn = d.serial_number || d.sn || d.spesifikasi || '';
-  const snHtml = sn ? `<div class="inu-sn-row"><span class="inu-sn-label">S/N</span><span class="inu-sn-value">${esc(sn)}</span></div>` : '';
-  // CHANGED: role (master/follower) ditampilkan jika ada di keterangan
+  
+  const snHtml = sn ? `<div class="inu-sn-row">
+    <span class="inu-sn-label">S/N</span>
+    <span class="inu-sn-value">${esc(sn)}</span>
+  </div>` : '';
+
   const keterangan = d.keterangan || '';
   const roleLower = keterangan.toLowerCase();
   let roleHtml = '';
-  if (roleLower.includes('master')) roleHtml = `<div class="inu-role">▲ MASTER</div>`;
-  else if (roleLower.includes('follower') || roleLower.includes('slave')) roleHtml = `<div class="inu-role">▽ Followers</div>`;
-  const infoText = keterangan.replace(/master|follower|slave/gi,'').trim();
-  return `<div class="inu-card ${st}" onclick="requestEdit('${esc(d.drive_id)}','${st}','${esc(d.keterangan)}','${esc(d.merk)}','${esc(sn)}','${esc(d.photo_url||'')}','${esc(sn)}')">
+  if (roleLower.includes('master')) 
+    roleHtml = `<div class="inu-role">▲ MASTER</div>`;
+  else if (roleLower.includes('follower') || roleLower.includes('slave')) 
+    roleHtml = `<div class="inu-role">▽ Followers</div>`;
+
+  // Keterangan tanpa kata master/follower
+  const infoText = keterangan.replace(/master|follower|slave/gi, '').trim();
+
+  const photoHtml = d.photo_url 
+    ? `<button class="inu-photo-btn" onclick="event.stopPropagation();requestViewPhoto('${esc(d.photo_url)}')">📷 Lihat Foto</button>` 
+    : '';
+
+  return `<div class="inu-card ${st}" onclick="requestEdit(
+    '${esc(d.drive_id)}',
+    '${st}',
+    '${esc(d.keterangan)}',
+    '${esc(d.merk)}',
+    '${esc(sn)}',
+    '${esc(d.photo_url||'')}',
+    '${esc(sn)}'
+  )">
     <div class="inu-edit-hint">✏️ edit</div>
     <div class="inu-tag">${esc(d.drive_id)}</div>
-    <div class="inu-name">${esc(d.merk)||'—'}</div>
+    <div class="inu-name">${esc(d.merk) || '—'}</div>
     ${snHtml}
     <div class="inu-status"><div class="inu-dot"></div>${stTx}</div>
     ${roleHtml}
-    ${infoText?`<div class="inu-info">${esc(infoText)}</div>`:''}
+    ${infoText ? `<div class="inu-info">${esc(infoText)}</div>` : ''}
     ${photoHtml}
   </div>`;
 }
