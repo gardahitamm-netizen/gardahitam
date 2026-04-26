@@ -128,16 +128,12 @@ body.light .btn-reset-filter{ color:#3a5a80; border-color:#b8ccec; background:#f
 body.light .btn-reset-filter:hover{ border-color:#d91a34; color:#d91a34; background:#fff0f2; }
 body.light .hist-month-section-head{ background:#dde8f8; border-color:#b8ccec; color:#0d1a2e; }
 body.light .hist-month-section-head .hms-count{ color:#3a5a80; }
-body.light .pm-modal{ background:#f5f8ff; }
-body.light .pm-modal-header{ background:linear-gradient(135deg,#ffffff,#eaf4ff); }
-body.light .pm-modal-footer{ background:#f5f8ff; }
-body.light .pm-desc-box{ background:#eaf1fb; border-color:#b8ccec; color:#0d1a2e; }
-body.light .pm-note-item{ background:#eaf1fb; border-color:#b8ccec; }
-body.light .pm-note-input{ background:#eaf1fb; border-color:#b8ccec; color:#0d1a2e; }
-body.light .pm-meta-chip{ background:#dde8f8; border-color:#b8ccec; }
 body.light .ts-modal{ background:#f5f8ff; }
 body.light .inu-stiker-row{ background:rgba(196,120,0,.06); border-color:rgba(196,120,0,.25); }
 body.light .inu-stiker-label{ color:#c47800; }
+body.light .mb-table td{ color:#0d1a2e; }
+body.light .mb-table tr:hover td{ background:rgba(0,0,0,.025); }
+body.light .mb-filter-bar{ background:#eaf2fc; border-color:#b8ccec; }
 
 *{margin:0;padding:0;box-sizing:border-box;}
 html,body{width:100%;height:100%;overflow:hidden;}
@@ -217,42 +213,6 @@ body{font-family:'Plus Jakarta Sans',sans-serif;background:var(--bg);color:var(-
 tr:hover .btn-edit-ts{opacity:1;}
 .btn-edit-ts:hover{border-color:var(--teal);color:var(--teal);background:var(--teal-bg);}
 
-/* ══ PM DETAIL MODAL ══ */
-.pm-modal-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,.75);backdrop-filter:blur(5px);z-index:500;align-items:center;justify-content:center;padding:16px;}
-.pm-modal-overlay.open{display:flex;}
-.pm-modal{background:var(--surf);border:1px solid var(--border);border-radius:16px;width:100%;max-width:560px;max-height:90vh;overflow:hidden;display:flex;flex-direction:column;animation:modalIn .2s ease;}
-.pm-modal-header{padding:20px 24px 16px;border-bottom:1px solid var(--border);flex-shrink:0;background:linear-gradient(135deg,var(--surf),var(--surf2));position:relative;}
-.pm-modal-header::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;background:linear-gradient(90deg,var(--accent),var(--teal));}
-.pm-modal-id{font-family:'JetBrains Mono',monospace;font-size:10px;color:var(--muted);margin-bottom:6px;}
-.pm-modal-title-text{font-size:18px;font-weight:700;color:var(--text);margin-bottom:4px;}
-.pm-modal-drive{font-family:'JetBrains Mono',monospace;font-size:12px;color:var(--teal);margin-bottom:12px;}
-.pm-modal-meta-row{display:flex;gap:8px;flex-wrap:wrap;}
-.pm-meta-chip{display:flex;align-items:center;gap:5px;font-size:11px;color:var(--muted);background:var(--surf3);border:1px solid var(--border);padding:4px 10px;border-radius:20px;}
-.pm-modal-body{flex:1;overflow-y:auto;padding:20px 24px;}
-.pm-section{margin-bottom:20px;}
-.pm-section-label{font-family:'JetBrains Mono',monospace;font-size:9px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:var(--muted);margin-bottom:8px;display:flex;align-items:center;gap:6px;}
-.pm-section-label::after{content:'';flex:1;height:1px;background:var(--border);}
-.pm-desc-box{background:var(--surf2);border:1px solid var(--border);border-radius:8px;padding:12px 14px;font-size:12px;color:var(--text);line-height:1.6;min-height:60px;white-space:pre-wrap;}
-.pm-notes-list{display:flex;flex-direction:column;gap:8px;}
-.pm-note-item{background:var(--surf2);border:1px solid var(--border);border-radius:8px;padding:10px 14px;}
-.pm-note-ts{font-family:'JetBrains Mono',monospace;font-size:9px;color:var(--muted);margin-bottom:4px;}
-.pm-note-text{font-size:12px;color:var(--text);line-height:1.5;}
-.pm-empty-notes{font-family:'JetBrains Mono',monospace;font-size:11px;color:var(--muted);padding:10px 0;}
-.pm-add-note{display:flex;gap:8px;margin-top:10px;align-items:flex-end;}
-.pm-note-input{flex:1;background:var(--surf2);border:1px solid var(--border);color:var(--text);padding:9px 12px;border-radius:8px;font-size:12px;font-family:'Plus Jakarta Sans',sans-serif;outline:none;transition:border-color .2s;resize:vertical;min-height:60px;}
-.pm-note-input:focus{border-color:var(--accent);}
-.btn-add-note{padding:9px 16px;border-radius:8px;font-size:12px;cursor:pointer;background:var(--teal-bg);border:1px solid var(--teal-bd);color:var(--teal);font-weight:600;transition:all .15s;flex-shrink:0;}
-.btn-add-note:hover{background:rgba(0,224,248,.2);}
-.pm-modal-footer{padding:16px 24px;border-top:1px solid var(--border);display:flex;gap:8px;justify-content:flex-end;align-items:center;flex-shrink:0;background:var(--surf);}
-.btn-edit-pm{padding:8px 20px;border-radius:8px;font-size:12px;cursor:pointer;background:var(--accent-bg);border:1px solid var(--accent-bd);color:var(--accent);font-weight:600;transition:all .15s;}
-.btn-edit-pm:hover{background:rgba(77,159,255,.25);}
-.pm-card{cursor:pointer;transition:all .2s;}
-.pm-card:hover{border-color:var(--accent-bd);transform:translateY(-1px);box-shadow:0 4px 16px rgba(0,0,0,.3);}
-.pm-card-hint{font-size:10px;font-family:'JetBrains Mono',monospace;color:var(--muted);margin-top:8px;opacity:0;transition:opacity .2s;}
-.pm-card:hover .pm-card-hint{opacity:1;}
-.pm-edit-section{background:var(--surf2);border:1px solid var(--accent-bd);border-radius:10px;padding:16px;margin-top:4px;}
-.pm-edit-section-title{font-family:'JetBrains Mono',monospace;font-size:9px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:var(--accent);margin-bottom:12px;}
-
 /* ══ EDIT TIMESTAMP MODAL ══ */
 .ts-modal-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,.7);backdrop-filter:blur(4px);z-index:510;align-items:center;justify-content:center;}
 .ts-modal-overlay.open{display:flex;}
@@ -322,6 +282,9 @@ tr:hover .btn-edit-ts{opacity:1;}
 #tab-histori.active{padding:0;display:flex;flex-direction:column;}
 .histori-scroll-area{flex:1;overflow-y:auto;min-height:0;padding:16px 20px 20px;}
 
+#tab-manual.active{padding:0;display:flex;flex-direction:column;}
+.manual-scroll-area{flex:1;overflow-y:auto;min-height:0;padding:16px 20px 20px;}
+
 .drive-header{margin-bottom:16px;flex-shrink:0;}
 .drive-title{font-size:18px;font-weight:700;font-family:var(--font-mixing);margin-bottom:3px;color:var(--text);}
 .drive-meta{font-size:11px;color:var(--muted);margin-bottom:14px;}
@@ -358,7 +321,7 @@ tr:hover .btn-edit-ts{opacity:1;}
 .inu-sn-label{font-family:'JetBrains Mono',monospace;font-size:9px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;color:var(--teal);flex-shrink:0;}
 .inu-sn-value{font-family:'JetBrains Mono',monospace;font-size:11px;color:var(--text);font-weight:600;word-break:break-all;}
 
-/* ── Stiker row (BARU) ── */
+/* ── Stiker row ── */
 .inu-stiker-row{display:flex;align-items:center;gap:6px;margin-bottom:10px;background:var(--stiker-bg);border:1px solid var(--stiker-bd);border-radius:6px;padding:5px 9px;}
 .inu-stiker-label{font-family:'JetBrains Mono',monospace;font-size:9px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;color:var(--maint);flex-shrink:0;}
 .inu-stiker-value{font-family:'JetBrains Mono',monospace;font-size:11px;color:var(--text);font-weight:600;word-break:break-all;}
@@ -398,16 +361,6 @@ body.light .inu-photo-btn:hover{color:#003850;}
 .st-fault{background:var(--fault-bg);color:var(--fault);border:1px solid var(--fault-bd);}
 .st-maint{background:var(--maint-bg);color:var(--maint);border:1px solid var(--maint-bd);}
 .st-kosong{background:var(--kosong-bg);color:var(--kosong);border:1px solid var(--kosong-bd);}
-
-/* PM cards */
-.pm-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:12px;}
-.pm-card{background:var(--surf);border:1px solid var(--border);border-radius:10px;padding:16px;}
-.pm-card-id{font-family:'JetBrains Mono',monospace;font-size:10px;color:var(--muted);margin-bottom:4px;}
-.pm-card-judul{font-size:14px;font-weight:600;margin-bottom:4px;color:var(--text);}
-.pm-card-drive{font-size:12px;color:var(--teal);font-family:'JetBrains Mono',monospace;margin-bottom:8px;}
-.pm-card-meta{font-size:11px;color:var(--muted);display:flex;flex-direction:column;gap:3px;}
-.pm-card-status{margin-top:10px;}
-.pm-card.search-hidden{display:none;}
 
 /* Summary */
 .summary-stats{display:flex;gap:12px;flex-wrap:wrap;margin-bottom:20px;}
@@ -495,13 +448,30 @@ body.light .inu-photo-btn:hover{color:#003850;}
 .state-box p{font-size:12px;text-align:center;max-width:340px;}
 .btn-retry{background:var(--accent-bg);border:1px solid var(--accent-bd);color:var(--accent);padding:6px 16px;border-radius:6px;font-size:12px;cursor:pointer;font-family:'JetBrains Mono',monospace;}
 
+/* ══ MANUAL BOOK TABLE ══ */
+.mb-filter-bar{display:flex;align-items:center;gap:10px;padding:10px 16px;background:var(--surf2);border-bottom:1px solid var(--border);flex-shrink:0;flex-wrap:wrap;}
+.mb-table-wrap{overflow-x:auto;}
+.mb-table{width:100%;border-collapse:collapse;font-size:12px;}
+.mb-table th{text-align:left;padding:9px 12px;font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:1px;text-transform:uppercase;color:var(--muted);border-bottom:1px solid var(--border);background:var(--surf);white-space:nowrap;position:sticky;top:0;z-index:2;}
+.mb-table td{padding:10px 12px;border-bottom:1px solid rgba(31,48,80,.5);vertical-align:middle;color:var(--text);}
+.mb-table tr:hover td{background:rgba(255,255,255,.025);}
+.mb-num{font-family:'JetBrains Mono',monospace;font-size:10px;color:var(--muted);width:36px;}
+.mb-judul{font-weight:600;color:var(--text);font-size:13px;}
+.mb-doc-id{font-family:'JetBrains Mono',monospace;font-size:10px;color:var(--muted);margin-top:3px;}
+.mb-drive{font-family:'JetBrains Mono',monospace;font-size:11px;color:var(--teal);}
+.mb-tanggal{font-family:'JetBrains Mono',monospace;font-size:10px;color:var(--muted);white-space:nowrap;}
+.mb-kategori-tag{display:inline-block;padding:2px 9px;border-radius:4px;font-family:'JetBrains Mono',monospace;font-size:10px;font-weight:700;background:var(--accent-bg);color:var(--accent);border:1px solid var(--accent-bd);}
+.btn-open-pdf{display:inline-flex;align-items:center;gap:5px;padding:5px 14px;border-radius:6px;font-family:'JetBrains Mono',monospace;font-size:10px;font-weight:700;color:var(--teal);background:var(--teal-bg);border:1px solid var(--teal-bd);cursor:pointer;text-decoration:none;transition:all .15s;white-space:nowrap;}
+.btn-open-pdf:hover{background:rgba(0,224,248,.22);transform:translateY(-1px);}
+body.light .btn-open-pdf:hover{color:#003850;}
+.mb-empty{color:var(--muted);font-family:'JetBrains Mono',monospace;font-size:11px;}
+.mb-header-row{display:flex;align-items:center;gap:10px;padding:14px 0 10px;flex-shrink:0;}
+.mb-header-title{font-family:'JetBrains Mono',monospace;font-size:11px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:var(--accent);}
+.mb-header-count{font-family:'JetBrains Mono',monospace;font-size:10px;color:var(--muted);margin-left:auto;background:var(--accent-bg);border:1px solid var(--accent-bd);padding:3px 10px;border-radius:12px;}
+
 ::-webkit-scrollbar{width:4px;height:4px;}
 ::-webkit-scrollbar-track{background:transparent;}
 ::-webkit-scrollbar-thumb{background:var(--border);border-radius:4px;}
-
-/* PM Filter Bar */
-.pm-filter-bar{display:flex;align-items:center;gap:10px;padding:10px 16px;background:var(--surf2);border-bottom:1px solid var(--border);flex-shrink:0;flex-wrap:wrap;}
-body.light .pm-filter-bar{background:#eaf2fc;border-color:#b8ccec;}
 
 @media (max-width: 768px) {
   html, body { overflow:hidden !important; height:100% !important; position:fixed !important; top:0 !important; left:0 !important; }
@@ -553,11 +523,11 @@ body.light .pm-filter-bar{background:#eaf2fc;border-color:#b8ccec;}
   .tab-content { flex:1 !important; overflow-y:auto !important; -webkit-overflow-scrolling:touch !important; padding:12px 10px !important; display:none !important; flex-direction:column !important; min-height:0 !important; }
   .tab-content.active { display:flex !important; }
   #tab-histori.active { padding:0 !important; }
-  #tab-pm.active { padding:0 !important; }
+  #tab-manual.active { padding:0 !important; }
   .histori-scroll-area { padding:10px !important; }
-  .pm-scroll-area { padding:10px !important; }
+  .manual-scroll-area { padding:10px !important; }
   .hist-filter-bar { padding:8px 10px !important; gap:6px !important; flex-wrap:wrap !important; }
-  .pm-filter-bar { padding:8px 10px !important; gap:6px !important; flex-wrap:wrap !important; }
+  .mb-filter-bar { padding:8px 10px !important; gap:6px !important; flex-wrap:wrap !important; }
   .hist-filter-label { font-size:9px !important; }
   .hist-filter-select { font-size:10px !important; padding:5px 7px !important; }
   .hist-period-badge { font-size:9px !important; padding:4px 9px !important; }
@@ -577,7 +547,8 @@ body.light .pm-filter-bar{background:#eaf2fc;border-color:#b8ccec;}
   .drive-group { margin-bottom:18px !important; }
   .hist-table-wrap { overflow-x:auto !important; -webkit-overflow-scrolling:touch !important; }
   .hist-table { min-width:480px !important; font-size:11px !important; }
-  .pm-grid { grid-template-columns:1fr !important; }
+  .mb-table-wrap { overflow-x:auto !important; -webkit-overflow-scrolling:touch !important; }
+  .mb-table { min-width:520px !important; font-size:11px !important; }
   .summary-stats { gap:6px !important; }
   .sum-stat { min-width:72px !important; padding:10px 10px !important; }
   .sum-stat-val { font-size:17px !important; }
@@ -590,16 +561,12 @@ body.light .pm-filter-bar{background:#eaf2fc;border-color:#b8ccec;}
   .modal { border-radius:18px 18px 0 0 !important; max-width:100% !important; margin:0 !important; padding:20px 16px 32px !important; max-height:92vh !important; overflow-y:auto !important; width:100% !important; }
   .login-overlay { align-items:flex-end !important; padding:0 !important; }
   .login-box { border-radius:18px 18px 0 0 !important; max-width:100% !important; margin:0 !important; padding:20px 16px 32px !important; width:100% !important; max-height:90vh !important; overflow-y:auto !important; }
-  .pm-modal-overlay { padding:0 !important; align-items:flex-end !important; }
-  .pm-modal { border-radius:18px 18px 0 0 !important; max-width:100% !important; max-height:92vh !important; }
-  .pm-modal-header { padding:16px 16px 12px !important; }
-  .pm-modal-body { padding:14px 16px !important; }
-  .pm-modal-footer { padding:12px 16px !important; }
   .ts-modal-overlay { align-items:flex-end !important; padding:0 !important; }
   .ts-modal { border-radius:18px 18px 0 0 !important; max-width:100% !important; margin:0 !important; padding:20px 16px 32px !important; }
   .btn-edit-ts { opacity:.6 !important; }
   .inu-sn-row { flex-wrap:wrap !important; }
   .inu-stiker-row { flex-wrap:wrap !important; }
+  .btn-open-pdf { padding:4px 10px !important; font-size:9px !important; }
 }
 
 @media (max-width: 380px) {
@@ -631,7 +598,7 @@ body.light .pm-filter-bar{background:#eaf2fc;border-color:#b8ccec;}
   <div class="running-inner">
     <span><span class="rb-label">📢 INFO:</span> Sistem monitoring drive aktif 24 jam — laporkan anomali segera ke tim teknisi</span>
     <span><span class="rb-label">⚠️ PERHATIAN:</span> Pastikan status drive selalu diperbarui setelah pengecekan lapangan</span>
-    <span><span class="rb-label">🔧 PM:</span> Jadwal Preventive Maintenance wajib dilaksanakan sesuai tanggal yang telah ditentukan</span>
+    <span><span class="rb-label">📖 MANUAL BOOK:</span> Dokumentasi teknis tersedia di tab Manual Book pada setiap mixing</span>
     <span><span class="rb-label">✅ SOP:</span> Setiap perubahan status drive harus disertai keterangan yang jelas dan akurat</span>
     <span><span class="rb-label">📊 GARDA HITAM:</span> Drive Monitoring System — Garda Hitam</span>
   </div>
@@ -684,7 +651,7 @@ body.light .pm-filter-bar{background:#eaf2fc;border-color:#b8ccec;}
         <div class="content-tabs">
           <div class="ctab active" id="ctab-drive"   onclick="switchTab('drive')">⚡ Drive</div>
           <div class="ctab"        id="ctab-histori" onclick="switchTab('histori')">📋 Histori</div>
-          <div class="ctab"        id="ctab-pm"      onclick="switchTab('pm')">🔧 pm</div>
+          <div class="ctab"        id="ctab-manual"  onclick="switchTab('manual')">📖 Manual Book</div>
           <div class="ctab"        id="ctab-summary" onclick="switchTab('summary')">⬜ Summary</div>
         </div>
         <div class="search-wrap" id="search-wrap" style="display:none">
@@ -694,6 +661,7 @@ body.light .pm-filter-bar{background:#eaf2fc;border-color:#b8ccec;}
           <button class="search-clear" id="search-clear" onclick="clearSearch()">✕ Clear</button>
         </div>
 
+        <!-- TAB DRIVE -->
         <div class="tab-content active" id="tab-drive">
           <div class="drive-header">
             <div class="drive-title" id="drive-title"></div>
@@ -737,36 +705,27 @@ body.light .pm-filter-bar{background:#eaf2fc;border-color:#b8ccec;}
           </div>
         </div>
 
-        <!-- TAB PM -->
-        <div class="tab-content" id="tab-pm">
-          <div class="pm-filter-bar" id="pm-filter-bar">
-            <span class="hist-filter-label">📅 Filter PM:</span>
+        <!-- TAB MANUAL BOOK -->
+        <div class="tab-content" id="tab-manual">
+          <div class="mb-filter-bar">
+            <span class="hist-filter-label">🔍 Filter Kategori:</span>
             <div class="hist-filter-group">
-              <select class="hist-filter-select" id="pm-filter-bulan" onchange="applyPMFilter()">
-                <option value="">Semua Bulan</option>
+              <select class="hist-filter-select" id="mb-filter-kategori" onchange="renderManualTable()">
+                <option value="">Semua Kategori</option>
               </select>
             </div>
-            <span class="hist-filter-sep">/</span>
-            <div class="hist-filter-group">
-              <select class="hist-filter-select" id="pm-filter-tahun" onchange="applyPMFilter()">
-                <option value="">Semua Tahun</option>
-              </select>
-            </div>
-            <div class="hist-period-badge" id="pm-period-badge" style="display:none">
-              <span>🔧</span><span id="pm-period-text">—</span>
-            </div>
-            <button class="btn-reset-filter hidden" id="btn-reset-pm-filter" onclick="resetPMFilter()">✕ Reset</button>
-            <span class="hist-filter-result" id="pm-filter-result"></span>
+            <span class="hist-filter-result" id="mb-filter-result"></span>
           </div>
-          <div style="display:flex;justify-content:flex-end;padding:10px 16px 0;flex-shrink:0;">
-            <button class="btn-pdf" onclick="printPMPDF()">🖨️ Cetak PDF</button>
-          </div>
-          <div class="pm-scroll-area" style="flex:1;overflow-y:auto;padding:16px 20px 20px;">
-            <div id="pm-content"></div>
-            <div class="no-results" id="pm-no-results"><span style="font-size:28px">🔍</span><span>Tidak ada hasil untuk "<span id="pm-search-query"></span>"</span></div>
+          <div class="manual-scroll-area">
+            <div id="manual-content"></div>
+            <div class="no-results" id="manual-no-results">
+              <span style="font-size:28px">🔍</span>
+              <span>Tidak ada hasil untuk "<span id="manual-search-query"></span>"</span>
+            </div>
           </div>
         </div>
 
+        <!-- TAB SUMMARY -->
         <div class="tab-content" id="tab-summary">
           <div id="summary-content"></div>
         </div>
@@ -857,60 +816,6 @@ body.light .pm-filter-bar{background:#eaf2fc;border-color:#b8ccec;}
   </div>
 </div>
 
-<!-- PM DETAIL MODAL -->
-<div class="pm-modal-overlay" id="pm-modal-overlay">
-  <div class="pm-modal">
-    <div class="pm-modal-header">
-      <div class="pm-modal-id" id="pm-modal-id">—</div>
-      <div class="pm-modal-title-text" id="pm-modal-title">—</div>
-      <div class="pm-modal-drive" id="pm-modal-drive">—</div>
-      <div class="pm-modal-meta-row" id="pm-modal-meta"></div>
-    </div>
-    <div class="pm-modal-body">
-      <div class="pm-section">
-        <div class="pm-section-label">📋 Deskripsi</div>
-        <div class="pm-desc-box" id="pm-modal-desc">—</div>
-      </div>
-      <div id="pm-edit-section" style="display:none">
-        <div class="pm-edit-section">
-          <div class="pm-edit-section-title">✏️ Edit Data PM</div>
-          <div class="form-group"><label class="form-label">Judul PM</label><input class="form-input" id="pm-edit-judul" type="text"></div>
-          <div style="display:flex;gap:10px">
-            <div class="form-group" style="flex:1;margin-bottom:0"><label class="form-label">Tanggal</label><input class="form-input" id="pm-edit-tanggal" type="text" placeholder="dd/mm/yyyy"></div>
-            <div class="form-group" style="flex:1;margin-bottom:0"><label class="form-label">Teknisi / Worker</label><input class="form-input" id="pm-edit-teknisi" type="text"></div>
-          </div>
-          <div class="form-group" style="margin-top:14px"><label class="form-label">Status</label>
-            <select class="form-select" id="pm-edit-status">
-              <option value="Pending">⏳ Pending</option>
-              <option value="Dalam Proses">🔄 Dalam Proses</option>
-              <option value="Selesai">✅ Selesai</option>
-              <option value="KERJAKAN">🔧 KERJAKAN</option>
-            </select>
-          </div>
-          <div class="form-group"><label class="form-label">Drive ID</label><input class="form-input" id="pm-edit-drive" type="text"></div>
-          <div class="form-group" style="margin-bottom:0"><label class="form-label">Catatan / Deskripsi</label><textarea class="form-input" id="pm-edit-catatan" rows="3" style="resize:vertical;"></textarea></div>
-          <div style="display:flex;gap:8px;margin-top:14px;justify-content:flex-end">
-            <button class="btn-cancel" onclick="cancelPMEdit()" style="font-size:12px;padding:7px 16px">Batal</button>
-            <button class="btn-save" id="btn-save-pm" onclick="savePMEdit()" style="font-size:12px;padding:7px 18px">Simpan Perubahan</button>
-          </div>
-        </div>
-      </div>
-      <div class="pm-section" style="margin-top:4px">
-        <div class="pm-section-label">📝 Notes / Catatan Lapangan</div>
-        <div class="pm-notes-list" id="pm-notes-list"></div>
-        <div class="pm-add-note" id="pm-add-note-area">
-          <textarea class="pm-note-input" id="pm-note-input" placeholder="Tambahkan catatan lapangan... (Enter untuk simpan)"></textarea>
-          <button class="btn-add-note" onclick="addPMNote()">➕ Tambah</button>
-        </div>
-      </div>
-    </div>
-    <div class="pm-modal-footer">
-      <button class="btn-cancel" onclick="closePMModal()" style="font-size:12px;padding:7px 16px">Tutup</button>
-      <button class="btn-edit-pm" id="btn-open-pm-edit" onclick="requestPMEdit()">✏️ Edit PM</button>
-    </div>
-  </div>
-</div>
-
 <script>
 const API       = 'https://script.google.com/macros/s/AKfycbwzgZWGlYmCmIQAQC8cQIKTN-9D2IyK2rthKGCP9wyo69pMKIug9-trvX8cL_jjOy--7A/exec';
 const LOGIN_API = 'https://script.google.com/macros/s/AKfycbzlhK15JovW0NpWxk5_aVE_IOmwGlEPgjssYzJjPGfQSZUKfMhQu_LqcU5hItI5HR91PQ/exec';
@@ -924,11 +829,7 @@ const S = {
   pendingDriveData:null, pendingPhotoUrl:null, pendingAction:'edit',
   searchQuery:'',
   histFilter:{ bulan:'', tahun:'' },
-  pmFilter:{ bulan:'', tahun:'' },
   pendingTsData: null,
-  currentPM: null,
-  pmNotes: [],
-  pmEditAuthed: false
 };
 
 // ══ FILTER DROPDOWN BUILDER ══
@@ -948,8 +849,9 @@ function buildFilterOptions(bulanSelId, tahunSelId, currentBulan, currentTahun) 
   bulanSel.value = currentBulan; tahunSel.value = currentTahun;
 }
 
-function buildHistoriFilterOptions() { buildFilterOptions('hist-filter-bulan','hist-filter-tahun', S.histFilter.bulan, S.histFilter.tahun); }
-function buildPMFilterOptions()      { buildFilterOptions('pm-filter-bulan','pm-filter-tahun', S.pmFilter.bulan, S.pmFilter.tahun); }
+function buildHistoriFilterOptions() {
+  buildFilterOptions('hist-filter-bulan','hist-filter-tahun', S.histFilter.bulan, S.histFilter.tahun);
+}
 
 // ══ PARSE TIMESTAMP ══
 function parseTimestamp(ts) {
@@ -984,61 +886,6 @@ function resetHistoriFilter() {
   id('hist-period-badge').style.display = 'none';
   id('btn-reset-histori-filter').classList.add('hidden');
   renderHistoriTableWithFilter();
-}
-
-// ══ FILTER PM ══
-function applyPMFilter() {
-  S.pmFilter.bulan = id('pm-filter-bulan').value;
-  S.pmFilter.tahun = id('pm-filter-tahun').value;
-  const hasFilter = S.pmFilter.bulan || S.pmFilter.tahun;
-  const badge = id('pm-period-badge'), resetBtn = id('btn-reset-pm-filter');
-  if (hasFilter) {
-    let label = S.pmFilter.bulan && S.pmFilter.tahun
-      ? NAMA_BULAN[+S.pmFilter.bulan] + ' ' + S.pmFilter.tahun
-      : S.pmFilter.bulan ? NAMA_BULAN[+S.pmFilter.bulan] + ' (Semua Tahun)'
-      : 'Tahun ' + S.pmFilter.tahun;
-    id('pm-period-text').textContent = label;
-    badge.style.display = 'flex'; resetBtn.classList.remove('hidden');
-  } else { badge.style.display = 'none'; resetBtn.classList.add('hidden'); }
-  renderPMWithFilter();
-}
-
-function resetPMFilter() {
-  S.pmFilter.bulan = ''; S.pmFilter.tahun = '';
-  id('pm-filter-bulan').value = ''; id('pm-filter-tahun').value = '';
-  id('pm-period-badge').style.display = 'none';
-  id('btn-reset-pm-filter').classList.add('hidden');
-  renderPMWithFilter();
-}
-
-// ══ RENDER PM ══
-function renderPMWithFilter() {
-  const jadwal = S.cache[S.plant + '_pm'];
-  if (!jadwal) return;
-  const filterBulan = S.pmFilter.bulan ? +S.pmFilter.bulan : null;
-  const filterTahun = S.pmFilter.tahun ? +S.pmFilter.tahun : null;
-  const q = S.searchQuery;
-  const filtered = jadwal.filter(p => {
-    const parsed = parseTimestamp(p.tanggal);
-    if (filterBulan && (!parsed || parsed.month !== filterBulan)) return false;
-    if (filterTahun && (!parsed || parsed.year  !== filterTahun)) return false;
-    if (q) {
-      const text = ((p.id||'')+(p.judul||'')+(p.drive_id||'')+(p.teknisi||'')+(p.status||'')+(p.catatan||'')).toLowerCase();
-      if (!text.includes(q)) return false;
-    }
-    return true;
-  });
-  const resultEl = id('pm-filter-result');
-  const hasFilter = filterBulan || filterTahun;
-  resultEl.textContent = (hasFilter || q) ? filtered.length + ' PM ditemukan' : jadwal.length + ' total PM';
-  const noRes = id('pm-no-results'), contentEl = id('pm-content');
-  if (!filtered.length) {
-    contentEl.innerHTML = '';
-    id('pm-search-query').textContent = q || (hasFilter ? 'periode ini' : '');
-    noRes.classList.add('visible'); return;
-  }
-  noRes.classList.remove('visible');
-  contentEl.innerHTML = `<div class="pm-grid">${filtered.map(p => pmCard(p, jadwal.indexOf(p))).join('')}</div>`;
 }
 
 // ══ RENDER HISTORI ══
@@ -1150,102 +997,101 @@ async function saveTsEdit() {
   finally { btn.disabled = false; btn.textContent = 'Simpan Koreksi'; }
 }
 
-// ══ PM MODAL ══
-function openPMModal(pm) {
-  S.currentPM = pm; S.pmEditAuthed = false;
-  const cacheKey = S.plant + '_pm_notes_' + (pm.id || '');
-  S.pmNotes = S.cache[cacheKey] ? [...S.cache[cacheKey]] : [];
-  id('pm-modal-id').textContent = pm.id || '—';
-  id('pm-modal-title').textContent = pm.judul || '—';
-  id('pm-modal-drive').textContent = '🔌 ' + (pm.drive_id || '—');
-  const stClass = {Selesai:'ok','Dalam Proses':'maint',Pending:'fault',KERJAKAN:'maint'}[pm.status] || 'kosong';
-  const workerDisplay = (pm.teknisi && pm.teknisi.trim() && pm.teknisi !== '.' && pm.teknisi !== '-')
-    ? esc(pm.teknisi) : '<span style="color:var(--muted);font-style:italic">—</span>';
-  id('pm-modal-meta').innerHTML = `
-    <span class="pm-meta-chip">📅 ${pm.tanggal||'—'}</span>
-    <span class="pm-meta-chip">👤 Worker: ${workerDisplay}</span>
-    <span class="status-tag st-${stClass}" style="font-size:11px;padding:4px 10px">${esc(pm.status||'—')}</span>`;
-  id('pm-modal-desc').textContent = pm.catatan || pm.deskripsi || '(Tidak ada deskripsi)';
-  id('pm-edit-section').style.display = 'none';
-  id('btn-open-pm-edit').style.display = '';
-  renderPMNotes();
-  id('pm-note-input').value = '';
-  id('pm-modal-overlay').classList.add('open');
-}
-
-function closePMModal() { id('pm-modal-overlay').classList.remove('open'); S.currentPM = null; S.pmEditAuthed = false; }
-
-function renderPMNotes() {
-  const list = id('pm-notes-list');
-  if (!S.pmNotes.length) { list.innerHTML = '<div class="pm-empty-notes">Belum ada catatan lapangan.</div>'; return; }
-  list.innerHTML = S.pmNotes.map(n => `
-    <div class="pm-note-item">
-      <div class="pm-note-ts">📝 ${esc(n.ts)} · ${esc(n.by||'Teknisi')}</div>
-      <div class="pm-note-text">${esc(n.text)}</div>
-    </div>`).join('');
-}
-
-function addPMNote() {
-  const input = id('pm-note-input'), text = input.value.trim();
-  if (!text) { input.focus(); return; }
-  const note = { ts: new Date().toLocaleString('id-ID'), by: 'Web User', text };
-  S.pmNotes.push(note);
-  const pm = S.currentPM;
-  if (pm) {
-    const cacheKey = S.plant + '_pm_notes_' + (pm.id||'');
-    S.cache[cacheKey] = [...S.pmNotes];
-    try { apiGet({ action:'addPMNote', plant:S.plant, pm_id:pm.id, note_text:text, note_ts:note.ts, note_by:note.by }).catch(()=>{}); } catch(e) {}
-  }
-  input.value = ''; renderPMNotes();
-  const listEl = id('pm-notes-list');
-  if (listEl) listEl.scrollIntoView({ behavior:'smooth', block:'end' });
-}
-
-document.addEventListener('DOMContentLoaded', () => {
-  const noteInput = id('pm-note-input');
-  if (noteInput) noteInput.addEventListener('keydown', e => { if(e.key==='Enter'&&!e.shiftKey){ e.preventDefault(); addPMNote(); } });
-});
-
-function requestPMEdit() {
-  if (S.pmEditAuthed) { showPMEditForm(); return; }
-  S.pendingAction = 'editPM'; S.pendingDriveData = null; S.pendingPhotoUrl = null;
-  id('login-sub-text').textContent = 'Untuk mengedit data PM, masukkan kredensial akun mixing ini.';
-  id('login-area-label').textContent = _getCurGroupLabel();
-  id('login-username').value = ''; id('login-password').value = '';
-  id('login-err').style.display = 'none';
-  const btn = id('btn-login-submit'); btn.classList.remove('loading'); btn.disabled = false;
-  id('login-overlay').classList.add('open');
-  setTimeout(() => id('login-username').focus(), 100);
-}
-
-function showPMEditForm() {
-  const pm = S.currentPM; if (!pm) return;
-  id('pm-edit-judul').value   = pm.judul || '';
-  id('pm-edit-tanggal').value = pm.tanggal || '';
-  id('pm-edit-teknisi').value = pm.teknisi || '';
-  id('pm-edit-status').value  = pm.status || 'Pending';
-  id('pm-edit-drive').value   = pm.drive_id || '';
-  id('pm-edit-catatan').value = pm.catatan || pm.deskripsi || '';
-  id('pm-edit-section').style.display = '';
-  id('btn-open-pm-edit').style.display = 'none';
-  id('pm-edit-section').scrollIntoView({ behavior:'smooth', block:'nearest' });
-}
-
-function cancelPMEdit() { id('pm-edit-section').style.display = 'none'; id('btn-open-pm-edit').style.display = ''; }
-
-async function savePMEdit() {
-  const pm = S.currentPM, btn = id('btn-save-pm'); if (!pm) return;
-  const updatedPM = { id:pm.id, judul:id('pm-edit-judul').value.trim(), tanggal:id('pm-edit-tanggal').value.trim(), teknisi:id('pm-edit-teknisi').value.trim(), status:id('pm-edit-status').value, drive_id:id('pm-edit-drive').value.trim(), catatan:id('pm-edit-catatan').value.trim() };
-  btn.disabled = true; btn.textContent = 'Menyimpan...';
+// ══ MANUAL BOOK ══
+async function renderManualTab() {
+  id('manual-content').innerHTML = loadingHTML('Memuat manual book...');
   try {
-    await apiGet({ action:'updateJadwalPM', plant:S.plant, ...updatedPM, updatedBy:'web-user' });
-    S.currentPM = { ...pm, ...updatedPM };
-    const jadwal = S.cache[S.plant + '_pm'] || [];
-    const idx = jadwal.findIndex(p => p.id === pm.id);
-    if (idx >= 0) jadwal[idx] = S.currentPM;
-    openPMModal(S.currentPM); renderPMWithFilter();
-  } catch(err) { alert('Gagal menyimpan: ' + err.message); }
-  finally { btn.disabled = false; btn.textContent = 'Simpan Perubahan'; }
+    if (!S.cache[S.plant + '_manuals']) {
+      const data = await apiGet({ action: 'getManualBook', plant: S.plant });
+      S.cache[S.plant + '_manuals'] = data.manuals || [];
+    }
+    const manuals = S.cache[S.plant + '_manuals'];
+    if (!manuals || !manuals.length) {
+      id('manual-content').innerHTML = `<div class="state-box"><div style="font-size:36px">📖</div><h3>Belum ada Manual Book</h3><p>Tambahkan data di sheet <b>manual_book</b> pada spreadsheet ${esc(S.plant)}</p></div>`;
+      return;
+    }
+    // Isi dropdown kategori
+    const katSel = id('mb-filter-kategori');
+    const kategoriList = [...new Set(manuals.map(m => m.kategori).filter(Boolean))].sort();
+    katSel.innerHTML = '<option value="">Semua Kategori</option>';
+    kategoriList.forEach(k => {
+      const opt = document.createElement('option');
+      opt.value = k; opt.textContent = k;
+      katSel.appendChild(opt);
+    });
+    renderManualTable();
+  } catch (err) {
+    id('manual-content').innerHTML = errHTML(err.message, renderManualTab);
+  }
+}
+
+function renderManualTable() {
+  const manuals   = S.cache[S.plant + '_manuals'] || [];
+  const katFilter = id('mb-filter-kategori') ? id('mb-filter-kategori').value : '';
+  const q         = S.searchQuery;
+
+  const filtered = manuals.filter(m => {
+    if (katFilter && m.kategori !== katFilter) return false;
+    if (q) {
+      const text = ((m.id||'')+(m.judul||'')+(m.drive_id||'')+(m.kategori||'')+(m.tanggal||'')).toLowerCase();
+      if (!text.includes(q)) return false;
+    }
+    return true;
+  });
+
+  const resultEl = id('mb-filter-result');
+  if (resultEl) resultEl.textContent = filtered.length + ' dokumen';
+
+  const noRes    = id('manual-no-results');
+  const contentEl = id('manual-content');
+
+  if (!filtered.length) {
+    contentEl.innerHTML = '';
+    const sqEl = id('manual-search-query');
+    if (sqEl) sqEl.textContent = q || katFilter || '';
+    if (noRes) noRes.classList.add('visible');
+    return;
+  }
+  if (noRes) noRes.classList.remove('visible');
+
+  contentEl.innerHTML = `
+    <div class="mb-header-row">
+      <span class="mb-header-title">📖 Dokumen Manual Book</span>
+      <span class="mb-header-count">${filtered.length} dokumen</span>
+    </div>
+    <div class="mb-table-wrap">
+      <table class="mb-table">
+        <thead>
+          <tr>
+            <th class="mb-num">#</th>
+            <th>Judul Dokumen</th>
+            <th>Drive ID</th>
+            <th>Kategori</th>
+            <th>Tanggal</th>
+            <th>Aksi</th>
+          </tr>
+        </thead>
+        <tbody>
+          ${filtered.map((m, i) => `
+            <tr>
+              <td class="mb-num">${i + 1}</td>
+              <td>
+                <div class="mb-judul">${esc(m.judul)}</div>
+                ${m.id ? `<div class="mb-doc-id">${esc(m.id)}</div>` : ''}
+              </td>
+              <td class="mb-drive">${esc(m.drive_id) || '<span style="color:var(--muted)">—</span>'}</td>
+              <td>${m.kategori
+                ? `<span class="mb-kategori-tag">${esc(m.kategori)}</span>`
+                : '<span class="mb-empty">—</span>'}</td>
+              <td class="mb-tanggal">${esc(m.tanggal) || '<span class="mb-empty">—</span>'}</td>
+              <td>${m.link_pdf
+                ? `<a class="btn-open-pdf" href="${esc(m.link_pdf)}" target="_blank" rel="noopener noreferrer">📄 Buka PDF</a>`
+                : '<span class="mb-empty">—</span>'}</td>
+            </tr>
+          `).join('')}
+        </tbody>
+      </table>
+    </div>`;
 }
 
 // ══ SEARCH ══
@@ -1265,7 +1111,7 @@ function applySearch() {
   const q = S.searchQuery;
   if (S.tab === 'drive')   applyDriveSearch(q);
   if (S.tab === 'histori') renderHistoriTableWithFilter();
-  if (S.tab === 'pm')      renderPMWithFilter();
+  if (S.tab === 'manual')  renderManualTable();
 }
 
 function applyDriveSearch(q) {
@@ -1329,10 +1175,9 @@ async function submitLogin() {
     if (result.success) {
       const action=S.pendingAction, photoUrl=S.pendingPhotoUrl, d=S.pendingDriveData, tsD=S.pendingTsData;
       closeLoginModal();
-      if      (action==='photo' && photoUrl)        window.open(photoUrl,'_blank');
-      else if (action==='edit' && d)                openModal(d.driveId,d.status,d.keterangan,d.merk,d.spesifikasi,d.photoUrl,d.serialNumber,d.stiker);
-      else if (action==='editTimestamp' && tsD)     openTsModal();
-      else if (action==='editPM')                   { S.pmEditAuthed = true; showPMEditForm(); }
+      if      (action==='photo' && photoUrl)    window.open(photoUrl,'_blank');
+      else if (action==='edit' && d)            openModal(d.driveId,d.status,d.keterangan,d.merk,d.spesifikasi,d.photoUrl,d.serialNumber,d.stiker);
+      else if (action==='editTimestamp' && tsD) openTsModal();
     } else { errEl.textContent='❌ '+(result.message||'Username atau password salah.'); errEl.style.display='block'; }
   } catch(err) { errEl.textContent='⚠️ Tidak dapat terhubung ke server.'; errEl.style.display='block'; }
   finally { btn.classList.remove('loading'); btn.disabled = false; }
@@ -1485,12 +1330,16 @@ function switchTab(tab, force) {
   id('tab-'+tab).classList.add('active');
   showSearchBar(tab !== 'summary');
   clearSearch();
-  const placeholders = { drive:'Cari drive, merk, serial number, stiker, status...', histori:'Cari drive ID, status, keterangan, waktu...', pm:'Cari judul PM, drive ID, teknisi, status...' };
+  const placeholders = {
+    drive   : 'Cari drive, merk, serial number, stiker, status...',
+    histori : 'Cari drive ID, status, keterangan, waktu...',
+    manual  : 'Cari judul, drive ID, kategori...'
+  };
   const sb = id('search-bar');
   if (sb && placeholders[tab]) sb.placeholder = placeholders[tab];
   if (tab==='drive')   renderDriveTab();
   if (tab==='histori') renderHistoriTab();
-  if (tab==='pm')      renderPMTab();
+  if (tab==='manual')  renderManualTab();
   if (tab==='summary') renderSummaryTab();
 }
 
@@ -1553,28 +1402,14 @@ async function renderDriveTab() {
   } catch(err) { id('drive-content').innerHTML = errHTML(err.message, renderDriveTab); id('drive-meta').textContent = 'Gagal memuat'; }
 }
 
-// ══ INU CARD — dengan Serial Number dan Stiker terpisah ══
 function inuCard(d) {
   const st   = d.status || 'kosong';
   const stTx = {ok:'OK', fault:'Fault', maint:'Maintenance', maintenance:'Maintenance', kosong:'Kosong'}[st] || st;
-
-  // Serial Number — dari kolom serial_number (bukan spesifikasi)
   const sn     = d.serial_number || d.sn || '';
-  // Stiker — dari kolom stiker
   const stiker = d.stiker || '';
-  // Spesifikasi — dari kolom spesifikasi (tipe/model drive)
   const spek   = d.spesifikasi || '';
-
-  const snHtml = sn ? `<div class="inu-sn-row">
-    <span class="inu-sn-label">S/N</span>
-    <span class="inu-sn-value">${esc(sn)}</span>
-  </div>` : '';
-
-  const stikerHtml = stiker ? `<div class="inu-stiker-row">
-    <span class="inu-stiker-label">STIKER</span>
-    <span class="inu-stiker-value">${esc(stiker)}</span>
-  </div>` : '';
-
+  const snHtml = sn ? `<div class="inu-sn-row"><span class="inu-sn-label">S/N</span><span class="inu-sn-value">${esc(sn)}</span></div>` : '';
+  const stikerHtml = stiker ? `<div class="inu-stiker-row"><span class="inu-stiker-label">STIKER</span><span class="inu-stiker-value">${esc(stiker)}</span></div>` : '';
   const keterangan = d.keterangan || '';
   const roleLower  = keterangan.toLowerCase();
   let roleHtml = '';
@@ -1582,28 +1417,19 @@ function inuCard(d) {
     roleHtml = `<div class="inu-role">▲ MASTER</div>`;
   else if (roleLower.includes('follower') || roleLower.includes('slave'))
     roleHtml = `<div class="inu-role">▽ Followers</div>`;
-
   const infoText = keterangan.replace(/master|follower|slave/gi,'').trim();
   const photoHtml = d.photo_url
     ? `<button class="inu-photo-btn" onclick="event.stopPropagation();requestViewPhoto('${esc(d.photo_url)}')">📷 Lihat Foto</button>`
     : '';
-
   return `<div class="inu-card ${st}" onclick="requestEdit(
-    '${esc(d.drive_id)}',
-    '${st}',
-    '${esc(keterangan)}',
-    '${esc(d.merk)}',
-    '${esc(spek)}',
-    '${esc(d.photo_url||'')}',
-    '${esc(sn)}',
-    '${esc(stiker)}'
+    '${esc(d.drive_id)}','${st}','${esc(keterangan)}','${esc(d.merk)}',
+    '${esc(spek)}','${esc(d.photo_url||'')}','${esc(sn)}','${esc(stiker)}'
   )">
     <div class="inu-edit-hint">✏️ edit</div>
     <div class="inu-tag">${esc(d.drive_id)}</div>
     <div class="inu-name">${esc(d.merk)||'—'}</div>
     ${spek ? `<div class="inu-spec">${esc(spek)}</div>` : ''}
-    ${snHtml}
-    ${stikerHtml}
+    ${snHtml}${stikerHtml}
     <div class="inu-status"><div class="inu-dot"></div>${stTx}</div>
     ${roleHtml}
     ${infoText ? `<div class="inu-info">${esc(infoText)}</div>` : ''}
@@ -1624,45 +1450,6 @@ async function renderHistoriTab() {
     buildHistoriFilterOptions();
     renderHistoriTableWithFilter();
   } catch(err) { id('histori-content').innerHTML = errHTML(err.message, renderHistoriTab); }
-}
-
-// ══ RENDER PM TAB ══
-async function renderPMTab() {
-  id('pm-content').innerHTML = loadingHTML('Memuat jadwal PM...');
-  try {
-    if (!S.cache[S.plant+'_pm']) {
-      const data = await apiGet({action:'getJadwalPM', plant:S.plant});
-      S.cache[S.plant+'_pm'] = data.jadwal || data;
-    }
-    const jadwal = S.cache[S.plant+'_pm'];
-    if (!jadwal||!jadwal.length) { id('pm-content').innerHTML=`<div class="state-box"><div style="font-size:28px">🔧</div><h3>Belum ada jadwal PM</h3></div>`; return; }
-    buildPMFilterOptions();
-    renderPMWithFilter();
-  } catch(err) { id('pm-content').innerHTML = errHTML(err.message, renderPMTab); }
-}
-
-function pmCard(p, origIdx) {
-  const stClass = {Selesai:'ok',Pending:'maint','Dalam Proses':'fault',KERJAKAN:'maint'}[p.status]||'kosong';
-  const workerName = (p.teknisi && p.teknisi.trim() && p.teknisi!=='.' && p.teknisi!=='-')
-    ? esc(p.teknisi) : '<em style="color:var(--muted)">—</em>';
-  return `<div class="pm-card" onclick="openPMModalFromGrid(${origIdx})">
-    <div class="pm-card-id">${esc(p.id)}</div>
-    <div class="pm-card-judul">${esc(p.judul)}</div>
-    <div class="pm-card-drive">${esc(p.drive_id)}</div>
-    <div class="pm-card-meta">
-      <span>📅 ${p.tanggal||'—'}</span>
-      <span>👤 Worker: ${workerName}</span>
-      ${p.catatan?`<span>📝 ${esc(p.catatan).substring(0,60)}${p.catatan.length>60?'…':''}</span>`:''}
-    </div>
-    <div class="pm-card-status"><span class="status-tag st-${stClass}">${esc(p.status)}</span></div>
-    <div class="pm-card-hint">🔍 Klik untuk detail &amp; edit</div>
-  </div>`;
-}
-
-function openPMModalFromGrid(idx) {
-  const jadwal = S.cache[S.plant+'_pm']||[];
-  const pm = jadwal[idx];
-  if (pm) openPMModal(pm);
 }
 
 // ══ RENDER SUMMARY TAB ══
@@ -1699,7 +1486,7 @@ function openModal(driveId, status, keterangan, merk, spesifikasi, photoUrl, ser
   id('modal-spek').value    = spesifikasi || '';
   id('modal-ket').value     = keterangan || '';
   id('modal-sn').value      = serialNumber || '';
-  id('modal-stiker').value  = stiker || '';        // ★ BARU
+  id('modal-stiker').value  = stiker || '';
   id('modal-photo').value   = photoUrl || '';
   id('modal').classList.add('open');
 }
@@ -1719,7 +1506,7 @@ async function saveStatus() {
       merk          : id('modal-merk').value.trim(),
       spesifikasi   : id('modal-spek').value.trim(),
       serial_number : id('modal-sn').value.trim(),
-      stiker        : id('modal-stiker').value.trim(),   // ★ BARU
+      stiker        : id('modal-stiker').value.trim(),
       photo_url     : id('modal-photo').value.trim(),
       updatedBy     : 'web-user'
     });
@@ -1734,12 +1521,11 @@ async function saveStatus() {
 id('modal').addEventListener('click', e => { if(e.target===id('modal')) closeModal(); });
 id('login-overlay').addEventListener('click', e => { if(e.target===id('login-overlay')) closeLoginModal(); });
 id('ts-modal-overlay').addEventListener('click', e => { if(e.target===id('ts-modal-overlay')) closeTsModal(); });
-id('pm-modal-overlay').addEventListener('click', e => { if(e.target===id('pm-modal-overlay')) closePMModal(); });
 
 // ══ REFRESH ══
 async function doRefresh() {
   const btn = id('btn-refresh'); btn.classList.add('loading');
-  if (S.plant) ['drives','groupList','histori','pm','summary'].forEach(k => delete S.cache[S.plant+'_'+k]);
+  if (S.plant) ['drives','groupList','histori','manuals','summary'].forEach(k => delete S.cache[S.plant+'_'+k]);
   clearSearch();
   if (S.page==='detail') await renderDetailPage(); else await renderPlantPage();
   btn.classList.remove('loading');
@@ -1755,26 +1541,7 @@ function errHTML(msg,fn) {
   return `<div class="state-box"><div style="font-size:28px">⚠️</div><h3>Gagal memuat</h3><p>${esc(msg)}</p><button class="btn-retry" id="${rid}">Coba Lagi</button></div>`;
 }
 
-// Clock
-setInterval(() => { id('clock').textContent = new Date().toTimeString().slice(0,8); }, 1000);
-id('clock').textContent = new Date().toTimeString().slice(0,8);
-
-// Theme
-function toggleTheme() {
-  const isLight = document.body.classList.toggle('light');
-  id('btn-theme').textContent = isLight ? '☀️ Light' : '🌙 Dark';
-  const m = id('stat-mode'); if(m) m.textContent = isLight ? 'LIGHT' : 'DARK';
-  localStorage.setItem('theme', isLight ? 'light' : 'dark');
-}
-if (localStorage.getItem('theme')==='light') {
-  document.body.classList.add('light');
-  document.addEventListener('DOMContentLoaded', () => {
-    const b=id('btn-theme'); if(b) b.textContent='☀️ Light';
-    const m=id('stat-mode'); if(m) m.textContent='LIGHT';
-  });
-}
-
-// ══ PRINT PDF ══
+// ══ PRINT HISTORI PDF ══
 async function printHistoriPDF() {
   const allRows = S.cache[S.plant+'_histori'];
   if (!allRows||!allRows.length) { alert('Tidak ada data histori untuk dicetak.'); return; }
@@ -1803,29 +1570,23 @@ async function printHistoriPDF() {
   doc.save(`Histori_${S.plant}_${safePeriod}_${new Date().toISOString().slice(0,10)}.pdf`);
 }
 
-async function printPMPDF() {
-  const jadwal = S.cache[S.plant+'_pm'];
-  if (!jadwal||!jadwal.length) { alert('Tidak ada data jadwal PM untuk dicetak.'); return; }
-  const filterBulan = S.pmFilter.bulan ? +S.pmFilter.bulan : null;
-  const filterTahun = S.pmFilter.tahun ? +S.pmFilter.tahun : null;
-  const filtered = jadwal.filter(p => {
-    const parsed = parseTimestamp(p.tanggal);
-    if (filterBulan && (!parsed || parsed.month !== filterBulan)) return false;
-    if (filterTahun && (!parsed || parsed.year  !== filterTahun)) return false;
-    return true;
+// Clock
+setInterval(() => { id('clock').textContent = new Date().toTimeString().slice(0,8); }, 1000);
+id('clock').textContent = new Date().toTimeString().slice(0,8);
+
+// Theme
+function toggleTheme() {
+  const isLight = document.body.classList.toggle('light');
+  id('btn-theme').textContent = isLight ? '☀️ Light' : '🌙 Dark';
+  const m = id('stat-mode'); if(m) m.textContent = isLight ? 'LIGHT' : 'DARK';
+  localStorage.setItem('theme', isLight ? 'light' : 'dark');
+}
+if (localStorage.getItem('theme')==='light') {
+  document.body.classList.add('light');
+  document.addEventListener('DOMContentLoaded', () => {
+    const b=id('btn-theme'); if(b) b.textContent='☀️ Light';
+    const m=id('stat-mode'); if(m) m.textContent='LIGHT';
   });
-  if (!filtered.length) { alert('Tidak ada data PM untuk periode yang dipilih.'); return; }
-  let periodLabel = 'Semua Periode';
-  if (filterBulan && filterTahun) periodLabel = NAMA_BULAN[filterBulan]+' '+filterTahun;
-  else if (filterBulan) periodLabel = NAMA_BULAN[filterBulan]+' (Semua Tahun)';
-  else if (filterTahun) periodLabel = 'Tahun '+filterTahun;
-  const {jsPDF} = window.jspdf, doc = new jsPDF({orientation:'landscape'});
-  doc.setFontSize(14); doc.setFont('helvetica','bold'); doc.text(`Jadwal PM — ${S.plant}`, 14, 16);
-  doc.setFontSize(9); doc.setFont('helvetica','normal');
-  doc.text(`Periode: ${periodLabel} · Dicetak: ${new Date().toLocaleString('id-ID')}`, 14, 22);
-  doc.autoTable({ startY:27, head:[['ID PM','Judul','Drive ID','Tanggal','Worker','Status','Catatan']], body:filtered.map(p=>[p.id||'—',p.judul||'—',p.drive_id||'—',p.tanggal||'—',p.teknisi||'—',p.status||'—',p.catatan||'—']), styles:{fontSize:8,cellPadding:2}, headStyles:{fillColor:[0,150,136],textColor:255,fontStyle:'bold'}, alternateRowStyles:{fillColor:[240,248,245]}, theme:'grid' });
-  const safePeriod = periodLabel.replace(/[^a-zA-Z0-9_\-]/g,'_');
-  doc.save(`JadwalPM_${S.plant}_${safePeriod}_${new Date().toISOString().slice(0,10)}.pdf`);
 }
 
 navTo('plant');
