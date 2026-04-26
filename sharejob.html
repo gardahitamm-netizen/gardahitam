@@ -188,7 +188,7 @@ body::after {
 
 #accessDeniedOverlay { display: none; position: fixed; inset: 0; background: rgba(8,12,16,0.85); backdrop-filter: blur(6px); z-index: 9000; justify-content: center; align-items: center; }
 #accessDeniedOverlay.show { display: flex; }
-.ad-box { background: var(--bg-panel); border: 1px solid rgba(255,23,68,0.4); border-radius: 12px; padding: 32px; text-align: center; max-width: 360px; box-shadow: 0 0 40px rgba(255,23,68,0.1); }
+.ad-box { background: var(--bg-panel); border: 1px solid rgba(255,23,68,0.4); border-radius: 12px; padding: 32px; text-align: center; max-width: 380px; box-shadow: 0 0 40px rgba(255,23,68,0.1); }
 .ad-icon { font-size: 36px; margin-bottom: 14px; }
 .ad-title { font-family: 'JetBrains Mono', monospace; font-size: 13px; color: var(--red-err); letter-spacing: 2px; margin-bottom: 10px; }
 .ad-desc { font-size: 13px; color: var(--text-mid); line-height: 1.6; margin-bottom: 20px; }
@@ -277,7 +277,6 @@ body::after {
 .btn-reset-filter.hidden { display: none; }
 .hist-filter-result { font-family: 'JetBrains Mono', monospace; font-size: 10px; color: var(--text-dim); flex-shrink: 0; }
 
-/* Search 3 input terpisah */
 .search-group { display: flex; align-items: center; gap: 6px; flex-wrap: wrap; flex: 1; min-width: 280px; }
 .search-item { position: relative; display: flex; align-items: center; min-width: 120px; flex: 1; }
 .search-item svg { position: absolute; left: 8px; width: 12px; height: 12px; fill: var(--text-dim); pointer-events: none; flex-shrink: 0; }
@@ -579,7 +578,6 @@ tr.filter-hidden { display: none; }
     </div>
     <button class="btn-reset-filter hidden" id="btnResetFilter" onclick="resetFilter()">✕ Reset</button>
 
-    <!-- 3 Search Input Terpisah -->
     <div class="search-group">
       <div class="search-item">
         <svg viewBox="0 0 24 24"><path d="M12 12c2.7 0 4.8-2.1 4.8-4.8S14.7 2.4 12 2.4 7.2 4.5 7.2 7.2 9.3 12 12 12zm0 2.4c-3.2 0-9.6 1.6-9.6 4.8v2.4h19.2v-2.4c0-3.2-6.4-4.8-9.6-4.8z"/></svg>
@@ -612,9 +610,7 @@ tr.filter-hidden { display: none; }
       <tbody id="data"></tbody>
     </table>
   </div>
-  <div style="font-family:'JetBrains Mono',monospace;font-size:10px;color:var(--text-dim);text-align:center;margin-bottom:8px;" id="editHint">
-    💡 Double-klik pada baris untuk edit • Jam Selesai otomatis saat status → Selesai
-  </div>
+  <div style="font-family:'JetBrains Mono',monospace;font-size:10px;color:var(--text-dim);text-align:center;margin-bottom:8px;" id="editHint"></div>
 </div>
 
 <div id="printPagesContainer"></div>
@@ -663,19 +659,36 @@ var UNIT_CONFIG = [
 var MASTER_GAS_URL = "https://script.google.com/macros/s/AKfycbxcpj6mYF6YHVhdNNhdn9mX2b_F9gi_2q8cJc_Co6QzjqDD_0qMdQGv4YxOBoLrJV0W/exec";
 
 // ═══════════════════════════════════════
-// RBAC
+// RBAC — DEFINISI ROLE & PERMISSION
 // ═══════════════════════════════════════
+// 
+// TEKNISI   : ubah status (Pending/Proses/Selesai)
+// SUPERVISOR: tambah, edit, hapus job — TIDAK bisa ubah status
+// ADMIN     : semua akses (teknisi + supervisor)
+// GUEST     : hanya lihat, cetak, filter, WA
+//
+// Cetak, WA, Filter, Refresh → semua role bisa
+// ═══════════════════════════════════════
+
 var ROLES = { ADMIN:'admin', SUPERVISOR:'supervisor', TEKNISI:'teknisi', GUEST:'guest' };
 
 var PERMISSIONS = {
-  'sharejob.add':            ['admin','supervisor'],
-  'sharejob.edit':           ['admin','supervisor'],
-  'sharejob.delete':         ['admin','supervisor'],
-  'sharejob.archive':        ['admin','supervisor'],
-  'sharejob.statusChange':   ['admin','supervisor','teknisi'],
-  'sharejob.editRunningText':['admin'],
-  'drive.view':              ['admin','supervisor','teknisi','guest'],
-  'drive.edit':              ['admin','teknisi']
+  // Tambah job baru
+  'sharejob.add':              ['admin', 'supervisor'],
+  // Edit job (inline double-click)
+  'sharejob.edit':             ['admin', 'supervisor'],
+  // Hapus job
+  'sharejob.delete':           ['admin', 'supervisor'],
+  // Archive semua job
+  'sharejob.archive':          ['admin', 'supervisor'],
+  // Ubah status Pending/Proses/Selesai
+  'sharejob.statusChange':     ['admin', 'teknisi'],      // ← supervisor TIDAK ada di sini
+  // Edit running text (marquee bawah)
+  'sharejob.editRunningText':  ['admin'],
+  // Cetak, WA, filter — semua role
+  'sharejob.print':            ['admin', 'supervisor', 'teknisi', 'guest'],
+  'sharejob.wa':               ['admin', 'supervisor', 'teknisi', 'guest'],
+  'sharejob.filter':           ['admin', 'supervisor', 'teknisi', 'guest'],
 };
 
 var ROLE_META = {
@@ -732,12 +745,18 @@ async function doLogin() {
     var result = await res.json();
 
     if (result.success) {
-      var role = (result.role || '').toLowerCase();
-      if (role === 'admin') role = ROLES.ADMIN;
-      else if (role === 'supervisor') role = ROLES.SUPERVISOR;
-      else if (role === 'teknisi') role = ROLES.TEKNISI;
-      else role = ROLES.TEKNISI;
-      var session = { username:username, role:role, allowedUnits: result.units || UNIT_CONFIG.map(function(u){return u.code;}), loginTime: Date.now() };
+      // ── PERBAIKAN UTAMA: ambil role dari response GAS ──
+      var role = (result.role || '').toLowerCase().trim();
+      // Validasi role harus salah satu dari role yang dikenal
+      if (['admin','supervisor','teknisi'].indexOf(role) === -1) {
+        role = ROLES.TEKNISI; // default ke teknisi jika tidak dikenal
+      }
+      var session = {
+        username: username,
+        role: role,
+        allowedUnits: result.units || UNIT_CONFIG.map(function(u){return u.code;}),
+        loginTime: Date.now()
+      };
       saveSession(session);
       startApp(session);
     } else {
@@ -745,8 +764,14 @@ async function doLogin() {
       errorDiv.classList.add('show');
     }
   } catch(err) {
+    // Fallback hardcoded admin jika koneksi gagal
     if (checkHardcodedAdmin(username, password)) {
-      var session = { username:username, role:ROLES.ADMIN, allowedUnits: UNIT_CONFIG.map(function(u){return u.code;}), loginTime: Date.now() };
+      var session = {
+        username: username,
+        role: ROLES.ADMIN,
+        allowedUnits: UNIT_CONFIG.map(function(u){return u.code;}),
+        loginTime: Date.now()
+      };
       saveSession(session); startApp(session);
     } else {
       errorDiv.textContent = 'Tidak dapat terhubung. Cek koneksi internet.';
@@ -762,7 +787,12 @@ function checkHardcodedAdmin(username, password) {
 }
 
 function loginAsGuest() {
-  var session = { username:'Tamu', role:ROLES.GUEST, allowedUnits: UNIT_CONFIG.map(function(u){return u.code;}), loginTime: Date.now() };
+  var session = {
+    username: 'Tamu',
+    role: ROLES.GUEST,
+    allowedUnits: UNIT_CONFIG.map(function(u){return u.code;}),
+    loginTime: Date.now()
+  };
   saveSession(session);
   startApp(session);
 }
@@ -787,41 +817,56 @@ function setupUserChip(session) {
 }
 
 function setupRoleUI(session) {
-  var showInput = hasPermission('sharejob.add');
-  var showDelete = hasPermission('sharejob.delete');
-  document.getElementById('toggleInputBtn').classList.toggle('hidden', !showInput);
-  document.getElementById('toggleDeleteBtn').classList.toggle('hidden', !showDelete);
-  var editRunBtn = document.getElementById('editRunningBtn');
-  if (editRunBtn) editRunBtn.style.opacity = hasPermission('sharejob.editRunningText') ? '1' : '0.3';
+  var role = session.role;
 
+  // Tombol tambah job: admin & supervisor
+  document.getElementById('toggleInputBtn').classList.toggle('hidden', !hasPermission('sharejob.add'));
+  // Tombol hapus job: admin & supervisor
+  document.getElementById('toggleDeleteBtn').classList.toggle('hidden', !hasPermission('sharejob.delete'));
+
+  // Edit running text: hanya admin
+  var editRunBtn = document.getElementById('editRunningBtn');
+  if (editRunBtn) {
+    editRunBtn.style.opacity = hasPermission('sharejob.editRunningText') ? '1' : '0.3';
+    editRunBtn.style.cursor  = hasPermission('sharejob.editRunningText') ? 'pointer' : 'not-allowed';
+  }
+
+  // Hint di bawah tabel sesuai role
   var hint = document.getElementById('editHint');
   if (hint) {
-    var role = session.role;
-    if (role === ROLES.GUEST) hint.textContent = '👁 Mode Tamu: hanya bisa melihat data';
-    else if (role === ROLES.TEKNISI) hint.textContent = '🔧 Teknisi: Anda bisa mengubah status job';
-    else if (role === ROLES.SUPERVISOR) hint.textContent = '🎯 Supervisor: Anda bisa menambah, edit, dan hapus job • Double-klik untuk edit';
-    else hint.textContent = '👑 Admin: Akses penuh • Double-klik pada baris untuk edit';
+    if (role === ROLES.GUEST) {
+      hint.textContent = '👁 Mode Tamu: hanya bisa melihat, filter, cetak, dan kirim WA';
+    } else if (role === ROLES.TEKNISI) {
+      hint.textContent = '🔧 Teknisi: Anda bisa mengubah status job (Pending / Proses / Selesai)';
+    } else if (role === ROLES.SUPERVISOR) {
+      hint.textContent = '🎯 Supervisor: Anda bisa menambah, edit, dan hapus job • Double-klik baris untuk edit';
+    } else {
+      hint.textContent = '👑 Admin: Akses penuh • Double-klik baris untuk edit • Ubah status tersedia';
+    }
   }
-  showPermNotice(session.role);
+
+  showPermNotice(role);
 }
 
 function showPermNotice(role) {
   var notice = document.getElementById('permNotice');
   if (!notice) return;
   var messages = {
-    guest:      { cls:'pn-info', text:'👁 Mode Tamu — Anda hanya bisa melihat data. Login untuk mendapat akses lebih.' },
+    guest:      { cls:'pn-info', text:'👁 Mode Tamu — Hanya bisa melihat, filter, cetak, dan kirim WA.' },
     teknisi:    { cls:'pn-warn', text:'🔧 Mode Teknisi — Anda dapat mengubah status job (Pending/Proses/Selesai).' },
-    supervisor: { cls:'pn-info', text:'🎯 Mode Supervisor — Anda dapat menambah, mengedit, dan menghapus job.' }
+    supervisor: { cls:'pn-info', text:'🎯 Mode Supervisor — Anda dapat menambah, mengedit, dan menghapus job. Perubahan status dilakukan oleh Teknisi.' }
   };
   var m = messages[role];
   if (m) { notice.className = 'perm-notice ' + m.cls; notice.textContent = m.text; notice.classList.remove('hidden'); }
-  else notice.classList.add('hidden');
+  else    { notice.classList.add('hidden'); }
 }
 
 function showAccessDenied(action, roleNeeded) {
   var meta = getRoleMeta();
   document.getElementById('adDesc').textContent = 'Tindakan "' + action + '" tidak diizinkan untuk role Anda.';
-  document.getElementById('adRoleInfo').innerHTML = '<strong>Role Anda:</strong> ' + meta.icon + ' ' + meta.label + '<br><strong>Dibutuhkan:</strong> ' + roleNeeded;
+  document.getElementById('adRoleInfo').innerHTML =
+    '<strong>Role Anda:</strong> ' + meta.icon + ' ' + meta.label +
+    '<br><strong>Dibutuhkan:</strong> ' + roleNeeded;
   document.getElementById('accessDeniedOverlay').classList.add('show');
 }
 function closeAccessDenied() { document.getElementById('accessDeniedOverlay').classList.remove('show'); }
@@ -873,7 +918,7 @@ var STATUS_ORDER = { 'Pending':0, 'Proses':1, 'Selesai':2 };
 // ═══════════════════════════════════════
 function showUnitSelector() {
   if (!currentSession) return;
-  var filtered = UNIT_CONFIG.filter(function(u) { return currentSession.allowedUnits.indexOf(u.code) !== -1; });
+  var filtered = UNIT_CONFIG.filter(function(u){ return currentSession.allowedUnits.indexOf(u.code) !== -1; });
   if (!filtered.length) filtered = UNIT_CONFIG;
   renderUnitSelector(filtered);
   document.getElementById('unitSelectorScreen').style.display = 'block';
@@ -901,12 +946,13 @@ function renderUnitSelector(arr) {
     var card = document.createElement('div');
     card.className = 'unit-card';
     card.style.setProperty('--unit-color', unit.color);
-    card.innerHTML = '<span class="unit-card-badge active">Aktif</span>' +
+    card.innerHTML =
+      '<span class="unit-card-badge active">Aktif</span>' +
       '<div class="unit-card-icon">' + unit.icon + '</div>' +
       '<div class="unit-card-code">' + escHtml(unit.code) + '</div>' +
       '<div class="unit-card-name">' + escHtml(unit.name) + '</div>' +
       '<span class="unit-card-arrow">↗</span>';
-    card.addEventListener('click', function() { selectUnit(unit); });
+    card.addEventListener('click', function(){ selectUnit(unit); });
     grid.appendChild(card);
   });
 }
@@ -928,7 +974,8 @@ async function testGasConnection(unit) {
     var res = await fetch(url.toString());
     if (!res.ok) throw new Error('HTTP ' + res.status);
     var json = await res.json();
-    if (json.error && json.error.indexOf('Unit tidak dikenal') !== -1) throw new Error('Unit ' + unit.code + ' tidak terdaftar di GAS');
+    if (json.error && json.error.indexOf('Unit tidak dikenal') !== -1)
+      throw new Error('Unit ' + unit.code + ' tidak terdaftar di GAS');
     return true;
   } catch(err) { showAlert('❌ Gagal terhubung ke ' + unit.code + '\n\n' + err.message); return false; }
 }
@@ -960,7 +1007,7 @@ async function api(action, params) {
     url.searchParams.set("action", action);
     url.searchParams.set("unit", currentUnit.code);
     if (params) {
-      Object.keys(params).forEach(function(k) {
+      Object.keys(params).forEach(function(k){
         url.searchParams.set(k, params[k] === null || params[k] === undefined ? "" : params[k]);
       });
     }
@@ -985,7 +1032,7 @@ function closeAlert() { document.getElementById("alertModal").style.display = "n
 function loadData(force) {
   if (!force && currentEditingRow) return;
   if (!currentUnit) return;
-  api("getTasks").then(function(res) {
+  api("getTasks").then(function(res){
     if (res.error) { showAlert("Error getTasks: " + res.error); return; }
     allTasks = sortTasks(res.data || []);
     renderTable();
@@ -998,11 +1045,11 @@ function manualRefresh() {
   var btn = document.getElementById('refreshBtn');
   btn.classList.add('spinning'); btn.disabled = true;
   loadData(true);
-  setTimeout(function() { btn.classList.remove('spinning'); btn.disabled = false; }, 1000);
+  setTimeout(function(){ btn.classList.remove('spinning'); btn.disabled = false; }, 1000);
 }
 
 function sortTasks(tasks) {
-  return tasks.slice().sort(function(a,b) {
+  return tasks.slice().sort(function(a,b){
     var ta = tanggalToTimestamp(a.tanggal), tb = tanggalToTimestamp(b.tanggal);
     if (tb !== ta) return tb - ta;
     var sa = STATUS_ORDER[a.status] !== undefined ? STATUS_ORDER[a.status] : 99;
@@ -1020,7 +1067,7 @@ function parseTanggal(str) {
   if (m2) return { day:+m2[3], month:+m2[2], year:+m2[1] };
   return null;
 }
-function tanggalToTimestamp(str) { var p = parseTanggal(str); return p ? p.year*10000 + p.month*100 + p.day : 0; }
+function tanggalToTimestamp(str) { var p = parseTanggal(str); return p ? p.year*10000+p.month*100+p.day : 0; }
 function tanggalToYMD(str) { var p = parseTanggal(str); return p ? p.year+'-'+String(p.month).padStart(2,'0')+'-'+String(p.day).padStart(2,'0') : ''; }
 function getStatusClass(s) { if (s==="Selesai") return "selesai"; if (s==="Proses") return "proses"; return "pending"; }
 
@@ -1043,19 +1090,25 @@ function renderTable() {
   }
 
   var groups = [], lastId = null;
-  allTasks.forEach(function(task) {
+  allTasks.forEach(function(task){
     if (String(task.id) !== lastId) { groups.push([]); lastId = String(task.id); }
     groups[groups.length-1].push(task);
   });
   allGroups = groups;
 
+  // Status select dinonaktifkan untuk supervisor & guest
+  // Admin & teknisi bisa ubah status
   var canChangeStatus = hasPermission('sharejob.statusChange');
+
   var html = "";
-  groups.forEach(function(group, gi) {
+  groups.forEach(function(group, gi){
     var task = group[0];
     var sc = getStatusClass(task.status);
     var allNama = group.map(function(t){return t.nama;}).join(", ");
-    html += "<tr class='group-row group-start' data-groupid='" + escHtml(String(task.id)) + "' data-groupidx='" + gi + "' data-status='" + escHtml(task.status) + "' data-tanggal='" + escHtml(task.tanggal||'') + "'>";
+    html += "<tr class='group-row group-start' data-groupid='" + escHtml(String(task.id)) +
+            "' data-groupidx='" + gi +
+            "' data-status='" + escHtml(task.status) +
+            "' data-tanggal='" + escHtml(task.tanggal||'') + "'>";
     if (deleteMode && canDelete) {
       html += "<td class='col-delete'><button class='btn-delete-row' onclick=\"askDeleteRow('" + task.id + "','" + (task.nama||'').replace(/'/g,"\\'") + "')\">✕</button></td>";
     }
@@ -1064,11 +1117,14 @@ function renderTable() {
     html += "<td>" + escHtml(task.tugas) + "</td>";
     html += "<td>" + escHtml(task.mesin) + "</td>";
     var disabledAttr = canChangeStatus ? '' : ' disabled';
-    html += "<td><select class='status-select " + sc + "' data-id='" + escHtml(String(task.id)) + "' data-prev='" + escHtml(task.status) + "' onchange='changeStatus(this)'" + disabledAttr + ">" +
-      "<option" + (task.status==="Pending"?" selected":"") + ">Pending</option>" +
-      "<option" + (task.status==="Proses"?" selected":"") + ">Proses</option>" +
-      "<option" + (task.status==="Selesai"?" selected":"") + ">Selesai</option>" +
-      "</select></td>";
+    html += "<td><select class='status-select " + sc +
+            "' data-id='" + escHtml(String(task.id)) +
+            "' data-prev='" + escHtml(task.status) +
+            "' onchange='changeStatus(this)'" + disabledAttr + ">" +
+            "<option" + (task.status==="Pending"?" selected":"") + ">Pending</option>" +
+            "<option" + (task.status==="Proses" ?" selected":"") + ">Proses</option>" +
+            "<option" + (task.status==="Selesai"?" selected":"") + ">Selesai</option>" +
+            "</select></td>";
     html += "<td>" + escHtml(task.tanggal) + "</td>";
     html += "<td style='color:var(--green-ok);'>" + (task.jamMulai ? escHtml(task.jamMulai) : "<span style='color:var(--text-dim);font-size:11px;'>—</span>") + "</td>";
     html += "<td style='color:var(--amber-warn);'>" + (task.jamSelesai ? escHtml(task.jamSelesai) : "<span style='color:var(--text-dim);font-size:11px;'>—</span>") + "</td>";
@@ -1093,7 +1149,12 @@ function handleTbodyDblClick(e) {
   if (!tr) return;
   if (!hasPermission('sharejob.edit')) {
     var role = currentSession ? currentSession.role : 'guest';
-    showAccessDenied('Edit Job', role === ROLES.TEKNISI ? 'Supervisor atau Admin' : 'Teknisi / Supervisor / Admin');
+    var needed = role === ROLES.TEKNISI
+      ? 'Supervisor atau Admin'
+      : role === ROLES.GUEST
+        ? 'Minimal Teknisi'
+        : 'Supervisor atau Admin';
+    showAccessDenied('Edit Job', needed);
     return;
   }
   startInlineEdit(tr);
@@ -1120,7 +1181,7 @@ function buildFilterOptions() {
   document.getElementById('filterTanggal').value = filterState.tanggal;
 }
 
-document.getElementById('filterTanggal').addEventListener('change', function() {
+document.getElementById('filterTanggal').addEventListener('change', function(){
   if (this.value) {
     document.getElementById('filterBulan').value = '';
     document.getElementById('filterTahun').value = '';
@@ -1175,17 +1236,16 @@ function resetFilter() {
 
 function applyFilterToRows() {
   var fT = filterState.tanggal || null;
-  var fB = filterState.bulan ? +filterState.bulan : null;
-  var fY = filterState.tahun ? +filterState.tahun : null;
-  var fS = filterState.status || null;
-
+  var fB = filterState.bulan   ? +filterState.bulan : null;
+  var fY = filterState.tahun   ? +filterState.tahun : null;
+  var fS = filterState.status  || null;
   var qNama  = document.getElementById('searchNama')  ? document.getElementById('searchNama').value.trim().toLowerCase()  : '';
   var qMesin = document.getElementById('searchMesin') ? document.getElementById('searchMesin').value.trim().toLowerCase() : '';
   var qTugas = document.getElementById('searchTugas') ? document.getElementById('searchTugas').value.trim().toLowerCase() : '';
 
   var rows = document.querySelectorAll('#data tr.group-row');
   var visible = 0;
-  rows.forEach(function(tr) {
+  rows.forEach(function(tr){
     var ts = tr.getAttribute('data-tanggal') || '';
     var rs = tr.getAttribute('data-status') || '';
     var p = parseTanggal(ts);
@@ -1204,7 +1264,6 @@ function applyFilterToRows() {
       var nama  = cells[offset+1] ? cells[offset+1].textContent.toLowerCase() : '';
       var tugas = cells[offset+2] ? cells[offset+2].textContent.toLowerCase() : '';
       var mesin = cells[offset+3] ? cells[offset+3].textContent.toLowerCase() : '';
-
       if (qNama  && nama.indexOf(qNama)   === -1) show = false;
       if (qTugas && tugas.indexOf(qTugas) === -1) show = false;
       if (qMesin && mesin.indexOf(qMesin) === -1) show = false;
@@ -1221,13 +1280,13 @@ function applyFilterToRows() {
 // ═══════════════════════════════════════
 function addTask() {
   if (!hasPermission('sharejob.add')) { showAccessDenied('Tambah Job','Supervisor atau Admin'); return; }
-  var id = document.getElementById("id").value.trim();
-  var nama = document.getElementById("nama").value;
-  var tugas = document.getElementById("tugas").value.trim();
-  var mesin = document.getElementById("mesin").value.trim();
+  var id     = document.getElementById("id").value.trim();
+  var nama   = document.getElementById("nama").value;
+  var tugas  = document.getElementById("tugas").value.trim();
+  var mesin  = document.getElementById("mesin").value.trim();
   var status = document.getElementById("status").value;
   if (!id || !nama.trim() || !tugas || !mesin) { showAlert("ID, Nama, Tugas dan Mesin harus diisi!"); return; }
-  api("addTask", { id:id, nama:nama, tugas:tugas, mesin:mesin, status:status }).then(function(res) {
+  api("addTask", { id:id, nama:nama, tugas:tugas, mesin:mesin, status:status }).then(function(res){
     if (res.error) { showAlert("Error: " + res.error); return; }
     document.getElementById("id").value = "";
     document.getElementById("nama").value = "";
@@ -1239,9 +1298,15 @@ function addTask() {
 }
 
 function changeStatus(select) {
+  // Cek permission ubah status
   if (!hasPermission('sharejob.statusChange')) {
     select.value = select.getAttribute("data-prev") || select.value;
-    showAccessDenied('Ubah Status','Teknisi / Supervisor / Admin'); return;
+    var role = currentSession ? currentSession.role : 'guest';
+    var needed = role === ROLES.SUPERVISOR
+      ? 'Teknisi atau Admin (Supervisor tidak bisa ubah status)'
+      : 'Teknisi atau Admin';
+    showAccessDenied('Ubah Status', needed);
+    return;
   }
   if (currentEditingRow) { select.value = select.getAttribute("data-prev") || select.value; return; }
   var id = select.getAttribute("data-id");
@@ -1250,7 +1315,7 @@ function changeStatus(select) {
   select.className = "status-select " + getStatusClass(newStatus);
   var tr = select.closest("tr");
   if (tr) tr.setAttribute("data-status", newStatus);
-  api("updateTaskStatus", { id:id, status:newStatus }).then(function(res) {
+  api("updateTaskStatus", { id:id, status:newStatus }).then(function(res){
     if (res.error) showAlert("Gagal update status: " + res.error);
     loadData(true);
   });
@@ -1277,16 +1342,16 @@ function askDeleteRow(id, nama) {
   document.getElementById("deleteRowModal").style.display = "flex";
 }
 
-document.getElementById("confirmDeleteRowBtn").addEventListener("click", function() {
+document.getElementById("confirmDeleteRowBtn").addEventListener("click", function(){
   if (!pendingDeleteId) return;
   var id = pendingDeleteId; pendingDeleteId = null;
   document.getElementById("deleteRowModal").style.display = "none";
-  api("deleteTask", { id:id }).then(function(res) {
+  api("deleteTask", { id:id }).then(function(res){
     if (res && res.error) showAlert("Gagal menghapus: " + res.error);
     else loadData(true);
   });
 });
-document.getElementById("cancelDeleteRowBtn").addEventListener("click", function() {
+document.getElementById("cancelDeleteRowBtn").addEventListener("click", function(){
   pendingDeleteId = null; document.getElementById("deleteRowModal").style.display = "none";
 });
 
@@ -1296,7 +1361,7 @@ function archiveTasks() {
 }
 function confirmArchive() {
   closeModal();
-  api("moveTasksToHistory").then(function(res) {
+  api("moveTasksToHistory").then(function(res){
     showAlert(res.message || res.error || "Archive berhasil");
     loadData(true);
     document.getElementById("inputSection").style.display = "none";
@@ -1319,30 +1384,38 @@ function startInlineEdit(tr) {
   var gt = (!isNaN(gi) && allGroups[gi]) ? allGroups[gi] : null;
   if (!gt || !gt.length) { currentEditingRow = null; return; }
   var ft = gt[0];
-  originalRowData = { id:String(ft.id), nama:gt.map(function(t){return t.nama;}).join("\n"), tugas:ft.tugas||"", mesin:ft.mesin||"", jamMulai:ft.jamMulai||"" };
+  originalRowData = {
+    id: String(ft.id),
+    nama: gt.map(function(t){return t.nama;}).join("\n"),
+    tugas: ft.tugas||"",
+    mesin: ft.mesin||"",
+    jamMulai: ft.jamMulai||""
+  };
   tr.classList.add("editing");
-  cells[offset+0].innerHTML = "<input class='inline-input' id='ie-id' value='" + escHtml(originalRowData.id) + "'><div class='inline-save-bar'><button class='inline-btn inline-btn-save' onclick='saveInlineEdit()'>✓ Simpan</button><button class='inline-btn inline-btn-cancel' onclick='cancelInlineEdit()'>✕ Batal</button></div>";
+  cells[offset+0].innerHTML = "<input class='inline-input' id='ie-id' value='" + escHtml(originalRowData.id) +
+    "'><div class='inline-save-bar'><button class='inline-btn inline-btn-save' onclick='saveInlineEdit()'>✓ Simpan</button>" +
+    "<button class='inline-btn inline-btn-cancel' onclick='cancelInlineEdit()'>✕ Batal</button></div>";
   cells[offset+1].innerHTML = "<textarea class='inline-input' id='ie-nama' rows='3' style='font-size:13px;'>" + escHtml(originalRowData.nama) + "</textarea>";
   cells[offset+2].innerHTML = "<textarea class='inline-input' id='ie-tugas' rows='3'>" + escHtml(originalRowData.tugas) + "</textarea>";
   cells[offset+3].innerHTML = "<input class='inline-input' id='ie-mesin' value='" + escHtml(originalRowData.mesin) + "'>";
   cells[offset+6].innerHTML = "<input class='inline-input' id='ie-jam-mulai' type='time' value='" + escHtml(originalRowData.jamMulai) + "'>";
-  setTimeout(function() { var inp = document.getElementById("ie-id"); if (inp) inp.focus(); }, 50);
-  tr._escHandler = function(e) { if (e.key === "Escape") { e.preventDefault(); cancelInlineEdit(); } };
+  setTimeout(function(){ var inp = document.getElementById("ie-id"); if (inp) inp.focus(); }, 50);
+  tr._escHandler = function(e){ if (e.key === "Escape") { e.preventDefault(); cancelInlineEdit(); } };
   document.addEventListener("keydown", tr._escHandler);
 }
 
 function saveInlineEdit() {
   if (!currentEditingRow) return;
-  var get = function(id, def) { var el = document.getElementById(id); return el ? el.value.trim() : def; };
-  var newId = get("ie-id", originalRowData.id);
-  var newNama = get("ie-nama", originalRowData.nama);
-  var newTugas = get("ie-tugas", originalRowData.tugas);
-  var newMesin = get("ie-mesin", originalRowData.mesin);
+  var get = function(id, def){ var el = document.getElementById(id); return el ? el.value.trim() : def; };
+  var newId       = get("ie-id", originalRowData.id);
+  var newNama     = get("ie-nama", originalRowData.nama);
+  var newTugas    = get("ie-tugas", originalRowData.tugas);
+  var newMesin    = get("ie-mesin", originalRowData.mesin);
   var newJamMulai = get("ie-jam-mulai", originalRowData.jamMulai);
   if (!newId || !newNama || !newTugas || !newMesin) { showAlert("Semua kolom harus diisi!"); return; }
   var oldId = originalRowData.id;
   finishInlineEdit();
-  api("updateTaskAll", { oldId:oldId, newId:newId, newNama:newNama, newTugas:newTugas, newMesin:newMesin, newJamMulai:newJamMulai, newJamSelesai:'' }).then(function(res) {
+  api("updateTaskAll", { oldId:oldId, newId:newId, newNama:newNama, newTugas:newTugas, newMesin:newMesin, newJamMulai:newJamMulai, newJamSelesai:'' }).then(function(res){
     if (res && res.error) showAlert("Gagal simpan: " + res.error);
     loadData(true);
   });
@@ -1372,7 +1445,8 @@ function doPrint() {
   var tanggal = days[now.getDay()]+", "+d+" "+mn[now.getMonth()]+" "+now.getFullYear();
   var periodLabel = getPeriodLabel();
   var unitLabel = currentUnit ? ' | Unit: '+currentUnit.code : '';
-  document.getElementById("printHeader").innerHTML = "Dicetak: "+tanggal+" "+h+":"+m+" | Filter: <b>"+periodLabel+"</b>"+unitLabel+" | <b>"+visible.length+" job</b>";
+  document.getElementById("printHeader").innerHTML =
+    "Dicetak: "+tanggal+" "+h+":"+m+" | Filter: <b>"+periodLabel+"</b>"+unitLabel+" | <b>"+visible.length+" job</b>";
   var container = document.getElementById('printPagesContainer');
   container.innerHTML = '';
   var ROWS = 30, totalPages = Math.ceil(visible.length/ROWS);
@@ -1386,9 +1460,9 @@ function doPrint() {
     var tbl = document.createElement('table');
     tbl.innerHTML = '<thead><tr><th>ID</th><th>Nama</th><th>Tugas</th><th>Mesin</th><th>Status</th><th>Tanggal</th><th>Mulai</th><th>Selesai</th></tr></thead>';
     var tb = document.createElement('tbody');
-    pageRows.forEach(function(tr) {
+    pageRows.forEach(function(tr){
       var cells = tr.querySelectorAll('td');
-      var get = function(i) { return cells[off+i] ? cells[off+i].textContent.trim() : ''; };
+      var get = function(i){ return cells[off+i] ? cells[off+i].textContent.trim() : ''; };
       var sv = tr.getAttribute('data-status')||'';
       var sc2 = sv==='Selesai'?'#2e7d32':sv==='Proses'?'#e65100':'#1565c0';
       var sb = sv==='Selesai'?'#e8f5e9':sv==='Proses'?'#fff3e0':'#e3f2fd';
@@ -1444,7 +1518,7 @@ function openWaModal() {
   if (unitLabel) pesan += "🏭 Unit : "+unitLabel+"\n";
   pesan += "📅 "+tanggal+"\n🔍 Filter: "+pl+"\n━━━━━━━━━━━━━━━━━━━━\n\n";
   var off = (deleteMode && hasPermission('sharejob.delete')) ? 1 : 0;
-  visible.forEach(function(tr, i) {
+  visible.forEach(function(tr, i){
     var cells = tr.children;
     var get = function(i2){return cells[off+i2]?cells[off+i2].textContent.trim():'';};
     var sv = tr.getAttribute('data-status')||'';
@@ -1533,7 +1607,7 @@ function _asStep(ts) { if(!_asActive)return; var max=document.documentElement.sc
 // ═══════════════════════════════════════
 // THEME & CLOCK
 // ═══════════════════════════════════════
-(function() {
+(function(){
   if (localStorage.getItem('pjh_theme') === 'light') document.body.classList.add('light-mode');
 })();
 
