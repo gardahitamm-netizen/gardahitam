@@ -10,7 +10,6 @@
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
 <meta name="apple-mobile-web-app-title" content="Garda Hitam">
 <link rel="apple-touch-icon" href="/gardahitam/icon-192.png">
-<!-- CHANGED: tambah Google Fonts untuk Times New Roman fallback (serif) -->
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <title>Drive Monitoring — Garda Hitam</title>
 <style>
@@ -47,7 +46,8 @@
   --accent-bd:rgba(77,159,255,.35);
   --teal-bg:  rgba(0,224,248,.08);
   --teal-bd:  rgba(0,224,248,.25);
-  /* CHANGED: font untuk nama mixing (sidebar & judul) pakai Times New Roman */
+  --stiker-bg: rgba(255,184,32,.08);
+  --stiker-bd: rgba(255,184,32,.25);
   --font-mixing: 'Times New Roman', Times, serif;
 }
 
@@ -79,6 +79,8 @@ body.light {
   --accent-bd:rgba(16,96,208,.35);
   --teal-bg:  rgba(0,122,170,.08);
   --teal-bd:  rgba(0,122,170,.3);
+  --stiker-bg: rgba(196,120,0,.08);
+  --stiker-bd: rgba(196,120,0,.3);
 }
 
 body.light .topbar{ background:#dce8f8; border-color:#b8ccec; }
@@ -134,6 +136,8 @@ body.light .pm-note-item{ background:#eaf1fb; border-color:#b8ccec; }
 body.light .pm-note-input{ background:#eaf1fb; border-color:#b8ccec; color:#0d1a2e; }
 body.light .pm-meta-chip{ background:#dde8f8; border-color:#b8ccec; }
 body.light .ts-modal{ background:#f5f8ff; }
+body.light .inu-stiker-row{ background:rgba(196,120,0,.06); border-color:rgba(196,120,0,.25); }
+body.light .inu-stiker-label{ color:#c47800; }
 
 *{margin:0;padding:0;box-sizing:border-box;}
 html,body{width:100%;height:100%;overflow:hidden;}
@@ -282,7 +286,6 @@ tr:hover .btn-edit-ts{opacity:1;}
 .plant-card:hover .plant-card-top::after{transform:scaleX(1);}
 .plant-card-corner{position:absolute;top:10px;right:10px;width:6px;height:6px;border-radius:50%;background:var(--ok);box-shadow:0 0 8px var(--ok);}
 .plant-card-id{font-family:'JetBrains Mono',monospace;font-size:9px;color:var(--muted);letter-spacing:1.5px;margin-bottom:8px;}
-/* CHANGED: plant-card-name pakai Times New Roman */
 .plant-card-name{font-family:var(--font-mixing);font-size:20px;font-weight:700;color:var(--card-title);margin-bottom:2px;}
 .plant-card-desc{font-size:11px;color:var(--muted);}
 .plant-card-bottom{padding:10px 18px;border-top:1px solid var(--border);display:flex;align-items:center;justify-content:space-between;background:rgba(0,0,0,.15);}
@@ -298,7 +301,6 @@ tr:hover .btn-edit-ts{opacity:1;}
 .sidebar{width:190px;min-width:190px;flex-shrink:0;background:#07101d;border-right:1px solid var(--border);overflow-y:auto;display:flex;flex-direction:column;}
 .sb-section{padding:10px 0;}
 .sb-head{font-family:'JetBrains Mono',monospace;font-size:9px;font-weight:600;letter-spacing:1.5px;text-transform:uppercase;color:var(--muted);padding:0 14px 6px;}
-/* CHANGED: sb-item pakai Times New Roman, diperbesar, lebih kontras */
 .sb-item{padding:9px 14px;font-size:13px;cursor:pointer;transition:all .15s;display:flex;align-items:center;justify-content:space-between;color:#a8c8ec;border-left:2px solid transparent;font-family:var(--font-mixing);letter-spacing:.3px;font-weight:600;}
 .sb-item:hover{background:var(--surf);color:var(--text);}
 .sb-item.active{background:var(--surf);color:#ffffff;border-left-color:var(--ok);text-shadow:0 0 8px rgba(0,240,160,.3);}
@@ -321,7 +323,6 @@ tr:hover .btn-edit-ts{opacity:1;}
 .histori-scroll-area{flex:1;overflow-y:auto;min-height:0;padding:16px 20px 20px;}
 
 .drive-header{margin-bottom:16px;flex-shrink:0;}
-/* CHANGED: drive-title pakai Times New Roman */
 .drive-title{font-size:18px;font-weight:700;font-family:var(--font-mixing);margin-bottom:3px;color:var(--text);}
 .drive-meta{font-size:11px;color:var(--muted);margin-bottom:14px;}
 .pills{display:flex;gap:7px;margin-bottom:18px;flex-wrap:wrap;}
@@ -348,15 +349,20 @@ tr:hover .btn-edit-ts{opacity:1;}
 .inu-card.fault{border-left-color:var(--fault);background:rgba(255,61,85,.05);}
 .inu-card.maint{border-left-color:var(--maint);}
 .inu-card.kosong{border-left-color:var(--kosong);}
-/* CHANGED: inu-tag diperbesar & lebih kontras agar drive ID lebih jelas */
 .inu-tag{font-family:'JetBrains Mono',monospace;font-size:13px;font-weight:700;color:var(--teal);margin-bottom:6px;letter-spacing:.5px;text-transform:uppercase;}
-/* CHANGED: inu-name (merk) tetap besar & jelas */
 .inu-name{font-size:16px;font-weight:700;margin-bottom:2px;color:var(--text);}
 .inu-spec{font-size:11px;color:var(--muted);margin-bottom:8px;}
-/* CHANGED: sn-label & sn-value — keterangan serial number */
-.inu-sn-row{display:flex;align-items:center;gap:6px;margin-bottom:10px;background:rgba(0,224,248,.05);border:1px solid rgba(0,224,248,.15);border-radius:6px;padding:5px 9px;}
+
+/* ── Serial Number row ── */
+.inu-sn-row{display:flex;align-items:center;gap:6px;margin-bottom:6px;background:rgba(0,224,248,.05);border:1px solid rgba(0,224,248,.15);border-radius:6px;padding:5px 9px;}
 .inu-sn-label{font-family:'JetBrains Mono',monospace;font-size:9px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;color:var(--teal);flex-shrink:0;}
 .inu-sn-value{font-family:'JetBrains Mono',monospace;font-size:11px;color:var(--text);font-weight:600;word-break:break-all;}
+
+/* ── Stiker row (BARU) ── */
+.inu-stiker-row{display:flex;align-items:center;gap:6px;margin-bottom:10px;background:var(--stiker-bg);border:1px solid var(--stiker-bd);border-radius:6px;padding:5px 9px;}
+.inu-stiker-label{font-family:'JetBrains Mono',monospace;font-size:9px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;color:var(--maint);flex-shrink:0;}
+.inu-stiker-value{font-family:'JetBrains Mono',monospace;font-size:11px;color:var(--text);font-weight:600;word-break:break-all;}
+
 .inu-status{display:flex;align-items:center;gap:5px;font-family:'JetBrains Mono',monospace;font-size:11px;font-weight:700;}
 .inu-dot{width:6px;height:6px;border-radius:50%;}
 .inu-card.ok .inu-dot{background:var(--ok);box-shadow:0 0 6px var(--ok);}
@@ -374,7 +380,6 @@ body.light .inu-photo-btn:hover{color:#003850;}
 .inu-edit-hint{position:absolute;top:10px;right:10px;font-size:10px;font-family:'JetBrains Mono',monospace;color:var(--muted);opacity:0;transition:opacity .2s;background:var(--surf3);border:1px solid var(--border);padding:2px 7px;border-radius:4px;}
 .inu-card:hover .inu-edit-hint{opacity:1;}
 .inu-card.search-hidden{display:none;}
-/* CHANGED: inu-role — baris master/follower */
 .inu-role{font-family:'JetBrains Mono',monospace;font-size:10px;font-weight:600;color:var(--muted);margin-top:4px;font-style:italic;}
 
 /* History table */
@@ -422,7 +427,6 @@ body.light .inu-photo-btn:hover{color:#003850;}
 .sum-table tr:last-child td{border-bottom:none;}
 .sum-table tr:hover td{background:rgba(255,255,255,.025);}
 .sum-table tr.has-kosong td:first-child{border-left:3px solid var(--kosong);padding-left:15px;}
-/* CHANGED: sum-group-name pakai Times New Roman */
 .sum-group-name{font-family:var(--font-mixing);font-size:13px;color:var(--text);font-weight:700;}
 .sum-mixing-num{font-family:'JetBrains Mono',monospace;font-size:10px;color:var(--muted);margin-top:2px;}
 .sum-kosong-badge{display:inline-flex;align-items:center;gap:4px;background:var(--kosong-bg);color:var(--kosong);border:1px solid var(--kosong-bd);border-radius:6px;padding:3px 10px;font-size:11px;font-weight:700;font-family:'JetBrains Mono',monospace;}
@@ -442,7 +446,7 @@ body.light .inu-photo-btn:hover{color:#003850;}
 /* Modal */
 .modal-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,.7);backdrop-filter:blur(4px);z-index:500;align-items:center;justify-content:center;}
 .modal-overlay.open{display:flex;}
-.modal{background:var(--surf);border:1px solid var(--border);border-radius:14px;padding:24px;width:100%;max-width:420px;animation:modalIn .2s ease;margin:16px;}
+.modal{background:var(--surf);border:1px solid var(--border);border-radius:14px;padding:24px;width:100%;max-width:420px;animation:modalIn .2s ease;margin:16px;max-height:92vh;overflow-y:auto;}
 @keyframes modalIn{from{opacity:0;transform:scale(.95)}to{opacity:1;transform:scale(1)}}
 .modal-title{font-size:15px;font-weight:700;margin-bottom:4px;color:var(--text);}
 .modal-sub{font-size:12px;color:var(--muted);margin-bottom:20px;}
@@ -495,7 +499,7 @@ body.light .inu-photo-btn:hover{color:#003850;}
 ::-webkit-scrollbar-track{background:transparent;}
 ::-webkit-scrollbar-thumb{background:var(--border);border-radius:4px;}
 
-/* ══ CHANGED: PM Filter Bar (same style as histori filter) ══ */
+/* PM Filter Bar */
 .pm-filter-bar{display:flex;align-items:center;gap:10px;padding:10px 16px;background:var(--surf2);border-bottom:1px solid var(--border);flex-shrink:0;flex-wrap:wrap;}
 body.light .pm-filter-bar{background:#eaf2fc;border-color:#b8ccec;}
 
@@ -533,7 +537,6 @@ body.light .pm-filter-bar{background:#eaf2fc;border-color:#b8ccec;}
   .sb-section::-webkit-scrollbar { display:none !important; }
   .sb-head { display:none !important; }
   #sb-items { display:contents !important; }
-  /* CHANGED: sb-item mobile juga lebih besar & kontras */
   .sb-item { display:inline-flex !important; align-items:center !important; justify-content:center !important; flex-shrink:0 !important; flex-grow:0 !important; white-space:nowrap !important; padding:5px 12px !important; margin-right:6px !important; border-radius:20px !important; font-size:11px !important; border:1px solid var(--border) !important; border-left:1px solid var(--border) !important; color:#a8c8ec !important; background:rgba(255,255,255,.03) !important; gap:4px !important; touch-action:manipulation !important; -webkit-tap-highlight-color:transparent !important; user-select:none !important; -webkit-user-select:none !important; transition:background .15s, border-color .15s, color .15s, box-shadow .15s !important; cursor:pointer !important; min-height:32px !important; font-family:var(--font-mixing) !important; font-weight:600 !important; }
   .sb-item:last-child { margin-right:2px !important; }
   .sb-item:active { opacity:.75 !important; }
@@ -596,6 +599,7 @@ body.light .pm-filter-bar{background:#eaf2fc;border-color:#b8ccec;}
   .ts-modal { border-radius:18px 18px 0 0 !important; max-width:100% !important; margin:0 !important; padding:20px 16px 32px !important; }
   .btn-edit-ts { opacity:.6 !important; }
   .inu-sn-row { flex-wrap:wrap !important; }
+  .inu-stiker-row { flex-wrap:wrap !important; }
 }
 
 @media (max-width: 380px) {
@@ -733,9 +737,8 @@ body.light .pm-filter-bar{background:#eaf2fc;border-color:#b8ccec;}
           </div>
         </div>
 
-        <!-- CHANGED: TAB PM sekarang punya filter bulan & tahun + scroll area -->
+        <!-- TAB PM -->
         <div class="tab-content" id="tab-pm">
-          <!-- CHANGED: PM Filter Bar -->
           <div class="pm-filter-bar" id="pm-filter-bar">
             <span class="hist-filter-label">📅 Filter PM:</span>
             <div class="hist-filter-group">
@@ -798,7 +801,8 @@ body.light .pm-filter-bar{background:#eaf2fc;border-color:#b8ccec;}
     <div class="modal-title">Edit Status Drive</div>
     <div class="modal-sub">Perubahan akan otomatis tersimpan ke spreadsheet &amp; log histori</div>
     <div class="modal-id" id="modal-drive-id"></div>
-    <div class="form-group"><label class="form-label">Status Saat Ini</label>
+    <div class="form-group">
+      <label class="form-label">Status Saat Ini</label>
       <select class="form-select" id="modal-status">
         <option value="ok">✅ OK / Aktif</option>
         <option value="fault">❌ Fault</option>
@@ -806,11 +810,19 @@ body.light .pm-filter-bar{background:#eaf2fc;border-color:#b8ccec;}
         <option value="kosong">⬜ Kosong</option>
       </select>
     </div>
-    <div class="form-group"><label class="form-label">Merk / Nama</label><input class="form-input" id="modal-merk" type="text" placeholder="Contoh: INU 1, ABB..."></div>
-    <div class="form-group"><label class="form-label">Spesifikasi / Slot</label><input class="form-input" id="modal-spek" type="text" placeholder="Contoh: Line 1 - Slot 1"></div>
-    <div class="form-group"><label class="form-label">Keterangan</label><input class="form-input" id="modal-ket" type="text" placeholder="Contoh: Vendor, Aman, Sedang diperbaiki..."></div>
-    <!-- CHANGED: tambah field Serial Number di modal edit -->
-    <div class="form-group"><label class="form-label">Serial Number</label><input class="form-input" id="modal-sn" type="text" placeholder="Contoh: 1244205155"></div>
+    <div class="form-group"><label class="form-label">Merk / Nama</label><input class="form-input" id="modal-merk" type="text" placeholder="Contoh: ABB, Siemens..."></div>
+    <div class="form-group"><label class="form-label">Spesifikasi / Tipe</label><input class="form-input" id="modal-spek" type="text" placeholder="Contoh: ACS880, ACS580..."></div>
+    <div class="form-group"><label class="form-label">Keterangan</label><input class="form-input" id="modal-ket" type="text" placeholder="Contoh: OK, Fault, Master, Followers..."></div>
+    <div class="form-group">
+      <label class="form-label">Serial Number</label>
+      <input class="form-input" id="modal-sn" type="text" placeholder="Contoh: 1244205155">
+      <div class="form-hint">Nomor seri dari nameplate drive</div>
+    </div>
+    <div class="form-group">
+      <label class="form-label">🏷️ Stiker / Label</label>
+      <input class="form-input" id="modal-stiker" type="text" placeholder="Contoh: STK-001, A1, B2...">
+      <div class="form-hint">Nomor atau kode stiker yang ditempel pada fisik drive</div>
+    </div>
     <div class="form-group">
       <label class="form-label">🖼️ Link Foto (Google Drive)</label>
       <input class="form-input" id="modal-photo" type="text" placeholder="Paste link Google Drive foto...">
@@ -905,7 +917,6 @@ const LOGIN_API = 'https://script.google.com/macros/s/AKfycbzlhK15JovW0NpWxk5_aV
 
 const NAMA_BULAN = ['','Januari','Februari','Maret','April','Mei','Juni','Juli','Agustus','September','Oktober','November','Desember'];
 const TAHUN_AWAL = 2026;
-const BULAN_AWAL = 4;
 
 const S = {
   page:'plant', plant:null, mixing:1, tab:'drive',
@@ -913,7 +924,6 @@ const S = {
   pendingDriveData:null, pendingPhotoUrl:null, pendingAction:'edit',
   searchQuery:'',
   histFilter:{ bulan:'', tahun:'' },
-  // CHANGED: tambah state filter PM
   pmFilter:{ bulan:'', tahun:'' },
   pendingTsData: null,
   currentPM: null,
@@ -923,68 +933,48 @@ const S = {
 
 // ══ FILTER DROPDOWN BUILDER ══
 function buildFilterOptions(bulanSelId, tahunSelId, currentBulan, currentTahun) {
-  const bulanSel  = id(bulanSelId);
-  const tahunSel  = id(tahunSelId);
-  const now       = new Date();
-  const nowYear   = now.getFullYear();
-
+  const bulanSel = id(bulanSelId), tahunSel = id(tahunSelId);
+  const nowYear  = new Date().getFullYear();
   tahunSel.innerHTML = '<option value="">Semua Tahun</option>';
   for (let y = TAHUN_AWAL; y <= nowYear + 1; y++) {
     const opt = document.createElement('option');
-    opt.value = y; opt.textContent = y;
-    tahunSel.appendChild(opt);
+    opt.value = y; opt.textContent = y; tahunSel.appendChild(opt);
   }
   bulanSel.innerHTML = '<option value="">Semua Bulan</option>';
   for (let m = 1; m <= 12; m++) {
     const opt = document.createElement('option');
-    opt.value = m; opt.textContent = NAMA_BULAN[m];
-    bulanSel.appendChild(opt);
+    opt.value = m; opt.textContent = NAMA_BULAN[m]; bulanSel.appendChild(opt);
   }
-  bulanSel.value = currentBulan;
-  tahunSel.value = currentTahun;
+  bulanSel.value = currentBulan; tahunSel.value = currentTahun;
 }
 
-function buildHistoriFilterOptions(rows) {
-  buildFilterOptions('hist-filter-bulan','hist-filter-tahun', S.histFilter.bulan, S.histFilter.tahun);
-}
-
-// CHANGED: build PM filter options
-function buildPMFilterOptions() {
-  buildFilterOptions('pm-filter-bulan','pm-filter-tahun', S.pmFilter.bulan, S.pmFilter.tahun);
-}
+function buildHistoriFilterOptions() { buildFilterOptions('hist-filter-bulan','hist-filter-tahun', S.histFilter.bulan, S.histFilter.tahun); }
+function buildPMFilterOptions()      { buildFilterOptions('pm-filter-bulan','pm-filter-tahun', S.pmFilter.bulan, S.pmFilter.tahun); }
 
 // ══ PARSE TIMESTAMP ══
 function parseTimestamp(ts) {
   if (!ts) return null;
   let m = String(ts).match(/^(\d{1,2})\/(\d{1,2})\/(\d{4})/);
-  if (m) return { day: +m[1], month: +m[2], year: +m[3] };
+  if (m) return { day:+m[1], month:+m[2], year:+m[3] };
   m = String(ts).match(/^(\d{4})-(\d{2})-(\d{2})/);
-  if (m) return { day: +m[3], month: +m[2], year: +m[1] };
+  if (m) return { day:+m[3], month:+m[2], year:+m[1] };
   return null;
 }
 
-// ══ APPLY FILTER HISTORI ══
+// ══ FILTER HISTORI ══
 function applyHistoriFilter() {
   S.histFilter.bulan = id('hist-filter-bulan').value;
   S.histFilter.tahun = id('hist-filter-tahun').value;
   const hasFilter = S.histFilter.bulan || S.histFilter.tahun;
-  const badge = id('hist-period-badge');
-  const resetBtn = id('btn-reset-histori-filter');
+  const badge = id('hist-period-badge'), resetBtn = id('btn-reset-histori-filter');
   if (hasFilter) {
-    let label = '';
-    if (S.histFilter.bulan && S.histFilter.tahun)
-      label = NAMA_BULAN[+S.histFilter.bulan] + ' ' + S.histFilter.tahun;
-    else if (S.histFilter.bulan)
-      label = NAMA_BULAN[+S.histFilter.bulan] + ' (Semua Tahun)';
-    else
-      label = 'Tahun ' + S.histFilter.tahun;
+    let label = S.histFilter.bulan && S.histFilter.tahun
+      ? NAMA_BULAN[+S.histFilter.bulan] + ' ' + S.histFilter.tahun
+      : S.histFilter.bulan ? NAMA_BULAN[+S.histFilter.bulan] + ' (Semua Tahun)'
+      : 'Tahun ' + S.histFilter.tahun;
     id('hist-period-text').textContent = label;
-    badge.style.display = 'flex';
-    resetBtn.classList.remove('hidden');
-  } else {
-    badge.style.display = 'none';
-    resetBtn.classList.add('hidden');
-  }
+    badge.style.display = 'flex'; resetBtn.classList.remove('hidden');
+  } else { badge.style.display = 'none'; resetBtn.classList.add('hidden'); }
   renderHistoriTableWithFilter();
 }
 
@@ -996,28 +986,20 @@ function resetHistoriFilter() {
   renderHistoriTableWithFilter();
 }
 
-// CHANGED: apply filter PM berdasarkan tanggal PM
+// ══ FILTER PM ══
 function applyPMFilter() {
   S.pmFilter.bulan = id('pm-filter-bulan').value;
   S.pmFilter.tahun = id('pm-filter-tahun').value;
   const hasFilter = S.pmFilter.bulan || S.pmFilter.tahun;
-  const badge = id('pm-period-badge');
-  const resetBtn = id('btn-reset-pm-filter');
+  const badge = id('pm-period-badge'), resetBtn = id('btn-reset-pm-filter');
   if (hasFilter) {
-    let label = '';
-    if (S.pmFilter.bulan && S.pmFilter.tahun)
-      label = NAMA_BULAN[+S.pmFilter.bulan] + ' ' + S.pmFilter.tahun;
-    else if (S.pmFilter.bulan)
-      label = NAMA_BULAN[+S.pmFilter.bulan] + ' (Semua Tahun)';
-    else
-      label = 'Tahun ' + S.pmFilter.tahun;
+    let label = S.pmFilter.bulan && S.pmFilter.tahun
+      ? NAMA_BULAN[+S.pmFilter.bulan] + ' ' + S.pmFilter.tahun
+      : S.pmFilter.bulan ? NAMA_BULAN[+S.pmFilter.bulan] + ' (Semua Tahun)'
+      : 'Tahun ' + S.pmFilter.tahun;
     id('pm-period-text').textContent = label;
-    badge.style.display = 'flex';
-    resetBtn.classList.remove('hidden');
-  } else {
-    badge.style.display = 'none';
-    resetBtn.classList.add('hidden');
-  }
+    badge.style.display = 'flex'; resetBtn.classList.remove('hidden');
+  } else { badge.style.display = 'none'; resetBtn.classList.add('hidden'); }
   renderPMWithFilter();
 }
 
@@ -1029,137 +1011,88 @@ function resetPMFilter() {
   renderPMWithFilter();
 }
 
-// CHANGED: render PM dengan filter + search
+// ══ RENDER PM ══
 function renderPMWithFilter() {
   const jadwal = S.cache[S.plant + '_pm'];
   if (!jadwal) return;
-
   const filterBulan = S.pmFilter.bulan ? +S.pmFilter.bulan : null;
   const filterTahun = S.pmFilter.tahun ? +S.pmFilter.tahun : null;
   const q = S.searchQuery;
-
-  const filtered = jadwal.filter((p, i) => {
+  const filtered = jadwal.filter(p => {
     const parsed = parseTimestamp(p.tanggal);
     if (filterBulan && (!parsed || parsed.month !== filterBulan)) return false;
     if (filterTahun && (!parsed || parsed.year  !== filterTahun)) return false;
     if (q) {
-      const text = ((p.id||'') + ' ' + (p.judul||'') + ' ' + (p.drive_id||'') + ' ' + (p.teknisi||'') + ' ' + (p.status||'') + ' ' + (p.catatan||'')).toLowerCase();
+      const text = ((p.id||'')+(p.judul||'')+(p.drive_id||'')+(p.teknisi||'')+(p.status||'')+(p.catatan||'')).toLowerCase();
       if (!text.includes(q)) return false;
     }
     return true;
   });
-
   const resultEl = id('pm-filter-result');
   const hasFilter = filterBulan || filterTahun;
-  if (hasFilter || q) {
-    resultEl.textContent = filtered.length + ' PM ditemukan';
-  } else {
-    resultEl.textContent = jadwal.length + ' total PM';
-  }
-
-  const noRes = id('pm-no-results');
-  const contentEl = id('pm-content');
-
+  resultEl.textContent = (hasFilter || q) ? filtered.length + ' PM ditemukan' : jadwal.length + ' total PM';
+  const noRes = id('pm-no-results'), contentEl = id('pm-content');
   if (!filtered.length) {
     contentEl.innerHTML = '';
     id('pm-search-query').textContent = q || (hasFilter ? 'periode ini' : '');
-    noRes.classList.add('visible');
-    return;
+    noRes.classList.add('visible'); return;
   }
   noRes.classList.remove('visible');
-
-  // Map filtered items ke index asli jadwal supaya openPMModalFromGrid benar
-  contentEl.innerHTML = `<div class="pm-grid">${filtered.map(p => {
-    const origIdx = jadwal.indexOf(p);
-    return pmCard(p, origIdx);
-  }).join('')}</div>`;
+  contentEl.innerHTML = `<div class="pm-grid">${filtered.map(p => pmCard(p, jadwal.indexOf(p))).join('')}</div>`;
 }
 
-// ══ RENDER TABEL HISTORI ══
+// ══ RENDER HISTORI ══
 function renderHistoriTableWithFilter() {
   const rows = S.cache[S.plant + '_histori'];
   if (!rows) return;
-
   const filterBulan = S.histFilter.bulan ? +S.histFilter.bulan : null;
   const filterTahun = S.histFilter.tahun ? +S.histFilter.tahun : null;
   const q = S.searchQuery;
-
   const filtered = rows.filter(r => {
     const parsed = parseTimestamp(r.timestamp);
     if (filterBulan && (!parsed || parsed.month !== filterBulan)) return false;
     if (filterTahun && (!parsed || parsed.year  !== filterTahun)) return false;
     if (q) {
-      const text = (r.timestamp + ' ' + r.drive_id + ' ' + r.drive_nama + ' ' + r.group + ' ' + r.status + ' ' + r.keterangan).toLowerCase();
+      const text = (r.timestamp+r.drive_id+r.drive_nama+r.group+r.status+r.keterangan).toLowerCase();
       if (!text.includes(q)) return false;
     }
     return true;
   });
-
   const resultEl = id('hist-filter-result');
   const hasFilter = filterBulan || filterTahun;
-  if (hasFilter || q) {
-    resultEl.textContent = filtered.length + ' data ditemukan';
-  } else {
-    resultEl.textContent = rows.length + ' total data';
-  }
-
-  const noRes = id('histori-no-results');
-  const contentEl = id('histori-content');
-
+  resultEl.textContent = (hasFilter || q) ? filtered.length + ' data ditemukan' : rows.length + ' total data';
+  const noRes = id('histori-no-results'), contentEl = id('histori-content');
   if (!filtered.length) {
     contentEl.innerHTML = '';
     id('histori-search-query').textContent = q || (hasFilter ? 'periode ini' : '');
-    noRes.classList.add('visible');
-    return;
+    noRes.classList.add('visible'); return;
   }
   noRes.classList.remove('visible');
-
   const groups = {}, groupOrder = [];
-  filtered.forEach((r) => {
+  filtered.forEach(r => {
     const parsed = parseTimestamp(r.timestamp);
     const key = parsed ? (parsed.year + '-' + String(parsed.month).padStart(2,'0')) : '0000-00';
     if (!groups[key]) { groups[key] = []; groupOrder.push(key); }
     groups[key].push({ ...r, _origIdx: rows.indexOf(r) });
   });
-
   const showGroups = !(filterBulan && filterTahun);
   let html = '';
-
   if (showGroups && groupOrder.length > 1) {
     groupOrder.forEach(key => {
       const grpRows = groups[key];
       const [yr, mo] = key.split('-').map(Number);
       const bulanLabel = mo ? (NAMA_BULAN[mo] + ' ' + yr) : 'Tidak diketahui';
-      html += `
-        <div class="hist-month-section-head">
-          <span class="hms-icon">📅</span>
-          <span class="hms-title">${bulanLabel}</span>
-          <span class="hms-count">${grpRows.length} data</span>
-        </div>
-        <div class="hist-table-wrap">
-          <table class="hist-table">
-            <thead><tr>
-              <th>Waktu</th><th>Drive ID</th><th>Nama</th>
-              <th>Group</th><th>Status</th><th>Keterangan</th>
-            </tr></thead>
-            <tbody>${grpRows.map(histRow).join('')}</tbody>
-          </table>
-        </div>`;
+      html += `<div class="hist-month-section-head"><span class="hms-icon">📅</span><span class="hms-title">${bulanLabel}</span><span class="hms-count">${grpRows.length} data</span></div>
+        <div class="hist-table-wrap"><table class="hist-table"><thead><tr><th>Waktu</th><th>Drive ID</th><th>Nama</th><th>Group</th><th>Status</th><th>Keterangan</th></tr></thead>
+        <tbody>${grpRows.map(histRow).join('')}</tbody></table></div>`;
     });
   } else {
-    const label = filterBulan && filterTahun
-      ? NAMA_BULAN[filterBulan] + ' ' + filterTahun
-      : filterTahun ? 'Tahun ' + filterTahun
-      : filterBulan ? NAMA_BULAN[filterBulan]
-      : 'Semua Data';
-    if (filterBulan || filterTahun) {
-      html += `<div class="hist-month-section-head"><span class="hms-icon">📅</span><span class="hms-title">${label}</span><span class="hms-count">${filtered.length} data</span></div>`;
-    }
+    const label = filterBulan && filterTahun ? NAMA_BULAN[filterBulan]+' '+filterTahun
+      : filterTahun ? 'Tahun '+filterTahun : filterBulan ? NAMA_BULAN[filterBulan] : 'Semua Data';
+    if (filterBulan || filterTahun) html += `<div class="hist-month-section-head"><span class="hms-icon">📅</span><span class="hms-title">${label}</span><span class="hms-count">${filtered.length} data</span></div>`;
     const allWithIdx = filtered.map(r => ({ ...r, _origIdx: rows.indexOf(r) }));
-    html += `<div class="hist-table-wrap"><table class="hist-table">
-      <thead><tr><th>Waktu</th><th>Drive ID</th><th>Nama</th><th>Group</th><th>Status</th><th>Keterangan</th></tr></thead>
-      <tbody>${allWithIdx.map(histRow).join('')}</tbody>
-    </table></div>`;
+    html += `<div class="hist-table-wrap"><table class="hist-table"><thead><tr><th>Waktu</th><th>Drive ID</th><th>Nama</th><th>Group</th><th>Status</th><th>Keterangan</th></tr></thead>
+      <tbody>${allWithIdx.map(histRow).join('')}</tbody></table></div>`;
   }
   contentEl.innerHTML = html;
 }
@@ -1178,25 +1111,22 @@ function histRow(r) {
 
 // ══ EDIT TIMESTAMP ══
 function requestEditTimestamp(rowIdx, driveId, currentTs) {
-  S.pendingAction = 'editTimestamp';
-  S.pendingTsData = { rowIdx, driveId, currentTs };
+  S.pendingAction = 'editTimestamp'; S.pendingTsData = { rowIdx, driveId, currentTs };
   S.pendingDriveData = null; S.pendingPhotoUrl = null;
   id('login-sub-text').textContent = 'Untuk mengedit waktu histori, masukkan kredensial akun mixing ini.';
   id('login-area-label').textContent = _getCurGroupLabel();
   id('login-username').value = ''; id('login-password').value = '';
   id('login-err').style.display = 'none';
-  const btn = id('btn-login-submit');
-  btn.classList.remove('loading'); btn.disabled = false;
+  const btn = id('btn-login-submit'); btn.classList.remove('loading'); btn.disabled = false;
   id('login-overlay').classList.add('open');
   setTimeout(() => id('login-username').focus(), 100);
 }
 
 function openTsModal() {
-  const d = S.pendingTsData;
-  if (!d) return;
+  const d = S.pendingTsData; if (!d) return;
   const rows = S.cache[S.plant + '_histori'] || [];
-  const row = rows[d.rowIdx] || {};
-  id('ts-modal-row-info').innerHTML = `<b>Drive ID:</b> ${esc(d.driveId)}<br><b>Status:</b> ${esc(row.status || '—')}<br><b>Waktu saat ini:</b> ${esc(d.currentTs)}`;
+  const row  = rows[d.rowIdx] || {};
+  id('ts-modal-row-info').innerHTML = `<b>Drive ID:</b> ${esc(d.driveId)}<br><b>Status:</b> ${esc(row.status||'—')}<br><b>Waktu saat ini:</b> ${esc(d.currentTs)}`;
   id('ts-input-datetime').value = d.currentTs || '';
   id('ts-input-alasan').value = '';
   id('btn-save-ts').disabled = false; id('btn-save-ts').textContent = 'Simpan Koreksi';
@@ -1207,10 +1137,7 @@ function openTsModal() {
 function closeTsModal() { id('ts-modal-overlay').classList.remove('open'); S.pendingTsData = null; }
 
 async function saveTsEdit() {
-  const newTs   = id('ts-input-datetime').value.trim();
-  const alasan  = id('ts-input-alasan').value.trim();
-  const d       = S.pendingTsData;
-  const btn     = id('btn-save-ts');
+  const newTs = id('ts-input-datetime').value.trim(), alasan = id('ts-input-alasan').value.trim(), d = S.pendingTsData, btn = id('btn-save-ts');
   if (!newTs) { alert('⚠️ Waktu baru tidak boleh kosong.'); return; }
   if (!d) return;
   btn.disabled = true; btn.textContent = 'Menyimpan...';
@@ -1223,7 +1150,7 @@ async function saveTsEdit() {
   finally { btn.disabled = false; btn.textContent = 'Simpan Koreksi'; }
 }
 
-// ══ PM DETAIL MODAL ══
+// ══ PM MODAL ══
 function openPMModal(pm) {
   S.currentPM = pm; S.pmEditAuthed = false;
   const cacheKey = S.plant + '_pm_notes_' + (pm.id || '');
@@ -1232,14 +1159,12 @@ function openPMModal(pm) {
   id('pm-modal-title').textContent = pm.judul || '—';
   id('pm-modal-drive').textContent = '🔌 ' + (pm.drive_id || '—');
   const stClass = {Selesai:'ok','Dalam Proses':'maint',Pending:'fault',KERJAKAN:'maint'}[pm.status] || 'kosong';
-  // CHANGED: tampilkan nama teknisi (worker) dari data, bukan titik/default
   const workerDisplay = (pm.teknisi && pm.teknisi.trim() && pm.teknisi !== '.' && pm.teknisi !== '-')
-    ? esc(pm.teknisi)
-    : '<span style="color:var(--muted);font-style:italic">—</span>';
+    ? esc(pm.teknisi) : '<span style="color:var(--muted);font-style:italic">—</span>';
   id('pm-modal-meta').innerHTML = `
-    <span class="pm-meta-chip">📅 ${pm.tanggal || '—'}</span>
+    <span class="pm-meta-chip">📅 ${pm.tanggal||'—'}</span>
     <span class="pm-meta-chip">👤 Worker: ${workerDisplay}</span>
-    <span class="status-tag st-${stClass}" style="font-size:11px;padding:4px 10px">${esc(pm.status || '—')}</span>`;
+    <span class="status-tag st-${stClass}" style="font-size:11px;padding:4px 10px">${esc(pm.status||'—')}</span>`;
   id('pm-modal-desc').textContent = pm.catatan || pm.deskripsi || '(Tidak ada deskripsi)';
   id('pm-edit-section').style.display = 'none';
   id('btn-open-pm-edit').style.display = '';
@@ -1253,34 +1178,32 @@ function closePMModal() { id('pm-modal-overlay').classList.remove('open'); S.cur
 function renderPMNotes() {
   const list = id('pm-notes-list');
   if (!S.pmNotes.length) { list.innerHTML = '<div class="pm-empty-notes">Belum ada catatan lapangan.</div>'; return; }
-  list.innerHTML = S.pmNotes.map((n) => `
+  list.innerHTML = S.pmNotes.map(n => `
     <div class="pm-note-item">
-      <div class="pm-note-ts">📝 ${esc(n.ts)} · ${esc(n.by || 'Teknisi')}</div>
+      <div class="pm-note-ts">📝 ${esc(n.ts)} · ${esc(n.by||'Teknisi')}</div>
       <div class="pm-note-text">${esc(n.text)}</div>
     </div>`).join('');
 }
 
 function addPMNote() {
-  const input = id('pm-note-input');
-  const text = input.value.trim();
+  const input = id('pm-note-input'), text = input.value.trim();
   if (!text) { input.focus(); return; }
   const note = { ts: new Date().toLocaleString('id-ID'), by: 'Web User', text };
   S.pmNotes.push(note);
   const pm = S.currentPM;
   if (pm) {
-    const cacheKey = S.plant + '_pm_notes_' + (pm.id || '');
+    const cacheKey = S.plant + '_pm_notes_' + (pm.id||'');
     S.cache[cacheKey] = [...S.pmNotes];
     try { apiGet({ action:'addPMNote', plant:S.plant, pm_id:pm.id, note_text:text, note_ts:note.ts, note_by:note.by }).catch(()=>{}); } catch(e) {}
   }
-  input.value = '';
-  renderPMNotes();
+  input.value = ''; renderPMNotes();
   const listEl = id('pm-notes-list');
   if (listEl) listEl.scrollIntoView({ behavior:'smooth', block:'end' });
 }
 
 document.addEventListener('DOMContentLoaded', () => {
   const noteInput = id('pm-note-input');
-  if (noteInput) noteInput.addEventListener('keydown', e => { if(e.key==='Enter' && !e.shiftKey){ e.preventDefault(); addPMNote(); } });
+  if (noteInput) noteInput.addEventListener('keydown', e => { if(e.key==='Enter'&&!e.shiftKey){ e.preventDefault(); addPMNote(); } });
 });
 
 function requestPMEdit() {
@@ -1297,12 +1220,12 @@ function requestPMEdit() {
 
 function showPMEditForm() {
   const pm = S.currentPM; if (!pm) return;
-  id('pm-edit-judul').value    = pm.judul || '';
-  id('pm-edit-tanggal').value  = pm.tanggal || '';
-  id('pm-edit-teknisi').value  = pm.teknisi || '';
-  id('pm-edit-status').value   = pm.status || 'Pending';
-  id('pm-edit-drive').value    = pm.drive_id || '';
-  id('pm-edit-catatan').value  = pm.catatan || pm.deskripsi || '';
+  id('pm-edit-judul').value   = pm.judul || '';
+  id('pm-edit-tanggal').value = pm.tanggal || '';
+  id('pm-edit-teknisi').value = pm.teknisi || '';
+  id('pm-edit-status').value  = pm.status || 'Pending';
+  id('pm-edit-drive').value   = pm.drive_id || '';
+  id('pm-edit-catatan').value = pm.catatan || pm.deskripsi || '';
   id('pm-edit-section').style.display = '';
   id('btn-open-pm-edit').style.display = 'none';
   id('pm-edit-section').scrollIntoView({ behavior:'smooth', block:'nearest' });
@@ -1311,7 +1234,7 @@ function showPMEditForm() {
 function cancelPMEdit() { id('pm-edit-section').style.display = 'none'; id('btn-open-pm-edit').style.display = ''; }
 
 async function savePMEdit() {
-  const pm = S.currentPM; const btn = id('btn-save-pm'); if (!pm) return;
+  const pm = S.currentPM, btn = id('btn-save-pm'); if (!pm) return;
   const updatedPM = { id:pm.id, judul:id('pm-edit-judul').value.trim(), tanggal:id('pm-edit-tanggal').value.trim(), teknisi:id('pm-edit-teknisi').value.trim(), status:id('pm-edit-status').value, drive_id:id('pm-edit-drive').value.trim(), catatan:id('pm-edit-catatan').value.trim() };
   btn.disabled = true; btn.textContent = 'Menyimpan...';
   try {
@@ -1328,8 +1251,7 @@ async function savePMEdit() {
 // ══ SEARCH ══
 function onSearch(val) {
   S.searchQuery = val.trim().toLowerCase();
-  const clearBtn = id('search-clear');
-  clearBtn.classList.toggle('visible', val.length > 0);
+  id('search-clear').classList.toggle('visible', val.length > 0);
   applySearch();
 }
 
@@ -1350,36 +1272,27 @@ function applyDriveSearch(q) {
   const cards = document.querySelectorAll('#drive-content .inu-card');
   let visible = 0;
   cards.forEach(card => {
-    const text = card.textContent.toLowerCase();
-    const match = !q || text.includes(q);
+    const match = !q || card.textContent.toLowerCase().includes(q);
     card.classList.toggle('search-hidden', !match);
     if (match) visible++;
   });
   document.querySelectorAll('#drive-content .drive-group').forEach(grp => {
-    const anyVisible = grp.querySelectorAll('.inu-card:not(.search-hidden)').length > 0;
-    grp.style.display = anyVisible ? '' : 'none';
+    grp.style.display = grp.querySelectorAll('.inu-card:not(.search-hidden)').length > 0 ? '' : 'none';
   });
-  const noRes = id('drive-no-results');
-  const total = cards.length;
+  const noRes = id('drive-no-results'), total = cards.length;
   if (q && total > 0) {
     id('search-count').textContent = visible + ' / ' + total;
     id('drive-search-query').textContent = q;
     noRes.classList.toggle('visible', visible === 0);
-  } else {
-    id('search-count').textContent = '';
-    noRes.classList.remove('visible');
-  }
+  } else { id('search-count').textContent = ''; noRes.classList.remove('visible'); }
 }
 
-function showSearchBar(show) {
-  id('search-wrap').style.display = show ? 'flex' : 'none';
-  if (!show) clearSearch();
-}
+function showSearchBar(show) { id('search-wrap').style.display = show ? 'flex' : 'none'; if (!show) clearSearch(); }
 
 // ══ LOGIN ══
-function requestEdit(driveId, status, keterangan, merk, spesifikasi, photoUrl, serialNumber) {
+function requestEdit(driveId, status, keterangan, merk, spesifikasi, photoUrl, serialNumber, stiker) {
   S.pendingAction = 'edit';
-  S.pendingDriveData = { driveId, status, keterangan, merk, spesifikasi, photoUrl, serialNumber };
+  S.pendingDriveData = { driveId, status, keterangan, merk, spesifikasi, photoUrl, serialNumber, stiker };
   id('login-sub-text').textContent = 'Untuk mengedit drive, masukkan kredensial akun mixing ini.';
   id('login-area-label').textContent = _getCurGroupLabel();
   id('login-username').value = ''; id('login-password').value = '';
@@ -1402,28 +1315,27 @@ function requestViewPhoto(photoUrl) {
 
 function closeLoginModal() {
   id('login-overlay').classList.remove('open');
-  S.pendingDriveData = null; S.pendingPhotoUrl = null;
-  S.pendingAction = 'edit'; S.pendingTsData = null;
+  S.pendingDriveData = null; S.pendingPhotoUrl = null; S.pendingAction = 'edit'; S.pendingTsData = null;
 }
 
 async function submitLogin() {
   const username = id('login-username').value.trim(), password = id('login-password').value.trim();
   const errEl = id('login-err'), btn = id('btn-login-submit');
   if (!username || !password) { errEl.textContent='⚠️ Username dan password wajib diisi.'; errEl.style.display='block'; return; }
-  btn.classList.add('loading'); btn.disabled=true; errEl.style.display='none';
+  btn.classList.add('loading'); btn.disabled = true; errEl.style.display = 'none';
   try {
     const res = await fetch(LOGIN_API+'?'+new URLSearchParams({username,password,mixing:S.plant}));
     const result = await res.json();
     if (result.success) {
       const action=S.pendingAction, photoUrl=S.pendingPhotoUrl, d=S.pendingDriveData, tsD=S.pendingTsData;
       closeLoginModal();
-      if (action==='photo' && photoUrl) window.open(photoUrl,'_blank');
-      else if (action==='edit' && d) openModal(d.driveId,d.status,d.keterangan,d.merk,d.spesifikasi,d.photoUrl,d.serialNumber);
-      else if (action==='editTimestamp' && tsD) openTsModal();
-      else if (action==='editPM') { S.pmEditAuthed = true; showPMEditForm(); }
+      if      (action==='photo' && photoUrl)        window.open(photoUrl,'_blank');
+      else if (action==='edit' && d)                openModal(d.driveId,d.status,d.keterangan,d.merk,d.spesifikasi,d.photoUrl,d.serialNumber,d.stiker);
+      else if (action==='editTimestamp' && tsD)     openTsModal();
+      else if (action==='editPM')                   { S.pmEditAuthed = true; showPMEditForm(); }
     } else { errEl.textContent='❌ '+(result.message||'Username atau password salah.'); errEl.style.display='block'; }
   } catch(err) { errEl.textContent='⚠️ Tidak dapat terhubung ke server.'; errEl.style.display='block'; }
-  finally { btn.classList.remove('loading'); btn.disabled=false; }
+  finally { btn.classList.remove('loading'); btn.disabled = false; }
 }
 
 document.addEventListener('DOMContentLoaded', () => {
@@ -1435,7 +1347,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
 // ══ API ══
 async function apiGet(params) {
-  const res = await fetch(API+'?'+new URLSearchParams(params));
+  const res  = await fetch(API+'?'+new URLSearchParams(params));
   const data = await res.json();
   if (data.error) throw new Error(data.error);
   return data;
@@ -1459,8 +1371,8 @@ function _getCurGroupLabel() {
 
 function updateBC() {
   const s2=id('bcs2'),b2=id('bc2'),s3=id('bcs3'),b3=id('bc3');
-  if (S.plant&&S.page==='detail') {
-    const label=_getCurGroupLabel();
+  if (S.plant && S.page==='detail') {
+    const label = _getCurGroupLabel();
     s2.style.display=b2.style.display='';
     b2.className='bc-cur'; b2.textContent=label;
     id('topbar-sub').textContent=label;
@@ -1470,42 +1382,42 @@ function updateBC() {
 
 // ══ RENDER PLANT PAGE ══
 async function renderPlantPage() {
-  const el=id('plant-content');
-  el.innerHTML=loadingHTML('Memuat plant...');
+  const el = id('plant-content');
+  el.innerHTML = loadingHTML('Memuat plant...');
   try {
-    const data=await apiGet({action:'getPlants'});
-    id('stat-total').textContent=data.plants.length;
-    id('stat-sync').textContent=new Date().toTimeString().slice(0,5);
-    el.innerHTML=`<div class="plant-grid">${data.plants.map((p,i)=>plantCard(p,i)).join('')}</div>`;
-    await Promise.all(data.plants.map(async (p) => {
+    const data = await apiGet({action:'getPlants'});
+    id('stat-total').textContent = data.plants.length;
+    id('stat-sync').textContent  = new Date().toTimeString().slice(0,5);
+    el.innerHTML = `<div class="plant-grid">${data.plants.map((p,i) => plantCard(p,i)).join('')}</div>`;
+    await Promise.all(data.plants.map(async p => {
       try {
         if (!S.cache[p.plant+'_groupList']) {
-          const res=await apiGet({action:'getDrives',plant:p.plant});
-          const drives=Array.isArray(res.drives)?res.drives:(Array.isArray(res)?res:[]);
-          S.cache[p.plant+'_drives']=drives;
+          const res = await apiGet({action:'getDrives',plant:p.plant});
+          const drives = Array.isArray(res.drives)?res.drives:(Array.isArray(res)?res:[]);
+          S.cache[p.plant+'_drives'] = drives;
           const seen=[],groups=[];
           drives.forEach(d=>{const g=String(d.group||'').trim();if(g&&!seen.includes(g)){seen.push(g);groups.push(g);}});
-          S.cache[p.plant+'_groupList']=groups;
+          S.cache[p.plant+'_groupList'] = groups;
         }
-        const gl=S.cache[p.plant+'_groupList']||[];
-        const tagEl=document.getElementById('mix-tag-'+p.plant);
-        if(tagEl&&gl.length) tagEl.textContent=gl.length+' Mixing';
+        const gl = S.cache[p.plant+'_groupList']||[];
+        const tagEl = document.getElementById('mix-tag-'+p.plant);
+        if (tagEl && gl.length) tagEl.textContent = gl.length+' Mixing';
       } catch(e) {}
     }));
-  } catch(err) { el.innerHTML=errHTML(err.message,renderPlantPage); }
+  } catch(err) { el.innerHTML = errHTML(err.message, renderPlantPage); }
 }
 
 const PLANT_META = {
-  MCA:{desc:'Mixing Center A',color:'#4d9fff'},MCC:{desc:'Mixing Center C',color:'#00e0f8'},
-  MCD:{desc:'Mixing Center D',color:'#00f0a0'},MCG:{desc:'Mixing Center G',color:'#ffb820'},
-  MCH:{desc:'Mixing Center H',color:'#ff6b81'},MCI:{desc:'Mixing Center I',color:'#c084fc'},
+  MCA:{desc:'Mixing Center A',color:'#4d9fff'}, MCC:{desc:'Mixing Center C',color:'#00e0f8'},
+  MCD:{desc:'Mixing Center D',color:'#00f0a0'}, MCG:{desc:'Mixing Center G',color:'#ffb820'},
+  MCH:{desc:'Mixing Center H',color:'#ff6b81'}, MCI:{desc:'Mixing Center I',color:'#c084fc'},
   'PLANT E':{desc:'Plant Extension E',color:'#f472b6'},
 };
 
 function plantCard(p,i) {
-  const m=PLANT_META[p.plant]||{desc:p.label||'',color:'#4d9fff'};
-  const gl=S.cache[p.plant+'_groupList']||[];
-  const mixTag=gl.length?gl.length+' Mixing':'Memuat…';
+  const m = PLANT_META[p.plant]||{desc:p.label||'',color:'#4d9fff'};
+  const gl = S.cache[p.plant+'_groupList']||[];
+  const mixTag = gl.length ? gl.length+' Mixing' : 'Memuat…';
   return `<div class="plant-card" onclick="navTo('detail','${p.plant}')" style="animation-delay:${i*0.06}s">
     <div class="plant-card-top">
       <div class="plant-card-corner" style="background:${m.color};box-shadow:0 0 8px ${m.color}"></div>
@@ -1524,168 +1436,174 @@ function plantCard(p,i) {
 async function renderDetailPage() {
   try {
     if (!S.cache[S.plant+'_drives']) {
-      const data=await apiGet({action:'getDrives',plant:S.plant});
-      const drives=Array.isArray(data.drives)?data.drives:(Array.isArray(data)?data:[]);
-      S.cache[S.plant+'_drives']=drives;
+      const data = await apiGet({action:'getDrives',plant:S.plant});
+      const drives = Array.isArray(data.drives)?data.drives:(Array.isArray(data)?data:[]);
+      S.cache[S.plant+'_drives'] = drives;
     }
     if (!S.cache[S.plant+'_groupList']) {
       const seen=[],groups=[];
       (S.cache[S.plant+'_drives']||[]).forEach(d=>{const g=String(d.group||'').trim();if(g&&!seen.includes(g)){seen.push(g);groups.push(g);}});
-      S.cache[S.plant+'_groupList']=groups;
+      S.cache[S.plant+'_groupList'] = groups;
     }
   } catch(e) {}
-  renderSidebar(); switchTab(S.tab,true);
+  renderSidebar(); switchTab(S.tab, true);
 }
 
 function renderSidebar() {
-  const drives=S.cache[S.plant+'_drives']||[];
-  const groupList=S.cache[S.plant+'_groupList']||[];
-  const summary=S.cache[S.plant+'_summary']||[];
-  const kosongMap={};
-  summary.forEach(s=>{kosongMap[s.group]=s.kosong;});
-  const faultMap={};
-  drives.forEach(d=>{const g=String(d.group||'').trim();if(d.status==='fault'&&g)faultMap[g]=(faultMap[g]||0)+1;});
-  let html='';
-  groupList.forEach((label,i)=>{
-    const idx=i+1;
-    const active=S.mixing===idx?'active':'';
-    const hasFault=faultMap[label]?'has-fault':'';
-    const faultDot=faultMap[label]?'<div class="sb-fault"></div>':'';
-    const kosongCount=kosongMap[label]||0;
-    const kosongBadge=kosongCount>0?`<span class="sb-kosong-badge">${kosongCount}⬜</span>`:'';
-    html+=`<div class="sb-item ${active} ${hasFault}" onclick="selectMixing(${idx})">
-      <span>${esc(label)}</span>
-      <span class="sb-right">${kosongBadge}${faultDot}</span>
+  const drives    = S.cache[S.plant+'_drives']||[];
+  const groupList = S.cache[S.plant+'_groupList']||[];
+  const summary   = S.cache[S.plant+'_summary']||[];
+  const kosongMap = {}, faultMap = {};
+  summary.forEach(s => { kosongMap[s.group] = s.kosong; });
+  drives.forEach(d => { const g=String(d.group||'').trim(); if(d.status==='fault'&&g) faultMap[g]=(faultMap[g]||0)+1; });
+  let html = '';
+  groupList.forEach((label,i) => {
+    const idx = i+1, active = S.mixing===idx?'active':'', hasFault = faultMap[label]?'has-fault':'';
+    const faultDot = faultMap[label] ? '<div class="sb-fault"></div>' : '';
+    const kosongCount = kosongMap[label]||0;
+    const kosongBadge = kosongCount>0 ? `<span class="sb-kosong-badge">${kosongCount}⬜</span>` : '';
+    html += `<div class="sb-item ${active} ${hasFault}" onclick="selectMixing(${idx})">
+      <span>${esc(label)}</span><span class="sb-right">${kosongBadge}${faultDot}</span>
     </div>`;
   });
-  id('sb-items').innerHTML=html;
-  requestAnimationFrame(()=>{
-    const activeEl=id('sb-items').querySelector('.sb-item.active');
-    const section=id('sb-section-inner');
-    if (activeEl&&section) {
-      const elLeft=activeEl.offsetLeft;
-      const elW=activeEl.offsetWidth;
-      const secW=section.offsetWidth;
-      section.scrollLeft=elLeft-(secW/2)+(elW/2);
-    }
+  id('sb-items').innerHTML = html;
+  requestAnimationFrame(() => {
+    const activeEl = id('sb-items').querySelector('.sb-item.active');
+    const section  = id('sb-section-inner');
+    if (activeEl && section) section.scrollLeft = activeEl.offsetLeft - (section.offsetWidth/2) + (activeEl.offsetWidth/2);
   });
 }
 
-function selectMixing(num) {
-  S.mixing=num; updateBC(); renderSidebar(); clearSearch();
-  if (S.tab==='drive') renderDriveTab();
-}
+function selectMixing(num) { S.mixing=num; updateBC(); renderSidebar(); clearSearch(); if(S.tab==='drive') renderDriveTab(); }
 
-function switchTab(tab,force) {
-  if (S.tab===tab&&!force) return;
-  S.tab=tab;
-  document.querySelectorAll('.ctab').forEach(t=>t.classList.remove('active'));
-  document.querySelectorAll('.tab-content').forEach(t=>t.classList.remove('active'));
+function switchTab(tab, force) {
+  if (S.tab===tab && !force) return;
+  S.tab = tab;
+  document.querySelectorAll('.ctab').forEach(t => t.classList.remove('active'));
+  document.querySelectorAll('.tab-content').forEach(t => t.classList.remove('active'));
   id('ctab-'+tab).classList.add('active');
   id('tab-'+tab).classList.add('active');
   showSearchBar(tab !== 'summary');
   clearSearch();
-  const placeholders = {
-    drive:   'Cari drive, merk, serial number, status...',
-    histori: 'Cari drive ID, status, keterangan, waktu...',
-    pm:      'Cari judul PM, drive ID, teknisi, status...'
-  };
+  const placeholders = { drive:'Cari drive, merk, serial number, stiker, status...', histori:'Cari drive ID, status, keterangan, waktu...', pm:'Cari judul PM, drive ID, teknisi, status...' };
   const sb = id('search-bar');
   if (sb && placeholders[tab]) sb.placeholder = placeholders[tab];
-  if(tab==='drive')   renderDriveTab();
-  if(tab==='histori') renderHistoriTab();
-  if(tab==='pm')      renderPMTab();
-  if(tab==='summary') renderSummaryTab();
+  if (tab==='drive')   renderDriveTab();
+  if (tab==='histori') renderHistoriTab();
+  if (tab==='pm')      renderPMTab();
+  if (tab==='summary') renderSummaryTab();
 }
 
 // ══ RENDER DRIVE TAB ══
 async function renderDriveTab() {
-  const mixLabel=_getCurGroupLabel();
-  id('drive-title').textContent=mixLabel;
-  id('drive-content').innerHTML=loadingHTML('Memuat data drive...');
+  const mixLabel = _getCurGroupLabel();
+  id('drive-title').textContent = mixLabel;
+  id('drive-content').innerHTML = loadingHTML('Memuat data drive...');
   try {
     if (!S.cache[S.plant+'_drives']) {
-      const data=await apiGet({action:'getDrives',plant:S.plant});
-      const drives=Array.isArray(data.drives)?data.drives:(Array.isArray(data)?data:[]);
-      S.cache[S.plant+'_drives']=drives;
+      const data = await apiGet({action:'getDrives',plant:S.plant});
+      const drives = Array.isArray(data.drives)?data.drives:(Array.isArray(data)?data:[]);
+      S.cache[S.plant+'_drives'] = drives;
       if (!S.cache[S.plant+'_groupList']) {
         const seen=[],groups=[];
         drives.forEach(d=>{const g=String(d.group||'').trim();if(g&&!seen.includes(g)){seen.push(g);groups.push(g);}});
-        S.cache[S.plant+'_groupList']=groups;
+        S.cache[S.plant+'_groupList'] = groups;
       }
     }
-    const all=S.cache[S.plant+'_drives'];
-    const groupList=S.cache[S.plant+'_groupList']||[];
-    const curGroup=groupList[S.mixing-1]||'';
-    const drives=all.filter(d=>String(d.group||'').trim()===curGroup);
-    const ok=drives.filter(d=>d.status==='ok').length;
-    const fault=drives.filter(d=>d.status==='fault').length;
-    const maint=drives.filter(d=>d.status==='maint'||d.status==='maintenance').length;
-    const kosong=drives.filter(d=>!d.status||d.status==='kosong').length;
-    id('drive-meta').textContent=`${drives.length} drives · ${ok} OK · ${fault} Fault · ${kosong} Kosong · ${maint} Maint`;
-    id('drive-pills').innerHTML=`
+    const all       = S.cache[S.plant+'_drives'];
+    const groupList = S.cache[S.plant+'_groupList']||[];
+    const curGroup  = groupList[S.mixing-1]||'';
+    const drives    = all.filter(d => String(d.group||'').trim()===curGroup);
+    const ok     = drives.filter(d=>d.status==='ok').length;
+    const fault  = drives.filter(d=>d.status==='fault').length;
+    const maint  = drives.filter(d=>d.status==='maint'||d.status==='maintenance').length;
+    const kosong = drives.filter(d=>!d.status||d.status==='kosong').length;
+    id('drive-meta').textContent  = `${drives.length} drives · ${ok} OK · ${fault} Fault · ${kosong} Kosong · ${maint} Maint`;
+    id('drive-pills').innerHTML   = `
       <div class="pill">Total ${drives.length}</div>
       <div class="pill ok"><div class="pill-d"></div>OK ${ok}</div>
       <div class="pill fault"><div class="pill-d"></div>Fault ${fault}</div>
       <div class="pill kosong"><div class="pill-d"></div>Kosong ${kosong}</div>
       <div class="pill maint"><div class="pill-d"></div>Maint ${maint}</div>`;
-    if (!drives.length) { id('drive-content').innerHTML=`<div class="state-box"><div style="font-size:28px">📭</div><h3>Tidak ada data</h3><p>${esc(curGroup)} belum ada data drive.</p></div>`; renderSidebar(); return; }
-    function getDriveType(driveId){const s=String(driveId||'').toUpperCase();if(s.includes('.INU.')||s.includes('-INU')||s.includes('_INU'))return'INU';if(s.includes('.DSU.')||s.includes('-DSU')||s.includes('_DSU'))return'DSU';return'OTHER';}
-    const groups={INU:[],DSU:[],OTHER:[]};
-    drives.forEach(d=>{groups[getDriveType(d.drive_id)].push(d);});
-    const groupConfig=[{key:'INU',label:'⚡ Inverter Unit (INU)',color:'#4d9fff'},{key:'DSU',label:'🔌 DC Supply Unit (DSU)',color:'#c084fc'},{key:'OTHER',label:'📦 Lainnya',color:'#7eb8e8'}];
-    let html='';
-    groupConfig.forEach(({key,label,color})=>{
-      const grp=groups[key]; if(!grp.length)return;
-      html+=`<div class="drive-group"><div class="drive-group-header"><div class="drive-group-label" style="border-color:${color};color:${color}">${label}</div><div class="drive-group-line"></div><div class="drive-group-count">${grp.length} unit</div></div><div class="cards-grid">${grp.map(inuCard).join('')}</div></div>`;
+    if (!drives.length) {
+      id('drive-content').innerHTML = `<div class="state-box"><div style="font-size:28px">📭</div><h3>Tidak ada data</h3><p>${esc(curGroup)} belum ada data drive.</p></div>`;
+      renderSidebar(); return;
+    }
+    function getDriveType(driveId) {
+      const s = String(driveId||'').toUpperCase();
+      if (s.includes('.INU.')||s.includes('-INU')||s.includes('_INU')) return 'INU';
+      if (s.includes('.DSU.')||s.includes('-DSU')||s.includes('_DSU')) return 'DSU';
+      return 'OTHER';
+    }
+    const groups = {INU:[],DSU:[],OTHER:[]};
+    drives.forEach(d => { groups[getDriveType(d.drive_id)].push(d); });
+    const groupConfig = [
+      {key:'INU',   label:'⚡ Inverter Unit (INU)', color:'#4d9fff'},
+      {key:'DSU',   label:'🔌 DC Supply Unit (DSU)',color:'#c084fc'},
+      {key:'OTHER', label:'📦 Lainnya',             color:'#7eb8e8'},
+    ];
+    let html = '';
+    groupConfig.forEach(({key,label,color}) => {
+      const grp = groups[key]; if (!grp.length) return;
+      html += `<div class="drive-group"><div class="drive-group-header"><div class="drive-group-label" style="border-color:${color};color:${color}">${label}</div><div class="drive-group-line"></div><div class="drive-group-count">${grp.length} unit</div></div><div class="cards-grid">${grp.map(inuCard).join('')}</div></div>`;
     });
-    id('drive-content').innerHTML=html;
+    id('drive-content').innerHTML = html;
     renderSidebar();
     if (S.searchQuery) applyDriveSearch(S.searchQuery);
-  } catch(err) { id('drive-content').innerHTML=errHTML(err.message,renderDriveTab); id('drive-meta').textContent='Gagal memuat'; }
+  } catch(err) { id('drive-content').innerHTML = errHTML(err.message, renderDriveTab); id('drive-meta').textContent = 'Gagal memuat'; }
 }
 
-// CHANGED: inuCard — ID lebih besar & kontras, serial number punya label keterangan, tampilkan role (master/follower)
+// ══ INU CARD — dengan Serial Number dan Stiker terpisah ══
 function inuCard(d) {
-  const st = d.status || 'kosong';
+  const st   = d.status || 'kosong';
   const stTx = {ok:'OK', fault:'Fault', maint:'Maintenance', maintenance:'Maintenance', kosong:'Kosong'}[st] || st;
-  
-  // Serial number bisa dari kolom serial_number atau spesifikasi
-  const sn = d.serial_number || d.sn || d.spesifikasi || '';
-  
+
+  // Serial Number — dari kolom serial_number (bukan spesifikasi)
+  const sn     = d.serial_number || d.sn || '';
+  // Stiker — dari kolom stiker
+  const stiker = d.stiker || '';
+  // Spesifikasi — dari kolom spesifikasi (tipe/model drive)
+  const spek   = d.spesifikasi || '';
+
   const snHtml = sn ? `<div class="inu-sn-row">
     <span class="inu-sn-label">S/N</span>
     <span class="inu-sn-value">${esc(sn)}</span>
   </div>` : '';
 
+  const stikerHtml = stiker ? `<div class="inu-stiker-row">
+    <span class="inu-stiker-label">STIKER</span>
+    <span class="inu-stiker-value">${esc(stiker)}</span>
+  </div>` : '';
+
   const keterangan = d.keterangan || '';
-  const roleLower = keterangan.toLowerCase();
+  const roleLower  = keterangan.toLowerCase();
   let roleHtml = '';
-  if (roleLower.includes('master')) 
+  if (roleLower.includes('master'))
     roleHtml = `<div class="inu-role">▲ MASTER</div>`;
-  else if (roleLower.includes('follower') || roleLower.includes('slave')) 
+  else if (roleLower.includes('follower') || roleLower.includes('slave'))
     roleHtml = `<div class="inu-role">▽ Followers</div>`;
 
-  // Keterangan tanpa kata master/follower
-  const infoText = keterangan.replace(/master|follower|slave/gi, '').trim();
-
-  const photoHtml = d.photo_url 
-    ? `<button class="inu-photo-btn" onclick="event.stopPropagation();requestViewPhoto('${esc(d.photo_url)}')">📷 Lihat Foto</button>` 
+  const infoText = keterangan.replace(/master|follower|slave/gi,'').trim();
+  const photoHtml = d.photo_url
+    ? `<button class="inu-photo-btn" onclick="event.stopPropagation();requestViewPhoto('${esc(d.photo_url)}')">📷 Lihat Foto</button>`
     : '';
 
   return `<div class="inu-card ${st}" onclick="requestEdit(
     '${esc(d.drive_id)}',
     '${st}',
-    '${esc(d.keterangan)}',
+    '${esc(keterangan)}',
     '${esc(d.merk)}',
-    '${esc(sn)}',
+    '${esc(spek)}',
     '${esc(d.photo_url||'')}',
-    '${esc(sn)}'
+    '${esc(sn)}',
+    '${esc(stiker)}'
   )">
     <div class="inu-edit-hint">✏️ edit</div>
     <div class="inu-tag">${esc(d.drive_id)}</div>
-    <div class="inu-name">${esc(d.merk) || '—'}</div>
+    <div class="inu-name">${esc(d.merk)||'—'}</div>
+    ${spek ? `<div class="inu-spec">${esc(spek)}</div>` : ''}
     ${snHtml}
+    ${stikerHtml}
     <div class="inu-status"><div class="inu-dot"></div>${stTx}</div>
     ${roleHtml}
     ${infoText ? `<div class="inu-info">${esc(infoText)}</div>` : ''}
@@ -1697,46 +1615,36 @@ function inuCard(d) {
 async function renderHistoriTab() {
   id('histori-content').innerHTML = loadingHTML('Memuat histori...');
   try {
-    if (!S.cache[S.plant + '_histori']) {
-      const data = await apiGet({ action: 'getHistori', plant: S.plant });
-      S.cache[S.plant + '_histori'] = data.histori || data;
+    if (!S.cache[S.plant+'_histori']) {
+      const data = await apiGet({action:'getHistori', plant:S.plant});
+      S.cache[S.plant+'_histori'] = data.histori || data;
     }
-    const rows = S.cache[S.plant + '_histori'];
-    if (!rows || !rows.length) {
-      id('histori-content').innerHTML = `<div class="state-box"><div style="font-size:28px">📋</div><h3>Belum ada histori</h3></div>`;
-      return;
-    }
-    buildHistoriFilterOptions(rows);
+    const rows = S.cache[S.plant+'_histori'];
+    if (!rows||!rows.length) { id('histori-content').innerHTML=`<div class="state-box"><div style="font-size:28px">📋</div><h3>Belum ada histori</h3></div>`; return; }
+    buildHistoriFilterOptions();
     renderHistoriTableWithFilter();
   } catch(err) { id('histori-content').innerHTML = errHTML(err.message, renderHistoriTab); }
 }
 
 // ══ RENDER PM TAB ══
 async function renderPMTab() {
-  id('pm-content').innerHTML=loadingHTML('Memuat jadwal PM...');
+  id('pm-content').innerHTML = loadingHTML('Memuat jadwal PM...');
   try {
     if (!S.cache[S.plant+'_pm']) {
-      const data=await apiGet({action:'getJadwalPM',plant:S.plant});
-      S.cache[S.plant+'_pm']=data.jadwal||data;
+      const data = await apiGet({action:'getJadwalPM', plant:S.plant});
+      S.cache[S.plant+'_pm'] = data.jadwal || data;
     }
-    const jadwal=S.cache[S.plant+'_pm'];
-    if (!jadwal||!jadwal.length) {
-      id('pm-content').innerHTML=`<div class="state-box"><div style="font-size:28px">🔧</div><h3>Belum ada jadwal PM</h3></div>`;
-      return;
-    }
-    // CHANGED: build filter options untuk PM
+    const jadwal = S.cache[S.plant+'_pm'];
+    if (!jadwal||!jadwal.length) { id('pm-content').innerHTML=`<div class="state-box"><div style="font-size:28px">🔧</div><h3>Belum ada jadwal PM</h3></div>`; return; }
     buildPMFilterOptions();
     renderPMWithFilter();
-  } catch(err) { id('pm-content').innerHTML=errHTML(err.message,renderPMTab); }
+  } catch(err) { id('pm-content').innerHTML = errHTML(err.message, renderPMTab); }
 }
 
-// CHANGED: pmCard — tampilkan nama worker dari data spreadsheet (bukan titik)
 function pmCard(p, origIdx) {
-  const stClass={Selesai:'ok',Pending:'maint','Dalam Proses':'fault',KERJAKAN:'maint'}[p.status]||'kosong';
-  // CHANGED: worker name dari spreadsheet, bukan default kosong/titik
-  const workerName = (p.teknisi && p.teknisi.trim() && p.teknisi !== '.' && p.teknisi !== '-')
-    ? esc(p.teknisi)
-    : '<em style="color:var(--muted)">—</em>';
+  const stClass = {Selesai:'ok',Pending:'maint','Dalam Proses':'fault',KERJAKAN:'maint'}[p.status]||'kosong';
+  const workerName = (p.teknisi && p.teknisi.trim() && p.teknisi!=='.' && p.teknisi!=='-')
+    ? esc(p.teknisi) : '<em style="color:var(--muted)">—</em>';
   return `<div class="pm-card" onclick="openPMModalFromGrid(${origIdx})">
     <div class="pm-card-id">${esc(p.id)}</div>
     <div class="pm-card-judul">${esc(p.judul)}</div>
@@ -1752,116 +1660,124 @@ function pmCard(p, origIdx) {
 }
 
 function openPMModalFromGrid(idx) {
-  const jadwal = S.cache[S.plant+'_pm'] || [];
+  const jadwal = S.cache[S.plant+'_pm']||[];
   const pm = jadwal[idx];
   if (pm) openPMModal(pm);
 }
 
 // ══ RENDER SUMMARY TAB ══
 async function renderSummaryTab() {
-  id('summary-content').innerHTML=loadingHTML('Memuat summary...');
+  id('summary-content').innerHTML = loadingHTML('Memuat summary...');
   try {
-    const data=await apiGet({action:'getSummaryKosong',plant:S.plant});
-    S.cache[S.plant+'_summary']=data.summary||[];
-    const rows=data.summary||[],totalKosong=data.totalKosong||0,totalDrive=data.totalDrive||0;
-    const adaKosong=rows.filter(r=>r.kosong>0),bersih=rows.filter(r=>r.kosong===0).length;
-    let html=`<div class="summary-stats">
+    const data = await apiGet({action:'getSummaryKosong', plant:S.plant});
+    S.cache[S.plant+'_summary'] = data.summary||[];
+    const rows=data.summary||[], totalKosong=data.totalKosong||0, totalDrive=data.totalDrive||0;
+    const adaKosong=rows.filter(r=>r.kosong>0), bersih=rows.filter(r=>r.kosong===0).length;
+    let html = `<div class="summary-stats">
       <div class="sum-stat"><div class="sum-stat-label">Drive Kosong</div><div class="sum-stat-val kosong">${totalKosong}</div></div>
       <div class="sum-stat"><div class="sum-stat-label">Terdampak</div><div class="sum-stat-val" style="color:var(--maint)">${adaKosong.length}</div></div>
       <div class="sum-stat"><div class="sum-stat-label">Bersih</div><div class="sum-stat-val ok">${bersih}</div></div>
       <div class="sum-stat"><div class="sum-stat-label">Total Drive</div><div class="sum-stat-val accent">${totalDrive}</div></div>
     </div>`;
     if (!adaKosong.length) {
-      html+=`<div class="state-box"><div style="font-size:36px">✅</div><h3>Semua Drive Terisi</h3><p>Tidak ada drive kosong di ${esc(S.plant)}</p></div>`;
+      html += `<div class="state-box"><div style="font-size:36px">✅</div><h3>Semua Drive Terisi</h3><p>Tidak ada drive kosong di ${esc(S.plant)}</p></div>`;
     } else {
-      html+=`<div class="summary-panel"><div class="summary-panel-head"><div class="summary-panel-title">⬜ Mixing dengan Drive Kosong</div><div class="summary-panel-count">${adaKosong.length} dari ${rows.length} mixing</div></div><div style="overflow-x:auto"><table class="sum-table"><thead><tr><th>Mixing</th><th>Kosong</th><th>Total</th><th>%</th></tr></thead><tbody>${adaKosong.map(r=>{const pct=Math.round(r.kosong/r.total*100);return`<tr class="has-kosong"><td><div class="sum-group-name">${esc(r.group)}</div><div class="sum-mixing-num">Mixing ${r.mixing}</div></td><td><span class="sum-kosong-badge">⬜ ${r.kosong}</span></td><td><span class="sum-zero">${r.total}</span></td><td><div class="sum-pct-bar"><div class="sum-bar-track"><div class="sum-bar-fill" style="width:${pct}%"></div></div><span class="sum-pct-txt">${pct}%</span></div></td></tr>`;}).join('')}</tbody></table></div></div>
+      html += `<div class="summary-panel"><div class="summary-panel-head"><div class="summary-panel-title">⬜ Mixing dengan Drive Kosong</div><div class="summary-panel-count">${adaKosong.length} dari ${rows.length} mixing</div></div><div style="overflow-x:auto"><table class="sum-table"><thead><tr><th>Mixing</th><th>Kosong</th><th>Total</th><th>%</th></tr></thead><tbody>${adaKosong.map(r=>{const pct=Math.round(r.kosong/r.total*100);return`<tr class="has-kosong"><td><div class="sum-group-name">${esc(r.group)}</div><div class="sum-mixing-num">Mixing ${r.mixing}</div></td><td><span class="sum-kosong-badge">⬜ ${r.kosong}</span></td><td><span class="sum-zero">${r.total}</span></td><td><div class="sum-pct-bar"><div class="sum-bar-track"><div class="sum-bar-fill" style="width:${pct}%"></div></div><span class="sum-pct-txt">${pct}%</span></div></td></tr>`;}).join('')}</tbody></table></div></div>
       <div class="summary-panel"><div class="summary-panel-head"><div class="summary-panel-title">📋 Semua Mixing</div><div class="summary-panel-count">${rows.length} mixing</div></div><div style="overflow-x:auto"><table class="sum-table"><thead><tr><th>Mixing</th><th>OK</th><th>Kosong</th><th>Fault</th><th>Maint</th><th>Total</th></tr></thead><tbody>${rows.map(r=>`<tr class="${r.kosong>0?'has-kosong':''}"><td><div class="sum-group-name">${esc(r.group)}</div><div class="sum-mixing-num">Mixing ${r.mixing}</div></td><td style="color:${r.ok>0?'var(--ok)':'var(--muted)'};font-family:'JetBrains Mono',monospace;font-size:11px">${r.ok}</td><td>${r.kosong>0?`<span class="sum-kosong-badge">⬜ ${r.kosong}</span>`:`<span class="sum-zero">0</span>`}</td><td style="color:${r.fault>0?'var(--fault)':'var(--muted)'};font-family:'JetBrains Mono',monospace;font-size:11px">${r.fault}</td><td style="color:${r.maint>0?'var(--maint)':'var(--muted)'};font-family:'JetBrains Mono',monospace;font-size:11px">${r.maint}</td><td class="sum-zero">${r.total}</td></tr>`).join('')}</tbody></table></div></div>`;
     }
-    id('summary-content').innerHTML=html;
+    id('summary-content').innerHTML = html;
     renderSidebar();
-  } catch(err) { id('summary-content').innerHTML=errHTML(err.message,renderSummaryTab); }
+  } catch(err) { id('summary-content').innerHTML = errHTML(err.message, renderSummaryTab); }
 }
 
 // ══ EDIT DRIVE MODAL ══
-// CHANGED: tambah serialNumber parameter
-function openModal(driveId, status, keterangan, merk, spesifikasi, photoUrl, serialNumber) {
-  S.editDrive=driveId;
-  id('modal-drive-id').textContent=driveId;
-  id('modal-status').value=status||'ok';
-  id('modal-merk').value=merk||'';
-  id('modal-spek').value=spesifikasi||'';
-  id('modal-ket').value=keterangan||'';
-  id('modal-sn').value=serialNumber||'';
-  id('modal-photo').value=photoUrl||'';
+function openModal(driveId, status, keterangan, merk, spesifikasi, photoUrl, serialNumber, stiker) {
+  S.editDrive = driveId;
+  id('modal-drive-id').textContent = driveId;
+  id('modal-status').value  = status || 'ok';
+  id('modal-merk').value    = merk || '';
+  id('modal-spek').value    = spesifikasi || '';
+  id('modal-ket').value     = keterangan || '';
+  id('modal-sn').value      = serialNumber || '';
+  id('modal-stiker').value  = stiker || '';        // ★ BARU
+  id('modal-photo').value   = photoUrl || '';
   id('modal').classList.add('open');
 }
 
-function closeModal(){ id('modal').classList.remove('open'); S.editDrive=null; }
+function closeModal() { id('modal').classList.remove('open'); S.editDrive = null; }
 
-async function saveStatus(){
-  const status=id('modal-status').value, btn=id('btn-save');
-  btn.disabled=true; btn.textContent='Menyimpan...';
+async function saveStatus() {
+  const status = id('modal-status').value, btn = id('btn-save');
+  btn.disabled = true; btn.textContent = 'Menyimpan...';
   try {
     await apiGet({
-      action:'updateStatus', plant:S.plant, drive_id:S.editDrive, status,
-      keterangan:id('modal-ket').value.trim(),
-      merk:id('modal-merk').value.trim(),
-      spesifikasi:id('modal-spek').value.trim(),
-      serial_number:id('modal-sn').value.trim(),
-      photo_url:id('modal-photo').value.trim(),
-      updatedBy:'web-user'
+      action        : 'updateStatus',
+      plant         : S.plant,
+      drive_id      : S.editDrive,
+      status,
+      keterangan    : id('modal-ket').value.trim(),
+      merk          : id('modal-merk').value.trim(),
+      spesifikasi   : id('modal-spek').value.trim(),
+      serial_number : id('modal-sn').value.trim(),
+      stiker        : id('modal-stiker').value.trim(),   // ★ BARU
+      photo_url     : id('modal-photo').value.trim(),
+      updatedBy     : 'web-user'
     });
     delete S.cache[S.plant+'_drives']; delete S.cache[S.plant+'_groupList'];
     delete S.cache[S.plant+'_histori']; delete S.cache[S.plant+'_summary'];
     closeModal(); await renderDetailPage();
-  } catch(err){ alert('Gagal menyimpan: '+err.message); }
-  finally{ btn.disabled=false; btn.textContent='Simpan'; }
+  } catch(err) { alert('Gagal menyimpan: ' + err.message); }
+  finally { btn.disabled = false; btn.textContent = 'Simpan'; }
 }
 
 // Close modals on overlay click
-id('modal').addEventListener('click',e=>{if(e.target===id('modal'))closeModal();});
-id('login-overlay').addEventListener('click',e=>{if(e.target===id('login-overlay'))closeLoginModal();});
-id('ts-modal-overlay').addEventListener('click',e=>{if(e.target===id('ts-modal-overlay'))closeTsModal();});
-id('pm-modal-overlay').addEventListener('click',e=>{if(e.target===id('pm-modal-overlay'))closePMModal();});
+id('modal').addEventListener('click', e => { if(e.target===id('modal')) closeModal(); });
+id('login-overlay').addEventListener('click', e => { if(e.target===id('login-overlay')) closeLoginModal(); });
+id('ts-modal-overlay').addEventListener('click', e => { if(e.target===id('ts-modal-overlay')) closeTsModal(); });
+id('pm-modal-overlay').addEventListener('click', e => { if(e.target===id('pm-modal-overlay')) closePMModal(); });
 
 // ══ REFRESH ══
-async function doRefresh(){
-  const btn=id('btn-refresh'); btn.classList.add('loading');
-  if(S.plant)['drives','groupList','histori','pm','summary'].forEach(k=>delete S.cache[S.plant+'_'+k]);
+async function doRefresh() {
+  const btn = id('btn-refresh'); btn.classList.add('loading');
+  if (S.plant) ['drives','groupList','histori','pm','summary'].forEach(k => delete S.cache[S.plant+'_'+k]);
   clearSearch();
-  if(S.page==='detail') await renderDetailPage(); else await renderPlantPage();
+  if (S.page==='detail') await renderDetailPage(); else await renderPlantPage();
   btn.classList.remove('loading');
 }
 
 // ══ UTILITIES ══
-function id(i){return document.getElementById(i);}
-function esc(s){return String(s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');}
-function loadingHTML(msg){return`<div class="state-box"><div class="sp"></div><p>${msg}</p></div>`;}
-function errHTML(msg,fn){const rid='r'+Date.now();setTimeout(()=>{const b=id(rid);if(b)b.onclick=fn;},50);return`<div class="state-box"><div style="font-size:28px">⚠️</div><h3>Gagal memuat</h3><p>${esc(msg)}</p><button class="btn-retry" id="${rid}">Coba Lagi</button></div>`;}
+function id(i) { return document.getElementById(i); }
+function esc(s) { return String(s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;'); }
+function loadingHTML(msg) { return `<div class="state-box"><div class="sp"></div><p>${msg}</p></div>`; }
+function errHTML(msg,fn) {
+  const rid = 'r'+Date.now();
+  setTimeout(() => { const b=id(rid); if(b) b.onclick=fn; }, 50);
+  return `<div class="state-box"><div style="font-size:28px">⚠️</div><h3>Gagal memuat</h3><p>${esc(msg)}</p><button class="btn-retry" id="${rid}">Coba Lagi</button></div>`;
+}
 
 // Clock
-setInterval(()=>{id('clock').textContent=new Date().toTimeString().slice(0,8);},1000);
-id('clock').textContent=new Date().toTimeString().slice(0,8);
+setInterval(() => { id('clock').textContent = new Date().toTimeString().slice(0,8); }, 1000);
+id('clock').textContent = new Date().toTimeString().slice(0,8);
 
 // Theme
-function toggleTheme(){
-  const isLight=document.body.classList.toggle('light');
-  id('btn-theme').textContent=isLight?'☀️ Light':'🌙 Dark';
-  const m=id('stat-mode'); if(m)m.textContent=isLight?'LIGHT':'DARK';
-  localStorage.setItem('theme',isLight?'light':'dark');
+function toggleTheme() {
+  const isLight = document.body.classList.toggle('light');
+  id('btn-theme').textContent = isLight ? '☀️ Light' : '🌙 Dark';
+  const m = id('stat-mode'); if(m) m.textContent = isLight ? 'LIGHT' : 'DARK';
+  localStorage.setItem('theme', isLight ? 'light' : 'dark');
 }
-if(localStorage.getItem('theme')==='light'){
+if (localStorage.getItem('theme')==='light') {
   document.body.classList.add('light');
-  document.addEventListener('DOMContentLoaded',()=>{
-    const b=id('btn-theme');if(b)b.textContent='☀️ Light';
-    const m=id('stat-mode');if(m)m.textContent='LIGHT';
+  document.addEventListener('DOMContentLoaded', () => {
+    const b=id('btn-theme'); if(b) b.textContent='☀️ Light';
+    const m=id('stat-mode'); if(m) m.textContent='LIGHT';
   });
 }
 
 // ══ PRINT PDF ══
-async function printHistoriPDF(){
+async function printHistoriPDF() {
   const allRows = S.cache[S.plant+'_histori'];
-  if(!allRows||!allRows.length){alert('Tidak ada data histori untuk dicetak.');return;}
+  if (!allRows||!allRows.length) { alert('Tidak ada data histori untuk dicetak.'); return; }
   const filterBulan = S.histFilter.bulan ? +S.histFilter.bulan : null;
   const filterTahun = S.histFilter.tahun ? +S.histFilter.tahun : null;
   const rows = allRows.filter(r => {
@@ -1870,27 +1786,26 @@ async function printHistoriPDF(){
     if (filterTahun && (!parsed || parsed.year  !== filterTahun)) return false;
     return true;
   });
-  if(!rows.length){alert('Tidak ada data histori untuk periode yang dipilih.');return;}
+  if (!rows.length) { alert('Tidak ada data histori untuk periode yang dipilih.'); return; }
   let periodLabel = 'Semua Periode';
-  if (filterBulan && filterTahun) periodLabel = NAMA_BULAN[filterBulan] + ' ' + filterTahun;
-  else if (filterBulan) periodLabel = NAMA_BULAN[filterBulan] + ' (Semua Tahun)';
-  else if (filterTahun) periodLabel = 'Tahun ' + filterTahun;
-  const {jsPDF}=window.jspdf, doc=new jsPDF({orientation:'landscape'});
-  doc.setFontSize(14);doc.setFont('helvetica','bold');
-  doc.text(`Histori Drive — ${S.plant}`,14,16);
-  doc.setFontSize(10);doc.setFont('helvetica','normal');
-  doc.text(`Periode: ${periodLabel}`,14,22);
+  if (filterBulan && filterTahun) periodLabel = NAMA_BULAN[filterBulan]+' '+filterTahun;
+  else if (filterBulan) periodLabel = NAMA_BULAN[filterBulan]+' (Semua Tahun)';
+  else if (filterTahun) periodLabel = 'Tahun '+filterTahun;
+  const {jsPDF} = window.jspdf, doc = new jsPDF({orientation:'landscape'});
+  doc.setFontSize(14); doc.setFont('helvetica','bold');
+  doc.text(`Histori Drive — ${S.plant}`, 14, 16);
+  doc.setFontSize(10); doc.setFont('helvetica','normal');
+  doc.text(`Periode: ${periodLabel}`, 14, 22);
   doc.setFontSize(9);
-  doc.text(`Dicetak: ${new Date().toLocaleString('id-ID')} · Total: ${rows.length} data`,14,27);
-  doc.autoTable({startY:32,head:[['Waktu','Drive ID','Nama','Group','Status','Keterangan']],body:rows.map(r=>[r.timestamp,r.drive_id,r.drive_nama||'—',r.group||'—',r.status.toUpperCase(),r.keterangan||'—']),styles:{fontSize:8,cellPadding:2},headStyles:{fillColor:[21,101,192],textColor:255,fontStyle:'bold'},alternateRowStyles:{fillColor:[240,244,248]},theme:'grid'});
+  doc.text(`Dicetak: ${new Date().toLocaleString('id-ID')} · Total: ${rows.length} data`, 14, 27);
+  doc.autoTable({ startY:32, head:[['Waktu','Drive ID','Nama','Group','Status','Keterangan']], body:rows.map(r=>[r.timestamp,r.drive_id,r.drive_nama||'—',r.group||'—',r.status.toUpperCase(),r.keterangan||'—']), styles:{fontSize:8,cellPadding:2}, headStyles:{fillColor:[21,101,192],textColor:255,fontStyle:'bold'}, alternateRowStyles:{fillColor:[240,244,248]}, theme:'grid' });
   const safePeriod = periodLabel.replace(/[^a-zA-Z0-9_\-]/g,'_');
   doc.save(`Histori_${S.plant}_${safePeriod}_${new Date().toISOString().slice(0,10)}.pdf`);
 }
 
-async function printPMPDF(){
-  const jadwal=S.cache[S.plant+'_pm'];
-  if(!jadwal||!jadwal.length){alert('Tidak ada data jadwal PM untuk dicetak.');return;}
-  // CHANGED: PDF PM juga ikut filter
+async function printPMPDF() {
+  const jadwal = S.cache[S.plant+'_pm'];
+  if (!jadwal||!jadwal.length) { alert('Tidak ada data jadwal PM untuk dicetak.'); return; }
   const filterBulan = S.pmFilter.bulan ? +S.pmFilter.bulan : null;
   const filterTahun = S.pmFilter.tahun ? +S.pmFilter.tahun : null;
   const filtered = jadwal.filter(p => {
@@ -1899,16 +1814,16 @@ async function printPMPDF(){
     if (filterTahun && (!parsed || parsed.year  !== filterTahun)) return false;
     return true;
   });
-  if(!filtered.length){alert('Tidak ada data PM untuk periode yang dipilih.');return;}
+  if (!filtered.length) { alert('Tidak ada data PM untuk periode yang dipilih.'); return; }
   let periodLabel = 'Semua Periode';
-  if (filterBulan && filterTahun) periodLabel = NAMA_BULAN[filterBulan] + ' ' + filterTahun;
-  else if (filterBulan) periodLabel = NAMA_BULAN[filterBulan] + ' (Semua Tahun)';
-  else if (filterTahun) periodLabel = 'Tahun ' + filterTahun;
-  const {jsPDF}=window.jspdf, doc=new jsPDF({orientation:'landscape'});
-  doc.setFontSize(14);doc.setFont('helvetica','bold');doc.text(`Jadwal PM — ${S.plant}`,14,16);
-  doc.setFontSize(9);doc.setFont('helvetica','normal');
-  doc.text(`Periode: ${periodLabel} · Dicetak: ${new Date().toLocaleString('id-ID')}`,14,22);
-  doc.autoTable({startY:27,head:[['ID PM','Judul','Drive ID','Tanggal','Worker','Status','Catatan']],body:filtered.map(p=>[p.id||'—',p.judul||'—',p.drive_id||'—',p.tanggal||'—',p.teknisi||'—',p.status||'—',p.catatan||'—']),styles:{fontSize:8,cellPadding:2},headStyles:{fillColor:[0,150,136],textColor:255,fontStyle:'bold'},alternateRowStyles:{fillColor:[240,248,245]},theme:'grid'});
+  if (filterBulan && filterTahun) periodLabel = NAMA_BULAN[filterBulan]+' '+filterTahun;
+  else if (filterBulan) periodLabel = NAMA_BULAN[filterBulan]+' (Semua Tahun)';
+  else if (filterTahun) periodLabel = 'Tahun '+filterTahun;
+  const {jsPDF} = window.jspdf, doc = new jsPDF({orientation:'landscape'});
+  doc.setFontSize(14); doc.setFont('helvetica','bold'); doc.text(`Jadwal PM — ${S.plant}`, 14, 16);
+  doc.setFontSize(9); doc.setFont('helvetica','normal');
+  doc.text(`Periode: ${periodLabel} · Dicetak: ${new Date().toLocaleString('id-ID')}`, 14, 22);
+  doc.autoTable({ startY:27, head:[['ID PM','Judul','Drive ID','Tanggal','Worker','Status','Catatan']], body:filtered.map(p=>[p.id||'—',p.judul||'—',p.drive_id||'—',p.tanggal||'—',p.teknisi||'—',p.status||'—',p.catatan||'—']), styles:{fontSize:8,cellPadding:2}, headStyles:{fillColor:[0,150,136],textColor:255,fontStyle:'bold'}, alternateRowStyles:{fillColor:[240,248,245]}, theme:'grid' });
   const safePeriod = periodLabel.replace(/[^a-zA-Z0-9_\-]/g,'_');
   doc.save(`JadwalPM_${S.plant}_${safePeriod}_${new Date().toISOString().slice(0,10)}.pdf`);
 }
@@ -1918,11 +1833,11 @@ navTo('plant');
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.8.2/jspdf.plugin.autotable.min.js"></script>
 <script>
-  if('serviceWorker' in navigator){
-    window.addEventListener('load',()=>{
+  if ('serviceWorker' in navigator) {
+    window.addEventListener('load', () => {
       navigator.serviceWorker.register('/gardahitam/sw.js')
-        .then(r=>console.log('[SW] Registered:',r.scope))
-        .catch(e=>console.log('[SW] Error:',e));
+        .then(r => console.log('[SW] Registered:', r.scope))
+        .catch(e => console.log('[SW] Error:', e));
     });
   }
 </script>
