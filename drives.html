@@ -618,12 +618,13 @@ body.light .btn-open-pdf:hover{color:#003850;}
   <span class="topbar-title">Drive Monitoring</span>
   <span class="topbar-sep">&nbsp;/&nbsp;</span>
   <span class="topbar-sub" id="topbar-sub">Pilih Plant</span>
-  <div class="topbar-r">
+ <div class="topbar-r">
     <div class="role-badge supervisor" id="role-badge">👁️ Supervisor</div>
+    <div class="btn-sm" id="btn-login-topbar" onclick="openLoginTopbar()" style="border-color:var(--accent);color:var(--accent);">🔐 Login</div>
+    <div class="btn-sm" id="btn-logout-topbar" onclick="doLogout()" style="display:none;border-color:var(--fault);color:var(--fault);">↩ Logout</div>
     <div class="btn-theme" id="btn-theme" onclick="toggleTheme()">🌙 Dark</div>
     <div class="btn-sm" id="btn-refresh" onclick="doRefresh()">⟳ Refresh</div>
     <div class="topbar-clock" id="clock"></div>
-  </div>
 </div>
 
 <!-- ── RUNNING BAR ── -->
@@ -918,6 +919,7 @@ function updateRoleBadge() {
     admin      : '⚙️ Admin',
   };
   badge.textContent = labels[S.role] || '👁️ Supervisor';
+  updateLoginButtons();
 }
 
 // ══════════════════════════════════════════════════════════
@@ -1218,7 +1220,7 @@ function showSearchBar(show) { id('search-wrap').style.display = show ? 'flex' :
 // ══════════════════════════════════════════════════════════
 function openLoginModal(subText) {
   id('login-sub-text').textContent = subText || 'Masukkan kredensial untuk melanjutkan.';
-  id('login-area-label').textContent = _getCurGroupLabel();
+  id('login-area-label').textContent = S.plant ? _getCurGroupLabel() : 'Semua Plant';
   id('login-username').value = '';
   id('login-password').value = '';
   id('login-err').style.display = 'none';
@@ -1226,6 +1228,30 @@ function openLoginModal(subText) {
   btn.classList.remove('loading'); btn.disabled = false;
   id('login-overlay').classList.add('open');
   setTimeout(() => id('login-username').focus(), 100);
+}
+  
+function openLoginTopbar() {
+  // Jika sudah login, langsung logout saja
+  if (canEdit()) { doLogout(); return; }
+  S.pendingAction = 'topbarLogin';
+  S.pendingDriveData = null; S.pendingPhotoUrl = null; S.pendingTsData = null;
+  openLoginModal('Login untuk mengaktifkan mode edit drive.');
+}
+
+function doLogout() {
+  S.role = 'supervisor';
+  updateRoleBadge();
+  updateLoginButtons();
+  // Re-render supaya kartu drive refresh (hilangkan hint edit)
+  if (S.page === 'detail') renderDetailPage();
+}
+
+function updateLoginButtons() {
+  const isLoggedIn = canEdit();
+  const btnLogin  = id('btn-login-topbar');
+  const btnLogout = id('btn-logout-topbar');
+  if (btnLogin)  btnLogin.style.display  = isLoggedIn ? 'none' : 'flex';
+  if (btnLogout) btnLogout.style.display = isLoggedIn ? 'flex' : 'none';
 }
 
 function requestEdit(driveId, status, keterangan, merk, spesifikasi, photoUrl, serialNumber, stiker) {
@@ -1278,8 +1304,9 @@ async function submitLogin() {
 
     if (result.success) {
       // Simpan role ke state
-      S.role = result.role || selectedRole;
-      updateRoleBadge();
+    S.role = result.role || selectedRole;
+updateRoleBadge();
+updateLoginButtons();
 
       const action   = S.pendingAction;
       const photoUrl = S.pendingPhotoUrl;
@@ -1287,9 +1314,12 @@ async function submitLogin() {
       const tsD      = S.pendingTsData;
       closeLoginModal();
 
-      if      (action === 'photo' && photoUrl)    window.open(photoUrl, '_blank');
-      else if (action === 'edit' && d)            openModal(d.driveId, d.status, d.keterangan, d.merk, d.spesifikasi, d.photoUrl, d.serialNumber, d.stiker);
-      else if (action === 'editTimestamp' && tsD) openTsModal();
+     if      (action === 'photo' && photoUrl)    window.open(photoUrl, '_blank');
+else if (action === 'edit' && d)            openModal(d.driveId, d.status, d.keterangan, d.merk, d.spesifikasi, d.photoUrl, d.serialNumber, d.stiker);
+else if (action === 'editTimestamp' && tsD) openTsModal();
+else if (action === 'topbarLogin')          { if (S.page === 'detail') renderDetailPage(); }
+// updateLoginButtons dipanggil setelah role diset
+updateLoginButtons();
     } else {
       errEl.textContent = '❌ ' + (result.message || 'Username atau password salah.');
       errEl.style.display = 'block';
