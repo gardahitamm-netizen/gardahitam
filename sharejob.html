@@ -35,6 +35,10 @@
   --role-admin:   #FF6D00;
   --role-supervisor: #00E0F8;
   --role-teknisi: #00E676;
+  /* History accent */
+  --hist-accent:  #B39DDB;
+  --hist-accent-bg: rgba(179,157,219,0.08);
+  --hist-accent-bd: rgba(179,157,219,0.3);
 }
 
 * { box-sizing: border-box; margin: 0; padding: 0; }
@@ -257,6 +261,11 @@ body::after {
 #refreshBtn svg { fill: var(--teal); }
 #refreshBtn:hover { border-color: var(--teal); }
 #refreshBtn.spinning svg { animation: spinAnim 0.7s linear infinite; }
+/* Tombol Histori */
+#historiBtn { color: var(--hist-accent); border-color: var(--hist-accent-bd); background: var(--hist-accent-bg); }
+#historiBtn svg { fill: var(--hist-accent); }
+#historiBtn:hover { border-color: var(--hist-accent); box-shadow: 0 0 14px rgba(179,157,219,0.2); }
+#historiBtn::after { background: var(--hist-accent); }
 @keyframes spinAnim { to { transform: rotate(360deg); } }
 
 .perm-notice { display: flex; align-items: center; gap: 10px; padding: 10px 14px; border-radius: 6px; margin-bottom: 14px; font-family: 'JetBrains Mono', monospace; font-size: 11px; position: relative; z-index: 1; }
@@ -330,6 +339,8 @@ tr.filter-hidden { display: none; }
 .selesai { background: rgba(0,230,118,0.08); color: var(--green-ok); border-color: rgba(0,230,118,0.3); }
 .status-select:disabled { opacity: 0.6; cursor: not-allowed; }
 
+.status-badge-static { display: inline-block; font-size: 11px; font-weight: 700; font-family: 'JetBrains Mono', monospace; padding: 3px 8px; border-radius: 3px; border: 1px solid transparent; text-transform: uppercase; }
+
 .btn-delete-row { display: inline-flex; align-items: center; justify-content: center; width: 24px; height: 24px; border-radius: 50%; background: rgba(255,23,68,0.08); border: 1px solid rgba(255,23,68,0.35); color: var(--red-err); font-size: 12px; font-weight: 900; cursor: pointer; }
 .btn-delete-row:hover { background: rgba(255,23,68,0.22); border-color: var(--red-err); transform: scale(1.15); }
 
@@ -379,6 +390,76 @@ tr.filter-hidden { display: none; }
 #themeToggleBtn { position: fixed; bottom: 54px; right: 14px; z-index: 3000; display: inline-flex; align-items: center; justify-content: center; width: 36px; height: 36px; border-radius: 50%; background: var(--bg-panel); border: 1px solid var(--border-mid); cursor: pointer; padding: 0; }
 #themeToggleBtn:hover { border-color: var(--border-orange); box-shadow: 0 0 14px var(--orange-glow); transform: scale(1.08); }
 
+/* ──────────────────────────────────────
+   HISTORY PAGE
+   ────────────────────────────────────── */
+#historyPage { display: none; position: relative; z-index: 1; }
+
+.hist-page-header {
+  text-align: center; padding: 10px 0 20px; position: relative; z-index: 1;
+}
+.hist-page-header h2 {
+  font-family: 'Exo 2', sans-serif; font-size: 24px; font-weight: 900;
+  letter-spacing: 5px; text-transform: uppercase; color: var(--text-bright);
+}
+.hist-page-header h2 span { color: var(--hist-accent); text-shadow: 0 0 20px rgba(179,157,219,0.5); }
+.hist-page-subline {
+  display: flex; align-items: center; justify-content: center; gap: 12px; margin-top: 6px;
+}
+.hist-page-subline::before, .hist-page-subline::after {
+  content: ''; flex: 1; max-width: 140px; height: 1px;
+  background: linear-gradient(90deg, transparent, var(--hist-accent));
+}
+.hist-page-subline::after { background: linear-gradient(90deg, var(--hist-accent), transparent); }
+.hist-page-badge {
+  font-family: 'JetBrains Mono', monospace; font-size: 10px; letter-spacing: 3px;
+  color: var(--hist-accent); opacity: 0.7; text-transform: uppercase;
+}
+
+.hist-top-bar { display: flex; align-items: center; gap: 8px; margin-bottom: 14px; flex-wrap: wrap; }
+.hist-back-btn {
+  display: inline-flex; align-items: center; gap: 6px; height: 44px; padding: 0 16px;
+  background: var(--hist-accent-bg); border: 1px solid var(--hist-accent-bd);
+  border-radius: 4px; cursor: pointer; font-family: 'Exo 2', sans-serif;
+  font-size: 13px; font-weight: 700; letter-spacing: 1.5px; text-transform: uppercase;
+  color: var(--hist-accent); transition: all 0.18s;
+}
+.hist-back-btn:hover { background: rgba(179,157,219,0.15); box-shadow: 0 0 14px rgba(179,157,219,0.2); }
+.hist-reload-btn {
+  display: inline-flex; align-items: center; gap: 6px; height: 44px; padding: 0 16px;
+  background: var(--bg-card); border: 1px solid var(--teal-bd);
+  border-radius: 4px; cursor: pointer; font-family: 'Exo 2', sans-serif;
+  font-size: 13px; font-weight: 700; letter-spacing: 1.5px; text-transform: uppercase;
+  color: var(--teal); transition: all 0.18s;
+}
+.hist-reload-btn:hover { border-color: var(--teal); box-shadow: 0 0 10px rgba(0,224,248,0.15); }
+.hist-reload-btn.spinning svg { animation: spinAnim 0.7s linear infinite; }
+.hist-reload-btn svg { fill: var(--teal); width: 18px; height: 18px; }
+
+/* Filter bar untuk history — pakai accent hist */
+#histFilterBar .hist-period-badge { background: var(--hist-accent-bg); border-color: var(--hist-accent-bd); color: var(--hist-accent); }
+#histFilterBar .hist-filter-select:focus { border-color: var(--hist-accent); }
+#histFilterBar .hist-filter-date:focus { border-color: var(--hist-accent); }
+#histFilterBar .search-item input:focus { border-color: var(--hist-accent); box-shadow: 0 0 0 3px rgba(179,157,219,0.1); }
+
+/* Tabel history — header dengan accent warna ungu */
+#historyTable thead tr { border-bottom: 2px solid var(--hist-accent); }
+#historyTable th { color: var(--hist-accent); }
+#historyTable tr:hover td { background: rgba(179,157,219,0.05) !important; }
+
+.hist-info-empty {
+  text-align: center; padding: 60px 20px;
+  font-family: 'JetBrains Mono', monospace; font-size: 13px; color: var(--text-dim);
+  letter-spacing: 1px;
+}
+.hist-info-empty .ei-icon { font-size: 36px; margin-bottom: 14px; }
+.hist-info-empty .ei-text { color: var(--text-dim); }
+
+.hist-archived-at {
+  font-family: 'JetBrains Mono', monospace; font-size: 10px; color: var(--text-dim);
+  letter-spacing: 0.5px;
+}
+
 #printPagesContainer { display: none !important; }
 .print-header { display: none; text-align: center; font-size: 12px; color: #555; margin-bottom: 8px; }
 
@@ -386,10 +467,11 @@ tr.filter-hidden { display: none; }
   @page { size: A4 landscape; margin: 8mm; }
   html { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
   body { background: #fff !important; color: #000 !important; padding: 5px; }
-  body::before, body::after, #logo-img, #clock, .top-bar, #inputSection, #runningTextBar,
+  body::before, body::after, #logo-img, #clock, .top-bar, .hist-top-bar, #inputSection, #runningTextBar,
   #confirmModal, #alertModal, #deleteRowModal, #loadingOverlay, .btn-delete-row,
   td.col-delete, th.col-delete, .hist-filter-bar, #unitSelectorScreen, #activeUnitBar,
-  #homeBtn, #themeToggleBtn, #mainApp, .page-header, #authScreen, #userChip, .perm-notice { display: none !important; }
+  #homeBtn, #themeToggleBtn, #mainApp, .page-header, #authScreen, #userChip, .perm-notice,
+  #historyPage .hist-page-header, #historyPage .hist-top-bar { display: none !important; }
   #printPagesContainer { display: block !important; }
   .print-header { display: block !important; }
   .print-page { display: block !important; page-break-after: always; margin-bottom: 0; }
@@ -405,10 +487,12 @@ tr.filter-hidden { display: none; }
 
 @keyframes fadeInUp { from { opacity: 0; transform: translateY(16px); } to { opacity: 1; transform: translateY(0); } }
 .unit-card { animation: fadeInUp 0.3s ease both; }
+#historyPage { animation: fadeInUp 0.25s ease both; }
 </style>
 </head>
 <body>
 
+<!-- AUTH SCREEN -->
 <div id="authScreen">
   <div class="auth-box">
     <h2 class="auth-title">SHARE <span>JOB</span></h2>
@@ -483,11 +567,13 @@ tr.filter-hidden { display: none; }
   Home
 </a>
 
+<!-- UNIT SELECTOR -->
 <div id="unitSelectorScreen">
   <div class="unit-selector-title">Pilih <span>Unit / Departemen</span> untuk melanjutkan</div>
   <div class="unit-grid" id="unitGrid"></div>
 </div>
 
+<!-- ACTIVE UNIT BAR -->
 <div id="activeUnitBar">
   <span class="aub-label">Unit aktif</span>
   <span class="aub-unit" id="aubCode">—</span>
@@ -496,6 +582,7 @@ tr.filter-hidden { display: none; }
   <button class="aub-change" onclick="changeUnit()">&#8634; Ganti Unit</button>
 </div>
 
+<!-- MAIN APP (Job Harian) -->
 <div id="mainApp">
   <div class="top-bar">
     <button class="tb-btn hidden" id="toggleInputBtn" onclick="toggleInput()">
@@ -519,6 +606,11 @@ tr.filter-hidden { display: none; }
     <button class="tb-btn" id="autoScrollBtn" onclick="toggleAutoScroll()">
       <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 4l-1.41 1.41L16.17 11H4v2h12.17l-5.58 5.59L12 20l8-8z"/></svg>
       Auto Scroll
+    </button>
+    <!-- TOMBOL HISTORI BARU -->
+    <button class="tb-btn" id="historiBtn" onclick="openHistoryPage()">
+      <svg viewBox="0 0 24 24" fill="currentColor"><path d="M13 3c-4.97 0-9 4.03-9 9H1l3.89 3.89.07.14L9 12H6c0-3.87 3.13-7 7-7s7 3.13 7 7-3.13 7-7 7c-1.93 0-3.68-.79-4.94-2.06l-1.42 1.42C8.27 19.99 10.51 21 13 21c4.97 0 9-4.03 9-9s-4.03-9-9-9zm-1 5v5l4.28 2.54.72-1.21-3.5-2.08V8H12z"/></svg>
+      Histori
     </button>
   </div>
 
@@ -577,7 +669,6 @@ tr.filter-hidden { display: none; }
       <span>📋</span><span id="periodText">—</span>
     </div>
     <button class="btn-reset-filter hidden" id="btnResetFilter" onclick="resetFilter()">✕ Reset</button>
-
     <div class="search-group">
       <div class="search-item">
         <svg viewBox="0 0 24 24"><path d="M12 12c2.7 0 4.8-2.1 4.8-4.8S14.7 2.4 12 2.4 7.2 4.5 7.2 7.2 9.3 12 12 12zm0 2.4c-3.2 0-9.6 1.6-9.6 4.8v2.4h19.2v-2.4c0-3.2-6.4-4.8-9.6-4.8z"/></svg>
@@ -595,7 +686,6 @@ tr.filter-hidden { display: none; }
         <span class="search-label">tugas</span>
       </div>
     </div>
-
     <span class="hist-filter-result" id="filterResult"></span>
   </div>
 
@@ -613,8 +703,94 @@ tr.filter-hidden { display: none; }
   <div style="font-family:'JetBrains Mono',monospace;font-size:10px;color:var(--text-dim);text-align:center;margin-bottom:8px;" id="editHint"></div>
 </div>
 
+<!-- ══════════════════════════════════════
+     HISTORY PAGE
+     ══════════════════════════════════════ -->
+<div id="historyPage">
+  <div class="hist-page-header">
+    <h2>RIWAYAT <span>JOB</span> SELESAI</h2>
+    <div class="hist-page-subline">
+      <span class="hist-page-badge">TASK HISTORY — AUTO ARCHIVED AT 05:00</span>
+    </div>
+  </div>
+
+  <div class="hist-top-bar">
+    <button class="hist-back-btn" onclick="closeHistoryPage()">
+      ← Kembali ke Job Harian
+    </button>
+    <button class="hist-reload-btn" id="histReloadBtn" onclick="reloadHistory()">
+      <svg viewBox="0 0 24 24"><path d="M17.65 6.35A7.958 7.958 0 0 0 12 4c-4.42 0-7.99 3.58-7.99 8s3.57 8 7.99 8c3.73 0 6.84-2.55 7.73-6h-2.08A5.99 5.99 0 0 1 12 18c-3.31 0-6-2.69-6-6s2.69-6 6-6c1.66 0 3.14.69 4.22 1.78L13 11h7V4l-2.35 2.35z"/></svg>
+      Refresh
+    </button>
+  </div>
+
+  <!-- Filter bar untuk histori -->
+  <div class="hist-filter-bar" id="histFilterBar">
+    <span class="hist-filter-label">📅 Filter:</span>
+    <div class="hist-filter-group">
+      <span class="hist-filter-label" style="font-size:9px;">TGL</span>
+      <input type="date" class="hist-filter-date" id="hFilterTanggal" oninput="applyHistFilter()">
+    </div>
+    <span class="hist-filter-sep">|</span>
+    <div class="hist-filter-group">
+      <select class="hist-filter-select" id="hFilterBulan" onchange="onHBulanTahunChange()">
+        <option value="">Semua Bulan</option>
+      </select>
+    </div>
+    <span class="hist-filter-sep">/</span>
+    <div class="hist-filter-group">
+      <select class="hist-filter-select" id="hFilterTahun" onchange="onHBulanTahunChange()">
+        <option value="">Semua Tahun</option>
+      </select>
+    </div>
+    <div class="hist-period-badge" id="hPeriodBadge" style="display:none;">
+      <span>📋</span><span id="hPeriodText">—</span>
+    </div>
+    <button class="btn-reset-filter hidden" id="hBtnResetFilter" onclick="resetHistFilter()">✕ Reset</button>
+    <div class="search-group">
+      <div class="search-item">
+        <svg viewBox="0 0 24 24"><path d="M12 12c2.7 0 4.8-2.1 4.8-4.8S14.7 2.4 12 2.4 7.2 4.5 7.2 7.2 9.3 12 12 12zm0 2.4c-3.2 0-9.6 1.6-9.6 4.8v2.4h19.2v-2.4c0-3.2-6.4-4.8-9.6-4.8z"/></svg>
+        <input type="text" id="hSearchNama" placeholder="Cari nama..." oninput="applyHistFilter()">
+        <span class="search-label">nama</span>
+      </div>
+      <div class="search-item">
+        <svg viewBox="0 0 24 24"><path d="M22.7 19l-9.1-9.1c.9-2.3.4-5-1.5-6.9-2-2-5-2.4-7.4-1.3L9 6 6 9 1.6 4.7C.4 7.1.9 10.1 2.9 12.1c1.9 1.9 4.6 2.4 6.9 1.5l9.1 9.1c.4.4 1 .4 1.4 0l2.3-2.3c.5-.4.5-1.1.1-1.4z"/></svg>
+        <input type="text" id="hSearchMesin" placeholder="Cari mesin..." oninput="applyHistFilter()">
+        <span class="search-label">mesin</span>
+      </div>
+      <div class="search-item">
+        <svg viewBox="0 0 24 24"><path d="M14 2H6c-1.1 0-2 .9-2 2v16c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2V8l-6-6zm-1 7V3.5L18.5 9H13zM8 13h8v1H8zm0 2h8v1H8zm0 2h5v1H8z"/></svg>
+        <input type="text" id="hSearchTugas" placeholder="Cari tugas..." oninput="applyHistFilter()">
+        <span class="search-label">tugas</span>
+      </div>
+    </div>
+    <span class="hist-filter-result" id="hFilterResult"></span>
+  </div>
+
+  <div class="table-wrapper">
+    <table id="historyTable">
+      <colgroup><col style="width:140px"><col style="width:150px"><col><col style="width:120px"><col style="width:80px"><col style="width:80px"><col style="width:130px"></colgroup>
+      <thead>
+        <tr>
+          <th>ID</th>
+          <th>Nama</th>
+          <th>Tugas</th>
+          <th>Mesin</th>
+          <th>Mulai</th>
+          <th>Selesai</th>
+          <th>Diarsipkan</th>
+        </tr>
+      </thead>
+      <tbody id="histData">
+        <tr><td colspan="7"><div class="hist-info-empty"><div class="ei-icon">⏳</div><div class="ei-text">Klik Refresh untuk memuat riwayat job</div></div></td></tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+
 <div id="printPagesContainer"></div>
 
+<!-- MODALS -->
 <div id="confirmModal" class="modal"><div class="modal-box"><h3>⚠ Konfirmasi Archive</h3><p>Semua job hari ini akan dipindah ke arsip. Lanjutkan?</p><br><button onclick="confirmArchive()">Ya, Archive</button><button onclick="closeModal()">Batal</button></div></div>
 <div id="alertModal" class="modal"><div class="modal-box"><p id="alertText"></p><br><button onclick="closeAlert()">OK</button></div></div>
 <div id="deleteRowModal" class="modal"><div class="modal-box"><h3>🗑 Hapus Job?</h3><p id="deleteRowDesc"></p><p style="font-size:13px;margin-bottom:18px;">Tindakan ini tidak dapat dibatalkan.</p><div style="display:flex;justify-content:center;gap:12px;"><button id="confirmDeleteRowBtn">Ya, Hapus</button><button id="cancelDeleteRowBtn">Batal</button></div></div></div>
@@ -659,38 +835,20 @@ var UNIT_CONFIG = [
 var MASTER_GAS_URL = "https://script.google.com/macros/s/AKfycbxcpj6mYF6YHVhdNNhdn9mX2b_F9gi_2q8cJc_Co6QzjqDD_0qMdQGv4YxOBoLrJV0W/exec";
 
 // ═══════════════════════════════════════
-// RBAC — DEFINISI ROLE & PERMISSION
+// RBAC
 // ═══════════════════════════════════════
-// 
-// TEKNISI   : ubah status (Pending/Proses/Selesai)
-// SUPERVISOR: tambah, edit, hapus job — TIDAK bisa ubah status
-// ADMIN     : semua akses (teknisi + supervisor)
-// GUEST     : hanya lihat, cetak, filter, WA
-//
-// Cetak, WA, Filter, Refresh → semua role bisa
-// ═══════════════════════════════════════
-
 var ROLES = { ADMIN:'admin', SUPERVISOR:'supervisor', TEKNISI:'teknisi', GUEST:'guest' };
-
 var PERMISSIONS = {
-  // Tambah job baru
   'sharejob.add':              ['admin', 'supervisor'],
-  // Edit job (inline double-click)
   'sharejob.edit':             ['admin', 'supervisor'],
-  // Hapus job
   'sharejob.delete':           ['admin', 'supervisor'],
-  // Archive semua job
   'sharejob.archive':          ['admin', 'supervisor'],
-  // Ubah status Pending/Proses/Selesai
-  'sharejob.statusChange':     ['admin', 'teknisi'],      // ← supervisor TIDAK ada di sini
-  // Edit running text (marquee bawah)
+  'sharejob.statusChange':     ['admin', 'teknisi'],
   'sharejob.editRunningText':  ['admin'],
-  // Cetak, WA, filter — semua role
   'sharejob.print':            ['admin', 'supervisor', 'teknisi', 'guest'],
   'sharejob.wa':               ['admin', 'supervisor', 'teknisi', 'guest'],
   'sharejob.filter':           ['admin', 'supervisor', 'teknisi', 'guest'],
 };
-
 var ROLE_META = {
   admin:      { label:'ADMIN',      color:'var(--role-admin)',      dot:'#FF6D00', icon:'👑' },
   supervisor: { label:'SUPERVISOR', color:'var(--role-supervisor)', dot:'#00E0F8', icon:'🎯' },
@@ -710,7 +868,6 @@ function loadSession() {
   return null;
 }
 function clearSession() { localStorage.removeItem(SESSION_KEY); currentSession = null; }
-
 function hasPermission(perm) {
   if (!currentSession) return false;
   var allowed = PERMISSIONS[perm];
@@ -726,16 +883,9 @@ async function doLogin() {
   var password = document.getElementById('authPassword').value.trim();
   var errorDiv = document.getElementById('authError');
   var btn = document.getElementById('authLoginBtn');
-
-  if (!username || !password) {
-    errorDiv.textContent = 'Username dan password harus diisi!';
-    errorDiv.classList.add('show');
-    return;
-  }
-
+  if (!username || !password) { errorDiv.textContent = 'Username dan password harus diisi!'; errorDiv.classList.add('show'); return; }
   btn.classList.add('loading'); btn.disabled = true;
   errorDiv.classList.remove('show');
-
   try {
     var url = new URL(MASTER_GAS_URL);
     url.searchParams.set('action','verifyUser');
@@ -743,146 +893,90 @@ async function doLogin() {
     url.searchParams.set('password', password);
     var res = await fetch(url.toString());
     var result = await res.json();
-
     if (result.success) {
-      // ── PERBAIKAN UTAMA: ambil role dari response GAS ──
       var role = (result.role || '').toLowerCase().trim();
-      // Validasi role harus salah satu dari role yang dikenal
-      if (['admin','supervisor','teknisi'].indexOf(role) === -1) {
-        role = ROLES.TEKNISI; // default ke teknisi jika tidak dikenal
-      }
-      var session = {
-        username: username,
-        role: role,
-        allowedUnits: result.units || UNIT_CONFIG.map(function(u){return u.code;}),
-        loginTime: Date.now()
-      };
-      saveSession(session);
-      startApp(session);
+      if (['admin','supervisor','teknisi'].indexOf(role) === -1) role = ROLES.TEKNISI;
+      var session = { username: username, role: role, allowedUnits: result.units || UNIT_CONFIG.map(function(u){return u.code;}), loginTime: Date.now() };
+      saveSession(session); startApp(session);
     } else {
       errorDiv.textContent = result.error || 'Username atau password salah!';
       errorDiv.classList.add('show');
     }
   } catch(err) {
-    // Fallback hardcoded admin jika koneksi gagal
     if (checkHardcodedAdmin(username, password)) {
-      var session = {
-        username: username,
-        role: ROLES.ADMIN,
-        allowedUnits: UNIT_CONFIG.map(function(u){return u.code;}),
-        loginTime: Date.now()
-      };
+      var session = { username: username, role: ROLES.ADMIN, allowedUnits: UNIT_CONFIG.map(function(u){return u.code;}), loginTime: Date.now() };
       saveSession(session); startApp(session);
     } else {
       errorDiv.textContent = 'Tidak dapat terhubung. Cek koneksi internet.';
       errorDiv.classList.add('show');
     }
-  } finally {
-    btn.classList.remove('loading'); btn.disabled = false;
-  }
+  } finally { btn.classList.remove('loading'); btn.disabled = false; }
 }
-
-function checkHardcodedAdmin(username, password) {
-  return btoa(username) === btoa('admin') && btoa(password) === btoa('gh@dm1n2025');
-}
-
+function checkHardcodedAdmin(username, password) { return btoa(username) === btoa('admin') && btoa(password) === btoa('gh@dm1n2025'); }
 function loginAsGuest() {
-  var session = {
-    username: 'Tamu',
-    role: ROLES.GUEST,
-    allowedUnits: UNIT_CONFIG.map(function(u){return u.code;}),
-    loginTime: Date.now()
-  };
-  saveSession(session);
-  startApp(session);
+  var session = { username: 'Tamu', role: ROLES.GUEST, allowedUnits: UNIT_CONFIG.map(function(u){return u.code;}), loginTime: Date.now() };
+  saveSession(session); startApp(session);
 }
-
 function startApp(session) {
   currentSession = session;
   document.getElementById('authScreen').style.display = 'none';
-  setupUserChip(session);
-  setupRoleUI(session);
-  showUnitSelector();
+  setupUserChip(session); setupRoleUI(session); showUnitSelector();
 }
-
 function setupUserChip(session) {
   var meta = ROLE_META[session.role] || ROLE_META.guest;
-  var chip = document.getElementById('userChip');
   document.getElementById('ucDot').style.background = meta.dot;
   document.getElementById('ucDot').style.boxShadow = '0 0 6px ' + meta.dot;
   document.getElementById('ucName').textContent = session.username;
   document.getElementById('ucName').style.color = meta.color;
   document.getElementById('ucRole').textContent = meta.icon + ' ' + meta.label;
-  chip.style.display = 'flex';
+  document.getElementById('userChip').style.display = 'flex';
 }
-
 function setupRoleUI(session) {
   var role = session.role;
-
-  // Tombol tambah job: admin & supervisor
   document.getElementById('toggleInputBtn').classList.toggle('hidden', !hasPermission('sharejob.add'));
-  // Tombol hapus job: admin & supervisor
   document.getElementById('toggleDeleteBtn').classList.toggle('hidden', !hasPermission('sharejob.delete'));
-
-  // Edit running text: hanya admin
   var editRunBtn = document.getElementById('editRunningBtn');
   if (editRunBtn) {
     editRunBtn.style.opacity = hasPermission('sharejob.editRunningText') ? '1' : '0.3';
     editRunBtn.style.cursor  = hasPermission('sharejob.editRunningText') ? 'pointer' : 'not-allowed';
   }
-
-  // Hint di bawah tabel sesuai role
   var hint = document.getElementById('editHint');
   if (hint) {
-    if (role === ROLES.GUEST) {
-      hint.textContent = '👁 Mode Tamu: hanya bisa melihat, filter, cetak, dan kirim WA';
-    } else if (role === ROLES.TEKNISI) {
-      hint.textContent = '🔧 Teknisi: Anda bisa mengubah status job (Pending / Proses / Selesai)';
-    } else if (role === ROLES.SUPERVISOR) {
-      hint.textContent = '🎯 Supervisor: Anda bisa menambah, edit, dan hapus job • Double-klik baris untuk edit';
-    } else {
-      hint.textContent = '👑 Admin: Akses penuh • Double-klik baris untuk edit • Ubah status tersedia';
-    }
+    if (role === ROLES.GUEST) hint.textContent = '👁 Mode Tamu: hanya bisa melihat, filter, cetak, dan kirim WA';
+    else if (role === ROLES.TEKNISI) hint.textContent = '🔧 Teknisi: Anda bisa mengubah status job (Pending / Proses / Selesai)';
+    else if (role === ROLES.SUPERVISOR) hint.textContent = '🎯 Supervisor: Anda bisa menambah, edit, dan hapus job • Double-klik baris untuk edit';
+    else hint.textContent = '👑 Admin: Akses penuh • Double-klik baris untuk edit • Ubah status tersedia';
   }
-
   showPermNotice(role);
 }
-
 function showPermNotice(role) {
   var notice = document.getElementById('permNotice');
   if (!notice) return;
   var messages = {
     guest:      { cls:'pn-info', text:'👁 Mode Tamu — Hanya bisa melihat, filter, cetak, dan kirim WA.' },
     teknisi:    { cls:'pn-warn', text:'🔧 Mode Teknisi — Anda dapat mengubah status job (Pending/Proses/Selesai).' },
-    supervisor: { cls:'pn-info', text:'🎯 Mode Supervisor — Anda dapat menambah, mengedit, dan menghapus job. Perubahan status dilakukan oleh Teknisi.' }
+    supervisor: { cls:'pn-info', text:'🎯 Mode Supervisor — Anda dapat menambah, mengedit, dan menghapus job.' }
   };
   var m = messages[role];
   if (m) { notice.className = 'perm-notice ' + m.cls; notice.textContent = m.text; notice.classList.remove('hidden'); }
   else    { notice.classList.add('hidden'); }
 }
-
 function showAccessDenied(action, roleNeeded) {
   var meta = getRoleMeta();
   document.getElementById('adDesc').textContent = 'Tindakan "' + action + '" tidak diizinkan untuk role Anda.';
-  document.getElementById('adRoleInfo').innerHTML =
-    '<strong>Role Anda:</strong> ' + meta.icon + ' ' + meta.label +
-    '<br><strong>Dibutuhkan:</strong> ' + roleNeeded;
+  document.getElementById('adRoleInfo').innerHTML = '<strong>Role Anda:</strong> ' + meta.icon + ' ' + meta.label + '<br><strong>Dibutuhkan:</strong> ' + roleNeeded;
   document.getElementById('accessDeniedOverlay').classList.add('show');
 }
 function closeAccessDenied() { document.getElementById('accessDeniedOverlay').classList.remove('show'); }
-
-function confirmLogout() {
-  document.getElementById('logoutUserName').textContent = currentSession ? currentSession.username : '—';
-  document.getElementById('logoutModal').style.display = 'flex';
-}
+function confirmLogout() { document.getElementById('logoutUserName').textContent = currentSession ? currentSession.username : '—'; document.getElementById('logoutModal').style.display = 'flex'; }
 function closeLogoutModal() { document.getElementById('logoutModal').style.display = 'none'; }
-
 function doLogout() {
   clearSession(); closeLogoutModal();
   currentUnit = null; allTasks = []; allGroups = []; deleteMode = false;
   document.getElementById('mainApp').style.display = 'none';
   document.getElementById('activeUnitBar').style.display = 'none';
   document.getElementById('unitSelectorScreen').style.display = 'none';
+  document.getElementById('historyPage').style.display = 'none';
   document.getElementById('userChip').style.display = 'none';
   clearPrintContainer();
   document.getElementById('authScreen').style.display = 'flex';
@@ -890,7 +984,6 @@ function doLogout() {
   document.getElementById('authPassword').value = '';
   document.getElementById('authError').classList.remove('show');
 }
-
 function updateAubRoleChip() {
   if (!currentSession) return;
   var meta = getRoleMeta();
@@ -909,6 +1002,8 @@ var allTasks = [], allGroups = [];
 var deleteMode = false;
 var currentEditingRow = null, originalRowData = null;
 var filterState = { tanggal:'', bulan:'', tahun:'', status:'' };
+var histFilterState = { tanggal:'', bulan:'', tahun:'' };
+var allHistoryData = [];
 var NAMA_BULAN = ['','Januari','Februari','Maret','April','Mei','Juni','Juli','Agustus','September','Oktober','November','Desember'];
 var TAHUN_AWAL = 2024;
 var STATUS_ORDER = { 'Pending':0, 'Proses':1, 'Selesai':2 };
@@ -923,15 +1018,16 @@ function showUnitSelector() {
   renderUnitSelector(filtered);
   document.getElementById('unitSelectorScreen').style.display = 'block';
   document.getElementById('mainApp').style.display = 'none';
+  document.getElementById('historyPage').style.display = 'none';
   document.getElementById('activeUnitBar').style.display = 'none';
 }
-
 function goHome() {
   if (currentEditingRow) { showAlert("Selesaikan edit terlebih dahulu!"); return; }
   currentUnit = null;
   document.documentElement.style.setProperty('--orange','#FF6D00');
   clearPrintContainer();
   document.getElementById('mainApp').style.display = 'none';
+  document.getElementById('historyPage').style.display = 'none';
   document.getElementById('activeUnitBar').style.display = 'none';
   document.getElementById('inputSection').style.display = 'none';
   showUnitSelector();
@@ -965,7 +1061,6 @@ async function selectUnit(unit) {
   showLoading(false);
   if (ok) { showMainApp(unit); loadData(true); loadRunningText(); }
 }
-
 async function testGasConnection(unit) {
   try {
     var url = new URL(MASTER_GAS_URL);
@@ -974,14 +1069,13 @@ async function testGasConnection(unit) {
     var res = await fetch(url.toString());
     if (!res.ok) throw new Error('HTTP ' + res.status);
     var json = await res.json();
-    if (json.error && json.error.indexOf('Unit tidak dikenal') !== -1)
-      throw new Error('Unit ' + unit.code + ' tidak terdaftar di GAS');
+    if (json.error && json.error.indexOf('Unit tidak dikenal') !== -1) throw new Error('Unit ' + unit.code + ' tidak terdaftar di GAS');
     return true;
   } catch(err) { showAlert('❌ Gagal terhubung ke ' + unit.code + '\n\n' + err.message); return false; }
 }
-
 function showMainApp(unit) {
   document.getElementById('unitSelectorScreen').style.display = 'none';
+  document.getElementById('historyPage').style.display = 'none';
   document.getElementById('activeUnitBar').style.display = 'flex';
   document.getElementById('mainApp').style.display = 'block';
   document.getElementById('aubCode').textContent = unit.code;
@@ -994,6 +1088,162 @@ function showMainApp(unit) {
   applyFilter();
   renderTable();
   if (currentSession) setupRoleUI(currentSession);
+}
+
+// ═══════════════════════════════════════
+// HISTORY PAGE NAVIGATION
+// ═══════════════════════════════════════
+function openHistoryPage() {
+  if (!currentUnit) { showAlert("Pilih unit terlebih dahulu!"); return; }
+  document.getElementById('mainApp').style.display = 'none';
+  document.getElementById('historyPage').style.display = 'block';
+  buildHistFilterOptions();
+  loadHistory();
+}
+function closeHistoryPage() {
+  document.getElementById('historyPage').style.display = 'none';
+  document.getElementById('mainApp').style.display = 'block';
+}
+function reloadHistory() {
+  var btn = document.getElementById('histReloadBtn');
+  btn.classList.add('spinning'); btn.disabled = true;
+  loadHistory().finally(function(){
+    setTimeout(function(){ btn.classList.remove('spinning'); btn.disabled = false; }, 800);
+  });
+}
+
+async function loadHistory() {
+  showLoading(true, 'Memuat riwayat job...');
+  try {
+    var url = new URL(MASTER_GAS_URL);
+    url.searchParams.set('action','getHistory');
+    url.searchParams.set('unit', currentUnit.code);
+    var res = await fetch(url.toString());
+    if (!res.ok) throw new Error('HTTP ' + res.status);
+    var json = await res.json();
+    if (json.error) { showAlert('Error getHistory: ' + json.error); return; }
+    allHistoryData = json.data || [];
+    renderHistoryTable();
+    applyHistFilter();
+  } catch(err) {
+    showAlert('❌ Gagal memuat history: ' + err.message);
+  } finally {
+    showLoading(false);
+  }
+}
+
+function buildHistFilterOptions() {
+  var bulanSel = document.getElementById('hFilterBulan');
+  var tahunSel = document.getElementById('hFilterTahun');
+  var nowYear = new Date().getFullYear();
+  tahunSel.innerHTML = '<option value="">Semua Tahun</option>';
+  for (var y = TAHUN_AWAL; y <= nowYear+1; y++) {
+    var o = document.createElement('option'); o.value = y; o.textContent = y; tahunSel.appendChild(o);
+  }
+  bulanSel.innerHTML = '<option value="">Semua Bulan</option>';
+  for (var m = 1; m <= 12; m++) {
+    var o2 = document.createElement('option'); o2.value = m; o2.textContent = NAMA_BULAN[m]; bulanSel.appendChild(o2);
+  }
+}
+
+function renderHistoryTable() {
+  var tbody = document.getElementById('histData');
+  if (!allHistoryData.length) {
+    tbody.innerHTML = '<tr><td colspan="7"><div class="hist-info-empty"><div class="ei-icon">📭</div><div class="ei-text">Belum ada riwayat job yang diarsipkan</div></div></td></tr>';
+    return;
+  }
+
+  // Group by ID+tanggal untuk tampil rapi (nama digabung)
+  var grouped = {};
+  var order = [];
+  allHistoryData.forEach(function(t) {
+    var key = t.id + '|' + t.tanggal + '|' + t.archivedAt;
+    if (!grouped[key]) { grouped[key] = { task: t, names: [] }; order.push(key); }
+    grouped[key].names.push(t.nama);
+  });
+
+  var html = '';
+  order.forEach(function(key) {
+    var g = grouped[key];
+    var t = g.task;
+    var allNama = g.names.join(', ');
+    html += '<tr class="hist-group-row" ' +
+      'data-tanggal="' + escHtml(t.tanggal||'') + '" ' +
+      'data-nama="' + escHtml(allNama.toLowerCase()) + '" ' +
+      'data-mesin="' + escHtml((t.mesin||'').toLowerCase()) + '" ' +
+      'data-tugas="' + escHtml((t.tugas||'').toLowerCase()) + '">' +
+      '<td>' + escHtml(t.id) + '</td>' +
+      '<td>' + escHtml(allNama) + '</td>' +
+      '<td>' + escHtml(t.tugas) + '</td>' +
+      '<td>' + escHtml(t.mesin) + '</td>' +
+      '<td style="color:var(--green-ok);font-family:\'JetBrains Mono\',monospace;">' + (t.jamMulai || '<span style="color:var(--text-dim)">—</span>') + '</td>' +
+      '<td style="color:var(--amber-warn);font-family:\'JetBrains Mono\',monospace;">' + (t.jamSelesai || '<span style="color:var(--text-dim)">—</span>') + '</td>' +
+      '<td class="hist-archived-at">' + escHtml(t.tanggal) + (t.archivedAt ? '<br>' + escHtml(t.archivedAt) : '') + '</td>' +
+      '</tr>';
+  });
+  tbody.innerHTML = html;
+}
+
+function applyHistFilter() {
+  var fT = document.getElementById('hFilterTanggal').value || null;
+  var fB = document.getElementById('hFilterBulan').value ? +document.getElementById('hFilterBulan').value : null;
+  var fY = document.getElementById('hFilterTahun').value ? +document.getElementById('hFilterTahun').value : null;
+  var qNama  = (document.getElementById('hSearchNama').value || '').trim().toLowerCase();
+  var qMesin = (document.getElementById('hSearchMesin').value || '').trim().toLowerCase();
+  var qTugas = (document.getElementById('hSearchTugas').value || '').trim().toLowerCase();
+
+  var hasFilter = fT || fB || fY || qNama || qMesin || qTugas;
+  var badge = document.getElementById('hPeriodBadge');
+  var resetBtn = document.getElementById('hBtnResetFilter');
+
+  if (hasFilter) {
+    var label = '';
+    if (fT) { var pts = fT.split('-'); label = pts.length===3 ? pts[2]+' '+NAMA_BULAN[+pts[1]]+' '+pts[0] : fT; }
+    else if (fB && fY) label = NAMA_BULAN[fB]+' '+fY;
+    else if (fB) label = NAMA_BULAN[fB]+' (Semua Tahun)';
+    else if (fY) label = 'Tahun '+fY;
+    document.getElementById('hPeriodText').textContent = label || 'Filter Aktif';
+    badge.style.display = 'flex'; resetBtn.classList.remove('hidden');
+  } else {
+    badge.style.display = 'none'; resetBtn.classList.add('hidden');
+  }
+
+  var rows = document.querySelectorAll('#histData tr.hist-group-row');
+  var visible = 0;
+  rows.forEach(function(tr) {
+    var ts = tr.getAttribute('data-tanggal') || '';
+    var p = parseTanggal(ts);
+    var show = true;
+    if (fT) { if (tanggalToYMD(ts) !== fT) show = false; }
+    else {
+      if (fB && (!p || p.month !== fB)) show = false;
+      if (fY && (!p || p.year !== fY)) show = false;
+    }
+    if (show && qNama  && (tr.getAttribute('data-nama')||'').indexOf(qNama) === -1) show = false;
+    if (show && qMesin && (tr.getAttribute('data-mesin')||'').indexOf(qMesin) === -1) show = false;
+    if (show && qTugas && (tr.getAttribute('data-tugas')||'').indexOf(qTugas) === -1) show = false;
+    if (show) { tr.classList.remove('filter-hidden'); visible++; }
+    else       { tr.classList.add('filter-hidden'); }
+  });
+  document.getElementById('hFilterResult').textContent = visible + ' job ditemukan';
+}
+
+function onHBulanTahunChange() {
+  if (document.getElementById('hFilterTanggal').value) {
+    document.getElementById('hFilterTanggal').value = '';
+  }
+  applyHistFilter();
+}
+function resetHistFilter() {
+  document.getElementById('hFilterTanggal').value = '';
+  document.getElementById('hFilterBulan').value = '';
+  document.getElementById('hFilterTahun').value = '';
+  document.getElementById('hSearchNama').value = '';
+  document.getElementById('hSearchMesin').value = '';
+  document.getElementById('hSearchTugas').value = '';
+  document.getElementById('hPeriodBadge').style.display = 'none';
+  document.getElementById('hBtnResetFilter').classList.add('hidden');
+  applyHistFilter();
 }
 
 // ═══════════════════════════════════════
@@ -1039,7 +1289,6 @@ function loadData(force) {
     applyFilterToRows();
   });
 }
-
 function manualRefresh() {
   if (currentEditingRow) { showAlert("Selesaikan edit terlebih dahulu!"); return; }
   var btn = document.getElementById('refreshBtn');
@@ -1047,7 +1296,6 @@ function manualRefresh() {
   loadData(true);
   setTimeout(function(){ btn.classList.remove('spinning'); btn.disabled = false; }, 1000);
 }
-
 function sortTasks(tasks) {
   return tasks.slice().sort(function(a,b){
     var ta = tanggalToTimestamp(a.tanggal), tb = tanggalToTimestamp(b.tanggal);
@@ -1057,7 +1305,6 @@ function sortTasks(tasks) {
     return sa - sb;
   });
 }
-
 function parseTanggal(str) {
   if (!str) return null;
   str = String(str).trim();
@@ -1076,7 +1323,6 @@ function renderTable() {
   var thead = document.getElementById("theadRow");
   var tbody = document.getElementById("data");
   var canDelete = hasPermission('sharejob.delete');
-
   if (deleteMode && canDelete) {
     table.classList.add("delete-mode");
     if (!thead.querySelector("th.col-delete")) {
@@ -1088,18 +1334,13 @@ function renderTable() {
     var ex = thead.querySelector("th.col-delete");
     if (ex) thead.removeChild(ex);
   }
-
   var groups = [], lastId = null;
   allTasks.forEach(function(task){
     if (String(task.id) !== lastId) { groups.push([]); lastId = String(task.id); }
     groups[groups.length-1].push(task);
   });
   allGroups = groups;
-
-  // Status select dinonaktifkan untuk supervisor & guest
-  // Admin & teknisi bisa ubah status
   var canChangeStatus = hasPermission('sharejob.statusChange');
-
   var html = "";
   groups.forEach(function(group, gi){
     var task = group[0];
@@ -1139,7 +1380,6 @@ function attachDoubleClickEdit() {
   tbody.removeEventListener('dblclick', handleTbodyDblClick);
   tbody.addEventListener('dblclick', handleTbodyDblClick);
 }
-
 function handleTbodyDblClick(e) {
   if (e.target.closest('.btn-delete-row')) return;
   if (e.target.tagName === 'SELECT') return;
@@ -1149,19 +1389,14 @@ function handleTbodyDblClick(e) {
   if (!tr) return;
   if (!hasPermission('sharejob.edit')) {
     var role = currentSession ? currentSession.role : 'guest';
-    var needed = role === ROLES.TEKNISI
-      ? 'Supervisor atau Admin'
-      : role === ROLES.GUEST
-        ? 'Minimal Teknisi'
-        : 'Supervisor atau Admin';
-    showAccessDenied('Edit Job', needed);
-    return;
+    var needed = role === ROLES.TEKNISI ? 'Supervisor atau Admin' : role === ROLES.GUEST ? 'Minimal Teknisi' : 'Supervisor atau Admin';
+    showAccessDenied('Edit Job', needed); return;
   }
   startInlineEdit(tr);
 }
 
 // ═══════════════════════════════════════
-// FILTER
+// FILTER (Main)
 // ═══════════════════════════════════════
 function buildFilterOptions() {
   var bulanSel = document.getElementById('filterBulan');
@@ -1180,23 +1415,14 @@ function buildFilterOptions() {
   document.getElementById('filterStatus').value = filterState.status;
   document.getElementById('filterTanggal').value = filterState.tanggal;
 }
-
 document.getElementById('filterTanggal').addEventListener('change', function(){
-  if (this.value) {
-    document.getElementById('filterBulan').value = '';
-    document.getElementById('filterTahun').value = '';
-    filterState.bulan = ''; filterState.tahun = '';
-  }
+  if (this.value) { document.getElementById('filterBulan').value = ''; document.getElementById('filterTahun').value = ''; filterState.bulan = ''; filterState.tahun = ''; }
   applyFilter();
 });
-
 function onBulanTahunChange() {
-  if (document.getElementById('filterTanggal').value) {
-    document.getElementById('filterTanggal').value = ''; filterState.tanggal = '';
-  }
+  if (document.getElementById('filterTanggal').value) { document.getElementById('filterTanggal').value = ''; filterState.tanggal = ''; }
   applyFilter();
 }
-
 function applyFilter() {
   filterState.tanggal = document.getElementById('filterTanggal').value;
   filterState.bulan   = document.getElementById('filterBulan').value;
@@ -1219,7 +1445,6 @@ function applyFilter() {
   }
   applyFilterToRows();
 }
-
 function resetFilter() {
   filterState = { tanggal:'', bulan:'', tahun:'', status:'' };
   document.getElementById('filterTanggal').value = '';
@@ -1233,7 +1458,6 @@ function resetFilter() {
   document.getElementById('btnResetFilter').classList.add('hidden');
   applyFilterToRows();
 }
-
 function applyFilterToRows() {
   var fT = filterState.tanggal || null;
   var fB = filterState.bulan   ? +filterState.bulan : null;
@@ -1242,7 +1466,6 @@ function applyFilterToRows() {
   var qNama  = document.getElementById('searchNama')  ? document.getElementById('searchNama').value.trim().toLowerCase()  : '';
   var qMesin = document.getElementById('searchMesin') ? document.getElementById('searchMesin').value.trim().toLowerCase() : '';
   var qTugas = document.getElementById('searchTugas') ? document.getElementById('searchTugas').value.trim().toLowerCase() : '';
-
   var rows = document.querySelectorAll('#data tr.group-row');
   var visible = 0;
   rows.forEach(function(tr){
@@ -1250,14 +1473,9 @@ function applyFilterToRows() {
     var rs = tr.getAttribute('data-status') || '';
     var p = parseTanggal(ts);
     var show = true;
-
     if (fT) { if (tanggalToYMD(ts) !== fT) show = false; }
-    else {
-      if (fB && (!p || p.month !== fB)) show = false;
-      if (fY && (!p || p.year !== fY)) show = false;
-    }
+    else { if (fB && (!p || p.month !== fB)) show = false; if (fY && (!p || p.year !== fY)) show = false; }
     if (fS && rs !== fS) show = false;
-
     if (show) {
       var offset = (deleteMode && hasPermission('sharejob.delete')) ? 1 : 0;
       var cells = tr.children;
@@ -1268,7 +1486,6 @@ function applyFilterToRows() {
       if (qTugas && tugas.indexOf(qTugas) === -1) show = false;
       if (qMesin && mesin.indexOf(qMesin) === -1) show = false;
     }
-
     if (show) { tr.classList.remove('filter-hidden'); visible++; }
     else       { tr.classList.add('filter-hidden'); }
   });
@@ -1280,11 +1497,9 @@ function applyFilterToRows() {
 // ═══════════════════════════════════════
 function addTask() {
   if (!hasPermission('sharejob.add')) { showAccessDenied('Tambah Job','Supervisor atau Admin'); return; }
-  var id     = document.getElementById("id").value.trim();
-  var nama   = document.getElementById("nama").value;
-  var tugas  = document.getElementById("tugas").value.trim();
-  var mesin  = document.getElementById("mesin").value.trim();
-  var status = document.getElementById("status").value;
+  var id=document.getElementById("id").value.trim(), nama=document.getElementById("nama").value,
+      tugas=document.getElementById("tugas").value.trim(), mesin=document.getElementById("mesin").value.trim(),
+      status=document.getElementById("status").value;
   if (!id || !nama.trim() || !tugas || !mesin) { showAlert("ID, Nama, Tugas dan Mesin harus diisi!"); return; }
   api("addTask", { id:id, nama:nama, tugas:tugas, mesin:mesin, status:status }).then(function(res){
     if (res.error) { showAlert("Error: " + res.error); return; }
@@ -1296,17 +1511,12 @@ function addTask() {
     document.getElementById("inputSection").style.display = "none";
   });
 }
-
 function changeStatus(select) {
-  // Cek permission ubah status
   if (!hasPermission('sharejob.statusChange')) {
     select.value = select.getAttribute("data-prev") || select.value;
     var role = currentSession ? currentSession.role : 'guest';
-    var needed = role === ROLES.SUPERVISOR
-      ? 'Teknisi atau Admin (Supervisor tidak bisa ubah status)'
-      : 'Teknisi atau Admin';
-    showAccessDenied('Ubah Status', needed);
-    return;
+    var needed = role === ROLES.SUPERVISOR ? 'Teknisi atau Admin (Supervisor tidak bisa ubah status)' : 'Teknisi atau Admin';
+    showAccessDenied('Ubah Status', needed); return;
   }
   if (currentEditingRow) { select.value = select.getAttribute("data-prev") || select.value; return; }
   var id = select.getAttribute("data-id");
@@ -1320,20 +1530,17 @@ function changeStatus(select) {
     loadData(true);
   });
 }
-
 function toggleDeleteMode() {
   if (!hasPermission('sharejob.delete')) { showAccessDenied('Hapus Job','Supervisor atau Admin'); return; }
   deleteMode = !deleteMode;
   document.getElementById("toggleDeleteBtn").classList.toggle("active", deleteMode);
   renderTable(); applyFilterToRows();
 }
-
 function toggleInput() {
   if (!hasPermission('sharejob.add')) { showAccessDenied('Tambah Job','Supervisor atau Admin'); return; }
   var s = document.getElementById("inputSection");
   s.style.display = s.style.display === "none" ? "block" : "none";
 }
-
 var pendingDeleteId = null;
 function askDeleteRow(id, nama) {
   if (!hasPermission('sharejob.delete')) { showAccessDenied('Hapus Job','Supervisor atau Admin'); return; }
@@ -1341,7 +1548,6 @@ function askDeleteRow(id, nama) {
   document.getElementById("deleteRowDesc").textContent = "ID: " + id + (nama ? " — " + nama : "");
   document.getElementById("deleteRowModal").style.display = "flex";
 }
-
 document.getElementById("confirmDeleteRowBtn").addEventListener("click", function(){
   if (!pendingDeleteId) return;
   var id = pendingDeleteId; pendingDeleteId = null;
@@ -1354,7 +1560,6 @@ document.getElementById("confirmDeleteRowBtn").addEventListener("click", functio
 document.getElementById("cancelDeleteRowBtn").addEventListener("click", function(){
   pendingDeleteId = null; document.getElementById("deleteRowModal").style.display = "none";
 });
-
 function archiveTasks() {
   if (!hasPermission('sharejob.archive')) { showAccessDenied('Archive Job','Supervisor atau Admin'); return; }
   document.getElementById("confirmModal").style.display = "flex";
@@ -1384,17 +1589,9 @@ function startInlineEdit(tr) {
   var gt = (!isNaN(gi) && allGroups[gi]) ? allGroups[gi] : null;
   if (!gt || !gt.length) { currentEditingRow = null; return; }
   var ft = gt[0];
-  originalRowData = {
-    id: String(ft.id),
-    nama: gt.map(function(t){return t.nama;}).join("\n"),
-    tugas: ft.tugas||"",
-    mesin: ft.mesin||"",
-    jamMulai: ft.jamMulai||""
-  };
+  originalRowData = { id: String(ft.id), nama: gt.map(function(t){return t.nama;}).join("\n"), tugas: ft.tugas||"", mesin: ft.mesin||"", jamMulai: ft.jamMulai||"" };
   tr.classList.add("editing");
-  cells[offset+0].innerHTML = "<input class='inline-input' id='ie-id' value='" + escHtml(originalRowData.id) +
-    "'><div class='inline-save-bar'><button class='inline-btn inline-btn-save' onclick='saveInlineEdit()'>✓ Simpan</button>" +
-    "<button class='inline-btn inline-btn-cancel' onclick='cancelInlineEdit()'>✕ Batal</button></div>";
+  cells[offset+0].innerHTML = "<input class='inline-input' id='ie-id' value='" + escHtml(originalRowData.id) + "'><div class='inline-save-bar'><button class='inline-btn inline-btn-save' onclick='saveInlineEdit()'>✓ Simpan</button><button class='inline-btn inline-btn-cancel' onclick='cancelInlineEdit()'>✕ Batal</button></div>";
   cells[offset+1].innerHTML = "<textarea class='inline-input' id='ie-nama' rows='3' style='font-size:13px;'>" + escHtml(originalRowData.nama) + "</textarea>";
   cells[offset+2].innerHTML = "<textarea class='inline-input' id='ie-tugas' rows='3'>" + escHtml(originalRowData.tugas) + "</textarea>";
   cells[offset+3].innerHTML = "<input class='inline-input' id='ie-mesin' value='" + escHtml(originalRowData.mesin) + "'>";
@@ -1403,15 +1600,12 @@ function startInlineEdit(tr) {
   tr._escHandler = function(e){ if (e.key === "Escape") { e.preventDefault(); cancelInlineEdit(); } };
   document.addEventListener("keydown", tr._escHandler);
 }
-
 function saveInlineEdit() {
   if (!currentEditingRow) return;
   var get = function(id, def){ var el = document.getElementById(id); return el ? el.value.trim() : def; };
-  var newId       = get("ie-id", originalRowData.id);
-  var newNama     = get("ie-nama", originalRowData.nama);
-  var newTugas    = get("ie-tugas", originalRowData.tugas);
-  var newMesin    = get("ie-mesin", originalRowData.mesin);
-  var newJamMulai = get("ie-jam-mulai", originalRowData.jamMulai);
+  var newId=get("ie-id",originalRowData.id), newNama=get("ie-nama",originalRowData.nama),
+      newTugas=get("ie-tugas",originalRowData.tugas), newMesin=get("ie-mesin",originalRowData.mesin),
+      newJamMulai=get("ie-jam-mulai",originalRowData.jamMulai);
   if (!newId || !newNama || !newTugas || !newMesin) { showAlert("Semua kolom harus diisi!"); return; }
   var oldId = originalRowData.id;
   finishInlineEdit();
@@ -1445,8 +1639,7 @@ function doPrint() {
   var tanggal = days[now.getDay()]+", "+d+" "+mn[now.getMonth()]+" "+now.getFullYear();
   var periodLabel = getPeriodLabel();
   var unitLabel = currentUnit ? ' | Unit: '+currentUnit.code : '';
-  document.getElementById("printHeader").innerHTML =
-    "Dicetak: "+tanggal+" "+h+":"+m+" | Filter: <b>"+periodLabel+"</b>"+unitLabel+" | <b>"+visible.length+" job</b>";
+  document.getElementById("printHeader").innerHTML = "Dicetak: "+tanggal+" "+h+":"+m+" | Filter: <b>"+periodLabel+"</b>"+unitLabel+" | <b>"+visible.length+" job</b>";
   var container = document.getElementById('printPagesContainer');
   container.innerHTML = '';
   var ROWS = 30, totalPages = Math.ceil(visible.length/ROWS);
@@ -1475,7 +1668,6 @@ function doPrint() {
   window.print();
   setTimeout(function(){container.innerHTML='';}, 1000);
 }
-
 function getPeriodLabel() {
   var f = filterState;
   if (f.tanggal) { var p = f.tanggal.split('-'); return p.length===3?p[2]+' '+NAMA_BULAN[+p[1]]+' '+p[0]:f.tanggal; }
@@ -1610,34 +1802,21 @@ function _asStep(ts) { if(!_asActive)return; var max=document.documentElement.sc
 (function(){
   if (localStorage.getItem('pjh_theme') === 'light') document.body.classList.add('light-mode');
 })();
-
 function toggleTheme() {
   var body = document.body, icon = document.getElementById('themeIcon');
-  if (body.classList.contains('light-mode')) {
-    body.classList.remove('light-mode'); icon.textContent='☀️'; localStorage.setItem('pjh_theme','dark');
-  } else {
-    body.classList.add('light-mode'); icon.textContent='🌙'; localStorage.setItem('pjh_theme','light');
-  }
+  if (body.classList.contains('light-mode')) { body.classList.remove('light-mode'); icon.textContent='☀️'; localStorage.setItem('pjh_theme','dark'); }
+  else { body.classList.add('light-mode'); icon.textContent='🌙'; localStorage.setItem('pjh_theme','light'); }
 }
-
 function updateClock() {
   var now = new Date();
   var days = ["Minggu","Senin","Selasa","Rabu","Kamis","Jumat","Sabtu"];
   var mn = ["Jan","Feb","Mar","Apr","Mei","Jun","Jul","Agu","Sep","Okt","Nov","Des"];
   document.getElementById('clock').innerText =
-    days[now.getDay()] + ", " +
-    String(now.getDate()).padStart(2,'0') + " " +
-    mn[now.getMonth()] + " " + now.getFullYear() + " — " +
-    String(now.getHours()).padStart(2,'0') + ":" +
-    String(now.getMinutes()).padStart(2,'0') + ":" +
-    String(now.getSeconds()).padStart(2,'0');
+    days[now.getDay()] + ", " + String(now.getDate()).padStart(2,'0') + " " + mn[now.getMonth()] + " " + now.getFullYear() + " — " +
+    String(now.getHours()).padStart(2,'0') + ":" + String(now.getMinutes()).padStart(2,'0') + ":" + String(now.getSeconds()).padStart(2,'0');
 }
-setInterval(updateClock, 1000);
-updateClock();
+setInterval(updateClock, 1000); updateClock();
 
-// ═══════════════════════════════════════
-// UTILITY
-// ═══════════════════════════════════════
 function escHtml(str) {
   return String(str||"").replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;").replace(/"/g,"&quot;").replace(/'/g,"&#39;");
 }
