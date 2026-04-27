@@ -618,13 +618,14 @@ body.light .btn-open-pdf:hover{color:#003850;}
   <span class="topbar-title">Drive Monitoring</span>
   <span class="topbar-sep">&nbsp;/&nbsp;</span>
   <span class="topbar-sub" id="topbar-sub">Pilih Plant</span>
- <div class="topbar-r">
+  <div class="topbar-r">
     <div class="role-badge supervisor" id="role-badge">👁️ Supervisor</div>
     <div class="btn-sm" id="btn-login-topbar" onclick="openLoginTopbar()" style="border-color:var(--accent);color:var(--accent);">🔐 Login</div>
     <div class="btn-sm" id="btn-logout-topbar" onclick="doLogout()" style="display:none;border-color:var(--fault);color:var(--fault);">↩ Logout</div>
     <div class="btn-theme" id="btn-theme" onclick="toggleTheme()">🌙 Dark</div>
     <div class="btn-sm" id="btn-refresh" onclick="doRefresh()">⟳ Refresh</div>
     <div class="topbar-clock" id="clock"></div>
+  </div>
 </div>
 
 <!-- ── RUNNING BAR ── -->
@@ -883,9 +884,6 @@ const TAHUN_AWAL = 2026;
 
 // ══════════════════════════════════════════════════════════
 //  STATE
-//  role: 'supervisor' = read-only tanpa login
-//        'user'       = teknisi (cek sheet "users")
-//        'admin'      = admin   (cek sheet "admin")
 // ══════════════════════════════════════════════════════════
 const S = {
   page        : 'plant',
@@ -900,7 +898,7 @@ const S = {
   searchQuery       : '',
   histFilter        : { bulan:'', tahun:'' },
   pendingTsData     : null,
-  role              : 'supervisor',   // default: supervisor (read-only)
+  role              : 'supervisor',
 };
 
 // ══════════════════════════════════════════════════════════
@@ -919,7 +917,19 @@ function updateRoleBadge() {
     admin      : '⚙️ Admin',
   };
   badge.textContent = labels[S.role] || '👁️ Supervisor';
+  // updateLoginButtons dipanggil di sini — satu tempat, tidak duplikat
   updateLoginButtons();
+}
+
+// ══════════════════════════════════════════════════════════
+//  LOGIN / LOGOUT BUTTON STATE
+// ══════════════════════════════════════════════════════════
+function updateLoginButtons() {
+  const isLoggedIn = canEdit();
+  const btnLogin  = id('btn-login-topbar');
+  const btnLogout = id('btn-logout-topbar');
+  if (btnLogin)  btnLogin.style.display  = isLoggedIn ? 'none' : 'flex';
+  if (btnLogout) btnLogout.style.display = isLoggedIn ? 'flex' : 'none';
 }
 
 // ══════════════════════════════════════════════════════════
@@ -1044,7 +1054,6 @@ function renderHistoriTableWithFilter() {
 
 function histRow(r) {
   const origIdx = r._origIdx !== undefined ? r._origIdx : -1;
-  // Tombol edit timestamp hanya muncul untuk user & admin
   const editTsBtn = canEdit()
     ? `<button class="btn-edit-ts" onclick="event.stopPropagation();requestEditTimestamp(${origIdx},'${esc(r.drive_id)}','${esc(r.timestamp)}')" title="Edit waktu">✏️</button>`
     : '';
@@ -1229,9 +1238,8 @@ function openLoginModal(subText) {
   id('login-overlay').classList.add('open');
   setTimeout(() => id('login-username').focus(), 100);
 }
-  
+
 function openLoginTopbar() {
-  // Jika sudah login, langsung logout saja
   if (canEdit()) { doLogout(); return; }
   S.pendingAction = 'topbarLogin';
   S.pendingDriveData = null; S.pendingPhotoUrl = null; S.pendingTsData = null;
@@ -1240,18 +1248,8 @@ function openLoginTopbar() {
 
 function doLogout() {
   S.role = 'supervisor';
-  updateRoleBadge();
-  updateLoginButtons();
-  // Re-render supaya kartu drive refresh (hilangkan hint edit)
+  updateRoleBadge(); // updateLoginButtons sudah dipanggil di dalam updateRoleBadge
   if (S.page === 'detail') renderDetailPage();
-}
-
-function updateLoginButtons() {
-  const isLoggedIn = canEdit();
-  const btnLogin  = id('btn-login-topbar');
-  const btnLogout = id('btn-logout-topbar');
-  if (btnLogin)  btnLogin.style.display  = isLoggedIn ? 'none' : 'flex';
-  if (btnLogout) btnLogout.style.display = isLoggedIn ? 'flex' : 'none';
 }
 
 function requestEdit(driveId, status, keterangan, merk, spesifikasi, photoUrl, serialNumber, stiker) {
@@ -1264,7 +1262,6 @@ function requestEdit(driveId, status, keterangan, merk, spesifikasi, photoUrl, s
 
 function requestViewPhoto(photoUrl) {
   if (isReadOnly()) {
-    // Supervisor langsung buka foto tanpa login
     window.open(photoUrl, '_blank');
     return;
   }
@@ -1303,10 +1300,9 @@ async function submitLogin() {
     const result = await res.json();
 
     if (result.success) {
-      // Simpan role ke state
-    S.role = result.role || selectedRole;
-updateRoleBadge();
-updateLoginButtons();
+      // ── Set role & update UI ──
+      S.role = result.role || selectedRole;
+      updateRoleBadge(); // memanggil updateLoginButtons() di dalamnya — tidak perlu duplikat
 
       const action   = S.pendingAction;
       const photoUrl = S.pendingPhotoUrl;
@@ -1314,12 +1310,11 @@ updateLoginButtons();
       const tsD      = S.pendingTsData;
       closeLoginModal();
 
-     if      (action === 'photo' && photoUrl)    window.open(photoUrl, '_blank');
-else if (action === 'edit' && d)            openModal(d.driveId, d.status, d.keterangan, d.merk, d.spesifikasi, d.photoUrl, d.serialNumber, d.stiker);
-else if (action === 'editTimestamp' && tsD) openTsModal();
-else if (action === 'topbarLogin')          { if (S.page === 'detail') renderDetailPage(); }
-// updateLoginButtons dipanggil setelah role diset
-updateLoginButtons();
+      if      (action === 'photo' && photoUrl)    window.open(photoUrl, '_blank');
+      else if (action === 'edit' && d)            openModal(d.driveId, d.status, d.keterangan, d.merk, d.spesifikasi, d.photoUrl, d.serialNumber, d.stiker);
+      else if (action === 'editTimestamp' && tsD) openTsModal();
+      else if (action === 'topbarLogin')          { if (S.page === 'detail') renderDetailPage(); }
+
     } else {
       errEl.textContent = '❌ ' + (result.message || 'Username atau password salah.');
       errEl.style.display = 'block';
@@ -1545,7 +1540,6 @@ async function renderDriveTab() {
       <div class="pill maint"><div class="pill-d"></div>Maint ${maint}</div>`;
 
     // Read-only notice untuk supervisor
-    const existingNotice = id('drive-content').previousElementSibling;
     const noticeId = 'readonly-notice-el';
     let noticeEl = id(noticeId);
     if (isReadOnly()) {
@@ -1611,12 +1605,10 @@ function inuCard(d) {
 
   const infoText = keterangan.replace(/master|follower|slave/gi, '').trim();
 
-  // Foto: supervisor bisa lihat langsung, user/admin perlu login
   const photoHtml = d.photo_url
     ? `<button class="inu-photo-btn" onclick="event.stopPropagation();requestViewPhoto('${esc(d.photo_url)}')">📷 Lihat Foto</button>`
     : '';
 
-  // Clickable hanya kalau bisa edit
   const clickable = canEdit() ? 'clickable' : '';
   const onclickAttr = canEdit()
     ? `onclick="requestEdit('${esc(d.drive_id)}','${st}','${esc(keterangan)}','${esc(d.merk)}','${esc(spek)}','${esc(d.photo_url||'')}','${esc(sn)}','${esc(stiker)}')" `
