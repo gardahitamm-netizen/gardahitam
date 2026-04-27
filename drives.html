@@ -48,6 +48,9 @@
   --teal-bd:  rgba(0,224,248,.25);
   --stiker-bg: rgba(255,184,32,.08);
   --stiker-bd: rgba(255,184,32,.25);
+  --admin-color: #c084fc;
+  --admin-bg:    rgba(192,132,252,.12);
+  --admin-bd:    rgba(192,132,252,.35);
   --font-mixing: 'Times New Roman', Times, serif;
 }
 
@@ -81,6 +84,9 @@ body.light {
   --teal-bd:  rgba(0,122,170,.3);
   --stiker-bg: rgba(196,120,0,.08);
   --stiker-bd: rgba(196,120,0,.3);
+  --admin-color: #7c3aed;
+  --admin-bg:    rgba(124,58,237,.1);
+  --admin-bd:    rgba(124,58,237,.35);
 }
 
 body.light .topbar{ background:#dce8f8; border-color:#b8ccec; }
@@ -134,11 +140,14 @@ body.light .inu-stiker-label{ color:#c47800; }
 body.light .mb-table td{ color:#0d1a2e; }
 body.light .mb-table tr:hover td{ background:rgba(0,0,0,.025); }
 body.light .mb-filter-bar{ background:#eaf2fc; border-color:#b8ccec; }
+body.light .role-badge{ filter:brightness(.85); }
+body.light .login-role-opt label{ color:#0d1a2e; }
 
 *{margin:0;padding:0;box-sizing:border-box;}
 html,body{width:100%;height:100%;overflow:hidden;}
 body{font-family:'Plus Jakarta Sans',sans-serif;background:var(--bg);color:var(--text);display:flex;flex-direction:column;}
 
+/* ── TOPBAR ── */
 .topbar{display:flex;align-items:center;gap:10px;padding:0 20px;height:var(--topbar-h);background:#060b14;border-bottom:1px solid var(--border);flex-shrink:0;z-index:200;}
 .topbar-pulse{width:8px;height:8px;border-radius:50%;background:var(--ok);box-shadow:0 0 10px var(--ok);animation:pulse 2s infinite;}
 @keyframes pulse{0%,100%{opacity:1;transform:scale(1)}50%{opacity:.5;transform:scale(.8)}}
@@ -156,6 +165,13 @@ body{font-family:'Plus Jakarta Sans',sans-serif;background:var(--bg);color:var(-
 .btn-theme{display:flex;align-items:center;gap:5px;font-family:'JetBrains Mono',monospace;font-size:11px;padding:5px 10px;border-radius:5px;cursor:pointer;border:1px solid var(--border);background:var(--surf2);color:var(--muted);transition:all .2s;flex-shrink:0;}
 .btn-theme:hover{border-color:var(--teal);color:var(--teal);}
 
+/* ── ROLE BADGE di topbar ── */
+.role-badge{display:inline-flex;align-items:center;gap:5px;font-family:'JetBrains Mono',monospace;font-size:10px;font-weight:700;padding:3px 10px;border-radius:20px;border:1px solid;flex-shrink:0;letter-spacing:.5px;text-transform:uppercase;}
+.role-badge.supervisor{background:var(--teal-bg);border-color:var(--teal-bd);color:var(--teal);}
+.role-badge.user{background:var(--ok-bg);border-color:var(--ok-bd);color:var(--ok);}
+.role-badge.admin{background:var(--admin-bg);border-color:var(--admin-bd);color:var(--admin-color);}
+
+/* ── RUNNING BAR ── */
 .running-bar{flex-shrink:0;overflow:hidden;white-space:nowrap;background:#07101e;border-bottom:1px solid var(--border);padding:5px 0;position:relative;height:var(--rbar-h);}
 .running-bar::before,.running-bar::after{content:'';position:absolute;top:0;bottom:0;width:40px;z-index:2;}
 .running-bar::before{left:0;background:linear-gradient(to right,#07101e,transparent);}
@@ -165,6 +181,7 @@ body{font-family:'Plus Jakarta Sans',sans-serif;background:var(--bg);color:var(-
 .running-inner .rb-label{color:var(--teal);font-weight:700;}
 @keyframes marquee{from{transform:translateX(100vw)}to{transform:translateX(-100%)}}
 
+/* ── BREADCRUMB ── */
 .breadcrumb{display:flex;align-items:center;gap:5px;padding:0 20px;height:var(--bc-h);font-family:'JetBrains Mono',monospace;font-size:11px;color:var(--muted);border-bottom:1px solid var(--border);background:#08101c;flex-shrink:0;}
 .bc-link{cursor:pointer;transition:color .15s;text-decoration:none;color:var(--muted);}
 .bc-link:hover{color:var(--accent);}
@@ -187,7 +204,7 @@ body{font-family:'Plus Jakarta Sans',sans-serif;background:var(--bg);color:var(-
 .search-clear:hover{border-color:var(--fault);color:var(--fault);}
 .search-count{font-family:'JetBrains Mono',monospace;font-size:10px;color:var(--muted);flex-shrink:0;white-space:nowrap;}
 
-/* HISTORI FILTER BAR */
+/* ── HISTORI FILTER BAR ── */
 .hist-filter-bar{display:flex;align-items:center;gap:10px;padding:10px 16px;background:var(--surf2);border-bottom:1px solid var(--border);flex-shrink:0;flex-wrap:wrap;}
 .hist-filter-label{font-family:'JetBrains Mono',monospace;font-size:10px;color:var(--muted);letter-spacing:1px;text-transform:uppercase;flex-shrink:0;}
 .hist-filter-group{display:flex;align-items:center;gap:6px;flex-shrink:0;}
@@ -201,24 +218,25 @@ body{font-family:'Plus Jakarta Sans',sans-serif;background:var(--bg);color:var(-
 .btn-reset-filter.hidden{display:none;}
 .hist-filter-result{margin-left:auto;font-family:'JetBrains Mono',monospace;font-size:10px;color:var(--muted);flex-shrink:0;}
 
-/* Pengelompokan per bulan */
+/* ── HISTORI MONTH SECTION ── */
 .hist-month-section-head{display:flex;align-items:center;gap:10px;padding:8px 12px;background:rgba(77,159,255,.06);border-bottom:1px solid var(--border);border-top:2px solid rgba(77,159,255,.2);}
 .hms-icon{font-size:13px;}
 .hms-title{font-family:'JetBrains Mono',monospace;font-size:11px;font-weight:700;color:var(--accent);}
 .hms-count{font-family:'JetBrains Mono',monospace;font-size:10px;color:var(--muted);margin-left:auto;}
 
-/* ══ TIMESTAMP EDIT BUTTON ══ */
+/* ── TIMESTAMP EDIT ── */
 .hist-ts-wrap{display:flex;align-items:center;gap:5px;}
 .btn-edit-ts{display:inline-flex;align-items:center;font-family:'JetBrains Mono',monospace;font-size:9px;padding:2px 6px;border-radius:4px;cursor:pointer;border:1px solid var(--border);background:transparent;color:var(--muted);transition:all .15s;opacity:0;flex-shrink:0;}
 tr:hover .btn-edit-ts{opacity:1;}
 .btn-edit-ts:hover{border-color:var(--teal);color:var(--teal);background:var(--teal-bg);}
+.btn-edit-ts.hidden{display:none !important;}
 
-/* ══ EDIT TIMESTAMP MODAL ══ */
+/* ── EDIT TIMESTAMP MODAL ── */
 .ts-modal-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,.7);backdrop-filter:blur(4px);z-index:510;align-items:center;justify-content:center;}
 .ts-modal-overlay.open{display:flex;}
 .ts-modal{background:var(--surf);border:1px solid var(--border);border-radius:14px;padding:24px;width:100%;max-width:400px;animation:modalIn .2s ease;margin:16px;}
 
-/* Plant page */
+/* ── PLANT PAGE ── */
 .plant-wrap{flex:1;overflow-y:auto;width:100%;}
 .plant-hero{position:relative;overflow:hidden;padding:36px 28px 28px;background:linear-gradient(135deg,#050a16,#0b1828,#091018);border-bottom:1px solid var(--border);}
 .plant-hero::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse 60% 80% at 70% 50%,rgba(77,159,255,.1),transparent 70%),radial-gradient(ellipse 40% 60% at 20% 80%,rgba(0,224,248,.07),transparent 60%);}
@@ -256,7 +274,7 @@ tr:hover .btn-edit-ts{opacity:1;}
 .plant-card:nth-child(1){animation-delay:.05s}.plant-card:nth-child(2){animation-delay:.10s}.plant-card:nth-child(3){animation-delay:.15s}
 .plant-card:nth-child(4){animation-delay:.20s}.plant-card:nth-child(5){animation-delay:.25s}.plant-card:nth-child(6){animation-delay:.30s}.plant-card:nth-child(7){animation-delay:.35s}
 
-/* Detail page */
+/* ── DETAIL PAGE ── */
 .main-layout{display:flex;flex:1;overflow:hidden;min-height:0;width:100%;}
 .sidebar{width:190px;min-width:190px;flex-shrink:0;background:#07101d;border-right:1px solid var(--border);overflow-y:auto;display:flex;flex-direction:column;}
 .sb-section{padding:10px 0;}
@@ -281,7 +299,6 @@ tr:hover .btn-edit-ts{opacity:1;}
 
 #tab-histori.active{padding:0;display:flex;flex-direction:column;}
 .histori-scroll-area{flex:1;overflow-y:auto;min-height:0;padding:16px 20px 20px;}
-
 #tab-manual.active{padding:0;display:flex;flex-direction:column;}
 .manual-scroll-area{flex:1;overflow-y:auto;min-height:0;padding:16px 20px 20px;}
 
@@ -306,8 +323,9 @@ tr:hover .btn-edit-ts{opacity:1;}
 .drive-group-line{flex:1;height:1px;background:linear-gradient(to right,var(--border),transparent);}
 .drive-group-count{font-family:'JetBrains Mono',monospace;font-size:10px;color:var(--muted);flex-shrink:0;}
 .cards-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(230px,1fr));gap:12px;}
-.inu-card{background:var(--surf);border:1px solid var(--border);border-radius:10px;padding:16px;cursor:pointer;transition:all .2s;border-left:4px solid var(--border);position:relative;}
-.inu-card:hover{background:var(--surf2);transform:translateY(-1px);box-shadow:0 4px 16px rgba(0,0,0,.3);}
+.inu-card{background:var(--surf);border:1px solid var(--border);border-radius:10px;padding:16px;transition:all .2s;border-left:4px solid var(--border);position:relative;}
+.inu-card.clickable{cursor:pointer;}
+.inu-card.clickable:hover{background:var(--surf2);transform:translateY(-1px);box-shadow:0 4px 16px rgba(0,0,0,.3);}
 .inu-card.ok{border-left-color:var(--ok);}
 .inu-card.fault{border-left-color:var(--fault);background:rgba(255,61,85,.05);}
 .inu-card.maint{border-left-color:var(--maint);}
@@ -315,17 +333,12 @@ tr:hover .btn-edit-ts{opacity:1;}
 .inu-tag{font-family:'JetBrains Mono',monospace;font-size:13px;font-weight:700;color:var(--teal);margin-bottom:6px;letter-spacing:.5px;text-transform:uppercase;}
 .inu-name{font-size:16px;font-weight:700;margin-bottom:2px;color:var(--text);}
 .inu-spec{font-size:11px;color:var(--muted);margin-bottom:8px;}
-
-/* ── Serial Number row ── */
 .inu-sn-row{display:flex;align-items:center;gap:6px;margin-bottom:6px;background:rgba(0,224,248,.05);border:1px solid rgba(0,224,248,.15);border-radius:6px;padding:5px 9px;}
 .inu-sn-label{font-family:'JetBrains Mono',monospace;font-size:9px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;color:var(--teal);flex-shrink:0;}
 .inu-sn-value{font-family:'JetBrains Mono',monospace;font-size:11px;color:var(--text);font-weight:600;word-break:break-all;}
-
-/* ── Stiker row ── */
 .inu-stiker-row{display:flex;align-items:center;gap:6px;margin-bottom:10px;background:var(--stiker-bg);border:1px solid var(--stiker-bd);border-radius:6px;padding:5px 9px;}
 .inu-stiker-label{font-family:'JetBrains Mono',monospace;font-size:9px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;color:var(--maint);flex-shrink:0;}
 .inu-stiker-value{font-family:'JetBrains Mono',monospace;font-size:11px;color:var(--text);font-weight:600;word-break:break-all;}
-
 .inu-status{display:flex;align-items:center;gap:5px;font-family:'JetBrains Mono',monospace;font-size:11px;font-weight:700;}
 .inu-dot{width:6px;height:6px;border-radius:50%;}
 .inu-card.ok .inu-dot{background:var(--ok);box-shadow:0 0 6px var(--ok);}
@@ -341,11 +354,14 @@ tr:hover .btn-edit-ts{opacity:1;}
 .inu-photo-btn:hover{background:rgba(0,224,248,.2);border-color:var(--teal);transform:translateY(-1px);}
 body.light .inu-photo-btn:hover{color:#003850;}
 .inu-edit-hint{position:absolute;top:10px;right:10px;font-size:10px;font-family:'JetBrains Mono',monospace;color:var(--muted);opacity:0;transition:opacity .2s;background:var(--surf3);border:1px solid var(--border);padding:2px 7px;border-radius:4px;}
-.inu-card:hover .inu-edit-hint{opacity:1;}
+.inu-card.clickable:hover .inu-edit-hint{opacity:1;}
 .inu-card.search-hidden{display:none;}
 .inu-role{font-family:'JetBrains Mono',monospace;font-size:10px;font-weight:600;color:var(--muted);margin-top:4px;font-style:italic;}
 
-/* History table */
+/* ── READ-ONLY NOTICE ── */
+.readonly-notice{display:flex;align-items:center;gap:8px;background:var(--teal-bg);border:1px solid var(--teal-bd);border-radius:8px;padding:8px 14px;font-family:'JetBrains Mono',monospace;font-size:11px;color:var(--teal);margin-bottom:14px;flex-shrink:0;}
+
+/* ── HISTORY TABLE ── */
 .hist-table-wrap{overflow-x:auto;}
 .hist-table{width:100%;border-collapse:collapse;font-size:12px;}
 .hist-table th{text-align:left;padding:9px 12px;font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:1px;text-transform:uppercase;color:var(--muted);border-bottom:1px solid var(--border);background:var(--surf);white-space:nowrap;}
@@ -355,14 +371,13 @@ body.light .inu-photo-btn:hover{color:#003850;}
 .hist-id{font-family:'JetBrains Mono',monospace;font-size:11px;color:var(--teal);}
 .hist-table tr.search-hidden{display:none;}
 .hist-table tr.filter-hidden{display:none;}
-
 .status-tag{display:inline-block;padding:2px 8px;border-radius:4px;font-family:'JetBrains Mono',monospace;font-size:10px;font-weight:700;}
 .st-ok{background:var(--ok-bg);color:var(--ok);border:1px solid var(--ok-bd);}
 .st-fault{background:var(--fault-bg);color:var(--fault);border:1px solid var(--fault-bd);}
 .st-maint{background:var(--maint-bg);color:var(--maint);border:1px solid var(--maint-bd);}
 .st-kosong{background:var(--kosong-bg);color:var(--kosong);border:1px solid var(--kosong-bd);}
 
-/* Summary */
+/* ── SUMMARY ── */
 .summary-stats{display:flex;gap:12px;flex-wrap:wrap;margin-bottom:20px;}
 .sum-stat{background:var(--surf);border:1px solid var(--border);border-radius:10px;padding:14px 18px;min-width:120px;}
 .sum-stat-label{font-family:'JetBrains Mono',monospace;font-size:9px;letter-spacing:1.5px;text-transform:uppercase;color:var(--muted);margin-bottom:6px;}
@@ -392,11 +407,10 @@ body.light .inu-photo-btn:hover{color:#003850;}
 .tab-action-bar{display:flex;justify-content:flex-end;margin-bottom:14px;flex-shrink:0;}
 .btn-pdf{display:flex;align-items:center;gap:5px;font-family:'JetBrains Mono',monospace;font-size:11px;padding:5px 14px;border-radius:5px;cursor:pointer;border:1px solid var(--fault-bd);background:var(--fault-bg);color:var(--fault);transition:all .2s;}
 .btn-pdf:hover{background:rgba(255,61,85,.2);border-color:var(--fault);}
-
 .no-results{display:none;flex-direction:column;align-items:center;padding:40px 20px;gap:8px;color:var(--muted);font-family:'JetBrains Mono',monospace;font-size:12px;}
 .no-results.visible{display:flex;}
 
-/* Modal */
+/* ── MODAL ── */
 .modal-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,.7);backdrop-filter:blur(4px);z-index:500;align-items:center;justify-content:center;}
 .modal-overlay.open{display:flex;}
 .modal{background:var(--surf);border:1px solid var(--border);border-radius:14px;padding:24px;width:100%;max-width:420px;animation:modalIn .2s ease;margin:16px;max-height:92vh;overflow-y:auto;}
@@ -417,7 +431,7 @@ body.light .inu-photo-btn:hover{color:#003850;}
 .btn-save:hover{filter:brightness(1.15);}
 .btn-save:disabled{opacity:.5;pointer-events:none;}
 
-/* Login modal */
+/* ── LOGIN MODAL ── */
 .login-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,.75);backdrop-filter:blur(6px);z-index:600;align-items:center;justify-content:center;}
 .login-overlay.open{display:flex;}
 .login-box{background:var(--surf);border:1px solid var(--border);border-radius:16px;padding:28px 28px 24px;width:100%;max-width:360px;animation:modalIn .2s ease;position:relative;overflow:hidden;margin:16px;}
@@ -425,7 +439,19 @@ body.light .inu-photo-btn:hover{color:#003850;}
 .login-icon{width:44px;height:44px;border-radius:10px;background:var(--accent-bg);border:1px solid var(--accent-bd);display:flex;align-items:center;justify-content:center;font-size:20px;margin-bottom:16px;}
 .login-title{font-size:16px;font-weight:700;margin-bottom:3px;color:var(--text);}
 .login-sub{font-size:12px;color:var(--muted);margin-bottom:6px;}
-.login-area-badge{display:inline-flex;align-items:center;gap:5px;background:var(--teal-bg);border:1px solid var(--teal-bd);color:var(--teal);font-family:'JetBrains Mono',monospace;font-size:11px;padding:3px 10px;border-radius:20px;margin-bottom:20px;}
+.login-area-badge{display:inline-flex;align-items:center;gap:5px;background:var(--teal-bg);border:1px solid var(--teal-bd);color:var(--teal);font-family:'JetBrains Mono',monospace;font-size:11px;padding:3px 10px;border-radius:20px;margin-bottom:16px;}
+
+/* ── Role selector ── */
+.login-role-field{margin-bottom:16px;}
+.login-role-label{display:block;font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.7px;color:var(--muted);margin-bottom:8px;}
+.login-role-opts{display:flex;gap:8px;}
+.login-role-opt{flex:1;}
+.login-role-opt input[type=radio]{display:none;}
+.login-role-opt label{display:flex;align-items:center;justify-content:center;gap:6px;padding:8px 12px;border-radius:8px;border:1px solid var(--border);background:var(--surf2);color:var(--muted);font-size:12px;font-weight:600;cursor:pointer;transition:all .15s;text-align:center;}
+.login-role-opt input[type=radio]:checked + label{border-color:var(--accent);background:var(--accent-bg);color:var(--accent);}
+.login-role-opt.admin-opt input[type=radio]:checked + label{border-color:var(--admin-bd);background:var(--admin-bg);color:var(--admin-color);}
+.login-role-opt label:hover{border-color:var(--accent);color:var(--accent);}
+
 .login-field{margin-bottom:13px;}
 .login-field label{display:block;font-size:10px;font-weight:600;text-transform:uppercase;letter-spacing:.7px;color:var(--muted);margin-bottom:6px;}
 .login-field input{width:100%;background:var(--surf2);border:1px solid var(--border);color:var(--text);padding:10px 12px;border-radius:8px;font-size:13px;font-family:'Plus Jakarta Sans',sans-serif;transition:border-color .15s;outline:none;}
@@ -448,7 +474,7 @@ body.light .inu-photo-btn:hover{color:#003850;}
 .state-box p{font-size:12px;text-align:center;max-width:340px;}
 .btn-retry{background:var(--accent-bg);border:1px solid var(--accent-bd);color:var(--accent);padding:6px 16px;border-radius:6px;font-size:12px;cursor:pointer;font-family:'JetBrains Mono',monospace;}
 
-/* ══ MANUAL BOOK TABLE ══ */
+/* ── MANUAL BOOK ── */
 .mb-filter-bar{display:flex;align-items:center;gap:10px;padding:10px 16px;background:var(--surf2);border-bottom:1px solid var(--border);flex-shrink:0;flex-wrap:wrap;}
 .mb-table-wrap{overflow-x:auto;}
 .mb-table{width:100%;border-collapse:collapse;font-size:12px;}
@@ -482,6 +508,7 @@ body.light .btn-open-pdf:hover{color:#003850;}
   .btn-theme { font-size:10px !important; padding:4px 8px !important; }
   .btn-sm { font-size:10px !important; padding:4px 8px !important; }
   .topbar-clock { display:none !important; }
+  .role-badge { font-size:9px !important; padding:2px 7px !important; }
   .running-bar { height:22px !important; }
   .running-inner { font-size:9px !important; }
   .breadcrumb { padding:0 10px !important; font-size:10px !important; height:26px !important; overflow-x:auto !important; scrollbar-width:none !important; flex-wrap:nowrap !important; white-space:nowrap !important; }
@@ -567,6 +594,9 @@ body.light .btn-open-pdf:hover{color:#003850;}
   .inu-sn-row { flex-wrap:wrap !important; }
   .inu-stiker-row { flex-wrap:wrap !important; }
   .btn-open-pdf { padding:4px 10px !important; font-size:9px !important; }
+  .login-role-opts { gap:6px !important; }
+  .login-role-opt label { padding:7px 8px !important; font-size:11px !important; }
+  .readonly-notice { font-size:10px !important; padding:6px 10px !important; }
 }
 
 @media (max-width: 380px) {
@@ -580,6 +610,7 @@ body.light .btn-open-pdf:hover{color:#003850;}
 </head>
 <body>
 
+<!-- ── TOPBAR ── -->
 <div class="topbar">
   <a href="index.html" class="btn-back">← Home</a>
   <div class="topbar-divider"></div>
@@ -588,12 +619,14 @@ body.light .btn-open-pdf:hover{color:#003850;}
   <span class="topbar-sep">&nbsp;/&nbsp;</span>
   <span class="topbar-sub" id="topbar-sub">Pilih Plant</span>
   <div class="topbar-r">
+    <div class="role-badge supervisor" id="role-badge">👁️ Supervisor</div>
     <div class="btn-theme" id="btn-theme" onclick="toggleTheme()">🌙 Dark</div>
     <div class="btn-sm" id="btn-refresh" onclick="doRefresh()">⟳ Refresh</div>
     <div class="topbar-clock" id="clock"></div>
   </div>
 </div>
 
+<!-- ── RUNNING BAR ── -->
 <div class="running-bar">
   <div class="running-inner">
     <span><span class="rb-label">📢 INFO:</span> Sistem monitoring drive aktif 24 jam — laporkan anomali segera ke tim teknisi</span>
@@ -604,6 +637,7 @@ body.light .btn-open-pdf:hover{color:#003850;}
   </div>
 </div>
 
+<!-- ── BREADCRUMB ── -->
 <div class="breadcrumb">
   <a href="index.html" class="bc-link">Home</a>
   <span class="bc-sep">›</span>
@@ -614,7 +648,10 @@ body.light .btn-open-pdf:hover{color:#003850;}
   <span id="bc3" class="bc-cur" style="display:none"></span>
 </div>
 
+<!-- ── PAGES ── -->
 <div id="pages-wrapper">
+
+  <!-- PAGE: PLANT LIST -->
   <div class="page active" id="page-plant">
     <div class="plant-wrap">
       <div class="plant-hero">
@@ -639,6 +676,7 @@ body.light .btn-open-pdf:hover{color:#003850;}
     </div>
   </div>
 
+  <!-- PAGE: DETAIL -->
   <div class="page" id="page-detail">
     <div class="main-layout">
       <div class="sidebar" id="sidebar">
@@ -656,7 +694,7 @@ body.light .btn-open-pdf:hover{color:#003850;}
         </div>
         <div class="search-wrap" id="search-wrap" style="display:none">
           <span class="search-icon">🔍</span>
-          <input class="search-bar" id="search-bar" type="text" placeholder="Cari drive, merk, status, keterangan..." autocomplete="off" oninput="onSearch(this.value)">
+          <input class="search-bar" id="search-bar" type="text" placeholder="Cari drive..." autocomplete="off" oninput="onSearch(this.value)">
           <span class="search-count" id="search-count"></span>
           <button class="search-clear" id="search-clear" onclick="clearSearch()">✕ Clear</button>
         </div>
@@ -734,13 +772,29 @@ body.light .btn-open-pdf:hover{color:#003850;}
   </div>
 </div>
 
-<!-- LOGIN MODAL -->
+<!-- ── LOGIN MODAL ── -->
 <div class="login-overlay" id="login-overlay">
   <div class="login-box">
     <div class="login-icon">🔐</div>
     <div class="login-title">Login Diperlukan</div>
-    <div class="login-sub" id="login-sub-text">Untuk mengedit, masukkan kredensial akun mixing ini.</div>
+    <div class="login-sub" id="login-sub-text">Masukkan kredensial untuk melanjutkan.</div>
     <div class="login-area-badge"><span>📍</span><span id="login-area-label">—</span></div>
+
+    <!-- Role Selector -->
+    <div class="login-role-field">
+      <span class="login-role-label">Login Sebagai</span>
+      <div class="login-role-opts">
+        <div class="login-role-opt">
+          <input type="radio" name="login-role" id="role-user" value="user" checked>
+          <label for="role-user">🔧 Teknisi</label>
+        </div>
+        <div class="login-role-opt admin-opt">
+          <input type="radio" name="login-role" id="role-admin" value="admin">
+          <label for="role-admin">⚙️ Admin</label>
+        </div>
+      </div>
+    </div>
+
     <div class="login-field"><label>Username</label><input type="text" id="login-username" placeholder="Masukkan username" autocomplete="off"></div>
     <div class="login-field"><label>Password</label><input type="password" id="login-password" placeholder="Masukkan password"></div>
     <div class="login-err" id="login-err"></div>
@@ -754,7 +808,7 @@ body.light .btn-open-pdf:hover{color:#003850;}
   </div>
 </div>
 
-<!-- EDIT DRIVE MODAL -->
+<!-- ── EDIT DRIVE MODAL ── -->
 <div class="modal-overlay" id="modal">
   <div class="modal">
     <div class="modal-title">Edit Status Drive</div>
@@ -794,7 +848,7 @@ body.light .btn-open-pdf:hover{color:#003850;}
   </div>
 </div>
 
-<!-- EDIT TIMESTAMP MODAL -->
+<!-- ── EDIT TIMESTAMP MODAL ── -->
 <div class="ts-modal-overlay" id="ts-modal-overlay">
   <div class="ts-modal">
     <div class="modal-title">✏️ Edit Waktu Histori</div>
@@ -803,7 +857,7 @@ body.light .btn-open-pdf:hover{color:#003850;}
     <div class="form-group">
       <label class="form-label">Tanggal &amp; Waktu Baru</label>
       <input class="form-input" id="ts-input-datetime" type="text" placeholder="Contoh: 31/3/2026, 15.49.28">
-      <div class="form-hint">Format: dd/mm/yyyy, HH.mm.ss — sesuai format data yang ada</div>
+      <div class="form-hint">Format: dd/mm/yyyy, HH.mm.ss</div>
     </div>
     <div class="form-group">
       <label class="form-label">Alasan Koreksi</label>
@@ -817,22 +871,58 @@ body.light .btn-open-pdf:hover{color:#003850;}
 </div>
 
 <script>
+// ══════════════════════════════════════════════════════════
+//  KONFIGURASI
+// ══════════════════════════════════════════════════════════
 const API       = 'https://script.google.com/macros/s/AKfycbwzgZWGlYmCmIQAQC8cQIKTN-9D2IyK2rthKGCP9wyo69pMKIug9-trvX8cL_jjOy--7A/exec';
 const LOGIN_API = 'https://script.google.com/macros/s/AKfycbzlhK15JovW0NpWxk5_aVE_IOmwGlEPgjssYzJjPGfQSZUKfMhQu_LqcU5hItI5HR91PQ/exec';
 
 const NAMA_BULAN = ['','Januari','Februari','Maret','April','Mei','Juni','Juli','Agustus','September','Oktober','November','Desember'];
 const TAHUN_AWAL = 2026;
 
+// ══════════════════════════════════════════════════════════
+//  STATE
+//  role: 'supervisor' = read-only tanpa login
+//        'user'       = teknisi (cek sheet "users")
+//        'admin'      = admin   (cek sheet "admin")
+// ══════════════════════════════════════════════════════════
 const S = {
-  page:'plant', plant:null, mixing:1, tab:'drive',
-  cache:{}, editDrive:null,
-  pendingDriveData:null, pendingPhotoUrl:null, pendingAction:'edit',
-  searchQuery:'',
-  histFilter:{ bulan:'', tahun:'' },
-  pendingTsData: null,
+  page        : 'plant',
+  plant       : null,
+  mixing      : 1,
+  tab         : 'drive',
+  cache       : {},
+  editDrive   : null,
+  pendingDriveData  : null,
+  pendingPhotoUrl   : null,
+  pendingAction     : 'edit',
+  searchQuery       : '',
+  histFilter        : { bulan:'', tahun:'' },
+  pendingTsData     : null,
+  role              : 'supervisor',   // default: supervisor (read-only)
 };
 
-// ══ FILTER DROPDOWN BUILDER ══
+// ══════════════════════════════════════════════════════════
+//  ROLE HELPER
+// ══════════════════════════════════════════════════════════
+function isReadOnly() { return S.role === 'supervisor'; }
+function canEdit()    { return S.role === 'user' || S.role === 'admin'; }
+
+function updateRoleBadge() {
+  const badge = id('role-badge');
+  if (!badge) return;
+  badge.className = 'role-badge ' + S.role;
+  const labels = {
+    supervisor : '👁️ Supervisor',
+    user       : '🔧 Teknisi',
+    admin      : '⚙️ Admin',
+  };
+  badge.textContent = labels[S.role] || '👁️ Supervisor';
+}
+
+// ══════════════════════════════════════════════════════════
+//  FILTER DROPDOWN
+// ══════════════════════════════════════════════════════════
 function buildFilterOptions(bulanSelId, tahunSelId, currentBulan, currentTahun) {
   const bulanSel = id(bulanSelId), tahunSel = id(tahunSelId);
   const nowYear  = new Date().getFullYear();
@@ -853,7 +943,9 @@ function buildHistoriFilterOptions() {
   buildFilterOptions('hist-filter-bulan','hist-filter-tahun', S.histFilter.bulan, S.histFilter.tahun);
 }
 
-// ══ PARSE TIMESTAMP ══
+// ══════════════════════════════════════════════════════════
+//  PARSE TIMESTAMP
+// ══════════════════════════════════════════════════════════
 function parseTimestamp(ts) {
   if (!ts) return null;
   let m = String(ts).match(/^(\d{1,2})\/(\d{1,2})\/(\d{4})/);
@@ -863,7 +955,9 @@ function parseTimestamp(ts) {
   return null;
 }
 
-// ══ FILTER HISTORI ══
+// ══════════════════════════════════════════════════════════
+//  FILTER HISTORI
+// ══════════════════════════════════════════════════════════
 function applyHistoriFilter() {
   S.histFilter.bulan = id('hist-filter-bulan').value;
   S.histFilter.tahun = id('hist-filter-tahun').value;
@@ -888,7 +982,9 @@ function resetHistoriFilter() {
   renderHistoriTableWithFilter();
 }
 
-// ══ RENDER HISTORI ══
+// ══════════════════════════════════════════════════════════
+//  RENDER HISTORI TABLE
+// ══════════════════════════════════════════════════════════
 function renderHistoriTableWithFilter() {
   const rows = S.cache[S.plant + '_histori'];
   if (!rows) return;
@@ -946,8 +1042,12 @@ function renderHistoriTableWithFilter() {
 
 function histRow(r) {
   const origIdx = r._origIdx !== undefined ? r._origIdx : -1;
+  // Tombol edit timestamp hanya muncul untuk user & admin
+  const editTsBtn = canEdit()
+    ? `<button class="btn-edit-ts" onclick="event.stopPropagation();requestEditTimestamp(${origIdx},'${esc(r.drive_id)}','${esc(r.timestamp)}')" title="Edit waktu">✏️</button>`
+    : '';
   return `<tr>
-    <td><div class="hist-ts-wrap"><span class="hist-ts">${esc(r.timestamp)}</span><button class="btn-edit-ts" onclick="event.stopPropagation();requestEditTimestamp(${origIdx},'${esc(r.drive_id)}','${esc(r.timestamp)}')" title="Edit waktu">✏️</button></div></td>
+    <td><div class="hist-ts-wrap"><span class="hist-ts">${esc(r.timestamp)}</span>${editTsBtn}</div></td>
     <td class="hist-id">${esc(r.drive_id)}</td>
     <td>${esc(r.drive_nama)}</td>
     <td>${esc(r.group)}</td>
@@ -956,17 +1056,15 @@ function histRow(r) {
   </tr>`;
 }
 
-// ══ EDIT TIMESTAMP ══
+// ══════════════════════════════════════════════════════════
+//  EDIT TIMESTAMP
+// ══════════════════════════════════════════════════════════
 function requestEditTimestamp(rowIdx, driveId, currentTs) {
-  S.pendingAction = 'editTimestamp'; S.pendingTsData = { rowIdx, driveId, currentTs };
+  if (isReadOnly()) return;
+  S.pendingAction = 'editTimestamp';
+  S.pendingTsData = { rowIdx, driveId, currentTs };
   S.pendingDriveData = null; S.pendingPhotoUrl = null;
-  id('login-sub-text').textContent = 'Untuk mengedit waktu histori, masukkan kredensial akun mixing ini.';
-  id('login-area-label').textContent = _getCurGroupLabel();
-  id('login-username').value = ''; id('login-password').value = '';
-  id('login-err').style.display = 'none';
-  const btn = id('btn-login-submit'); btn.classList.remove('loading'); btn.disabled = false;
-  id('login-overlay').classList.add('open');
-  setTimeout(() => id('login-username').focus(), 100);
+  openLoginModal('Untuk mengedit waktu histori, masukkan kredensial akun mixing ini.');
 }
 
 function openTsModal() {
@@ -984,7 +1082,8 @@ function openTsModal() {
 function closeTsModal() { id('ts-modal-overlay').classList.remove('open'); S.pendingTsData = null; }
 
 async function saveTsEdit() {
-  const newTs = id('ts-input-datetime').value.trim(), alasan = id('ts-input-alasan').value.trim(), d = S.pendingTsData, btn = id('btn-save-ts');
+  const newTs = id('ts-input-datetime').value.trim(), alasan = id('ts-input-alasan').value.trim();
+  const d = S.pendingTsData, btn = id('btn-save-ts');
   if (!newTs) { alert('⚠️ Waktu baru tidak boleh kosong.'); return; }
   if (!d) return;
   btn.disabled = true; btn.textContent = 'Menyimpan...';
@@ -997,7 +1096,9 @@ async function saveTsEdit() {
   finally { btn.disabled = false; btn.textContent = 'Simpan Koreksi'; }
 }
 
-// ══ MANUAL BOOK ══
+// ══════════════════════════════════════════════════════════
+//  MANUAL BOOK
+// ══════════════════════════════════════════════════════════
 async function renderManualTab() {
   id('manual-content').innerHTML = loadingHTML('Memuat manual book...');
   try {
@@ -1010,14 +1111,12 @@ async function renderManualTab() {
       id('manual-content').innerHTML = `<div class="state-box"><div style="font-size:36px">📖</div><h3>Belum ada Manual Book</h3><p>Tambahkan data di sheet <b>manual_book</b> pada spreadsheet ${esc(S.plant)}</p></div>`;
       return;
     }
-    // Isi dropdown kategori
     const katSel = id('mb-filter-kategori');
     const kategoriList = [...new Set(manuals.map(m => m.kategori).filter(Boolean))].sort();
     katSel.innerHTML = '<option value="">Semua Kategori</option>';
     kategoriList.forEach(k => {
       const opt = document.createElement('option');
-      opt.value = k; opt.textContent = k;
-      katSel.appendChild(opt);
+      opt.value = k; opt.textContent = k; katSel.appendChild(opt);
     });
     renderManualTable();
   } catch (err) {
@@ -1029,8 +1128,7 @@ function renderManualTable() {
   const manuals   = S.cache[S.plant + '_manuals'] || [];
   const katFilter = id('mb-filter-kategori') ? id('mb-filter-kategori').value : '';
   const q         = S.searchQuery;
-
-  const filtered = manuals.filter(m => {
+  const filtered  = manuals.filter(m => {
     if (katFilter && m.kategori !== katFilter) return false;
     if (q) {
       const text = ((m.id||'')+(m.judul||'')+(m.drive_id||'')+(m.kategori||'')+(m.tanggal||'')).toLowerCase();
@@ -1038,13 +1136,9 @@ function renderManualTable() {
     }
     return true;
   });
-
   const resultEl = id('mb-filter-result');
   if (resultEl) resultEl.textContent = filtered.length + ' dokumen';
-
-  const noRes    = id('manual-no-results');
-  const contentEl = id('manual-content');
-
+  const noRes = id('manual-no-results'), contentEl = id('manual-content');
   if (!filtered.length) {
     contentEl.innerHTML = '';
     const sqEl = id('manual-search-query');
@@ -1053,7 +1147,6 @@ function renderManualTable() {
     return;
   }
   if (noRes) noRes.classList.remove('visible');
-
   contentEl.innerHTML = `
     <div class="mb-header-row">
       <span class="mb-header-title">📖 Dokumen Manual Book</span>
@@ -1061,40 +1154,25 @@ function renderManualTable() {
     </div>
     <div class="mb-table-wrap">
       <table class="mb-table">
-        <thead>
-          <tr>
-            <th class="mb-num">#</th>
-            <th>Judul Dokumen</th>
-            <th>Drive ID</th>
-            <th>Kategori</th>
-            <th>Tanggal</th>
-            <th>Aksi</th>
-          </tr>
-        </thead>
+        <thead><tr><th class="mb-num">#</th><th>Judul Dokumen</th><th>Drive ID</th><th>Kategori</th><th>Tanggal</th><th>Aksi</th></tr></thead>
         <tbody>
           ${filtered.map((m, i) => `
             <tr>
               <td class="mb-num">${i + 1}</td>
-              <td>
-                <div class="mb-judul">${esc(m.judul)}</div>
-                ${m.id ? `<div class="mb-doc-id">${esc(m.id)}</div>` : ''}
-              </td>
+              <td><div class="mb-judul">${esc(m.judul)}</div>${m.id ? `<div class="mb-doc-id">${esc(m.id)}</div>` : ''}</td>
               <td class="mb-drive">${esc(m.drive_id) || '<span style="color:var(--muted)">—</span>'}</td>
-              <td>${m.kategori
-                ? `<span class="mb-kategori-tag">${esc(m.kategori)}</span>`
-                : '<span class="mb-empty">—</span>'}</td>
+              <td>${m.kategori ? `<span class="mb-kategori-tag">${esc(m.kategori)}</span>` : '<span class="mb-empty">—</span>'}</td>
               <td class="mb-tanggal">${esc(m.tanggal) || '<span class="mb-empty">—</span>'}</td>
-              <td>${m.link_pdf
-                ? `<a class="btn-open-pdf" href="${esc(m.link_pdf)}" target="_blank" rel="noopener noreferrer">📄 Buka PDF</a>`
-                : '<span class="mb-empty">—</span>'}</td>
-            </tr>
-          `).join('')}
+              <td>${m.link_pdf ? `<a class="btn-open-pdf" href="${esc(m.link_pdf)}" target="_blank" rel="noopener noreferrer">📄 Buka PDF</a>` : '<span class="mb-empty">—</span>'}</td>
+            </tr>`).join('')}
         </tbody>
       </table>
     </div>`;
 }
 
-// ══ SEARCH ══
+// ══════════════════════════════════════════════════════════
+//  SEARCH
+// ══════════════════════════════════════════════════════════
 function onSearch(val) {
   S.searchQuery = val.trim().toLowerCase();
   id('search-clear').classList.toggle('visible', val.length > 0);
@@ -1115,8 +1193,8 @@ function applySearch() {
 }
 
 function applyDriveSearch(q) {
-  const cards = document.querySelectorAll('#drive-content .inu-card');
-  let visible = 0;
+  const cards   = document.querySelectorAll('#drive-content .inu-card');
+  let visible   = 0;
   cards.forEach(card => {
     const match = !q || card.textContent.toLowerCase().includes(q);
     card.classList.toggle('search-hidden', !match);
@@ -1135,134 +1213,188 @@ function applyDriveSearch(q) {
 
 function showSearchBar(show) { id('search-wrap').style.display = show ? 'flex' : 'none'; if (!show) clearSearch(); }
 
-// ══ LOGIN ══
-function requestEdit(driveId, status, keterangan, merk, spesifikasi, photoUrl, serialNumber, stiker) {
-  S.pendingAction = 'edit';
-  S.pendingDriveData = { driveId, status, keterangan, merk, spesifikasi, photoUrl, serialNumber, stiker };
-  id('login-sub-text').textContent = 'Untuk mengedit drive, masukkan kredensial akun mixing ini.';
+// ══════════════════════════════════════════════════════════
+//  LOGIN MODAL
+// ══════════════════════════════════════════════════════════
+function openLoginModal(subText) {
+  id('login-sub-text').textContent = subText || 'Masukkan kredensial untuk melanjutkan.';
   id('login-area-label').textContent = _getCurGroupLabel();
-  id('login-username').value = ''; id('login-password').value = '';
+  id('login-username').value = '';
+  id('login-password').value = '';
   id('login-err').style.display = 'none';
-  const btn = id('btn-login-submit'); btn.classList.remove('loading'); btn.disabled = false;
+  const btn = id('btn-login-submit');
+  btn.classList.remove('loading'); btn.disabled = false;
   id('login-overlay').classList.add('open');
   setTimeout(() => id('login-username').focus(), 100);
 }
 
+function requestEdit(driveId, status, keterangan, merk, spesifikasi, photoUrl, serialNumber, stiker) {
+  if (isReadOnly()) return;
+  S.pendingAction = 'edit';
+  S.pendingDriveData = { driveId, status, keterangan, merk, spesifikasi, photoUrl, serialNumber, stiker };
+  S.pendingPhotoUrl = null; S.pendingTsData = null;
+  openLoginModal('Untuk mengedit drive, masukkan kredensial akun mixing ini.');
+}
+
 function requestViewPhoto(photoUrl) {
-  S.pendingAction = 'photo'; S.pendingPhotoUrl = photoUrl; S.pendingDriveData = null;
-  id('login-sub-text').textContent = 'Untuk melihat foto, masukkan kredensial akun mixing ini.';
-  id('login-area-label').textContent = _getCurGroupLabel();
-  id('login-username').value = ''; id('login-password').value = '';
-  id('login-err').style.display = 'none';
-  const btn = id('btn-login-submit'); btn.classList.remove('loading'); btn.disabled = false;
-  id('login-overlay').classList.add('open');
-  setTimeout(() => id('login-username').focus(), 100);
+  if (isReadOnly()) {
+    // Supervisor langsung buka foto tanpa login
+    window.open(photoUrl, '_blank');
+    return;
+  }
+  S.pendingAction = 'photo';
+  S.pendingPhotoUrl = photoUrl;
+  S.pendingDriveData = null; S.pendingTsData = null;
+  openLoginModal('Untuk melihat foto, masukkan kredensial akun mixing ini.');
 }
 
 function closeLoginModal() {
   id('login-overlay').classList.remove('open');
-  S.pendingDriveData = null; S.pendingPhotoUrl = null; S.pendingAction = 'edit'; S.pendingTsData = null;
+  S.pendingDriveData = null; S.pendingPhotoUrl = null;
+  S.pendingAction = 'edit'; S.pendingTsData = null;
 }
 
 async function submitLogin() {
-  const username = id('login-username').value.trim(), password = id('login-password').value.trim();
+  const username    = id('login-username').value.trim();
+  const password    = id('login-password').value.trim();
+  const roleRadio   = document.querySelector('input[name="login-role"]:checked');
+  const selectedRole = roleRadio ? roleRadio.value : 'user';
   const errEl = id('login-err'), btn = id('btn-login-submit');
-  if (!username || !password) { errEl.textContent='⚠️ Username dan password wajib diisi.'; errEl.style.display='block'; return; }
+
+  if (!username || !password) {
+    errEl.textContent = '⚠️ Username dan password wajib diisi.';
+    errEl.style.display = 'block'; return;
+  }
   btn.classList.add('loading'); btn.disabled = true; errEl.style.display = 'none';
+
   try {
-    const res = await fetch(LOGIN_API+'?'+new URLSearchParams({username,password,mixing:S.plant}));
+    const res = await fetch(LOGIN_API + '?' + new URLSearchParams({
+      username,
+      password,
+      mixing : S.plant,
+      role   : selectedRole,
+    }));
     const result = await res.json();
+
     if (result.success) {
-      const action=S.pendingAction, photoUrl=S.pendingPhotoUrl, d=S.pendingDriveData, tsD=S.pendingTsData;
+      // Simpan role ke state
+      S.role = result.role || selectedRole;
+      updateRoleBadge();
+
+      const action   = S.pendingAction;
+      const photoUrl = S.pendingPhotoUrl;
+      const d        = S.pendingDriveData;
+      const tsD      = S.pendingTsData;
       closeLoginModal();
-      if      (action==='photo' && photoUrl)    window.open(photoUrl,'_blank');
-      else if (action==='edit' && d)            openModal(d.driveId,d.status,d.keterangan,d.merk,d.spesifikasi,d.photoUrl,d.serialNumber,d.stiker);
-      else if (action==='editTimestamp' && tsD) openTsModal();
-    } else { errEl.textContent='❌ '+(result.message||'Username atau password salah.'); errEl.style.display='block'; }
-  } catch(err) { errEl.textContent='⚠️ Tidak dapat terhubung ke server.'; errEl.style.display='block'; }
-  finally { btn.classList.remove('loading'); btn.disabled = false; }
+
+      if      (action === 'photo' && photoUrl)    window.open(photoUrl, '_blank');
+      else if (action === 'edit' && d)            openModal(d.driveId, d.status, d.keterangan, d.merk, d.spesifikasi, d.photoUrl, d.serialNumber, d.stiker);
+      else if (action === 'editTimestamp' && tsD) openTsModal();
+    } else {
+      errEl.textContent = '❌ ' + (result.message || 'Username atau password salah.');
+      errEl.style.display = 'block';
+    }
+  } catch(err) {
+    errEl.textContent = '⚠️ Tidak dapat terhubung ke server.';
+    errEl.style.display = 'block';
+  } finally {
+    btn.classList.remove('loading'); btn.disabled = false;
+  }
 }
 
+// Enter key di login
 document.addEventListener('DOMContentLoaded', () => {
   ['login-username','login-password'].forEach(fid => {
     const el = id(fid);
-    if (el) el.addEventListener('keydown', e => { if(e.key==='Enter') submitLogin(); });
+    if (el) el.addEventListener('keydown', e => { if (e.key === 'Enter') submitLogin(); });
   });
 });
 
-// ══ API ══
+// ══════════════════════════════════════════════════════════
+//  API
+// ══════════════════════════════════════════════════════════
 async function apiGet(params) {
-  const res  = await fetch(API+'?'+new URLSearchParams(params));
+  const res  = await fetch(API + '?' + new URLSearchParams(params));
   const data = await res.json();
   if (data.error) throw new Error(data.error);
   return data;
 }
 
-// ══ NAVIGASI ══
+// ══════════════════════════════════════════════════════════
+//  NAVIGASI
+// ══════════════════════════════════════════════════════════
 function navTo(page, plant) {
   if (plant) S.plant = plant;
   S.page = page;
   document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
-  document.getElementById('page-'+page).classList.add('active');
+  document.getElementById('page-' + page).classList.add('active');
   updateBC();
-  if (page==='plant')  { showSearchBar(false); renderPlantPage(); }
-  if (page==='detail') { S.mixing=1; S.tab='drive'; showSearchBar(true); renderDetailPage(); }
+  if (page === 'plant')  { showSearchBar(false); renderPlantPage(); }
+  if (page === 'detail') { S.mixing = 1; S.tab = 'drive'; showSearchBar(true); renderDetailPage(); }
 }
 
 function _getCurGroupLabel() {
-  const gl = S.cache[S.plant+'_groupList']||[];
-  return gl[S.mixing-1]||(S.plant+' — Mixing '+S.mixing);
+  const gl = S.cache[S.plant + '_groupList'] || [];
+  return gl[S.mixing - 1] || (S.plant + ' — Mixing ' + S.mixing);
 }
 
 function updateBC() {
-  const s2=id('bcs2'),b2=id('bc2'),s3=id('bcs3'),b3=id('bc3');
-  if (S.plant && S.page==='detail') {
+  const s2 = id('bcs2'), b2 = id('bc2'), s3 = id('bcs3'), b3 = id('bc3');
+  if (S.plant && S.page === 'detail') {
     const label = _getCurGroupLabel();
-    s2.style.display=b2.style.display='';
-    b2.className='bc-cur'; b2.textContent=label;
-    id('topbar-sub').textContent=label;
-  } else { s2.style.display=b2.style.display='none'; id('topbar-sub').textContent='Pilih Plant'; }
-  s3.style.display=b3.style.display='none';
+    s2.style.display = b2.style.display = '';
+    b2.className = 'bc-cur'; b2.textContent = label;
+    id('topbar-sub').textContent = label;
+  } else {
+    s2.style.display = b2.style.display = 'none';
+    id('topbar-sub').textContent = 'Pilih Plant';
+  }
+  s3.style.display = b3.style.display = 'none';
 }
 
-// ══ RENDER PLANT PAGE ══
+// ══════════════════════════════════════════════════════════
+//  RENDER PLANT PAGE
+// ══════════════════════════════════════════════════════════
 async function renderPlantPage() {
   const el = id('plant-content');
   el.innerHTML = loadingHTML('Memuat plant...');
   try {
-    const data = await apiGet({action:'getPlants'});
+    const data = await apiGet({ action: 'getPlants' });
     id('stat-total').textContent = data.plants.length;
-    id('stat-sync').textContent  = new Date().toTimeString().slice(0,5);
-    el.innerHTML = `<div class="plant-grid">${data.plants.map((p,i) => plantCard(p,i)).join('')}</div>`;
+    id('stat-sync').textContent  = new Date().toTimeString().slice(0, 5);
+    el.innerHTML = `<div class="plant-grid">${data.plants.map((p, i) => plantCard(p, i)).join('')}</div>`;
     await Promise.all(data.plants.map(async p => {
       try {
-        if (!S.cache[p.plant+'_groupList']) {
-          const res = await apiGet({action:'getDrives',plant:p.plant});
-          const drives = Array.isArray(res.drives)?res.drives:(Array.isArray(res)?res:[]);
-          S.cache[p.plant+'_drives'] = drives;
-          const seen=[],groups=[];
-          drives.forEach(d=>{const g=String(d.group||'').trim();if(g&&!seen.includes(g)){seen.push(g);groups.push(g);}});
-          S.cache[p.plant+'_groupList'] = groups;
+        if (!S.cache[p.plant + '_groupList']) {
+          const res = await apiGet({ action:'getDrives', plant:p.plant });
+          const drives = Array.isArray(res.drives) ? res.drives : (Array.isArray(res) ? res : []);
+          S.cache[p.plant + '_drives'] = drives;
+          const seen = [], groups = [];
+          drives.forEach(d => { const g = String(d.group||'').trim(); if(g&&!seen.includes(g)){seen.push(g);groups.push(g);} });
+          S.cache[p.plant + '_groupList'] = groups;
         }
-        const gl = S.cache[p.plant+'_groupList']||[];
-        const tagEl = document.getElementById('mix-tag-'+p.plant);
-        if (tagEl && gl.length) tagEl.textContent = gl.length+' Mixing';
+        const gl = S.cache[p.plant + '_groupList'] || [];
+        const tagEl = document.getElementById('mix-tag-' + p.plant);
+        if (tagEl && gl.length) tagEl.textContent = gl.length + ' Mixing';
       } catch(e) {}
     }));
   } catch(err) { el.innerHTML = errHTML(err.message, renderPlantPage); }
 }
 
 const PLANT_META = {
-  MCA:{desc:'Mixing Center A',color:'#4d9fff'}, MCC:{desc:'Mixing Center C',color:'#00e0f8'},
-  MCD:{desc:'Mixing Center D',color:'#00f0a0'}, MCG:{desc:'Mixing Center G',color:'#ffb820'},
-  MCH:{desc:'Mixing Center H',color:'#ff6b81'}, MCI:{desc:'Mixing Center I',color:'#c084fc'},
-  'PLANT E':{desc:'Plant Extension E',color:'#f472b6'},
+  MCA    :{ desc:'Mixing Center A',      color:'#4d9fff' },
+  MCC    :{ desc:'Mixing Center C',      color:'#00e0f8' },
+  MCD    :{ desc:'Mixing Center D',      color:'#00f0a0' },
+  MCG    :{ desc:'Mixing Center G',      color:'#ffb820' },
+  MCH    :{ desc:'Mixing Center H',      color:'#ff6b81' },
+  MCI    :{ desc:'Mixing Center I',      color:'#c084fc' },
+  'PLANT E':{ desc:'Plant Extension E',  color:'#f472b6' },
 };
 
-function plantCard(p,i) {
-  const m = PLANT_META[p.plant]||{desc:p.label||'',color:'#4d9fff'};
-  const gl = S.cache[p.plant+'_groupList']||[];
-  const mixTag = gl.length ? gl.length+' Mixing' : 'Memuat…';
+function plantCard(p, i) {
+  const m      = PLANT_META[p.plant] || { desc: p.label || '', color: '#4d9fff' };
+  const gl     = S.cache[p.plant + '_groupList'] || [];
+  const mixTag = gl.length ? gl.length + ' Mixing' : 'Memuat…';
   return `<div class="plant-card" onclick="navTo('detail','${p.plant}')" style="animation-delay:${i*0.06}s">
     <div class="plant-card-top">
       <div class="plant-card-corner" style="background:${m.color};box-shadow:0 0 8px ${m.color}"></div>
@@ -1277,36 +1409,41 @@ function plantCard(p,i) {
   </div>`;
 }
 
-// ══ RENDER DETAIL PAGE ══
+// ══════════════════════════════════════════════════════════
+//  RENDER DETAIL PAGE
+// ══════════════════════════════════════════════════════════
 async function renderDetailPage() {
   try {
-    if (!S.cache[S.plant+'_drives']) {
-      const data = await apiGet({action:'getDrives',plant:S.plant});
-      const drives = Array.isArray(data.drives)?data.drives:(Array.isArray(data)?data:[]);
-      S.cache[S.plant+'_drives'] = drives;
+    if (!S.cache[S.plant + '_drives']) {
+      const data   = await apiGet({ action:'getDrives', plant:S.plant });
+      const drives = Array.isArray(data.drives) ? data.drives : (Array.isArray(data) ? data : []);
+      S.cache[S.plant + '_drives'] = drives;
     }
-    if (!S.cache[S.plant+'_groupList']) {
-      const seen=[],groups=[];
-      (S.cache[S.plant+'_drives']||[]).forEach(d=>{const g=String(d.group||'').trim();if(g&&!seen.includes(g)){seen.push(g);groups.push(g);}});
-      S.cache[S.plant+'_groupList'] = groups;
+    if (!S.cache[S.plant + '_groupList']) {
+      const seen = [], groups = [];
+      (S.cache[S.plant + '_drives'] || []).forEach(d => {
+        const g = String(d.group||'').trim();
+        if (g && !seen.includes(g)) { seen.push(g); groups.push(g); }
+      });
+      S.cache[S.plant + '_groupList'] = groups;
     }
   } catch(e) {}
   renderSidebar(); switchTab(S.tab, true);
 }
 
 function renderSidebar() {
-  const drives    = S.cache[S.plant+'_drives']||[];
-  const groupList = S.cache[S.plant+'_groupList']||[];
-  const summary   = S.cache[S.plant+'_summary']||[];
+  const drives    = S.cache[S.plant + '_drives'] || [];
+  const groupList = S.cache[S.plant + '_groupList'] || [];
+  const summary   = S.cache[S.plant + '_summary'] || [];
   const kosongMap = {}, faultMap = {};
   summary.forEach(s => { kosongMap[s.group] = s.kosong; });
-  drives.forEach(d => { const g=String(d.group||'').trim(); if(d.status==='fault'&&g) faultMap[g]=(faultMap[g]||0)+1; });
+  drives.forEach(d => { const g = String(d.group||'').trim(); if(d.status==='fault'&&g) faultMap[g]=(faultMap[g]||0)+1; });
   let html = '';
-  groupList.forEach((label,i) => {
-    const idx = i+1, active = S.mixing===idx?'active':'', hasFault = faultMap[label]?'has-fault':'';
-    const faultDot = faultMap[label] ? '<div class="sb-fault"></div>' : '';
-    const kosongCount = kosongMap[label]||0;
-    const kosongBadge = kosongCount>0 ? `<span class="sb-kosong-badge">${kosongCount}⬜</span>` : '';
+  groupList.forEach((label, i) => {
+    const idx    = i + 1, active = S.mixing===idx?'active':'', hasFault = faultMap[label]?'has-fault':'';
+    const faultDot    = faultMap[label] ? '<div class="sb-fault"></div>' : '';
+    const kosongCount = kosongMap[label] || 0;
+    const kosongBadge = kosongCount > 0 ? `<span class="sb-kosong-badge">${kosongCount}⬜</span>` : '';
     html += `<div class="sb-item ${active} ${hasFault}" onclick="selectMixing(${idx})">
       <span>${esc(label)}</span><span class="sb-right">${kosongBadge}${faultDot}</span>
     </div>`;
@@ -1319,113 +1456,147 @@ function renderSidebar() {
   });
 }
 
-function selectMixing(num) { S.mixing=num; updateBC(); renderSidebar(); clearSearch(); if(S.tab==='drive') renderDriveTab(); }
+function selectMixing(num) { S.mixing = num; updateBC(); renderSidebar(); clearSearch(); if(S.tab==='drive') renderDriveTab(); }
 
 function switchTab(tab, force) {
-  if (S.tab===tab && !force) return;
+  if (S.tab === tab && !force) return;
   S.tab = tab;
   document.querySelectorAll('.ctab').forEach(t => t.classList.remove('active'));
   document.querySelectorAll('.tab-content').forEach(t => t.classList.remove('active'));
-  id('ctab-'+tab).classList.add('active');
-  id('tab-'+tab).classList.add('active');
+  id('ctab-' + tab).classList.add('active');
+  id('tab-' + tab).classList.add('active');
   showSearchBar(tab !== 'summary');
   clearSearch();
   const placeholders = {
     drive   : 'Cari drive, merk, serial number, stiker, status...',
     histori : 'Cari drive ID, status, keterangan, waktu...',
-    manual  : 'Cari judul, drive ID, kategori...'
+    manual  : 'Cari judul, drive ID, kategori...',
   };
   const sb = id('search-bar');
   if (sb && placeholders[tab]) sb.placeholder = placeholders[tab];
-  if (tab==='drive')   renderDriveTab();
-  if (tab==='histori') renderHistoriTab();
-  if (tab==='manual')  renderManualTab();
-  if (tab==='summary') renderSummaryTab();
+  if (tab === 'drive')   renderDriveTab();
+  if (tab === 'histori') renderHistoriTab();
+  if (tab === 'manual')  renderManualTab();
+  if (tab === 'summary') renderSummaryTab();
 }
 
-// ══ RENDER DRIVE TAB ══
+// ══════════════════════════════════════════════════════════
+//  RENDER DRIVE TAB
+// ══════════════════════════════════════════════════════════
 async function renderDriveTab() {
   const mixLabel = _getCurGroupLabel();
   id('drive-title').textContent = mixLabel;
   id('drive-content').innerHTML = loadingHTML('Memuat data drive...');
   try {
-    if (!S.cache[S.plant+'_drives']) {
-      const data = await apiGet({action:'getDrives',plant:S.plant});
-      const drives = Array.isArray(data.drives)?data.drives:(Array.isArray(data)?data:[]);
-      S.cache[S.plant+'_drives'] = drives;
-      if (!S.cache[S.plant+'_groupList']) {
-        const seen=[],groups=[];
-        drives.forEach(d=>{const g=String(d.group||'').trim();if(g&&!seen.includes(g)){seen.push(g);groups.push(g);}});
-        S.cache[S.plant+'_groupList'] = groups;
+    if (!S.cache[S.plant + '_drives']) {
+      const data   = await apiGet({ action:'getDrives', plant:S.plant });
+      const drives = Array.isArray(data.drives) ? data.drives : (Array.isArray(data) ? data : []);
+      S.cache[S.plant + '_drives'] = drives;
+      if (!S.cache[S.plant + '_groupList']) {
+        const seen = [], groups = [];
+        drives.forEach(d => { const g = String(d.group||'').trim(); if(g&&!seen.includes(g)){seen.push(g);groups.push(g);} });
+        S.cache[S.plant + '_groupList'] = groups;
       }
     }
-    const all       = S.cache[S.plant+'_drives'];
-    const groupList = S.cache[S.plant+'_groupList']||[];
-    const curGroup  = groupList[S.mixing-1]||'';
-    const drives    = all.filter(d => String(d.group||'').trim()===curGroup);
-    const ok     = drives.filter(d=>d.status==='ok').length;
-    const fault  = drives.filter(d=>d.status==='fault').length;
-    const maint  = drives.filter(d=>d.status==='maint'||d.status==='maintenance').length;
-    const kosong = drives.filter(d=>!d.status||d.status==='kosong').length;
-    id('drive-meta').textContent  = `${drives.length} drives · ${ok} OK · ${fault} Fault · ${kosong} Kosong · ${maint} Maint`;
-    id('drive-pills').innerHTML   = `
+    const all       = S.cache[S.plant + '_drives'];
+    const groupList = S.cache[S.plant + '_groupList'] || [];
+    const curGroup  = groupList[S.mixing - 1] || '';
+    const drives    = all.filter(d => String(d.group||'').trim() === curGroup);
+    const ok     = drives.filter(d => d.status === 'ok').length;
+    const fault  = drives.filter(d => d.status === 'fault').length;
+    const maint  = drives.filter(d => d.status === 'maint' || d.status === 'maintenance').length;
+    const kosong = drives.filter(d => !d.status || d.status === 'kosong').length;
+    id('drive-meta').textContent = `${drives.length} drives · ${ok} OK · ${fault} Fault · ${kosong} Kosong · ${maint} Maint`;
+    id('drive-pills').innerHTML  = `
       <div class="pill">Total ${drives.length}</div>
       <div class="pill ok"><div class="pill-d"></div>OK ${ok}</div>
       <div class="pill fault"><div class="pill-d"></div>Fault ${fault}</div>
       <div class="pill kosong"><div class="pill-d"></div>Kosong ${kosong}</div>
       <div class="pill maint"><div class="pill-d"></div>Maint ${maint}</div>`;
+
+    // Read-only notice untuk supervisor
+    const existingNotice = id('drive-content').previousElementSibling;
+    const noticeId = 'readonly-notice-el';
+    let noticeEl = id(noticeId);
+    if (isReadOnly()) {
+      if (!noticeEl) {
+        noticeEl = document.createElement('div');
+        noticeEl.id = noticeId;
+        noticeEl.className = 'readonly-notice';
+        noticeEl.innerHTML = '👁️ <span>Mode Supervisor — tampilan read-only, tidak dapat mengedit drive</span>';
+        id('tab-drive').insertBefore(noticeEl, id('drive-content'));
+      }
+    } else {
+      if (noticeEl) noticeEl.remove();
+    }
+
     if (!drives.length) {
       id('drive-content').innerHTML = `<div class="state-box"><div style="font-size:28px">📭</div><h3>Tidak ada data</h3><p>${esc(curGroup)} belum ada data drive.</p></div>`;
       renderSidebar(); return;
     }
+
     function getDriveType(driveId) {
       const s = String(driveId||'').toUpperCase();
       if (s.includes('.INU.')||s.includes('-INU')||s.includes('_INU')) return 'INU';
       if (s.includes('.DSU.')||s.includes('-DSU')||s.includes('_DSU')) return 'DSU';
       return 'OTHER';
     }
-    const groups = {INU:[],DSU:[],OTHER:[]};
+    const groups = { INU:[], DSU:[], OTHER:[] };
     drives.forEach(d => { groups[getDriveType(d.drive_id)].push(d); });
     const groupConfig = [
-      {key:'INU',   label:'⚡ Inverter Unit (INU)', color:'#4d9fff'},
-      {key:'DSU',   label:'🔌 DC Supply Unit (DSU)',color:'#c084fc'},
-      {key:'OTHER', label:'📦 Lainnya',             color:'#7eb8e8'},
+      { key:'INU',   label:'⚡ Inverter Unit (INU)',  color:'#4d9fff' },
+      { key:'DSU',   label:'🔌 DC Supply Unit (DSU)', color:'#c084fc' },
+      { key:'OTHER', label:'📦 Lainnya',              color:'#7eb8e8' },
     ];
     let html = '';
-    groupConfig.forEach(({key,label,color}) => {
+    groupConfig.forEach(({ key, label, color }) => {
       const grp = groups[key]; if (!grp.length) return;
       html += `<div class="drive-group"><div class="drive-group-header"><div class="drive-group-label" style="border-color:${color};color:${color}">${label}</div><div class="drive-group-line"></div><div class="drive-group-count">${grp.length} unit</div></div><div class="cards-grid">${grp.map(inuCard).join('')}</div></div>`;
     });
     id('drive-content').innerHTML = html;
     renderSidebar();
     if (S.searchQuery) applyDriveSearch(S.searchQuery);
-  } catch(err) { id('drive-content').innerHTML = errHTML(err.message, renderDriveTab); id('drive-meta').textContent = 'Gagal memuat'; }
+  } catch(err) {
+    id('drive-content').innerHTML = errHTML(err.message, renderDriveTab);
+    id('drive-meta').textContent = 'Gagal memuat';
+  }
 }
 
 function inuCard(d) {
-  const st   = d.status || 'kosong';
-  const stTx = {ok:'OK', fault:'Fault', maint:'Maintenance', maintenance:'Maintenance', kosong:'Kosong'}[st] || st;
+  const st    = d.status || 'kosong';
+  const stTx  = { ok:'OK', fault:'Fault', maint:'Maintenance', maintenance:'Maintenance', kosong:'Kosong' }[st] || st;
   const sn     = d.serial_number || d.sn || '';
   const stiker = d.stiker || '';
   const spek   = d.spesifikasi || '';
-  const snHtml = sn ? `<div class="inu-sn-row"><span class="inu-sn-label">S/N</span><span class="inu-sn-value">${esc(sn)}</span></div>` : '';
-  const stikerHtml = stiker ? `<div class="inu-stiker-row"><span class="inu-stiker-label">STIKER</span><span class="inu-stiker-value">${esc(stiker)}</span></div>` : '';
   const keterangan = d.keterangan || '';
   const roleLower  = keterangan.toLowerCase();
+  const snHtml     = sn     ? `<div class="inu-sn-row"><span class="inu-sn-label">S/N</span><span class="inu-sn-value">${esc(sn)}</span></div>` : '';
+  const stikerHtml = stiker ? `<div class="inu-stiker-row"><span class="inu-stiker-label">STIKER</span><span class="inu-stiker-value">${esc(stiker)}</span></div>` : '';
+
   let roleHtml = '';
   if (roleLower.includes('master'))
     roleHtml = `<div class="inu-role">▲ MASTER</div>`;
   else if (roleLower.includes('follower') || roleLower.includes('slave'))
     roleHtml = `<div class="inu-role">▽ Followers</div>`;
-  const infoText = keterangan.replace(/master|follower|slave/gi,'').trim();
+
+  const infoText = keterangan.replace(/master|follower|slave/gi, '').trim();
+
+  // Foto: supervisor bisa lihat langsung, user/admin perlu login
   const photoHtml = d.photo_url
     ? `<button class="inu-photo-btn" onclick="event.stopPropagation();requestViewPhoto('${esc(d.photo_url)}')">📷 Lihat Foto</button>`
     : '';
-  return `<div class="inu-card ${st}" onclick="requestEdit(
-    '${esc(d.drive_id)}','${st}','${esc(keterangan)}','${esc(d.merk)}',
-    '${esc(spek)}','${esc(d.photo_url||'')}','${esc(sn)}','${esc(stiker)}'
-  )">
-    <div class="inu-edit-hint">✏️ edit</div>
+
+  // Clickable hanya kalau bisa edit
+  const clickable = canEdit() ? 'clickable' : '';
+  const onclickAttr = canEdit()
+    ? `onclick="requestEdit('${esc(d.drive_id)}','${st}','${esc(keterangan)}','${esc(d.merk)}','${esc(spek)}','${esc(d.photo_url||'')}','${esc(sn)}','${esc(stiker)}')" `
+    : '';
+  const editHint = canEdit()
+    ? `<div class="inu-edit-hint">✏️ edit</div>`
+    : '';
+
+  return `<div class="inu-card ${st} ${clickable}" ${onclickAttr}>
+    ${editHint}
     <div class="inu-tag">${esc(d.drive_id)}</div>
     <div class="inu-name">${esc(d.merk)||'—'}</div>
     ${spek ? `<div class="inu-spec">${esc(spek)}</div>` : ''}
@@ -1437,29 +1608,36 @@ function inuCard(d) {
   </div>`;
 }
 
-// ══ RENDER HISTORI TAB ══
+// ══════════════════════════════════════════════════════════
+//  RENDER HISTORI TAB
+// ══════════════════════════════════════════════════════════
 async function renderHistoriTab() {
   id('histori-content').innerHTML = loadingHTML('Memuat histori...');
   try {
-    if (!S.cache[S.plant+'_histori']) {
-      const data = await apiGet({action:'getHistori', plant:S.plant});
-      S.cache[S.plant+'_histori'] = data.histori || data;
+    if (!S.cache[S.plant + '_histori']) {
+      const data = await apiGet({ action:'getHistori', plant:S.plant });
+      S.cache[S.plant + '_histori'] = data.histori || data;
     }
-    const rows = S.cache[S.plant+'_histori'];
-    if (!rows||!rows.length) { id('histori-content').innerHTML=`<div class="state-box"><div style="font-size:28px">📋</div><h3>Belum ada histori</h3></div>`; return; }
+    const rows = S.cache[S.plant + '_histori'];
+    if (!rows || !rows.length) {
+      id('histori-content').innerHTML = `<div class="state-box"><div style="font-size:28px">📋</div><h3>Belum ada histori</h3></div>`;
+      return;
+    }
     buildHistoriFilterOptions();
     renderHistoriTableWithFilter();
   } catch(err) { id('histori-content').innerHTML = errHTML(err.message, renderHistoriTab); }
 }
 
-// ══ RENDER SUMMARY TAB ══
+// ══════════════════════════════════════════════════════════
+//  RENDER SUMMARY TAB
+// ══════════════════════════════════════════════════════════
 async function renderSummaryTab() {
   id('summary-content').innerHTML = loadingHTML('Memuat summary...');
   try {
-    const data = await apiGet({action:'getSummaryKosong', plant:S.plant});
-    S.cache[S.plant+'_summary'] = data.summary||[];
-    const rows=data.summary||[], totalKosong=data.totalKosong||0, totalDrive=data.totalDrive||0;
-    const adaKosong=rows.filter(r=>r.kosong>0), bersih=rows.filter(r=>r.kosong===0).length;
+    const data = await apiGet({ action:'getSummaryKosong', plant:S.plant });
+    S.cache[S.plant + '_summary'] = data.summary || [];
+    const rows = data.summary||[], totalKosong = data.totalKosong||0, totalDrive = data.totalDrive||0;
+    const adaKosong = rows.filter(r => r.kosong > 0), bersih = rows.filter(r => r.kosong === 0).length;
     let html = `<div class="summary-stats">
       <div class="sum-stat"><div class="sum-stat-label">Drive Kosong</div><div class="sum-stat-val kosong">${totalKosong}</div></div>
       <div class="sum-stat"><div class="sum-stat-label">Terdampak</div><div class="sum-stat-val" style="color:var(--maint)">${adaKosong.length}</div></div>
@@ -1477,7 +1655,9 @@ async function renderSummaryTab() {
   } catch(err) { id('summary-content').innerHTML = errHTML(err.message, renderSummaryTab); }
 }
 
-// ══ EDIT DRIVE MODAL ══
+// ══════════════════════════════════════════════════════════
+//  EDIT DRIVE MODAL
+// ══════════════════════════════════════════════════════════
 function openModal(driveId, status, keterangan, merk, spesifikasi, photoUrl, serialNumber, stiker) {
   S.editDrive = driveId;
   id('modal-drive-id').textContent = driveId;
@@ -1508,43 +1688,51 @@ async function saveStatus() {
       serial_number : id('modal-sn').value.trim(),
       stiker        : id('modal-stiker').value.trim(),
       photo_url     : id('modal-photo').value.trim(),
-      updatedBy     : 'web-user'
+      updatedBy     : S.role + '-web',
     });
-    delete S.cache[S.plant+'_drives']; delete S.cache[S.plant+'_groupList'];
-    delete S.cache[S.plant+'_histori']; delete S.cache[S.plant+'_summary'];
+    delete S.cache[S.plant + '_drives'];
+    delete S.cache[S.plant + '_groupList'];
+    delete S.cache[S.plant + '_histori'];
+    delete S.cache[S.plant + '_summary'];
     closeModal(); await renderDetailPage();
   } catch(err) { alert('Gagal menyimpan: ' + err.message); }
   finally { btn.disabled = false; btn.textContent = 'Simpan'; }
 }
 
-// Close modals on overlay click
+// Tutup modal klik overlay
 id('modal').addEventListener('click', e => { if(e.target===id('modal')) closeModal(); });
 id('login-overlay').addEventListener('click', e => { if(e.target===id('login-overlay')) closeLoginModal(); });
 id('ts-modal-overlay').addEventListener('click', e => { if(e.target===id('ts-modal-overlay')) closeTsModal(); });
 
-// ══ REFRESH ══
+// ══════════════════════════════════════════════════════════
+//  REFRESH
+// ══════════════════════════════════════════════════════════
 async function doRefresh() {
   const btn = id('btn-refresh'); btn.classList.add('loading');
   if (S.plant) ['drives','groupList','histori','manuals','summary'].forEach(k => delete S.cache[S.plant+'_'+k]);
   clearSearch();
-  if (S.page==='detail') await renderDetailPage(); else await renderPlantPage();
+  if (S.page === 'detail') await renderDetailPage(); else await renderPlantPage();
   btn.classList.remove('loading');
 }
 
-// ══ UTILITIES ══
-function id(i) { return document.getElementById(i); }
-function esc(s) { return String(s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;'); }
+// ══════════════════════════════════════════════════════════
+//  UTILITIES
+// ══════════════════════════════════════════════════════════
+function id(i)    { return document.getElementById(i); }
+function esc(s)   { return String(s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;'); }
 function loadingHTML(msg) { return `<div class="state-box"><div class="sp"></div><p>${msg}</p></div>`; }
-function errHTML(msg,fn) {
-  const rid = 'r'+Date.now();
-  setTimeout(() => { const b=id(rid); if(b) b.onclick=fn; }, 50);
+function errHTML(msg, fn) {
+  const rid = 'r' + Date.now();
+  setTimeout(() => { const b = id(rid); if(b) b.onclick = fn; }, 50);
   return `<div class="state-box"><div style="font-size:28px">⚠️</div><h3>Gagal memuat</h3><p>${esc(msg)}</p><button class="btn-retry" id="${rid}">Coba Lagi</button></div>`;
 }
 
-// ══ PRINT HISTORI PDF ══
+// ══════════════════════════════════════════════════════════
+//  PRINT HISTORI PDF
+// ══════════════════════════════════════════════════════════
 async function printHistoriPDF() {
-  const allRows = S.cache[S.plant+'_histori'];
-  if (!allRows||!allRows.length) { alert('Tidak ada data histori untuk dicetak.'); return; }
+  const allRows = S.cache[S.plant + '_histori'];
+  if (!allRows || !allRows.length) { alert('Tidak ada data histori untuk dicetak.'); return; }
   const filterBulan = S.histFilter.bulan ? +S.histFilter.bulan : null;
   const filterTahun = S.histFilter.tahun ? +S.histFilter.tahun : null;
   const rows = allRows.filter(r => {
@@ -1555,40 +1743,53 @@ async function printHistoriPDF() {
   });
   if (!rows.length) { alert('Tidak ada data histori untuk periode yang dipilih.'); return; }
   let periodLabel = 'Semua Periode';
-  if (filterBulan && filterTahun) periodLabel = NAMA_BULAN[filterBulan]+' '+filterTahun;
-  else if (filterBulan) periodLabel = NAMA_BULAN[filterBulan]+' (Semua Tahun)';
-  else if (filterTahun) periodLabel = 'Tahun '+filterTahun;
-  const {jsPDF} = window.jspdf, doc = new jsPDF({orientation:'landscape'});
+  if (filterBulan && filterTahun) periodLabel = NAMA_BULAN[filterBulan] + ' ' + filterTahun;
+  else if (filterBulan) periodLabel = NAMA_BULAN[filterBulan] + ' (Semua Tahun)';
+  else if (filterTahun) periodLabel = 'Tahun ' + filterTahun;
+  const { jsPDF } = window.jspdf, doc = new jsPDF({ orientation:'landscape' });
   doc.setFontSize(14); doc.setFont('helvetica','bold');
   doc.text(`Histori Drive — ${S.plant}`, 14, 16);
   doc.setFontSize(10); doc.setFont('helvetica','normal');
   doc.text(`Periode: ${periodLabel}`, 14, 22);
   doc.setFontSize(9);
   doc.text(`Dicetak: ${new Date().toLocaleString('id-ID')} · Total: ${rows.length} data`, 14, 27);
-  doc.autoTable({ startY:32, head:[['Waktu','Drive ID','Nama','Group','Status','Keterangan']], body:rows.map(r=>[r.timestamp,r.drive_id,r.drive_nama||'—',r.group||'—',r.status.toUpperCase(),r.keterangan||'—']), styles:{fontSize:8,cellPadding:2}, headStyles:{fillColor:[21,101,192],textColor:255,fontStyle:'bold'}, alternateRowStyles:{fillColor:[240,244,248]}, theme:'grid' });
+  doc.autoTable({
+    startY     : 32,
+    head       : [['Waktu','Drive ID','Nama','Group','Status','Keterangan']],
+    body       : rows.map(r => [r.timestamp, r.drive_id, r.drive_nama||'—', r.group||'—', r.status.toUpperCase(), r.keterangan||'—']),
+    styles     : { fontSize:8, cellPadding:2 },
+    headStyles : { fillColor:[21,101,192], textColor:255, fontStyle:'bold' },
+    alternateRowStyles: { fillColor:[240,244,248] },
+    theme      : 'grid',
+  });
   const safePeriod = periodLabel.replace(/[^a-zA-Z0-9_\-]/g,'_');
   doc.save(`Histori_${S.plant}_${safePeriod}_${new Date().toISOString().slice(0,10)}.pdf`);
 }
 
-// Clock
+// ══════════════════════════════════════════════════════════
+//  CLOCK & THEME
+// ══════════════════════════════════════════════════════════
 setInterval(() => { id('clock').textContent = new Date().toTimeString().slice(0,8); }, 1000);
 id('clock').textContent = new Date().toTimeString().slice(0,8);
 
-// Theme
 function toggleTheme() {
   const isLight = document.body.classList.toggle('light');
   id('btn-theme').textContent = isLight ? '☀️ Light' : '🌙 Dark';
   const m = id('stat-mode'); if(m) m.textContent = isLight ? 'LIGHT' : 'DARK';
   localStorage.setItem('theme', isLight ? 'light' : 'dark');
 }
-if (localStorage.getItem('theme')==='light') {
+if (localStorage.getItem('theme') === 'light') {
   document.body.classList.add('light');
   document.addEventListener('DOMContentLoaded', () => {
-    const b=id('btn-theme'); if(b) b.textContent='☀️ Light';
-    const m=id('stat-mode'); if(m) m.textContent='LIGHT';
+    const b = id('btn-theme'); if(b) b.textContent = '☀️ Light';
+    const m = id('stat-mode'); if(m) m.textContent = 'LIGHT';
   });
 }
 
+// ══════════════════════════════════════════════════════════
+//  INIT
+// ══════════════════════════════════════════════════════════
+updateRoleBadge();
 navTo('plant');
 </script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
