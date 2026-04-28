@@ -1944,19 +1944,21 @@ async function renderAsliTab() {
       <div class="mb-table-wrap" style="padding:0 20px 20px">
         <table class="mb-table">
           <thead><tr>
-            <th class="mb-num">#</th>
-            <th>Drive ID</th>
-            <th>Spesifikasi</th>
-            <th>Serial Number</th>
-          </tr></thead>
+  <th class="mb-num">#</th>
+  <th>Drive ID</th>
+  <th>Spesifikasi</th>
+  <th>Serial Number</th>
+  <th>Cari Data Lapangan</th>
+</tr></thead>
           <tbody>
             ${rows.map((r, i) => {
-              const match = !q || (r.drive_id + r.spesifikasi + r.serial_number).toLowerCase().includes(q);
+            const match = !q || (r.drive_id + r.spesifikasi + r.serial_number + r.cari_data_lapangan).toLowerCase().includes(q);
               return `<tr style="${match ? '' : 'display:none'}">
                 <td class="mb-num">${i + 1}</td>
                 <td class="hist-id">${esc(r.drive_id)}</td>
                 <td>${esc(r.spesifikasi) || '<span class="mb-empty">—</span>'}</td>
-                <td style="font-family:\'JetBrains Mono\',monospace;font-size:11px">${esc(r.serial_number) || '<span class="mb-empty">—</span>'}</td>
+              <td style="font-family:'JetBrains Mono',monospace;font-size:11px">${esc(r.serial_number) || '<span class="mb-empty">—</span>'}</td>
+<td>${esc(r.cari_data_lapangan) || '<span class="mb-empty">—</span>'}</td>
               </tr>`;
             }).join('')}
           </tbody>
