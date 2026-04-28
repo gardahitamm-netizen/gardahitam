@@ -97,6 +97,7 @@ body.light .breadcrumb{ background:#eaf2fc; border-color:#b8ccec; }
 body.light .sidebar{ background:#e4eefa; border-color:#b8ccec; }
 body.light .hist-table thead tr{ background:#dde8f8; }
 body.light .hist-table tbody tr:hover{ background:#eaf2fc; }
+body.light .login-gate-box{ background:#f5f8ff; border-color:#b8ccec; }
 body.light .login-box{ background:#f5f8ff; }
 body.light input, body.light select{ background:#eaf1fb !important; border-color:#b8ccec !important; color:#0d1a2e !important; }
 body.light .running-bar::before{ background:linear-gradient(to right,#e8f0fc,transparent); }
@@ -142,10 +143,187 @@ body.light .mb-table tr:hover td{ background:rgba(0,0,0,.025); }
 body.light .mb-filter-bar{ background:#eaf2fc; border-color:#b8ccec; }
 body.light .role-badge{ filter:brightness(.85); }
 body.light .login-role-opt label{ color:#0d1a2e; }
+body.light .login-gate-overlay{ background:rgba(180,200,230,.6); }
 
 *{margin:0;padding:0;box-sizing:border-box;}
 html,body{width:100%;height:100%;overflow:hidden;}
 body{font-family:'Plus Jakarta Sans',sans-serif;background:var(--bg);color:var(--text);display:flex;flex-direction:column;}
+
+/* ══════════════════════════════════════════
+   LOGIN GATE — full screen sebelum masuk
+   ══════════════════════════════════════════ */
+.login-gate-overlay{
+  display:none;
+  position:fixed;inset:0;
+  background:rgba(5,10,22,.92);
+  backdrop-filter:blur(8px);
+  z-index:900;
+  align-items:center;
+  justify-content:center;
+}
+.login-gate-overlay.open{ display:flex; animation:fadeIn .3s ease; }
+@keyframes fadeIn{ from{opacity:0} to{opacity:1} }
+
+.login-gate-box{
+  background:var(--surf);
+  border:1px solid var(--border);
+  border-radius:20px;
+  padding:36px 32px 30px;
+  width:100%;
+  max-width:420px;
+  position:relative;
+  overflow:hidden;
+  animation:slideUp .35s cubic-bezier(.34,1.4,.64,1);
+  margin:16px;
+}
+@keyframes slideUp{from{opacity:0;transform:translateY(40px)}to{opacity:1;transform:translateY(0)}}
+
+.login-gate-box::before{
+  content:'';
+  position:absolute;top:0;left:0;right:0;height:3px;
+  background:linear-gradient(90deg,var(--accent),var(--teal),var(--ok));
+}
+.login-gate-grid{
+  position:absolute;inset:0;opacity:.025;
+  background-image:linear-gradient(var(--border) 1px,transparent 1px),linear-gradient(90deg,var(--border) 1px,transparent 1px);
+  background-size:32px 32px;
+  pointer-events:none;
+}
+.gate-logo{
+  display:flex;align-items:center;gap:10px;margin-bottom:24px;
+}
+.gate-logo-icon{
+  width:42px;height:42px;border-radius:10px;
+  background:linear-gradient(135deg,var(--accent-bg),var(--teal-bg));
+  border:1px solid var(--accent-bd);
+  display:flex;align-items:center;justify-content:center;
+  font-size:20px;
+  position:relative;overflow:hidden;
+}
+.gate-logo-icon::after{
+  content:'';position:absolute;inset:0;
+  background:radial-gradient(circle at 30% 30%,rgba(77,159,255,.3),transparent 70%);
+}
+.gate-logo-text{
+  display:flex;flex-direction:column;
+}
+.gate-logo-title{
+  font-family:'JetBrains Mono',monospace;
+  font-size:15px;font-weight:700;
+  color:var(--text);letter-spacing:.5px;
+}
+.gate-logo-sub{
+  font-family:'JetBrains Mono',monospace;
+  font-size:10px;color:var(--teal);letter-spacing:1.5px;text-transform:uppercase;
+}
+.gate-title{
+  font-size:22px;font-weight:700;color:var(--text);
+  margin-bottom:4px;line-height:1.2;
+}
+.gate-sub{
+  font-size:12px;color:var(--muted);margin-bottom:24px;line-height:1.5;
+}
+.gate-divider{
+  height:1px;background:linear-gradient(to right,var(--border),transparent);
+  margin-bottom:20px;
+}
+
+/* Role pills di gate */
+.gate-role-field{ margin-bottom:16px; }
+.gate-role-label{
+  display:block;font-size:10px;font-weight:700;
+  text-transform:uppercase;letter-spacing:.7px;
+  color:var(--muted);margin-bottom:8px;
+  font-family:'JetBrains Mono',monospace;
+}
+.gate-role-opts{ display:flex;gap:8px; }
+.gate-role-opt{ flex:1; }
+.gate-role-opt input[type=radio]{ display:none; }
+.gate-role-opt label{
+  display:flex;align-items:center;justify-content:center;gap:7px;
+  padding:10px 12px;border-radius:9px;
+  border:1px solid var(--border);background:var(--surf2);
+  color:var(--muted);font-size:12px;font-weight:600;
+  cursor:pointer;transition:all .18s;text-align:center;
+  font-family:'JetBrains Mono',monospace;
+}
+.gate-role-opt input[type=radio]:checked + label{
+  border-color:var(--accent);background:var(--accent-bg);color:var(--accent);
+  box-shadow:0 0 12px rgba(77,159,255,.2);
+}
+.gate-role-opt.admin-opt input[type=radio]:checked + label{
+  border-color:var(--admin-bd);background:var(--admin-bg);color:var(--admin-color);
+  box-shadow:0 0 12px rgba(192,132,252,.2);
+}
+.gate-role-opt label:hover{ border-color:var(--accent-bd);color:var(--accent); }
+
+.gate-field{ margin-bottom:14px; }
+.gate-field label{
+  display:block;font-size:10px;font-weight:700;
+  text-transform:uppercase;letter-spacing:.7px;
+  color:var(--muted);margin-bottom:7px;
+  font-family:'JetBrains Mono',monospace;
+}
+.gate-input-wrap{ position:relative; }
+.gate-input-icon{
+  position:absolute;left:12px;top:50%;transform:translateY(-50%);
+  font-size:13px;pointer-events:none;
+}
+.gate-field input{
+  width:100%;
+  background:var(--surf2);border:1px solid var(--border);
+  color:var(--text);padding:11px 12px 11px 38px;
+  border-radius:9px;font-size:13px;
+  font-family:'Plus Jakarta Sans',sans-serif;
+  transition:border-color .15s,box-shadow .15s;outline:none;
+}
+.gate-field input:focus{
+  border-color:var(--accent);
+  box-shadow:0 0 0 3px rgba(77,159,255,.1);
+}
+.gate-field input::placeholder{ color:var(--muted); }
+
+.gate-err{
+  font-size:12px;color:var(--fault);
+  background:var(--fault-bg);border:1px solid var(--fault-bd);
+  border-radius:7px;padding:9px 12px;margin-bottom:14px;
+  display:none;font-family:'JetBrains Mono',monospace;
+  animation:shake .3s ease;
+}
+@keyframes shake{0%,100%{transform:translateX(0)}25%{transform:translateX(-5px)}75%{transform:translateX(5px)}}
+.gate-err.visible{ display:flex;align-items:center;gap:8px; }
+
+.gate-btn{
+  width:100%;padding:12px;border-radius:10px;
+  font-size:14px;font-weight:700;cursor:pointer;
+  background:linear-gradient(135deg,var(--accent),#3a8eff);
+  border:1px solid var(--accent);color:#fff;
+  font-family:'JetBrains Mono',monospace;
+  letter-spacing:.5px;
+  transition:all .2s;
+  display:flex;align-items:center;justify-content:center;gap:8px;
+  position:relative;overflow:hidden;
+}
+.gate-btn::before{
+  content:'';position:absolute;inset:0;
+  background:linear-gradient(135deg,rgba(255,255,255,.15),transparent);
+  opacity:0;transition:opacity .2s;
+}
+.gate-btn:hover::before{ opacity:1; }
+.gate-btn:hover{ transform:translateY(-1px);box-shadow:0 8px 24px rgba(77,159,255,.4); }
+.gate-btn:active{ transform:translateY(0); }
+.gate-btn:disabled{ opacity:.5;pointer-events:none; }
+.gate-btn .btn-spin{ width:14px;height:14px;border:2px solid rgba(255,255,255,.3);border-top-color:#fff;border-radius:50%;animation:spin .6s linear infinite;display:none; }
+.gate-btn.loading .btn-spin{ display:block; }
+.gate-btn.loading .btn-label{ display:none; }
+
+.gate-security-note{
+  display:flex;align-items:center;gap:7px;
+  margin-top:16px;padding:8px 12px;
+  background:var(--teal-bg);border:1px solid var(--teal-bd);
+  border-radius:7px;
+  font-family:'JetBrains Mono',monospace;font-size:10px;color:var(--teal);
+}
 
 /* ── TOPBAR ── */
 .topbar{display:flex;align-items:center;gap:10px;padding:0 20px;height:var(--topbar-h);background:#060b14;border-bottom:1px solid var(--border);flex-shrink:0;z-index:200;}
@@ -165,11 +343,21 @@ body{font-family:'Plus Jakarta Sans',sans-serif;background:var(--bg);color:var(-
 .btn-theme{display:flex;align-items:center;gap:5px;font-family:'JetBrains Mono',monospace;font-size:11px;padding:5px 10px;border-radius:5px;cursor:pointer;border:1px solid var(--border);background:var(--surf2);color:var(--muted);transition:all .2s;flex-shrink:0;}
 .btn-theme:hover{border-color:var(--teal);color:var(--teal);}
 
-/* ── ROLE BADGE di topbar ── */
+/* ROLE BADGE */
 .role-badge{display:inline-flex;align-items:center;gap:5px;font-family:'JetBrains Mono',monospace;font-size:10px;font-weight:700;padding:3px 10px;border-radius:20px;border:1px solid;flex-shrink:0;letter-spacing:.5px;text-transform:uppercase;}
 .role-badge.supervisor{background:var(--teal-bg);border-color:var(--teal-bd);color:var(--teal);}
-.role-badge.user{background:var(--ok-bg);border-color:var(--ok-bd);color:var(--ok);}
+.role-badge.teknisi{background:var(--ok-bg);border-color:var(--ok-bd);color:var(--ok);}
 .role-badge.admin{background:var(--admin-bg);border-color:var(--admin-bd);color:var(--admin-color);}
+
+/* Tombol logout */
+.btn-logout{
+  display:flex;align-items:center;gap:5px;
+  font-family:'JetBrains Mono',monospace;font-size:11px;
+  padding:5px 12px;border-radius:5px;cursor:pointer;
+  border:1px solid var(--fault-bd);background:var(--fault-bg);
+  color:var(--fault);transition:all .2s;flex-shrink:0;
+}
+.btn-logout:hover{ border-color:var(--fault);background:rgba(255,61,85,.2); }
 
 /* ── RUNNING BAR ── */
 .running-bar{flex-shrink:0;overflow:hidden;white-space:nowrap;background:#07101e;border-bottom:1px solid var(--border);padding:5px 0;position:relative;height:var(--rbar-h);}
@@ -271,8 +459,6 @@ tr:hover .btn-edit-ts{opacity:1;}
 .plant-card-arr{color:var(--border);font-size:14px;transition:all .2s;}
 .plant-card:hover{border-color:var(--accent-bd);transform:translateY(-3px);box-shadow:0 12px 30px rgba(0,0,0,.5),0 0 0 1px var(--accent-bg);}
 .plant-card:hover .plant-card-arr{color:var(--accent);transform:translateX(3px);}
-.plant-card:nth-child(1){animation-delay:.05s}.plant-card:nth-child(2){animation-delay:.10s}.plant-card:nth-child(3){animation-delay:.15s}
-.plant-card:nth-child(4){animation-delay:.20s}.plant-card:nth-child(5){animation-delay:.25s}.plant-card:nth-child(6){animation-delay:.30s}.plant-card:nth-child(7){animation-delay:.35s}
 
 /* ── DETAIL PAGE ── */
 .main-layout{display:flex;flex:1;overflow:hidden;min-height:0;width:100%;}
@@ -358,10 +544,10 @@ body.light .inu-photo-btn:hover{color:#003850;}
 .inu-card.search-hidden{display:none;}
 .inu-role{font-family:'JetBrains Mono',monospace;font-size:10px;font-weight:600;color:var(--muted);margin-top:4px;font-style:italic;}
 
-/* ── READ-ONLY NOTICE ── */
+/* READ-ONLY NOTICE */
 .readonly-notice{display:flex;align-items:center;gap:8px;background:var(--teal-bg);border:1px solid var(--teal-bd);border-radius:8px;padding:8px 14px;font-family:'JetBrains Mono',monospace;font-size:11px;color:var(--teal);margin-bottom:14px;flex-shrink:0;}
 
-/* ── HISTORY TABLE ── */
+/* HISTORY TABLE */
 .hist-table-wrap{overflow-x:auto;}
 .hist-table{width:100%;border-collapse:collapse;font-size:12px;}
 .hist-table th{text-align:left;padding:9px 12px;font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:1px;text-transform:uppercase;color:var(--muted);border-bottom:1px solid var(--border);background:var(--surf);white-space:nowrap;}
@@ -377,7 +563,7 @@ body.light .inu-photo-btn:hover{color:#003850;}
 .st-maint{background:var(--maint-bg);color:var(--maint);border:1px solid var(--maint-bd);}
 .st-kosong{background:var(--kosong-bg);color:var(--kosong);border:1px solid var(--kosong-bd);}
 
-/* ── SUMMARY ── */
+/* SUMMARY */
 .summary-stats{display:flex;gap:12px;flex-wrap:wrap;margin-bottom:20px;}
 .sum-stat{background:var(--surf);border:1px solid var(--border);border-radius:10px;padding:14px 18px;min-width:120px;}
 .sum-stat-label{font-family:'JetBrains Mono',monospace;font-size:9px;letter-spacing:1.5px;text-transform:uppercase;color:var(--muted);margin-bottom:6px;}
@@ -410,7 +596,7 @@ body.light .inu-photo-btn:hover{color:#003850;}
 .no-results{display:none;flex-direction:column;align-items:center;padding:40px 20px;gap:8px;color:var(--muted);font-family:'JetBrains Mono',monospace;font-size:12px;}
 .no-results.visible{display:flex;}
 
-/* ── MODAL ── */
+/* MODAL */
 .modal-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,.7);backdrop-filter:blur(4px);z-index:500;align-items:center;justify-content:center;}
 .modal-overlay.open{display:flex;}
 .modal{background:var(--surf);border:1px solid var(--border);border-radius:14px;padding:24px;width:100%;max-width:420px;animation:modalIn .2s ease;margin:16px;max-height:92vh;overflow-y:auto;}
@@ -431,50 +617,7 @@ body.light .inu-photo-btn:hover{color:#003850;}
 .btn-save:hover{filter:brightness(1.15);}
 .btn-save:disabled{opacity:.5;pointer-events:none;}
 
-/* ── LOGIN MODAL ── */
-.login-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,.75);backdrop-filter:blur(6px);z-index:600;align-items:center;justify-content:center;}
-.login-overlay.open{display:flex;}
-.login-box{background:var(--surf);border:1px solid var(--border);border-radius:16px;padding:28px 28px 24px;width:100%;max-width:360px;animation:modalIn .2s ease;position:relative;overflow:hidden;margin:16px;}
-.login-box::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;background:linear-gradient(90deg,var(--accent),var(--teal));}
-.login-icon{width:44px;height:44px;border-radius:10px;background:var(--accent-bg);border:1px solid var(--accent-bd);display:flex;align-items:center;justify-content:center;font-size:20px;margin-bottom:16px;}
-.login-title{font-size:16px;font-weight:700;margin-bottom:3px;color:var(--text);}
-.login-sub{font-size:12px;color:var(--muted);margin-bottom:6px;}
-.login-area-badge{display:inline-flex;align-items:center;gap:5px;background:var(--teal-bg);border:1px solid var(--teal-bd);color:var(--teal);font-family:'JetBrains Mono',monospace;font-size:11px;padding:3px 10px;border-radius:20px;margin-bottom:16px;}
-
-/* ── Role selector ── */
-.login-role-field{margin-bottom:16px;}
-.login-role-label{display:block;font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.7px;color:var(--muted);margin-bottom:8px;}
-.login-role-opts{display:flex;gap:8px;}
-.login-role-opt{flex:1;}
-.login-role-opt input[type=radio]{display:none;}
-.login-role-opt label{display:flex;align-items:center;justify-content:center;gap:6px;padding:8px 12px;border-radius:8px;border:1px solid var(--border);background:var(--surf2);color:var(--muted);font-size:12px;font-weight:600;cursor:pointer;transition:all .15s;text-align:center;}
-.login-role-opt input[type=radio]:checked + label{border-color:var(--accent);background:var(--accent-bg);color:var(--accent);}
-.login-role-opt.admin-opt input[type=radio]:checked + label{border-color:var(--admin-bd);background:var(--admin-bg);color:var(--admin-color);}
-.login-role-opt label:hover{border-color:var(--accent);color:var(--accent);}
-
-.login-field{margin-bottom:13px;}
-.login-field label{display:block;font-size:10px;font-weight:600;text-transform:uppercase;letter-spacing:.7px;color:var(--muted);margin-bottom:6px;}
-.login-field input{width:100%;background:var(--surf2);border:1px solid var(--border);color:var(--text);padding:10px 12px;border-radius:8px;font-size:13px;font-family:'Plus Jakarta Sans',sans-serif;transition:border-color .15s;outline:none;}
-.login-field input:focus{border-color:var(--accent);}
-.login-err{font-size:12px;color:var(--fault);background:var(--fault-bg);border:1px solid var(--fault-bd);border-radius:6px;padding:8px 12px;margin-bottom:12px;display:none;}
-.login-actions{display:flex;gap:8px;margin-top:4px;}
-.btn-login{flex:1;padding:10px;border-radius:8px;font-size:13px;font-weight:600;cursor:pointer;background:var(--accent);border:1px solid var(--accent);color:#fff;transition:all .15s;display:flex;align-items:center;justify-content:center;gap:6px;}
-.btn-login:hover{filter:brightness(1.15);}
-.btn-login:disabled{opacity:.5;pointer-events:none;}
-.btn-login-cancel{padding:10px 16px;border-radius:8px;font-size:13px;cursor:pointer;background:transparent;border:1px solid var(--border);color:var(--muted);transition:all .15s;}
-.btn-login-cancel:hover{border-color:var(--text);color:var(--text);}
-.btn-spin{width:13px;height:13px;border:2px solid rgba(255,255,255,.3);border-top-color:#fff;border-radius:50%;animation:spin .6s linear infinite;display:none;}
-.btn-login.loading .btn-spin{display:block;}
-.btn-login.loading .btn-login-label{display:none;}
-
-.state-box{display:flex;flex-direction:column;align-items:center;justify-content:center;padding:60px 20px;gap:12px;color:var(--muted);}
-.state-box .sp{width:28px;height:28px;border:2px solid var(--border);border-top-color:var(--accent);border-radius:50%;animation:spin .7s linear infinite;}
-@keyframes spin{to{transform:rotate(360deg)}}
-.state-box h3{font-size:14px;color:var(--text);}
-.state-box p{font-size:12px;text-align:center;max-width:340px;}
-.btn-retry{background:var(--accent-bg);border:1px solid var(--accent-bd);color:var(--accent);padding:6px 16px;border-radius:6px;font-size:12px;cursor:pointer;font-family:'JetBrains Mono',monospace;}
-
-/* ── MANUAL BOOK ── */
+/* MANUAL BOOK */
 .mb-filter-bar{display:flex;align-items:center;gap:10px;padding:10px 16px;background:var(--surf2);border-bottom:1px solid var(--border);flex-shrink:0;flex-wrap:wrap;}
 .mb-table-wrap{overflow-x:auto;}
 .mb-table{width:100%;border-collapse:collapse;font-size:12px;}
@@ -499,116 +642,155 @@ body.light .btn-open-pdf:hover{color:#003850;}
 ::-webkit-scrollbar-track{background:transparent;}
 ::-webkit-scrollbar-thumb{background:var(--border);border-radius:4px;}
 
-@media (max-width: 768px) {
-  html, body { overflow:hidden !important; height:100% !important; position:fixed !important; top:0 !important; left:0 !important; }
-  .topbar { height:44px !important; padding:0 10px !important; gap:6px !important; }
-  .topbar-title { font-size:11px !important; }
-  .topbar-sub, .topbar-divider { display:none !important; }
-  .btn-back { font-size:10px !important; padding:4px 8px !important; }
-  .btn-theme { font-size:10px !important; padding:4px 8px !important; }
-  .btn-sm { font-size:10px !important; padding:4px 8px !important; }
-  .topbar-clock { display:none !important; }
-  .role-badge { font-size:9px !important; padding:2px 7px !important; }
-  .running-bar { height:22px !important; }
-  .running-inner { font-size:9px !important; }
-  .breadcrumb { padding:0 10px !important; font-size:10px !important; height:26px !important; overflow-x:auto !important; scrollbar-width:none !important; flex-wrap:nowrap !important; white-space:nowrap !important; }
-  .breadcrumb::-webkit-scrollbar { display:none !important; }
-  .plant-wrap { height:100% !important; overflow-y:auto !important; -webkit-overflow-scrolling:touch !important; }
-  .plant-hero { padding:16px 12px 14px !important; }
-  .plant-hero-title { font-size:18px !important; }
-  .plant-hero-sub { font-size:10px !important; margin-bottom:10px !important; }
-  .plant-stats-row { gap:6px !important; }
-  .plant-stat-box { min-width:64px !important; padding:6px 9px !important; }
-  .plant-stat-val { font-size:14px !important; }
-  .plant-stat-label { font-size:8px !important; }
-  .plant-section { padding:12px 10px !important; }
-  .plant-grid { grid-template-columns:repeat(auto-fill,minmax(140px,1fr)) !important; gap:8px !important; }
-  .plant-card-top { padding:12px 10px 9px !important; }
-  .plant-card-name { font-size:16px !important; }
-  .plant-card-desc { font-size:10px !important; }
-  .plant-card-bottom { padding:7px 10px !important; }
-  #page-detail { flex-direction:column !important; overflow:hidden !important; }
-  .main-layout { flex-direction:column !important; overflow:hidden !important; flex:1 !important; min-height:0 !important; }
-  .sidebar { width:100% !important; min-width:unset !important; height:auto !important; flex-shrink:0 !important; border-right:none !important; border-bottom:1px solid var(--border) !important; background:#06090f !important; overflow:hidden !important; }
-  .sb-section { display:flex !important; flex-direction:row !important; flex-wrap:nowrap !important; align-items:center !important; overflow-x:auto !important; overflow-y:hidden !important; scrollbar-width:none !important; -webkit-overflow-scrolling:touch !important; padding:7px 10px !important; gap:0 !important; width:100% !important; box-sizing:border-box !important; }
-  .sb-section::-webkit-scrollbar { display:none !important; }
-  .sb-head { display:none !important; }
-  #sb-items { display:contents !important; }
-  .sb-item { display:inline-flex !important; align-items:center !important; justify-content:center !important; flex-shrink:0 !important; flex-grow:0 !important; white-space:nowrap !important; padding:5px 12px !important; margin-right:6px !important; border-radius:20px !important; font-size:11px !important; border:1px solid var(--border) !important; border-left:1px solid var(--border) !important; color:#a8c8ec !important; background:rgba(255,255,255,.03) !important; gap:4px !important; touch-action:manipulation !important; -webkit-tap-highlight-color:transparent !important; user-select:none !important; -webkit-user-select:none !important; transition:background .15s, border-color .15s, color .15s, box-shadow .15s !important; cursor:pointer !important; min-height:32px !important; font-family:var(--font-mixing) !important; font-weight:600 !important; }
-  .sb-item:last-child { margin-right:2px !important; }
-  .sb-item:active { opacity:.75 !important; }
-  .sb-item.active { background:var(--accent) !important; border-color:var(--accent) !important; color:#fff !important; box-shadow:0 0 14px rgba(77,159,255,.4) !important; }
-  .sb-item.has-fault { color:#ff8090 !important; border-color:var(--fault-bd) !important; background:var(--fault-bg) !important; }
-  .sb-item.has-fault.active { background:var(--fault) !important; border-color:var(--fault) !important; color:#fff !important; box-shadow:0 0 14px rgba(255,61,85,.4) !important; }
-  .sb-fault { display:none !important; }
-  .sb-right { gap:3px !important; }
-  .sb-kosong-badge { font-size:8px !important; padding:1px 4px !important; }
-  .content-area { flex:1 !important; min-height:0 !important; overflow:hidden !important; display:flex !important; flex-direction:column !important; }
-  .content-tabs { padding:0 !important; flex-shrink:0 !important; background:#07101a !important; overflow-x:auto !important; display:flex !important; -webkit-overflow-scrolling:touch !important; border-bottom:1px solid var(--border) !important; scrollbar-width:none !important; }
-  .content-tabs::-webkit-scrollbar { display:none !important; }
-  .ctab { flex:1 !important; padding:10px 6px !important; font-size:10px !important; flex-shrink:0 !important; text-align:center !important; min-width:64px !important; }
-  .tab-content { flex:1 !important; overflow-y:auto !important; -webkit-overflow-scrolling:touch !important; padding:12px 10px !important; display:none !important; flex-direction:column !important; min-height:0 !important; }
-  .tab-content.active { display:flex !important; }
-  #tab-histori.active { padding:0 !important; }
-  #tab-manual.active { padding:0 !important; }
-  .histori-scroll-area { padding:10px !important; }
-  .manual-scroll-area { padding:10px !important; }
-  .hist-filter-bar { padding:8px 10px !important; gap:6px !important; flex-wrap:wrap !important; }
-  .mb-filter-bar { padding:8px 10px !important; gap:6px !important; flex-wrap:wrap !important; }
-  .hist-filter-label { font-size:9px !important; }
-  .hist-filter-select { font-size:10px !important; padding:5px 7px !important; }
-  .hist-period-badge { font-size:9px !important; padding:4px 9px !important; }
-  .drive-header { margin-bottom:10px !important; }
-  .drive-title { font-size:15px !important; }
-  .drive-meta { font-size:10px !important; margin-bottom:8px !important; }
-  .pills { gap:5px !important; flex-wrap:wrap !important; margin-bottom:10px !important; }
-  .pill { font-size:10px !important; padding:3px 8px !important; }
-  .cards-grid { grid-template-columns:1fr !important; gap:8px !important; }
-  .inu-card { padding:13px 14px !important; }
-  .inu-tag { font-size:11px !important; }
-  .inu-name { font-size:14px !important; }
-  .inu-spec { font-size:10px !important; margin-bottom:6px !important; }
-  .inu-edit-hint { opacity:.5 !important; font-size:9px !important; }
-  .drive-group-label { font-size:9px !important; padding:3px 10px !important; }
-  .drive-group-count { font-size:9px !important; }
-  .drive-group { margin-bottom:18px !important; }
-  .hist-table-wrap { overflow-x:auto !important; -webkit-overflow-scrolling:touch !important; }
-  .hist-table { min-width:480px !important; font-size:11px !important; }
-  .mb-table-wrap { overflow-x:auto !important; -webkit-overflow-scrolling:touch !important; }
-  .mb-table { min-width:520px !important; font-size:11px !important; }
-  .summary-stats { gap:6px !important; }
-  .sum-stat { min-width:72px !important; padding:10px 10px !important; }
-  .sum-stat-val { font-size:17px !important; }
-  .sum-table { min-width:360px !important; }
-  .tab-action-bar { margin-bottom:10px !important; }
-  .search-wrap { padding:7px 10px !important; gap:6px !important; }
-  .search-bar { font-size:11px !important; padding:6px 10px !important; }
-  .search-count { font-size:9px !important; }
-  .modal-overlay { align-items:flex-end !important; padding:0 !important; }
-  .modal { border-radius:18px 18px 0 0 !important; max-width:100% !important; margin:0 !important; padding:20px 16px 32px !important; max-height:92vh !important; overflow-y:auto !important; width:100% !important; }
-  .login-overlay { align-items:flex-end !important; padding:0 !important; }
-  .login-box { border-radius:18px 18px 0 0 !important; max-width:100% !important; margin:0 !important; padding:20px 16px 32px !important; width:100% !important; max-height:90vh !important; overflow-y:auto !important; }
-  .ts-modal-overlay { align-items:flex-end !important; padding:0 !important; }
-  .ts-modal { border-radius:18px 18px 0 0 !important; max-width:100% !important; margin:0 !important; padding:20px 16px 32px !important; }
-  .btn-edit-ts { opacity:.6 !important; }
-  .inu-sn-row { flex-wrap:wrap !important; }
-  .inu-stiker-row { flex-wrap:wrap !important; }
-  .btn-open-pdf { padding:4px 10px !important; font-size:9px !important; }
-  .login-role-opts { gap:6px !important; }
-  .login-role-opt label { padding:7px 8px !important; font-size:11px !important; }
-  .readonly-notice { font-size:10px !important; padding:6px 10px !important; }
-}
+.state-box{display:flex;flex-direction:column;align-items:center;justify-content:center;padding:60px 20px;gap:12px;color:var(--muted);}
+.state-box .sp{width:28px;height:28px;border:2px solid var(--border);border-top-color:var(--accent);border-radius:50%;animation:spin .7s linear infinite;}
+@keyframes spin{to{transform:rotate(360deg)}}
+.state-box h3{font-size:14px;color:var(--text);}
+.state-box p{font-size:12px;text-align:center;max-width:340px;}
+.btn-retry{background:var(--accent-bg);border:1px solid var(--accent-bd);color:var(--accent);padding:6px 16px;border-radius:6px;font-size:12px;cursor:pointer;font-family:'JetBrains Mono',monospace;}
 
-@media (max-width: 380px) {
-  .plant-grid { grid-template-columns:1fr 1fr !important; }
-  .plant-card-name { font-size:14px !important; }
-  .topbar-title { font-size:10px !important; max-width:80px !important; overflow:hidden !important; text-overflow:ellipsis !important; white-space:nowrap !important; }
-  .ctab { font-size:9px !important; min-width:56px !important; padding:9px 4px !important; }
-  .sb-item { padding:4px 10px !important; font-size:10px !important; min-height:28px !important; }
+@media (max-width: 768px) {
+  html,body{overflow:hidden !important;height:100% !important;position:fixed !important;top:0 !important;left:0 !important;}
+  .topbar{height:44px !important;padding:0 10px !important;gap:6px !important;}
+  .topbar-title{font-size:11px !important;}
+  .topbar-sub,.topbar-divider{display:none !important;}
+  .btn-back{font-size:10px !important;padding:4px 8px !important;}
+  .btn-theme{font-size:10px !important;padding:4px 8px !important;}
+  .btn-sm{font-size:10px !important;padding:4px 8px !important;}
+  .btn-logout{font-size:10px !important;padding:4px 8px !important;}
+  .topbar-clock{display:none !important;}
+  .role-badge{font-size:9px !important;padding:2px 7px !important;}
+  .running-bar{height:22px !important;}
+  .running-inner{font-size:9px !important;}
+  .breadcrumb{padding:0 10px !important;font-size:10px !important;height:26px !important;overflow-x:auto !important;scrollbar-width:none !important;flex-wrap:nowrap !important;white-space:nowrap !important;}
+  .plant-wrap{height:100% !important;overflow-y:auto !important;-webkit-overflow-scrolling:touch !important;}
+  .plant-hero{padding:16px 12px 14px !important;}
+  .plant-hero-title{font-size:18px !important;}
+  .plant-hero-sub{font-size:10px !important;margin-bottom:10px !important;}
+  .plant-stats-row{gap:6px !important;}
+  .plant-stat-box{min-width:64px !important;padding:6px 9px !important;}
+  .plant-stat-val{font-size:14px !important;}
+  .plant-stat-label{font-size:8px !important;}
+  .plant-section{padding:12px 10px !important;}
+  .plant-grid{grid-template-columns:repeat(auto-fill,minmax(140px,1fr)) !important;gap:8px !important;}
+  .plant-card-top{padding:12px 10px 9px !important;}
+  .plant-card-name{font-size:16px !important;}
+  .plant-card-desc{font-size:10px !important;}
+  .plant-card-bottom{padding:7px 10px !important;}
+  .main-layout{flex-direction:column !important;overflow:hidden !important;flex:1 !important;min-height:0 !important;}
+  .sidebar{width:100% !important;min-width:unset !important;height:auto !important;flex-shrink:0 !important;border-right:none !important;border-bottom:1px solid var(--border) !important;background:#06090f !important;overflow:hidden !important;}
+  .sb-section{display:flex !important;flex-direction:row !important;flex-wrap:nowrap !important;align-items:center !important;overflow-x:auto !important;overflow-y:hidden !important;scrollbar-width:none !important;-webkit-overflow-scrolling:touch !important;padding:7px 10px !important;gap:0 !important;width:100% !important;box-sizing:border-box !important;}
+  .sb-section::-webkit-scrollbar{display:none !important;}
+  .sb-head{display:none !important;}
+  .sb-item{display:inline-flex !important;align-items:center !important;justify-content:center !important;flex-shrink:0 !important;flex-grow:0 !important;white-space:nowrap !important;padding:5px 12px !important;margin-right:6px !important;border-radius:20px !important;font-size:11px !important;border:1px solid var(--border) !important;border-left:1px solid var(--border) !important;color:#a8c8ec !important;background:rgba(255,255,255,.03) !important;gap:4px !important;touch-action:manipulation !important;-webkit-tap-highlight-color:transparent !important;user-select:none !important;-webkit-user-select:none !important;transition:background .15s,border-color .15s,color .15s,box-shadow .15s !important;cursor:pointer !important;min-height:32px !important;font-family:var(--font-mixing) !important;font-weight:600 !important;}
+  .sb-item.active{background:var(--accent) !important;border-color:var(--accent) !important;color:#fff !important;box-shadow:0 0 14px rgba(77,159,255,.4) !important;}
+  .sb-item.has-fault{color:#ff8090 !important;border-color:var(--fault-bd) !important;background:var(--fault-bg) !important;}
+  .sb-item.has-fault.active{background:var(--fault) !important;border-color:var(--fault) !important;color:#fff !important;}
+  .sb-fault{display:none !important;}
+  .content-area{flex:1 !important;min-height:0 !important;overflow:hidden !important;display:flex !important;flex-direction:column !important;}
+  .content-tabs{padding:0 !important;flex-shrink:0 !important;background:#07101a !important;overflow-x:auto !important;display:flex !important;-webkit-overflow-scrolling:touch !important;border-bottom:1px solid var(--border) !important;scrollbar-width:none !important;}
+  .content-tabs::-webkit-scrollbar{display:none !important;}
+  .ctab{flex:1 !important;padding:10px 6px !important;font-size:10px !important;flex-shrink:0 !important;text-align:center !important;min-width:64px !important;}
+  .tab-content{flex:1 !important;overflow-y:auto !important;-webkit-overflow-scrolling:touch !important;padding:12px 10px !important;display:none !important;flex-direction:column !important;min-height:0 !important;}
+  .tab-content.active{display:flex !important;}
+  #tab-histori.active{padding:0 !important;}
+  #tab-manual.active{padding:0 !important;}
+  .histori-scroll-area{padding:10px !important;}
+  .manual-scroll-area{padding:10px !important;}
+  .cards-grid{grid-template-columns:1fr !important;gap:8px !important;}
+  .inu-card{padding:13px 14px !important;}
+  .search-wrap{padding:7px 10px !important;gap:6px !important;}
+  .search-bar{font-size:11px !important;padding:6px 10px !important;}
+  .modal-overlay{align-items:flex-end !important;padding:0 !important;}
+  .modal{border-radius:18px 18px 0 0 !important;max-width:100% !important;margin:0 !important;padding:20px 16px 32px !important;max-height:92vh !important;overflow-y:auto !important;width:100% !important;}
+  .ts-modal-overlay{align-items:flex-end !important;padding:0 !important;}
+  .ts-modal{border-radius:18px 18px 0 0 !important;max-width:100% !important;margin:0 !important;padding:20px 16px 32px !important;}
+  .login-gate-box{border-radius:18px 18px 0 0 !important;max-width:100% !important;margin:0 !important;padding:24px 16px 36px !important;max-height:92vh !important;overflow-y:auto !important;}
+  .login-gate-overlay{align-items:flex-end !important;}
 }
 </style>
 </head>
 <body>
+
+<!-- ══════════════════════════════════════════
+     LOGIN GATE — muncul sebelum masuk app
+     ══════════════════════════════════════════ -->
+<div class="login-gate-overlay open" id="login-gate-overlay">
+  <div class="login-gate-box">
+    <div class="login-gate-grid"></div>
+
+    <div class="gate-logo">
+      <div class="gate-logo-icon">🔌</div>
+      <div class="gate-logo-text">
+        <div class="gate-logo-title">Garda Hitam</div>
+        <div class="gate-logo-sub">Drive Monitoring System</div>
+      </div>
+    </div>
+
+    <div class="gate-title">Akses Diperlukan</div>
+    <div class="gate-sub">Masukkan kredensial akun Anda untuk memantau kondisi drive secara real-time.</div>
+    <div class="gate-divider"></div>
+
+    <!-- Role Selector -->
+    <div class="gate-role-field">
+      <span class="gate-role-label">Login Sebagai</span>
+      <div class="gate-role-opts">
+        <div class="gate-role-opt">
+          <input type="radio" name="gate-role" id="gate-role-teknisi" value="user" checked>
+          <label for="gate-role-teknisi">🔧 Teknisi</label>
+        </div>
+        <div class="gate-role-opt admin-opt">
+          <input type="radio" name="gate-role" id="gate-role-admin" value="admin">
+          <label for="gate-role-admin">⚙️ Admin</label>
+        </div>
+      </div>
+    </div>
+
+    <div class="gate-field">
+      <label>Username</label>
+      <div class="gate-input-wrap">
+        <span class="gate-input-icon">👤</span>
+        <input type="text" id="gate-username" placeholder="Contoh: mca, samcg..." autocomplete="off">
+      </div>
+    </div>
+
+    <div class="gate-field">
+      <label>Password</label>
+      <div class="gate-input-wrap">
+        <span class="gate-input-icon">🔑</span>
+        <input type="password" id="gate-password" placeholder="Masukkan password">
+      </div>
+    </div>
+
+    <div class="gate-field" id="gate-plant-field">
+      <label>Plant / Mixing</label>
+      <div class="gate-input-wrap">
+        <span class="gate-input-icon">🏭</span>
+        <select id="gate-plant" style="width:100%;background:var(--surf2);border:1px solid var(--border);color:var(--text);padding:11px 12px 11px 38px;border-radius:9px;font-size:13px;font-family:'Plus Jakarta Sans',sans-serif;outline:none;cursor:pointer;transition:border-color .15s,box-shadow .15s;">
+          <option value="">-- Pilih Plant --</option>
+          <option value="MCA">MCA — Mixing Center A</option>
+          <option value="MCC">MCC — Mixing Center C</option>
+          <option value="MCD">MCD — Mixing Center D</option>
+          <option value="MCG">MCG — Mixing Center G</option>
+          <option value="MCH">MCH — Mixing Center H</option>
+          <option value="MCI">MCI — Mixing Center I</option>
+          <option value="PLANT E">PLANT E — Plant Extension E</option>
+        </select>
+      </div>
+    </div>
+
+    <div class="gate-err" id="gate-err"></div>
+
+    <button class="gate-btn" id="gate-btn" onclick="submitGateLogin()">
+      <div class="btn-spin"></div>
+      <span class="btn-label">🔐 Masuk ke Drive Monitoring</span>
+    </button>
+
+    <div class="gate-security-note">
+      🔒 <span>Session tersimpan selama browser terbuka. Logout manual diperlukan untuk keluar.</span>
+    </div>
+  </div>
+</div>
 
 <!-- ── TOPBAR ── -->
 <div class="topbar">
@@ -619,9 +801,9 @@ body.light .btn-open-pdf:hover{color:#003850;}
   <span class="topbar-sep">&nbsp;/&nbsp;</span>
   <span class="topbar-sub" id="topbar-sub">Pilih Plant</span>
   <div class="topbar-r">
-    <div class="role-badge supervisor" id="role-badge">👁️ Supervisor</div>
-    <div class="btn-sm" id="btn-login-topbar" onclick="openLoginTopbar()" style="border-color:var(--accent);color:var(--accent);">🔐 Login</div>
-    <div class="btn-sm" id="btn-logout-topbar" onclick="doLogout()" style="display:none;border-color:var(--fault);color:var(--fault);">↩ Logout</div>
+    <div class="role-badge teknisi" id="role-badge">🔧 Teknisi</div>
+    <span class="role-badge" id="user-badge" style="background:var(--surf2);border-color:var(--border);color:var(--muted);font-size:10px;"></span>
+    <button class="btn-logout" id="btn-logout" onclick="doLogout()">↩ Logout</button>
     <div class="btn-theme" id="btn-theme" onclick="toggleTheme()">🌙 Dark</div>
     <div class="btn-sm" id="btn-refresh" onclick="doRefresh()">⟳ Refresh</div>
     <div class="topbar-clock" id="clock"></div>
@@ -774,42 +956,6 @@ body.light .btn-open-pdf:hover{color:#003850;}
   </div>
 </div>
 
-<!-- ── LOGIN MODAL ── -->
-<div class="login-overlay" id="login-overlay">
-  <div class="login-box">
-    <div class="login-icon">🔐</div>
-    <div class="login-title">Login Diperlukan</div>
-    <div class="login-sub" id="login-sub-text">Masukkan kredensial untuk melanjutkan.</div>
-    <div class="login-area-badge"><span>📍</span><span id="login-area-label">—</span></div>
-
-    <!-- Role Selector -->
-    <div class="login-role-field">
-      <span class="login-role-label">Login Sebagai</span>
-      <div class="login-role-opts">
-        <div class="login-role-opt">
-          <input type="radio" name="login-role" id="role-user" value="user" checked>
-          <label for="role-user">🔧 Teknisi</label>
-        </div>
-        <div class="login-role-opt admin-opt">
-          <input type="radio" name="login-role" id="role-admin" value="admin">
-          <label for="role-admin">⚙️ Admin</label>
-        </div>
-      </div>
-    </div>
-
-    <div class="login-field"><label>Username</label><input type="text" id="login-username" placeholder="Masukkan username" autocomplete="off"></div>
-    <div class="login-field"><label>Password</label><input type="password" id="login-password" placeholder="Masukkan password"></div>
-    <div class="login-err" id="login-err"></div>
-    <div class="login-actions">
-      <button class="btn-login-cancel" onclick="closeLoginModal()">Batal</button>
-      <button class="btn-login" id="btn-login-submit" onclick="submitLogin()">
-        <div class="btn-spin"></div>
-        <span class="btn-login-label">Masuk &amp; Edit</span>
-      </button>
-    </div>
-  </div>
-</div>
-
 <!-- ── EDIT DRIVE MODAL ── -->
 <div class="modal-overlay" id="modal">
   <div class="modal">
@@ -879,8 +1025,9 @@ body.light .btn-open-pdf:hover{color:#003850;}
 const API       = 'https://script.google.com/macros/s/AKfycbwzgZWGlYmCmIQAQC8cQIKTN-9D2IyK2rthKGCP9wyo69pMKIug9-trvX8cL_jjOy--7A/exec';
 const LOGIN_API = 'https://script.google.com/macros/s/AKfycbzlhK15JovW0NpWxk5_aVE_IOmwGlEPgjssYzJjPGfQSZUKfMhQu_LqcU5hItI5HR91PQ/exec';
 
-const NAMA_BULAN = ['','Januari','Februari','Maret','April','Mei','Juni','Juli','Agustus','September','Oktober','November','Desember'];
-const TAHUN_AWAL = 2026;
+const SESSION_KEY = 'gh_drive_session'; // key sessionStorage
+const NAMA_BULAN  = ['','Januari','Februari','Maret','April','Mei','Juni','Juli','Agustus','September','Oktober','November','Desember'];
+const TAHUN_AWAL  = 2026;
 
 // ══════════════════════════════════════════════════════════
 //  STATE
@@ -892,45 +1039,175 @@ const S = {
   tab         : 'drive',
   cache       : {},
   editDrive   : null,
-  pendingDriveData  : null,
-  pendingPhotoUrl   : null,
-  pendingAction     : 'edit',
+  pendingTsData     : null,
   searchQuery       : '',
   histFilter        : { bulan:'', tahun:'' },
-  pendingTsData     : null,
-  role              : 'supervisor',
+  // Session dari gate login
+  role        : 'supervisor',  // 'teknisi' | 'admin' | 'supervisor'
+  username    : '',
+  loggedInPlant: '',           // plant yang login (dari gate)
 };
+
+// ══════════════════════════════════════════════════════════
+//  SESSION MANAGEMENT
+// ══════════════════════════════════════════════════════════
+function saveSession() {
+  const data = { role: S.role, username: S.username, loggedInPlant: S.loggedInPlant };
+  sessionStorage.setItem(SESSION_KEY, JSON.stringify(data));
+}
+
+function loadSession() {
+  try {
+    const raw = sessionStorage.getItem(SESSION_KEY);
+    if (!raw) return false;
+    const data = JSON.parse(raw);
+    if (data.role && data.username) {
+      S.role = data.role;
+      S.username = data.username;
+      S.loggedInPlant = data.loggedInPlant || '';
+      return true;
+    }
+  } catch(e) {}
+  return false;
+}
+
+function clearSession() {
+  sessionStorage.removeItem(SESSION_KEY);
+  S.role = 'supervisor'; S.username = ''; S.loggedInPlant = '';
+}
 
 // ══════════════════════════════════════════════════════════
 //  ROLE HELPER
 // ══════════════════════════════════════════════════════════
-function isReadOnly() { return S.role === 'supervisor'; }
-function canEdit()    { return S.role === 'user' || S.role === 'admin'; }
+// Teknisi: bisa edit drive
+// Admin: bisa edit drive + edit timestamp
+// Supervisor: read-only (tidak bisa login via gate — hanya untuk legacy, tidak dipakai)
+function isReadOnly()   { return S.role === 'supervisor'; }
+function canEdit()      { return S.role === 'teknisi' || S.role === 'admin'; }
+function isAdmin()      { return S.role === 'admin'; }
 
 function updateRoleBadge() {
   const badge = id('role-badge');
+  const userBadge = id('user-badge');
   if (!badge) return;
-  badge.className = 'role-badge ' + S.role;
+
   const labels = {
-    supervisor : '👁️ Supervisor',
-    user       : '🔧 Teknisi',
+    teknisi    : '🔧 Teknisi',
     admin      : '⚙️ Admin',
+    supervisor : '👁️ Supervisor',
   };
+  const cls = { teknisi:'teknisi', admin:'admin', supervisor:'supervisor' };
+
+  badge.className = 'role-badge ' + (cls[S.role] || 'supervisor');
   badge.textContent = labels[S.role] || '👁️ Supervisor';
-  // updateLoginButtons dipanggil di sini — satu tempat, tidak duplikat
-  updateLoginButtons();
+
+  if (userBadge) {
+    userBadge.textContent = S.username ? '👤 ' + S.username.toUpperCase() : '';
+    userBadge.style.display = S.username ? 'inline-flex' : 'none';
+  }
 }
 
 // ══════════════════════════════════════════════════════════
-//  LOGIN / LOGOUT BUTTON STATE
+//  LOGIN GATE
 // ══════════════════════════════════════════════════════════
-function updateLoginButtons() {
-  const isLoggedIn = canEdit();
-  const btnLogin  = id('btn-login-topbar');
-  const btnLogout = id('btn-logout-topbar');
-  if (btnLogin)  btnLogin.style.display  = isLoggedIn ? 'none' : 'flex';
-  if (btnLogout) btnLogout.style.display = isLoggedIn ? 'flex' : 'none';
+async function submitGateLogin() {
+  const username = id('gate-username').value.trim();
+  const password = id('gate-password').value.trim();
+  const plant    = id('gate-plant').value.trim();
+  const roleRadio = document.querySelector('input[name="gate-role"]:checked');
+  const roleReq  = roleRadio ? roleRadio.value : 'user';
+
+  const errEl = id('gate-err');
+  const btn   = id('gate-btn');
+
+  if (!username || !password) {
+    showGateErr('⚠️ Username dan password wajib diisi.');
+    return;
+  }
+  if (!plant) {
+    showGateErr('⚠️ Pilih plant terlebih dahulu.');
+    return;
+  }
+
+  btn.classList.add('loading'); btn.disabled = true;
+  errEl.classList.remove('visible');
+
+  try {
+    const res = await fetch(LOGIN_API + '?' + new URLSearchParams({
+      username, password, mixing: plant, role: roleReq,
+    }));
+    const result = await res.json();
+
+    if (result.success) {
+      // Tentukan role internal:
+      // DB "teknisi" → login sebagai user → S.role = 'teknisi'
+      // DB "supervisor & admin" + pilih teknisi → S.role = 'teknisi'
+      // DB "supervisor & admin" + pilih admin   → S.role = 'admin'
+      S.role = result.role === 'admin' ? 'admin' : 'teknisi';
+      S.username = username;
+      S.loggedInPlant = plant;
+      saveSession();
+      closeGate();
+      updateRoleBadge();
+      renderPlantPage();
+    } else {
+      showGateErr('❌ ' + (result.message || 'Username, password, atau plant salah.'));
+    }
+  } catch(err) {
+    showGateErr('⚠️ Tidak dapat terhubung ke server login.');
+  } finally {
+    btn.classList.remove('loading'); btn.disabled = false;
+  }
 }
+
+function showGateErr(msg) {
+  const errEl = id('gate-err');
+  errEl.textContent = msg;
+  errEl.classList.add('visible');
+}
+
+function closeGate() {
+  id('login-gate-overlay').classList.remove('open');
+}
+
+function doLogout() {
+  clearSession();
+  // Reset state
+  S.page = 'plant'; S.plant = null; S.mixing = 1; S.tab = 'drive';
+  S.cache = {};
+  // Tampilkan gate kembali
+  id('gate-username').value = '';
+  id('gate-password').value = '';
+  id('gate-plant').value = '';
+  id('gate-err').classList.remove('visible');
+  id('gate-btn').classList.remove('loading');
+  id('gate-btn').disabled = false;
+  id('login-gate-overlay').classList.add('open');
+  updateRoleBadge();
+  // Kembali ke plant page & reset
+  document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+  id('page-plant').classList.add('active');
+  id('plant-content').innerHTML = '';
+  id('topbar-sub').textContent = 'Pilih Plant';
+  id('bcs2').style.display = id('bc2').style.display = 'none';
+}
+
+// Enter key di gate
+document.addEventListener('DOMContentLoaded', () => {
+  ['gate-username','gate-password'].forEach(fid => {
+    const el = id(fid);
+    if (el) el.addEventListener('keydown', e => { if (e.key === 'Enter') submitGateLogin(); });
+  });
+  const gatePlant = id('gate-plant');
+  if (gatePlant) gatePlant.addEventListener('keydown', e => { if (e.key === 'Enter') submitGateLogin(); });
+
+  // Cek session — jika ada, skip gate
+  if (loadSession()) {
+    closeGate();
+    updateRoleBadge();
+    navTo('plant');
+  }
+});
 
 // ══════════════════════════════════════════════════════════
 //  FILTER DROPDOWN
@@ -1054,8 +1331,9 @@ function renderHistoriTableWithFilter() {
 
 function histRow(r) {
   const origIdx = r._origIdx !== undefined ? r._origIdx : -1;
-  const editTsBtn = canEdit()
-    ? `<button class="btn-edit-ts" onclick="event.stopPropagation();requestEditTimestamp(${origIdx},'${esc(r.drive_id)}','${esc(r.timestamp)}')" title="Edit waktu">✏️</button>`
+  // Hanya admin yang bisa edit timestamp
+  const editTsBtn = isAdmin()
+    ? `<button class="btn-edit-ts" onclick="event.stopPropagation();openTsModal(${origIdx},'${esc(r.drive_id)}','${esc(r.timestamp)}')" title="Edit waktu">✏️</button>`
     : '';
   return `<tr>
     <td><div class="hist-ts-wrap"><span class="hist-ts">${esc(r.timestamp)}</span>${editTsBtn}</div></td>
@@ -1068,22 +1346,15 @@ function histRow(r) {
 }
 
 // ══════════════════════════════════════════════════════════
-//  EDIT TIMESTAMP
+//  EDIT TIMESTAMP (Admin only)
 // ══════════════════════════════════════════════════════════
-function requestEditTimestamp(rowIdx, driveId, currentTs) {
-  if (isReadOnly()) return;
-  S.pendingAction = 'editTimestamp';
+function openTsModal(rowIdx, driveId, currentTs) {
+  if (!isAdmin()) return;
   S.pendingTsData = { rowIdx, driveId, currentTs };
-  S.pendingDriveData = null; S.pendingPhotoUrl = null;
-  openLoginModal('Untuk mengedit waktu histori, masukkan kredensial akun mixing ini.');
-}
-
-function openTsModal() {
-  const d = S.pendingTsData; if (!d) return;
   const rows = S.cache[S.plant + '_histori'] || [];
-  const row  = rows[d.rowIdx] || {};
-  id('ts-modal-row-info').innerHTML = `<b>Drive ID:</b> ${esc(d.driveId)}<br><b>Status:</b> ${esc(row.status||'—')}<br><b>Waktu saat ini:</b> ${esc(d.currentTs)}`;
-  id('ts-input-datetime').value = d.currentTs || '';
+  const row  = rows[rowIdx] || {};
+  id('ts-modal-row-info').innerHTML = `<b>Drive ID:</b> ${esc(driveId)}<br><b>Status:</b> ${esc(row.status||'—')}<br><b>Waktu saat ini:</b> ${esc(currentTs)}`;
+  id('ts-input-datetime').value = currentTs || '';
   id('ts-input-alasan').value = '';
   id('btn-save-ts').disabled = false; id('btn-save-ts').textContent = 'Simpan Koreksi';
   id('ts-modal-overlay').classList.add('open');
@@ -1099,7 +1370,7 @@ async function saveTsEdit() {
   if (!d) return;
   btn.disabled = true; btn.textContent = 'Menyimpan...';
   try {
-    await apiGet({ action:'updateHistoriTimestamp', plant:S.plant, row_index:d.rowIdx, drive_id:d.driveId, old_timestamp:d.currentTs, new_timestamp:newTs, alasan:alasan||'—', updatedBy:'web-user' });
+    await apiGet({ action:'updateHistoriTimestamp', plant:S.plant, row_index:d.rowIdx, drive_id:d.driveId, old_timestamp:d.currentTs, new_timestamp:newTs, alasan:alasan||'—', updatedBy:S.username });
     const rows = S.cache[S.plant + '_histori'] || [];
     if (rows[d.rowIdx]) rows[d.rowIdx].timestamp = newTs;
     closeTsModal(); renderHistoriTableWithFilter();
@@ -1223,117 +1494,6 @@ function applyDriveSearch(q) {
 }
 
 function showSearchBar(show) { id('search-wrap').style.display = show ? 'flex' : 'none'; if (!show) clearSearch(); }
-
-// ══════════════════════════════════════════════════════════
-//  LOGIN MODAL
-// ══════════════════════════════════════════════════════════
-function openLoginModal(subText) {
-  id('login-sub-text').textContent = subText || 'Masukkan kredensial untuk melanjutkan.';
-  id('login-area-label').textContent = S.plant ? _getCurGroupLabel() : 'Semua Plant';
-  id('login-username').value = '';
-  id('login-password').value = '';
-  id('login-err').style.display = 'none';
-  const btn = id('btn-login-submit');
-  btn.classList.remove('loading'); btn.disabled = false;
-  id('login-overlay').classList.add('open');
-  setTimeout(() => id('login-username').focus(), 100);
-}
-
-function openLoginTopbar() {
-  if (canEdit()) { doLogout(); return; }
-  S.pendingAction = 'topbarLogin';
-  S.pendingDriveData = null; S.pendingPhotoUrl = null; S.pendingTsData = null;
-  openLoginModal('Login untuk mengaktifkan mode edit drive.');
-}
-
-function doLogout() {
-  S.role = 'supervisor';
-  updateRoleBadge(); // updateLoginButtons sudah dipanggil di dalam updateRoleBadge
-  if (S.page === 'detail') renderDetailPage();
-}
-
-function requestEdit(driveId, status, keterangan, merk, spesifikasi, photoUrl, serialNumber, stiker) {
-  if (isReadOnly()) return;
-  S.pendingAction = 'edit';
-  S.pendingDriveData = { driveId, status, keterangan, merk, spesifikasi, photoUrl, serialNumber, stiker };
-  S.pendingPhotoUrl = null; S.pendingTsData = null;
-  openLoginModal('Untuk mengedit drive, masukkan kredensial akun mixing ini.');
-}
-
-function requestViewPhoto(photoUrl) {
-  if (isReadOnly()) {
-    window.open(photoUrl, '_blank');
-    return;
-  }
-  S.pendingAction = 'photo';
-  S.pendingPhotoUrl = photoUrl;
-  S.pendingDriveData = null; S.pendingTsData = null;
-  openLoginModal('Untuk melihat foto, masukkan kredensial akun mixing ini.');
-}
-
-function closeLoginModal() {
-  id('login-overlay').classList.remove('open');
-  S.pendingDriveData = null; S.pendingPhotoUrl = null;
-  S.pendingAction = 'edit'; S.pendingTsData = null;
-}
-
-async function submitLogin() {
-  const username    = id('login-username').value.trim();
-  const password    = id('login-password').value.trim();
-  const roleRadio   = document.querySelector('input[name="login-role"]:checked');
-  const selectedRole = roleRadio ? roleRadio.value : 'user';
-  const errEl = id('login-err'), btn = id('btn-login-submit');
-
-  if (!username || !password) {
-    errEl.textContent = '⚠️ Username dan password wajib diisi.';
-    errEl.style.display = 'block'; return;
-  }
-  btn.classList.add('loading'); btn.disabled = true; errEl.style.display = 'none';
-
-  try {
-    const res = await fetch(LOGIN_API + '?' + new URLSearchParams({
-      username,
-      password,
-      mixing : S.plant,
-      role   : selectedRole,
-    }));
-    const result = await res.json();
-
-    if (result.success) {
-      // ── Set role & update UI ──
-      S.role = result.role || selectedRole;
-      updateRoleBadge(); // memanggil updateLoginButtons() di dalamnya — tidak perlu duplikat
-
-      const action   = S.pendingAction;
-      const photoUrl = S.pendingPhotoUrl;
-      const d        = S.pendingDriveData;
-      const tsD      = S.pendingTsData;
-      closeLoginModal();
-
-      if      (action === 'photo' && photoUrl)    window.open(photoUrl, '_blank');
-      else if (action === 'edit' && d)            openModal(d.driveId, d.status, d.keterangan, d.merk, d.spesifikasi, d.photoUrl, d.serialNumber, d.stiker);
-      else if (action === 'editTimestamp' && tsD) openTsModal();
-      else if (action === 'topbarLogin')          { if (S.page === 'detail') renderDetailPage(); }
-
-    } else {
-      errEl.textContent = '❌ ' + (result.message || 'Username atau password salah.');
-      errEl.style.display = 'block';
-    }
-  } catch(err) {
-    errEl.textContent = '⚠️ Tidak dapat terhubung ke server.';
-    errEl.style.display = 'block';
-  } finally {
-    btn.classList.remove('loading'); btn.disabled = false;
-  }
-}
-
-// Enter key di login
-document.addEventListener('DOMContentLoaded', () => {
-  ['login-username','login-password'].forEach(fid => {
-    const el = id(fid);
-    if (el) el.addEventListener('keydown', e => { if (e.key === 'Enter') submitLogin(); });
-  });
-});
 
 // ══════════════════════════════════════════════════════════
 //  API
@@ -1539,7 +1699,7 @@ async function renderDriveTab() {
       <div class="pill kosong"><div class="pill-d"></div>Kosong ${kosong}</div>
       <div class="pill maint"><div class="pill-d"></div>Maint ${maint}</div>`;
 
-    // Read-only notice untuk supervisor
+    // Notice untuk teknisi (read-only karena tidak punya akses admin) — sebenarnya teknisi bisa edit
     const noticeId = 'readonly-notice-el';
     let noticeEl = id(noticeId);
     if (isReadOnly()) {
@@ -1547,7 +1707,7 @@ async function renderDriveTab() {
         noticeEl = document.createElement('div');
         noticeEl.id = noticeId;
         noticeEl.className = 'readonly-notice';
-        noticeEl.innerHTML = '👁️ <span>Mode Supervisor — tampilan read-only, tidak dapat mengedit drive</span>';
+        noticeEl.innerHTML = '👁️ <span>Mode Read-Only — tidak dapat mengedit drive</span>';
         id('tab-drive').insertBefore(noticeEl, id('drive-content'));
       }
     } else {
@@ -1606,12 +1766,13 @@ function inuCard(d) {
   const infoText = keterangan.replace(/master|follower|slave/gi, '').trim();
 
   const photoHtml = d.photo_url
-    ? `<button class="inu-photo-btn" onclick="event.stopPropagation();requestViewPhoto('${esc(d.photo_url)}')">📷 Lihat Foto</button>`
+    ? `<button class="inu-photo-btn" onclick="event.stopPropagation();window.open('${esc(d.photo_url)}','_blank')">📷 Lihat Foto</button>`
     : '';
 
+  // Teknisi & Admin bisa edit drive
   const clickable = canEdit() ? 'clickable' : '';
   const onclickAttr = canEdit()
-    ? `onclick="requestEdit('${esc(d.drive_id)}','${st}','${esc(keterangan)}','${esc(d.merk)}','${esc(spek)}','${esc(d.photo_url||'')}','${esc(sn)}','${esc(stiker)}')" `
+    ? `onclick="openModal('${esc(d.drive_id)}','${st}','${esc(keterangan)}','${esc(d.merk)}','${esc(spek)}','${esc(d.photo_url||'')}','${esc(sn)}','${esc(stiker)}')" `
     : '';
   const editHint = canEdit()
     ? `<div class="inu-edit-hint">✏️ edit</div>`
@@ -1678,9 +1839,10 @@ async function renderSummaryTab() {
 }
 
 // ══════════════════════════════════════════════════════════
-//  EDIT DRIVE MODAL
+//  EDIT DRIVE MODAL (Teknisi & Admin)
 // ══════════════════════════════════════════════════════════
 function openModal(driveId, status, keterangan, merk, spesifikasi, photoUrl, serialNumber, stiker) {
+  if (!canEdit()) return;
   S.editDrive = driveId;
   id('modal-drive-id').textContent = driveId;
   id('modal-status').value  = status || 'ok';
@@ -1710,7 +1872,7 @@ async function saveStatus() {
       serial_number : id('modal-sn').value.trim(),
       stiker        : id('modal-stiker').value.trim(),
       photo_url     : id('modal-photo').value.trim(),
-      updatedBy     : S.role + '-web',
+      updatedBy     : S.username + '-' + S.role,
     });
     delete S.cache[S.plant + '_drives'];
     delete S.cache[S.plant + '_groupList'];
@@ -1723,7 +1885,6 @@ async function saveStatus() {
 
 // Tutup modal klik overlay
 id('modal').addEventListener('click', e => { if(e.target===id('modal')) closeModal(); });
-id('login-overlay').addEventListener('click', e => { if(e.target===id('login-overlay')) closeLoginModal(); });
 id('ts-modal-overlay').addEventListener('click', e => { if(e.target===id('ts-modal-overlay')) closeTsModal(); });
 
 // ══════════════════════════════════════════════════════════
@@ -1809,10 +1970,10 @@ if (localStorage.getItem('theme') === 'light') {
 }
 
 // ══════════════════════════════════════════════════════════
-//  INIT
+//  INIT — cek session duluan
 // ══════════════════════════════════════════════════════════
 updateRoleBadge();
-navTo('plant');
+// DOMContentLoaded akan handle session check & navTo
 </script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.8.2/jspdf.plugin.autotable.min.js"></script>
