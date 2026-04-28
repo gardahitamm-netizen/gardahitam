@@ -734,10 +734,15 @@ body.light .btn-open-pdf:hover{color:#003850;}
     <!-- Role Selector -->
     <div class="gate-role-field">
       <span class="gate-role-label">Login Sebagai</span>
-      <div class="gate-role-opts">
+    
+        <div class="gate-role-opts">
         <div class="gate-role-opt">
           <input type="radio" name="gate-role" id="gate-role-teknisi" value="user" checked>
           <label for="gate-role-teknisi">🔧 Teknisi</label>
+        </div>
+        <div class="gate-role-opt">
+          <input type="radio" name="gate-role" id="gate-role-supervisor" value="supervisor">
+          <label for="gate-role-supervisor">👁️ Supervisor</label>
         </div>
         <div class="gate-role-opt admin-opt">
           <input type="radio" name="gate-role" id="gate-role-admin" value="admin">
@@ -759,23 +764,6 @@ body.light .btn-open-pdf:hover{color:#003850;}
       <div class="gate-input-wrap">
         <span class="gate-input-icon">🔑</span>
         <input type="password" id="gate-password" placeholder="Masukkan password">
-      </div>
-    </div>
-
-    <div class="gate-field" id="gate-plant-field">
-      <label>Plant / Mixing</label>
-      <div class="gate-input-wrap">
-        <span class="gate-input-icon">🏭</span>
-        <select id="gate-plant" style="width:100%;background:var(--surf2);border:1px solid var(--border);color:var(--text);padding:11px 12px 11px 38px;border-radius:9px;font-size:13px;font-family:'Plus Jakarta Sans',sans-serif;outline:none;cursor:pointer;transition:border-color .15s,box-shadow .15s;">
-          <option value="">-- Pilih Plant --</option>
-          <option value="MCA">MCA — Mixing Center A</option>
-          <option value="MCC">MCC — Mixing Center C</option>
-          <option value="MCD">MCD — Mixing Center D</option>
-          <option value="MCG">MCG — Mixing Center G</option>
-          <option value="MCH">MCH — Mixing Center H</option>
-          <option value="MCI">MCI — Mixing Center I</option>
-          <option value="PLANT E">PLANT E — Plant Extension E</option>
-        </select>
       </div>
     </div>
 
@@ -1112,7 +1100,6 @@ function updateRoleBadge() {
 async function submitGateLogin() {
   const username = id('gate-username').value.trim();
   const password = id('gate-password').value.trim();
-  const plant    = id('gate-plant').value.trim();
   const roleRadio = document.querySelector('input[name="gate-role"]:checked');
   const roleReq  = roleRadio ? roleRadio.value : 'user';
 
@@ -1123,34 +1110,31 @@ async function submitGateLogin() {
     showGateErr('⚠️ Username dan password wajib diisi.');
     return;
   }
-  if (!plant) {
-    showGateErr('⚠️ Pilih plant terlebih dahulu.');
-    return;
-  }
 
   btn.classList.add('loading'); btn.disabled = true;
   errEl.classList.remove('visible');
 
   try {
     const res = await fetch(LOGIN_API + '?' + new URLSearchParams({
-      username, password, mixing: plant, role: roleReq,
+      username, password, role: roleReq,
     }));
     const result = await res.json();
 
     if (result.success) {
-      // Tentukan role internal:
-      // DB "teknisi" → login sebagai user → S.role = 'teknisi'
-      // DB "supervisor & admin" + pilih teknisi → S.role = 'teknisi'
-      // DB "supervisor & admin" + pilih admin   → S.role = 'admin'
-      S.role = result.role === 'admin' ? 'admin' : 'teknisi';
-      S.username = username;
-      S.loggedInPlant = plant;
+      if (roleReq === 'supervisor') {
+        S.role = 'supervisor';
+      } else {
+        S.role = result.role === 'admin' ? 'admin' : 'teknisi';
+      }
+      S.username      = username;
+      S.loggedInPlant = result.mixing;
       saveSession();
       closeGate();
       updateRoleBadge();
-      renderPlantPage();
+      // Langsung masuk ke plant sesuai akun, skip halaman plant list
+      navTo('detail', result.mixing);
     } else {
-      showGateErr('❌ ' + (result.message || 'Username, password, atau plant salah.'));
+      showGateErr('❌ ' + (result.message || 'Username atau password salah.'));
     }
   } catch(err) {
     showGateErr('⚠️ Tidak dapat terhubung ke server login.');
@@ -1177,7 +1161,6 @@ function doLogout() {
   // Tampilkan gate kembali
   id('gate-username').value = '';
   id('gate-password').value = '';
-  id('gate-plant').value = '';
   id('gate-err').classList.remove('visible');
   id('gate-btn').classList.remove('loading');
   id('gate-btn').disabled = false;
@@ -1200,11 +1183,15 @@ document.addEventListener('DOMContentLoaded', () => {
   const gatePlant = id('gate-plant');
   if (gatePlant) gatePlant.addEventListener('keydown', e => { if (e.key === 'Enter') submitGateLogin(); });
 
-  // Cek session — jika ada, skip gate
+    // Cek session — jika ada, skip gate
   if (loadSession()) {
     closeGate();
     updateRoleBadge();
-    navTo('plant');
+    if (S.loggedInPlant) {
+      navTo('detail', S.loggedInPlant);
+    } else {
+      navTo('plant');
+    }
   }
 });
 
