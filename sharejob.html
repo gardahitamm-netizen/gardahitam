@@ -35,7 +35,6 @@
   --role-admin:   #FF6D00;
   --role-supervisor: #00E0F8;
   --role-teknisi: #00E676;
-  /* History accent */
   --hist-accent:  #B39DDB;
   --hist-accent-bg: rgba(179,157,219,0.08);
   --hist-accent-bd: rgba(179,157,219,0.3);
@@ -261,7 +260,6 @@ body::after {
 #refreshBtn svg { fill: var(--teal); }
 #refreshBtn:hover { border-color: var(--teal); }
 #refreshBtn.spinning svg { animation: spinAnim 0.7s linear infinite; }
-/* Tombol Histori */
 #historiBtn { color: var(--hist-accent); border-color: var(--hist-accent-bd); background: var(--hist-accent-bg); }
 #historiBtn svg { fill: var(--hist-accent); }
 #historiBtn:hover { border-color: var(--hist-accent); box-shadow: 0 0 14px rgba(179,157,219,0.2); }
@@ -289,21 +287,10 @@ body::after {
 .search-group { display: flex; align-items: center; gap: 6px; flex-wrap: wrap; flex: 1; min-width: 280px; }
 .search-item { position: relative; display: flex; align-items: center; min-width: 120px; flex: 1; }
 .search-item svg { position: absolute; left: 8px; width: 12px; height: 12px; fill: var(--text-dim); pointer-events: none; flex-shrink: 0; }
-.search-item input {
-  width: 100%; padding: 6px 36px 6px 26px;
-  background: var(--bg-card); border: 1px solid var(--border-mid);
-  color: var(--text-bright); border-radius: 6px;
-  font-size: 11px; font-family: 'JetBrains Mono', monospace;
-  outline: none; height: 32px;
-}
+.search-item input { width: 100%; padding: 6px 36px 6px 26px; background: var(--bg-card); border: 1px solid var(--border-mid); color: var(--text-bright); border-radius: 6px; font-size: 11px; font-family: 'JetBrains Mono', monospace; outline: none; height: 32px; }
 .search-item input:focus { border-color: var(--orange); box-shadow: 0 0 0 3px var(--orange-faint); }
 .search-item input::placeholder { color: var(--text-dim); font-size: 10px; }
-.search-item .search-label {
-  position: absolute; right: 7px; top: 50%; transform: translateY(-50%);
-  font-family: 'JetBrains Mono', monospace; font-size: 8px; letter-spacing: 1px;
-  color: var(--text-dim); pointer-events: none; text-transform: uppercase;
-  background: var(--bg-card); padding: 1px 3px; border-radius: 3px;
-}
+.search-item .search-label { position: absolute; right: 7px; top: 50%; transform: translateY(-50%); font-family: 'JetBrains Mono', monospace; font-size: 8px; letter-spacing: 1px; color: var(--text-dim); pointer-events: none; text-transform: uppercase; background: var(--bg-card); padding: 1px 3px; border-radius: 3px; }
 
 #inputSection { background: var(--bg-panel); border: 1px solid var(--border-orange); border-radius: 6px; padding: 14px 16px 10px; margin-bottom: 14px; position: relative; z-index: 1; display: none; }
 #inputSection::before { content: 'INPUT JOB BARU'; position: absolute; top: -10px; left: 14px; background: var(--bg-panel); padding: 0 8px; font-family: 'JetBrains Mono', monospace; font-size: 10px; letter-spacing: 2px; color: var(--orange); }
@@ -390,76 +377,62 @@ tr.filter-hidden { display: none; }
 #themeToggleBtn { position: fixed; bottom: 54px; right: 14px; z-index: 3000; display: inline-flex; align-items: center; justify-content: center; width: 36px; height: 36px; border-radius: 50%; background: var(--bg-panel); border: 1px solid var(--border-mid); cursor: pointer; padding: 0; }
 #themeToggleBtn:hover { border-color: var(--border-orange); box-shadow: 0 0 14px var(--orange-glow); transform: scale(1.08); }
 
-/* ──────────────────────────────────────
+/* ══════════════════════════════════════
    HISTORY PAGE
-   ────────────────────────────────────── */
+   ══════════════════════════════════════ */
 #historyPage { display: none; position: relative; z-index: 1; }
 
-.hist-page-header {
-  text-align: center; padding: 10px 0 20px; position: relative; z-index: 1;
-}
-.hist-page-header h2 {
-  font-family: 'Exo 2', sans-serif; font-size: 24px; font-weight: 900;
-  letter-spacing: 5px; text-transform: uppercase; color: var(--text-bright);
-}
+.hist-page-header { text-align: center; padding: 10px 0 20px; position: relative; z-index: 1; }
+.hist-page-header h2 { font-family: 'Exo 2', sans-serif; font-size: 24px; font-weight: 900; letter-spacing: 5px; text-transform: uppercase; color: var(--text-bright); }
 .hist-page-header h2 span { color: var(--hist-accent); text-shadow: 0 0 20px rgba(179,157,219,0.5); }
-.hist-page-subline {
-  display: flex; align-items: center; justify-content: center; gap: 12px; margin-top: 6px;
-}
-.hist-page-subline::before, .hist-page-subline::after {
-  content: ''; flex: 1; max-width: 140px; height: 1px;
-  background: linear-gradient(90deg, transparent, var(--hist-accent));
-}
+.hist-page-subline { display: flex; align-items: center; justify-content: center; gap: 12px; margin-top: 6px; }
+.hist-page-subline::before, .hist-page-subline::after { content: ''; flex: 1; max-width: 140px; height: 1px; background: linear-gradient(90deg, transparent, var(--hist-accent)); }
 .hist-page-subline::after { background: linear-gradient(90deg, var(--hist-accent), transparent); }
-.hist-page-badge {
-  font-family: 'JetBrains Mono', monospace; font-size: 10px; letter-spacing: 3px;
-  color: var(--hist-accent); opacity: 0.7; text-transform: uppercase;
-}
+.hist-page-badge { font-family: 'JetBrains Mono', monospace; font-size: 10px; letter-spacing: 3px; color: var(--hist-accent); opacity: 0.7; text-transform: uppercase; }
 
 .hist-top-bar { display: flex; align-items: center; gap: 8px; margin-bottom: 14px; flex-wrap: wrap; }
-.hist-back-btn {
-  display: inline-flex; align-items: center; gap: 6px; height: 44px; padding: 0 16px;
-  background: var(--hist-accent-bg); border: 1px solid var(--hist-accent-bd);
-  border-radius: 4px; cursor: pointer; font-family: 'Exo 2', sans-serif;
-  font-size: 13px; font-weight: 700; letter-spacing: 1.5px; text-transform: uppercase;
-  color: var(--hist-accent); transition: all 0.18s;
-}
+
+.hist-back-btn { display: inline-flex; align-items: center; gap: 6px; height: 44px; padding: 0 16px; background: var(--hist-accent-bg); border: 1px solid var(--hist-accent-bd); border-radius: 4px; cursor: pointer; font-family: 'Exo 2', sans-serif; font-size: 13px; font-weight: 700; letter-spacing: 1.5px; text-transform: uppercase; color: var(--hist-accent); transition: all 0.18s; }
 .hist-back-btn:hover { background: rgba(179,157,219,0.15); box-shadow: 0 0 14px rgba(179,157,219,0.2); }
-.hist-reload-btn {
-  display: inline-flex; align-items: center; gap: 6px; height: 44px; padding: 0 16px;
-  background: var(--bg-card); border: 1px solid var(--teal-bd);
-  border-radius: 4px; cursor: pointer; font-family: 'Exo 2', sans-serif;
-  font-size: 13px; font-weight: 700; letter-spacing: 1.5px; text-transform: uppercase;
-  color: var(--teal); transition: all 0.18s;
-}
+
+.hist-reload-btn { display: inline-flex; align-items: center; gap: 6px; height: 44px; padding: 0 16px; background: var(--bg-card); border: 1px solid var(--teal-bd); border-radius: 4px; cursor: pointer; font-family: 'Exo 2', sans-serif; font-size: 13px; font-weight: 700; letter-spacing: 1.5px; text-transform: uppercase; color: var(--teal); transition: all 0.18s; }
 .hist-reload-btn:hover { border-color: var(--teal); box-shadow: 0 0 10px rgba(0,224,248,0.15); }
 .hist-reload-btn.spinning svg { animation: spinAnim 0.7s linear infinite; }
 .hist-reload-btn svg { fill: var(--teal); width: 18px; height: 18px; }
 
-/* Filter bar untuk history — pakai accent hist */
+/* ── TOMBOL CETAK PDF HISTORI (BARU) ── */
+.hist-print-btn { display: inline-flex; align-items: center; gap: 6px; height: 44px; padding: 0 16px; background: var(--bg-card); border: 1px solid var(--border-orange); border-radius: 4px; cursor: pointer; font-family: 'Exo 2', sans-serif; font-size: 13px; font-weight: 700; letter-spacing: 1.5px; text-transform: uppercase; color: var(--orange); transition: all 0.18s; position: relative; overflow: hidden; }
+.hist-print-btn::after { content: ''; position: absolute; bottom: 0; left: 0; width: 0; height: 2px; background: var(--orange); transition: width 0.2s; }
+.hist-print-btn:hover { border-color: var(--orange); box-shadow: 0 0 14px rgba(255,109,0,0.2); background: var(--orange-faint); }
+.hist-print-btn:hover::after { width: 100%; }
+.hist-print-btn svg { fill: var(--orange); width: 18px; height: 18px; }
+
+/* ── TOMBOL KIRIM WA HISTORI (BARU) ── */
+.hist-wa-btn { display: inline-flex; align-items: center; gap: 6px; height: 44px; padding: 0 16px; background: var(--bg-card); border: 1px solid rgba(0,230,118,0.25); border-radius: 4px; cursor: pointer; font-family: 'Exo 2', sans-serif; font-size: 13px; font-weight: 700; letter-spacing: 1.5px; text-transform: uppercase; color: var(--green-ok); transition: all 0.18s; position: relative; overflow: hidden; }
+.hist-wa-btn::after { content: ''; position: absolute; bottom: 0; left: 0; width: 0; height: 2px; background: var(--green-ok); transition: width 0.2s; }
+.hist-wa-btn:hover { border-color: rgba(0,230,118,0.6); box-shadow: 0 0 14px rgba(0,230,118,0.15); }
+.hist-wa-btn:hover::after { width: 100%; }
+.hist-wa-btn svg { fill: var(--green-ok); width: 18px; height: 18px; }
+
+/* Filter bar untuk history */
 #histFilterBar .hist-period-badge { background: var(--hist-accent-bg); border-color: var(--hist-accent-bd); color: var(--hist-accent); }
 #histFilterBar .hist-filter-select:focus { border-color: var(--hist-accent); }
 #histFilterBar .hist-filter-date:focus { border-color: var(--hist-accent); }
 #histFilterBar .search-item input:focus { border-color: var(--hist-accent); box-shadow: 0 0 0 3px rgba(179,157,219,0.1); }
 
-/* Tabel history — header dengan accent warna ungu */
+/* Tabel history */
 #historyTable thead tr { border-bottom: 2px solid var(--hist-accent); }
 #historyTable th { color: var(--hist-accent); }
 #historyTable tr:hover td { background: rgba(179,157,219,0.05) !important; }
 
-.hist-info-empty {
-  text-align: center; padding: 60px 20px;
-  font-family: 'JetBrains Mono', monospace; font-size: 13px; color: var(--text-dim);
-  letter-spacing: 1px;
-}
+.hist-info-empty { text-align: center; padding: 60px 20px; font-family: 'JetBrains Mono', monospace; font-size: 13px; color: var(--text-dim); letter-spacing: 1px; }
 .hist-info-empty .ei-icon { font-size: 36px; margin-bottom: 14px; }
 .hist-info-empty .ei-text { color: var(--text-dim); }
+.hist-archived-at { font-family: 'JetBrains Mono', monospace; font-size: 10px; color: var(--text-dim); letter-spacing: 0.5px; }
 
-.hist-archived-at {
-  font-family: 'JetBrains Mono', monospace; font-size: 10px; color: var(--text-dim);
-  letter-spacing: 0.5px;
-}
-
+/* ══════════════════════════════════════
+   PRINT STYLES
+   ══════════════════════════════════════ */
 #printPagesContainer { display: none !important; }
 .print-header { display: none; text-align: center; font-size: 12px; color: #555; margin-bottom: 8px; }
 
@@ -467,7 +440,8 @@ tr.filter-hidden { display: none; }
   @page { size: A4 landscape; margin: 8mm; }
   html { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
   body { background: #fff !important; color: #000 !important; padding: 5px; }
-  body::before, body::after, #logo-img, #clock, .top-bar, .hist-top-bar, #inputSection, #runningTextBar,
+  body::before, body::after, #logo-img, #clock, .top-bar, .hist-top-bar,
+  #inputSection, #runningTextBar,
   #confirmModal, #alertModal, #deleteRowModal, #loadingOverlay, .btn-delete-row,
   td.col-delete, th.col-delete, .hist-filter-bar, #unitSelectorScreen, #activeUnitBar,
   #homeBtn, #themeToggleBtn, #mainApp, .page-header, #authScreen, #userChip, .perm-notice,
@@ -477,11 +451,16 @@ tr.filter-hidden { display: none; }
   .print-page { display: block !important; page-break-after: always; margin-bottom: 0; }
   .print-page:last-child { page-break-after: avoid; }
   .print-page-header { font-family: monospace; font-size: 11px; color: #555; margin-bottom: 6px; display: flex; justify-content: space-between; align-items: center; }
+  /* Garis pembeda: job harian = oranye, histori = ungu */
+  .print-page.type-harian th { background: #E65100 !important; color: white !important; }
+  .print-page.type-histori th { background: #7B1FA2 !important; color: white !important; }
+  .print-page.type-histori .print-page-header { color: #4A148C; }
   .print-page table { width: 100% !important; font-size: 11px; border-collapse: collapse; table-layout: auto !important; background: white !important; }
-  .print-page th { background: #E65100 !important; color: white !important; font-size: 10px; padding: 5px 7px; border: 1px solid #ccc !important; white-space: nowrap; }
+  .print-page th { font-size: 10px; padding: 5px 7px; border: 1px solid #ccc !important; white-space: nowrap; }
   .print-page td { background: white !important; color: #000 !important; padding: 4px 7px; border: 1px solid #ccc !important; font-size: 11px; word-break: break-word !important; }
   .print-page tr:nth-child(even) td { background: #f5f5f5 !important; }
   .print-page .group-start-print td { border-top: 2px solid #E65100 !important; }
+  .print-page.type-histori .group-start-print td { border-top: 2px solid #7B1FA2 !important; }
   .print-page .status-badge { font-size: 10px; padding: 2px 6px; border-radius: 3px; font-weight: 700; border: 1px solid #999; }
 }
 
@@ -582,7 +561,7 @@ tr.filter-hidden { display: none; }
   <button class="aub-change" onclick="changeUnit()">&#8634; Ganti Unit</button>
 </div>
 
-<!-- MAIN APP (Job Harian) -->
+<!-- MAIN APP -->
 <div id="mainApp">
   <div class="top-bar">
     <button class="tb-btn hidden" id="toggleInputBtn" onclick="toggleInput()">
@@ -607,7 +586,6 @@ tr.filter-hidden { display: none; }
       <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 4l-1.41 1.41L16.17 11H4v2h12.17l-5.58 5.59L12 20l8-8z"/></svg>
       Auto Scroll
     </button>
-    <!-- TOMBOL HISTORI BARU -->
     <button class="tb-btn" id="historiBtn" onclick="openHistoryPage()">
       <svg viewBox="0 0 24 24" fill="currentColor"><path d="M13 3c-4.97 0-9 4.03-9 9H1l3.89 3.89.07.14L9 12H6c0-3.87 3.13-7 7-7s7 3.13 7 7-3.13 7-7 7c-1.93 0-3.68-.79-4.94-2.06l-1.42 1.42C8.27 19.99 10.51 21 13 21c4.97 0 9-4.03 9-9s-4.03-9-9-9zm-1 5v5l4.28 2.54.72-1.21-3.5-2.08V8H12z"/></svg>
       Histori
@@ -722,9 +700,19 @@ tr.filter-hidden { display: none; }
       <svg viewBox="0 0 24 24"><path d="M17.65 6.35A7.958 7.958 0 0 0 12 4c-4.42 0-7.99 3.58-7.99 8s3.57 8 7.99 8c3.73 0 6.84-2.55 7.73-6h-2.08A5.99 5.99 0 0 1 12 18c-3.31 0-6-2.69-6-6s2.69-6 6-6c1.66 0 3.14.69 4.22 1.78L13 11h7V4l-2.35 2.35z"/></svg>
       Refresh
     </button>
+    <!-- ★ TOMBOL CETAK PDF HISTORI ★ -->
+    <button class="hist-print-btn" id="histPrintBtn" onclick="doPrintHistory()">
+      <svg viewBox="0 0 24 24" fill="currentColor"><path d="M19 8H5c-1.66 0-3 1.34-3 3v6h4v4h12v-4h4v-6c0-1.66-1.34-3-3-3zm-3 11H8v-5h8v5zm3-7c-.55 0-1-.45-1-1s.45-1 1-1 1 .45 1 1-.45 1-1 1zm-1-9H6v4h12V3z"/></svg>
+      Cetak PDF
+    </button>
+    <!-- ★ TOMBOL KIRIM WA HISTORI ★ -->
+    <button class="hist-wa-btn" id="histWaBtn" onclick="openWaHistModal()">
+      <svg viewBox="0 0 32 32" fill="none"><path d="M23.5 8.5C21.6 6.6 19.1 5.5 16.4 5.5C10.8 5.5 6.3 10 6.3 15.6C6.3 17.4 6.8 19.2 7.7 20.8L6.2 26.5L12.1 25C13.6 25.8 15.2 26.3 16.8 26.3H16.9C22.5 26.3 27 21.8 27 16.2C27 13.5 25.9 11 24 9.1L23.5 8.5ZM16.4 24.6H16.3C14.9 24.6 13.5 24.2 12.3 23.4L12 23.2L8.7 24.1L9.6 20.9L9.4 20.6C8.5 19.3 8.1 17.8 8.1 16.2C8.1 11.3 12.1 7.3 17 7.3C19.4 7.3 21.6 8.2 23.3 9.9C24.9 11.6 25.9 13.8 25.9 16.2C25.9 21.1 21.9 24.6 16.4 24.6Z" fill="currentColor"/></svg>
+      Kirim WA
+    </button>
   </div>
 
-  <!-- Filter bar untuk histori -->
+  <!-- Filter bar histori -->
   <div class="hist-filter-bar" id="histFilterBar">
     <span class="hist-filter-label">📅 Filter:</span>
     <div class="hist-filter-group">
@@ -769,7 +757,15 @@ tr.filter-hidden { display: none; }
 
   <div class="table-wrapper">
     <table id="historyTable">
-      <colgroup><col style="width:140px"><col style="width:150px"><col><col style="width:120px"><col style="width:80px"><col style="width:80px"><col style="width:130px"></colgroup>
+      <colgroup>
+        <col style="width:150px">
+        <col style="width:150px">
+        <col>
+        <col style="width:130px">
+        <col style="width:75px">
+        <col style="width:75px">
+        <col style="width:140px">
+      </colgroup>
       <thead>
         <tr>
           <th>ID</th>
@@ -796,6 +792,7 @@ tr.filter-hidden { display: none; }
 <div id="deleteRowModal" class="modal"><div class="modal-box"><h3>🗑 Hapus Job?</h3><p id="deleteRowDesc"></p><p style="font-size:13px;margin-bottom:18px;">Tindakan ini tidak dapat dibatalkan.</p><div style="display:flex;justify-content:center;gap:12px;"><button id="confirmDeleteRowBtn">Ya, Hapus</button><button id="cancelDeleteRowBtn">Batal</button></div></div></div>
 <div id="logoutModal" class="modal"><div class="modal-box"><h3>⏻ LOGOUT</h3><p>Yakin ingin keluar dari akun <strong id="logoutUserName">—</strong>?</p><br><div style="display:flex;justify-content:center;gap:12px;"><button onclick="doLogout()" style="color:var(--red-err);border-color:rgba(255,23,68,0.4)">Ya, Logout</button><button onclick="closeLogoutModal()">Batal</button></div></div></div>
 
+<!-- WA Modal (Job Harian) -->
 <div id="waModal" class="modal">
   <div class="modal-box">
     <h3>📱 Kirim WhatsApp</h3>
@@ -808,6 +805,23 @@ tr.filter-hidden { display: none; }
     <div class="wa-btn-row">
       <button class="wa-send-btn" onclick="sendWhatsApp()">📤 Kirim</button>
       <button class="wa-cancel-btn" onclick="closeWaModal()">❌ Batal</button>
+    </div>
+  </div>
+</div>
+
+<!-- WA Modal Histori (BARU) -->
+<div id="waHistModal" class="modal">
+  <div class="modal-box" style="border-color:rgba(179,157,219,0.5);">
+    <h3 style="color:var(--hist-accent);">📱 Kirim WA — Riwayat Job</h3>
+    <div class="wa-preview-label">▸ Preview Pesan</div>
+    <div class="wa-preview" id="waHistPreviewText" style="color:#D1C4E9;border-color:rgba(179,157,219,0.2);"></div>
+    <div class="wa-input-label">▸ Nomor Tujuan</div>
+    <input type="text" id="waHistPhoneInput" placeholder="081234567890" maxlength="15" oninput="validateWaHistPhone(this)" style="border-color:rgba(179,157,219,0.3);color:var(--hist-accent);">
+    <div class="wa-hint">Format: 08xxxxxxxx → otomatis dikonversi ke +628xx</div>
+    <div id="waHistPhoneError" style="color:var(--red-err);font-size:12px;margin-bottom:10px;text-align:left;display:none;">✕ Nomor tidak valid.</div>
+    <div class="wa-btn-row">
+      <button class="wa-send-btn" onclick="sendWaHist()" style="background:rgba(179,157,219,0.08);color:var(--hist-accent);border-color:rgba(179,157,219,0.4);">📤 Kirim</button>
+      <button class="wa-cancel-btn" onclick="closeWaHistModal()">❌ Batal</button>
     </div>
   </div>
 </div>
@@ -1091,7 +1105,7 @@ function showMainApp(unit) {
 }
 
 // ═══════════════════════════════════════
-// HISTORY PAGE NAVIGATION
+// HISTORY PAGE
 // ═══════════════════════════════════════
 function openHistoryPage() {
   if (!currentUnit) { showAlert("Pilih unit terlebih dahulu!"); return; }
@@ -1153,7 +1167,7 @@ function renderHistoryTable() {
     return;
   }
 
-  // Group by ID+tanggal untuk tampil rapi (nama digabung)
+  // Kelompokkan berdasarkan ID+tanggal+archivedAt agar tampil rapi
   var grouped = {};
   var order = [];
   allHistoryData.forEach(function(t) {
@@ -1167,7 +1181,7 @@ function renderHistoryTable() {
     var g = grouped[key];
     var t = g.task;
     var allNama = g.names.join(', ');
-    html += '<tr class="hist-group-row" ' +
+    html += '<tr class="hist-group-row group-row" ' +
       'data-tanggal="' + escHtml(t.tanggal||'') + '" ' +
       'data-nama="' + escHtml(allNama.toLowerCase()) + '" ' +
       'data-mesin="' + escHtml((t.mesin||'').toLowerCase()) + '" ' +
@@ -1176,9 +1190,12 @@ function renderHistoryTable() {
       '<td>' + escHtml(allNama) + '</td>' +
       '<td>' + escHtml(t.tugas) + '</td>' +
       '<td>' + escHtml(t.mesin) + '</td>' +
-      '<td style="color:var(--green-ok);font-family:\'JetBrains Mono\',monospace;">' + (t.jamMulai || '<span style="color:var(--text-dim)">—</span>') + '</td>' +
-      '<td style="color:var(--amber-warn);font-family:\'JetBrains Mono\',monospace;">' + (t.jamSelesai || '<span style="color:var(--text-dim)">—</span>') + '</td>' +
-      '<td class="hist-archived-at">' + escHtml(t.tanggal) + (t.archivedAt ? '<br>' + escHtml(t.archivedAt) : '') + '</td>' +
+      '<td style="color:var(--green-ok);font-family:\'JetBrains Mono\',monospace;font-weight:700;">' +
+        (t.jamMulai ? escHtml(t.jamMulai) : '<span style="color:var(--text-dim)">—</span>') + '</td>' +
+      '<td style="color:var(--amber-warn);font-family:\'JetBrains Mono\',monospace;font-weight:700;">' +
+        (t.jamSelesai ? escHtml(t.jamSelesai) : '<span style="color:var(--text-dim)">—</span>') + '</td>' +
+      '<td class="hist-archived-at">' + escHtml(t.tanggal) +
+        (t.archivedAt ? '<br><span style="color:var(--hist-accent);font-size:9px;">' + escHtml(t.archivedAt) + '</span>' : '') + '</td>' +
       '</tr>';
   });
   tbody.innerHTML = html;
@@ -1229,9 +1246,7 @@ function applyHistFilter() {
 }
 
 function onHBulanTahunChange() {
-  if (document.getElementById('hFilterTanggal').value) {
-    document.getElementById('hFilterTanggal').value = '';
-  }
+  if (document.getElementById('hFilterTanggal').value) document.getElementById('hFilterTanggal').value = '';
   applyHistFilter();
 }
 function resetHistFilter() {
@@ -1245,6 +1260,164 @@ function resetHistFilter() {
   document.getElementById('hBtnResetFilter').classList.add('hidden');
   applyHistFilter();
 }
+
+// ═══════════════════════════════════════
+// ★ CETAK PDF — HISTORI (BARU)
+// ═══════════════════════════════════════
+function doPrintHistory() {
+  var rows = document.querySelectorAll('#histData tr.hist-group-row');
+  var visible = Array.from(rows).filter(function(tr){ return !tr.classList.contains('filter-hidden'); });
+  if (!visible.length) { showAlert("Tidak ada data histori untuk dicetak."); return; }
+
+  var now = new Date();
+  var days = ["Minggu","Senin","Selasa","Rabu","Kamis","Jumat","Sabtu"];
+  var mn   = ["Jan","Feb","Mar","Apr","Mei","Jun","Jul","Agu","Sep","Okt","Nov","Des"];
+  var d    = String(now.getDate()).padStart(2,'0');
+  var h    = String(now.getHours()).padStart(2,'0');
+  var m    = String(now.getMinutes()).padStart(2,'0');
+  var tanggalCetak = days[now.getDay()] + ", " + d + " " + mn[now.getMonth()] + " " + now.getFullYear();
+  var unitLabel = currentUnit ? currentUnit.code + ' — ' + currentUnit.name : '';
+
+  // Baca label filter aktif
+  var periodLabel = getHistPeriodLabel();
+
+  document.getElementById('printHeader').innerHTML =
+    'Dicetak: ' + tanggalCetak + ' ' + h + ':' + m +
+    (unitLabel ? ' | Unit: <b>' + unitLabel + '</b>' : '') +
+    ' | Filter: <b>' + periodLabel + '</b>' +
+    ' | <b>' + visible.length + ' job</b>';
+
+  var container = document.getElementById('printPagesContainer');
+  container.innerHTML = '';
+
+  var ROWS_PER_PAGE = 30;
+  var totalPages = Math.ceil(visible.length / ROWS_PER_PAGE);
+
+  for (var p = 0; p < totalPages; p++) {
+    var pageRows = visible.slice(p * ROWS_PER_PAGE, (p + 1) * ROWS_PER_PAGE);
+
+    var pageDiv = document.createElement('div');
+    pageDiv.className = 'print-page type-histori';
+
+    // Header halaman
+    var ph = document.createElement('div');
+    ph.className = 'print-page-header';
+    ph.innerHTML =
+      '<span><strong>RIWAYAT JOB SELESAI</strong>' +
+      (unitLabel ? ' | ' + unitLabel : '') +
+      ' | Filter: ' + periodLabel + '</span>' +
+      '<span>Halaman ' + (p+1) + '/' + totalPages + ' | ' + tanggalCetak + ' ' + h + ':' + m + '</span>';
+    pageDiv.appendChild(ph);
+
+    // Tabel
+    var tbl = document.createElement('table');
+    tbl.innerHTML = '<thead><tr>' +
+      '<th style="width:150px">ID</th>' +
+      '<th style="width:140px">Nama</th>' +
+      '<th>Tugas</th>' +
+      '<th style="width:120px">Mesin</th>' +
+      '<th style="width:60px">Mulai</th>' +
+      '<th style="width:60px">Selesai</th>' +
+      '<th style="width:130px">Diarsipkan</th>' +
+      '</tr></thead>';
+
+    var tb = document.createElement('tbody');
+    pageRows.forEach(function(tr) {
+      var cells = tr.querySelectorAll('td');
+      var get = function(i){ return cells[i] ? cells[i].textContent.trim() : ''; };
+      var pTr = document.createElement('tr');
+      pTr.className = 'group-start-print';
+      pTr.innerHTML =
+        '<td>' + escHtml(get(0)) + '</td>' +
+        '<td>' + escHtml(get(1)) + '</td>' +
+        '<td>' + escHtml(get(2)) + '</td>' +
+        '<td>' + escHtml(get(3)) + '</td>' +
+        '<td style="color:#1B5E20;font-weight:700;text-align:center;">' + escHtml(get(4) || '—') + '</td>' +
+        '<td style="color:#BF360C;font-weight:700;text-align:center;">' + escHtml(get(5) || '—') + '</td>' +
+        '<td style="color:#4A148C;font-size:10px;">' + escHtml(get(6)) + '</td>';
+      tb.appendChild(pTr);
+    });
+
+    tbl.appendChild(tb);
+    pageDiv.appendChild(tbl);
+    container.appendChild(pageDiv);
+  }
+
+  window.print();
+  setTimeout(function(){ container.innerHTML = ''; }, 1500);
+}
+
+function getHistPeriodLabel() {
+  var fT = document.getElementById('hFilterTanggal').value;
+  var fB = document.getElementById('hFilterBulan').value;
+  var fY = document.getElementById('hFilterTahun').value;
+  if (fT) { var pts = fT.split('-'); return pts.length===3 ? pts[2]+' '+NAMA_BULAN[+pts[1]]+' '+pts[0] : fT; }
+  if (fB && fY) return NAMA_BULAN[+fB]+' '+fY;
+  if (fB) return NAMA_BULAN[+fB]+' (Semua Tahun)';
+  if (fY) return 'Tahun '+fY;
+  return 'Semua Periode';
+}
+
+// ═══════════════════════════════════════
+// ★ KIRIM WA — HISTORI (BARU)
+// ═══════════════════════════════════════
+function openWaHistModal() {
+  var rows = document.querySelectorAll('#histData tr.hist-group-row');
+  var visible = Array.from(rows).filter(function(tr){ return !tr.classList.contains('filter-hidden'); });
+  if (!visible.length) { showAlert("Tidak ada data histori untuk dikirim."); return; }
+
+  var now = new Date();
+  var days = ["Minggu","Senin","Selasa","Rabu","Kamis","Jumat","Sabtu"];
+  var mn   = ["Jan","Feb","Mar","Apr","Mei","Jun","Jul","Agu","Sep","Okt","Nov","Des"];
+  var tanggal = days[now.getDay()] + ", " + String(now.getDate()).padStart(2,'0') + " " + mn[now.getMonth()] + " " + now.getFullYear();
+  var pl = getHistPeriodLabel();
+  var unitLabel = currentUnit ? currentUnit.code + ' — ' + currentUnit.name : '';
+
+  var pesan = "📋 *Riwayat Job Selesai*\n";
+  if (unitLabel) pesan += "🏭 Unit : " + unitLabel + "\n";
+  pesan += "📅 " + tanggal + "\n🔍 Filter: " + pl + "\n━━━━━━━━━━━━━━━━━━━━\n\n";
+
+  visible.forEach(function(tr, i) {
+    var cells = tr.querySelectorAll('td');
+    var get = function(idx){ return cells[idx] ? cells[idx].textContent.trim() : ''; };
+    pesan += (i+1) + ". *" + get(1) + "*\n";
+    pesan += "   🆔 ID        : " + get(0) + "\n";
+    pesan += "   🔧 Mesin     : " + get(3) + "\n";
+    pesan += "   📌 Tugas     : " + get(2) + "\n";
+    var ml = get(4), sl = get(5);
+    if (ml && ml !== '—') pesan += "   🕐 Mulai     : " + ml + "\n";
+    if (sl && sl !== '—') pesan += "   🕑 Selesai   : " + sl + "\n";
+    pesan += "   🗂 Diarsipkan: " + get(6) + "\n\n";
+  });
+
+  pesan += "━━━━━━━━━━━━━━━━━━━━\nTotal: " + visible.length + " job selesai\nTerima kasih! 🙏";
+
+  document.getElementById('waHistPreviewText').innerText = pesan;
+  document.getElementById('waHistPhoneInput').value = '';
+  document.getElementById('waHistPhoneInput').style.borderColor = 'rgba(179,157,219,0.3)';
+  document.getElementById('waHistPhoneError').style.display = 'none';
+  document.getElementById('waHistModal').style.display = 'flex';
+  setTimeout(function(){ document.getElementById('waHistPhoneInput').focus(); }, 150);
+}
+function closeWaHistModal() { document.getElementById('waHistModal').style.display = 'none'; }
+function validateWaHistPhone(input) {
+  var val = input.value.trim().replace(/[\s\-]/g,"");
+  var errEl = document.getElementById("waHistPhoneError");
+  var valid = /^(0|62|\+62)[0-9]{8,12}$/.test(val);
+  if (!input.value.trim()) { errEl.style.display="none"; input.style.borderColor="rgba(179,157,219,0.3)"; }
+  else if (valid) { errEl.style.display="none"; input.style.borderColor="var(--hist-accent)"; }
+  else { errEl.style.display="block"; input.style.borderColor="var(--red-err)"; }
+}
+function sendWaHist() {
+  var inputVal = document.getElementById('waHistPhoneInput').value.trim();
+  if (!inputVal) { showAlert("Masukkan nomor WhatsApp!"); return; }
+  var waNumber = convertToWaNumber(inputVal);
+  if (!waNumber) { document.getElementById('waHistPhoneError').style.display = 'block'; return; }
+  var pesan = document.getElementById('waHistPreviewText').innerText;
+  window.open("https://wa.me/" + waNumber.replace("+","") + "?text=" + encodeURIComponent(pesan), "_blank");
+  closeWaHistModal();
+}
+document.getElementById('waHistPhoneInput').addEventListener('keydown', function(e){ if(e.key==='Enter') sendWaHist(); });
 
 // ═══════════════════════════════════════
 // API
@@ -1623,7 +1796,7 @@ function finishInlineEdit() {
 }
 
 // ═══════════════════════════════════════
-// PRINT
+// PRINT — JOB HARIAN
 // ═══════════════════════════════════════
 function doPrint() {
   applyFilterToRows();
@@ -1646,7 +1819,7 @@ function doPrint() {
   var off = (deleteMode && hasPermission('sharejob.delete')) ? 1 : 0;
   for (var p = 0; p < totalPages; p++) {
     var pageRows = visible.slice(p*ROWS, (p+1)*ROWS);
-    var pageDiv = document.createElement('div'); pageDiv.className = 'print-page';
+    var pageDiv = document.createElement('div'); pageDiv.className = 'print-page type-harian';
     var ph = document.createElement('div'); ph.className = 'print-page-header';
     ph.innerHTML = '<span><strong>PEMBAGIAN JOB HARIAN</strong> | '+(currentUnit?currentUnit.code+' - '+currentUnit.name:'')+' | Filter: '+periodLabel+'</span><span>Halaman '+(p+1)+'/'+totalPages+' | '+tanggal+' '+h+':'+m+'</span>';
     pageDiv.appendChild(ph);
@@ -1678,7 +1851,7 @@ function getPeriodLabel() {
 }
 
 // ═══════════════════════════════════════
-// WHATSAPP
+// WHATSAPP — JOB HARIAN
 // ═══════════════════════════════════════
 function convertToWaNumber(input) {
   var num = input.trim().replace(/[\s\-]/g,"");
