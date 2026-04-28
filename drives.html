@@ -866,6 +866,7 @@ body.light .btn-open-pdf:hover{color:#003850;}
           <div class="ctab"        id="ctab-histori" onclick="switchTab('histori')">📋 Histori</div>
           <div class="ctab"        id="ctab-manual"  onclick="switchTab('manual')">📖 Manual Book</div>
           <div class="ctab"        id="ctab-summary" onclick="switchTab('summary')">⬜ Summary</div>
+          <div class="ctab"        id="ctab-asli"    onclick="switchTab('asli')">📋 Asli</div>
         </div>
         <div class="search-wrap" id="search-wrap" style="display:none">
           <span class="search-icon">🔍</span>
@@ -939,9 +940,15 @@ body.light .btn-open-pdf:hover{color:#003850;}
         </div>
 
         <!-- TAB SUMMARY -->
-        <div class="tab-content" id="tab-summary">
-          <div id="summary-content"></div>
-        </div>
+       <!-- TAB SUMMARY -->
+<div class="tab-content" id="tab-summary">
+  <div id="summary-content"></div>
+</div>
+
+<!-- TAB ASLI -->
+<div class="tab-content" id="tab-asli">
+  <div id="asli-content"></div>
+</div>
       </div>
     </div>
   </div>
@@ -1630,7 +1637,11 @@ function renderSidebar() {
   });
 }
 
-function selectMixing(num) { S.mixing = num; updateBC(); renderSidebar(); clearSearch(); if(S.tab==='drive') renderDriveTab(); }
+function selectMixing(num) {
+  S.mixing = num; updateBC(); renderSidebar(); clearSearch();
+  if (S.tab === 'drive') renderDriveTab();
+  if (S.tab === 'asli')  renderAsliTab();
+}
 
 function switchTab(tab, force) {
   if (S.tab === tab && !force) return;
@@ -1641,17 +1652,19 @@ function switchTab(tab, force) {
   id('tab-' + tab).classList.add('active');
   showSearchBar(tab !== 'summary');
   clearSearch();
-  const placeholders = {
-    drive   : 'Cari drive, merk, serial number, stiker, status...',
-    histori : 'Cari drive ID, status, keterangan, waktu...',
-    manual  : 'Cari judul, drive ID, kategori...',
-  };
+ const placeholders = {
+  drive   : 'Cari drive, merk, serial number, stiker, status...',
+  histori : 'Cari drive ID, status, keterangan, waktu...',
+  manual  : 'Cari judul, drive ID, kategori...',
+  asli    : 'Cari drive ID, spesifikasi, serial number...',
+};
   const sb = id('search-bar');
   if (sb && placeholders[tab]) sb.placeholder = placeholders[tab];
-  if (tab === 'drive')   renderDriveTab();
-  if (tab === 'histori') renderHistoriTab();
-  if (tab === 'manual')  renderManualTab();
-  if (tab === 'summary') renderSummaryTab();
+if (tab === 'drive')   renderDriveTab();
+if (tab === 'histori') renderHistoriTab();
+if (tab === 'manual')  renderManualTab();
+if (tab === 'summary') renderSummaryTab();
+if (tab === 'asli')    renderAsliTab();
 }
 
 // ══════════════════════════════════════════════════════════
@@ -1881,7 +1894,7 @@ id('ts-modal-overlay').addEventListener('click', e => { if(e.target===id('ts-mod
 // ══════════════════════════════════════════════════════════
 async function doRefresh() {
   const btn = id('btn-refresh'); btn.classList.add('loading');
-  if (S.plant) ['drives','groupList','histori','manuals','summary'].forEach(k => delete S.cache[S.plant+'_'+k]);
+if (S.plant) ['drives','groupList','histori','manuals','summary','asli'].forEach(k => delete S.cache[S.plant+'_'+k]);
   clearSearch();
   if (S.page === 'detail') await renderDetailPage(); else await renderPlantPage();
   btn.classList.remove('loading');
@@ -1898,7 +1911,62 @@ function errHTML(msg, fn) {
   setTimeout(() => { const b = id(rid); if(b) b.onclick = fn; }, 50);
   return `<div class="state-box"><div style="font-size:28px">⚠️</div><h3>Gagal memuat</h3><p>${esc(msg)}</p><button class="btn-retry" id="${rid}">Coba Lagi</button></div>`;
 }
+// ══════════════════════════════════════════════════════════
+//  RENDER ASLI TAB
+// ══════════════════════════════════════════════════════════
+async function renderAsliTab() {
+  id('asli-content').innerHTML = loadingHTML('Memuat data asli...');
+  try {
+    if (!S.cache[S.plant + '_asli']) {
+      const data = await apiGet({ action: 'getAsli', plant: S.plant });
+      S.cache[S.plant + '_asli'] = data.asli || [];
+    }
+    const all       = S.cache[S.plant + '_asli'];
+    const groupList = S.cache[S.plant + '_groupList'] || [];
+    const curGroup  = groupList[S.mixing - 1] || '';
+    const rows      = all.filter(d => d.group === curGroup);
 
+    if (!rows.length) {
+      id('asli-content').innerHTML = `<div class="state-box">
+        <div style="font-size:28px">📭</div>
+        <h3>Tidak ada data</h3>
+        <p>${esc(curGroup)} belum ada data asli.</p>
+      </div>`;
+      return;
+    }
+
+    const q = S.searchQuery;
+    const html = `
+      <div class="mb-header-row" style="padding:14px 20px 10px">
+        <span class="mb-header-title">📋 Data Asli — ${esc(curGroup)}</span>
+        <span class="mb-header-count">${rows.length} drive</span>
+      </div>
+      <div class="mb-table-wrap" style="padding:0 20px 20px">
+        <table class="mb-table">
+          <thead><tr>
+            <th class="mb-num">#</th>
+            <th>Drive ID</th>
+            <th>Spesifikasi</th>
+            <th>Serial Number</th>
+          </tr></thead>
+          <tbody>
+            ${rows.map((r, i) => {
+              const match = !q || (r.drive_id + r.spesifikasi + r.serial_number).toLowerCase().includes(q);
+              return `<tr style="${match ? '' : 'display:none'}">
+                <td class="mb-num">${i + 1}</td>
+                <td class="hist-id">${esc(r.drive_id)}</td>
+                <td>${esc(r.spesifikasi) || '<span class="mb-empty">—</span>'}</td>
+                <td style="font-family:\'JetBrains Mono\',monospace;font-size:11px">${esc(r.serial_number) || '<span class="mb-empty">—</span>'}</td>
+              </tr>`;
+            }).join('')}
+          </tbody>
+        </table>
+      </div>`;
+    id('asli-content').innerHTML = html;
+  } catch(err) {
+    id('asli-content').innerHTML = errHTML(err.message, renderAsliTab);
+  }
+}
 // ══════════════════════════════════════════════════════════
 //  PRINT HISTORI PDF
 // ══════════════════════════════════════════════════════════
