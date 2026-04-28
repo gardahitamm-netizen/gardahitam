@@ -1167,35 +1167,40 @@ function renderHistoryTable() {
     return;
   }
 
-  // Kelompokkan berdasarkan ID+tanggal+archivedAt agar tampil rapi
+  // Kelompokkan berdasarkan ID + tanggal + archivedAt
   var grouped = {};
   var order = [];
   allHistoryData.forEach(function(t) {
     var key = t.id + '|' + t.tanggal + '|' + t.archivedAt;
-    if (!grouped[key]) { grouped[key] = { task: t, names: [] }; order.push(key); }
+    if (!grouped[key]) {
+      grouped[key] = { task: t, names: [] };
+      order.push(key);
+    }
     grouped[key].names.push(t.nama);
   });
 
   var html = '';
   order.forEach(function(key) {
-    var g = grouped[key];
-    var t = g.task;
+    var g    = grouped[key];
+    var t    = g.task;
     var allNama = g.names.join(', ');
     html += '<tr class="hist-group-row group-row" ' +
-      'data-tanggal="' + escHtml(t.tanggal||'') + '" ' +
-      'data-nama="' + escHtml(allNama.toLowerCase()) + '" ' +
-      'data-mesin="' + escHtml((t.mesin||'').toLowerCase()) + '" ' +
-      'data-tugas="' + escHtml((t.tugas||'').toLowerCase()) + '">' +
+      'data-tanggal="'  + escHtml(t.tanggal  || '') + '" ' +
+      'data-nama="'     + escHtml(allNama.toLowerCase()) + '" ' +
+      'data-mesin="'    + escHtml((t.mesin  || '').toLowerCase()) + '" ' +
+      'data-tugas="'    + escHtml((t.tugas  || '').toLowerCase()) + '">' +
       '<td>' + escHtml(t.id) + '</td>' +
       '<td>' + escHtml(allNama) + '</td>' +
       '<td>' + escHtml(t.tugas) + '</td>' +
       '<td>' + escHtml(t.mesin) + '</td>' +
       '<td style="color:var(--green-ok);font-family:\'JetBrains Mono\',monospace;font-weight:700;">' +
-        (t.jamMulai ? escHtml(t.jamMulai) : '<span style="color:var(--text-dim)">—</span>') + '</td>' +
+        (t.jamMulai   ? escHtml(t.jamMulai)   : '<span style="color:var(--text-dim)">—</span>') + '</td>' +
       '<td style="color:var(--amber-warn);font-family:\'JetBrains Mono\',monospace;font-weight:700;">' +
         (t.jamSelesai ? escHtml(t.jamSelesai) : '<span style="color:var(--text-dim)">—</span>') + '</td>' +
-      '<td class="hist-archived-at">' + escHtml(t.tanggal) +
-        (t.archivedAt ? '<br><span style="color:var(--hist-accent);font-size:9px;">' + escHtml(t.archivedAt) + '</span>' : '') + '</td>' +
+      '<td class="hist-archived-at">' +
+        escHtml(t.tanggal) +
+        (t.archivedAt ? '<br><span style="color:var(--hist-accent);font-size:9px;">' + escHtml(t.archivedAt) + '</span>' : '') +
+      '</td>' +
       '</tr>';
   });
   tbody.innerHTML = html;
