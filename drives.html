@@ -236,7 +236,7 @@ body{font-family:'Plus Jakarta Sans',sans-serif;background:var(--bg);color:var(-
   color:var(--muted);margin-bottom:8px;
   font-family:'JetBrains Mono',monospace;
 }
-.gate-role-opts{ display:flex;gap:8px; }
+.gate-role-opts{ display:flex;gap:8px;width:100%; }
 .gate-role-opt{ flex:1;min-width:0; }
 .gate-role-opt label{ width:100%;justify-content:center; }
 .gate-role-opt input[type=radio]{ display:none; }
@@ -244,9 +244,11 @@ body{font-family:'Plus Jakarta Sans',sans-serif;background:var(--bg);color:var(-
   display:flex;align-items:center;justify-content:center;gap:7px;
   padding:10px 12px;border-radius:9px;
   border:1px solid var(--border);background:var(--surf2);
-  color:var(--muted);font-size:12px;font-weight:600;
+  color:var(--muted);font-size:11px;font-weight:600;
   cursor:pointer;transition:all .18s;text-align:center;
   font-family:'JetBrains Mono',monospace;
+  width:100%;box-sizing:border-box;
+  white-space:nowrap;overflow:hidden;
 }
 .gate-role-opt input[type=radio]:checked + label{
   border-color:var(--accent);background:var(--accent-bg);color:var(--accent);
