@@ -7,9 +7,6 @@
 <style>
 @import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap');
 
-/* ══════════════════════════════════════
-   DARK MODE (default)
-══════════════════════════════════════ */
 :root {
   --bg:      #0a0e1a;
   --surf:    #111827;
@@ -26,7 +23,6 @@
   --accent:  #5badff;
   --purple:  #a78bff;
   --teal:    #00e8f8;
-
   --ok-bg:    rgba(0,240,160,.1);
   --ok-bd:    rgba(0,240,160,.32);
   --fault-bg: rgba(255,61,85,.1);
@@ -41,9 +37,6 @@
   --teal-bd:  rgba(0,232,248,.25);
 }
 
-/* ══════════════════════════════════════
-   LIGHT MODE
-══════════════════════════════════════ */
 body.light {
   --bg:#f4f8ff; --surf:#ffffff; --surf2:#e8f0fc; --surf3:#dce8f8;
   --border:#b0c8e8; --text:#0a1528; --text-strong:#050d1c; --muted:#2e5c8a;
@@ -108,9 +101,7 @@ body.light .login-footer { color:#5580a8; }
 html,body{width:100%;height:100%;overflow:hidden;}
 body{font-family:'Plus Jakarta Sans',sans-serif;background:var(--bg);color:var(--text);display:flex;flex-direction:column;}
 
-/* ══════════════════════════════════════
-   LOGIN PAGE
-══════════════════════════════════════ */
+/* LOGIN */
 #page-login {
   position:fixed;inset:0;z-index:9999;
   display:flex;align-items:center;justify-content:center;
@@ -119,77 +110,33 @@ body{font-family:'Plus Jakarta Sans',sans-serif;background:var(--bg);color:var(-
   flex-direction:column;
 }
 #page-login.hidden { display:none; }
-
 .login-box { width:100%;max-width:400px;padding:20px;animation:fadeUp .4s ease; }
 @keyframes fadeUp{from{opacity:0;transform:translateY(20px)}to{opacity:1;transform:translateY(0)}}
-
 .login-logo { text-align:center;margin-bottom:28px; }
-.login-logo-dot {
-  width:12px;height:12px;border-radius:50%;background:var(--accent);
-  box-shadow:0 0 16px var(--accent);margin:0 auto 14px;animation:blink 2s infinite;
-}
-.login-logo-title {
-  font-family:'JetBrains Mono',monospace;font-size:26px;font-weight:700;color:var(--text);
-}
+.login-logo-dot { width:12px;height:12px;border-radius:50%;background:var(--accent);box-shadow:0 0 16px var(--accent);margin:0 auto 14px;animation:blink 2s infinite; }
+.login-logo-title { font-family:'JetBrains Mono',monospace;font-size:26px;font-weight:700;color:var(--text); }
 .login-logo-title span { color:var(--accent); }
-.login-logo-sub {
-  font-family:'JetBrains Mono',monospace;font-size:10px;color:var(--muted);
-  letter-spacing:2.5px;text-transform:uppercase;margin-top:5px;
-}
-.login-card {
-  background:var(--surf);border:1px solid var(--border);border-radius:16px;
-  padding:30px 26px;position:relative;overflow:hidden;
-}
-.login-card::before {
-  content:'';position:absolute;top:0;left:0;right:0;height:2px;
-  background:linear-gradient(90deg,var(--accent),var(--purple),var(--teal));
-}
+.login-logo-sub { font-family:'JetBrains Mono',monospace;font-size:10px;color:var(--muted);letter-spacing:2.5px;text-transform:uppercase;margin-top:5px; }
+.login-card { background:var(--surf);border:1px solid var(--border);border-radius:16px;padding:30px 26px;position:relative;overflow:hidden; }
+.login-card::before { content:'';position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,var(--accent),var(--purple),var(--teal)); }
 .login-field { margin-bottom:18px; }
-.login-label {
-  font-family:'JetBrains Mono',monospace;font-size:10px;color:var(--muted);
-  letter-spacing:1.2px;text-transform:uppercase;margin-bottom:7px;display:block;
-}
-.login-input {
-  width:100%;background:var(--surf2);border:1px solid var(--border);
-  color:var(--text);padding:13px 16px;border-radius:9px;
-  font-size:13px;font-family:'JetBrains Mono',monospace;
-  outline:none;transition:border-color .2s;
-}
+.login-label { font-family:'JetBrains Mono',monospace;font-size:10px;color:var(--muted);letter-spacing:1.2px;text-transform:uppercase;margin-bottom:7px;display:block; }
+.login-input { width:100%;background:var(--surf2);border:1px solid var(--border);color:var(--text);padding:13px 16px;border-radius:9px;font-size:13px;font-family:'JetBrains Mono',monospace;outline:none;transition:border-color .2s; }
 .login-input:focus { border-color:var(--accent); box-shadow:0 0 0 3px rgba(91,173,255,.1); }
 .login-input::placeholder { color:var(--muted); }
-.login-btn {
-  width:100%;padding:14px;border-radius:9px;border:none;
-  background:linear-gradient(135deg,var(--accent),var(--purple));
-  color:#fff;font-family:'JetBrains Mono',monospace;font-size:13px;font-weight:700;
-  cursor:pointer;transition:all .2s;margin-top:6px;letter-spacing:.5px;
-}
+.login-btn { width:100%;padding:14px;border-radius:9px;border:none;background:linear-gradient(135deg,var(--accent),var(--purple));color:#fff;font-family:'JetBrains Mono',monospace;font-size:13px;font-weight:700;cursor:pointer;transition:all .2s;margin-top:6px;letter-spacing:.5px; }
 .login-btn:hover { opacity:.88;transform:translateY(-1px);box-shadow:0 6px 20px rgba(91,173,255,.3); }
 .login-btn:disabled { opacity:.45;cursor:not-allowed;transform:none;box-shadow:none; }
-.login-err {
-  display:none;background:var(--fault-bg);border:1px solid var(--fault-bd);
-  color:var(--fault);border-radius:8px;padding:10px 14px;
-  font-family:'JetBrains Mono',monospace;font-size:11px;margin-top:12px;text-align:center;
-}
+.login-err { display:none;background:var(--fault-bg);border:1px solid var(--fault-bd);color:var(--fault);border-radius:8px;padding:10px 14px;font-family:'JetBrains Mono',monospace;font-size:11px;margin-top:12px;text-align:center; }
 .login-err.visible { display:block;animation:fadeUp .2s ease; }
-.login-loading {
-  display:none;text-align:center;padding:10px;
-  font-family:'JetBrains Mono',monospace;font-size:11px;color:var(--teal);
-}
+.login-loading { display:none;text-align:center;padding:10px;font-family:'JetBrains Mono',monospace;font-size:11px;color:var(--teal); }
 .login-loading.visible { display:block; }
-.login-footer {
-  text-align:center;margin-top:18px;font-family:'JetBrains Mono',monospace;
-  font-size:9px;color:var(--muted);letter-spacing:1.5px;text-transform:uppercase;
-}
-.login-back-home {
-  display:block;text-align:center;margin-top:14px;
-  font-family:'JetBrains Mono',monospace;font-size:10px;
-  color:var(--muted);text-decoration:none;letter-spacing:.5px;
-  transition:color .2s;
-}
+.login-footer { text-align:center;margin-top:18px;font-family:'JetBrains Mono',monospace;font-size:9px;color:var(--muted);letter-spacing:1.5px;text-transform:uppercase; }
+.login-back-home { display:block;text-align:center;margin-top:14px;font-family:'JetBrains Mono',monospace;font-size:10px;color:var(--muted);text-decoration:none;letter-spacing:.5px;transition:color .2s; }
 .login-back-home:hover { color:var(--accent); }
 body.light .login-back-home { color:#2e5c8a; }
 
-/* ── TOPBAR ── */
+/* TOPBAR */
 .topbar{display:flex;align-items:center;gap:8px;padding:0 20px;height:50px;background:#07101d;border-bottom:1px solid var(--border);flex-shrink:0;z-index:200;}
 .topbar-dot{width:8px;height:8px;border-radius:50%;background:var(--accent);box-shadow:0 0 10px var(--accent);animation:blink 2s infinite;flex-shrink:0;}
 @keyframes blink{0%,100%{opacity:1}50%{opacity:.3}}
@@ -211,7 +158,7 @@ body.light .login-back-home { color:#2e5c8a; }
 .btn-theme{display:flex;align-items:center;gap:5px;font-family:'JetBrains Mono',monospace;font-size:11px;padding:5px 10px;border-radius:5px;cursor:pointer;border:1px solid var(--border);background:var(--surf2);color:var(--muted);transition:all .2s;flex-shrink:0;}
 .btn-theme:hover{border-color:var(--teal);color:var(--teal);}
 
-/* ── RUNNING TEXT ── */
+/* RUNNING TEXT */
 .running-bar{flex-shrink:0;overflow:hidden;white-space:nowrap;background:#060f1c;border-bottom:1px solid var(--border);padding:5px 0;position:relative;}
 .running-bar::before,.running-bar::after{content:'';position:absolute;top:0;bottom:0;width:40px;z-index:2;}
 .running-bar::before{left:0;background:linear-gradient(to right,#060f1c,transparent);}
@@ -221,7 +168,7 @@ body.light .login-back-home { color:#2e5c8a; }
 .running-inner .rb-lbl{color:var(--accent);font-weight:700;}
 @keyframes marquee{from{transform:translateX(100vw)}to{transform:translateX(-100%)}}
 
-/* ── BREADCRUMB ── */
+/* BREADCRUMB */
 .breadcrumb{display:flex;align-items:center;gap:5px;padding:8px 20px;font-family:'JetBrains Mono',monospace;font-size:11px;color:var(--muted);border-bottom:1px solid var(--border);background:#08111e;flex-shrink:0;overflow-x:auto;scrollbar-width:none;white-space:nowrap;}
 .breadcrumb::-webkit-scrollbar{display:none;}
 .bc-link{cursor:pointer;transition:color .15s;text-decoration:none;color:var(--muted);flex-shrink:0;}
@@ -229,12 +176,12 @@ body.light .login-back-home { color:#2e5c8a; }
 .bc-cur{color:var(--text);flex-shrink:0;font-weight:600;}
 .bc-sep{color:var(--border);flex-shrink:0;}
 
-/* ── PAGES ── */
+/* PAGES */
 #pages-wrapper{flex:1;overflow:hidden;display:flex;flex-direction:column;min-height:0;}
 .page{display:none;flex:1;overflow:hidden;flex-direction:column;min-height:0;}
 .page.active{display:flex;animation:fadeUp .25s ease;}
 
-/* ── SEARCH BAR ── */
+/* SEARCH */
 .search-wrap{display:flex;align-items:center;gap:8px;padding:10px 16px;background:var(--surf);border-bottom:1px solid var(--border);flex-shrink:0;}
 .search-icon{font-size:14px;flex-shrink:0;color:var(--muted);}
 .search-bar{flex:1;background:var(--surf2);border:1px solid var(--border);color:var(--text);padding:8px 14px;border-radius:8px;font-size:12px;font-family:'JetBrains Mono',monospace;outline:none;transition:border-color .2s;}
@@ -245,7 +192,7 @@ body.light .login-back-home { color:#2e5c8a; }
 .search-clear:hover{border-color:var(--fault);color:var(--fault);}
 .search-count{font-family:'JetBrains Mono',monospace;font-size:10px;color:var(--muted);flex-shrink:0;white-space:nowrap;}
 
-/* ── STATE BOX ── */
+/* STATE BOX */
 .state-box{display:flex;flex-direction:column;align-items:center;justify-content:center;padding:80px 20px;gap:14px;color:var(--muted);}
 .state-box .sp{width:30px;height:30px;border:2px solid var(--border);border-top-color:var(--accent);border-radius:50%;animation:spin .7s linear infinite;}
 @keyframes spin{to{transform:rotate(360deg)}}
@@ -255,7 +202,7 @@ body.light .login-back-home { color:#2e5c8a; }
 .no-results{display:none;flex-direction:column;align-items:center;padding:40px 20px;gap:8px;color:var(--muted);font-family:'JetBrains Mono',monospace;font-size:12px;}
 .no-results.visible{display:flex;}
 
-/* ── PLANT PAGE ── */
+/* PLANT PAGE */
 .plant-wrap{padding:0;overflow-y:auto;width:100%;}
 .plant-hero{position:relative;overflow:hidden;padding:34px 28px 26px;background:linear-gradient(135deg,#050a16,#0a1626,#080e1c);border-bottom:1px solid var(--border);}
 .plant-hero::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse 55% 80% at 75% 50%,rgba(91,173,255,.09),transparent 70%),radial-gradient(ellipse 35% 50% at 15% 90%,rgba(167,139,255,.07),transparent 60%);}
@@ -297,7 +244,7 @@ body.light .login-back-home { color:#2e5c8a; }
 .plant-card:hover{transform:translateY(-3px);box-shadow:0 14px 32px rgba(0,0,0,.5),0 0 0 1px var(--purple-bg);}
 .plant-card:hover .plant-card-arr{transform:translateX(3px);}
 
-/* ── UNIT PAGE ── */
+/* UNIT PAGE */
 .unit-page{padding:0;overflow-y:auto;width:100%;}
 .unit-hero{position:relative;overflow:hidden;padding:26px 28px 22px;background:linear-gradient(135deg,#050a16,#0a1626);border-bottom:1px solid var(--border);}
 .unit-hero::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse 50% 100% at 80% 50%,rgba(91,173,255,.07),transparent 70%);}
@@ -315,7 +262,7 @@ body.light .login-back-home { color:#2e5c8a; }
 .unit-card-name{font-family:'JetBrains Mono',monospace;font-size:13px;font-weight:600;margin-bottom:8px;color:var(--text);}
 .unit-badge{font-family:'JetBrains Mono',monospace;font-size:9px;padding:2px 7px;border-radius:4px;background:var(--ok-bg);color:var(--ok);border:1px solid var(--ok-bd);}
 
-/* ── FILE PAGE ── */
+/* FILE PAGE */
 .file-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:12px;}
 .file-card{background:var(--surf);border:1px solid var(--border);border-radius:10px;padding:16px 18px;cursor:pointer;transition:all .2s;position:relative;overflow:hidden;animation:cardIn .35s ease both;display:flex;align-items:center;gap:12px;}
 .file-card::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,var(--teal),var(--accent));transform:scaleX(0);transform-origin:left;transition:transform .3s;}
@@ -326,7 +273,7 @@ body.light .login-back-home { color:#2e5c8a; }
 .file-name{font-family:'JetBrains Mono',monospace;font-size:11px;font-weight:600;color:var(--text);margin-bottom:4px;word-break:break-all;line-height:1.4;}
 .file-badge{font-family:'JetBrains Mono',monospace;font-size:9px;padding:2px 7px;border-radius:4px;background:var(--teal-bg);color:var(--teal);border:1px solid var(--teal-bd);}
 
-/* ── DETAIL PAGE ── */
+/* DETAIL PAGE */
 .detail-page{display:flex;flex:1;overflow:hidden;min-height:0;flex-direction:column;}
 .detail-content-wrap{display:flex;flex:1;overflow:hidden;min-height:0;}
 .sidebar{width:200px;min-width:200px;flex-shrink:0;background:#07101c;border-right:1px solid var(--border);overflow-y:auto;display:flex;flex-direction:column;}
@@ -354,9 +301,6 @@ body.light .login-back-home { color:#2e5c8a; }
 ::-webkit-scrollbar-track{background:transparent;}
 ::-webkit-scrollbar-thumb{background:var(--border);border-radius:4px;}
 
-/* ══════════════════════════════════════
-   RESPONSIVE
-══════════════════════════════════════ */
 @media (max-width: 768px) {
   html, body { overflow:hidden !important; height:100% !important; position:fixed !important; top:0 !important; left:0 !important; }
   .topbar { height:44px !important; padding:0 10px !important; gap:6px !important; }
@@ -429,9 +373,6 @@ body.light .login-back-home { color:#2e5c8a; }
 </head>
 <body>
 
-<!-- ══════════════════════════════════════
-     LOGIN PAGE (overlay, hidden setelah login)
-══════════════════════════════════════ -->
 <div id="page-login">
   <div class="login-box">
     <div class="login-logo">
@@ -460,9 +401,6 @@ body.light .login-back-home { color:#2e5c8a; }
   </div>
 </div>
 
-<!-- ══════════════════════════════════════
-     MAIN APP (disembunyikan sebelum login)
-══════════════════════════════════════ -->
 <div id="app-wrapper" style="display:none;flex-direction:column;height:100%;width:100%;">
 
 <div class="topbar">
@@ -476,7 +414,7 @@ body.light .login-back-home { color:#2e5c8a; }
     <div class="topbar-user">👤 <span id="user-label">—</span></div>
     <div class="btn-theme" id="btn-theme" onclick="toggleTheme()">🌙 Dark</div>
     <div class="btn-sm" id="btn-refresh" onclick="doRefresh()">⟳ Refresh</div>
-    <div class="btn-sm btn-logout" onclick="doLogout()">⎋ Logout</div>
+    <div class="btn-sm btn-logout" id="btn-logout" onclick="doLogout()">⎋ Logout</div>
     <div class="topbar-clock" id="clock"></div>
   </div>
 </div>
@@ -590,8 +528,8 @@ body.light .login-back-home { color:#2e5c8a; }
     </div>
   </div>
 
-</div><!-- end pages-wrapper -->
-</div><!-- end app-wrapper -->
+</div>
+</div>
 
 <script>
 // ══════════════════════════════════════════════════════
@@ -600,22 +538,66 @@ body.light .login-back-home { color:#2e5c8a; }
 const API = 'https://script.google.com/macros/s/AKfycbyb42w69ObzQPjbCG_iQvXa7106hZt0qAkBP17D8cQxrPYCoYakwgadBBUkmg9MZdXrrA/exec';
 
 // ══════════════════════════════════════════════════════
-//  SESSION MANAGEMENT
+//  UTILS
 // ══════════════════════════════════════════════════════
-function getSession() {
-  try { return JSON.parse(localStorage.getItem('gh_session')); } catch { return null; }
-}
-function setSession(data) {
-  localStorage.setItem('gh_session', JSON.stringify(data));
-}
-function clearSession() {
-  localStorage.removeItem('gh_session');
+function $id(i) { return document.getElementById(i); }
+function esc(s){ return String(s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;'); }
+function loadingHTML(msg) { return `<div class="state-box"><div class="sp"></div><p>${msg}</p></div>`; }
+function errorHTML(msg, fn) {
+  const rid = 'r'+Date.now();
+  setTimeout(()=>{ const b=$id(rid); if(b) b.onclick=fn; }, 80);
+  return `<div class="state-box"><div style="font-size:28px">⚠️</div><h3>Gagal memuat</h3><p>${esc(msg)}</p><button class="btn-retry" id="${rid}">Coba Lagi</button></div>`;
 }
 
-let SESSION = getSession();
+// ══════════════════════════════════════════════════════
+//  SESSION
+// ══════════════════════════════════════════════════════
+function getSession()   { try { return JSON.parse(localStorage.getItem('gh_session')); } catch { return null; } }
+function setSession(d)  { localStorage.setItem('gh_session', JSON.stringify(d)); }
+function clearSession() { localStorage.removeItem('gh_session'); }
 
-// ── Init: cek apakah sudah login ──
+let SESSION = null;
+
+// ══════════════════════════════════════════════════════
+//  APP STATE — satu objek tunggal, di-reset total saat logout
+// ══════════════════════════════════════════════════════
+function freshState() {
+  return {
+    page       : 'plant',
+    plant      : null,
+    unit       : null,
+    unitLabel  : null,
+    fileId     : null,
+    fileLabel  : null,
+    filesCache : {},
+    tagsCache  : {},
+    unitsCache : {},
+    searchQuery: ''
+  };
+}
+let S = freshState();
+
+// ══════════════════════════════════════════════════════
+//  CLOCK
+// ══════════════════════════════════════════════════════
+let _clockInterval = null;
+function startClock() {
+  if (_clockInterval) clearInterval(_clockInterval);
+  const tick = () => { const c=$id('clock'); if(c) c.textContent=new Date().toTimeString().slice(0,8); };
+  tick();
+  _clockInterval = setInterval(tick, 1000);
+}
+function stopClock() {
+  if (_clockInterval) { clearInterval(_clockInterval); _clockInterval = null; }
+  const c = $id('clock'); if(c) c.textContent = '';
+}
+
+// ══════════════════════════════════════════════════════
+//  INIT
+// ══════════════════════════════════════════════════════
 (function initApp() {
+  SESSION = getSession();
+  applyTheme();
   if (SESSION) {
     showApp();
   } else {
@@ -623,51 +605,71 @@ let SESSION = getSession();
   }
 })();
 
-function showLogin() {
-  document.getElementById('page-login').classList.remove('hidden');
-  document.getElementById('app-wrapper').style.display = 'none';
-  // apply theme ke login juga
+// ══════════════════════════════════════════════════════
+//  THEME
+// ══════════════════════════════════════════════════════
+function applyTheme() {
   const isLight = localStorage.getItem('ioplc_theme') === 'light';
-  if (isLight) document.body.classList.add('light');
+  if (isLight) {
+    document.body.classList.add('light');
+    const bt = $id('btn-theme'); if(bt) bt.textContent = '☀️ Light';
+    const sm = $id('stat-mode'); if(sm) sm.textContent = 'LIGHT';
+  } else {
+    document.body.classList.remove('light');
+    const bt = $id('btn-theme'); if(bt) bt.textContent = '🌙 Dark';
+    const sm = $id('stat-mode'); if(sm) sm.textContent = 'DARK';
+  }
+}
+function toggleTheme() {
+  const isLight = document.body.classList.toggle('light');
+  const bt = $id('btn-theme'); if(bt) bt.textContent = isLight ? '☀️ Light' : '🌙 Dark';
+  const sm = $id('stat-mode'); if(sm) sm.textContent = isLight ? 'LIGHT' : 'DARK';
+  localStorage.setItem('ioplc_theme', isLight ? 'light' : 'dark');
+}
+
+// ══════════════════════════════════════════════════════
+//  SHOW LOGIN / SHOW APP
+// ══════════════════════════════════════════════════════
+function showLogin() {
+  stopClock();
+  $id('page-login').classList.remove('hidden');
+  $id('app-wrapper').style.display = 'none';
+  // Reset form
+  $id('inp-user').value = '';
+  $id('inp-pass').value = '';
+  $id('login-err').classList.remove('visible');
+  $id('login-loading').classList.remove('visible');
+  $id('btn-login').disabled = false;
 }
 
 function showApp() {
-  document.getElementById('page-login').classList.add('hidden');
-  const aw = document.getElementById('app-wrapper');
-  aw.style.display = 'flex';
-  // Set user label
-  const ul = document.getElementById('user-label');
+  $id('page-login').classList.add('hidden');
+  $id('app-wrapper').style.display = 'flex';
+
+  // Update user label
+  const ul = $id('user-label');
   if (ul && SESSION) {
     const plantLabel = SESSION.plant === 'ALL' ? 'ALL PLANT' : SESSION.plant;
     ul.textContent = SESSION.username + ' [' + plantLabel + ']';
   }
-  // Apply theme
-  const isLight = localStorage.getItem('ioplc_theme') === 'light';
-  if (isLight) {
-    document.body.classList.add('light');
-    const bt = document.getElementById('btn-theme');
-    if (bt) bt.textContent = '☀️ Light';
-    const sm = document.getElementById('stat-mode');
-    if (sm) sm.textContent = 'LIGHT';
-  }
-  // Start clock
-  setInterval(() => {
-    const c = document.getElementById('clock');
-    if (c) c.textContent = new Date().toTimeString().slice(0,8);
-  }, 1000);
-  const c = document.getElementById('clock');
-  if (c) c.textContent = new Date().toTimeString().slice(0,8);
-  // Nav to plant
+
+  applyTheme();
+  startClock();
   navTo('plant');
 }
 
-// ── LOGIN ──
+// ══════════════════════════════════════════════════════
+//  LOGIN
+// ══════════════════════════════════════════════════════
 async function doLogin() {
-  const username = document.getElementById('inp-user').value.trim();
-  const password = document.getElementById('inp-pass').value;
+  const username = $id('inp-user').value.trim();
+  const password = $id('inp-pass').value;
   if (!username || !password) { showLoginErr('Username dan password wajib diisi'); return; }
 
-  setLoginLoading(true);
+  $id('btn-login').disabled = true;
+  $id('login-loading').classList.add('visible');
+  $id('login-err').classList.remove('visible');
+
   try {
     const res  = await fetch(API + '?' + new URLSearchParams({ action:'login', username, password }));
     const data = await res.json();
@@ -680,6 +682,7 @@ async function doLogin() {
         loginAt  : Date.now()
       };
       setSession(SESSION);
+      S = freshState(); // ← PENTING: reset state untuk user baru
       showApp();
     } else {
       showLoginErr(data.message || 'Login gagal');
@@ -687,122 +690,44 @@ async function doLogin() {
   } catch(err) {
     showLoginErr('Koneksi gagal, coba lagi');
   }
-  setLoginLoading(false);
+
+  $id('btn-login').disabled = false;
+  $id('login-loading').classList.remove('visible');
 }
 
-function setLoginLoading(on) {
-  document.getElementById('btn-login').disabled = on;
-  document.getElementById('login-loading').classList.toggle('visible', on);
-  if (on) document.getElementById('login-err').classList.remove('visible');
-}
 function showLoginErr(msg) {
-  const el = document.getElementById('login-err');
+  const el = $id('login-err');
   el.textContent = '⚠️ ' + msg;
   el.classList.add('visible');
 }
 
-// ── LOGOUT ──
-// ── LOGOUT ──
-// ── LOGOUT ──
+// ══════════════════════════════════════════════════════
+//  LOGOUT — reset SEMUA state, kembali ke login
+// ══════════════════════════════════════════════════════
 function doLogout() {
-  // 1. Bersihkan session storage DULU
+  // 1. Bersihkan session & state
   clearSession();
   SESSION = null;
+  S = freshState();
 
-  // 2. Reset SEMUA state termasuk cache
-  S.page       = 'plant';
-  S.plant      = null;
-  S.unit       = null;
-  S.unitLabel  = null;
-  S.fileId     = null;
-  S.fileLabel  = null;
-  S.filesCache = {};
-  S.tagsCache  = {};
-  S.unitsCache = {};
-  S.searchQuery = '';
+  // 2. Reset semua DOM konten
+  ['plant-content','unit-content','file-content','det-content','sidebar'].forEach(i => {
+    const el = $id(i); if(el) el.innerHTML = '';
+  });
+  [$id('det-title'),$id('det-meta')].forEach(el => { if(el) el.textContent = ''; });
+  $id('tag-no-results').classList.remove('visible');
 
-  // 3. Reset UI konten biar tidak ada sisa render lama
-  const el = document.getElementById('plant-content');
-  if (el) el.innerHTML = '';
-  const uc = document.getElementById('unit-content');
-  if (uc) uc.innerHTML = '';
-  const fc = document.getElementById('file-content');
-  if (fc) fc.innerHTML = '';
-  const dc = document.getElementById('det-content');
-  if (dc) dc.innerHTML = '';
-  const sb = document.getElementById('sidebar');
-  if (sb) sb.innerHTML = '';
-
-  // 4. Reset semua page ke default (hilangkan .active)
+  // 3. Kembali ke page plant & hide semua breadcrumb extra
   document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
-  document.getElementById('page-plant').classList.add('active');
+  $id('page-plant').classList.add('active');
+  ['bcs2','bc2','bcs3','bc3','bcs4','bc4'].forEach(i => {
+    const el = $id(i); if(el) el.style.display = 'none';
+  });
+  $id('topbar-sub').textContent = 'PLC Input / Output Tags';
 
-  // 5. Reset login form
-  document.getElementById('inp-user').value = '';
-  document.getElementById('inp-pass').value = '';
-  document.getElementById('login-err').classList.remove('visible');
-  document.getElementById('login-loading').classList.remove('visible');
-  document.getElementById('btn-login').disabled = false;
-
-  // 6. Tampilkan login
+  // 4. Tampilkan login
   showLogin();
 }
-
-function showApp() {
-  document.getElementById('page-login').classList.add('hidden');
-  const aw = document.getElementById('app-wrapper');
-  aw.style.display = 'flex';
-
-  // Set user label — gunakan SESSION yang sudah pasti fresh
-  const ul = document.getElementById('user-label');
-  if (ul && SESSION) {
-    const plantLabel = SESSION.plant === 'ALL' ? 'ALL PLANT' : SESSION.plant;
-    ul.textContent = SESSION.username + ' [' + plantLabel + ']';
-  }
-
-  // Apply theme
-  const isLight = localStorage.getItem('ioplc_theme') === 'light';
-  if (isLight) {
-    document.body.classList.add('light');
-    const bt = document.getElementById('btn-theme');
-    if (bt) bt.textContent = '☀️ Light';
-    const sm = document.getElementById('stat-mode');
-    if (sm) sm.textContent = 'LIGHT';
-  } else {
-    document.body.classList.remove('light');
-    const bt = document.getElementById('btn-theme');
-    if (bt) bt.textContent = '🌙 Dark';
-    const sm = document.getElementById('stat-mode');
-    if (sm) sm.textContent = 'DARK';
-  }
-
-  // Start clock (clear dulu kalau ada interval lama)
-  if (window._clockInterval) clearInterval(window._clockInterval);
-  window._clockInterval = setInterval(() => {
-    const c = document.getElementById('clock');
-    if (c) c.textContent = new Date().toTimeString().slice(0, 8);
-  }, 1000);
-  const c = document.getElementById('clock');
-  if (c) c.textContent = new Date().toTimeString().slice(0, 8);
-
-  // Nav to plant — render fresh dengan SESSION baru
-  navTo('plant');
-}
-// ══════════════════════════════════════════════════════
-//  APP STATE
-// ══════════════════════════════════════════════════════
-const S = {
-  page      : 'plant',
-  plant     : null,
-  unit      : null,
-  unitLabel : null,
-  fileId    : null,
-  fileLabel : null,
-  filesCache: {},
-  tagsCache : {},
-  unitsCache: {},
-  searchQuery: ''
-};
 
 // ══════════════════════════════════════════════════════
 //  API
@@ -820,34 +745,32 @@ async function apiFetch(params) {
 // ══════════════════════════════════════════════════════
 function onSearch(val) {
   S.searchQuery = val.trim().toLowerCase();
-  id('search-clear').classList.toggle('visible', val.length > 0);
+  $id('search-clear').classList.toggle('visible', val.length > 0);
   applyTagSearch(S.searchQuery);
 }
 function clearSearch() {
-  id('search-bar').value = '';
+  const sb = $id('search-bar'); if(sb) sb.value = '';
   S.searchQuery = '';
-  id('search-clear').classList.remove('visible');
-  id('search-count').textContent = '';
+  $id('search-clear').classList.remove('visible');
+  $id('search-count').textContent = '';
   applyTagSearch('');
 }
 function applyTagSearch(q) {
   const rows = document.querySelectorAll('#det-content .tag-table tbody tr');
   let visible = 0;
   rows.forEach(row => {
-    const text  = row.textContent.toLowerCase();
-    const match = !q || text.includes(q);
+    const match = !q || row.textContent.toLowerCase().includes(q);
     row.classList.toggle('search-hidden', !match);
     if (match) visible++;
   });
-  const noRes = id('tag-no-results');
   const total = rows.length;
   if (q && total > 0) {
-    id('search-count').textContent = visible + ' / ' + total + ' tags';
-    id('tag-search-query').textContent = q;
-    noRes.classList.toggle('visible', visible === 0);
+    $id('search-count').textContent = visible + ' / ' + total + ' tags';
+    $id('tag-search-query').textContent = q;
+    $id('tag-no-results').classList.toggle('visible', visible === 0);
   } else {
-    id('search-count').textContent = total > 0 ? total + ' tags' : '';
-    noRes.classList.remove('visible');
+    $id('search-count').textContent = total > 0 ? total + ' tags' : '';
+    $id('tag-no-results').classList.remove('visible');
   }
 }
 
@@ -856,15 +779,15 @@ function applyTagSearch(q) {
 // ══════════════════════════════════════════════════════
 function navTo(page, opts) {
   opts = opts || {};
-  if (opts.plant)     S.plant     = opts.plant;
-  if (opts.unit)      S.unit      = opts.unit;
-  if (opts.unitLabel) S.unitLabel = opts.unitLabel;
-  if (opts.fileId)    S.fileId    = opts.fileId;
-  if (opts.fileLabel) S.fileLabel = opts.fileLabel;
+  if (opts.plant     !== undefined) S.plant     = opts.plant;
+  if (opts.unit      !== undefined) S.unit      = opts.unit;
+  if (opts.unitLabel !== undefined) S.unitLabel = opts.unitLabel;
+  if (opts.fileId    !== undefined) S.fileId    = opts.fileId;
+  if (opts.fileLabel !== undefined) S.fileLabel = opts.fileLabel;
   S.page = page;
 
   document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
-  document.getElementById('page-' + page).classList.add('active');
+  $id('page-' + page).classList.add('active');
 
   updateBreadcrumb();
   updateTopbar();
@@ -876,9 +799,9 @@ function navTo(page, opts) {
 }
 
 function updateBreadcrumb() {
-  const s2=id('bcs2'),b2=id('bc2');
-  const s3=id('bcs3'),b3=id('bc3');
-  const s4=id('bcs4'),b4=id('bc4');
+  const s2=$id('bcs2'), b2=$id('bc2');
+  const s3=$id('bcs3'), b3=$id('bc3');
+  const s4=$id('bcs4'), b4=$id('bc4');
 
   if (S.plant) {
     s2.style.display = b2.style.display = '';
@@ -896,14 +819,14 @@ function updateBreadcrumb() {
 
   if (S.fileLabel && S.page === 'detail') {
     s4.style.display = b4.style.display = '';
-    b4.textContent  = S.fileLabel;
-    b4.className    = 'bc-cur';
+    b4.textContent = S.fileLabel;
+    b4.className = 'bc-cur';
   } else { s4.style.display=b4.style.display='none'; }
 }
 
 function updateTopbar() {
-  const sub = id('topbar-sub');
-  if      (S.page === 'detail') sub.textContent = S.fileLabel || S.fileId;
+  const sub = $id('topbar-sub');
+  if      (S.page === 'detail') sub.textContent = S.fileLabel || S.fileId || '—';
   else if (S.page === 'file')   sub.textContent = S.plant + ' — ' + S.unitLabel;
   else if (S.page === 'unit')   sub.textContent = S.plant + ' — Pilih Unit';
   else                          sub.textContent = 'PLC Input / Output Tags';
@@ -923,26 +846,31 @@ const PLANT_META = {
 };
 
 async function renderPlantPage() {
-  const el = id('plant-content');
+  const el = $id('plant-content');
   el.innerHTML = loadingHTML('Memuat daftar plant...');
   try {
-    // Kirim plant_access dari session agar backend filter sesuai akses user
     const plantAccess = SESSION ? SESSION.plant : 'ALL';
     const data = await apiFetch({ action:'getPlants', plant_access: plantAccess });
-    id('stat-total').textContent = data.plants.length;
-    id('stat-sync').textContent  = new Date().toTimeString().slice(0,5);
+    $id('stat-total').textContent = data.plants.length;
+    $id('stat-sync').textContent  = new Date().toTimeString().slice(0,5);
+    if (!data.plants.length) {
+      el.innerHTML = `<div class="state-box"><div style="font-size:28px">🏭</div><h3>Tidak ada plant</h3><p>Tidak ada plant yang bisa diakses untuk akun ini.</p></div>`;
+      return;
+    }
     el.innerHTML = `<div class="plant-grid">${data.plants.map((p,i) => plantCard(p,i)).join('')}</div>`;
   } catch(err) { el.innerHTML = errorHTML(err.message, renderPlantPage); }
 }
 
 function plantCard(p, i) {
   const m = PLANT_META[p.plant] || { desc:'Mixing Plant', color:'#5badff', tag:'PLC' };
-  return `<div class="plant-card" onclick="navTo('unit',{plant:'${p.plant}'})">
+  // Escape plant name untuk onclick attribute
+  const plantEsc = p.plant.replace(/'/g, "\\'");
+  return `<div class="plant-card" onclick="navTo('unit',{plant:'${plantEsc}'})">
     <div class="plant-card-top">
       <div class="plant-card-stripe" style="background:linear-gradient(90deg,${m.color},${m.color}66)"></div>
       <div class="plant-card-dot" style="background:${m.color};box-shadow:0 0 8px ${m.color}"></div>
       <div class="plant-card-seq">PLANT ID · ${String(i+1).padStart(2,'0')}</div>
-      <div class="plant-card-name" style="color:${m.color}">${p.plant}</div>
+      <div class="plant-card-name" style="color:${m.color}">${esc(p.plant)}</div>
       <div class="plant-card-desc">${m.desc}</div>
     </div>
     <div class="plant-card-bottom">
@@ -956,18 +884,18 @@ function plantCard(p, i) {
 //  UNIT PAGE
 // ══════════════════════════════════════════════════════
 async function renderUnitPage() {
-  id('unit-title').textContent = S.plant + ' — Pilih Unit';
-  id('unit-sub').textContent   = 'Pilih unit / mixer untuk melihat I/O List';
-  const el = id('unit-content');
+  $id('unit-title').textContent = (S.plant || '—') + ' — Pilih Unit';
+  $id('unit-sub').textContent   = 'Pilih unit / mixer untuk melihat I/O List';
+  const el = $id('unit-content');
   el.innerHTML = loadingHTML('Memuat daftar unit...');
   try {
     if (!S.unitsCache[S.plant]) {
-      const data = await apiFetch({ action:'getUnits', plant:S.plant });
+      const data = await apiFetch({ action:'getUnits', plant: S.plant });
       S.unitsCache[S.plant] = data.units;
     }
     const units = S.unitsCache[S.plant];
-    if (!units.length) {
-      el.innerHTML = `<div class="state-box"><div style="font-size:28px">📁</div><h3>Tidak ada unit</h3><p>Folder ${S.plant} kosong.</p></div>`;
+    if (!units || !units.length) {
+      el.innerHTML = `<div class="state-box"><div style="font-size:28px">📁</div><h3>Tidak ada unit</h3><p>Folder ${esc(S.plant)} kosong.</p></div>`;
       return;
     }
     el.innerHTML = `<div class="unit-grid">${units.map((u,i) => unitCard(u,i)).join('')}</div>`;
@@ -975,7 +903,9 @@ async function renderUnitPage() {
 }
 
 function unitCard(u, i) {
-  return `<div class="unit-card" onclick="navTo('file',{unit:'${u.unit}',unitLabel:'${esc(u.label)}'})" style="animation-delay:${i*0.05}s">
+  const unitIdEsc   = u.unit.replace(/'/g, "\\'");
+  const unitLblEsc  = esc(u.label).replace(/'/g, '&#39;');
+  return `<div class="unit-card" onclick="navTo('file',{unit:'${unitIdEsc}',unitLabel:'${unitLblEsc}'})" style="animation-delay:${i*0.05}s">
     <div class="unit-card-name">${esc(u.label)}</div>
     <span class="unit-badge">● Active</span>
   </div>`;
@@ -985,20 +915,20 @@ function unitCard(u, i) {
 //  FILE PAGE
 // ══════════════════════════════════════════════════════
 async function renderFilePage() {
-  id('file-title').textContent = S.plant + ' — ' + S.unitLabel;
-  id('file-sub').textContent   = 'Pilih file I/O List untuk melihat PLC Tags';
-  id('file-back-btn').onclick  = () => navTo('unit');
-  const el = id('file-content');
+  $id('file-title').textContent = (S.plant||'—') + ' — ' + (S.unitLabel||'—');
+  $id('file-sub').textContent   = 'Pilih file I/O List untuk melihat PLC Tags';
+  $id('file-back-btn').onclick  = () => navTo('unit');
+  const el = $id('file-content');
   el.innerHTML = loadingHTML('Memuat daftar file...');
   try {
     const cacheKey = S.unit;
     if (!S.filesCache[cacheKey]) {
-      const data = await apiFetch({ action:'getTags', plant:S.plant, unit:S.unit });
+      const data = await apiFetch({ action:'getTags', plant: S.plant, unit: S.unit });
       S.filesCache[cacheKey] = data.files;
     }
     const files = S.filesCache[cacheKey];
     if (!files || !files.length) {
-      el.innerHTML = `<div class="state-box"><div style="font-size:28px">📭</div><h3>Tidak ada file</h3><p>Tidak ada file Excel di folder ${esc(S.unitLabel)}.</p></div>`;
+      el.innerHTML = `<div class="state-box"><div style="font-size:28px">📭</div><h3>Tidak ada file</h3><p>Tidak ada file Excel di folder ${esc(S.unitLabel||'')}.</p></div>`;
       return;
     }
     el.innerHTML = `<div class="file-grid">${files.map((f,i) => fileCard(f,i)).join('')}</div>`;
@@ -1007,7 +937,9 @@ async function renderFilePage() {
 }
 
 function fileCard(f, i) {
-  return `<div class="file-card" onclick="navTo('detail',{fileId:'${f.fileId}',fileLabel:'${esc(f.name)}'})" style="animation-delay:${i*0.04}s">
+  const fIdEsc   = f.fileId.replace(/'/g, "\\'");
+  const fNameEsc = esc(f.name).replace(/'/g, '&#39;');
+  return `<div class="file-card" onclick="navTo('detail',{fileId:'${fIdEsc}',fileLabel:'${fNameEsc}'})" style="animation-delay:${i*0.04}s">
     <div class="file-icon">📄</div>
     <div class="file-info">
       <div class="file-name">${esc(f.name)}</div>
@@ -1020,50 +952,50 @@ function fileCard(f, i) {
 //  DETAIL PAGE
 // ══════════════════════════════════════════════════════
 async function renderDetailPage() {
-  id('det-title').textContent = S.fileLabel || '—';
-  id('det-meta').textContent  = 'Memuat data tag...';
-  id('det-content').innerHTML = loadingHTML('Membaca file dari Google Drive...');
+  $id('det-title').textContent = S.fileLabel || '—';
+  $id('det-meta').textContent  = 'Memuat data tag...';
+  $id('det-content').innerHTML = loadingHTML('Membaca file dari Google Drive...');
 
   const files = S.filesCache[S.unit] || [];
   renderSidebar(files);
 
   try {
     if (!S.tagsCache[S.fileId]) {
-      const data = await apiFetch({ action:'getTags', plant:S.plant, unit:S.unit, fileId:S.fileId });
+      const data = await apiFetch({ action:'getTags', plant: S.plant, unit: S.unit, fileId: S.fileId });
       S.tagsCache[S.fileId] = data;
     }
     const data = S.tagsCache[S.fileId];
     const rows = data.tables && data.tables[0] ? data.tables[0].rows : [];
-    id('det-meta').textContent  = `${rows.length} tags · ${S.plant} ${S.unitLabel} — ${S.fileLabel}`;
-    id('search-count').textContent = rows.length + ' tags';
+    $id('det-meta').textContent     = `${rows.length} tags · ${S.plant} ${S.unitLabel||''} — ${S.fileLabel||''}`;
+    $id('search-count').textContent = rows.length + ' tags';
     renderTagTable(rows);
   } catch(err) {
-    id('det-content').innerHTML = errorHTML(err.message, renderDetailPage);
-    id('det-meta').textContent  = 'Gagal memuat';
+    $id('det-content').innerHTML = errorHTML(err.message, renderDetailPage);
+    $id('det-meta').textContent  = 'Gagal memuat';
   }
 }
 
 function renderSidebar(files) {
-  if (!files || !files.length) { id('sidebar').innerHTML = ''; return; }
-  id('sidebar').innerHTML =
+  const sidebar = $id('sidebar');
+  if (!files || !files.length) { sidebar.innerHTML = ''; return; }
+  sidebar.innerHTML =
     '<div class="sb-head">FILES</div>' +
     files.map(f => {
-      const active = f.fileId === S.fileId ? 'active' : '';
-      return `<div class="sb-item ${active}" onclick="navTo('detail',{fileId:'${f.fileId}',fileLabel:'${esc(f.name)}'})">
-        ${esc(f.name)}
-      </div>`;
+      const active  = f.fileId === S.fileId ? 'active' : '';
+      const fIdEsc  = f.fileId.replace(/'/g, "\\'");
+      const fNmEsc  = esc(f.name).replace(/'/g, '&#39;');
+      return `<div class="sb-item ${active}" onclick="navTo('detail',{fileId:'${fIdEsc}',fileLabel:'${fNmEsc}'})">${esc(f.name)}</div>`;
     }).join('');
 
   requestAnimationFrame(() => {
-    const sidebar  = id('sidebar');
-    const activeEl = sidebar && sidebar.querySelector('.sb-item.active');
+    const activeEl = sidebar.querySelector('.sb-item.active');
     if (activeEl) activeEl.scrollIntoView({ inline:'center', block:'nearest', behavior:'smooth' });
   });
 }
 
 function renderTagTable(rows) {
   if (!rows || !rows.length) {
-    id('det-content').innerHTML = `<div class="state-box"><div style="font-size:28px">📭</div><h3>Tidak ada data</h3><p>File ini kosong atau format tidak dikenali.</p></div>`;
+    $id('det-content').innerHTML = `<div class="state-box"><div style="font-size:28px">📭</div><h3>Tidak ada data</h3><p>File ini kosong atau format tidak dikenali.</p></div>`;
     return;
   }
   const tbody = rows.map((r,i) => {
@@ -1077,7 +1009,7 @@ function renderTagTable(rows) {
     </tr>`;
   }).join('');
 
-  id('det-content').innerHTML = `
+  $id('det-content').innerHTML = `
     <div class="tag-table-wrap">
       <table class="tag-table">
         <thead><tr><th>#</th><th>NAME</th><th>TYPE</th><th>ADDRESS</th><th>COMMENT</th></tr></thead>
@@ -1089,38 +1021,20 @@ function renderTagTable(rows) {
 }
 
 // ══════════════════════════════════════════════════════
-//  THEME
-// ══════════════════════════════════════════════════════
-function toggleTheme() {
-  const isLight = document.body.classList.toggle('light');
-  id('btn-theme').textContent = isLight ? '☀️ Light' : '🌙 Dark';
-  const m = id('stat-mode'); if (m) m.textContent = isLight ? 'LIGHT' : 'DARK';
-  localStorage.setItem('ioplc_theme', isLight ? 'light' : 'dark');
-}
-
-// ══════════════════════════════════════════════════════
 //  REFRESH
 // ══════════════════════════════════════════════════════
 async function doRefresh() {
-  const btn = id('btn-refresh');
-  btn.classList.add('loading'); btn.textContent='⟳ Loading...';
-  if      (S.page === 'detail') { delete S.tagsCache[S.fileId]; clearSearch(); await renderDetailPage(); }
-  else if (S.page === 'file')   { delete S.filesCache[S.unit];  await renderFilePage(); }
-  else if (S.page === 'unit')   { delete S.unitsCache[S.plant]; await renderUnitPage(); }
-  else                          { await renderPlantPage(); }
-  btn.classList.remove('loading'); btn.textContent='⟳ Refresh';
-}
-
-// ══════════════════════════════════════════════════════
-//  UTILS
-// ══════════════════════════════════════════════════════
-function id(i) { return document.getElementById(i); }
-function esc(s){ return String(s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;'); }
-function loadingHTML(msg) { return `<div class="state-box"><div class="sp"></div><p>${msg}</p></div>`; }
-function errorHTML(msg, fn) {
-  const rid = 'r'+Date.now();
-  setTimeout(()=>{ const b=id(rid); if(b) b.onclick=fn; }, 50);
-  return `<div class="state-box"><div style="font-size:28px">⚠️</div><h3>Gagal memuat</h3><p>${esc(msg)}</p><button class="btn-retry" id="${rid}">Coba Lagi</button></div>`;
+  const btn = $id('btn-refresh');
+  btn.classList.add('loading');
+  btn.textContent = '⟳ Loading...';
+  try {
+    if      (S.page === 'detail') { delete S.tagsCache[S.fileId]; clearSearch(); await renderDetailPage(); }
+    else if (S.page === 'file')   { delete S.filesCache[S.unit];  await renderFilePage(); }
+    else if (S.page === 'unit')   { delete S.unitsCache[S.plant]; await renderUnitPage(); }
+    else                          { await renderPlantPage(); }
+  } catch(e) { /* sudah handle di masing-masing render */ }
+  btn.classList.remove('loading');
+  btn.textContent = '⟳ Refresh';
 }
 </script>
 </body>
