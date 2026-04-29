@@ -2011,36 +2011,88 @@ async function renderAsliTab() {
 
     const q = S.searchQuery;
 
-    /* Helper: render nilai kolom Cari Data Lapangan */
-    function renderCari(val) {
+    // Hitung statistik
+    const total          = rows.length;
+    const sesuai         = rows.filter(r => r.status === 'SESUAI').length;
+    const tidakSesuai    = rows.filter(r => r.status === 'TIDAK SESUAI').length;
+    const tidakDitemukan = rows.filter(r => r.status === 'TIDAK DITEMUKAN').length;
+
+    function rowStyle(status) {
+      if (status === 'SESUAI')          return 'background:rgba(0,240,160,.08);border-left:3px solid var(--ok)';
+      if (status === 'TIDAK SESUAI')    return 'background:rgba(255,61,85,.08);border-left:3px solid var(--fault)';
+      if (status === 'TIDAK DITEMUKAN') return 'background:rgba(126,184,232,.06);border-left:3px solid var(--kosong)';
+      return '';
+    }
+
+    function statusBadge(status) {
+      if (status === 'SESUAI')
+        return `<span class="status-tag st-ok">✅ SESUAI</span>`;
+      if (status === 'TIDAK SESUAI')
+        return `<span class="status-tag st-fault">❌ TIDAK SESUAI</span>`;
+      if (status === 'TIDAK DITEMUKAN')
+        return `<span class="status-tag st-kosong">🔍 TDK DITEMUKAN</span>`;
+      return `<span style="color:var(--muted)">—</span>`;
+    }
+
+    function renderCari(val, status) {
       if (!val || val === '—') return '<span style="color:var(--muted)">—</span>';
       if (val.trim() === '#REF!') return `<span class="asli-ref-err">#REF!</span>`;
+      if (status === 'TIDAK SESUAI')
+        return `<span class="asli-cari" style="color:var(--fault);border-color:rgba(255,61,85,.35);background:rgba(255,61,85,.1)">${esc(val)}</span>`;
+      if (status === 'SESUAI')
+        return `<span class="asli-cari" style="color:var(--ok);border-color:rgba(0,240,160,.35);background:rgba(0,240,160,.1)">${esc(val)}</span>`;
       return `<span class="asli-cari">${esc(val)}</span>`;
     }
 
     const html = `
-      <div class="mb-header-row" style="padding:14px 20px 10px">
-        <span class="mb-header-title">📋 Data Asli — ${esc(curGroup)}</span>
-        <span class="mb-header-count">${rows.length} drive</span>
+      <div style="padding:14px 20px 0">
+        <div class="mb-header-row">
+          <span class="mb-header-title">📋 Data Asli — ${esc(curGroup)}</span>
+          <span class="mb-header-count">${total} drive</span>
+        </div>
+
+        <!-- Stats Bar -->
+        <div style="display:flex;gap:10px;flex-wrap:wrap;margin-bottom:14px">
+          <div class="sum-stat" style="min-width:90px;padding:10px 14px">
+            <div class="sum-stat-label">Sesuai</div>
+            <div class="sum-stat-val ok" style="font-size:18px">${sesuai}</div>
+          </div>
+          <div class="sum-stat" style="min-width:90px;padding:10px 14px">
+            <div class="sum-stat-label">Tidak Sesuai</div>
+            <div class="sum-stat-val" style="font-size:18px;color:var(--fault)">${tidakSesuai}</div>
+          </div>
+          <div class="sum-stat" style="min-width:90px;padding:10px 14px">
+            <div class="sum-stat-label">Tdk Ditemukan</div>
+            <div class="sum-stat-val kosong" style="font-size:18px">${tidakDitemukan}</div>
+          </div>
+          <div class="sum-stat" style="min-width:90px;padding:10px 14px">
+            <div class="sum-stat-label">Total</div>
+            <div class="sum-stat-val accent" style="font-size:18px">${total}</div>
+          </div>
+        </div>
       </div>
+
       <div class="mb-table-wrap" style="padding:0 20px 20px">
         <table class="mb-table">
           <thead><tr>
             <th class="mb-num">#</th>
-            <th>Drive ID</th>
+            <th>Drive ID (Posisi Asli)</th>
+            <th>Ada di Lapangan</th>
+            <th>Serial Number Asli</th>
             <th>Spesifikasi</th>
-            <th>Serial Number</th>
-            <th>Cari Data Lapangan</th>
+            <th>Status</th>
           </tr></thead>
           <tbody>
             ${rows.map((r, i) => {
-              const match = !q || (r.drive_id + r.spesifikasi + r.serial_number + r.cari_data_lapangan).toLowerCase().includes(q);
-              return `<tr style="${match ? '' : 'display:none'}">
+              const match = !q || (r.drive_id + r.spesifikasi + r.serial_number + (r['cari data lapangan']||r.cari_data_lapangan||'') + r.status).toLowerCase().includes(q);
+              const cari  = r['cari data lapangan'] || r.cari_data_lapangan || '';
+              return `<tr style="${rowStyle(r.status)}${match ? '' : ';display:none'}">
                 <td class="mb-num">${i + 1}</td>
                 <td><span class="asli-drive-id">${esc(r.drive_id)}</span></td>
+                <td>${renderCari(cari, r.status)}</td>
+                <td style="font-family:'JetBrains Mono',monospace;font-size:11px;color:var(--text)">${esc(r.serial_number) || '<span style="color:var(--muted)">—</span>'}</td>
                 <td style="font-size:12px;color:var(--text)">${esc(r.spesifikasi) || '<span style="color:var(--muted)">—</span>'}</td>
-                <td style="font-family:\'JetBrains Mono\',monospace;font-size:11px;color:var(--text)">${esc(r.serial_number) || '<span style="color:var(--muted)">—</span>'}</td>
-                <td>${renderCari(r.cari_data_lapangan)}</td>
+                <td>${statusBadge(r.status)}</td>
               </tr>`;
             }).join('')}
           </tbody>
