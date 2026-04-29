@@ -702,19 +702,91 @@ function showLoginErr(msg) {
 }
 
 // ── LOGOUT ──
+// ── LOGOUT ──
 function doLogout() {
+  // 1. Bersihkan session storage DULU
   clearSession();
   SESSION = null;
-  S.plant = null; S.unit = null; S.unitLabel = null;
-  S.fileId = null; S.fileLabel = null;
-  S.filesCache = {}; S.tagsCache = {}; S.unitsCache = {};
-  // Reset login form
+
+  // 2. Reset SEMUA state termasuk cache
+  S.page       = 'plant';
+  S.plant      = null;
+  S.unit       = null;
+  S.unitLabel  = null;
+  S.fileId     = null;
+  S.fileLabel  = null;
+  S.filesCache = {};
+  S.tagsCache  = {};
+  S.unitsCache = {};
+  S.searchQuery = '';
+
+  // 3. Reset UI konten biar tidak ada sisa render lama
+  const el = document.getElementById('plant-content');
+  if (el) el.innerHTML = '';
+  const uc = document.getElementById('unit-content');
+  if (uc) uc.innerHTML = '';
+  const fc = document.getElementById('file-content');
+  if (fc) fc.innerHTML = '';
+  const dc = document.getElementById('det-content');
+  if (dc) dc.innerHTML = '';
+  const sb = document.getElementById('sidebar');
+  if (sb) sb.innerHTML = '';
+
+  // 4. Reset semua page ke default (hilangkan .active)
+  document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+  document.getElementById('page-plant').classList.add('active');
+
+  // 5. Reset login form
   document.getElementById('inp-user').value = '';
   document.getElementById('inp-pass').value = '';
   document.getElementById('login-err').classList.remove('visible');
+  document.getElementById('login-loading').classList.remove('visible');
+  document.getElementById('btn-login').disabled = false;
+
+  // 6. Tampilkan login
   showLogin();
 }
 
+function showApp() {
+  document.getElementById('page-login').classList.add('hidden');
+  const aw = document.getElementById('app-wrapper');
+  aw.style.display = 'flex';
+
+  // Set user label — gunakan SESSION yang sudah pasti fresh
+  const ul = document.getElementById('user-label');
+  if (ul && SESSION) {
+    const plantLabel = SESSION.plant === 'ALL' ? 'ALL PLANT' : SESSION.plant;
+    ul.textContent = SESSION.username + ' [' + plantLabel + ']';
+  }
+
+  // Apply theme
+  const isLight = localStorage.getItem('ioplc_theme') === 'light';
+  if (isLight) {
+    document.body.classList.add('light');
+    const bt = document.getElementById('btn-theme');
+    if (bt) bt.textContent = '☀️ Light';
+    const sm = document.getElementById('stat-mode');
+    if (sm) sm.textContent = 'LIGHT';
+  } else {
+    document.body.classList.remove('light');
+    const bt = document.getElementById('btn-theme');
+    if (bt) bt.textContent = '🌙 Dark';
+    const sm = document.getElementById('stat-mode');
+    if (sm) sm.textContent = 'DARK';
+  }
+
+  // Start clock (clear dulu kalau ada interval lama)
+  if (window._clockInterval) clearInterval(window._clockInterval);
+  window._clockInterval = setInterval(() => {
+    const c = document.getElementById('clock');
+    if (c) c.textContent = new Date().toTimeString().slice(0, 8);
+  }, 1000);
+  const c = document.getElementById('clock');
+  if (c) c.textContent = new Date().toTimeString().slice(0, 8);
+
+  // Nav to plant — render fresh dengan SESSION baru
+  navTo('plant');
+}
 // ══════════════════════════════════════════════════════
 //  APP STATE
 // ══════════════════════════════════════════════════════
