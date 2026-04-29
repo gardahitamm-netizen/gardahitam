@@ -432,7 +432,7 @@ body.light .login-back-home { color:#2e5c8a; }
 <div class="breadcrumb">
   <a href="index.html" class="bc-link">Home</a>
   <span class="bc-sep">›</span>
-  <span class="bc-link" onclick="navTo('plant')">Control Troubleshooting</span>
+  <span class="bc-link" onclick="goHome()">Control Troubleshooting</span>
   <span class="bc-sep" id="bcs2" style="display:none">›</span>
   <span id="bc2" style="display:none"></span>
   <span class="bc-sep" id="bcs3" style="display:none">›</span>
@@ -471,7 +471,7 @@ body.light .login-back-home { color:#2e5c8a; }
     <div class="unit-page">
       <div class="unit-hero">
         <div class="unit-hero-grid"></div>
-        <div class="unit-hero-back" onclick="navTo('plant')">← Kembali ke Plant</div>
+        <div class="unit-hero-back" id="unit-back-btn" onclick="navTo('plant')">← Kembali ke Plant</div>
         <div class="unit-hero-title" id="unit-title">—</div>
         <div class="unit-hero-sub" id="unit-sub">Pilih unit / mixer</div>
       </div>
@@ -655,7 +655,20 @@ function showApp() {
 
   applyTheme();
   startClock();
-  navTo('plant');
+
+  // User single plant → langsung ke unit, skip plant selection
+  if (SESSION && isSinglePlant()) {
+    navTo('unit', { plant: SESSION.plant });
+  } else {
+    navTo('plant');
+  }
+}
+
+// Cek apakah user punya akses 1 plant saja (bukan ALL dan bukan multi)
+function isSinglePlant() {
+  if (!SESSION || !SESSION.plant) return false;
+  const p = SESSION.plant.trim().toUpperCase();
+  return p !== 'ALL' && !p.includes(',');
 }
 
 // ══════════════════════════════════════════════════════
@@ -777,6 +790,15 @@ function applyTagSearch(q) {
 // ══════════════════════════════════════════════════════
 //  NAVIGATION
 // ══════════════════════════════════════════════════════
+// Navigasi ke home: single plant → ke unit, ALL → ke plant
+function goHome() {
+  if (isSinglePlant()) {
+    navTo('unit', { plant: SESSION.plant });
+  } else {
+    navTo('plant');
+  }
+}
+
 function navTo(page, opts) {
   opts = opts || {};
   if (opts.plant     !== undefined) S.plant     = opts.plant;
@@ -886,6 +908,9 @@ function plantCard(p, i) {
 async function renderUnitPage() {
   $id('unit-title').textContent = (S.plant || '—') + ' — Pilih Unit';
   $id('unit-sub').textContent   = 'Pilih unit / mixer untuk melihat I/O List';
+  // Sembunyikan tombol "Kembali ke Plant" kalau user hanya punya 1 plant
+  const backBtn = $id('unit-back-btn');
+  if (backBtn) backBtn.style.display = isSinglePlant() ? 'none' : '';
   const el = $id('unit-content');
   el.innerHTML = loadingHTML('Memuat daftar unit...');
   try {
