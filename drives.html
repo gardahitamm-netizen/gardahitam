@@ -21,9 +21,9 @@
   --surf2:   #18243a;
   --surf3:   #1e2d47;
   --border:  #1f3050;
-  --text:    #eef4ff;
+  --text:    #f0f6ff;
   --text-inv:#0d1a2e;
-  --muted:   #7ba4cc;
+  --muted:   #9fc3e8;
   --ok:      #00f0a0;
   --fault:   #ff3d55;
   --maint:   #ffb820;
@@ -62,7 +62,7 @@ body.light {
   --border:   #b8ccec;
   --text:     #0d1a2e;
   --text-inv: #ffffff;
-  --muted:    #3a5a80;
+  --muted:    #2d5070;
   --ok:       #00954f;
   --fault:    #d91a34;
   --maint:    #c47800;
@@ -558,6 +558,78 @@ body.light .inu-photo-btn:hover{color:#003850;}
 .hist-table tr:hover td{background:rgba(255,255,255,.025);}
 .hist-ts{font-family:'JetBrains Mono',monospace;font-size:10px;color:var(--muted);}
 .hist-id{font-family:'JetBrains Mono',monospace;font-size:11px;color:var(--teal);}
+  /* Drive ID di tab Asli — teal terang & bold */
+.asli-drive-id {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 12px;
+  font-weight: 700;
+  color: #00e0f8;                         /* --teal */
+  background: rgba(0, 224, 248, 0.12);
+  border: 1px solid rgba(0, 224, 248, 0.35);
+  border-radius: 5px;
+  padding: 2px 9px;
+  display: inline-block;
+  letter-spacing: 0.5px;
+}
+
+body.light .asli-drive-id {
+  color: #005f80;
+  background: rgba(0, 122, 170, 0.1);
+  border-color: rgba(0, 122, 170, 0.35);
+}
+
+/* Cari Data Lapangan — amber/kuning mencolok */
+.asli-cari {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 11px;
+  font-weight: 700;
+  color: #ffb820;                         /* --maint/amber */
+  background: rgba(255, 184, 32, 0.13);
+  border: 1px solid rgba(255, 184, 32, 0.35);
+  border-radius: 5px;
+  padding: 3px 10px;
+  display: inline-block;
+}
+
+/* REF error — merah, beda dari #REF! biasa */
+.asli-ref-err {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 10px;
+  color: #ff6b7a;
+  background: rgba(255, 61, 85, 0.1);
+  border: 1px solid rgba(255, 61, 85, 0.25);
+  border-radius: 4px;
+  padding: 2px 7px;
+  display: inline-block;
+}
+
+body.light .asli-cari {
+  color: #8a5c00;
+  background: rgba(196, 120, 0, 0.1);
+  border-color: rgba(196, 120, 0, 0.35);
+}
+
+body.light .asli-ref-err {
+  color: #c0001a;
+  background: rgba(217, 26, 52, 0.08);
+  border-color: rgba(217, 26, 52, 0.25);
+}
+
+/* Header kolom Asli — lebih kontras */
+.mb-table th {
+  color: #9fc3e8 !important;   /* lebih terang dari muted sebelumnya */
+  font-size: 10px;
+  letter-spacing: 1px;
+}
+
+body.light .mb-table th {
+  color: #2d5070 !important;
+}
+
+/* Row hover lebih kentara di Asli */
+#asli-content .mb-table tbody tr:hover td {
+  background: rgba(0, 224, 248, 0.06);
+}
 .hist-table tr.search-hidden{display:none;}
 .hist-table tr.filter-hidden{display:none;}
 .status-tag{display:inline-block;padding:2px 8px;border-radius:4px;font-family:'JetBrains Mono',monospace;font-size:10px;font-weight:700;}
@@ -1914,6 +1986,8 @@ function errHTML(msg, fn) {
 // ══════════════════════════════════════════════════════════
 //  RENDER ASLI TAB
 // ══════════════════════════════════════════════════════════
+/* Ganti fungsi renderAsliTab() yang lama dengan ini */
+
 async function renderAsliTab() {
   id('asli-content').innerHTML = loadingHTML('Memuat data asli...');
   try {
@@ -1936,6 +2010,14 @@ async function renderAsliTab() {
     }
 
     const q = S.searchQuery;
+
+    /* Helper: render nilai kolom Cari Data Lapangan */
+    function renderCari(val) {
+      if (!val || val === '—') return '<span style="color:var(--muted)">—</span>';
+      if (val.trim() === '#REF!') return `<span class="asli-ref-err">#REF!</span>`;
+      return `<span class="asli-cari">${esc(val)}</span>`;
+    }
+
     const html = `
       <div class="mb-header-row" style="padding:14px 20px 10px">
         <span class="mb-header-title">📋 Data Asli — ${esc(curGroup)}</span>
@@ -1944,26 +2026,27 @@ async function renderAsliTab() {
       <div class="mb-table-wrap" style="padding:0 20px 20px">
         <table class="mb-table">
           <thead><tr>
-  <th class="mb-num">#</th>
-  <th>Drive ID</th>
-  <th>Spesifikasi</th>
-  <th>Serial Number</th>
-  <th>Cari Data Lapangan</th>
-</tr></thead>
+            <th class="mb-num">#</th>
+            <th>Drive ID</th>
+            <th>Spesifikasi</th>
+            <th>Serial Number</th>
+            <th>Cari Data Lapangan</th>
+          </tr></thead>
           <tbody>
             ${rows.map((r, i) => {
-            const match = !q || (r.drive_id + r.spesifikasi + r.serial_number + r.cari_data_lapangan).toLowerCase().includes(q);
+              const match = !q || (r.drive_id + r.spesifikasi + r.serial_number + r.cari_data_lapangan).toLowerCase().includes(q);
               return `<tr style="${match ? '' : 'display:none'}">
                 <td class="mb-num">${i + 1}</td>
-                <td class="hist-id">${esc(r.drive_id)}</td>
-                <td>${esc(r.spesifikasi) || '<span class="mb-empty">—</span>'}</td>
-              <td style="font-family:'JetBrains Mono',monospace;font-size:11px">${esc(r.serial_number) || '<span class="mb-empty">—</span>'}</td>
-<td>${esc(r.cari_data_lapangan) || '<span class="mb-empty">—</span>'}</td>
+                <td><span class="asli-drive-id">${esc(r.drive_id)}</span></td>
+                <td style="font-size:12px;color:var(--text)">${esc(r.spesifikasi) || '<span style="color:var(--muted)">—</span>'}</td>
+                <td style="font-family:\'JetBrains Mono\',monospace;font-size:11px;color:var(--text)">${esc(r.serial_number) || '<span style="color:var(--muted)">—</span>'}</td>
+                <td>${renderCari(r.cari_data_lapangan)}</td>
               </tr>`;
             }).join('')}
           </tbody>
         </table>
       </div>`;
+
     id('asli-content').innerHTML = html;
   } catch(err) {
     id('asli-content').innerHTML = errHTML(err.message, renderAsliTab);
