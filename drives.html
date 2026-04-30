@@ -2099,7 +2099,8 @@ async function renderAsliTab() {
         </table>
       </div>`;
 
-    id('asli-content').innerHTML = html;
+id('asli-content').innerHTML = html;
+    renderSidebar();
   } catch(err) {
     id('asli-content').innerHTML = errHTML(err.message, renderAsliTab);
   }
