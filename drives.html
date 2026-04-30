@@ -753,16 +753,6 @@ tr:hover .btn-edit-ts{opacity:1;}
   <!-- PAGE: MIXING (line picker) -->
   <div class="page" id="page-mixing">
     <div class="mixing-page-wrap">
-      <div class="global-search-wrap" id="mixing-search-wrap">
-  <div class="global-search-inner">
-    <span class="global-search-icon">🌐</span>
-    <input class="global-search-bar" id="mixing-global-search-bar" type="text"
-      placeholder="Cari drive di semua plant... (serial number, merk, drive ID)"
-      autocomplete="off" oninput="onGlobalSearch(this.value)">
-    <span class="global-search-hint" id="mixing-global-search-status">Cross-plant search</span>
-    <button class="global-search-clear" id="mixing-global-search-clear" onclick="clearGlobalSearchMixing()">✕ Clear</button>
-  </div>
-</div>
       <div class="mixing-hero">
         <div class="mixing-hero-grid"></div>
         <div class="mixing-hero-plant" id="mixing-hero-plant">MCG</div>
@@ -786,16 +776,6 @@ tr:hover .btn-edit-ts{opacity:1;}
       <span class="detail-plant-badge" id="detail-plant-badge"></span>
       <span class="detail-mixing-label" id="detail-mixing-label"></span>
     </div>
-    <div class="global-search-wrap" id="detail-search-wrap" style="border-bottom:1px solid var(--border);">
-  <div class="global-search-inner">
-    <span class="global-search-icon">🌐</span>
-    <input class="global-search-bar" id="detail-global-search-bar" type="text"
-      placeholder="Cari drive di semua plant... (serial number, merk, drive ID)"
-      autocomplete="off" oninput="onGlobalSearch(this.value)">
-    <span class="global-search-hint" id="detail-global-search-status">Cross-plant search</span>
-    <button class="global-search-clear" id="detail-global-search-clear" onclick="clearGlobalSearchDetail()">✕ Clear</button>
-  </div>
-</div>
     <div class="content-area">
       <div class="content-tabs">
         <div class="ctab active" id="ctab-drive"   onclick="switchTab('drive')">⚡ Drive</div>
@@ -1408,33 +1388,33 @@ function inuCard(d) {
 let globalSearchTimer = null;
 
 function onGlobalSearch(val) {
-  syncGlobalSearchInputs(val);
-  if (!val.trim()) { closeGlobalSearch(); return; }
+  const clear=id('global-search-clear');
+  clear.classList.toggle('visible', val.length>0);
+  if (!val.trim()) { closeGlobalSearch(); id('global-search-status').textContent='Cross-plant search'; return; }
   clearTimeout(globalSearchTimer);
   globalSearchTimer = setTimeout(() => doGlobalSearch(val.trim().toLowerCase()), 400);
 }
 
 function clearGlobalSearch() {
-  syncGlobalSearchInputs('');
+  id('global-search-bar').value='';
+  id('global-search-clear').classList.remove('visible');
+  id('global-search-status').textContent='Cross-plant search';
   closeGlobalSearch();
 }
-function clearGlobalSearchMixing()  { clearGlobalSearch(); }
-function clearGlobalSearchDetail()  { clearGlobalSearch(); }
 
 function closeGlobalSearch() {
   id('global-results-overlay').classList.remove('open');
-  ['global-search-status','mixing-global-search-status','detail-global-search-status'].forEach(bid => {
-    const el = id(bid); if (el) el.textContent = 'Cross-plant search';
-  });
 }
 
-sync function doGlobalSearch(q) {
+async function doGlobalSearch(q) {
   const overlay = id('global-results-overlay');
   const content = id('global-results-content');
   const countEl = id('global-results-count');
   overlay.classList.add('open');
   content.innerHTML = `<div class="global-searching"><div class="sp" style="width:20px;height:20px;border:2px solid var(--border);border-top-color:var(--accent);border-radius:50%;animation:spin .7s linear infinite;"></div>Mencari di semua plant...</div>`;
+  id('global-search-status').textContent = 'Mencari...';
 
+  // Tentukan plant yang perlu di-search
   const plantsToSearch = canAccessAllPlants() ? ALL_PLANTS : [S.loggedInPlant];
   let allResults = [];
 
@@ -1454,15 +1434,15 @@ sync function doGlobalSearch(q) {
           (d.drive_id||'')+(d.merk||'')+(d.spesifikasi||'')+
           (d.serial_number||d.sn||'')+(d.stiker||'')+(d.keterangan||'')+(d.status||'')
         ).toLowerCase();
-        if (text.includes(q)) allResults.push({ ...d, _plant: plant });
+        if (text.includes(q)) {
+          allResults.push({ ...d, _plant: plant });
+        }
       });
     } catch(e) {}
   }));
 
   countEl.textContent = allResults.length + ' hasil';
-  ['global-search-status','mixing-global-search-status','detail-global-search-status'].forEach(bid => {
-    const el = id(bid); if (el) el.textContent = allResults.length + ' hasil ditemukan';
-  });
+  id('global-search-status').textContent = allResults.length + ' hasil ditemukan';
 
   if (!allResults.length) {
     content.innerHTML = `<div class="global-no-results"><span style="font-size:36px">🔍</span><span>Tidak ada drive yang cocok dengan "<b>${esc(q)}</b>"</span><span style="color:var(--muted)">Coba cari dengan serial number, merk, atau drive ID</span></div>`;
@@ -1487,7 +1467,7 @@ sync function doGlobalSearch(q) {
           const st  = d.status||'kosong';
           const sn  = d.serial_number||d.sn||'';
           const grp = String(d.group||'');
-          return `<div class="global-result-card ${st}" onclick="openFromGlobal('${esc(plant)}','${esc(grp)}','${esc(d.drive_id)}')">
+          return `<div class="global-result-card ${st}" onclick="openFromGlobal('${esc(plant)}','${esc(grp)}')">
             <div class="global-result-id">${esc(d.drive_id)}</div>
             <div class="global-result-name">${esc(d.merk)||'—'}</div>
             ${d.spesifikasi?`<div class="global-result-spec">${esc(d.spesifikasi)}</div>`:''}
@@ -1496,7 +1476,6 @@ sync function doGlobalSearch(q) {
               <span class="global-result-mixing">${esc(grp)}</span>
               ${sn?`<span class="global-result-sn">SN: ${esc(sn)}</span>`:''}
             </div>
-            <div style="margin-top:6px;font-family:'JetBrains Mono',monospace;font-size:9px;color:var(--teal);opacity:.8">→ Klik untuk navigasi ke drive ini</div>
           </div>`;
         }).join('')}
       </div>
@@ -1505,27 +1484,10 @@ sync function doGlobalSearch(q) {
   content.innerHTML = html;
 }
 
-// GANTI fungsi openFromGlobal — tambah parameter driveId & highlight
-function openFromGlobal(plant, group, driveId) {
+function openFromGlobal(plant, group) {
   closeGlobalSearch();
   clearGlobalSearch();
-  // Navigasi ke detail, lalu highlight drive
   navTo('detail', plant, group);
-  // Setelah render, isi search bar lokal dengan driveId supaya highlight
-  if (driveId) {
-    setTimeout(() => {
-      const sb = id('search-bar');
-      if (sb) {
-        sb.value = driveId;
-        onSearch(driveId);
-        // Scroll ke card yang match
-        setTimeout(() => {
-          const cards = document.querySelectorAll('#drive-content .inu-card:not(.search-hidden)');
-          if (cards.length) cards[0].scrollIntoView({ behavior:'smooth', block:'center' });
-        }, 400);
-      }
-    }, 800);
-  }
 }
 
 // ══════════════════════════════════════════════════════════
