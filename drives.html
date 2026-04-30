@@ -477,6 +477,72 @@ tr:hover .btn-edit-ts{opacity:1;}
 .sb-fault{width:5px;height:5px;border-radius:50%;background:var(--fault);}
 .sb-kosong-badge{display:inline-block;background:var(--kosong-bg);color:var(--kosong);border:1px solid var(--kosong-bd);border-radius:8px;font-size:9px;padding:1px 5px;font-family:'JetBrains Mono',monospace;line-height:1.4;font-weight:700;}
 
+  /* ══ TAB ANALISA TA ══ */
+.analisa-wrap{padding:20px}
+.analisa-top{display:flex;align-items:flex-start;justify-content:space-between;flex-wrap:wrap;gap:12px;margin-bottom:20px}
+.analisa-title{font-family:'JetBrains Mono',monospace;font-size:15px;font-weight:700;color:var(--text)}
+.analisa-sub{font-size:11px;color:var(--muted);margin-top:3px}
+.analisa-btn-row{display:flex;gap:8px;flex-wrap:wrap}
+.a-btn{display:flex;align-items:center;gap:5px;font-family:'JetBrains Mono',monospace;font-size:11px;padding:6px 14px;border-radius:6px;cursor:pointer;border:1px solid var(--border);background:var(--surf2);color:var(--muted);transition:all .2s}
+.a-btn:hover{border-color:var(--accent);color:var(--accent)}
+.a-btn.ok-btn{border-color:var(--ok-bd);background:var(--ok-bg);color:var(--ok)}
+.a-btn.ok-btn:hover{background:rgba(0,240,160,.25)}
+.a-btn.fault-btn{border-color:var(--fault-bd);background:var(--fault-bg);color:var(--fault)}
+.a-btn.fault-btn:hover{background:rgba(255,61,85,.25)}
+
+.analisa-filter-bar{display:flex;align-items:center;gap:10px;padding:10px 14px;background:var(--surf2);border:1px solid var(--border);border-radius:10px;margin-bottom:16px;flex-wrap:wrap}
+.a-filter-label{font-family:'JetBrains Mono',monospace;font-size:10px;color:var(--muted);letter-spacing:1px;text-transform:uppercase;flex-shrink:0}
+.a-filter-sel{background:var(--surf3);border:1px solid var(--border);color:var(--text);padding:5px 10px;border-radius:6px;font-size:11px;font-family:'JetBrains Mono',monospace;outline:none;cursor:pointer}
+.a-filter-sel:focus{border-color:var(--accent)}
+
+.analisa-metric-row{display:grid;grid-template-columns:repeat(auto-fill,minmax(130px,1fr));gap:10px;margin-bottom:20px}
+.a-mcard{background:var(--surf);border:1px solid var(--border);border-radius:10px;padding:14px 16px}
+.a-mcard-label{font-family:'JetBrains Mono',monospace;font-size:9px;letter-spacing:1.5px;text-transform:uppercase;color:var(--muted);margin-bottom:6px}
+.a-mcard-val{font-family:'JetBrains Mono',monospace;font-size:22px;font-weight:700}
+.a-mcard-val.ok{color:var(--ok)}
+.a-mcard-val.ng{color:var(--fault)}
+.a-mcard-val.nf{color:var(--accent)}
+.a-mcard-val.tot{color:var(--text)}
+.a-mcard-pct{font-family:'JetBrains Mono',monospace;font-size:10px;color:var(--muted);margin-top:3px}
+
+.analisa-chart-row{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:20px}
+.a-chart-box{background:var(--surf);border:1px solid var(--border);border-radius:12px;padding:16px}
+.a-chart-title{font-family:'JetBrains Mono',monospace;font-size:10px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;color:var(--muted);margin-bottom:10px}
+.a-legend-row{display:flex;flex-wrap:wrap;gap:10px;margin-bottom:10px}
+.a-legend-item{display:flex;align-items:center;gap:4px;font-family:'JetBrains Mono',monospace;font-size:10px;color:var(--muted)}
+.a-legend-sq{width:10px;height:10px;border-radius:2px;flex-shrink:0}
+@media(max-width:768px){.analisa-chart-row{grid-template-columns:1fr!important}}
+
+.a-section-head{display:flex;align-items:center;gap:10px;margin-bottom:12px;margin-top:20px}
+.a-section-label{font-family:'JetBrains Mono',monospace;font-size:10px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:var(--muted)}
+.a-section-line{flex:1;height:1px;background:linear-gradient(to right,var(--border),transparent)}
+
+.a-tbl-wrap{overflow-x:auto;margin-bottom:20px}
+.a-table{width:100%;border-collapse:collapse;font-size:12px;min-width:500px}
+.a-table th{text-align:left;padding:9px 12px;font-family:'JetBrains Mono',monospace;font-size:9px;letter-spacing:1px;text-transform:uppercase;color:var(--muted);border-bottom:1px solid var(--border);background:var(--surf);white-space:nowrap;position:sticky;top:0;z-index:2}
+.a-table td{padding:9px 12px;border-bottom:1px solid rgba(31,48,80,.5);vertical-align:middle;color:var(--text)}
+.a-table tr:hover td{background:rgba(255,255,255,.025)}
+.a-bar-cell{display:flex;align-items:center;gap:6px}
+.a-bar-track{height:5px;background:var(--surf3);border-radius:3px;flex:1;min-width:50px}
+.a-bar-fill{height:5px;border-radius:3px;transition:width .4s ease}
+
+.a-insight-box{background:var(--surf);border:1px solid var(--border);border-radius:12px;padding:16px 18px;margin-bottom:20px}
+.a-insight-title{font-family:'JetBrains Mono',monospace;font-size:10px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;color:var(--teal);margin-bottom:12px}
+.a-insight-list{list-style:none;display:flex;flex-direction:column;gap:8px}
+.a-insight-list li{font-size:12px;color:var(--muted);padding-left:14px;position:relative;line-height:1.6}
+.a-insight-list li::before{content:"›";position:absolute;left:0;color:var(--teal);font-size:14px;line-height:1.3}
+.a-insight-list li strong{color:var(--text)}
+
+.a-trend-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(160px,1fr));gap:10px;margin-bottom:20px}
+.a-trend-card{background:var(--surf);border:1px solid var(--border);border-radius:10px;padding:12px 14px;position:relative;overflow:hidden}
+.a-trend-card::before{content:'';position:absolute;top:0;left:0;right:0;height:3px}
+.a-trend-card.ok-card::before{background:var(--ok)}
+.a-trend-card.ng-card::before{background:var(--fault)}
+.a-trend-card.nf-card::before{background:var(--accent)}
+.a-trend-name{font-family:'JetBrains Mono',monospace;font-size:10px;color:var(--muted);margin-bottom:4px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.a-trend-val{font-family:'JetBrains Mono',monospace;font-size:16px;font-weight:700}
+.a-trend-sub{font-family:'JetBrains Mono',monospace;font-size:9px;color:var(--muted);margin-top:3px}
+  
 .content-area{flex:1;overflow:hidden;display:flex;flex-direction:column;min-width:0;min-height:0;}
 .content-tabs{display:flex;border-bottom:1px solid var(--border);background:#08111e;padding:0 20px;flex-shrink:0;overflow-x:auto;scrollbar-width:none;}
 .content-tabs::-webkit-scrollbar{display:none;}
@@ -939,6 +1005,7 @@ body.light .btn-open-pdf:hover{color:#003850;}
           <div class="ctab"        id="ctab-manual"  onclick="switchTab('manual')">📖 Manual Book</div>
           <div class="ctab"        id="ctab-summary" onclick="switchTab('summary')">⬜ Summary</div>
           <div class="ctab"        id="ctab-asli"    onclick="switchTab('asli')">📋 Asli</div>
+          <div class="ctab" id="ctab-analisa" onclick="switchTab('analisa')">📊 Analisa </div>
         </div>
         <div class="search-wrap" id="search-wrap" style="display:none">
           <span class="search-icon">🔍</span>
@@ -1020,6 +1087,10 @@ body.light .btn-open-pdf:hover{color:#003850;}
 <!-- TAB ASLI -->
 <div class="tab-content" id="tab-asli">
   <div id="asli-content"></div>
+</div>
+        <!-- TAB ANALISA  -->
+<div class="tab-content" id="tab-analisa">
+  <div id="analisa-content"></div>
 </div>
       </div>
     </div>
@@ -1734,6 +1805,7 @@ async function switchTab(tab, force) {
     histori : 'Cari drive ID, status, keterangan, waktu...',
     manual  : 'Cari judul, drive ID, kategori...',
     asli    : 'Cari drive ID, spesifikasi, serial number...',
+    analisa : 'Analisa sedang ditampilkan dalam mode chart...',
   };
   const sb = id('search-bar');
   if (sb && placeholders[tab]) sb.placeholder = placeholders[tab];
@@ -1742,6 +1814,7 @@ async function switchTab(tab, force) {
   if (tab === 'manual')  await renderManualTab();
   if (tab === 'summary') await renderSummaryTab();
   if (tab === 'asli')    await renderAsliTab();
+  if (tab === 'analisa') await renderAnalisaTab();
 }
 // ══════════════════════════════════════════════════════════
 //  RENDER DRIVE TAB
@@ -1971,6 +2044,7 @@ id('ts-modal-overlay').addEventListener('click', e => { if(e.target===id('ts-mod
 async function doRefresh() {
   const btn = id('btn-refresh'); btn.classList.add('loading');
 if (S.plant) ['drives','groupList','histori','manuals','summary','asli'].forEach(k => delete S.cache[S.plant+'_'+k]);
+ANALISA.barChart = ANALISA.pieChart = ANALISA.lineChart = null;
   clearSearch();
   if (S.page === 'detail') await renderDetailPage(); else await renderPlantPage();
   btn.classList.remove('loading');
@@ -2184,6 +2258,413 @@ updateRoleBadge();
         .catch(e => console.log('[SW] Error:', e));
     });
   }
+  // ══════════════════════════════════════════════════════════
+//  TAB ANALISA TA
+// ══════════════════════════════════════════════════════════
+const ANALISA = {
+  cache   : {},
+  barChart: null,
+  pieChart: null,
+  lineChart: null,
+};
+
+const A_COLORS = {
+  ok : '#00f0a0',
+  ng : '#ff3d55',
+  nf : '#4d9fff',
+};
+
+function aStatusNorm(s) {
+  const v = String(s || '').trim().toUpperCase();
+  if (v === 'SESUAI')                              return 'SESUAI';
+  if (v === 'TIDAK SESUAI')                        return 'TIDAK SESUAI';
+  if (v.includes('TIDAK DITEMUKAN') || v.includes('TDK DITEMUKAN')) return 'TIDAK DITEMUKAN';
+  return v || '—';
+}
+
+function aCalcStats(rows) {
+  let sesuai = 0, tidakSesuai = 0, tidakDitemukan = 0;
+  rows.forEach(r => {
+    const s = aStatusNorm(r.status);
+    if (s === 'SESUAI')            sesuai++;
+    else if (s === 'TIDAK SESUAI') tidakSesuai++;
+    else if (s === 'TIDAK DITEMUKAN') tidakDitemukan++;
+  });
+  return { sesuai, tidakSesuai, tidakDitemukan, total: rows.length };
+}
+
+async function renderAnalisaTab() {
+  const el = id('analisa-content');
+  el.innerHTML = loadingHTML('Memuat data analisa...');
+  try {
+    // Fetch asli data untuk plant saat ini
+    if (!S.cache[S.plant + '_asli']) {
+      const data = await apiGet({ action: 'getAsli', plant: S.plant });
+      S.cache[S.plant + '_asli'] = data.asli || [];
+    }
+    const allRows = S.cache[S.plant + '_asli'];
+    if (!allRows.length) {
+      el.innerHTML = `<div class="state-box"><div style="font-size:36px">📊</div><h3>Belum ada data asli</h3><p>Tambahkan sheet "asli" pada spreadsheet ${esc(S.plant)}</p></div>`;
+      return;
+    }
+    el.innerHTML = buildAnalisaHTML(allRows);
+    buildAnalisaMixFilter(allRows);
+    renderAnalisaAll(allRows);
+    // Attach filter event
+    const sel = id('a-mix-filter');
+    if (sel) sel.onchange = () => {
+      const filtered = sel.value
+        ? allRows.filter(r => r.group === sel.value)
+        : allRows;
+      renderAnalisaAll(filtered);
+    };
+  } catch(err) {
+    el.innerHTML = errHTML(err.message, renderAnalisaTab);
+  }
+}
+
+function buildAnalisaHTML(rows) {
+  const groups = [...new Set(rows.map(r => r.group).filter(Boolean))];
+  const opts   = groups.map(g => `<option value="${g}">${g}</option>`).join('');
+  return `
+  <div class="analisa-wrap">
+    <div class="analisa-top">
+      <div>
+        <div class="analisa-title">📊 Analisa Data Drive — ${esc(S.plant)}</div>
+        <div class="analisa-sub">Perbandingan posisi asli vs kondisi lapangan · Untuk keperluan Tugas Akhir</div>
+      </div>
+      <div class="analisa-btn-row">
+        <button class="a-btn ok-btn" onclick="analisaExportCSV()">⬇ Export CSV</button>
+        <button class="a-btn fault-btn" onclick="analisaPrintPDF()">🖨️ Cetak PDF</button>
+      </div>
+    </div>
+
+    <div class="analisa-filter-bar">
+      <span class="a-filter-label">🔍 Filter Mixing:</span>
+      <select class="a-filter-sel" id="a-mix-filter">
+        <option value="">Semua Mixing</option>
+        ${opts}
+      </select>
+      <span id="a-filter-count" style="font-family:'JetBrains Mono',monospace;font-size:10px;color:var(--muted);margin-left:auto"></span>
+    </div>
+
+    <div class="analisa-metric-row" id="a-metric-row"></div>
+
+    <div class="a-section-head"><span class="a-section-label">📈 Visualisasi</span><div class="a-section-line"></div></div>
+    <div class="analisa-chart-row">
+      <div class="a-chart-box">
+        <div class="a-chart-title">Distribusi status per mixing</div>
+        <div class="a-legend-row">
+          <span class="a-legend-item"><span class="a-legend-sq" style="background:${A_COLORS.ok}"></span>Sesuai</span>
+          <span class="a-legend-item"><span class="a-legend-sq" style="background:${A_COLORS.ng}"></span>Tidak sesuai</span>
+          <span class="a-legend-item"><span class="a-legend-sq" style="background:${A_COLORS.nf}"></span>Tdk ditemukan</span>
+        </div>
+        <div style="position:relative;height:250px"><canvas id="a-bar-chart"></canvas></div>
+      </div>
+      <div class="a-chart-box">
+        <div class="a-chart-title">Proporsi keseluruhan</div>
+        <div id="a-pie-legend" class="a-legend-row"></div>
+        <div style="position:relative;height:250px"><canvas id="a-pie-chart"></canvas></div>
+      </div>
+    </div>
+
+    <div class="a-section-head"><span class="a-section-label">📊 % Kesesuaian per Mixing</span><div class="a-section-line"></div></div>
+    <div style="background:var(--surf);border:1px solid var(--border);border-radius:12px;padding:16px;margin-bottom:20px">
+      <div class="a-legend-row">
+        <span class="a-legend-item"><span class="a-legend-sq" style="background:${A_COLORS.ok}"></span>% Sesuai</span>
+        <span class="a-legend-item"><span class="a-legend-sq" style="background:${A_COLORS.ng}"></span>% Tidak sesuai</span>
+      </div>
+      <div style="position:relative;height:200px"><canvas id="a-line-chart"></canvas></div>
+    </div>
+
+    <div class="a-section-head"><span class="a-section-label">🔍 Temuan & Rekomendasi</span><div class="a-section-line"></div></div>
+    <div class="a-insight-box">
+      <div class="a-insight-title">⚡ Hasil Analisa Otomatis</div>
+      <ul class="a-insight-list" id="a-insight-list"></ul>
+    </div>
+
+    <div class="a-section-head"><span class="a-section-label">📋 Ringkasan per Mixing</span><div class="a-section-line"></div></div>
+    <div class="a-tbl-wrap">
+      <table class="a-table">
+        <thead><tr>
+          <th>Mixing</th><th>Total</th><th>Sesuai</th><th>Tidak Sesuai</th><th>Tdk Ditemukan</th><th>% Sesuai</th><th>Kesesuaian</th>
+        </tr></thead>
+        <tbody id="a-summary-tbody"></tbody>
+      </table>
+    </div>
+
+    <div class="a-section-head"><span class="a-section-label">📄 Detail Semua Drive</span><div class="a-section-line"></div></div>
+    <div class="a-tbl-wrap">
+      <table class="a-table">
+        <thead><tr>
+          <th>#</th><th>Mixing</th><th>Drive ID (Asli)</th><th>Ada di Lapangan</th><th>Serial Number</th><th>Spesifikasi</th><th>Status</th>
+        </tr></thead>
+        <tbody id="a-detail-tbody"></tbody>
+      </table>
+    </div>
+  </div>`;
+}
+
+function buildAnalisaMixFilter(rows) {
+  // already built inline in buildAnalisaHTML
+}
+
+function renderAnalisaAll(rows) {
+  id('a-filter-count').textContent = rows.length + ' drive';
+  renderAnalisaMetrics(rows);
+  renderAnalisaCharts(rows);
+  renderAnalisaLineChart(rows);
+  renderAnalisaSummaryTable(rows);
+  renderAnalisaDetailTable(rows);
+  renderAnalisaInsights(rows);
+}
+
+function renderAnalisaMetrics(rows) {
+  const { sesuai, tidakSesuai, tidakDitemukan, total } = aCalcStats(rows);
+  const pct = total > 0 ? Math.round(sesuai / total * 100) : 0;
+  const color = pct >= 80 ? 'ok' : pct >= 50 ? 'tot' : 'ng';
+  id('a-metric-row').innerHTML = `
+    <div class="a-mcard"><div class="a-mcard-label">Total Drive</div><div class="a-mcard-val tot">${total}</div></div>
+    <div class="a-mcard"><div class="a-mcard-label">Sesuai</div><div class="a-mcard-val ok">${sesuai}</div><div class="a-mcard-pct">${total > 0 ? Math.round(sesuai/total*100) : 0}% dari total</div></div>
+    <div class="a-mcard"><div class="a-mcard-label">Tidak Sesuai</div><div class="a-mcard-val ng">${tidakSesuai}</div><div class="a-mcard-pct">${total > 0 ? Math.round(tidakSesuai/total*100) : 0}% dari total</div></div>
+    <div class="a-mcard"><div class="a-mcard-label">Tdk Ditemukan</div><div class="a-mcard-val nf">${tidakDitemukan}</div><div class="a-mcard-pct">${total > 0 ? Math.round(tidakDitemukan/total*100) : 0}% dari total</div></div>
+    <div class="a-mcard"><div class="a-mcard-label">Tingkat Kesesuaian</div><div class="a-mcard-val ${color}">${pct}%</div></div>`;
+}
+
+function renderAnalisaCharts(rows) {
+  const groups   = [...new Set(rows.map(r => r.group).filter(Boolean))];
+  const labels   = groups.map(g => g.replace(/^MCG\./,'').replace(/^MC[A-Z]\./,''));
+  const sesuaiArr = groups.map(g => aCalcStats(rows.filter(r => r.group===g)).sesuai);
+  const ngArr     = groups.map(g => aCalcStats(rows.filter(r => r.group===g)).tidakSesuai);
+  const nfArr     = groups.map(g => aCalcStats(rows.filter(r => r.group===g)).tidakDitemukan);
+
+  if (ANALISA.barChart) ANALISA.barChart.destroy();
+  ANALISA.barChart = new Chart(id('a-bar-chart').getContext('2d'), {
+    type: 'bar',
+    data: {
+      labels,
+      datasets: [
+        { label:'Sesuai',        data:sesuaiArr, backgroundColor:A_COLORS.ok,  borderWidth:0 },
+        { label:'Tidak sesuai',  data:ngArr,     backgroundColor:A_COLORS.ng,  borderWidth:0 },
+        { label:'Tdk ditemukan', data:nfArr,     backgroundColor:A_COLORS.nf,  borderWidth:0 },
+      ]
+    },
+    options: {
+      responsive:true, maintainAspectRatio:false,
+      plugins:{ legend:{ display:false } },
+      scales:{
+        x:{ stacked:true, ticks:{ color:'#9fc3e8', font:{size:9}, maxRotation:45, autoSkip:false } },
+        y:{ stacked:true, ticks:{ color:'#9fc3e8', font:{size:9} }, grid:{ color:'rgba(31,48,80,.5)' } }
+      }
+    }
+  });
+
+  const tot = aCalcStats(rows);
+  const t   = tot.total || 1;
+  if (ANALISA.pieChart) ANALISA.pieChart.destroy();
+  ANALISA.pieChart = new Chart(id('a-pie-chart').getContext('2d'), {
+    type: 'doughnut',
+    data: {
+      labels:['Sesuai','Tidak sesuai','Tdk ditemukan'],
+      datasets:[{ data:[tot.sesuai,tot.tidakSesuai,tot.tidakDitemukan], backgroundColor:[A_COLORS.ok,A_COLORS.ng,A_COLORS.nf], borderWidth:2, borderColor:'#121929' }]
+    },
+    options:{ responsive:true, maintainAspectRatio:false, plugins:{ legend:{ display:false } }, cutout:'62%' }
+  });
+  id('a-pie-legend').innerHTML = [
+    [A_COLORS.ok,'Sesuai',tot.sesuai],
+    [A_COLORS.ng,'Tidak sesuai',tot.tidakSesuai],
+    [A_COLORS.nf,'Tdk ditemukan',tot.tidakDitemukan]
+  ].map(([c,l,v])=>`<span class="a-legend-item"><span class="a-legend-sq" style="background:${c}"></span>${l} — <strong style="color:var(--text)">${Math.round(v/t*100)}%</strong></span>`).join('');
+}
+
+function renderAnalisaLineChart(rows) {
+  const groups = [...new Set(rows.map(r => r.group).filter(Boolean))];
+  const labels = groups.map(g => g.replace(/^MC[A-Z]\./,''));
+  const pctOk  = groups.map(g => {
+    const s = aCalcStats(rows.filter(r=>r.group===g));
+    return s.total > 0 ? Math.round(s.sesuai/s.total*100) : 0;
+  });
+  const pctNg  = groups.map(g => {
+    const s = aCalcStats(rows.filter(r=>r.group===g));
+    return s.total > 0 ? Math.round(s.tidakSesuai/s.total*100) : 0;
+  });
+
+  if (ANALISA.lineChart) ANALISA.lineChart.destroy();
+  ANALISA.lineChart = new Chart(id('a-line-chart').getContext('2d'), {
+    type: 'line',
+    data: {
+      labels,
+      datasets: [
+        { label:'% Sesuai', data:pctOk, borderColor:A_COLORS.ok, backgroundColor:'rgba(0,240,160,.1)', tension:.35, fill:true, pointBackgroundColor:A_COLORS.ok, pointRadius:4, borderDash:[] },
+        { label:'% Tidak sesuai', data:pctNg, borderColor:A_COLORS.ng, backgroundColor:'rgba(255,61,85,.08)', tension:.35, fill:true, pointBackgroundColor:A_COLORS.ng, pointRadius:4, borderDash:[4,3] },
+      ]
+    },
+    options:{
+      responsive:true, maintainAspectRatio:false,
+      plugins:{ legend:{ display:false } },
+      scales:{
+        x:{ ticks:{ color:'#9fc3e8', font:{size:9}, maxRotation:45, autoSkip:false } },
+        y:{ min:0, max:100, ticks:{ color:'#9fc3e8', font:{size:9}, callback:v=>v+'%' }, grid:{ color:'rgba(31,48,80,.5)' } }
+      }
+    }
+  });
+}
+
+function renderAnalisaSummaryTable(rows) {
+  const groups = [...new Set(rows.map(r => r.group).filter(Boolean))];
+  const tbody  = id('a-summary-tbody');
+  if (!groups.length) { tbody.innerHTML = '<tr><td colspan="7" style="color:var(--muted);padding:20px">Tidak ada data</td></tr>'; return; }
+  tbody.innerHTML = groups.map(g => {
+    const gr = rows.filter(r => r.group===g);
+    const { sesuai, tidakSesuai, tidakDitemukan, total } = aCalcStats(gr);
+    const pct   = total > 0 ? Math.round(sesuai/total*100) : 0;
+    const color = pct >= 80 ? A_COLORS.ok : pct >= 50 ? '#ffb820' : A_COLORS.ng;
+    return `<tr>
+      <td style="font-family:'JetBrains Mono',monospace;font-size:11px;font-weight:700;color:var(--teal)">${esc(g)}</td>
+      <td style="font-family:'JetBrains Mono',monospace">${total}</td>
+      <td><span class="status-tag st-ok">${sesuai}</span></td>
+      <td><span class="status-tag st-fault">${tidakSesuai}</span></td>
+      <td><span class="status-tag st-kosong">${tidakDitemukan}</span></td>
+      <td style="font-family:'JetBrains Mono',monospace;font-weight:700;color:${color}">${pct}%</td>
+      <td><div class="a-bar-cell"><div class="a-bar-track"><div class="a-bar-fill" style="width:${pct}%;background:${color}"></div></div><span style="font-family:'JetBrains Mono',monospace;font-size:10px;color:var(--muted);min-width:30px">${pct}%</span></div></td>
+    </tr>`;
+  }).join('');
+}
+
+function renderAnalisaDetailTable(rows) {
+  const tbody = id('a-detail-tbody');
+  tbody.innerHTML = rows.map((r, i) => {
+    const s    = aStatusNorm(r.status);
+    const stCl = s==='SESUAI'?'st-ok':s==='TIDAK SESUAI'?'st-fault':'st-kosong';
+    const stLb = s==='SESUAI'?'SESUAI':s==='TIDAK SESUAI'?'TDK SESUAI':'TDK DITEMUKAN';
+    const cari = r.cari_data_lapangan || r['cari data lapangan'] || '—';
+    const cariColor = s==='SESUAI'?'color:var(--ok)':s==='TIDAK SESUAI'?'color:var(--fault)':'color:var(--muted)';
+    return `<tr>
+      <td style="font-family:'JetBrains Mono',monospace;font-size:10px;color:var(--muted)">${i+1}</td>
+      <td style="font-family:'JetBrains Mono',monospace;font-size:10px;color:var(--muted)">${esc(r.group||'—')}</td>
+      <td><span class="asli-drive-id">${esc(r.drive_id||'—')}</span></td>
+      <td style="font-family:'JetBrains Mono',monospace;font-size:11px;${cariColor}">${esc(cari)}</td>
+      <td style="font-family:'JetBrains Mono',monospace;font-size:11px">${esc(r.serial_number||'—')}</td>
+      <td style="font-size:11px">${esc(r.spesifikasi||'—')}</td>
+      <td><span class="status-tag ${stCl}">${stLb}</span></td>
+    </tr>`;
+  }).join('');
+}
+
+function renderAnalisaInsights(rows) {
+  const { sesuai, tidakSesuai, tidakDitemukan, total } = aCalcStats(rows);
+  const pct    = total > 0 ? Math.round(sesuai/total*100) : 0;
+  const groups = [...new Set(rows.map(r=>r.group).filter(Boolean))];
+
+  const worst = groups.reduce((acc, g) => {
+    const s = aCalcStats(rows.filter(r=>r.group===g));
+    const p = s.total > 0 ? s.sesuai/s.total : 1;
+    return (!acc || p < acc.pct) ? { group:g, pct:p, ...s } : acc;
+  }, null);
+
+  const best = groups.reduce((acc, g) => {
+    const s = aCalcStats(rows.filter(r=>r.group===g));
+    const p = s.total > 0 ? s.sesuai/s.total : 0;
+    return (!acc || p > acc.pct) ? { group:g, pct:p, ...s } : acc;
+  }, null);
+
+  const items = [
+    `Total <strong>${total}</strong> drive dianalisa di <strong>${S.plant}</strong> dengan tingkat kesesuaian posisi asli <strong>${pct}%</strong>.`,
+    tidakDitemukan > 0
+      ? `<strong>${tidakDitemukan} drive tidak ditemukan</strong> di lapangan — perlu investigasi fisik apakah drive dipindah tanpa pencatatan atau hilang.`
+      : `Semua drive berhasil ditemukan di lapangan — tidak ada drive yang hilang.`,
+    tidakSesuai > 0
+      ? `<strong>${tidakSesuai} drive berada di posisi tidak sesuai</strong> data asli — kemungkinan terjadi relokasi tanpa pembaruan database.`
+      : `Semua drive yang ditemukan berada di posisi yang sesuai dengan data asli.`,
+    worst && worst.total > 0
+      ? `Mixing dengan ketidaksesuaian tertinggi: <strong>${worst.group}</strong> (${Math.round(worst.pct*100)}% sesuai, ${worst.tidakSesuai} tidak sesuai, ${worst.tidakDitemukan} tdk ditemukan).`
+      : '',
+    best && best.total > 0 && best.group !== (worst?.group)
+      ? `Mixing terbaik: <strong>${best.group}</strong> dengan kesesuaian <strong>${Math.round(best.pct*100)}%</strong>.`
+      : '',
+    pct < 70
+      ? `<strong>Rekomendasi:</strong> Tingkat kesesuaian di bawah 70% — disarankan audit fisik menyeluruh dan rekonsiliasi database posisi drive secara total.`
+      : pct < 90
+      ? `<strong>Rekomendasi:</strong> Lakukan pengecekan ulang pada mixing yang memiliki drive tidak sesuai dan perbarui pencatatan secara berkala.`
+      : `<strong>Rekomendasi:</strong> Kondisi drive sudah sangat baik (≥90%). Pertahankan konsistensi sistem pencatatan Garda Hitam.`,
+    `<strong>Untuk TA:</strong> Data ini dapat dijadikan bahan analisa bab hasil & pembahasan, menunjukkan efektivitas sistem Garda Hitam dalam mendeteksi ketidaksesuaian posisi drive.`,
+  ].filter(Boolean);
+
+  id('a-insight-list').innerHTML = items.map(i => `<li>${i}</li>`).join('');
+}
+
+function analisaExportCSV() {
+  const allRows = S.cache[S.plant + '_asli'] || [];
+  const sel     = id('a-mix-filter');
+  const mix     = sel ? sel.value : '';
+  const rows    = mix ? allRows.filter(r => r.group===mix) : allRows;
+  let csv = 'No,Plant,Mixing,Drive ID (Asli),Ada di Lapangan,Serial Number,Spesifikasi,Status\n';
+  rows.forEach((r, i) => {
+    const cari = (r.cari_data_lapangan||r['cari data lapangan']||'—').replace(/,/g,' ');
+    csv += `${i+1},"${S.plant}","${r.group||''}","${r.drive_id||''}","${cari}","${r.serial_number||''}","${(r.spesifikasi||'').replace(/,/g,' ')}","${aStatusNorm(r.status)}"\n`;
+  });
+  const blob = new Blob(['\uFEFF'+csv], { type:'text/csv;charset=utf-8;' });
+  const url  = URL.createObjectURL(blob);
+  const a    = document.createElement('a');
+  a.href = url; a.download = `Analisa_Drive_${S.plant}_${mix||'Semua'}_${new Date().toISOString().slice(0,10)}.csv`;
+  a.click(); URL.revokeObjectURL(url);
+}
+
+function analisaPrintPDF() {
+  const { jsPDF } = window.jspdf;
+  const doc = new jsPDF({ orientation:'landscape' });
+  const allRows = S.cache[S.plant + '_asli'] || [];
+  const sel     = id('a-mix-filter');
+  const mix     = sel ? sel.value : '';
+  const rows    = mix ? allRows.filter(r => r.group===mix) : allRows;
+  const { sesuai, tidakSesuai, tidakDitemukan, total } = aCalcStats(rows);
+  const pct = total > 0 ? Math.round(sesuai/total*100) : 0;
+
+  doc.setFontSize(16); doc.setFont('helvetica','bold');
+  doc.text('Analisa Data Drive — ' + S.plant, 14, 16);
+  doc.setFontSize(10); doc.setFont('helvetica','normal');
+  doc.text('Tugas Akhir · Sistem Monitoring Drive Garda Hitam', 14, 23);
+  doc.text('Filter: ' + (mix || 'Semua Mixing') + '  |  Dicetak: ' + new Date().toLocaleString('id-ID'), 14, 29);
+
+  // Stats box
+  doc.setFontSize(9);
+  doc.setFillColor(240,248,255); doc.roundedRect(14,33,260,18,2,2,'F');
+  doc.text(`Total: ${total}  |  Sesuai: ${sesuai} (${pct}%)  |  Tidak Sesuai: ${tidakSesuai}  |  Tdk Ditemukan: ${tidakDitemukan}`, 18, 44);
+
+  doc.autoTable({
+    startY: 56,
+    head: [['#','Mixing','Drive ID (Asli)','Ada di Lapangan','Serial Number','Spesifikasi','Status']],
+    body: rows.map((r,i) => [
+      i+1,
+      r.group||'—',
+      r.drive_id||'—',
+      r.cari_data_lapangan||r['cari data lapangan']||'—',
+      r.serial_number||'—',
+      r.spesifikasi||'—',
+      aStatusNorm(r.status),
+    ]),
+    styles:{ fontSize:8, cellPadding:2 },
+    headStyles:{ fillColor:[13,26,46], textColor:255, fontStyle:'bold' },
+    alternateRowStyles:{ fillColor:[245,248,255] },
+    didParseCell: (data) => {
+      if (data.column.index === 6 && data.section === 'body') {
+        const v = String(data.cell.raw||'');
+        if (v==='SESUAI') data.cell.styles.textColor=[0,149,79];
+        else if (v==='TIDAK SESUAI') data.cell.styles.textColor=[200,30,50];
+        else data.cell.styles.textColor=[24,95,165];
+      }
+    },
+    theme: 'grid',
+  });
+
+  const pageCount = doc.internal.getNumberOfPages();
+  for (let i = 1; i <= pageCount; i++) {
+    doc.setPage(i); doc.setFontSize(7); doc.setTextColor(150);
+    doc.text(`Garda Hitam Drive Monitoring · ${S.plant} · Hal ${i}/${pageCount}`, 14, doc.internal.pageSize.height - 8);
+  }
+
+  doc.save(`Analisa_Drive_${S.plant}_${mix||'Semua'}_${new Date().toISOString().slice(0,10)}.pdf`);
+}
 </script>
 </body>
 </html>
