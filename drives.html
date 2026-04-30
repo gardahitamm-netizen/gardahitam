@@ -1750,9 +1750,9 @@ async function renderAsliTab(){
         <table class="mb-table">
           <thead><tr><th class="mb-num">#</th><th>Drive ID (Posisi Asli)</th><th>Ada di Lapangan</th><th>Serial Number Asli</th><th>Spesifikasi</th><th>Status</th></tr></thead>
           <tbody>${rows.map((r,i)=>{
-            const match=!q||(r.drive_id+r.spesifikasi+r.serial_number+(r['cari data lapangan']||r.cari_data_lapangan||'')+r.status).toLowerCase().includes(q);
-            const cari=r['cari data lapangan']||r.cari_data_lapangan||'';
-            return`<tr style="${rowStyle(r.status)}${match?';display:none':''}">
+          const match=!q||(r.drive_id+r.spesifikasi+r.serial_number+(r['cari data lapangan']||r.cari_data_lapangan||'')+r.status).toLowerCase().includes(q);
+const cari=r['cari data lapangan']||r.cari_data_lapangan||'';
+return`<tr style="${rowStyle(r.status)}${!match?';display:none':''}">
               <td class="mb-num">${i+1}</td>
               <td><span class="asli-drive-id">${esc(r.drive_id)}</span></td>
               <td>${renderCari(cari,r.status)}</td>
