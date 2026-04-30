@@ -1669,8 +1669,11 @@ async function renderDetailPage() {
   try {
     if (!S.cache[S.plant + '_drives']) {
       const data   = await apiGet({ action:'getDrives', plant:S.plant });
+      console.log('RAW drives response:', data); // ← TAMBAH INI
       const drives = Array.isArray(data.drives) ? data.drives : (Array.isArray(data) ? data : []);
       S.cache[S.plant + '_drives'] = drives;
+      console.log('drives count:', drives.length); // ← TAMBAH INI
+      console.log('sample drive[0]:', drives[0]);  // ← TAMBAH INI
     }
     if (!S.cache[S.plant + '_groupList']) {
       const seen = [], groups = [];
@@ -1679,8 +1682,11 @@ async function renderDetailPage() {
         if (g && !seen.includes(g)) { seen.push(g); groups.push(g); }
       });
       S.cache[S.plant + '_groupList'] = groups;
+      console.log('groupList:', groups); // ← TAMBAH INI
     }
-  } catch(e) {}
+  } catch(e) {
+    console.error('renderDetailPage error:', e); // ← TAMBAH INI
+  }
   renderSidebar(); switchTab(S.tab, true);
 }
 
