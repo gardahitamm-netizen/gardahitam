@@ -1282,9 +1282,9 @@ async function switchTab(tab, force) {
   document.querySelectorAll('.tab-content').forEach(t => t.classList.remove('active'));
   id('ctab-'+tab).classList.add('active');
   id('tab-'+tab).classList.add('active');
-  showSearchBar(tab!=='summary');
+showSearchBar(tab!=='summary' && tab!=='analisa');
   clearSearch();
-  const ph={ drive:'Cari drive, merk, serial number, stiker, status...', histori:'Cari drive ID, status, keterangan, waktu...', manual:'Cari judul, drive ID, kategori...', asli:'Cari drive ID, spesifikasi, serial number...', analisa:'Analisa chart mode...' };
+const ph={ drive:'Cari drive...', histori:'Cari drive ID...', manual:'Cari judul...', asli:'Cari drive ID...' };;
   const sb=id('search-bar'); if(sb&&ph[tab]) sb.placeholder=ph[tab];
   if (tab==='drive')   await renderDriveTab();
   if (tab==='histori') await renderHistoriTab();
