@@ -112,6 +112,7 @@ body::after {
 #userChip .uc-logout { font-size: 10px; color: var(--text-dim); margin-left: 4px; transition: color 0.2s; }
 #userChip:hover .uc-logout { color: var(--red-err); }
 
+/* ── AUTH SCREEN ── */
 #authScreen {
   position: fixed; inset: 0;
   background: var(--bg-void);
@@ -138,10 +139,23 @@ body::after {
 .auth-title span { color: var(--orange); }
 .auth-sub { text-align: center; font-family: 'JetBrains Mono', monospace; font-size: 10px; color: var(--text-dim); margin-bottom: 28px; letter-spacing: 1px; }
 
+/* Role info badges */
+.auth-role-info {
+  display: flex; flex-direction: column; gap: 6px;
+  background: var(--bg-card); border: 1px solid var(--border-faint);
+  border-radius: 8px; padding: 12px 14px; margin-bottom: 20px;
+  font-family: 'JetBrains Mono', monospace; font-size: 10px; color: var(--text-dim);
+}
+.auth-role-info-title { font-size: 9px; letter-spacing: 2px; color: var(--text-dim); text-transform: uppercase; margin-bottom: 4px; }
+.auth-role-row { display: flex; align-items: center; gap: 8px; }
+.auth-role-dot { width: 6px; height: 6px; border-radius: 50%; flex-shrink: 0; }
+.auth-role-name { font-weight: 700; width: 80px; }
+.auth-role-desc { color: var(--text-dim); font-size: 9px; }
+
 .auth-guest-banner {
   display: flex; align-items: center; gap: 8px;
   background: var(--teal-bg); border: 1px solid var(--teal-bd);
-  border-radius: 8px; padding: 10px 14px; margin-bottom: 20px;
+  border-radius: 8px; padding: 10px 14px; margin-bottom: 16px;
   font-family: 'JetBrains Mono', monospace; font-size: 10px; color: var(--teal); letter-spacing: 0.5px;
 }
 .auth-guest-banner span { flex: 1; }
@@ -154,7 +168,7 @@ body::after {
 .auth-guest-btn:hover { background: rgba(0,224,248,0.2); border-color: var(--teal); }
 
 .auth-divider {
-  display: flex; align-items: center; gap: 10px; margin-bottom: 20px;
+  display: flex; align-items: center; gap: 10px; margin-bottom: 16px;
   font-family: 'JetBrains Mono', monospace; font-size: 9px; color: var(--text-dim); letter-spacing: 1px;
 }
 .auth-divider::before, .auth-divider::after { content: ''; flex: 1; height: 1px; background: var(--border-mid); }
@@ -179,16 +193,6 @@ body::after {
 .auth-error { background: rgba(255,23,68,0.1); border: 1px solid rgba(255,23,68,0.3); border-radius: 6px; padding: 10px; margin-top: 14px; color: var(--red-err); font-size: 12px; text-align: center; display: none; }
 .auth-error.show { display: block; }
 
-.role-badges { display: flex; gap: 8px; margin-bottom: 20px; flex-wrap: wrap; }
-.role-badge { display: flex; align-items: center; gap: 5px; padding: 5px 12px; border-radius: 20px; font-family: 'JetBrains Mono', monospace; font-size: 9px; font-weight: 700; border: 1px solid; letter-spacing: 0.5px; text-transform: uppercase; }
-.rb-admin { color: var(--role-admin); border-color: rgba(255,109,0,0.4); background: rgba(255,109,0,0.07); }
-.rb-supervisor { color: var(--role-supervisor); border-color: rgba(0,224,248,0.4); background: rgba(0,224,248,0.07); }
-.rb-teknisi { color: var(--role-teknisi); border-color: rgba(0,230,118,0.4); background: rgba(0,230,118,0.07); }
-.rb-dot { width: 5px; height: 5px; border-radius: 50%; }
-.rb-admin .rb-dot { background: var(--role-admin); }
-.rb-supervisor .rb-dot { background: var(--role-supervisor); }
-.rb-teknisi .rb-dot { background: var(--role-teknisi); }
-
 #accessDeniedOverlay { display: none; position: fixed; inset: 0; background: rgba(8,12,16,0.85); backdrop-filter: blur(6px); z-index: 9000; justify-content: center; align-items: center; }
 #accessDeniedOverlay.show { display: flex; }
 .ad-box { background: var(--bg-panel); border: 1px solid rgba(255,23,68,0.4); border-radius: 12px; padding: 32px; text-align: center; max-width: 380px; box-shadow: 0 0 40px rgba(255,23,68,0.1); }
@@ -210,11 +214,25 @@ body::after {
 #homeBtn:hover { border-color: var(--border-orange); color: var(--orange); background: var(--orange-faint); transform: translateY(-1px); }
 #homeBtn svg { width: 14px; height: 14px; fill: currentColor; }
 
+/* ── UNIT SELECTOR ── */
 #unitSelectorScreen { position: relative; z-index: 1; max-width: 820px; margin: 0 auto; padding-top: 10px; display: none; }
 .unit-selector-title { text-align: center; font-family: 'JetBrains Mono', monospace; font-size: 11px; letter-spacing: 3px; color: var(--text-dim); text-transform: uppercase; margin-bottom: 28px; }
 .unit-selector-title span { color: var(--orange); }
+
+/* Access badge for full-access roles */
+.unit-selector-access-badge {
+  display: flex; align-items: center; justify-content: center; gap: 8px;
+  padding: 8px 16px; margin-bottom: 20px;
+  background: var(--orange-faint); border: 1px solid var(--border-orange);
+  border-radius: 20px; font-family: 'JetBrains Mono', monospace;
+  font-size: 10px; letter-spacing: 1px; color: var(--orange);
+  text-transform: uppercase; width: fit-content; margin-left: auto; margin-right: auto;
+}
+.unit-selector-access-badge .badge-dot { width: 6px; height: 6px; border-radius: 50%; background: var(--orange); box-shadow: 0 0 6px var(--orange); animation: pulse-dot 1.4s ease-in-out infinite; }
+@keyframes pulse-dot { 0%,100%{opacity:1} 50%{opacity:0.4} }
+
 .unit-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(180px, 1fr)); gap: 14px; margin-bottom: 32px; }
-.unit-card { position: relative; background: var(--bg-card); border: 1px solid var(--border-mid); border-radius: 6px; padding: 22px 18px 18px; cursor: pointer; transition: all 0.2s; overflow: hidden; display: flex; flex-direction: column; gap: 8px; min-height: 120px; }
+.unit-card { position: relative; background: var(--bg-card); border: 1px solid var(--border-mid); border-radius: 6px; padding: 22px 18px 18px; cursor: pointer; transition: all 0.2s; overflow: hidden; display: flex; flex-direction: column; gap: 8px; min-height: 120px; animation: fadeInUp 0.3s ease both; }
 .unit-card::before { content: ''; position: absolute; top: 0; left: 0; width: 0; height: 2px; background: var(--unit-color, var(--orange)); transition: width 0.25s; }
 .unit-card:hover { border-color: var(--unit-color, var(--orange)); background: rgba(255,109,0,0.04); transform: translateY(-2px); box-shadow: 0 8px 30px rgba(0,0,0,0.4); }
 .unit-card:hover::before { width: 100%; }
@@ -233,6 +251,8 @@ body::after {
 .aub-role-chip { font-family: 'JetBrains Mono', monospace; font-size: 9px; font-weight: 700; padding: 3px 9px; border-radius: 12px; border: 1px solid; letter-spacing: 0.5px; text-transform: uppercase; }
 .aub-change { margin-left: auto; font-family: 'JetBrains Mono', monospace; font-size: 10px; letter-spacing: 1px; color: var(--text-dim); cursor: pointer; padding: 4px 10px; border: 1px solid var(--border-faint); border-radius: 4px; transition: all 0.15s; background: transparent; text-transform: uppercase; }
 .aub-change:hover { border-color: var(--border-orange); color: var(--orange); background: var(--orange-faint); }
+/* Hide "Ganti Unit" for teknisi */
+.aub-change.hidden { display: none !important; }
 
 #mainApp { display: none; }
 
@@ -376,7 +396,7 @@ tr.filter-hidden { display: none; }
 #themeToggleBtn { position: fixed; bottom: 54px; right: 14px; z-index: 3000; display: inline-flex; align-items: center; justify-content: center; width: 36px; height: 36px; border-radius: 50%; background: var(--bg-panel); border: 1px solid var(--border-mid); cursor: pointer; padding: 0; }
 #themeToggleBtn:hover { border-color: var(--border-orange); box-shadow: 0 0 14px var(--orange-glow); transform: scale(1.08); }
 
-/* HISTORY PAGE */
+/* ── HISTORY PAGE ── */
 #historyPage { display: none; position: relative; z-index: 1; }
 .hist-page-header { text-align: center; padding: 10px 0 20px; position: relative; z-index: 1; }
 .hist-page-header h2 { font-family: 'Exo 2', sans-serif; font-size: 24px; font-weight: 900; letter-spacing: 5px; text-transform: uppercase; color: var(--text-bright); }
@@ -392,7 +412,7 @@ tr.filter-hidden { display: none; }
 .hist-reload-btn:hover { border-color: var(--teal); box-shadow: 0 0 10px rgba(0,224,248,0.15); }
 .hist-reload-btn.spinning svg { animation: spinAnim 0.7s linear infinite; }
 .hist-reload-btn svg { fill: var(--teal); width: 18px; height: 18px; }
-.hist-print-btn { display: inline-flex; align-items: center; gap: 6px; height: 44px; padding: 0 16px; background: var(--bg-card); border: 1px solid var(--border-orange); border-radius: 4px; cursor: pointer; font-family: 'Exo 2', sans-serif; font-size: 13px; font-weight: 700; letter-spacing: 1.5px; text-transform: uppercase; color: var(--orange); transition: all 0.18s; position: relative; overflow: hidden; }
+.hist-print-btn { display: inline-flex; align-items: center; gap: 6px; height: 44px; padding: 0 16px; background: var(--bg-card); border: 1px solid var(--border-orange); border-radius: 4px; cursor: pointer; font-family: 'Exo 2', sans-serif; font-size: 13px; font-weight: 700; letter-spacing: 1.5px; text-transform: uppercase; color: var(--orange); transition: all 0.18s; }
 .hist-print-btn:hover { border-color: var(--orange); box-shadow: 0 0 14px rgba(255,109,0,0.2); background: var(--orange-faint); }
 .hist-print-btn svg { fill: var(--orange); width: 18px; height: 18px; }
 .hist-wa-btn { display: inline-flex; align-items: center; gap: 6px; height: 44px; padding: 0 16px; background: var(--bg-card); border: 1px solid rgba(0,230,118,0.25); border-radius: 4px; cursor: pointer; font-family: 'Exo 2', sans-serif; font-size: 13px; font-weight: 700; letter-spacing: 1.5px; text-transform: uppercase; color: var(--green-ok); transition: all 0.18s; }
@@ -406,7 +426,7 @@ tr.filter-hidden { display: none; }
 .hist-info-empty .ei-icon { font-size: 36px; margin-bottom: 14px; }
 .hist-archived-at { font-family: 'JetBrains Mono', monospace; font-size: 10px; color: var(--text-dim); letter-spacing: 0.5px; }
 
-/* PRINT STYLES */
+/* ── PRINT STYLES ── */
 #printPagesContainer { display: none !important; }
 .print-header { display: none; text-align: center; font-size: 12px; color: #555; margin-bottom: 8px; }
 
@@ -438,7 +458,6 @@ tr.filter-hidden { display: none; }
 }
 
 @keyframes fadeInUp { from { opacity: 0; transform: translateY(16px); } to { opacity: 1; transform: translateY(0); } }
-.unit-card { animation: fadeInUp 0.3s ease both; }
 #historyPage { animation: fadeInUp 0.25s ease both; }
 </style>
 </head>
@@ -449,16 +468,32 @@ tr.filter-hidden { display: none; }
   <div class="auth-box">
     <h2 class="auth-title">SHARE <span>JOB</span></h2>
     <div class="auth-sub">PRODUCTION MONITORING SYSTEM</div>
+
+    <!-- Role info -->
+    <div class="auth-role-info">
+      <div class="auth-role-info-title">Tipe Akun</div>
+      <div class="auth-role-row">
+        <div class="auth-role-dot" style="background:#FF6D00;box-shadow:0 0 5px #FF6D00"></div>
+        <span class="auth-role-name" style="color:#FF6D00">Admin</span>
+        <span class="auth-role-desc">Akses semua unit — pilih setelah login</span>
+      </div>
+      <div class="auth-role-row">
+        <div class="auth-role-dot" style="background:#00E0F8;box-shadow:0 0 5px #00E0F8"></div>
+        <span class="auth-role-name" style="color:#00E0F8">Supervisor</span>
+        <span class="auth-role-desc">Akses semua unit — pilih setelah login</span>
+      </div>
+      <div class="auth-role-row">
+        <div class="auth-role-dot" style="background:#00E676;box-shadow:0 0 5px #00E676"></div>
+        <span class="auth-role-name" style="color:#00E676">Teknisi</span>
+        <span class="auth-role-desc">Akses langsung ke unit masing-masing</span>
+      </div>
+    </div>
+
     <div class="auth-guest-banner">
       <span>👁 Mode Lihat: akses terbatas tanpa login</span>
       <button class="auth-guest-btn" onclick="loginAsGuest()">Masuk Tamu</button>
     </div>
-    <div class="auth-divider">ATAU LOGIN AKUN</div>
-    <div class="role-badges">
-      <div class="role-badge rb-admin"><div class="rb-dot"></div>Admin</div>
-      <div class="role-badge rb-supervisor"><div class="rb-dot"></div>Supervisor</div>
-      <div class="role-badge rb-teknisi"><div class="rb-dot"></div>Teknisi</div>
-    </div>
+    <div class="auth-divider">LOGIN AKUN</div>
     <div class="auth-field">
       <label>👤 Username</label>
       <input type="text" id="authUsername" placeholder="Masukkan username" autocomplete="off">
@@ -521,7 +556,11 @@ tr.filter-hidden { display: none; }
 
 <!-- UNIT SELECTOR -->
 <div id="unitSelectorScreen">
-  <div class="unit-selector-title">Pilih <span>Unit / Departemen</span> untuk melanjutkan</div>
+  <div class="unit-selector-title">Pilih <span>Unit / Departemen</span></div>
+  <div id="unitAccessBadge" style="display:none;" class="unit-selector-access-badge">
+    <div class="badge-dot"></div>
+    <span id="unitAccessBadgeText">Akses Semua Unit</span>
+  </div>
   <div class="unit-grid" id="unitGrid"></div>
 </div>
 
@@ -531,7 +570,7 @@ tr.filter-hidden { display: none; }
   <span class="aub-unit" id="aubCode">—</span>
   <span class="aub-name" id="aubName">—</span>
   <span class="aub-role-chip" id="aubRoleChip">—</span>
-  <button class="aub-change" onclick="changeUnit()">&#8634; Ganti Unit</button>
+  <button class="aub-change" id="aubChangeBtn" onclick="changeUnit()">&#8634; Ganti Unit</button>
 </div>
 
 <!-- MAIN APP -->
@@ -802,14 +841,18 @@ var UNIT_CONFIG = [
   { code: "PLANTE", name: "Plant E",          icon: "🏭",  color: "#00E676", active: true }
 ];
 
+var ALL_UNITS = UNIT_CONFIG.map(function(u){ return u.code; });
+
 var MASTER_GAS_URL = "https://script.google.com/macros/s/AKfycbxcpj6mYF6YHVhdNNhdn9mX2b_F9gi_2q8cJc_Co6QzjqDD_0qMdQGv4YxOBoLrJV0W/exec";
 
 // ═══════════════════════════════════════
-// RBAC — PERMISSION BARU
-// Teknisi: hanya lihat, filter, cetak, WA
-// Supervisor & Admin: akses penuh
+// RBAC
 // ═══════════════════════════════════════
 var ROLES = { ADMIN:'admin', SUPERVISOR:'supervisor', TEKNISI:'teknisi', GUEST:'guest' };
+
+// Roles yang dapat akses SEMUA unit (tidak terbatas pada unit tertentu dari spreadsheet)
+var FULL_ACCESS_ROLES = ['admin', 'supervisor'];
+
 var PERMISSIONS = {
   'sharejob.add':              ['admin', 'supervisor'],
   'sharejob.edit':             ['admin', 'supervisor'],
@@ -820,7 +863,9 @@ var PERMISSIONS = {
   'sharejob.print':            ['admin', 'supervisor', 'teknisi', 'guest'],
   'sharejob.wa':               ['admin', 'supervisor', 'teknisi', 'guest'],
   'sharejob.filter':           ['admin', 'supervisor', 'teknisi', 'guest'],
+  'sharejob.changeUnit':       ['admin', 'supervisor', 'guest'],  // teknisi TIDAK bisa ganti unit
 };
+
 var ROLE_META = {
   admin:      { label:'ADMIN',      color:'var(--role-admin)',      dot:'#FF6D00', icon:'👑' },
   supervisor: { label:'SUPERVISOR', color:'var(--role-supervisor)', dot:'#00E0F8', icon:'🎯' },
@@ -845,6 +890,10 @@ function hasPermission(perm) {
   var allowed = PERMISSIONS[perm];
   return allowed ? allowed.indexOf(currentSession.role) !== -1 : false;
 }
+function isFullAccessRole() {
+  if (!currentSession) return false;
+  return FULL_ACCESS_ROLES.indexOf(currentSession.role) !== -1;
+}
 function getRoleMeta() { return currentSession ? (ROLE_META[currentSession.role] || ROLE_META.guest) : ROLE_META.guest; }
 
 // ═══════════════════════════════════════
@@ -868,15 +917,34 @@ async function doLogin() {
     if (result.success) {
       var role = (result.role || '').toLowerCase().trim();
       if (['admin','supervisor','teknisi'].indexOf(role) === -1) role = ROLES.TEKNISI;
-      var session = { username: username, role: role, allowedUnits: result.units || UNIT_CONFIG.map(function(u){return u.code;}), loginTime: Date.now() };
-      saveSession(session); startApp(session);
+
+      var allowedUnits;
+      // Admin & Supervisor: selalu akses semua unit, abaikan kolom unit di spreadsheet
+      if (FULL_ACCESS_ROLES.indexOf(role) !== -1) {
+        allowedUnits = ALL_UNITS;
+      } else {
+        // Teknisi: sesuai unit yang terdaftar di spreadsheet
+        allowedUnits = (result.units && result.units.length)
+          ? result.units
+          : ALL_UNITS;
+      }
+
+      var session = {
+        username: username,
+        role: role,
+        allowedUnits: allowedUnits,
+        isFullAccess: FULL_ACCESS_ROLES.indexOf(role) !== -1,
+        loginTime: Date.now()
+      };
+      saveSession(session);
+      startApp(session);
     } else {
       errorDiv.textContent = result.error || 'Username atau password salah!';
       errorDiv.classList.add('show');
     }
   } catch(err) {
     if (checkHardcodedAdmin(username, password)) {
-      var session = { username: username, role: ROLES.ADMIN, allowedUnits: UNIT_CONFIG.map(function(u){return u.code;}), loginTime: Date.now() };
+      var session = { username: username, role: ROLES.ADMIN, allowedUnits: ALL_UNITS, isFullAccess: true, loginTime: Date.now() };
       saveSession(session); startApp(session);
     } else {
       errorDiv.textContent = 'Tidak dapat terhubung. Cek koneksi internet.';
@@ -884,16 +952,32 @@ async function doLogin() {
     }
   } finally { btn.classList.remove('loading'); btn.disabled = false; }
 }
+
 function checkHardcodedAdmin(username, password) { return btoa(username) === btoa('admin') && btoa(password) === btoa('gh@dm1n2025'); }
+
 function loginAsGuest() {
-  var session = { username: 'Tamu', role: ROLES.GUEST, allowedUnits: UNIT_CONFIG.map(function(u){return u.code;}), loginTime: Date.now() };
+  var session = { username: 'Tamu', role: ROLES.GUEST, allowedUnits: ALL_UNITS, isFullAccess: true, loginTime: Date.now() };
   saveSession(session); startApp(session);
 }
+
 function startApp(session) {
   currentSession = session;
   document.getElementById('authScreen').style.display = 'none';
-  setupUserChip(session); setupRoleUI(session); showUnitSelector();
+  setupUserChip(session);
+
+  // Teknisi dengan hanya 1 unit: langsung masuk ke unit tersebut
+  if (session.role === ROLES.TEKNISI && session.allowedUnits.length === 1) {
+    var unitCode = session.allowedUnits[0];
+    var unitObj = UNIT_CONFIG.find(function(u){ return u.code === unitCode; });
+    if (unitObj) {
+      selectUnit(unitObj);
+      return;
+    }
+  }
+
+  showUnitSelector();
 }
+
 function setupUserChip(session) {
   var meta = ROLE_META[session.role] || ROLE_META.guest;
   document.getElementById('ucDot').style.background = meta.dot;
@@ -903,10 +987,18 @@ function setupUserChip(session) {
   document.getElementById('ucRole').textContent = meta.icon + ' ' + meta.label;
   document.getElementById('userChip').style.display = 'flex';
 }
+
 function setupRoleUI(session) {
   var role = session.role;
   document.getElementById('toggleInputBtn').classList.toggle('hidden', !hasPermission('sharejob.add'));
   document.getElementById('toggleDeleteBtn').classList.toggle('hidden', !hasPermission('sharejob.delete'));
+
+  // Tombol "Ganti Unit" — hanya untuk non-teknisi
+  var changeBtn = document.getElementById('aubChangeBtn');
+  if (changeBtn) {
+    changeBtn.classList.toggle('hidden', !hasPermission('sharejob.changeUnit'));
+  }
+
   var editRunBtn = document.getElementById('editRunningBtn');
   if (editRunBtn) {
     editRunBtn.style.opacity = hasPermission('sharejob.editRunningText') ? '1' : '0.3';
@@ -914,13 +1006,14 @@ function setupRoleUI(session) {
   }
   var hint = document.getElementById('editHint');
   if (hint) {
-    if (role === ROLES.GUEST)      hint.textContent = '👁 Mode Tamu: hanya bisa melihat, filter, cetak, dan kirim WA';
+    if (role === ROLES.GUEST)           hint.textContent = '👁 Mode Tamu: hanya bisa melihat, filter, cetak, dan kirim WA';
     else if (role === ROLES.TEKNISI)    hint.textContent = '🔧 Teknisi: hanya bisa melihat, filter, cetak, dan kirim WA';
     else if (role === ROLES.SUPERVISOR) hint.textContent = '🎯 Supervisor: Akses penuh — tambah, edit, hapus, archive, ubah status • Double-klik baris untuk edit';
-    else hint.textContent = '👑 Admin: Akses penuh — tambah, edit, hapus, archive, ubah status • Double-klik baris untuk edit';
+    else                                hint.textContent = '👑 Admin: Akses penuh — tambah, edit, hapus, archive, ubah status • Double-klik baris untuk edit';
   }
   showPermNotice(role);
 }
+
 function showPermNotice(role) {
   var notice = document.getElementById('permNotice');
   if (!notice) return;
@@ -933,6 +1026,7 @@ function showPermNotice(role) {
   if (m) { notice.className = 'perm-notice ' + m.cls; notice.textContent = m.text; notice.classList.remove('hidden'); }
   else    { notice.classList.add('hidden'); }
 }
+
 function showAccessDenied(action, roleNeeded) {
   var meta = getRoleMeta();
   document.getElementById('adDesc').textContent = 'Tindakan "' + action + '" tidak diizinkan untuk role Anda.';
@@ -956,6 +1050,7 @@ function doLogout() {
   document.getElementById('authPassword').value = '';
   document.getElementById('authError').classList.remove('show');
 }
+
 function updateAubRoleChip() {
   if (!currentSession) return;
   var meta = getRoleMeta();
@@ -987,14 +1082,28 @@ function showUnitSelector() {
   if (!currentSession) return;
   var filtered = UNIT_CONFIG.filter(function(u){ return currentSession.allowedUnits.indexOf(u.code) !== -1; });
   if (!filtered.length) filtered = UNIT_CONFIG;
+
+  // Tampilkan badge akses penuh untuk admin/supervisor
+  var badge = document.getElementById('unitAccessBadge');
+  var badgeText = document.getElementById('unitAccessBadgeText');
+  if (currentSession.isFullAccess) {
+    var meta = getRoleMeta();
+    badgeText.textContent = meta.icon + ' ' + meta.label + ' — Akses Semua Unit (' + filtered.length + ')';
+    badge.style.display = 'flex';
+  } else {
+    badge.style.display = 'none';
+  }
+
   renderUnitSelector(filtered);
   document.getElementById('unitSelectorScreen').style.display = 'block';
   document.getElementById('mainApp').style.display = 'none';
   document.getElementById('historyPage').style.display = 'none';
   document.getElementById('activeUnitBar').style.display = 'none';
 }
+
 function goHome() {
   if (currentEditingRow) { showAlert("Selesaikan edit terlebih dahulu!"); return; }
+  if (!hasPermission('sharejob.changeUnit')) { showAccessDenied('Ganti Unit', 'Supervisor atau Admin'); return; }
   currentUnit = null;
   document.documentElement.style.setProperty('--orange','#FF6D00');
   clearPrintContainer();
@@ -1004,16 +1113,23 @@ function goHome() {
   document.getElementById('inputSection').style.display = 'none';
   showUnitSelector();
 }
-function changeUnit() { if (currentEditingRow) { showAlert("Selesaikan edit terlebih dahulu!"); return; } goHome(); }
+
+function changeUnit() {
+  if (currentEditingRow) { showAlert("Selesaikan edit terlebih dahulu!"); return; }
+  if (!hasPermission('sharejob.changeUnit')) { showAccessDenied('Ganti Unit', 'Supervisor atau Admin'); return; }
+  goHome();
+}
+
 function clearPrintContainer() { document.getElementById('printPagesContainer').innerHTML = ''; }
 
 function renderUnitSelector(arr) {
   var grid = document.getElementById('unitGrid');
   grid.innerHTML = '';
-  arr.forEach(function(unit) {
+  arr.forEach(function(unit, idx) {
     var card = document.createElement('div');
     card.className = 'unit-card';
     card.style.setProperty('--unit-color', unit.color);
+    card.style.animationDelay = (idx * 0.05) + 's';
     card.innerHTML =
       '<span class="unit-card-badge active">Aktif</span>' +
       '<div class="unit-card-icon">' + unit.icon + '</div>' +
@@ -1033,6 +1149,7 @@ async function selectUnit(unit) {
   showLoading(false);
   if (ok) { showMainApp(unit); loadData(true); loadRunningText(); }
 }
+
 async function testGasConnection(unit) {
   try {
     var url = new URL(MASTER_GAS_URL);
@@ -1045,6 +1162,7 @@ async function testGasConnection(unit) {
     return true;
   } catch(err) { showAlert('❌ Gagal terhubung ke ' + unit.code + '\n\n' + err.message); return false; }
 }
+
 function showMainApp(unit) {
   document.getElementById('unitSelectorScreen').style.display = 'none';
   document.getElementById('historyPage').style.display = 'none';
@@ -1124,7 +1242,6 @@ function renderHistoryTable() {
     tbody.innerHTML = '<tr><td colspan="7"><div class="hist-info-empty"><div class="ei-icon">📭</div><div class="ei-text">Belum ada riwayat job yang diarsipkan</div></div></td></tr>';
     return;
   }
-
   var grouped = {};
   var order = [];
   allHistoryData.forEach(function(t) {
@@ -1132,7 +1249,6 @@ function renderHistoryTable() {
     if (!grouped[key]) { grouped[key] = { task: t, names: [] }; order.push(key); }
     grouped[key].names.push(t.nama);
   });
-
   var html = '';
   order.forEach(function(key) {
     var g = grouped[key];
@@ -1477,9 +1593,7 @@ function handleTbodyDblClick(e) {
   if (e.target.closest('.inline-save-bar')) return;
   var tr = e.target.closest('tr.group-row');
   if (!tr) return;
-  if (!hasPermission('sharejob.edit')) {
-    showAccessDenied('Edit Job', 'Supervisor atau Admin'); return;
-  }
+  if (!hasPermission('sharejob.edit')) { showAccessDenied('Edit Job', 'Supervisor atau Admin'); return; }
   startInlineEdit(tr);
 }
 
@@ -1742,7 +1856,7 @@ function doPrint() {
     var tb = document.createElement('tbody');
     pageRows.forEach(function(tr){
       var cells = tr.querySelectorAll('td');
-      var get = function(i){ return cells[off+i] ? cells[off+i].textContent.trim() : ''; };
+      var get = function(i2){return cells[off+i2]?cells[off+i2].textContent.trim():'';};
       var sv = tr.getAttribute('data-status')||'';
       var sc2 = sv==='Selesai'?'#2e7d32':sv==='Proses'?'#e65100':'#1565c0';
       var sb = sv==='Selesai'?'#e8f5e9':sv==='Proses'?'#fff3e0':'#e3f2fd';
