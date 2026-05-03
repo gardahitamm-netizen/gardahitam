@@ -129,8 +129,6 @@ body{font-family:'Plus Jakarta Sans',sans-serif;background:var(--bg);color:var(-
 .login-btn:disabled { opacity:.45;cursor:not-allowed;transform:none;box-shadow:none; }
 .login-err { display:none;background:var(--fault-bg);border:1px solid var(--fault-bd);color:var(--fault);border-radius:8px;padding:10px 14px;font-family:'JetBrains Mono',monospace;font-size:11px;margin-top:12px;text-align:center; }
 .login-err.visible { display:block;animation:fadeUp .2s ease; }
-.login-loading { display:none;text-align:center;padding:10px;font-family:'JetBrains Mono',monospace;font-size:11px;color:var(--teal); }
-.login-loading.visible { display:block; }
 .login-footer { text-align:center;margin-top:18px;font-family:'JetBrains Mono',monospace;font-size:9px;color:var(--muted);letter-spacing:1.5px;text-transform:uppercase; }
 .login-back-home { display:block;text-align:center;margin-top:14px;font-family:'JetBrains Mono',monospace;font-size:10px;color:var(--muted);text-decoration:none;letter-spacing:.5px;transition:color .2s; }
 .login-back-home:hover { color:var(--accent); }
@@ -373,6 +371,7 @@ body.light .login-back-home { color:#2e5c8a; }
 </head>
 <body>
 
+<!-- LOGIN PAGE -->
 <div id="page-login">
   <div class="login-box">
     <div class="login-logo">
@@ -393,7 +392,6 @@ body.light .login-back-home { color:#2e5c8a; }
           onkeydown="if(event.key==='Enter')doLogin()">
       </div>
       <button class="login-btn" id="btn-login" onclick="doLogin()">🔐 LOGIN</button>
-      <div class="login-loading" id="login-loading">⟳ Memverifikasi...</div>
       <div class="login-err" id="login-err"></div>
     </div>
     <div class="login-footer">GARDA HITAM · Authorized Access Only</div>
@@ -401,134 +399,139 @@ body.light .login-back-home { color:#2e5c8a; }
   </div>
 </div>
 
+<!-- APP -->
 <div id="app-wrapper" style="display:none;flex-direction:column;height:100%;width:100%;">
 
-<div class="topbar">
-  <a href="index.html" class="btn-back">← Home</a>
-  <div class="topbar-divider"></div>
-  <div class="topbar-dot"></div>
-  <span class="topbar-title">Control Troubleshooting</span>
-  <span class="topbar-sep">&nbsp;/&nbsp;</span>
-  <span class="topbar-sub" id="topbar-sub">PLC Input / Output Tags</span>
-  <div class="topbar-r">
-    <div class="topbar-user">👤 <span id="user-label">—</span></div>
-    <div class="btn-theme" id="btn-theme" onclick="toggleTheme()">🌙 Dark</div>
-    <div class="btn-sm" id="btn-refresh" onclick="doRefresh()">⟳ Refresh</div>
-    <div class="btn-sm btn-logout" id="btn-logout" onclick="doLogout()">⎋ Logout</div>
-    <div class="topbar-clock" id="clock"></div>
-  </div>
-</div>
-
-<div class="running-bar">
-  <div class="running-inner">
-    <span><span class="rb-lbl">📡 SISTEM:</span> Control Troubleshooting aktif — monitoring PLC Input/Output Tags secara real-time</span>
-    <span><span class="rb-lbl">⚙️ SOP:</span> Setiap identifikasi fault pada PLC Tag wajib dilaporkan ke tim kontrol dalam 15 menit</span>
-    <span><span class="rb-lbl">🔍 INFO:</span> Pastikan address tag sesuai dengan konfigurasi hardware PLC di lapangan</span>
-    <span><span class="rb-lbl">⚠️ PERINGATAN:</span> Jangan modifikasi parameter PLC tanpa izin supervisor dan checklist K3</span>
-    <span><span class="rb-lbl">📊 GARDA HITAM:</span> Control Troubleshooting System — GARDA HITAM</span>
-  </div>
-</div>
-
-<div class="breadcrumb">
-  <a href="index.html" class="bc-link">Home</a>
-  <span class="bc-sep">›</span>
-  <span class="bc-link" onclick="goHome()">Control Troubleshooting</span>
-  <span class="bc-sep" id="bcs2" style="display:none">›</span>
-  <span id="bc2" style="display:none"></span>
-  <span class="bc-sep" id="bcs3" style="display:none">›</span>
-  <span id="bc3" style="display:none"></span>
-  <span class="bc-sep" id="bcs4" style="display:none">›</span>
-  <span id="bc4" class="bc-cur" style="display:none"></span>
-</div>
-
-<div id="pages-wrapper">
-
-  <div class="page active" id="page-plant">
-    <div class="plant-wrap">
-      <div class="plant-hero">
-        <div class="plant-hero-grid"></div>
-        <div class="plant-hero-badge">🔌 PLC Monitoring System</div>
-        <div class="plant-hero-title">Control <span>Troubleshooting</span></div>
-        <div class="plant-hero-sub">GARDA HITAM — Pilih plant untuk memantau status PLC Input/Output Tags</div>
-        <div class="plant-stats-row">
-          <div class="plant-stat-box"><div class="plant-stat-label">Total Plant</div><div class="plant-stat-val acc" id="stat-total">—</div></div>
-          <div class="plant-stat-box"><div class="plant-stat-label">PLC Status</div><div class="plant-stat-val ok">ONLINE</div></div>
-          <div class="plant-stat-box"><div class="plant-stat-label">Last Sync</div><div class="plant-stat-val tel" id="stat-sync">—</div></div>
-          <div class="plant-stat-box"><div class="plant-stat-label">Mode</div><div class="plant-stat-val pur" id="stat-mode">DARK</div></div>
-        </div>
-      </div>
-      <div class="plant-section">
-        <div class="plant-section-head">
-          <div class="plant-section-label">⚡ Mixing Plants</div>
-          <div class="plant-section-line"></div>
-        </div>
-        <div id="plant-content"></div>
-      </div>
+  <div class="topbar">
+    <a href="index.html" class="btn-back">← Home</a>
+    <div class="topbar-divider"></div>
+    <div class="topbar-dot"></div>
+    <span class="topbar-title">Control Troubleshooting</span>
+    <span class="topbar-sep">&nbsp;/&nbsp;</span>
+    <span class="topbar-sub" id="topbar-sub">PLC Input / Output Tags</span>
+    <div class="topbar-r">
+      <div class="topbar-user">👤 <span id="user-label">mixing</span></div>
+      <div class="btn-theme" id="btn-theme" onclick="toggleTheme()">🌙 Dark</div>
+      <div class="btn-sm" id="btn-refresh" onclick="doRefresh()">⟳ Refresh</div>
+      <div class="btn-sm btn-logout" id="btn-logout" onclick="doLogout()">⎋ Logout</div>
+      <div class="topbar-clock" id="clock"></div>
     </div>
   </div>
 
-  <div class="page" id="page-unit">
-    <div class="unit-page">
-      <div class="unit-hero">
-        <div class="unit-hero-grid"></div>
-        <div class="unit-hero-back" id="unit-back-btn" onclick="navTo('plant')">← Kembali ke Plant</div>
-        <div class="unit-hero-title" id="unit-title">—</div>
-        <div class="unit-hero-sub" id="unit-sub">Pilih unit / mixer</div>
-      </div>
-      <div class="unit-section">
-        <div class="plant-section-head">
-          <div class="plant-section-label">📁 Unit / Mixer</div>
-          <div class="plant-section-line"></div>
-        </div>
-        <div id="unit-content"></div>
-      </div>
+  <div class="running-bar">
+    <div class="running-inner">
+      <span><span class="rb-lbl">📡 SISTEM:</span> Control Troubleshooting aktif — monitoring PLC Input/Output Tags secara real-time</span>
+      <span><span class="rb-lbl">⚙️ SOP:</span> Setiap identifikasi fault pada PLC Tag wajib dilaporkan ke tim kontrol dalam 15 menit</span>
+      <span><span class="rb-lbl">🔍 INFO:</span> Pastikan address tag sesuai dengan konfigurasi hardware PLC di lapangan</span>
+      <span><span class="rb-lbl">⚠️ PERINGATAN:</span> Jangan modifikasi parameter PLC tanpa izin supervisor dan checklist K3</span>
+      <span><span class="rb-lbl">📊 GARDA HITAM:</span> Control Troubleshooting System — GARDA HITAM</span>
     </div>
   </div>
 
-  <div class="page" id="page-file">
-    <div class="unit-page">
-      <div class="unit-hero">
-        <div class="unit-hero-grid"></div>
-        <div class="unit-hero-back" id="file-back-btn">← Kembali</div>
-        <div class="unit-hero-title" id="file-title">—</div>
-        <div class="unit-hero-sub" id="file-sub">Pilih file untuk melihat PLC Tags</div>
-      </div>
-      <div class="unit-section">
-        <div class="plant-section-head">
-          <div class="plant-section-label">📋 I/O List Files</div>
-          <div class="plant-section-line"></div>
-        </div>
-        <div id="file-content"></div>
-      </div>
-    </div>
+  <div class="breadcrumb">
+    <a href="index.html" class="bc-link">Home</a>
+    <span class="bc-sep">›</span>
+    <span class="bc-link" onclick="goHome()">Control Troubleshooting</span>
+    <span class="bc-sep" id="bcs2" style="display:none">›</span>
+    <span id="bc2" style="display:none"></span>
+    <span class="bc-sep" id="bcs3" style="display:none">›</span>
+    <span id="bc3" style="display:none"></span>
+    <span class="bc-sep" id="bcs4" style="display:none">›</span>
+    <span id="bc4" class="bc-cur" style="display:none"></span>
   </div>
 
-  <div class="page" id="page-detail">
-    <div class="detail-page">
-      <div class="search-wrap" id="search-wrap">
-        <span class="search-icon">🔍</span>
-        <input class="search-bar" id="search-bar" type="text"
-          placeholder="Cari nama tag, address, comment, tipe..."
-          autocomplete="off" oninput="onSearch(this.value)">
-        <span class="search-count" id="search-count"></span>
-        <button class="search-clear" id="search-clear" onclick="clearSearch()">✕ Clear</button>
+  <div id="pages-wrapper">
+
+    <!-- PLANT PAGE -->
+    <div class="page active" id="page-plant">
+      <div class="plant-wrap">
+        <div class="plant-hero">
+          <div class="plant-hero-grid"></div>
+          <div class="plant-hero-badge">🔌 PLC Monitoring System</div>
+          <div class="plant-hero-title">Control <span>Troubleshooting</span></div>
+          <div class="plant-hero-sub">GARDA HITAM — Pilih plant untuk memantau status PLC Input/Output Tags</div>
+          <div class="plant-stats-row">
+            <div class="plant-stat-box"><div class="plant-stat-label">Total Plant</div><div class="plant-stat-val acc" id="stat-total">—</div></div>
+            <div class="plant-stat-box"><div class="plant-stat-label">PLC Status</div><div class="plant-stat-val ok">ONLINE</div></div>
+            <div class="plant-stat-box"><div class="plant-stat-label">Last Sync</div><div class="plant-stat-val tel" id="stat-sync">—</div></div>
+            <div class="plant-stat-box"><div class="plant-stat-label">Mode</div><div class="plant-stat-val pur" id="stat-mode">DARK</div></div>
+          </div>
+        </div>
+        <div class="plant-section">
+          <div class="plant-section-head">
+            <div class="plant-section-label">⚡ Mixing Plants</div>
+            <div class="plant-section-line"></div>
+          </div>
+          <div id="plant-content"></div>
+        </div>
       </div>
-      <div class="detail-content-wrap">
-        <div class="sidebar" id="sidebar"></div>
-        <div class="detail-main">
-          <div class="detail-title" id="det-title"></div>
-          <div class="detail-meta"  id="det-meta"></div>
-          <div id="det-content"></div>
-          <div class="no-results" id="tag-no-results">
-            <span style="font-size:28px">🔍</span>
-            <span>Tidak ada tag untuk "<span id="tag-search-query"></span>"</span>
+    </div>
+
+    <!-- UNIT PAGE -->
+    <div class="page" id="page-unit">
+      <div class="unit-page">
+        <div class="unit-hero">
+          <div class="unit-hero-grid"></div>
+          <div class="unit-hero-back" id="unit-back-btn" onclick="navTo('plant')">← Kembali ke Plant</div>
+          <div class="unit-hero-title" id="unit-title">—</div>
+          <div class="unit-hero-sub" id="unit-sub">Pilih unit / mixer</div>
+        </div>
+        <div class="unit-section">
+          <div class="plant-section-head">
+            <div class="plant-section-label">📁 Unit / Mixer</div>
+            <div class="plant-section-line"></div>
+          </div>
+          <div id="unit-content"></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- FILE PAGE -->
+    <div class="page" id="page-file">
+      <div class="unit-page">
+        <div class="unit-hero">
+          <div class="unit-hero-grid"></div>
+          <div class="unit-hero-back" id="file-back-btn">← Kembali</div>
+          <div class="unit-hero-title" id="file-title">—</div>
+          <div class="unit-hero-sub" id="file-sub">Pilih file untuk melihat PLC Tags</div>
+        </div>
+        <div class="unit-section">
+          <div class="plant-section-head">
+            <div class="plant-section-label">📋 I/O List Files</div>
+            <div class="plant-section-line"></div>
+          </div>
+          <div id="file-content"></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- DETAIL PAGE -->
+    <div class="page" id="page-detail">
+      <div class="detail-page">
+        <div class="search-wrap" id="search-wrap">
+          <span class="search-icon">🔍</span>
+          <input class="search-bar" id="search-bar" type="text"
+            placeholder="Cari nama tag, address, comment, tipe..."
+            autocomplete="off" oninput="onSearch(this.value)">
+          <span class="search-count" id="search-count"></span>
+          <button class="search-clear" id="search-clear" onclick="clearSearch()">✕ Clear</button>
+        </div>
+        <div class="detail-content-wrap">
+          <div class="sidebar" id="sidebar"></div>
+          <div class="detail-main">
+            <div class="detail-title" id="det-title"></div>
+            <div class="detail-meta"  id="det-meta"></div>
+            <div id="det-content"></div>
+            <div class="no-results" id="tag-no-results">
+              <span style="font-size:28px">🔍</span>
+              <span>Tidak ada tag untuk "<span id="tag-search-query"></span>"</span>
+            </div>
           </div>
         </div>
       </div>
     </div>
-  </div>
 
-</div>
+  </div>
 </div>
 
 <script>
@@ -536,6 +539,11 @@ body.light .login-back-home { color:#2e5c8a; }
 //  CONFIG
 // ══════════════════════════════════════════════════════
 const API = 'https://script.google.com/macros/s/AKfycbyb42w69ObzQPjbCG_iQvXa7106hZt0qAkBP17D8cQxrPYCoYakwgadBBUkmg9MZdXrrA/exec';
+
+// ── Hardcoded credentials — ubah di sini jika perlu ──
+const VALID_USERS = [
+  { username: 'mixing', password: '123', plant: 'ALL', role: 'user' }
+];
 
 // ══════════════════════════════════════════════════════
 //  UTILS
@@ -550,16 +558,16 @@ function errorHTML(msg, fn) {
 }
 
 // ══════════════════════════════════════════════════════
-//  SESSION
+//  SESSION — simpan di sessionStorage (hilang saat tab ditutup)
 // ══════════════════════════════════════════════════════
-function getSession()   { try { return JSON.parse(localStorage.getItem('gh_session')); } catch { return null; } }
-function setSession(d)  { localStorage.setItem('gh_session', JSON.stringify(d)); }
-function clearSession() { localStorage.removeItem('gh_session'); }
+function getSession()   { try { return JSON.parse(sessionStorage.getItem('gh_session')); } catch { return null; } }
+function setSession(d)  { sessionStorage.setItem('gh_session', JSON.stringify(d)); }
+function clearSession() { sessionStorage.removeItem('gh_session'); }
 
 let SESSION = null;
 
 // ══════════════════════════════════════════════════════
-//  APP STATE — satu objek tunggal, di-reset total saat logout
+//  APP STATE
 // ══════════════════════════════════════════════════════
 function freshState() {
   return {
@@ -634,78 +642,63 @@ function showLogin() {
   stopClock();
   $id('page-login').classList.remove('hidden');
   $id('app-wrapper').style.display = 'none';
-  // Reset form
   $id('inp-user').value = '';
   $id('inp-pass').value = '';
   $id('login-err').classList.remove('visible');
-  $id('login-loading').classList.remove('visible');
   $id('btn-login').disabled = false;
 }
 
 function showApp() {
   $id('page-login').classList.add('hidden');
   $id('app-wrapper').style.display = 'flex';
-
-  // Update user label
   const ul = $id('user-label');
-  if (ul && SESSION) {
-    const plantLabel = SESSION.plant === 'ALL' ? 'ALL PLANT' : SESSION.plant;
-    ul.textContent = SESSION.username + ' [' + plantLabel + ']';
-  }
-
+  if (ul && SESSION) ul.textContent = SESSION.username;
   applyTheme();
   startClock();
+  // Selalu mulai dari halaman pilih plant
+  navTo('plant');
+}
 
-  // User single plant → langsung ke unit, skip plant selection
-  if (SESSION && isSinglePlant()) {
-    navTo('unit', { plant: SESSION.plant });
+// ══════════════════════════════════════════════════════
+//  LOGIN — hardcoded, tidak perlu API call
+// ══════════════════════════════════════════════════════
+function doLogin() {
+  const username = $id('inp-user').value.trim().toLowerCase();
+  const password = $id('inp-pass').value.trim();
+
+  if (!username || !password) {
+    showLoginErr('Username dan password wajib diisi');
+    return;
+  }
+
+  // Cek ke daftar VALID_USERS
+  const found = VALID_USERS.find(u =>
+    u.username.toLowerCase() === username &&
+    String(u.password) === String(password)
+  );
+
+  if (found) {
+    SESSION = {
+      username : found.username,
+      plant    : found.plant,
+      role     : found.role,
+      loginAt  : Date.now()
+    };
+    setSession(SESSION);
+    S = freshState();
+    showApp();
   } else {
-    navTo('plant');
+    showLoginErr('Username atau password salah');
+    // Shake animasi pada input
+    [$id('inp-user'), $id('inp-pass')].forEach(el => {
+      el.style.borderColor = 'var(--fault)';
+      el.style.animation = 'shake .3s ease';
+      setTimeout(() => {
+        el.style.borderColor = '';
+        el.style.animation = '';
+      }, 600);
+    });
   }
-}
-
-// Cek apakah user punya akses 1 plant saja (bukan ALL dan bukan multi)
-function isSinglePlant() {
-  if (!SESSION || !SESSION.plant) return false;
-  const p = SESSION.plant.trim().toUpperCase();
-  return p !== 'ALL' && !p.includes(',');
-}
-
-// ══════════════════════════════════════════════════════
-//  LOGIN
-// ══════════════════════════════════════════════════════
-async function doLogin() {
-  const username = $id('inp-user').value.trim();
-  const password = $id('inp-pass').value;
-  if (!username || !password) { showLoginErr('Username dan password wajib diisi'); return; }
-
-  $id('btn-login').disabled = true;
-  $id('login-loading').classList.add('visible');
-  $id('login-err').classList.remove('visible');
-
-  try {
-    const res  = await fetch(API + '?' + new URLSearchParams({ action:'login', username, password }));
-    const data = await res.json();
-    if (data.status === 'ok') {
-      SESSION = {
-        username : data.username,
-        plant    : data.plant,
-        role     : data.role,
-        token    : data.token,
-        loginAt  : Date.now()
-      };
-      setSession(SESSION);
-      S = freshState(); // ← PENTING: reset state untuk user baru
-      showApp();
-    } else {
-      showLoginErr(data.message || 'Login gagal');
-    }
-  } catch(err) {
-    showLoginErr('Koneksi gagal, coba lagi');
-  }
-
-  $id('btn-login').disabled = false;
-  $id('login-loading').classList.remove('visible');
 }
 
 function showLoginErr(msg) {
@@ -715,35 +708,28 @@ function showLoginErr(msg) {
 }
 
 // ══════════════════════════════════════════════════════
-//  LOGOUT — reset SEMUA state, kembali ke login
+//  LOGOUT
 // ══════════════════════════════════════════════════════
 function doLogout() {
-  // 1. Bersihkan session & state
   clearSession();
   SESSION = null;
   S = freshState();
-
-  // 2. Reset semua DOM konten
   ['plant-content','unit-content','file-content','det-content','sidebar'].forEach(i => {
     const el = $id(i); if(el) el.innerHTML = '';
   });
   [$id('det-title'),$id('det-meta')].forEach(el => { if(el) el.textContent = ''; });
   $id('tag-no-results').classList.remove('visible');
-
-  // 3. Kembali ke page plant & hide semua breadcrumb extra
   document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
   $id('page-plant').classList.add('active');
   ['bcs2','bc2','bcs3','bc3','bcs4','bc4'].forEach(i => {
     const el = $id(i); if(el) el.style.display = 'none';
   });
   $id('topbar-sub').textContent = 'PLC Input / Output Tags';
-
-  // 4. Tampilkan login
   showLogin();
 }
 
 // ══════════════════════════════════════════════════════
-//  API
+//  API — hanya untuk data plant/unit/tags dari Google Drive
 // ══════════════════════════════════════════════════════
 async function apiFetch(params) {
   const res = await fetch(API + '?' + new URLSearchParams(params).toString());
@@ -790,14 +776,7 @@ function applyTagSearch(q) {
 // ══════════════════════════════════════════════════════
 //  NAVIGATION
 // ══════════════════════════════════════════════════════
-// Navigasi ke home: single plant → ke unit, ALL → ke plant
-function goHome() {
-  if (isSinglePlant()) {
-    navTo('unit', { plant: SESSION.plant });
-  } else {
-    navTo('plant');
-  }
-}
+function goHome() { navTo('plant'); }
 
 function navTo(page, opts) {
   opts = opts || {};
@@ -855,28 +834,27 @@ function updateTopbar() {
 }
 
 // ══════════════════════════════════════════════════════
-//  PLANT PAGE
+//  PLANT PAGE — ambil dari Google Drive via Apps Script
 // ══════════════════════════════════════════════════════
 const PLANT_META = {
-  MCG:     { desc:'Mixing Plant G', color:'#ffb820', tag:'PLC · I/O List' },
-  MCA:     { desc:'Mixing Plant A', color:'#5badff', tag:'PLC · I/O List' },
-  MCC:     { desc:'Mixing Plant C', color:'#00e8f8', tag:'PLC · I/O List' },
-  MCD:     { desc:'Mixing Plant D', color:'#00f0a0', tag:'PLC · I/O List' },
-  MCH:     { desc:'Mixing Plant H', color:'#ff6b80', tag:'PLC · I/O List' },
-  MCI:     { desc:'Mixing Plant I', color:'#c084fc', tag:'PLC · I/O List' },
-  'PLANT E':{ desc:'Plant E',       color:'#f472b6', tag:'PLC · PLANT E'  },
+  MCG: { desc:'Mixing Plant G', color:'#ffb820', tag:'PLC · I/O List' },
+  MCA: { desc:'Mixing Plant A', color:'#5badff', tag:'PLC · I/O List' },
+  MCC: { desc:'Mixing Plant C', color:'#00e8f8', tag:'PLC · I/O List' },
+  MCD: { desc:'Mixing Plant D', color:'#00f0a0', tag:'PLC · I/O List' },
+  MCH: { desc:'Mixing Plant H', color:'#ff6b80', tag:'PLC · I/O List' },
+  MCI: { desc:'Mixing Plant I', color:'#c084fc', tag:'PLC · I/O List' },
 };
 
 async function renderPlantPage() {
   const el = $id('plant-content');
   el.innerHTML = loadingHTML('Memuat daftar plant...');
   try {
-    const plantAccess = SESSION ? SESSION.plant : 'ALL';
-    const data = await apiFetch({ action:'getPlants', plant_access: plantAccess });
+    // Selalu kirim plant_access=ALL karena user mixing punya akses semua
+    const data = await apiFetch({ action:'getPlants', plant_access: 'ALL' });
     $id('stat-total').textContent = data.plants.length;
     $id('stat-sync').textContent  = new Date().toTimeString().slice(0,5);
     if (!data.plants.length) {
-      el.innerHTML = `<div class="state-box"><div style="font-size:28px">🏭</div><h3>Tidak ada plant</h3><p>Tidak ada plant yang bisa diakses untuk akun ini.</p></div>`;
+      el.innerHTML = `<div class="state-box"><div style="font-size:28px">🏭</div><h3>Tidak ada plant</h3><p>Belum ada plant yang dikonfigurasi.</p></div>`;
       return;
     }
     el.innerHTML = `<div class="plant-grid">${data.plants.map((p,i) => plantCard(p,i)).join('')}</div>`;
@@ -885,7 +863,6 @@ async function renderPlantPage() {
 
 function plantCard(p, i) {
   const m = PLANT_META[p.plant] || { desc:'Mixing Plant', color:'#5badff', tag:'PLC' };
-  // Escape plant name untuk onclick attribute
   const plantEsc = p.plant.replace(/'/g, "\\'");
   return `<div class="plant-card" onclick="navTo('unit',{plant:'${plantEsc}'})">
     <div class="plant-card-top">
@@ -908,9 +885,6 @@ function plantCard(p, i) {
 async function renderUnitPage() {
   $id('unit-title').textContent = (S.plant || '—') + ' — Pilih Unit';
   $id('unit-sub').textContent   = 'Pilih unit / mixer untuk melihat I/O List';
-  // Sembunyikan tombol "Kembali ke Plant" kalau user hanya punya 1 plant
-  const backBtn = $id('unit-back-btn');
-  if (backBtn) backBtn.style.display = isSinglePlant() ? 'none' : '';
   const el = $id('unit-content');
   el.innerHTML = loadingHTML('Memuat daftar unit...');
   try {
@@ -928,8 +902,8 @@ async function renderUnitPage() {
 }
 
 function unitCard(u, i) {
-  const unitIdEsc   = u.unit.replace(/'/g, "\\'");
-  const unitLblEsc  = esc(u.label).replace(/'/g, '&#39;');
+  const unitIdEsc  = u.unit.replace(/'/g, "\\'");
+  const unitLblEsc = esc(u.label).replace(/'/g, '&#39;');
   return `<div class="unit-card" onclick="navTo('file',{unit:'${unitIdEsc}',unitLabel:'${unitLblEsc}'})" style="animation-delay:${i*0.05}s">
     <div class="unit-card-name">${esc(u.label)}</div>
     <span class="unit-badge">● Active</span>
@@ -1057,7 +1031,7 @@ async function doRefresh() {
     else if (S.page === 'file')   { delete S.filesCache[S.unit];  await renderFilePage(); }
     else if (S.page === 'unit')   { delete S.unitsCache[S.plant]; await renderUnitPage(); }
     else                          { await renderPlantPage(); }
-  } catch(e) { /* sudah handle di masing-masing render */ }
+  } catch(e) { /* handled in render */ }
   btn.classList.remove('loading');
   btn.textContent = '⟳ Refresh';
 }
