@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="id">
 <head>
@@ -16,42 +17,19 @@
 @import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap');
 
 :root {
-  --bg:      #0b0f1a;
-  --surf:    #121929;
-  --surf2:   #18243a;
-  --surf3:   #1e2d47;
-  --border:  #1f3050;
-  --text:    #f0f6ff;
-  --text-inv:#0d1a2e;
-  --muted:   #9fc3e8;
-  --ok:      #00f0a0;
-  --fault:   #ff3d55;
-  --maint:   #ffb820;
-  --kosong:  #7eb8e8;
-  --accent:  #4d9fff;
-  --teal:    #00e0f8;
-  --card-title:#ffffff;
-  --topbar-h: 50px;
-  --rbar-h:   30px;
-  --bc-h:     32px;
-  --ok-bg:    rgba(0,240,160,.12);
-  --ok-bd:    rgba(0,240,160,.35);
-  --fault-bg: rgba(255,61,85,.12);
-  --fault-bd: rgba(255,61,85,.35);
-  --maint-bg: rgba(255,184,32,.12);
-  --maint-bd: rgba(255,184,32,.35);
-  --kosong-bg:rgba(126,184,232,.12);
-  --kosong-bd:rgba(126,184,232,.35);
-  --accent-bg:rgba(77,159,255,.12);
-  --accent-bd:rgba(77,159,255,.35);
-  --teal-bg:  rgba(0,224,248,.08);
-  --teal-bd:  rgba(0,224,248,.25);
-  --stiker-bg: rgba(255,184,32,.08);
-  --stiker-bd: rgba(255,184,32,.25);
-  --admin-color: #c084fc;
-  --admin-bg:    rgba(192,132,252,.12);
-  --admin-bd:    rgba(192,132,252,.35);
-  --font-mixing: 'Times New Roman', Times, serif;
+  --bg:#0b0f1a;--surf:#121929;--surf2:#18243a;--surf3:#1e2d47;--border:#1f3050;
+  --text:#f0f6ff;--text-inv:#0d1a2e;--muted:#9fc3e8;--ok:#00f0a0;--fault:#ff3d55;
+  --maint:#ffb820;--kosong:#7eb8e8;--accent:#4d9fff;--teal:#00e0f8;--card-title:#ffffff;
+  --topbar-h:50px;--rbar-h:30px;--bc-h:32px;
+  --ok-bg:rgba(0,240,160,.12);--ok-bd:rgba(0,240,160,.35);
+  --fault-bg:rgba(255,61,85,.12);--fault-bd:rgba(255,61,85,.35);
+  --maint-bg:rgba(255,184,32,.12);--maint-bd:rgba(255,184,32,.35);
+  --kosong-bg:rgba(126,184,232,.12);--kosong-bd:rgba(126,184,232,.35);
+  --accent-bg:rgba(77,159,255,.12);--accent-bd:rgba(77,159,255,.35);
+  --teal-bg:rgba(0,224,248,.08);--teal-bd:rgba(0,224,248,.25);
+  --stiker-bg:rgba(255,184,32,.08);--stiker-bd:rgba(255,184,32,.25);
+  --admin-color:#c084fc;--admin-bg:rgba(192,132,252,.12);--admin-bd:rgba(192,132,252,.35);
+  --font-mixing:'Times New Roman',Times,serif;
 }
 
 body.light {
@@ -103,6 +81,8 @@ body.light .login-gate-overlay{background:rgba(180,200,230,.6);}
 body.light .global-search-bar{background:#eaf1fb!important;border-color:#b8ccec!important;color:#0d1a2e!important;}
 body.light .global-result-card{background:#fff;border-color:#c4d8f0;}
 body.light .global-result-card:hover{background:#edf5ff;}
+body.light .pool-card{background:#fff;border-color:#c4d8f0;}
+body.light .pool-card:hover{background:#edf5ff;}
 
 *{margin:0;padding:0;box-sizing:border-box;}
 html,body{width:100%;height:100%;overflow:hidden;}
@@ -218,8 +198,6 @@ body{font-family:'Plus Jakarta Sans',sans-serif;background:var(--bg);color:var(-
 .global-search-clear{font-family:'JetBrains Mono',monospace;font-size:10px;padding:4px 9px;border-radius:5px;cursor:pointer;border:1px solid var(--border);background:transparent;color:var(--muted);transition:all .15s;display:none;flex-shrink:0;}
 .global-search-clear.visible{display:block;}
 .global-search-clear:hover{border-color:var(--fault);color:var(--fault);}
-
-/* Global search results overlay */
 .global-results-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,.6);backdrop-filter:blur(4px);z-index:400;overflow-y:auto;}
 .global-results-overlay.open{display:flex;flex-direction:column;}
 .global-results-panel{background:var(--surf);border-bottom:1px solid var(--border);min-height:100%;padding:20px;}
@@ -284,7 +262,7 @@ body{font-family:'Plus Jakarta Sans',sans-serif;background:var(--bg);color:var(-
 .plant-card:hover{border-color:var(--accent-bd);transform:translateY(-3px);box-shadow:0 12px 30px rgba(0,0,0,.5),0 0 0 1px var(--accent-bg);}
 .plant-card:hover .plant-card-arr{color:var(--accent);transform:translateX(3px);}
 
-/* ══ MIXING PAGE (NEW) ══ */
+/* ══ MIXING PAGE ══ */
 .mixing-page-wrap{flex:1;overflow-y:auto;width:100%;}
 .mixing-hero{position:relative;overflow:hidden;padding:24px 28px 20px;background:linear-gradient(135deg,#050a16,#0b1828);border-bottom:1px solid var(--border);}
 .mixing-hero::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse 50% 70% at 60% 50%,rgba(77,159,255,.08),transparent 70%);}
@@ -326,8 +304,8 @@ body{font-family:'Plus Jakarta Sans',sans-serif;background:var(--bg);color:var(-
 .histori-scroll-area{flex:1;overflow-y:auto;min-height:0;padding:16px 20px 20px;}
 #tab-manual.active{padding:0;display:flex;flex-direction:column;}
 .manual-scroll-area{flex:1;overflow-y:auto;min-height:0;padding:16px 20px 20px;}
+#tab-pool.active{padding:0;display:flex;flex-direction:column;}
 
-/* Back button row inside detail */
 .detail-back-row{display:flex;align-items:center;gap:10px;padding:10px 20px;background:var(--surf);border-bottom:1px solid var(--border);flex-shrink:0;}
 .btn-back-mixing{display:flex;align-items:center;gap:5px;font-family:'JetBrains Mono',monospace;font-size:11px;padding:5px 12px;border-radius:5px;cursor:pointer;border:1px solid var(--border);background:var(--surf2);color:var(--muted);transition:all .2s;}
 .btn-back-mixing:hover{border-color:var(--teal);color:var(--teal);}
@@ -388,6 +366,10 @@ body{font-family:'Plus Jakarta Sans',sans-serif;background:var(--bg);color:var(-
 .inu-card.clickable:hover .inu-edit-hint{opacity:1;}
 .inu-card.search-hidden{display:none;}
 .inu-role{font-family:'JetBrains Mono',monospace;font-size:10px;font-weight:600;color:var(--muted);margin-top:4px;font-style:italic;}
+.inu-lokasi-badge{display:inline-flex;align-items:center;gap:4px;font-family:'JetBrains Mono',monospace;font-size:9px;font-weight:700;padding:2px 8px;border-radius:4px;margin-top:6px;}
+.inu-lokasi-badge.ws_boveri{background:var(--teal-bg);color:var(--teal);border:1px solid var(--teal-bd);}
+.inu-lokasi-badge.rusak{background:var(--fault-bg);color:var(--fault);border:1px solid var(--fault-bd);}
+.inu-lokasi-badge.abw6{background:var(--maint-bg);color:var(--maint);border:1px solid var(--maint-bd);}
 .readonly-notice{display:flex;align-items:center;gap:8px;background:var(--teal-bg);border:1px solid var(--teal-bd);border-radius:8px;padding:8px 14px;font-family:'JetBrains Mono',monospace;font-size:11px;color:var(--teal);margin-bottom:14px;flex-shrink:0;}
 
 /* ══ HISTORI ══ */
@@ -397,7 +379,7 @@ body{font-family:'Plus Jakarta Sans',sans-serif;background:var(--bg);color:var(-
 .hist-filter-select{background:var(--surf3);border:1px solid var(--border);color:var(--text);padding:6px 10px;border-radius:6px;font-size:11px;font-family:'JetBrains Mono',monospace;outline:none;cursor:pointer;transition:border-color .2s;}
 .hist-filter-select:focus{border-color:var(--accent);}
 .hist-filter-select option{background:var(--surf2);}
-.hist-period-badge{display:flex;align-items:center;gap:5px;background:var(--teal-bg);border:1px solid var(--teal-bd);color:var(--teal);font-family:'JetBrains Mono',monospace;font-size:10px;font-weight:700;padding:5px 12px;border-radius:20px;flex-shrink:0;transition:all .2s;}
+.hist-period-badge{display:flex;align-items:center;gap:5px;background:var(--teal-bg);border:1px solid var(--teal-bd);color:var(--teal);font-family:'JetBrains Mono',monospace;font-size:10px;font-weight:700;padding:5px 12px;border-radius:20px;flex-shrink:0;}
 .hist-filter-sep{color:var(--border);font-size:14px;flex-shrink:0;}
 .btn-reset-filter{display:flex;align-items:center;gap:4px;font-family:'JetBrains Mono',monospace;font-size:10px;padding:5px 12px;border-radius:6px;cursor:pointer;border:1px solid var(--border);background:transparent;color:var(--muted);transition:all .15s;flex-shrink:0;}
 .btn-reset-filter:hover{border-color:var(--fault);color:var(--fault);}
@@ -411,12 +393,11 @@ body{font-family:'Plus Jakarta Sans',sans-serif;background:var(--bg);color:var(-
 .btn-edit-ts{display:inline-flex;align-items:center;font-family:'JetBrains Mono',monospace;font-size:9px;padding:2px 6px;border-radius:4px;cursor:pointer;border:1px solid var(--border);background:transparent;color:var(--muted);transition:all .15s;opacity:0;flex-shrink:0;}
 tr:hover .btn-edit-ts{opacity:1;}
 .btn-edit-ts:hover{border-color:var(--teal);color:var(--teal);background:var(--teal-bg);}
-.btn-edit-ts.hidden{display:none!important;}
 .ts-modal-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,.7);backdrop-filter:blur(4px);z-index:510;align-items:center;justify-content:center;}
 .ts-modal-overlay.open{display:flex;}
 .ts-modal{background:var(--surf);border:1px solid var(--border);border-radius:14px;padding:24px;width:100%;max-width:400px;animation:modalIn .2s ease;margin:16px;}
 
-/* SUMMARY */
+/* ══ SUMMARY ══ */
 .summary-stats{display:flex;gap:12px;flex-wrap:wrap;margin-bottom:20px;}
 .sum-stat{background:var(--surf);border:1px solid var(--border);border-radius:10px;padding:14px 18px;min-width:120px;}
 .sum-stat-label{font-family:'JetBrains Mono',monospace;font-size:9px;letter-spacing:1.5px;text-transform:uppercase;color:var(--muted);margin-bottom:6px;}
@@ -440,14 +421,13 @@ tr:hover .btn-edit-ts{opacity:1;}
 .sum-bar-track{width:80px;height:5px;background:var(--surf3);border-radius:3px;overflow:hidden;flex-shrink:0;}
 .sum-bar-fill{height:100%;border-radius:3px;background:var(--kosong);transition:width .4s ease;}
 .sum-pct-txt{font-family:'JetBrains Mono',monospace;font-size:10px;color:var(--muted);}
-
 .tab-action-bar{display:flex;justify-content:flex-end;margin-bottom:14px;flex-shrink:0;}
 .btn-pdf{display:flex;align-items:center;gap:5px;font-family:'JetBrains Mono',monospace;font-size:11px;padding:5px 14px;border-radius:5px;cursor:pointer;border:1px solid var(--fault-bd);background:var(--fault-bg);color:var(--fault);transition:all .2s;}
 .btn-pdf:hover{background:rgba(255,61,85,.2);border-color:var(--fault);}
 .no-results{display:none;flex-direction:column;align-items:center;padding:40px 20px;gap:8px;color:var(--muted);font-family:'JetBrains Mono',monospace;font-size:12px;}
 .no-results.visible{display:flex;}
 
-/* HISTORY TABLE */
+/* ══ HISTORY TABLE ══ */
 .hist-table-wrap{overflow-x:auto;}
 .hist-table{width:100%;border-collapse:collapse;font-size:12px;}
 .hist-table th{text-align:left;padding:9px 12px;font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:1px;text-transform:uppercase;color:var(--muted);border-bottom:1px solid var(--border);background:var(--surf);white-space:nowrap;}
@@ -461,7 +441,7 @@ tr:hover .btn-edit-ts{opacity:1;}
 .st-maint{background:var(--maint-bg);color:var(--maint);border:1px solid var(--maint-bd);}
 .st-kosong{background:var(--kosong-bg);color:var(--kosong);border:1px solid var(--kosong-bd);}
 
-/* MODAL */
+/* ══ MODAL ══ */
 .modal-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,.7);backdrop-filter:blur(4px);z-index:500;align-items:center;justify-content:center;}
 .modal-overlay.open{display:flex;}
 .modal{background:var(--surf);border:1px solid var(--border);border-radius:14px;padding:24px;width:100%;max-width:420px;animation:modalIn .2s ease;margin:16px;max-height:92vh;overflow-y:auto;}
@@ -481,8 +461,9 @@ tr:hover .btn-edit-ts{opacity:1;}
 .btn-save{padding:8px 20px;border-radius:7px;font-size:13px;cursor:pointer;background:var(--accent);border:1px solid var(--accent);color:#fff;font-weight:600;transition:all .15s;}
 .btn-save:hover{filter:brightness(1.15);}
 .btn-save:disabled{opacity:.5;pointer-events:none;}
+.move-preview{margin-bottom:14px;padding:10px 14px;background:rgba(255,184,32,.08);border:1px solid rgba(255,184,32,.3);border-radius:8px;font-family:'JetBrains Mono',monospace;font-size:11px;color:#ffb820;line-height:1.6;}
 
-/* MANUAL BOOK */
+/* ══ MANUAL BOOK ══ */
 .mb-filter-bar{display:flex;align-items:center;gap:10px;padding:10px 16px;background:var(--surf2);border-bottom:1px solid var(--border);flex-shrink:0;flex-wrap:wrap;}
 .mb-table-wrap{overflow-x:auto;}
 .mb-table{width:100%;border-collapse:collapse;font-size:12px;}
@@ -502,53 +483,94 @@ tr:hover .btn-edit-ts{opacity:1;}
 .mb-header-title{font-family:'JetBrains Mono',monospace;font-size:11px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:var(--accent);}
 .mb-header-count{font-family:'JetBrains Mono',monospace;font-size:10px;color:var(--muted);margin-left:auto;background:var(--accent-bg);border:1px solid var(--accent-bd);padding:3px 10px;border-radius:12px;}
 
-/* ASLI */
+/* ══ ASLI ══ */
 .asli-drive-id{font-family:'JetBrains Mono',monospace;font-size:12px;font-weight:700;color:#00e0f8;background:rgba(0,224,248,.12);border:1px solid rgba(0,224,248,.35);border-radius:5px;padding:2px 9px;display:inline-block;letter-spacing:.5px;}
 .asli-cari{font-family:'JetBrains Mono',monospace;font-size:11px;font-weight:700;color:#ffb820;background:rgba(255,184,32,.13);border:1px solid rgba(255,184,32,.35);border-radius:5px;padding:3px 10px;display:inline-block;}
 .asli-ref-err{font-family:'JetBrains Mono',monospace;font-size:10px;color:#ff6b7a;background:rgba(255,61,85,.1);border:1px solid rgba(255,61,85,.25);border-radius:4px;padding:2px 7px;display:inline-block;}
 
-/* ANALISA */
-.analisa-wrap{padding:20px}
-.analisa-top{display:flex;align-items:flex-start;justify-content:space-between;flex-wrap:wrap;gap:12px;margin-bottom:20px}
-.analisa-title{font-family:'JetBrains Mono',monospace;font-size:15px;font-weight:700;color:var(--text)}
-.analisa-sub{font-size:11px;color:var(--muted);margin-top:3px}
-.analisa-btn-row{display:flex;gap:8px;flex-wrap:wrap}
-.a-btn{display:flex;align-items:center;gap:5px;font-family:'JetBrains Mono',monospace;font-size:11px;padding:6px 14px;border-radius:6px;cursor:pointer;border:1px solid var(--border);background:var(--surf2);color:var(--muted);transition:all .2s}
-.a-btn.ok-btn{border-color:var(--ok-bd);background:var(--ok-bg);color:var(--ok)}
-.a-btn.fault-btn{border-color:var(--fault-bd);background:var(--fault-bg);color:var(--fault)}
-.analisa-filter-bar{display:flex;align-items:center;gap:10px;padding:10px 14px;background:var(--surf2);border:1px solid var(--border);border-radius:10px;margin-bottom:16px;flex-wrap:wrap}
-.a-filter-label{font-family:'JetBrains Mono',monospace;font-size:10px;color:var(--muted);letter-spacing:1px;text-transform:uppercase;flex-shrink:0}
-.a-filter-sel{background:var(--surf3);border:1px solid var(--border);color:var(--text);padding:5px 10px;border-radius:6px;font-size:11px;font-family:'JetBrains Mono',monospace;outline:none;cursor:pointer}
-.analisa-metric-row{display:grid;grid-template-columns:repeat(auto-fill,minmax(130px,1fr));gap:10px;margin-bottom:20px}
-.a-mcard{background:var(--surf);border:1px solid var(--border);border-radius:10px;padding:14px 16px}
-.a-mcard-label{font-family:'JetBrains Mono',monospace;font-size:9px;letter-spacing:1.5px;text-transform:uppercase;color:var(--muted);margin-bottom:6px}
-.a-mcard-val{font-family:'JetBrains Mono',monospace;font-size:22px;font-weight:700}
-.a-mcard-val.ok{color:var(--ok)}.a-mcard-val.ng{color:var(--fault)}.a-mcard-val.nf{color:var(--accent)}.a-mcard-val.tot{color:var(--text)}
-.a-mcard-pct{font-family:'JetBrains Mono',monospace;font-size:10px;color:var(--muted);margin-top:3px}
-.analisa-chart-row{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:20px}
-.a-chart-box{background:var(--surf);border:1px solid var(--border);border-radius:12px;padding:16px}
-.a-chart-title{font-family:'JetBrains Mono',monospace;font-size:10px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;color:var(--muted);margin-bottom:10px}
-.a-legend-row{display:flex;flex-wrap:wrap;gap:10px;margin-bottom:10px}
-.a-legend-item{display:flex;align-items:center;gap:4px;font-family:'JetBrains Mono',monospace;font-size:10px;color:var(--muted)}
-.a-legend-sq{width:10px;height:10px;border-radius:2px;flex-shrink:0}
-.a-section-head{display:flex;align-items:center;gap:10px;margin-bottom:12px;margin-top:20px}
-.a-section-label{font-family:'JetBrains Mono',monospace;font-size:10px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:var(--muted)}
-.a-section-line{flex:1;height:1px;background:linear-gradient(to right,var(--border),transparent)}
-.a-tbl-wrap{overflow-x:auto;margin-bottom:20px}
-.a-table{width:100%;border-collapse:collapse;font-size:12px;min-width:500px}
-.a-table th{text-align:left;padding:9px 12px;font-family:'JetBrains Mono',monospace;font-size:9px;letter-spacing:1px;text-transform:uppercase;color:var(--muted);border-bottom:1px solid var(--border);background:var(--surf);white-space:nowrap;position:sticky;top:0;z-index:2}
-.a-table td{padding:9px 12px;border-bottom:1px solid rgba(31,48,80,.5);vertical-align:middle;color:var(--text)}
-.a-table tr:hover td{background:rgba(255,255,255,.025)}
-.a-bar-cell{display:flex;align-items:center;gap:6px}
-.a-bar-track{height:5px;background:var(--surf3);border-radius:3px;flex:1;min-width:50px}
-.a-bar-fill{height:5px;border-radius:3px;transition:width .4s ease}
-.a-insight-box{background:var(--surf);border:1px solid var(--border);border-radius:12px;padding:16px 18px;margin-bottom:20px}
-.a-insight-title{font-family:'JetBrains Mono',monospace;font-size:10px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;color:var(--teal);margin-bottom:12px}
-.a-insight-list{list-style:none;display:flex;flex-direction:column;gap:8px}
-.a-insight-list li{font-size:12px;color:var(--muted);padding-left:14px;position:relative;line-height:1.6}
-.a-insight-list li::before{content:"›";position:absolute;left:0;color:var(--teal);font-size:14px;line-height:1.3}
-.a-insight-list li strong{color:var(--text)}
-@media(max-width:768px){.analisa-chart-row{grid-template-columns:1fr!important}}
+/* ══ POOL & MUTASI ══ */
+.pool-tabs{display:flex;gap:6px;padding:14px 20px 0;flex-shrink:0;flex-wrap:wrap;}
+.pool-tab-btn{font-family:'JetBrains Mono',monospace;font-size:11px;padding:6px 14px;border-radius:6px;cursor:pointer;border:1px solid var(--border);background:var(--surf2);color:var(--muted);transition:all .2s;}
+.pool-tab-btn:hover{border-color:var(--accent-bd);color:var(--accent);}
+.pool-tab-btn.active{border-color:var(--accent-bd);background:var(--accent-bg);color:var(--accent);}
+.pool-tab-btn.btn-ws.active{border-color:var(--ok-bd);background:var(--ok-bg);color:var(--ok);}
+.pool-tab-btn.btn-rusak.active{border-color:var(--fault-bd);background:var(--fault-bg);color:var(--fault);}
+.pool-tab-btn.btn-abw6.active{border-color:var(--maint-bd);background:var(--maint-bg);color:var(--maint);}
+.pool-scroll{flex:1;overflow-y:auto;padding:14px 20px 20px;}
+.pool-header{display:flex;align-items:center;gap:10px;margin-bottom:14px;}
+.pool-header-title{font-family:'JetBrains Mono',monospace;font-size:10px;font-weight:700;letter-spacing:2px;text-transform:uppercase;}
+.pool-header-title.ws{color:var(--ok);}
+.pool-header-title.rusak{color:var(--fault);}
+.pool-header-title.abw6{color:var(--maint);}
+.pool-header-title.log{color:var(--accent);}
+.pool-header-count{font-family:'JetBrains Mono',monospace;font-size:10px;color:var(--muted);margin-left:auto;background:var(--surf2);border:1px solid var(--border);padding:3px 10px;border-radius:12px;}
+.pool-card{background:var(--surf);border:1px solid var(--border);border-radius:10px;padding:14px 16px;margin-bottom:10px;display:flex;align-items:flex-start;gap:12px;transition:all .2s;}
+.pool-card:hover{background:var(--surf2);}
+.pool-card-info{flex:1;min-width:0;}
+.pool-card-sn{font-family:'JetBrains Mono',monospace;font-size:12px;font-weight:700;color:var(--teal);margin-bottom:4px;}
+.pool-card-name{font-size:14px;font-weight:700;color:var(--text);margin-bottom:2px;}
+.pool-card-meta{font-family:'JetBrains Mono',monospace;font-size:10px;color:var(--muted);margin-top:2px;}
+.pool-card-ket{font-size:11px;color:var(--muted);margin-top:4px;font-style:italic;}
+.pool-card-dari{font-family:'JetBrains Mono',monospace;font-size:10px;color:var(--accent);background:var(--accent-bg);border:1px solid var(--accent-bd);padding:2px 8px;border-radius:4px;flex-shrink:0;white-space:nowrap;}
+.btn-pool-move{display:flex;align-items:center;gap:5px;font-family:'JetBrains Mono',monospace;font-size:10px;padding:6px 12px;border-radius:6px;cursor:pointer;border:1px solid var(--maint-bd);background:var(--maint-bg);color:var(--maint);transition:all .2s;flex-shrink:0;white-space:nowrap;}
+.btn-pool-move:hover{background:rgba(255,184,32,.25);}
+.movlog-item{display:flex;align-items:flex-start;gap:12px;padding:10px 0;border-bottom:1px solid rgba(31,48,80,.4);}
+.movlog-item:last-child{border-bottom:none;}
+.movlog-icon{font-size:18px;flex-shrink:0;padding-top:1px;}
+.movlog-body{flex:1;min-width:0;}
+.movlog-ts{font-family:'JetBrains Mono',monospace;font-size:10px;color:var(--muted);margin-bottom:3px;}
+.movlog-sn{font-family:'JetBrains Mono',monospace;font-size:11px;font-weight:700;color:var(--teal);margin-bottom:4px;}
+.movlog-route{display:flex;align-items:center;gap:6px;flex-wrap:wrap;}
+.movlog-loc{font-family:'JetBrains Mono',monospace;font-size:10px;font-weight:700;padding:2px 8px;border-radius:4px;}
+.movlog-loc.mixing{background:var(--ok-bg);color:var(--ok);border:1px solid var(--ok-bd);}
+.movlog-loc.ws_boveri{background:var(--teal-bg);color:var(--teal);border:1px solid var(--teal-bd);}
+.movlog-loc.rusak{background:var(--fault-bg);color:var(--fault);border:1px solid var(--fault-bd);}
+.movlog-loc.abw6{background:var(--maint-bg);color:var(--maint);border:1px solid var(--maint-bd);}
+.movlog-ket{font-size:10px;color:var(--muted);font-style:italic;}
+.pool-empty{display:flex;flex-direction:column;align-items:center;gap:10px;padding:48px 20px;color:var(--muted);font-family:'JetBrains Mono',monospace;font-size:12px;text-align:center;}
+
+/* ══ ANALISA ══ */
+.analisa-wrap{padding:20px;}
+.analisa-top{display:flex;align-items:flex-start;justify-content:space-between;flex-wrap:wrap;gap:12px;margin-bottom:20px;}
+.analisa-title{font-family:'JetBrains Mono',monospace;font-size:15px;font-weight:700;color:var(--text);}
+.analisa-sub{font-size:11px;color:var(--muted);margin-top:3px;}
+.analisa-btn-row{display:flex;gap:8px;flex-wrap:wrap;}
+.a-btn{display:flex;align-items:center;gap:5px;font-family:'JetBrains Mono',monospace;font-size:11px;padding:6px 14px;border-radius:6px;cursor:pointer;border:1px solid var(--border);background:var(--surf2);color:var(--muted);transition:all .2s;}
+.a-btn.ok-btn{border-color:var(--ok-bd);background:var(--ok-bg);color:var(--ok);}
+.a-btn.fault-btn{border-color:var(--fault-bd);background:var(--fault-bg);color:var(--fault);}
+.analisa-filter-bar{display:flex;align-items:center;gap:10px;padding:10px 14px;background:var(--surf2);border:1px solid var(--border);border-radius:10px;margin-bottom:16px;flex-wrap:wrap;}
+.a-filter-label{font-family:'JetBrains Mono',monospace;font-size:10px;color:var(--muted);letter-spacing:1px;text-transform:uppercase;flex-shrink:0;}
+.a-filter-sel{background:var(--surf3);border:1px solid var(--border);color:var(--text);padding:5px 10px;border-radius:6px;font-size:11px;font-family:'JetBrains Mono',monospace;outline:none;cursor:pointer;}
+.analisa-metric-row{display:grid;grid-template-columns:repeat(auto-fill,minmax(130px,1fr));gap:10px;margin-bottom:20px;}
+.a-mcard{background:var(--surf);border:1px solid var(--border);border-radius:10px;padding:14px 16px;}
+.a-mcard-label{font-family:'JetBrains Mono',monospace;font-size:9px;letter-spacing:1.5px;text-transform:uppercase;color:var(--muted);margin-bottom:6px;}
+.a-mcard-val{font-family:'JetBrains Mono',monospace;font-size:22px;font-weight:700;}
+.a-mcard-val.ok{color:var(--ok);}.a-mcard-val.ng{color:var(--fault);}.a-mcard-val.nf{color:var(--accent);}.a-mcard-val.tot{color:var(--text);}
+.a-mcard-pct{font-family:'JetBrains Mono',monospace;font-size:10px;color:var(--muted);margin-top:3px;}
+.analisa-chart-row{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:20px;}
+.a-chart-box{background:var(--surf);border:1px solid var(--border);border-radius:12px;padding:16px;}
+.a-chart-title{font-family:'JetBrains Mono',monospace;font-size:10px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;color:var(--muted);margin-bottom:10px;}
+.a-legend-row{display:flex;flex-wrap:wrap;gap:10px;margin-bottom:10px;}
+.a-legend-item{display:flex;align-items:center;gap:4px;font-family:'JetBrains Mono',monospace;font-size:10px;color:var(--muted);}
+.a-legend-sq{width:10px;height:10px;border-radius:2px;flex-shrink:0;}
+.a-section-head{display:flex;align-items:center;gap:10px;margin-bottom:12px;margin-top:20px;}
+.a-section-label{font-family:'JetBrains Mono',monospace;font-size:10px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:var(--muted);}
+.a-section-line{flex:1;height:1px;background:linear-gradient(to right,var(--border),transparent);}
+.a-tbl-wrap{overflow-x:auto;margin-bottom:20px;}
+.a-table{width:100%;border-collapse:collapse;font-size:12px;min-width:500px;}
+.a-table th{text-align:left;padding:9px 12px;font-family:'JetBrains Mono',monospace;font-size:9px;letter-spacing:1px;text-transform:uppercase;color:var(--muted);border-bottom:1px solid var(--border);background:var(--surf);white-space:nowrap;position:sticky;top:0;z-index:2;}
+.a-table td{padding:9px 12px;border-bottom:1px solid rgba(31,48,80,.5);vertical-align:middle;color:var(--text);}
+.a-table tr:hover td{background:rgba(255,255,255,.025);}
+.a-bar-cell{display:flex;align-items:center;gap:6px;}
+.a-bar-track{height:5px;background:var(--surf3);border-radius:3px;flex:1;min-width:50px;}
+.a-bar-fill{height:5px;border-radius:3px;transition:width .4s ease;}
+.a-insight-box{background:var(--surf);border:1px solid var(--border);border-radius:12px;padding:16px 18px;margin-bottom:20px;}
+.a-insight-title{font-family:'JetBrains Mono',monospace;font-size:10px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;color:var(--teal);margin-bottom:12px;}
+.a-insight-list{list-style:none;display:flex;flex-direction:column;gap:8px;}
+.a-insight-list li{font-size:12px;color:var(--muted);padding-left:14px;position:relative;line-height:1.6;}
+.a-insight-list li::before{content:"›";position:absolute;left:0;color:var(--teal);font-size:14px;line-height:1.3;}
+.a-insight-list li strong{color:var(--text);}
+@media(max-width:768px){.analisa-chart-row{grid-template-columns:1fr!important;}}
 
 ::-webkit-scrollbar{width:4px;height:4px;}
 ::-webkit-scrollbar-track{background:transparent;}
@@ -561,7 +583,6 @@ tr:hover .btn-edit-ts{opacity:1;}
 .state-box p{font-size:12px;text-align:center;max-width:340px;}
 .btn-retry{background:var(--accent-bg);border:1px solid var(--accent-bd);color:var(--accent);padding:6px 16px;border-radius:6px;font-size:12px;cursor:pointer;font-family:'JetBrains Mono',monospace;}
 
-/* ══ MOBILE ══ */
 @media(max-width:768px){
   html,body{overflow:hidden!important;height:100%!important;position:fixed!important;top:0!important;left:0!important;}
   .topbar{height:44px!important;padding:0 10px!important;gap:6px!important;}
@@ -594,6 +615,8 @@ tr:hover .btn-edit-ts{opacity:1;}
   .login-gate-overlay{align-items:flex-end!important;}
   .global-results-panel{padding:12px!important;}
   .global-result-grid{grid-template-columns:1fr!important;}
+  .pool-tabs{padding:10px 10px 0!important;gap:5px!important;}
+  .pool-scroll{padding:10px!important;}
 }
 </style>
 </head>
@@ -616,38 +639,22 @@ tr:hover .btn-edit-ts{opacity:1;}
     <div class="gate-role-field">
       <span class="gate-role-label">Login Sebagai</span>
       <div class="gate-role-opts">
-        <div class="gate-role-opt">
-          <input type="radio" name="gate-role" id="gate-role-teknisi" value="user" checked>
-          <label for="gate-role-teknisi">🔧 Teknisi</label>
-        </div>
-        <div class="gate-role-opt">
-          <input type="radio" name="gate-role" id="gate-role-supervisor" value="supervisor">
-          <label for="gate-role-supervisor">👁️ Supervisor</label>
-        </div>
-        <div class="gate-role-opt admin-opt">
-          <input type="radio" name="gate-role" id="gate-role-admin" value="admin">
-          <label for="gate-role-admin">⚙️ Admin</label>
-        </div>
+        <div class="gate-role-opt"><input type="radio" name="gate-role" id="gate-role-teknisi" value="user" checked><label for="gate-role-teknisi">🔧 Teknisi</label></div>
+        <div class="gate-role-opt"><input type="radio" name="gate-role" id="gate-role-supervisor" value="supervisor"><label for="gate-role-supervisor">👁️ Supervisor</label></div>
+        <div class="gate-role-opt admin-opt"><input type="radio" name="gate-role" id="gate-role-admin" value="admin"><label for="gate-role-admin">⚙️ Admin</label></div>
       </div>
     </div>
     <div class="gate-field">
       <label>Username</label>
-      <div class="gate-input-wrap">
-        <span class="gate-input-icon">👤</span>
-        <input type="text" id="gate-username" placeholder="Contoh: mca, samcg..." autocomplete="off">
-      </div>
+      <div class="gate-input-wrap"><span class="gate-input-icon">👤</span><input type="text" id="gate-username" placeholder="Contoh: mca, samcg..." autocomplete="off"></div>
     </div>
     <div class="gate-field">
       <label>Password</label>
-      <div class="gate-input-wrap">
-        <span class="gate-input-icon">🔑</span>
-        <input type="password" id="gate-password" placeholder="Masukkan password">
-      </div>
+      <div class="gate-input-wrap"><span class="gate-input-icon">🔑</span><input type="password" id="gate-password" placeholder="Masukkan password"></div>
     </div>
     <div class="gate-err" id="gate-err"></div>
     <button class="gate-btn" id="gate-btn" onclick="submitGateLogin()">
-      <div class="btn-spin"></div>
-      <span class="btn-label">🔐 Masuk ke Drive Monitoring</span>
+      <div class="btn-spin"></div><span class="btn-label">🔐 Masuk ke Drive Monitoring</span>
     </button>
     <div class="gate-security-note">🔒 <span>Session tersimpan selama browser terbuka. Logout manual diperlukan untuk keluar.</span></div>
   </div>
@@ -699,9 +706,7 @@ tr:hover .btn-edit-ts{opacity:1;}
 <div class="global-results-overlay" id="global-results-overlay">
   <div class="global-results-panel">
     <div class="global-results-header">
-      <div>
-        <div class="global-results-title">🔍 Hasil Pencarian Cross-Plant</div>
-      </div>
+      <div><div class="global-results-title">🔍 Hasil Pencarian Cross-Plant</div></div>
       <div style="display:flex;align-items:center;gap:10px;">
         <span class="global-results-count" id="global-results-count">0 hasil</span>
         <button class="btn-close-global" onclick="closeGlobalSearch()">✕ Tutup</button>
@@ -716,7 +721,6 @@ tr:hover .btn-edit-ts{opacity:1;}
 
   <!-- PAGE: PLANT LIST -->
   <div class="page active" id="page-plant">
-    <!-- Global Search Bar -->
     <div class="global-search-wrap">
       <div class="global-search-inner">
         <span class="global-search-icon">🌐</span>
@@ -741,16 +745,13 @@ tr:hover .btn-edit-ts{opacity:1;}
         </div>
       </div>
       <div class="plant-section">
-        <div class="plant-section-head">
-          <div class="plant-section-label">⚡ Mixing Plants</div>
-          <div class="plant-section-line"></div>
-        </div>
+        <div class="plant-section-head"><div class="plant-section-label">⚡ Mixing Plants</div><div class="plant-section-line"></div></div>
         <div id="plant-content"></div>
       </div>
     </div>
   </div>
 
-  <!-- PAGE: MIXING (line picker) -->
+  <!-- PAGE: MIXING -->
   <div class="page" id="page-mixing">
     <div class="mixing-page-wrap">
       <div class="mixing-hero">
@@ -760,16 +761,13 @@ tr:hover .btn-edit-ts{opacity:1;}
         <div class="mixing-hero-sub" id="mixing-hero-sub">Pilih line mixing untuk melihat status drive</div>
       </div>
       <div class="mixing-section">
-        <div class="mixing-section-head">
-          <div class="mixing-section-label">⚡ Daftar Mixing / Line</div>
-          <div class="mixing-section-line"></div>
-        </div>
+        <div class="mixing-section-head"><div class="mixing-section-label">⚡ Daftar Mixing / Line</div><div class="mixing-section-line"></div></div>
         <div class="mixing-grid" id="mixing-grid"></div>
       </div>
     </div>
   </div>
 
-  <!-- PAGE: DETAIL (drive list & tabs) -->
+  <!-- PAGE: DETAIL -->
   <div class="page" id="page-detail">
     <div class="detail-back-row">
       <button class="btn-back-mixing" onclick="goBackToMixing()">← Mixing List</button>
@@ -784,6 +782,7 @@ tr:hover .btn-edit-ts{opacity:1;}
         <div class="ctab"        id="ctab-summary" onclick="switchTab('summary')">⬜ Summary</div>
         <div class="ctab"        id="ctab-asli"    onclick="switchTab('asli')">📋 Asli</div>
         <div class="ctab"        id="ctab-analisa" onclick="switchTab('analisa')">📊 Analisa</div>
+        <div class="ctab"        id="ctab-pool"    onclick="switchTab('pool')">📦 Pool & Mutasi</div>
       </div>
       <div class="search-wrap" id="search-wrap" style="display:none">
         <span class="search-icon">🔍</span>
@@ -792,7 +791,6 @@ tr:hover .btn-edit-ts{opacity:1;}
         <button class="search-clear" id="search-clear" onclick="clearSearch()">✕ Clear</button>
       </div>
 
-      <!-- TAB DRIVE -->
       <div class="tab-content active" id="tab-drive">
         <div class="drive-header">
           <div class="drive-title" id="drive-title"></div>
@@ -803,7 +801,6 @@ tr:hover .btn-edit-ts{opacity:1;}
         <div class="no-results" id="drive-no-results"><span style="font-size:28px">🔍</span><span>Tidak ada hasil untuk "<span id="drive-search-query"></span>"</span></div>
       </div>
 
-      <!-- TAB HISTORI -->
       <div class="tab-content" id="tab-histori">
         <div class="hist-filter-bar" id="hist-filter-bar">
           <span class="hist-filter-label">📅 Filter:</span>
@@ -818,9 +815,7 @@ tr:hover .btn-edit-ts{opacity:1;}
               <option value="">Semua Tahun</option>
             </select>
           </div>
-          <div class="hist-period-badge" id="hist-period-badge" style="display:none">
-            <span>📋</span><span id="hist-period-text">—</span>
-          </div>
+          <div class="hist-period-badge" id="hist-period-badge" style="display:none"><span>📋</span><span id="hist-period-text">—</span></div>
           <button class="btn-reset-filter hidden" id="btn-reset-histori-filter" onclick="resetHistoriFilter()">✕ Reset</button>
           <span class="hist-filter-result" id="hist-filter-result"></span>
         </div>
@@ -829,62 +824,68 @@ tr:hover .btn-edit-ts{opacity:1;}
         </div>
         <div class="histori-scroll-area">
           <div id="histori-content"></div>
-          <div class="no-results" id="histori-no-results">
-            <span style="font-size:28px">🔍</span>
-            <span>Tidak ada hasil untuk "<span id="histori-search-query"></span>"</span>
-          </div>
+          <div class="no-results" id="histori-no-results"><span style="font-size:28px">🔍</span><span>Tidak ada hasil untuk "<span id="histori-search-query"></span>"</span></div>
         </div>
       </div>
 
-      <!-- TAB MANUAL BOOK -->
       <div class="tab-content" id="tab-manual">
         <div class="mb-filter-bar">
           <span class="hist-filter-label">🔍 Filter Kategori:</span>
           <div class="hist-filter-group">
-            <select class="hist-filter-select" id="mb-filter-kategori" onchange="renderManualTable()">
-              <option value="">Semua Kategori</option>
-            </select>
+            <select class="hist-filter-select" id="mb-filter-kategori" onchange="renderManualTable()"><option value="">Semua Kategori</option></select>
           </div>
           <span class="hist-filter-result" id="mb-filter-result"></span>
         </div>
-        <div class="manual-scroll-area">
-          <div id="manual-content"></div>
-        </div>
+        <div class="manual-scroll-area"><div id="manual-content"></div></div>
       </div>
 
-      <!-- TAB SUMMARY -->
-      <div class="tab-content" id="tab-summary">
-        <div id="summary-content"></div>
-      </div>
+      <div class="tab-content" id="tab-summary"><div id="summary-content"></div></div>
+      <div class="tab-content" id="tab-asli"><div id="asli-content"></div></div>
+      <div class="tab-content" id="tab-analisa"><div id="analisa-content"></div></div>
 
-      <!-- TAB ASLI -->
-      <div class="tab-content" id="tab-asli">
-        <div id="asli-content"></div>
-      </div>
-
-      <!-- TAB ANALISA -->
-      <div class="tab-content" id="tab-analisa">
-        <div id="analisa-content"></div>
+      <!-- TAB POOL -->
+      <div class="tab-content" id="tab-pool">
+        <!-- dirender oleh renderPoolTab() -->
       </div>
     </div>
   </div>
 </div>
 
-<!-- ══ EDIT DRIVE MODAL ══ -->
+<!-- ══ EDIT DRIVE MODAL (dengan tujuan pool) ══ -->
 <div class="modal-overlay" id="modal">
   <div class="modal">
     <div class="modal-title">Edit Status Drive</div>
     <div class="modal-sub">Perubahan akan otomatis tersimpan ke spreadsheet &amp; log histori</div>
     <div class="modal-id" id="modal-drive-id"></div>
+
     <div class="form-group">
       <label class="form-label">Status Saat Ini</label>
-      <select class="form-select" id="modal-status">
+      <select class="form-select" id="modal-status" onchange="onModalStatusChange()">
         <option value="ok">✅ OK / Aktif</option>
         <option value="fault">❌ Fault</option>
         <option value="maint">🔧 Maintenance</option>
         <option value="kosong">⬜ Kosong</option>
       </select>
     </div>
+
+    <!-- TUJUAN: muncul hanya saat status bukan OK -->
+    <div class="form-group" id="modal-tujuan-group" style="display:none">
+      <label class="form-label">📦 Kirim ke Lokasi</label>
+      <select class="form-select" id="modal-tujuan" onchange="updateMovePreview()">
+        <option value="mixing">🔩 Tetap di Mixing (tidak ke pool)</option>
+        <option value="ws_boveri">🏭 WS Boveri</option>
+        <option value="rusak">💀 Gudang Rusak</option>
+        <option value="abw6">📦 ABW 6</option>
+      </select>
+      <div class="form-hint">Drive akan tercatat berpindah ke lokasi ini berdasarkan serial number</div>
+    </div>
+
+    <!-- Preview tujuan -->
+    <div class="move-preview" id="modal-move-preview" style="display:none">
+      ⚠️ Drive akan dipindah ke: <strong id="modal-move-target">—</strong><br>
+      <span style="color:var(--muted);font-size:10px">Movement log dicatat otomatis by serial number</span>
+    </div>
+
     <div class="form-group"><label class="form-label">Merk / Nama</label><input class="form-input" id="modal-merk" type="text" placeholder="Contoh: ABB, Siemens..."></div>
     <div class="form-group"><label class="form-label">Spesifikasi / Tipe</label><input class="form-input" id="modal-spek" type="text" placeholder="Contoh: ACS880, ACS580..."></div>
     <div class="form-group"><label class="form-label">Keterangan</label><input class="form-input" id="modal-ket" type="text" placeholder="Contoh: OK, Fault, Master, Followers..."></div>
@@ -896,16 +897,40 @@ tr:hover .btn-edit-ts{opacity:1;}
     <div class="form-group">
       <label class="form-label">🏷️ Stiker / Label</label>
       <input class="form-input" id="modal-stiker" type="text" placeholder="Contoh: STK-001, A1, B2...">
-      <div class="form-hint">Nomor atau kode stiker yang ditempel pada fisik drive</div>
     </div>
     <div class="form-group">
       <label class="form-label">🖼️ Link Foto (Google Drive)</label>
       <input class="form-input" id="modal-photo" type="text" placeholder="Paste link Google Drive foto...">
-      <div class="form-hint">Contoh: https://drive.google.com/file/d/xxx/view</div>
     </div>
     <div class="modal-actions">
       <button class="btn-cancel" onclick="closeModal()">Batal</button>
       <button class="btn-save" id="btn-save" onclick="saveStatus()">Simpan</button>
+    </div>
+  </div>
+</div>
+
+<!-- ══ POOL MOVE MODAL ══ -->
+<div class="modal-overlay" id="pool-modal">
+  <div class="modal" style="max-width:460px">
+    <div class="modal-title">↔ Pindah Drive dari Pool</div>
+    <div class="modal-sub" id="pool-modal-nama">Pilih tujuan perpindahan</div>
+    <div class="modal-id" id="pool-modal-sn" style="font-size:11px;line-height:1.7;"></div>
+    <div class="form-group">
+      <label class="form-label">Tujuan Baru</label>
+      <select class="form-select" id="pool-modal-ke">
+        <option value="ws_boveri">🏭 WS Boveri</option>
+        <option value="rusak">💀 Gudang Rusak</option>
+        <option value="abw6">📦 ABW 6</option>
+        <option value="mixing">🔩 Pasang Kembali ke Mixing</option>
+      </select>
+    </div>
+    <div class="form-group">
+      <label class="form-label">Keterangan</label>
+      <input class="form-input" id="pool-modal-ket" type="text" placeholder="Alasan pemindahan...">
+    </div>
+    <div class="modal-actions">
+      <button class="btn-cancel" onclick="closePoolModal()">Batal</button>
+      <button class="btn-save" id="btn-pool-save" onclick="savePoolMove()">Pindahkan</button>
     </div>
   </div>
 </div>
@@ -943,715 +968,558 @@ const NAMA_BULAN  = ['','Januari','Februari','Maret','April','Mei','Juni','Juli'
 const TAHUN_AWAL  = 2026;
 const ALL_PLANTS  = ['MCA','MCC','MCD','MCG','MCH','MCI','PLANT E'];
 
-// ══════════════════════════════════════════════════════════
-//  STATE
-// ══════════════════════════════════════════════════════════
+// ── STATE ──────────────────────────────────────────────────
 const S = {
-  page         : 'plant',
-  plant        : null,      // plant yang sedang dibuka detail
-  curGroup     : '',        // group/mixing yang sedang dibuka detail
-  tab          : 'drive',
-  cache        : {},        // semua cache keyed by plant+type
-  editDrive    : null,
-  pendingTsData: null,
-  searchQuery  : '',
-  histFilter   : { bulan:'', tahun:'' },
-  // session
-  role         : 'supervisor',
-  username     : '',
-  loggedInPlant: '',        // plant akun teknisi (kosong = bisa semua)
+  page:'plant', plant:null, curGroup:'', tab:'drive',
+  cache:{}, editDrive:null, pendingTsData:null,
+  searchQuery:'', histFilter:{ bulan:'', tahun:'' },
+  role:'supervisor', username:'', loggedInPlant:'',
+  _poolMove:{},
 };
+let curPoolLokasi = 'ws_boveri';
 
-// ══════════════════════════════════════════════════════════
-//  SESSION
-// ══════════════════════════════════════════════════════════
-function saveSession() {
-  sessionStorage.setItem(SESSION_KEY, JSON.stringify({ role:S.role, username:S.username, loggedInPlant:S.loggedInPlant }));
-}
-function loadSession() {
-  try {
-    const raw = sessionStorage.getItem(SESSION_KEY);
-    if (!raw) return false;
-    const d = JSON.parse(raw);
-    if (d.role && d.username) { Object.assign(S, { role:d.role, username:d.username, loggedInPlant:d.loggedInPlant||'' }); return true; }
-  } catch(e) {}
-  return false;
-}
-function clearSession() {
-  sessionStorage.removeItem(SESSION_KEY);
-  Object.assign(S, { role:'supervisor', username:'', loggedInPlant:'' });
-}
+// ── SESSION ────────────────────────────────────────────────
+function saveSession(){sessionStorage.setItem(SESSION_KEY,JSON.stringify({role:S.role,username:S.username,loggedInPlant:S.loggedInPlant}));}
+function loadSession(){try{const raw=sessionStorage.getItem(SESSION_KEY);if(!raw)return false;const d=JSON.parse(raw);if(d.role&&d.username){Object.assign(S,{role:d.role,username:d.username,loggedInPlant:d.loggedInPlant||''});return true;}}catch(e){}return false;}
+function clearSession(){sessionStorage.removeItem(SESSION_KEY);Object.assign(S,{role:'supervisor',username:'',loggedInPlant:''});}
 
-// ══════════════════════════════════════════════════════════
-//  ROLE HELPERS
-// ══════════════════════════════════════════════════════════
-function isReadOnly()    { return S.role === 'supervisor'; }
-function canEdit()       { return S.role === 'teknisi' || S.role === 'admin'; }
-function isAdmin()       { return S.role === 'admin'; }
-// Admin & Supervisor bisa akses semua plant; Teknisi hanya plant mereka
-function canAccessAllPlants() { return S.role === 'admin' || S.role === 'supervisor'; }
+// ── ROLE HELPERS ───────────────────────────────────────────
+function isReadOnly()         { return S.role==='supervisor'; }
+function canEdit()            { return S.role==='teknisi'||S.role==='admin'; }
+function isAdmin()            { return S.role==='admin'; }
+function canAccessAllPlants() { return S.role==='admin'||S.role==='supervisor'; }
 
-function updateRoleBadge() {
-  const badge = id('role-badge'), userBadge = id('user-badge');
-  if (!badge) return;
-  const labels = { teknisi:'🔧 Teknisi', admin:'⚙️ Admin', supervisor:'👁️ Supervisor' };
-  badge.className = 'role-badge ' + (S.role || 'supervisor');
-  badge.textContent = labels[S.role] || '👁️ Supervisor';
-  if (userBadge) {
-    userBadge.textContent = S.username ? '👤 ' + S.username.toUpperCase() : '';
-    userBadge.style.display = S.username ? 'inline-flex' : 'none';
-  }
+function updateRoleBadge(){
+  const badge=id('role-badge'),userBadge=id('user-badge');
+  if(!badge)return;
+  const labels={teknisi:'🔧 Teknisi',admin:'⚙️ Admin',supervisor:'👁️ Supervisor'};
+  badge.className='role-badge '+(S.role||'supervisor');
+  badge.textContent=labels[S.role]||'👁️ Supervisor';
+  if(userBadge){userBadge.textContent=S.username?'👤 '+S.username.toUpperCase():'';userBadge.style.display=S.username?'inline-flex':'none';}
 }
 
-// ══════════════════════════════════════════════════════════
-//  LOGIN GATE
-// ══════════════════════════════════════════════════════════
-async function submitGateLogin() {
-  const username = id('gate-username').value.trim();
-  const password = id('gate-password').value.trim();
-  const roleReq  = document.querySelector('input[name="gate-role"]:checked')?.value || 'user';
-  if (!username || !password) { showGateErr('⚠️ Username dan password wajib diisi.'); return; }
-  const btn = id('gate-btn');
-  btn.classList.add('loading'); btn.disabled = true;
+// ── LOGIN GATE ─────────────────────────────────────────────
+async function submitGateLogin(){
+  const username=id('gate-username').value.trim(),password=id('gate-password').value.trim();
+  const roleReq=document.querySelector('input[name="gate-role"]:checked')?.value||'user';
+  if(!username||!password){showGateErr('⚠️ Username dan password wajib diisi.');return;}
+  const btn=id('gate-btn');
+  btn.classList.add('loading');btn.disabled=true;
   id('gate-err').classList.remove('visible');
-  try {
-    const res    = await fetch(LOGIN_API + '?' + new URLSearchParams({ username, password, role: roleReq }));
-    const result = await res.json();
-    if (result.success) {
-      S.role         = roleReq === 'supervisor' ? 'supervisor' : (result.role === 'admin' ? 'admin' : 'teknisi');
-      S.username     = username;
-      S.loggedInPlant= result.mixing || '';
-      saveSession();
-      closeGate();
-      updateRoleBadge();
-      // Admin / Supervisor → plant list; Teknisi → langsung ke plant mereka
-      if (canAccessAllPlants()) {
-        navTo('plant');
-      } else {
-        navTo('mixing', S.loggedInPlant);
-      }
-    } else {
-      showGateErr('❌ ' + (result.message || 'Username atau password salah.'));
-    }
-  } catch(err) {
-    showGateErr('⚠️ Tidak dapat terhubung ke server login.');
-  } finally {
-    btn.classList.remove('loading'); btn.disabled = false;
-  }
+  try{
+    const res=await fetch(LOGIN_API+'?'+new URLSearchParams({username,password,role:roleReq}));
+    const result=await res.json();
+    if(result.success){
+      S.role=roleReq==='supervisor'?'supervisor':(result.role==='admin'?'admin':'teknisi');
+      S.username=username;S.loggedInPlant=result.mixing||'';
+      saveSession();closeGate();updateRoleBadge();
+      if(canAccessAllPlants()) navTo('plant');
+      else navTo('mixing',S.loggedInPlant);
+    } else { showGateErr('❌ '+(result.message||'Username atau password salah.')); }
+  } catch(err){ showGateErr('⚠️ Tidak dapat terhubung ke server login.'); }
+  finally{ btn.classList.remove('loading');btn.disabled=false; }
 }
-
-function showGateErr(msg) {
-  const e = id('gate-err'); e.textContent = msg; e.classList.add('visible');
-}
-function closeGate() { id('login-gate-overlay').classList.remove('open'); }
-
-function doLogout() {
-  clearSession();
-  S.page = 'plant'; S.plant = null; S.curGroup = ''; S.tab = 'drive'; S.cache = {};
-  id('gate-username').value = ''; id('gate-password').value = '';
+function showGateErr(msg){const e=id('gate-err');e.textContent=msg;e.classList.add('visible');}
+function closeGate(){id('login-gate-overlay').classList.remove('open');}
+function doLogout(){
+  clearSession();Object.assign(S,{page:'plant',plant:null,curGroup:'',tab:'drive',cache:{}});
+  id('gate-username').value='';id('gate-password').value='';
   id('gate-err').classList.remove('visible');
   id('login-gate-overlay').classList.add('open');
-  updateRoleBadge();
-  showPage('plant');
-  id('plant-content').innerHTML = '';
-  id('topbar-sub').textContent = 'Pilih Plant';
-  updateBC();
+  updateRoleBadge();showPage('plant');
+  id('plant-content').innerHTML='';id('topbar-sub').textContent='Pilih Plant';updateBC();
 }
-
-document.addEventListener('DOMContentLoaded', () => {
-  ['gate-username','gate-password'].forEach(fid => {
-    const el = id(fid);
-    if (el) el.addEventListener('keydown', e => { if (e.key === 'Enter') submitGateLogin(); });
+document.addEventListener('DOMContentLoaded',()=>{
+  ['gate-username','gate-password'].forEach(fid=>{
+    const el=id(fid);if(el)el.addEventListener('keydown',e=>{if(e.key==='Enter')submitGateLogin();});
   });
-  if (loadSession()) {
-    closeGate();
-    updateRoleBadge();
-    if (canAccessAllPlants()) {
-      navTo('plant');
-    } else if (S.loggedInPlant) {
-      navTo('mixing', S.loggedInPlant);
-    } else {
-      navTo('plant');
-    }
-  }
+  if(loadSession()){closeGate();updateRoleBadge();if(canAccessAllPlants())navTo('plant');else if(S.loggedInPlant)navTo('mixing',S.loggedInPlant);else navTo('plant');}
 });
 
-// ══════════════════════════════════════════════════════════
-//  NAVIGASI
-// ══════════════════════════════════════════════════════════
-function showPage(name) {
-  document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
-  id('page-' + name).classList.add('active');
-  S.page = name;
-}
-
-function navTo(page, plant, group) {
-  if (plant) S.plant = plant;
-  if (group !== undefined) S.curGroup = group;
-  if (page === 'plant') {
-    showPage('plant');
-    showSearchBar(false);
-    renderPlantPage();
-  } else if (page === 'mixing') {
-    showPage('mixing');
-    showSearchBar(false);
-    renderMixingPage();
-  } else if (page === 'detail') {
-    showPage('detail');
-    S.tab = 'drive';
-    showSearchBar(true);
-    renderDetailPage();
-  }
+// ── NAVIGASI ───────────────────────────────────────────────
+function showPage(name){document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));id('page-'+name).classList.add('active');S.page=name;}
+function navTo(page,plant,group){
+  if(plant)S.plant=plant;if(group!==undefined)S.curGroup=group;
+  if(page==='plant'){showPage('plant');showSearchBar(false);renderPlantPage();}
+  else if(page==='mixing'){showPage('mixing');showSearchBar(false);renderMixingPage();}
+  else if(page==='detail'){showPage('detail');S.tab='drive';showSearchBar(true);renderDetailPage();}
   updateBC();
 }
-
-function goBackToMixing() { navTo('mixing', S.plant); }
-
-function updateBC() {
+function goBackToMixing(){navTo('mixing',S.plant);}
+function updateBC(){
   const s2=id('bcs2'),b2=id('bc2'),s3=id('bcs3'),b3=id('bc3'),s4=id('bcs4'),b4=id('bc4');
-  // Reset all
-  [s2,b2,s3,b3,s4,b4].forEach(el => { if(el) el.style.display='none'; });
-  b2.onclick = null; b3.onclick = null;
-
-  if (S.page === 'mixing' && S.plant) {
-    s2.style.display = b2.style.display = '';
-    b2.className = 'bc-cur'; b2.textContent = S.plant;
-    id('topbar-sub').textContent = S.plant;
-  } else if (S.page === 'detail' && S.plant && S.curGroup) {
-    if (canAccessAllPlants()) {
-      s2.style.display = b2.style.display = '';
-      b2.className = 'bc-link'; b2.textContent = S.plant;
-      b2.onclick = () => navTo('mixing', S.plant);
-    } else {
-      s2.style.display = b2.style.display = '';
-      b2.className = 'bc-link'; b2.textContent = S.plant;
-      b2.onclick = () => navTo('mixing', S.plant);
-    }
-    s3.style.display = b3.style.display = '';
-    b3.className = 'bc-cur'; b3.textContent = S.curGroup;
-    id('topbar-sub').textContent = S.curGroup;
-  } else {
-    id('topbar-sub').textContent = 'Pilih Plant';
-  }
+  [s2,b2,s3,b3,s4,b4].forEach(el=>{if(el)el.style.display='none';});
+  b2.onclick=null;
+  if(S.page==='mixing'&&S.plant){
+    s2.style.display=b2.style.display='';b2.className='bc-cur';b2.textContent=S.plant;id('topbar-sub').textContent=S.plant;
+  } else if(S.page==='detail'&&S.plant&&S.curGroup){
+    s2.style.display=b2.style.display='';b2.className='bc-link';b2.textContent=S.plant;b2.onclick=()=>navTo('mixing',S.plant);
+    s3.style.display=b3.style.display='';b3.className='bc-cur';b3.textContent=S.curGroup;id('topbar-sub').textContent=S.curGroup;
+  } else {id('topbar-sub').textContent='Pilih Plant';}
 }
 
-// ══════════════════════════════════════════════════════════
-//  RENDER PLANT PAGE
-// ══════════════════════════════════════════════════════════
-const PLANT_META = {
-  MCA    :{ desc:'Mixing Center A',     color:'#4d9fff' },
-  MCC    :{ desc:'Mixing Center C',     color:'#00e0f8' },
-  MCD    :{ desc:'Mixing Center D',     color:'#00f0a0' },
-  MCG    :{ desc:'Mixing Center G',     color:'#ffb820' },
-  MCH    :{ desc:'Mixing Center H',     color:'#ff6b81' },
-  MCI    :{ desc:'Mixing Center I',     color:'#c084fc' },
-  'PLANT E':{ desc:'Plant Extension E', color:'#f472b6' },
+// ── PLANT PAGE ─────────────────────────────────────────────
+const PLANT_META={
+  MCA:{desc:'Mixing Center A',color:'#4d9fff'},MCC:{desc:'Mixing Center C',color:'#00e0f8'},
+  MCD:{desc:'Mixing Center D',color:'#00f0a0'},MCG:{desc:'Mixing Center G',color:'#ffb820'},
+  MCH:{desc:'Mixing Center H',color:'#ff6b81'},MCI:{desc:'Mixing Center I',color:'#c084fc'},
+  'PLANT E':{desc:'Plant Extension E',color:'#f472b6'},
 };
 
-async function renderPlantPage() {
-  const el = id('plant-content');
-  el.innerHTML = loadingHTML('Memuat plant...');
-  try {
-    const data = await apiGet({ action:'getPlants' });
-    id('stat-total').textContent = data.plants.length;
-    id('stat-sync').textContent  = new Date().toTimeString().slice(0,5);
-    // Filter untuk teknisi — hanya tampilkan plant mereka
-    const plants = canAccessAllPlants()
-      ? data.plants
-      : data.plants.filter(p => p.plant === S.loggedInPlant);
-    el.innerHTML = `<div class="plant-grid">${plants.map((p,i) => plantCard(p,i)).join('')}</div>`;
-    // Pre-load group list
-    await Promise.all(plants.map(async p => {
-      try {
-        if (!S.cache[p.plant+'_groupList']) {
-          const res = await apiGet({ action:'getDrives', plant:p.plant });
-          const drives = Array.isArray(res.drives)?res.drives:(Array.isArray(res)?res:[]);
-          S.cache[p.plant+'_drives'] = drives;
+async function renderPlantPage(){
+  const el=id('plant-content');el.innerHTML=loadingHTML('Memuat plant...');
+  try{
+    const data=await apiGet({action:'getPlants'});
+    id('stat-total').textContent=data.plants.length;id('stat-sync').textContent=new Date().toTimeString().slice(0,5);
+    const plants=canAccessAllPlants()?data.plants:data.plants.filter(p=>p.plant===S.loggedInPlant);
+    el.innerHTML=`<div class="plant-grid">${plants.map((p,i)=>plantCard(p,i)).join('')}</div>`;
+    await Promise.all(plants.map(async p=>{
+      try{
+        if(!S.cache[p.plant+'_groupList']){
+          const res=await apiGet({action:'getDrives',plant:p.plant});
+          const drives=Array.isArray(res.drives)?res.drives:(Array.isArray(res)?res:[]);
+          S.cache[p.plant+'_drives']=drives;
           const seen=[],groups=[];
           drives.forEach(d=>{const g=String(d.group||'').trim();if(g&&!seen.includes(g)){seen.push(g);groups.push(g);}});
-          S.cache[p.plant+'_groupList'] = groups;
+          S.cache[p.plant+'_groupList']=groups;
         }
-        const gl = S.cache[p.plant+'_groupList']||[];
-        const tagEl = document.getElementById('mix-tag-'+p.plant);
-        if (tagEl && gl.length) tagEl.textContent = gl.length+' Mixing';
-      } catch(e) {}
+        const gl=S.cache[p.plant+'_groupList']||[];
+        const tagEl=document.getElementById('mix-tag-'+p.plant);
+        if(tagEl&&gl.length)tagEl.textContent=gl.length+' Mixing';
+      }catch(e){}
     }));
-  } catch(err) { el.innerHTML = errHTML(err.message, renderPlantPage); }
+  }catch(err){el.innerHTML=errHTML(err.message,renderPlantPage);}
 }
-
-function plantCard(p, i) {
-  const m   = PLANT_META[p.plant] || { desc:p.label||'', color:'#4d9fff' };
-  const gl  = S.cache[p.plant+'_groupList']||[];
-  const tag = gl.length ? gl.length+' Mixing' : 'Memuat…';
-  return `<div class="plant-card" onclick="navTo('mixing','${p.plant}')" style="animation-delay:${i*0.06}s">
-    <div class="plant-card-top">
-      <div class="plant-card-corner" style="background:${m.color};box-shadow:0 0 8px ${m.color}"></div>
-      <div class="plant-card-id">PLANT ID · ${String(i+1).padStart(2,'0')}</div>
-      <div class="plant-card-name" style="color:${m.color}">${p.plant}</div>
-      <div class="plant-card-desc">${m.desc}</div>
-    </div>
-    <div class="plant-card-bottom">
-      <span class="plant-card-tag" id="mix-tag-${p.plant}">${tag}</span>
-      <span class="plant-card-arr">→</span>
-    </div>
+function plantCard(p,i){
+  const m=PLANT_META[p.plant]||{desc:p.label||'',color:'#4d9fff'};
+  const gl=S.cache[p.plant+'_groupList']||[];
+  const tag=gl.length?gl.length+' Mixing':'Memuat…';
+  return`<div class="plant-card" onclick="navTo('mixing','${p.plant}')" style="animation-delay:${i*0.06}s">
+    <div class="plant-card-top"><div class="plant-card-corner" style="background:${m.color};box-shadow:0 0 8px ${m.color}"></div><div class="plant-card-id">PLANT ID · ${String(i+1).padStart(2,'0')}</div><div class="plant-card-name" style="color:${m.color}">${p.plant}</div><div class="plant-card-desc">${m.desc}</div></div>
+    <div class="plant-card-bottom"><span class="plant-card-tag" id="mix-tag-${p.plant}">${tag}</span><span class="plant-card-arr">→</span></div>
   </div>`;
 }
 
-// ══════════════════════════════════════════════════════════
-//  RENDER MIXING PAGE (NEW)
-// ══════════════════════════════════════════════════════════
-async function renderMixingPage() {
-  const m = PLANT_META[S.plant] || { desc:'', color:'#4d9fff' };
-  id('mixing-hero-plant').textContent = S.plant;
-  id('mixing-hero-plant').style.color = m.color;
-  id('mixing-hero-title').textContent = S.plant + ' — Daftar Mixing';
-  id('mixing-hero-sub').textContent   = m.desc + ' · Pilih line mixing untuk memantau drive';
-  const grid = id('mixing-grid');
-  grid.innerHTML = loadingHTML('Memuat mixing...');
-  try {
-    // Load drives jika belum ada
-    if (!S.cache[S.plant+'_drives']) {
-      const data   = await apiGet({ action:'getDrives', plant:S.plant });
-      const drives = Array.isArray(data.drives)?data.drives:(Array.isArray(data)?data:[]);
-      S.cache[S.plant+'_drives'] = drives;
+// ── MIXING PAGE ────────────────────────────────────────────
+async function renderMixingPage(){
+  const m=PLANT_META[S.plant]||{desc:'',color:'#4d9fff'};
+  id('mixing-hero-plant').textContent=S.plant;id('mixing-hero-plant').style.color=m.color;
+  id('mixing-hero-title').textContent=S.plant+' — Daftar Mixing';
+  id('mixing-hero-sub').textContent=m.desc+' · Pilih line mixing untuk memantau drive';
+  const grid=id('mixing-grid');grid.innerHTML=loadingHTML('Memuat mixing...');
+  try{
+    if(!S.cache[S.plant+'_drives']){
+      const data=await apiGet({action:'getDrives',plant:S.plant});
+      const drives=Array.isArray(data.drives)?data.drives:(Array.isArray(data)?data:[]);
+      S.cache[S.plant+'_drives']=drives;
       const seen=[],groups=[];
       drives.forEach(d=>{const g=String(d.group||'').trim();if(g&&!seen.includes(g)){seen.push(g);groups.push(g);}});
-      S.cache[S.plant+'_groupList'] = groups;
+      S.cache[S.plant+'_groupList']=groups;
     }
-    const drives    = S.cache[S.plant+'_drives']||[];
-    const groupList = S.cache[S.plant+'_groupList']||[];
-    if (!groupList.length) {
-      grid.innerHTML = `<div class="state-box"><div style="font-size:28px">📭</div><h3>Belum ada data</h3><p>Tidak ada mixing ditemukan di ${esc(S.plant)}.</p></div>`;
-      return;
-    }
-    // Hitung stats per group
-    const stats = {};
-    groupList.forEach(g => { stats[g]={ok:0,fault:0,kosong:0,maint:0,total:0}; });
-    drives.forEach(d => {
-      const g = String(d.group||'').trim();
-      if (!stats[g]) return;
-      stats[g].total++;
-      const st = d.status||'kosong';
-      if      (st==='ok')                          stats[g].ok++;
-      else if (st==='fault')                       stats[g].fault++;
-      else if (st==='maint'||st==='maintenance')   stats[g].maint++;
-      else                                         stats[g].kosong++;
+    const drives=S.cache[S.plant+'_drives']||[],groupList=S.cache[S.plant+'_groupList']||[];
+    if(!groupList.length){grid.innerHTML=`<div class="state-box"><div style="font-size:28px">📭</div><h3>Belum ada data</h3><p>Tidak ada mixing ditemukan di ${esc(S.plant)}.</p></div>`;return;}
+    const stats={};
+    groupList.forEach(g=>{stats[g]={ok:0,fault:0,kosong:0,maint:0,total:0};});
+    drives.forEach(d=>{
+      const g=String(d.group||'').trim();if(!stats[g])return;stats[g].total++;
+      const st=d.status||'kosong';
+      if(st==='ok')stats[g].ok++;else if(st==='fault')stats[g].fault++;else if(st==='maint'||st==='maintenance')stats[g].maint++;else stats[g].kosong++;
     });
-    grid.innerHTML = groupList.map((g,i) => {
-      const s   = stats[g]||{ok:0,fault:0,kosong:0,maint:0,total:0};
-      const hasFault = s.fault>0 ? 'has-fault' : '';
-      const pills = [
-        s.ok>0     ? `<span class="mix-stat-pill ok">OK ${s.ok}</span>`           : '',
-        s.fault>0  ? `<span class="mix-stat-pill fault">Fault ${s.fault}</span>`  : '',
-        s.kosong>0 ? `<span class="mix-stat-pill kosong">⬜ ${s.kosong}</span>`   : '',
-        s.maint>0  ? `<span class="mix-stat-pill maint">🔧 ${s.maint}</span>`     : '',
-      ].filter(Boolean).join('');
-      return `<div class="mix-card ${hasFault}" onclick="navTo('detail','${esc(S.plant)}','${esc(g)}')" style="animation-delay:${i*0.03}s">
-        <div class="mix-card-label">${esc(g)}</div>
-        <div class="mix-card-stats">${pills||'<span class="mix-stat-pill" style="color:var(--muted);border-color:var(--border)">'+s.total+' drives</span>'}</div>
-        <span class="mix-card-arr">→</span>
-      </div>`;
+    grid.innerHTML=groupList.map((g,i)=>{
+      const s=stats[g]||{ok:0,fault:0,kosong:0,maint:0,total:0};
+      const hasFault=s.fault>0?'has-fault':'';
+      const pills=[s.ok>0?`<span class="mix-stat-pill ok">OK ${s.ok}</span>`:'',s.fault>0?`<span class="mix-stat-pill fault">Fault ${s.fault}</span>`:'',s.kosong>0?`<span class="mix-stat-pill kosong">⬜ ${s.kosong}</span>`:'',s.maint>0?`<span class="mix-stat-pill maint">🔧 ${s.maint}</span>`:''].filter(Boolean).join('');
+      return`<div class="mix-card ${hasFault}" onclick="navTo('detail','${esc(S.plant)}','${esc(g)}')" style="animation-delay:${i*0.03}s"><div class="mix-card-label">${esc(g)}</div><div class="mix-card-stats">${pills||`<span class="mix-stat-pill" style="color:var(--muted);border-color:var(--border)">${s.total} drives</span>`}</div><span class="mix-card-arr">→</span></div>`;
     }).join('');
-  } catch(err) { grid.innerHTML = errHTML(err.message, renderMixingPage); }
+  }catch(err){grid.innerHTML=errHTML(err.message,renderMixingPage);}
 }
 
-// ══════════════════════════════════════════════════════════
-//  RENDER DETAIL PAGE
-// ══════════════════════════════════════════════════════════
-async function renderDetailPage() {
-  id('detail-plant-badge').textContent = S.plant;
-  id('detail-mixing-label').textContent = S.curGroup;
-  // Ensure drives loaded
-  try {
-    if (!S.cache[S.plant+'_drives']) {
-      const data   = await apiGet({ action:'getDrives', plant:S.plant });
-      const drives = Array.isArray(data.drives)?data.drives:(Array.isArray(data)?data:[]);
-      S.cache[S.plant+'_drives'] = drives;
+// ── DETAIL PAGE ────────────────────────────────────────────
+async function renderDetailPage(){
+  id('detail-plant-badge').textContent=S.plant;id('detail-mixing-label').textContent=S.curGroup;
+  try{
+    if(!S.cache[S.plant+'_drives']){
+      const data=await apiGet({action:'getDrives',plant:S.plant});
+      const drives=Array.isArray(data.drives)?data.drives:(Array.isArray(data)?data:[]);
+      S.cache[S.plant+'_drives']=drives;
       const seen=[],groups=[];
       drives.forEach(d=>{const g=String(d.group||'').trim();if(g&&!seen.includes(g)){seen.push(g);groups.push(g);}});
-      S.cache[S.plant+'_groupList'] = groups;
+      S.cache[S.plant+'_groupList']=groups;
     }
-  } catch(e) {}
-  switchTab(S.tab, true);
+  }catch(e){}
+  switchTab(S.tab,true);
 }
 
-async function switchTab(tab, force) {
-  if (S.tab===tab && !force) return;
-  S.tab = tab;
-  document.querySelectorAll('.ctab').forEach(t => t.classList.remove('active'));
-  document.querySelectorAll('.tab-content').forEach(t => t.classList.remove('active'));
-  id('ctab-'+tab).classList.add('active');
-  id('tab-'+tab).classList.add('active');
-showSearchBar(tab!=='summary' && tab!=='analisa');
+async function switchTab(tab,force){
+  if(S.tab===tab&&!force)return;S.tab=tab;
+  document.querySelectorAll('.ctab').forEach(t=>t.classList.remove('active'));
+  document.querySelectorAll('.tab-content').forEach(t=>t.classList.remove('active'));
+  id('ctab-'+tab).classList.add('active');id('tab-'+tab).classList.add('active');
+  showSearchBar(tab!=='summary'&&tab!=='analisa'&&tab!=='pool');
   clearSearch();
-const ph={ drive:'Cari drive...', histori:'Cari drive ID...', manual:'Cari judul...', asli:'Cari drive ID...' };;
-  const sb=id('search-bar'); if(sb&&ph[tab]) sb.placeholder=ph[tab];
-  if (tab==='drive')   await renderDriveTab();
-  if (tab==='histori') await renderHistoriTab();
-  if (tab==='manual')  await renderManualTab();
-  if (tab==='summary') await renderSummaryTab();
-  if (tab==='asli')    await renderAsliTab();
-  if (tab==='analisa') await renderAnalisaTab();
+  const ph={drive:'Cari drive...',histori:'Cari drive ID...',manual:'Cari judul...',asli:'Cari drive ID...'};
+  const sb=id('search-bar');if(sb&&ph[tab])sb.placeholder=ph[tab];
+  if(tab==='drive')   await renderDriveTab();
+  if(tab==='histori') await renderHistoriTab();
+  if(tab==='manual')  await renderManualTab();
+  if(tab==='summary') await renderSummaryTab();
+  if(tab==='asli')    await renderAsliTab();
+  if(tab==='analisa') await renderAnalisaTab();
+  if(tab==='pool')    await renderPoolTab();
 }
 
-// ══════════════════════════════════════════════════════════
-//  RENDER DRIVE TAB
-// ══════════════════════════════════════════════════════════
-async function renderDriveTab() {
-  id('drive-title').textContent = S.curGroup;
-  id('drive-content').innerHTML = loadingHTML('Memuat data drive...');
-  try {
-    const all       = S.cache[S.plant+'_drives']||[];
-    const drives    = all.filter(d => String(d.group||'').trim()===S.curGroup);
-    const ok     = drives.filter(d=>d.status==='ok').length;
-    const fault  = drives.filter(d=>d.status==='fault').length;
-    const maint  = drives.filter(d=>d.status==='maint'||d.status==='maintenance').length;
-    const kosong = drives.filter(d=>!d.status||d.status==='kosong').length;
-    id('drive-meta').textContent = `${drives.length} drives · ${ok} OK · ${fault} Fault · ${kosong} Kosong · ${maint} Maint`;
-    id('drive-pills').innerHTML  = `
-      <div class="pill">Total ${drives.length}</div>
-      <div class="pill ok"><div class="pill-d"></div>OK ${ok}</div>
-      <div class="pill fault"><div class="pill-d"></div>Fault ${fault}</div>
-      <div class="pill kosong"><div class="pill-d"></div>Kosong ${kosong}</div>
-      <div class="pill maint"><div class="pill-d"></div>Maint ${maint}</div>`;
-    const noticeId = 'readonly-notice-el';
-    let noticeEl = id(noticeId);
-    if (isReadOnly()) {
-      if (!noticeEl) {
-        noticeEl = document.createElement('div');
-        noticeEl.id = noticeId; noticeEl.className = 'readonly-notice';
-        noticeEl.innerHTML = '👁️ <span>Mode Read-Only — tidak dapat mengedit drive</span>';
-        id('tab-drive').insertBefore(noticeEl, id('drive-content'));
-      }
-    } else { if(noticeEl) noticeEl.remove(); }
-    if (!drives.length) {
-      id('drive-content').innerHTML=`<div class="state-box"><div style="font-size:28px">📭</div><h3>Tidak ada data</h3><p>${esc(S.curGroup)} belum ada data drive.</p></div>`;
-      return;
-    }
-    function getDriveType(driveId) {
-      const s=String(driveId||'').toUpperCase();
-      if(s.includes('.INU.')||s.includes('-INU')||s.includes('_INU')) return 'INU';
-      if(s.includes('.DSU.')||s.includes('-DSU')||s.includes('_DSU')) return 'DSU';
-      return 'OTHER';
-    }
+// ── DRIVE TAB ──────────────────────────────────────────────
+async function renderDriveTab(){
+  id('drive-title').textContent=S.curGroup;id('drive-content').innerHTML=loadingHTML('Memuat data drive...');
+  try{
+    const all=S.cache[S.plant+'_drives']||[];
+    const drives=all.filter(d=>String(d.group||'').trim()===S.curGroup);
+    const ok=drives.filter(d=>d.status==='ok').length,fault=drives.filter(d=>d.status==='fault').length;
+    const maint=drives.filter(d=>d.status==='maint'||d.status==='maintenance').length;
+    const kosong=drives.filter(d=>!d.status||d.status==='kosong').length;
+    id('drive-meta').textContent=`${drives.length} drives · ${ok} OK · ${fault} Fault · ${kosong} Kosong · ${maint} Maint`;
+    id('drive-pills').innerHTML=`<div class="pill">Total ${drives.length}</div><div class="pill ok"><div class="pill-d"></div>OK ${ok}</div><div class="pill fault"><div class="pill-d"></div>Fault ${fault}</div><div class="pill kosong"><div class="pill-d"></div>Kosong ${kosong}</div><div class="pill maint"><div class="pill-d"></div>Maint ${maint}</div>`;
+    const noticeId='readonly-notice-el';let noticeEl=id(noticeId);
+    if(isReadOnly()){if(!noticeEl){noticeEl=document.createElement('div');noticeEl.id=noticeId;noticeEl.className='readonly-notice';noticeEl.innerHTML='👁️ <span>Mode Read-Only — tidak dapat mengedit drive</span>';id('tab-drive').insertBefore(noticeEl,id('drive-content'));}}
+    else{if(noticeEl)noticeEl.remove();}
+    if(!drives.length){id('drive-content').innerHTML=`<div class="state-box"><div style="font-size:28px">📭</div><h3>Tidak ada data</h3><p>${esc(S.curGroup)} belum ada data drive.</p></div>`;return;}
+    function getDriveType(driveId){const s=String(driveId||'').toUpperCase();if(s.includes('.INU.')||s.includes('-INU')||s.includes('_INU'))return'INU';if(s.includes('.DSU.')||s.includes('-DSU')||s.includes('_DSU'))return'DSU';return'OTHER';}
     const groups={INU:[],DSU:[],OTHER:[]};
-    drives.forEach(d=>{ groups[getDriveType(d.drive_id)].push(d); });
-    const groupConfig=[
-      {key:'INU',label:'⚡ Inverter Unit (INU)',color:'#4d9fff'},
-      {key:'DSU',label:'🔌 DC Supply Unit (DSU)',color:'#c084fc'},
-      {key:'OTHER',label:'📦 Lainnya',color:'#7eb8e8'},
-    ];
+    drives.forEach(d=>{groups[getDriveType(d.drive_id)].push(d);});
+    const groupConfig=[{key:'INU',label:'⚡ Inverter Unit (INU)',color:'#4d9fff'},{key:'DSU',label:'🔌 DC Supply Unit (DSU)',color:'#c084fc'},{key:'OTHER',label:'📦 Lainnya',color:'#7eb8e8'}];
     let html='';
-    groupConfig.forEach(({key,label,color})=>{
-      const grp=groups[key]; if(!grp.length) return;
-      html+=`<div class="drive-group"><div class="drive-group-header"><div class="drive-group-label" style="border-color:${color};color:${color}">${label}</div><div class="drive-group-line"></div><div class="drive-group-count">${grp.length} unit</div></div><div class="cards-grid">${grp.map(inuCard).join('')}</div></div>`;
-    });
+    groupConfig.forEach(({key,label,color})=>{const grp=groups[key];if(!grp.length)return;html+=`<div class="drive-group"><div class="drive-group-header"><div class="drive-group-label" style="border-color:${color};color:${color}">${label}</div><div class="drive-group-line"></div><div class="drive-group-count">${grp.length} unit</div></div><div class="cards-grid">${grp.map(inuCard).join('')}</div></div>`;});
     id('drive-content').innerHTML=html;
-    if(S.searchQuery) applyDriveSearch(S.searchQuery);
-  } catch(err) {
-    id('drive-content').innerHTML=errHTML(err.message,renderDriveTab);
-    id('drive-meta').textContent='Gagal memuat';
-  }
+    if(S.searchQuery)applyDriveSearch(S.searchQuery);
+  }catch(err){id('drive-content').innerHTML=errHTML(err.message,renderDriveTab);id('drive-meta').textContent='Gagal memuat';}
 }
 
-function inuCard(d) {
-  const st    = d.status||'kosong';
-  const stTx  = {ok:'OK',fault:'Fault',maint:'Maintenance',maintenance:'Maintenance',kosong:'Kosong'}[st]||st;
+function inuCard(d){
+  const st=d.status||'kosong';
+  const stTx={ok:'OK',fault:'Fault',maint:'Maintenance',maintenance:'Maintenance',kosong:'Kosong'}[st]||st;
   const sn=d.serial_number||d.sn||'',stiker=d.stiker||'',spek=d.spesifikasi||'',ket=d.keterangan||'';
+  const lokasi=d.lokasi_saat_ini||'mixing';
   const roleLower=ket.toLowerCase();
-  const snHtml    = sn     ? `<div class="inu-sn-row"><span class="inu-sn-label">S/N</span><span class="inu-sn-value">${esc(sn)}</span></div>` : '';
-  const stikerHtml= stiker ? `<div class="inu-stiker-row"><span class="inu-stiker-label">STIKER</span><span class="inu-stiker-value">${esc(stiker)}</span></div>` : '';
+  const snHtml=sn?`<div class="inu-sn-row"><span class="inu-sn-label">S/N</span><span class="inu-sn-value">${esc(sn)}</span></div>`:'';
+  const stikerHtml=stiker?`<div class="inu-stiker-row"><span class="inu-stiker-label">STIKER</span><span class="inu-stiker-value">${esc(stiker)}</span></div>`:'';
+  const lokasiHtml=lokasi&&lokasi!=='mixing'?`<div class="inu-lokasi-badge ${lokasi}">${{ws_boveri:'🏭 WS Boveri',rusak:'💀 Rusak',abw6:'📦 ABW 6'}[lokasi]||lokasi}</div>`:'';
   let roleHtml='';
-  if(roleLower.includes('master')) roleHtml=`<div class="inu-role">▲ MASTER</div>`;
-  else if(roleLower.includes('follower')||roleLower.includes('slave')) roleHtml=`<div class="inu-role">▽ Followers</div>`;
+  if(roleLower.includes('master'))roleHtml=`<div class="inu-role">▲ MASTER</div>`;
+  else if(roleLower.includes('follower')||roleLower.includes('slave'))roleHtml=`<div class="inu-role">▽ Followers</div>`;
   const infoText=ket.replace(/master|follower|slave/gi,'').trim();
   const photoHtml=d.photo_url?`<button class="inu-photo-btn" onclick="event.stopPropagation();window.open('${esc(d.photo_url)}','_blank')">📷 Lihat Foto</button>`:'';
   const clickable=canEdit()?'clickable':'';
-  const onclickAttr=canEdit()?`onclick="openModal('${esc(d.drive_id)}','${st}','${esc(ket)}','${esc(d.merk)}','${esc(spek)}','${esc(d.photo_url||'')}','${esc(sn)}','${esc(stiker)}')" `:'';
+  const onclickAttr=canEdit()?`onclick="openModal('${esc(d.drive_id)}','${st}','${esc(ket)}','${esc(d.merk)}','${esc(spek)}','${esc(d.photo_url||'')}','${esc(sn)}','${esc(stiker)}')"`:'';
   const editHint=canEdit()?`<div class="inu-edit-hint">✏️ edit</div>`:'';
-  return `<div class="inu-card ${st} ${clickable}" ${onclickAttr}>
-    ${editHint}
-    <div class="inu-tag">${esc(d.drive_id)}</div>
-    <div class="inu-name">${esc(d.merk)||'—'}</div>
-    ${spek?`<div class="inu-spec">${esc(spek)}</div>`:''}
-    ${snHtml}${stikerHtml}
-    <div class="inu-status"><div class="inu-dot"></div>${stTx}</div>
-    ${roleHtml}
-    ${infoText?`<div class="inu-info">${esc(infoText)}</div>`:''}
-    ${photoHtml}
-  </div>`;
+  return`<div class="inu-card ${st} ${clickable}" ${onclickAttr}>${editHint}<div class="inu-tag">${esc(d.drive_id)}</div><div class="inu-name">${esc(d.merk)||'—'}</div>${spek?`<div class="inu-spec">${esc(spek)}</div>`:''}${snHtml}${stikerHtml}<div class="inu-status"><div class="inu-dot"></div>${stTx}</div>${lokasiHtml}${roleHtml}${infoText?`<div class="inu-info">${esc(infoText)}</div>`:''}${photoHtml}</div>`;
 }
 
-// ══════════════════════════════════════════════════════════
-//  GLOBAL SEARCH CROSS-PLANT
-// ══════════════════════════════════════════════════════════
-let globalSearchTimer = null;
-
-function onGlobalSearch(val) {
-  const clear=id('global-search-clear');
-  clear.classList.toggle('visible', val.length>0);
-  if (!val.trim()) { closeGlobalSearch(); id('global-search-status').textContent='Cross-plant search'; return; }
-  clearTimeout(globalSearchTimer);
-  globalSearchTimer = setTimeout(() => doGlobalSearch(val.trim().toLowerCase()), 400);
+// ── MODAL EDIT DRIVE ───────────────────────────────────────
+function onModalStatusChange(){
+  const status=id('modal-status').value;
+  const show=['kosong','maint','fault'].includes(status);
+  id('modal-tujuan-group').style.display=show?'block':'none';
+  updateMovePreview();
+}
+function updateMovePreview(){
+  const status=id('modal-status').value,tujuan=id('modal-tujuan')?.value||'mixing';
+  const show=['kosong','maint','fault'].includes(status)&&tujuan!=='mixing';
+  const prev=id('modal-move-preview');
+  if(show){
+    const labels={ws_boveri:'🏭 WS Boveri',rusak:'💀 Gudang Rusak',abw6:'📦 ABW 6'};
+    id('modal-move-target').textContent=labels[tujuan]||tujuan;
+    prev.style.display='block';
+  } else {prev.style.display='none';}
 }
 
-function clearGlobalSearch() {
-  id('global-search-bar').value='';
-  id('global-search-clear').classList.remove('visible');
-  id('global-search-status').textContent='Cross-plant search';
-  closeGlobalSearch();
+function openModal(driveId,status,keterangan,merk,spesifikasi,photoUrl,serialNumber,stiker){
+  if(!canEdit())return;
+  S.editDrive=driveId;
+  id('modal-drive-id').textContent=driveId;
+  id('modal-status').value=status||'ok';
+  id('modal-merk').value=merk||'';
+  id('modal-spek').value=spesifikasi||'';
+  id('modal-ket').value=keterangan||'';
+  id('modal-sn').value=serialNumber||'';
+  id('modal-stiker').value=stiker||'';
+  id('modal-photo').value=photoUrl||'';
+  const tujuanSel=id('modal-tujuan');if(tujuanSel)tujuanSel.value='mixing';
+  onModalStatusChange();
+  id('modal').classList.add('open');
+}
+function closeModal(){id('modal').classList.remove('open');S.editDrive=null;}
+
+async function saveStatus(){
+  const status=id('modal-status').value;
+  const tujuan=id('modal-tujuan')?.value||'mixing';
+  const btn=id('btn-save');btn.disabled=true;btn.textContent='Menyimpan...';
+  try{
+    await apiGet({
+      action:'moveDrive',plant:S.plant,drive_id:S.editDrive,status,tujuan,
+      keterangan:id('modal-ket').value.trim(),merk:id('modal-merk').value.trim(),
+      spesifikasi:id('modal-spek').value.trim(),serial_number:id('modal-sn').value.trim(),
+      stiker:id('modal-stiker').value.trim(),photo_url:id('modal-photo').value.trim(),
+      updatedBy:S.username+'-'+S.role,
+    });
+    ['drives','groupList','histori','summary','pool','movlog'].forEach(k=>delete S.cache[S.plant+'_'+k]);
+    closeModal();await renderDetailPage();
+  }catch(err){alert('Gagal menyimpan: '+err.message);}
+  finally{btn.disabled=false;btn.textContent='Simpan';}
 }
 
-function closeGlobalSearch() {
-  id('global-results-overlay').classList.remove('open');
+id('modal').addEventListener('click',e=>{if(e.target===id('modal'))closeModal();});
+
+// ── POOL TAB ───────────────────────────────────────────────
+async function renderPoolTab(){
+  const el=id('tab-pool');if(!el)return;
+  el.innerHTML=`
+    <div class="pool-tabs">
+      <button class="pool-tab-btn btn-ws ${curPoolLokasi==='ws_boveri'?'active':''}" onclick="switchPool('ws_boveri',this)">🏭 WS Boveri</button>
+      <button class="pool-tab-btn btn-rusak ${curPoolLokasi==='rusak'?'active':''}"   onclick="switchPool('rusak',this)">💀 Gudang Rusak</button>
+      <button class="pool-tab-btn btn-abw6 ${curPoolLokasi==='abw6'?'active':''}"     onclick="switchPool('abw6',this)">📦 ABW 6</button>
+      <button class="pool-tab-btn ${curPoolLokasi==='log'?'active':''}"               onclick="switchPool('log',this)">📋 Movement Log</button>
+    </div>
+    <div class="pool-scroll" id="pool-scroll-area">${loadingHTML('Memuat pool...')}</div>`;
+  await loadPoolContent();
 }
 
-async function doGlobalSearch(q) {
-  const overlay = id('global-results-overlay');
-  const content = id('global-results-content');
-  const countEl = id('global-results-count');
-  overlay.classList.add('open');
-  content.innerHTML = `<div class="global-searching"><div class="sp" style="width:20px;height:20px;border:2px solid var(--border);border-top-color:var(--accent);border-radius:50%;animation:spin .7s linear infinite;"></div>Mencari di semua plant...</div>`;
-  id('global-search-status').textContent = 'Mencari...';
+async function switchPool(lokasi,btn){
+  curPoolLokasi=lokasi;
+  document.querySelectorAll('.pool-tab-btn').forEach(b=>b.classList.remove('active'));
+  if(btn)btn.classList.add('active');
+  const el=id('pool-scroll-area');if(el)el.innerHTML=loadingHTML('Memuat...');
+  await loadPoolContent();
+}
 
-  // Tentukan plant yang perlu di-search
-  const plantsToSearch = canAccessAllPlants() ? ALL_PLANTS : [S.loggedInPlant];
-  let allResults = [];
-
-  await Promise.all(plantsToSearch.map(async plant => {
-    try {
-      if (!S.cache[plant+'_drives']) {
-        const data   = await apiGet({ action:'getDrives', plant });
-        const drives = Array.isArray(data.drives)?data.drives:(Array.isArray(data)?data:[]);
-        S.cache[plant+'_drives'] = drives;
-        const seen=[],groups=[];
-        drives.forEach(d=>{const g=String(d.group||'').trim();if(g&&!seen.includes(g)){seen.push(g);groups.push(g);}});
-        S.cache[plant+'_groupList'] = groups;
+async function loadPoolContent(){
+  const el=id('pool-scroll-area');if(!el)return;
+  try{
+    if(curPoolLokasi==='log'){
+      if(!S.cache[S.plant+'_movlog']){
+        const data=await apiGet({action:'getMovementLog',plant:S.plant});
+        S.cache[S.plant+'_movlog']=data.logs||[];
       }
-      const drives = S.cache[plant+'_drives']||[];
-      drives.forEach(d => {
-        const text = (
-          (d.drive_id||'')+(d.merk||'')+(d.spesifikasi||'')+
-          (d.serial_number||d.sn||'')+(d.stiker||'')+(d.keterangan||'')+(d.status||'')
-        ).toLowerCase();
-        if (text.includes(q)) {
-          allResults.push({ ...d, _plant: plant });
-        }
-      });
-    } catch(e) {}
-  }));
+      renderMovLog(el,S.cache[S.plant+'_movlog']);
+    } else {
+      if(!S.cache[S.plant+'_pool']){
+        const data=await apiGet({action:'getPool',plant:S.plant});
+        S.cache[S.plant+'_pool']=data.pool||{};
+      }
+      renderPoolList(el,curPoolLokasi,S.cache[S.plant+'_pool'][curPoolLokasi]||[]);
+    }
+  }catch(err){el.innerHTML=errHTML(err.message,loadPoolContent);}
+}
 
-  countEl.textContent = allResults.length + ' hasil';
-  id('global-search-status').textContent = allResults.length + ' hasil ditemukan';
-
-  if (!allResults.length) {
-    content.innerHTML = `<div class="global-no-results"><span style="font-size:36px">🔍</span><span>Tidak ada drive yang cocok dengan "<b>${esc(q)}</b>"</span><span style="color:var(--muted)">Coba cari dengan serial number, merk, atau drive ID</span></div>`;
+function renderPoolList(el,lokasi,items){
+  const lokLabels={ws_boveri:'WS Boveri',rusak:'Gudang Rusak',abw6:'ABW 6'};
+  const lokClass={ws_boveri:'ws',rusak:'rusak',abw6:'abw6'};
+  if(!items.length){
+    el.innerHTML=`<div class="pool-empty"><span style="font-size:40px">📭</span><span>${lokLabels[lokasi]||lokasi} kosong</span><span style="font-size:11px">Tidak ada drive di lokasi ini</span></div>`;
     return;
   }
-
-  // Grup per plant
-  const byPlant = {};
-  allResults.forEach(d => {
-    if (!byPlant[d._plant]) byPlant[d._plant] = [];
-    byPlant[d._plant].push(d);
-  });
-
-  let html = '';
-  Object.keys(byPlant).forEach(plant => {
-    const pDrives = byPlant[plant];
-    const m = PLANT_META[plant]||{color:'#4d9fff'};
-    html += `<div class="global-result-plant-section">
-      <div class="global-result-plant-label" style="color:${m.color}">${plant} — ${pDrives.length} drive ditemukan</div>
-      <div class="global-result-grid">
-        ${pDrives.map(d => {
-          const st  = d.status||'kosong';
-          const sn  = d.serial_number||d.sn||'';
-          const grp = String(d.group||'');
-          return `<div class="global-result-card ${st}" onclick="openFromGlobal('${esc(plant)}','${esc(grp)}')">
-            <div class="global-result-id">${esc(d.drive_id)}</div>
-            <div class="global-result-name">${esc(d.merk)||'—'}</div>
-            ${d.spesifikasi?`<div class="global-result-spec">${esc(d.spesifikasi)}</div>`:''}
-            <div class="global-result-meta">
-              <span class="global-result-plant-badge">${plant}</span>
-              <span class="global-result-mixing">${esc(grp)}</span>
-              ${sn?`<span class="global-result-sn">SN: ${esc(sn)}</span>`:''}
-            </div>
-          </div>`;
-        }).join('')}
-      </div>
-    </div>`;
-  });
-  content.innerHTML = html;
+  el.innerHTML=`
+    <div class="pool-header"><span class="pool-header-title ${lokClass[lokasi]||''}">📦 ${lokLabels[lokasi]||lokasi}</span><span class="pool-header-count">${items.length} drive</span></div>
+    ${items.map(d=>`
+      <div class="pool-card">
+        <div class="pool-card-info">
+          <div class="pool-card-sn">SN: ${esc(d.serial_number)}</div>
+          <div class="pool-card-name">${esc(d.merk)||'—'} <span style="font-size:12px;color:var(--muted)">${esc(d.spesifikasi)||''}</span></div>
+          <div class="pool-card-meta">Drive ID Asli: <b>${esc(d.drive_id_asli)||'—'}</b></div>
+          <div class="pool-card-meta">Masuk: ${esc(d.timestamp_masuk)||'—'} · Oleh: ${esc(d.oleh)||'—'}</div>
+          ${d.keterangan?`<div class="pool-card-ket">${esc(d.keterangan)}</div>`:''}
+        </div>
+        <div style="display:flex;flex-direction:column;align-items:flex-end;gap:8px;flex-shrink:0">
+          <span class="pool-card-dari">dari: ${esc(d.dari)||'—'}</span>
+          ${canEdit()?`<button class="btn-pool-move" onclick="openPoolModal('${esc(d.serial_number)}','${lokasi}','${esc(d.drive_id_asli||'')}','${esc((d.merk||'')+' '+(d.spesifikasi||''))}')">↔ Pindah</button>`:''}
+        </div>
+      </div>`).join('')}`;
 }
 
-function openFromGlobal(plant, group) {
-  closeGlobalSearch();
-  clearGlobalSearch();
-  navTo('detail', plant, group);
+function renderMovLog(el,logs){
+  const locIcon={mixing:'🔩',ws_boveri:'🏭',rusak:'💀',abw6:'📦'};
+  if(!logs.length){el.innerHTML=`<div class="pool-empty"><span style="font-size:40px">📋</span><span>Belum ada movement log</span></div>`;return;}
+  el.innerHTML=`
+    <div class="pool-header"><span class="pool-header-title log">📋 Movement Log</span><span class="pool-header-count">${logs.length} perpindahan</span></div>
+    ${logs.map(l=>`
+      <div class="movlog-item">
+        <div class="movlog-icon">${locIcon[l.ke]||'📦'}</div>
+        <div class="movlog-body">
+          <div class="movlog-ts">${esc(l.timestamp)} · oleh: ${esc(l.oleh)}</div>
+          <div class="movlog-sn">SN: ${esc(l.serial_number)||'—'} &nbsp;&nbsp; ${esc(l.drive_id)||''}</div>
+          <div class="movlog-route">
+            <span class="movlog-loc ${l.dari||'mixing'}">${locIcon[l.dari]||'🔩'} ${l.dari||'mixing'}</span>
+            <span style="color:var(--muted)">→</span>
+            <span class="movlog-loc ${l.ke||'mixing'}">${locIcon[l.ke]||'📦'} ${l.ke||'—'}</span>
+            ${l.keterangan?`<span class="movlog-ket">· ${esc(l.keterangan)}</span>`:''}
+          </div>
+        </div>
+      </div>`).join('')}`;
 }
 
-// ══════════════════════════════════════════════════════════
-//  HISTORI TAB
-// ══════════════════════════════════════════════════════════
-function buildHistoriFilterOptions() {
+// ── POOL MODAL ─────────────────────────────────────────────
+function openPoolModal(sn,dariSheet,driveId,namaTampil){
+  S._poolMove={sn,dariSheet,driveId};
+  id('pool-modal-nama').textContent=(namaTampil||driveId||sn).trim();
+  id('pool-modal-sn').innerHTML=`<b>SN:</b> ${esc(sn)}<br><b>Saat ini di:</b> ${esc(dariSheet)}<br><b>Drive ID Asli:</b> ${esc(driveId||'—')}`;
+  // disable option yang sama dengan asal
+  Array.from(id('pool-modal-ke').options).forEach(o=>{o.disabled=o.value===dariSheet;});
+  id('pool-modal-ket').value='';
+  id('btn-pool-save').disabled=false;id('btn-pool-save').textContent='Pindahkan';
+  id('pool-modal').classList.add('open');
+}
+function closePoolModal(){id('pool-modal').classList.remove('open');}
+async function savePoolMove(){
+  const ke=id('pool-modal-ke').value,ket=id('pool-modal-ket').value.trim();
+  const btn=id('btn-pool-save');btn.disabled=true;btn.textContent='Memindahkan...';
+  try{
+    await apiGet({action:'moveFromPool',plant:S.plant,serial_number:S._poolMove.sn,dari_sheet:S._poolMove.dariSheet,ke,keterangan:ket,updatedBy:S.username+'-'+S.role});
+    ['pool','movlog','drives','groupList'].forEach(k=>delete S.cache[S.plant+'_'+k]);
+    closePoolModal();await loadPoolContent();
+  }catch(err){alert('Gagal memindahkan: '+err.message);}
+  finally{btn.disabled=false;btn.textContent='Pindahkan';}
+}
+id('pool-modal').addEventListener('click',e=>{if(e.target===id('pool-modal'))closePoolModal();});
+
+// ── GLOBAL SEARCH ──────────────────────────────────────────
+let globalSearchTimer=null;
+function onGlobalSearch(val){
+  const clear=id('global-search-clear');clear.classList.toggle('visible',val.length>0);
+  if(!val.trim()){closeGlobalSearch();id('global-search-status').textContent='Cross-plant search';return;}
+  clearTimeout(globalSearchTimer);
+  globalSearchTimer=setTimeout(()=>doGlobalSearch(val.trim().toLowerCase()),400);
+}
+function clearGlobalSearch(){id('global-search-bar').value='';id('global-search-clear').classList.remove('visible');id('global-search-status').textContent='Cross-plant search';closeGlobalSearch();}
+function closeGlobalSearch(){id('global-results-overlay').classList.remove('open');}
+async function doGlobalSearch(q){
+  const overlay=id('global-results-overlay'),content=id('global-results-content'),countEl=id('global-results-count');
+  overlay.classList.add('open');
+  content.innerHTML=`<div class="global-searching"><div class="sp" style="width:20px;height:20px;border:2px solid var(--border);border-top-color:var(--accent);border-radius:50%;animation:spin .7s linear infinite;"></div>Mencari di semua plant...</div>`;
+  id('global-search-status').textContent='Mencari...';
+  const plantsToSearch=canAccessAllPlants()?ALL_PLANTS:[S.loggedInPlant];
+  let allResults=[];
+  await Promise.all(plantsToSearch.map(async plant=>{
+    try{
+      if(!S.cache[plant+'_drives']){
+        const data=await apiGet({action:'getDrives',plant});
+        const drives=Array.isArray(data.drives)?data.drives:(Array.isArray(data)?data:[]);
+        S.cache[plant+'_drives']=drives;
+        const seen=[],groups=[];
+        drives.forEach(d=>{const g=String(d.group||'').trim();if(g&&!seen.includes(g)){seen.push(g);groups.push(g);}});
+        S.cache[plant+'_groupList']=groups;
+      }
+      (S.cache[plant+'_drives']||[]).forEach(d=>{
+        const text=((d.drive_id||'')+(d.merk||'')+(d.spesifikasi||'')+(d.serial_number||d.sn||'')+(d.stiker||'')+(d.keterangan||'')+(d.status||'')).toLowerCase();
+        if(text.includes(q))allResults.push({...d,_plant:plant});
+      });
+    }catch(e){}
+  }));
+  countEl.textContent=allResults.length+' hasil';id('global-search-status').textContent=allResults.length+' hasil';
+  if(!allResults.length){content.innerHTML=`<div class="global-no-results"><span style="font-size:36px">🔍</span><span>Tidak ada drive yang cocok dengan "<b>${esc(q)}</b>"</span></div>`;return;}
+  const byPlant={};allResults.forEach(d=>{if(!byPlant[d._plant])byPlant[d._plant]=[];byPlant[d._plant].push(d);});
+  let html='';
+  Object.keys(byPlant).forEach(plant=>{
+    const pDrives=byPlant[plant],m=PLANT_META[plant]||{color:'#4d9fff'};
+    html+=`<div class="global-result-plant-section"><div class="global-result-plant-label" style="color:${m.color}">${plant} — ${pDrives.length} drive</div><div class="global-result-grid">${pDrives.map(d=>{const st=d.status||'kosong',sn=d.serial_number||d.sn||'',grp=String(d.group||'');return`<div class="global-result-card ${st}" onclick="openFromGlobal('${esc(plant)}','${esc(grp)}')"><div class="global-result-id">${esc(d.drive_id)}</div><div class="global-result-name">${esc(d.merk)||'—'}</div>${d.spesifikasi?`<div class="global-result-spec">${esc(d.spesifikasi)}</div>`:''}<div class="global-result-meta"><span class="global-result-plant-badge">${plant}</span><span class="global-result-mixing">${esc(grp)}</span>${sn?`<span class="global-result-sn">SN: ${esc(sn)}</span>`:''}</div></div>`;}).join('')}</div></div>`;
+  });
+  content.innerHTML=html;
+}
+function openFromGlobal(plant,group){closeGlobalSearch();clearGlobalSearch();navTo('detail',plant,group);}
+
+// ── HISTORI TAB ────────────────────────────────────────────
+function buildHistoriFilterOptions(){
   const bulanSel=id('hist-filter-bulan'),tahunSel=id('hist-filter-tahun');
   const nowYear=new Date().getFullYear();
   tahunSel.innerHTML='<option value="">Semua Tahun</option>';
   for(let y=TAHUN_AWAL;y<=nowYear+1;y++){const o=document.createElement('option');o.value=y;o.textContent=y;tahunSel.appendChild(o);}
   bulanSel.innerHTML='<option value="">Semua Bulan</option>';
   for(let m=1;m<=12;m++){const o=document.createElement('option');o.value=m;o.textContent=NAMA_BULAN[m];bulanSel.appendChild(o);}
-  bulanSel.value=S.histFilter.bulan; tahunSel.value=S.histFilter.tahun;
+  bulanSel.value=S.histFilter.bulan;tahunSel.value=S.histFilter.tahun;
 }
-
-function parseTimestamp(ts) {
-  if(!ts) return null;
-  let m=String(ts).match(/^(\d{1,2})\/(\d{1,2})\/(\d{4})/);
-  if(m) return{day:+m[1],month:+m[2],year:+m[3]};
-  m=String(ts).match(/^(\d{4})-(\d{2})-(\d{2})/);
-  if(m) return{day:+m[3],month:+m[2],year:+m[1]};
+function parseTimestamp(ts){
+  if(!ts)return null;
+  let m=String(ts).match(/^(\d{1,2})\/(\d{1,2})\/(\d{4})/);if(m)return{day:+m[1],month:+m[2],year:+m[3]};
+  m=String(ts).match(/^(\d{4})-(\d{2})-(\d{2})/);if(m)return{day:+m[3],month:+m[2],year:+m[1]};
   return null;
 }
-
-function applyHistoriFilter() {
-  S.histFilter.bulan=id('hist-filter-bulan').value;
-  S.histFilter.tahun=id('hist-filter-tahun').value;
+function applyHistoriFilter(){
+  S.histFilter.bulan=id('hist-filter-bulan').value;S.histFilter.tahun=id('hist-filter-tahun').value;
   const has=S.histFilter.bulan||S.histFilter.tahun;
   const badge=id('hist-period-badge'),resetBtn=id('btn-reset-histori-filter');
-  if(has){
-    let label=S.histFilter.bulan&&S.histFilter.tahun
-      ?NAMA_BULAN[+S.histFilter.bulan]+' '+S.histFilter.tahun
-      :S.histFilter.bulan?NAMA_BULAN[+S.histFilter.bulan]+' (Semua Tahun)'
-      :'Tahun '+S.histFilter.tahun;
-    id('hist-period-text').textContent=label;
-    badge.style.display='flex'; resetBtn.classList.remove('hidden');
-  } else { badge.style.display='none'; resetBtn.classList.add('hidden'); }
+  if(has){let label=S.histFilter.bulan&&S.histFilter.tahun?NAMA_BULAN[+S.histFilter.bulan]+' '+S.histFilter.tahun:S.histFilter.bulan?NAMA_BULAN[+S.histFilter.bulan]+' (Semua Tahun)':'Tahun '+S.histFilter.tahun;id('hist-period-text').textContent=label;badge.style.display='flex';resetBtn.classList.remove('hidden');}
+  else{badge.style.display='none';resetBtn.classList.add('hidden');}
   renderHistoriTableWithFilter();
 }
-
-function resetHistoriFilter() {
-  S.histFilter.bulan=''; S.histFilter.tahun='';
-  id('hist-filter-bulan').value=''; id('hist-filter-tahun').value='';
-  id('hist-period-badge').style.display='none';
-  id('btn-reset-histori-filter').classList.add('hidden');
-  renderHistoriTableWithFilter();
-}
-
-function renderHistoriTableWithFilter() {
-  const rows=S.cache[S.plant+'_histori']; if(!rows) return;
-  const fB=S.histFilter.bulan?+S.histFilter.bulan:null;
-  const fY=S.histFilter.tahun?+S.histFilter.tahun:null;
-  const q=S.searchQuery;
+function resetHistoriFilter(){S.histFilter.bulan='';S.histFilter.tahun='';id('hist-filter-bulan').value='';id('hist-filter-tahun').value='';id('hist-period-badge').style.display='none';id('btn-reset-histori-filter').classList.add('hidden');renderHistoriTableWithFilter();}
+function renderHistoriTableWithFilter(){
+  const rows=S.cache[S.plant+'_histori'];if(!rows)return;
+  const fB=S.histFilter.bulan?+S.histFilter.bulan:null,fY=S.histFilter.tahun?+S.histFilter.tahun:null,q=S.searchQuery;
   const filtered=rows.filter(r=>{
     const p=parseTimestamp(r.timestamp);
-    if(fB&&(!p||p.month!==fB)) return false;
-    if(fY&&(!p||p.year!==fY))  return false;
-    if(q){ const txt=(r.timestamp+r.drive_id+r.drive_nama+r.group+r.status+r.keterangan).toLowerCase(); if(!txt.includes(q)) return false; }
+    if(fB&&(!p||p.month!==fB))return false;if(fY&&(!p||p.year!==fY))return false;
+    if(q){const txt=(r.timestamp+r.drive_id+r.drive_nama+r.group+r.status+r.keterangan).toLowerCase();if(!txt.includes(q))return false;}
     return true;
   });
-  const resultEl=id('hist-filter-result');
-  resultEl.textContent=(fB||fY||q)?filtered.length+' data ditemukan':rows.length+' total data';
+  id('hist-filter-result').textContent=(fB||fY||q)?filtered.length+' data ditemukan':rows.length+' total data';
   const noRes=id('histori-no-results'),contentEl=id('histori-content');
-  if(!filtered.length){ contentEl.innerHTML=''; id('histori-search-query').textContent=q||(fB||fY?'periode ini':''); noRes.classList.add('visible'); return; }
+  if(!filtered.length){contentEl.innerHTML='';id('histori-search-query').textContent=q||(fB||fY?'periode ini':'');noRes.classList.add('visible');return;}
   noRes.classList.remove('visible');
   const groups={},groupOrder=[];
-  filtered.forEach(r=>{
-    const p=parseTimestamp(r.timestamp);
-    const key=p?(p.year+'-'+String(p.month).padStart(2,'0')):'0000-00';
-    if(!groups[key]){groups[key]=[];groupOrder.push(key);}
-    groups[key].push({...r,_origIdx:rows.indexOf(r)});
-  });
-  const showGroups=!(fB&&fY);
-  let html='';
+  filtered.forEach(r=>{const p=parseTimestamp(r.timestamp);const key=p?(p.year+'-'+String(p.month).padStart(2,'0')):'0000-00';if(!groups[key]){groups[key]=[];groupOrder.push(key);}groups[key].push({...r,_origIdx:rows.indexOf(r)});});
+  const showGroups=!(fB&&fY);let html='';
   if(showGroups&&groupOrder.length>1){
-    groupOrder.forEach(key=>{
-      const grpRows=groups[key];
-      const[yr,mo]=key.split('-').map(Number);
-      const label=mo?(NAMA_BULAN[mo]+' '+yr):'Tidak diketahui';
-      html+=`<div class="hist-month-section-head"><span class="hms-icon">📅</span><span class="hms-title">${label}</span><span class="hms-count">${grpRows.length} data</span></div>
-        <div class="hist-table-wrap"><table class="hist-table"><thead><tr><th>Waktu</th><th>Drive ID</th><th>Nama</th><th>Group</th><th>Status</th><th>Keterangan</th></tr></thead>
-        <tbody>${grpRows.map(histRow).join('')}</tbody></table></div>`;
-    });
+    groupOrder.forEach(key=>{const grpRows=groups[key];const[yr,mo]=key.split('-').map(Number);const label=mo?(NAMA_BULAN[mo]+' '+yr):'Tidak diketahui';html+=`<div class="hist-month-section-head"><span class="hms-icon">📅</span><span class="hms-title">${label}</span><span class="hms-count">${grpRows.length} data</span></div><div class="hist-table-wrap"><table class="hist-table"><thead><tr><th>Waktu</th><th>Drive ID</th><th>Nama</th><th>Group</th><th>Status</th><th>Keterangan</th></tr></thead><tbody>${grpRows.map(histRow).join('')}</tbody></table></div>`;});
   } else {
     const label=fB&&fY?NAMA_BULAN[fB]+' '+fY:fY?'Tahun '+fY:fB?NAMA_BULAN[fB]:'Semua Data';
-    if(fB||fY) html+=`<div class="hist-month-section-head"><span class="hms-icon">📅</span><span class="hms-title">${label}</span><span class="hms-count">${filtered.length} data</span></div>`;
-    html+=`<div class="hist-table-wrap"><table class="hist-table"><thead><tr><th>Waktu</th><th>Drive ID</th><th>Nama</th><th>Group</th><th>Status</th><th>Keterangan</th></tr></thead>
-      <tbody>${filtered.map(r=>({...r,_origIdx:rows.indexOf(r)})).map(histRow).join('')}</tbody></table></div>`;
+    if(fB||fY)html+=`<div class="hist-month-section-head"><span class="hms-icon">📅</span><span class="hms-title">${label}</span><span class="hms-count">${filtered.length} data</span></div>`;
+    html+=`<div class="hist-table-wrap"><table class="hist-table"><thead><tr><th>Waktu</th><th>Drive ID</th><th>Nama</th><th>Group</th><th>Status</th><th>Keterangan</th></tr></thead><tbody>${filtered.map(r=>({...r,_origIdx:rows.indexOf(r)})).map(histRow).join('')}</tbody></table></div>`;
   }
   contentEl.innerHTML=html;
 }
-
-function histRow(r) {
+function histRow(r){
   const origIdx=r._origIdx!==undefined?r._origIdx:-1;
   const editTsBtn=isAdmin()?`<button class="btn-edit-ts" onclick="event.stopPropagation();openTsModal(${origIdx},'${esc(r.drive_id)}','${esc(r.timestamp)}')" title="Edit waktu">✏️</button>`:'';
-  return `<tr>
-    <td><div class="hist-ts-wrap"><span class="hist-ts">${esc(r.timestamp)}</span>${editTsBtn}</div></td>
-    <td class="hist-id">${esc(r.drive_id)}</td>
-    <td>${esc(r.drive_nama)}</td>
-    <td>${esc(r.group)}</td>
-    <td><span class="status-tag st-${r.status}">${r.status.toUpperCase()}</span></td>
-    <td>${esc(r.keterangan)}</td>
-  </tr>`;
+  return`<tr><td><div class="hist-ts-wrap"><span class="hist-ts">${esc(r.timestamp)}</span>${editTsBtn}</div></td><td class="hist-id">${esc(r.drive_id)}</td><td>${esc(r.drive_nama)}</td><td>${esc(r.group)}</td><td><span class="status-tag st-${r.status}">${r.status.toUpperCase()}</span></td><td>${esc(r.keterangan)}</td></tr>`;
 }
-
-async function renderHistoriTab() {
+async function renderHistoriTab(){
   id('histori-content').innerHTML=loadingHTML('Memuat histori...');
-  try {
-    if(!S.cache[S.plant+'_histori']){
-      const data=await apiGet({action:'getHistori',plant:S.plant});
-      S.cache[S.plant+'_histori']=data.histori||data;
-    }
+  try{
+    if(!S.cache[S.plant+'_histori']){const data=await apiGet({action:'getHistori',plant:S.plant});S.cache[S.plant+'_histori']=data.histori||data;}
     const rows=S.cache[S.plant+'_histori'];
     if(!rows||!rows.length){id('histori-content').innerHTML=`<div class="state-box"><div style="font-size:28px">📋</div><h3>Belum ada histori</h3></div>`;return;}
-    buildHistoriFilterOptions();
-    renderHistoriTableWithFilter();
-  } catch(err){id('histori-content').innerHTML=errHTML(err.message,renderHistoriTab);}
+    buildHistoriFilterOptions();renderHistoriTableWithFilter();
+  }catch(err){id('histori-content').innerHTML=errHTML(err.message,renderHistoriTab);}
 }
 
-// ══════════════════════════════════════════════════════════
-//  EDIT TIMESTAMP (Admin only)
-// ══════════════════════════════════════════════════════════
+// ── EDIT TIMESTAMP (Admin only) ───────────────────────────
 function openTsModal(rowIdx,driveId,currentTs){
-  if(!isAdmin()) return;
-  S.pendingTsData={rowIdx,driveId,currentTs};
-  const rows=S.cache[S.plant+'_histori']||[];
-  const row=rows[rowIdx]||{};
+  if(!isAdmin())return;S.pendingTsData={rowIdx,driveId,currentTs};
+  const rows=S.cache[S.plant+'_histori']||[];const row=rows[rowIdx]||{};
   id('ts-modal-row-info').innerHTML=`<b>Drive ID:</b> ${esc(driveId)}<br><b>Status:</b> ${esc(row.status||'—')}<br><b>Waktu saat ini:</b> ${esc(currentTs)}`;
-  id('ts-input-datetime').value=currentTs||'';
-  id('ts-input-alasan').value='';
-  id('btn-save-ts').disabled=false; id('btn-save-ts').textContent='Simpan Koreksi';
-  id('ts-modal-overlay').classList.add('open');
-  setTimeout(()=>id('ts-input-datetime').focus(),100);
+  id('ts-input-datetime').value=currentTs||'';id('ts-input-alasan').value='';
+  id('btn-save-ts').disabled=false;id('btn-save-ts').textContent='Simpan Koreksi';
+  id('ts-modal-overlay').classList.add('open');setTimeout(()=>id('ts-input-datetime').focus(),100);
 }
 function closeTsModal(){id('ts-modal-overlay').classList.remove('open');S.pendingTsData=null;}
 async function saveTsEdit(){
   const newTs=id('ts-input-datetime').value.trim(),alasan=id('ts-input-alasan').value.trim();
   const d=S.pendingTsData,btn=id('btn-save-ts');
-  if(!newTs){alert('⚠️ Waktu baru tidak boleh kosong.');return;}
-  if(!d) return;
-  btn.disabled=true; btn.textContent='Menyimpan...';
+  if(!newTs){alert('⚠️ Waktu baru tidak boleh kosong.');return;}if(!d)return;
+  btn.disabled=true;btn.textContent='Menyimpan...';
   try{
     await apiGet({action:'updateHistoriTimestamp',plant:S.plant,row_index:d.rowIdx,drive_id:d.driveId,old_timestamp:d.currentTs,new_timestamp:newTs,alasan:alasan||'—',updatedBy:S.username});
-    const rows=S.cache[S.plant+'_histori']||[];
-    if(rows[d.rowIdx]) rows[d.rowIdx].timestamp=newTs;
-    closeTsModal(); renderHistoriTableWithFilter();
+    const rows=S.cache[S.plant+'_histori']||[];if(rows[d.rowIdx])rows[d.rowIdx].timestamp=newTs;
+    closeTsModal();renderHistoriTableWithFilter();
   }catch(err){alert('Gagal menyimpan: '+err.message);}
   finally{btn.disabled=false;btn.textContent='Simpan Koreksi';}
 }
 
-// ══════════════════════════════════════════════════════════
-//  MANUAL BOOK
-// ══════════════════════════════════════════════════════════
+// ── MANUAL BOOK ────────────────────────────────────────────
 async function renderManualTab(){
   id('manual-content').innerHTML=loadingHTML('Memuat manual book...');
   try{
-    if(!S.cache[S.plant+'_manuals']){
-      const data=await apiGet({action:'getManualBook',plant:S.plant});
-      S.cache[S.plant+'_manuals']=data.manuals||[];
-    }
+    if(!S.cache[S.plant+'_manuals']){const data=await apiGet({action:'getManualBook',plant:S.plant});S.cache[S.plant+'_manuals']=data.manuals||[];}
     const manuals=S.cache[S.plant+'_manuals'];
-    if(!manuals||!manuals.length){
-      id('manual-content').innerHTML=`<div class="state-box"><div style="font-size:36px">📖</div><h3>Belum ada Manual Book</h3><p>Tambahkan data di sheet <b>manual_book</b> pada spreadsheet ${esc(S.plant)}</p></div>`;return;
-    }
+    if(!manuals||!manuals.length){id('manual-content').innerHTML=`<div class="state-box"><div style="font-size:36px">📖</div><h3>Belum ada Manual Book</h3><p>Tambahkan data di sheet <b>manual_book</b></p></div>`;return;}
     const katSel=id('mb-filter-kategori');
     const kategoriList=[...new Set(manuals.map(m=>m.kategori).filter(Boolean))].sort();
     katSel.innerHTML='<option value="">Semua Kategori</option>';
@@ -1659,37 +1527,17 @@ async function renderManualTab(){
     renderManualTable();
   }catch(err){id('manual-content').innerHTML=errHTML(err.message,renderManualTab);}
 }
-
 function renderManualTable(){
   const manuals=S.cache[S.plant+'_manuals']||[];
-  const katFilter=id('mb-filter-kategori')?id('mb-filter-kategori').value:'';
-  const q=S.searchQuery;
-  const filtered=manuals.filter(m=>{
-    if(katFilter&&m.kategori!==katFilter) return false;
-    if(q){const txt=((m.id||'')+(m.judul||'')+(m.drive_id||'')+(m.kategori||'')+(m.tanggal||'')).toLowerCase();if(!txt.includes(q)) return false;}
-    return true;
-  });
-  const resultEl=id('mb-filter-result'); if(resultEl) resultEl.textContent=filtered.length+' dokumen';
+  const katFilter=id('mb-filter-kategori')?id('mb-filter-kategori').value:'',q=S.searchQuery;
+  const filtered=manuals.filter(m=>{if(katFilter&&m.kategori!==katFilter)return false;if(q){const txt=((m.id||'')+(m.judul||'')+(m.drive_id||'')+(m.kategori||'')+(m.tanggal||'')).toLowerCase();if(!txt.includes(q))return false;}return true;});
+  const resultEl=id('mb-filter-result');if(resultEl)resultEl.textContent=filtered.length+' dokumen';
   const contentEl=id('manual-content');
   if(!filtered.length){contentEl.innerHTML=`<div class="state-box"><div style="font-size:28px">📖</div><h3>Tidak ada dokumen</h3></div>`;return;}
-  contentEl.innerHTML=`
-    <div class="mb-header-row"><span class="mb-header-title">📖 Dokumen Manual Book</span><span class="mb-header-count">${filtered.length} dokumen</span></div>
-    <div class="mb-table-wrap"><table class="mb-table">
-      <thead><tr><th class="mb-num">#</th><th>Judul Dokumen</th><th>Drive ID</th><th>Kategori</th><th>Tanggal</th><th>Aksi</th></tr></thead>
-      <tbody>${filtered.map((m,i)=>`<tr>
-        <td class="mb-num">${i+1}</td>
-        <td><div class="mb-judul">${esc(m.judul)}</div>${m.id?`<div class="mb-doc-id">${esc(m.id)}</div>`:''}</td>
-        <td class="mb-drive">${esc(m.drive_id)||'<span style="color:var(--muted)">—</span>'}</td>
-        <td>${m.kategori?`<span class="mb-kategori-tag">${esc(m.kategori)}</span>`:'<span class="mb-empty">—</span>'}</td>
-        <td class="mb-tanggal">${esc(m.tanggal)||'<span class="mb-empty">—</span>'}</td>
-        <td>${m.link_pdf?`<a class="btn-open-pdf" href="${esc(m.link_pdf)}" target="_blank" rel="noopener noreferrer">📄 Buka PDF</a>`:'<span class="mb-empty">—</span>'}</td>
-      </tr>`).join('')}</tbody>
-    </table></div>`;
+  contentEl.innerHTML=`<div class="mb-header-row"><span class="mb-header-title">📖 Manual Book</span><span class="mb-header-count">${filtered.length} dokumen</span></div><div class="mb-table-wrap"><table class="mb-table"><thead><tr><th class="mb-num">#</th><th>Judul</th><th>Drive ID</th><th>Kategori</th><th>Tanggal</th><th>Aksi</th></tr></thead><tbody>${filtered.map((m,i)=>`<tr><td class="mb-num">${i+1}</td><td><div class="mb-judul">${esc(m.judul)}</div>${m.id?`<div class="mb-doc-id">${esc(m.id)}</div>`:''}</td><td class="mb-drive">${esc(m.drive_id)||'<span style="color:var(--muted)">—</span>'}</td><td>${m.kategori?`<span class="mb-kategori-tag">${esc(m.kategori)}</span>`:'<span class="mb-empty">—</span>'}</td><td class="mb-tanggal">${esc(m.tanggal)||'—'}</td><td>${m.link_pdf?`<a class="btn-open-pdf" href="${esc(m.link_pdf)}" target="_blank" rel="noopener noreferrer">📄 Buka PDF</a>`:'<span class="mb-empty">—</span>'}</td></tr>`).join('')}</tbody></table></div>`;
 }
 
-// ══════════════════════════════════════════════════════════
-//  SUMMARY TAB
-// ══════════════════════════════════════════════════════════
+// ── SUMMARY TAB ────────────────────────────────────────────
 async function renderSummaryTab(){
   id('summary-content').innerHTML=loadingHTML('Memuat summary...');
   try{
@@ -1697,21 +1545,92 @@ async function renderSummaryTab(){
     S.cache[S.plant+'_summary']=data.summary||[];
     const rows=data.summary||[],totalKosong=data.totalKosong||0,totalDrive=data.totalDrive||0;
     const adaKosong=rows.filter(r=>r.kosong>0),bersih=rows.filter(r=>r.kosong===0).length;
-    let html=`<div class="summary-stats">
-      <div class="sum-stat"><div class="sum-stat-label">Drive Kosong</div><div class="sum-stat-val kosong">${totalKosong}</div></div>
-      <div class="sum-stat"><div class="sum-stat-label">Terdampak</div><div class="sum-stat-val" style="color:var(--maint)">${adaKosong.length}</div></div>
-      <div class="sum-stat"><div class="sum-stat-label">Bersih</div><div class="sum-stat-val ok">${bersih}</div></div>
-      <div class="sum-stat"><div class="sum-stat-label">Total Drive</div><div class="sum-stat-val accent">${totalDrive}</div></div>
-    </div>`;
-    if(!adaKosong.length){
-      html+=`<div class="state-box"><div style="font-size:36px">✅</div><h3>Semua Drive Terisi</h3><p>Tidak ada drive kosong di ${esc(S.plant)}</p></div>`;
-    } else {
-      html+=`<div class="summary-panel"><div class="summary-panel-head"><div class="summary-panel-title">⬜ Mixing dengan Drive Kosong</div><div class="summary-panel-count">${adaKosong.length} dari ${rows.length} mixing</div></div><div style="overflow-x:auto"><table class="sum-table"><thead><tr><th>Mixing</th><th>Kosong</th><th>Total</th><th>%</th></tr></thead><tbody>${adaKosong.map(r=>{const pct=Math.round(r.kosong/r.total*100);return`<tr class="has-kosong"><td><div class="sum-group-name">${esc(r.group)}</div></td><td><span class="sum-kosong-badge">⬜ ${r.kosong}</span></td><td><span class="sum-zero">${r.total}</span></td><td><div class="sum-pct-bar"><div class="sum-bar-track"><div class="sum-bar-fill" style="width:${pct}%"></div></div><span class="sum-pct-txt">${pct}%</span></div></td></tr>`;}).join('')}</tbody></table></div></div>
-      <div class="summary-panel"><div class="summary-panel-head"><div class="summary-panel-title">📋 Semua Mixing</div><div class="summary-panel-count">${rows.length} mixing</div></div><div style="overflow-x:auto"><table class="sum-table"><thead><tr><th>Mixing</th><th>OK</th><th>Kosong</th><th>Fault</th><th>Maint</th><th>Total</th></tr></thead><tbody>${rows.map(r=>`<tr class="${r.kosong>0?'has-kosong':''}"><td><div class="sum-group-name">${esc(r.group)}</div></td><td style="color:${r.ok>0?'var(--ok)':'var(--muted)'};font-family:'JetBrains Mono',monospace;font-size:11px">${r.ok}</td><td>${r.kosong>0?`<span class="sum-kosong-badge">⬜ ${r.kosong}</span>`:`<span class="sum-zero">0</span>`}</td><td style="color:${r.fault>0?'var(--fault)':'var(--muted)'};font-family:'JetBrains Mono',monospace;font-size:11px">${r.fault}</td><td style="color:${r.maint>0?'var(--maint)':'var(--muted)'};font-family:'JetBrains Mono',monospace;font-size:11px">${r.maint}</td><td class="sum-zero">${r.total}</td></tr>`).join('')}</tbody></table></div></div>`;
-    }
+    let html=`<div class="summary-stats"><div class="sum-stat"><div class="sum-stat-label">Drive Kosong</div><div class="sum-stat-val kosong">${totalKosong}</div></div><div class="sum-stat"><div class="sum-stat-label">Terdampak</div><div class="sum-stat-val" style="color:var(--maint)">${adaKosong.length}</div></div><div class="sum-stat"><div class="sum-stat-label">Bersih</div><div class="sum-stat-val ok">${bersih}</div></div><div class="sum-stat"><div class="sum-stat-label">Total Drive</div><div class="sum-stat-val accent">${totalDrive}</div></div></div>`;
+    if(!adaKosong.length){html+=`<div class="state-box"><div style="font-size:36px">✅</div><h3>Semua Drive Terisi</h3></div>`;}
+    else{html+=`<div class="summary-panel"><div class="summary-panel-head"><div class="summary-panel-title">⬜ Mixing dengan Drive Kosong</div><div class="summary-panel-count">${adaKosong.length} dari ${rows.length} mixing</div></div><div style="overflow-x:auto"><table class="sum-table"><thead><tr><th>Mixing</th><th>Kosong</th><th>Total</th><th>%</th></tr></thead><tbody>${adaKosong.map(r=>{const pct=Math.round(r.kosong/r.total*100);return`<tr><td><div class="sum-group-name">${esc(r.group)}</div></td><td><span class="sum-kosong-badge">⬜ ${r.kosong}</span></td><td><span class="sum-zero">${r.total}</span></td><td><div class="sum-pct-bar"><div class="sum-bar-track"><div class="sum-bar-fill" style="width:${pct}%"></div></div><span class="sum-pct-txt">${pct}%</span></div></td></tr>`;}).join('')}</tbody></table></div></div><div class="summary-panel"><div class="summary-panel-head"><div class="summary-panel-title">📋 Semua Mixing</div><div class="summary-panel-count">${rows.length} mixing</div></div><div style="overflow-x:auto"><table class="sum-table"><thead><tr><th>Mixing</th><th>OK</th><th>Kosong</th><th>Fault</th><th>Maint</th><th>Total</th></tr></thead><tbody>${rows.map(r=>`<tr><td><div class="sum-group-name">${esc(r.group)}</div></td><td style="color:${r.ok>0?'var(--ok)':'var(--muted)'};font-family:'JetBrains Mono',monospace;font-size:11px">${r.ok}</td><td>${r.kosong>0?`<span class="sum-kosong-badge">⬜ ${r.kosong}</span>`:`<span class="sum-zero">0</span>`}</td><td style="color:${r.fault>0?'var(--fault)':'var(--muted)'};font-family:'JetBrains Mono',monospace;font-size:11px">${r.fault}</td><td style="color:${r.maint>0?'var(--maint)':'var(--muted)'};font-family:'JetBrains Mono',monospace;font-size:11px">${r.maint}</td><td class="sum-zero">${r.total}</td></tr>`).join('')}</tbody></table></div></div>`;}
     id('summary-content').innerHTML=html;
   }catch(err){id('summary-content').innerHTML=errHTML(err.message,renderSummaryTab);}
 }
+
+// ── ASLI TAB ───────────────────────────────────────────────
+async function renderAsliTab(){
+  id('asli-content').innerHTML=loadingHTML('Memuat data asli...');
+  try{
+    if(!S.cache[S.plant+'_asli']){const data=await apiGet({action:'getAsli',plant:S.plant});S.cache[S.plant+'_asli']=data.asli||[];}
+    const all=S.cache[S.plant+'_asli'];const rows=all.filter(d=>d.group===S.curGroup);
+    if(!rows.length){id('asli-content').innerHTML=`<div class="state-box"><div style="font-size:28px">📭</div><h3>Tidak ada data</h3></div>`;return;}
+    const q=S.searchQuery,total=rows.length;
+    const sesuai=rows.filter(r=>r.status==='SESUAI').length,tidakSesuai=rows.filter(r=>r.status==='TIDAK SESUAI').length,tidakDitemukan=rows.filter(r=>r.status==='TIDAK DITEMUKAN').length;
+    function rowStyle(st){if(st==='SESUAI')return'background:rgba(0,240,160,.08);border-left:3px solid var(--ok)';if(st==='TIDAK SESUAI')return'background:rgba(255,61,85,.08);border-left:3px solid var(--fault)';if(st==='TIDAK DITEMUKAN')return'background:rgba(126,184,232,.06);border-left:3px solid var(--kosong)';return'';}
+    function statusBadge(st){if(st==='SESUAI')return`<span class="status-tag st-ok">✅ SESUAI</span>`;if(st==='TIDAK SESUAI')return`<span class="status-tag st-fault">❌ TIDAK SESUAI</span>`;if(st==='TIDAK DITEMUKAN')return`<span class="status-tag st-kosong">🔍 TDK DITEMUKAN</span>`;return`<span style="color:var(--muted)">—</span>`;}
+    function renderCari(val,st){if(!val||val==='—')return'<span style="color:var(--muted)">—</span>';if(val.trim()==='#REF!')return`<span class="asli-ref-err">#REF!</span>`;if(st==='TIDAK SESUAI')return`<span class="asli-cari" style="color:var(--fault);border-color:rgba(255,61,85,.35);background:rgba(255,61,85,.1)">${esc(val)}</span>`;if(st==='SESUAI')return`<span class="asli-cari" style="color:var(--ok);border-color:rgba(0,240,160,.35);background:rgba(0,240,160,.1)">${esc(val)}</span>`;return`<span class="asli-cari">${esc(val)}</span>`;}
+    id('asli-content').innerHTML=`<div style="padding:14px 20px 0"><div class="mb-header-row"><span class="mb-header-title">📋 Data Asli — ${esc(S.curGroup)}</span><span class="mb-header-count">${total} drive</span></div><div style="display:flex;gap:10px;flex-wrap:wrap;margin-bottom:14px"><div class="sum-stat" style="min-width:90px;padding:10px 14px"><div class="sum-stat-label">Sesuai</div><div class="sum-stat-val ok" style="font-size:18px">${sesuai}</div></div><div class="sum-stat" style="min-width:90px;padding:10px 14px"><div class="sum-stat-label">Tidak Sesuai</div><div class="sum-stat-val" style="font-size:18px;color:var(--fault)">${tidakSesuai}</div></div><div class="sum-stat" style="min-width:90px;padding:10px 14px"><div class="sum-stat-label">Tdk Ditemukan</div><div class="sum-stat-val kosong" style="font-size:18px">${tidakDitemukan}</div></div><div class="sum-stat" style="min-width:90px;padding:10px 14px"><div class="sum-stat-label">Total</div><div class="sum-stat-val accent" style="font-size:18px">${total}</div></div></div></div><div class="mb-table-wrap" style="padding:0 20px 20px"><table class="mb-table"><thead><tr><th class="mb-num">#</th><th>Drive ID (Posisi Asli)</th><th>Ada di Lapangan</th><th>Serial Number Asli</th><th>Spesifikasi</th><th>Status</th></tr></thead><tbody>${rows.map((r,i)=>{const match=!q||(r.drive_id+r.spesifikasi+r.serial_number+(r['cari data lapangan']||r.cari_data_lapangan||'')+r.status).toLowerCase().includes(q);const cari=r['cari data lapangan']||r.cari_data_lapangan||'';return`<tr style="${rowStyle(r.status)}${!match?';display:none':''}"><td class="mb-num">${i+1}</td><td><span class="asli-drive-id">${esc(r.drive_id)}</span></td><td>${renderCari(cari,r.status)}</td><td style="font-family:'JetBrains Mono',monospace;font-size:11px">${esc(r.serial_number)||'<span style="color:var(--muted)">—</span>'}</td><td style="font-size:12px">${esc(r.spesifikasi)||'<span style="color:var(--muted)">—</span>'}</td><td>${statusBadge(r.status)}</td></tr>`;}).join('')}</tbody></table></div>`;
+  }catch(err){id('asli-content').innerHTML=errHTML(err.message,renderAsliTab);}
+}
+
+// ── LOCAL SEARCH ───────────────────────────────────────────
+function onSearch(val){S.searchQuery=val.trim().toLowerCase();id('search-clear').classList.toggle('visible',val.length>0);applySearch();}
+function clearSearch(){id('search-bar').value='';S.searchQuery='';id('search-clear').classList.remove('visible');id('search-count').textContent='';applySearch();}
+function applySearch(){const q=S.searchQuery;if(S.tab==='drive')applyDriveSearch(q);if(S.tab==='histori')renderHistoriTableWithFilter();if(S.tab==='manual')renderManualTable();}
+function applyDriveSearch(q){
+  const cards=document.querySelectorAll('#drive-content .inu-card');let visible=0;
+  cards.forEach(card=>{const match=!q||card.textContent.toLowerCase().includes(q);card.classList.toggle('search-hidden',!match);if(match)visible++;});
+  document.querySelectorAll('#drive-content .drive-group').forEach(grp=>{grp.style.display=grp.querySelectorAll('.inu-card:not(.search-hidden)').length>0?'':'none';});
+  const noRes=id('drive-no-results'),total=cards.length;
+  if(q&&total>0){id('search-count').textContent=visible+' / '+total;id('drive-search-query').textContent=q;noRes.classList.toggle('visible',visible===0);}
+  else{id('search-count').textContent='';noRes.classList.remove('visible');}
+}
+function showSearchBar(show){id('search-wrap').style.display=show?'flex':'none';if(!show)clearSearch();}
+
+// ── PRINT PDF ──────────────────────────────────────────────
+async function printHistoriPDF(){
+  const allRows=S.cache[S.plant+'_histori'];if(!allRows||!allRows.length){alert('Tidak ada data histori.');return;}
+  const fB=S.histFilter.bulan?+S.histFilter.bulan:null,fY=S.histFilter.tahun?+S.histFilter.tahun:null;
+  const rows=allRows.filter(r=>{const p=parseTimestamp(r.timestamp);if(fB&&(!p||p.month!==fB))return false;if(fY&&(!p||p.year!==fY))return false;return true;});
+  if(!rows.length){alert('Tidak ada data untuk periode yang dipilih.');return;}
+  let periodLabel='Semua Periode';
+  if(fB&&fY)periodLabel=NAMA_BULAN[fB]+' '+fY;else if(fB)periodLabel=NAMA_BULAN[fB];else if(fY)periodLabel='Tahun '+fY;
+  const{jsPDF}=window.jspdf,doc=new jsPDF({orientation:'landscape'});
+  doc.setFontSize(14);doc.setFont('helvetica','bold');doc.text(`Histori Drive — ${S.plant}`,14,16);
+  doc.setFontSize(10);doc.setFont('helvetica','normal');doc.text(`Periode: ${periodLabel}`,14,22);
+  doc.setFontSize(9);doc.text(`Dicetak: ${new Date().toLocaleString('id-ID')} · Total: ${rows.length} data`,14,27);
+  doc.autoTable({startY:32,head:[['Waktu','Drive ID','Nama','Group','Status','Keterangan']],body:rows.map(r=>[r.timestamp,r.drive_id,r.drive_nama||'—',r.group||'—',r.status.toUpperCase(),r.keterangan||'—']),styles:{fontSize:8,cellPadding:2},headStyles:{fillColor:[21,101,192],textColor:255,fontStyle:'bold'},alternateRowStyles:{fillColor:[240,244,248]},theme:'grid'});
+  const safePeriod=periodLabel.replace(/[^a-zA-Z0-9_\-]/g,'_');
+  doc.save(`Histori_${S.plant}_${safePeriod}_${new Date().toISOString().slice(0,10)}.pdf`);
+}
+
+// ── REFRESH ────────────────────────────────────────────────
+async function doRefresh(){
+  const btn=id('btn-refresh');btn.classList.add('loading');
+  if(S.plant){['drives','groupList','histori','manuals','summary','asli','pool','movlog'].forEach(k=>delete S.cache[S.plant+'_'+k]);}
+  clearSearch();
+  if(S.page==='detail')await renderDetailPage();
+  else if(S.page==='mixing')await renderMixingPage();
+  else await renderPlantPage();
+  btn.classList.remove('loading');
+}
+
+// ── UTILITIES ──────────────────────────────────────────────
+function id(i){return document.getElementById(i);}
+function esc(s){return String(s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');}
+function loadingHTML(msg){return`<div class="state-box"><div class="sp"></div><p>${msg}</p></div>`;}
+function errHTML(msg,fn){const rid='r'+Date.now();setTimeout(()=>{const b=id(rid);if(b)b.onclick=fn;},50);return`<div class="state-box"><div style="font-size:28px">⚠️</div><h3>Gagal memuat</h3><p>${esc(msg)}</p><button class="btn-retry" id="${rid}">Coba Lagi</button></div>`;}
+async function apiGet(params){const res=await fetch(API+'?'+new URLSearchParams(params));const data=await res.json();if(data.error)throw new Error(data.error);return data;}
+
+// ── CLOCK & THEME ──────────────────────────────────────────
+setInterval(()=>{id('clock').textContent=new Date().toTimeString().slice(0,8);},1000);
+id('clock').textContent=new Date().toTimeString().slice(0,8);
+function toggleTheme(){const isLight=document.body.classList.toggle('light');id('btn-theme').textContent=isLight?'☀️ Light':'🌙 Dark';const m=id('stat-mode');if(m)m.textContent=isLight?'LIGHT':'DARK';localStorage.setItem('theme',isLight?'light':'dark');}
+if(localStorage.getItem('theme')==='light'){document.body.classList.add('light');document.addEventListener('DOMContentLoaded',()=>{const b=id('btn-theme');if(b)b.textContent='☀️ Light';const m=id('stat-mode');if(m)m.textContent='LIGHT';});}
+updateRoleBadge();
+</script>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.8.2/jspdf.plugin.autotable.min.js"></script>
+
+<script>
+if('serviceWorker' in navigator){window.addEventListener('load',()=>{navigator.serviceWorker.register('/gardahitam/sw.js').then(r=>console.log('[SW]',r.scope)).catch(e=>console.log('[SW] Error:',e));});}
 
 // ══════════════════════════════════════════════════════════
 //  ASLI TAB
