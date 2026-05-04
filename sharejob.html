@@ -382,7 +382,6 @@ tr.filter-hidden { display: none; }
   font-family: 'JetBrains Mono', monospace; font-size: 11px; color: var(--text-mid);
   line-height: 1.8;
 }
-.action-modal-info strong { color: var(--green-ok); }
 .action-modal-label {
   font-family: 'JetBrains Mono', monospace; font-size: 10px; letter-spacing: 2px;
   color: var(--action-color); text-transform: uppercase; margin-bottom: 8px; display: block;
@@ -421,53 +420,85 @@ tr.filter-hidden { display: none; }
 }
 .action-skip-btn:hover { background: rgba(255,215,64,0.15); }
 
-/* ★ EDIT HIST MODAL STYLES */
-#editHistModal .modal-box {
-  border-color: var(--hist-accent-bd);
-  max-width: 500px;
-  text-align: left;
-}
-#editHistModal h3 { color: var(--hist-accent); text-align: center; }
-.edit-hist-field { margin-bottom: 14px; }
-.edit-hist-field label {
-  display: block; font-family: 'JetBrains Mono', monospace; font-size: 10px;
-  letter-spacing: 1.5px; color: var(--text-mid); margin-bottom: 6px; text-transform: uppercase;
-}
-.edit-hist-field input, .edit-hist-field textarea {
-  width: 100%; padding: 9px 12px;
-  background: var(--bg-void); border: 1px solid var(--hist-accent-bd);
-  border-radius: 4px; color: var(--text-bright);
-  font-family: 'Exo 2', sans-serif; font-size: 14px; font-weight: 600;
-}
-.edit-hist-field input:focus, .edit-hist-field textarea:focus {
-  outline: none; border-color: var(--hist-accent);
-  box-shadow: 0 0 0 3px var(--hist-accent-bg);
-}
-.edit-hist-field textarea { min-height: 80px; resize: vertical; }
-.edit-hist-btns { display: flex; justify-content: flex-end; gap: 10px; margin-top: 16px; }
-.edit-hist-save { background: rgba(179,157,219,0.1); color: var(--hist-accent); border: 1px solid var(--hist-accent-bd); border-radius: 4px; padding: 10px 22px; cursor: pointer; font-family: 'Exo 2', sans-serif; font-size: 13px; font-weight: 700; letter-spacing: 1.5px; text-transform: uppercase; transition: all 0.18s; }
-.edit-hist-save:hover { background: rgba(179,157,219,0.2); box-shadow: 0 0 14px rgba(179,157,219,0.2); }
-.edit-hist-cancel { background: rgba(255,23,68,0.07); color: var(--red-err); border: 1px solid rgba(255,23,68,0.35); border-radius: 4px; padding: 10px 18px; cursor: pointer; font-family: 'Exo 2', sans-serif; font-size: 13px; font-weight: 700; letter-spacing: 1.5px; text-transform: uppercase; transition: all 0.18s; }
-
-/* ★ TOMBOL EDIT DI BARIS HISTORI */
-.btn-edit-hist {
-  display: inline-flex; align-items: center; justify-content: center;
-  width: 22px; height: 22px; border-radius: 4px;
-  background: var(--hist-accent-bg); border: 1px solid var(--hist-accent-bd);
-  color: var(--hist-accent); font-size: 11px; cursor: pointer;
-  transition: all 0.15s; flex-shrink: 0;
-}
-.btn-edit-hist:hover { background: rgba(179,157,219,0.2); border-color: var(--hist-accent); transform: scale(1.1); }
-
-/* ★ ACTION BADGE DI TABEL */
+/* ── ACTION BADGE DI TABEL ── */
 .action-badge {
   display: inline-block; font-family: 'JetBrains Mono', monospace; font-size: 10px;
   color: var(--action-color); background: var(--action-bg);
   border: 1px solid var(--action-bd); border-radius: 4px;
   padding: 3px 8px; line-height: 1.4; word-break: break-word;
-  max-width: 200px;
+  max-width: 100%;
 }
 .action-empty { color: var(--text-dim); font-family: 'JetBrains Mono', monospace; font-size: 10px; font-style: italic; }
+
+/* ── HIST INLINE EDIT ──
+   Double-click cell di histori → jadi editable langsung
+*/
+#historyTable td.hist-editable-cell {
+  cursor: text;
+  position: relative;
+}
+#historyTable td.hist-editable-cell:hover::after {
+  content: '✏';
+  position: absolute;
+  top: 4px; right: 4px;
+  font-size: 9px;
+  color: var(--hist-accent);
+  opacity: 0.6;
+  pointer-events: none;
+}
+#historyTable td.hist-cell-editing {
+  padding: 4px !important;
+  background: rgba(179,157,219,0.06) !important;
+}
+.hist-inline-input {
+  width: 100%;
+  background: var(--bg-void);
+  border: 1px solid var(--hist-accent-bd);
+  border-radius: 3px;
+  padding: 5px 8px;
+  color: var(--text-bright);
+  font-family: 'Exo 2', sans-serif;
+  font-size: 13px;
+  box-shadow: 0 0 0 2px rgba(179,157,219,0.12);
+}
+.hist-inline-input:focus {
+  outline: none;
+  border-color: var(--hist-accent);
+  box-shadow: 0 0 0 2px rgba(179,157,219,0.2);
+}
+.hist-inline-input.type-time {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 13px;
+}
+.hist-inline-input.type-action {
+  min-height: 60px;
+  resize: vertical;
+  font-size: 12px;
+}
+.hist-inline-bar {
+  display: flex; gap: 4px; margin-top: 4px;
+}
+.hist-inline-save {
+  font-family: 'JetBrains Mono', monospace; font-size: 9px; font-weight: 700;
+  padding: 3px 8px; border-radius: 3px; cursor: pointer;
+  background: rgba(0,230,118,0.1); color: var(--green-ok);
+  border: 1px solid rgba(0,230,118,0.4); letter-spacing: 0.5px; text-transform: uppercase;
+}
+.hist-inline-save:hover { background: rgba(0,230,118,0.2); box-shadow: none; }
+.hist-inline-cancel {
+  font-family: 'JetBrains Mono', monospace; font-size: 9px; font-weight: 700;
+  padding: 3px 8px; border-radius: 3px; cursor: pointer;
+  background: rgba(255,23,68,0.07); color: var(--red-err);
+  border: 1px solid rgba(255,23,68,0.35); letter-spacing: 0.5px; text-transform: uppercase;
+}
+.hist-inline-cancel:hover { background: rgba(255,23,68,0.14); box-shadow: none; }
+
+/* hint di bawah tabel histori */
+.hist-dblclick-hint {
+  font-family: 'JetBrains Mono', monospace; font-size: 10px;
+  color: var(--text-dim); text-align: center; margin-bottom: 8px;
+  letter-spacing: 0.5px;
+}
 
 #waModal .modal-box { border-color: rgba(0,230,118,0.4); }
 #waModal h3 { color: var(--green-ok); }
@@ -539,7 +570,7 @@ tr.filter-hidden { display: none; }
   #confirmModal, #alertModal, #deleteRowModal, #loadingOverlay, .btn-delete-row,
   td.col-delete, th.col-delete, .hist-filter-bar, #unitSelectorScreen, #activeUnitBar,
   #homeBtn, #themeToggleBtn, #mainApp, .page-header, #authScreen, #userChip, .perm-notice,
-  #historyPage, .btn-edit-hist { display: none !important; }
+  #historyPage, .hist-dblclick-hint { display: none !important; }
   #printPagesContainer { display: block !important; }
   .print-header { display: block !important; }
   .print-page { display: block !important; page-break-after: always; margin-bottom: 0; }
@@ -861,18 +892,22 @@ tr.filter-hidden { display: none; }
     <table id="historyTable">
       <colgroup>
         <col style="width:130px"><col style="width:130px"><col><col style="width:110px">
-        <col style="width:65px"><col style="width:65px"><col style="width:130px"><col style="width:180px"><col style="width:36px">
+        <col style="width:65px"><col style="width:65px"><col style="width:130px"><col style="width:200px">
       </colgroup>
       <thead>
         <tr>
           <th>ID</th><th>Nama</th><th>Tugas</th><th>Mesin</th>
-          <th>Mulai</th><th>Selesai</th><th>Diarsipkan</th><th>Action / Tindakan</th><th></th>
+          <th>Mulai</th><th>Selesai</th><th>Diarsipkan</th><th>Action / Tindakan</th>
         </tr>
       </thead>
       <tbody id="histData">
-        <tr><td colspan="9"><div class="hist-info-empty"><div class="ei-icon">⏳</div><div class="ei-text">Klik Refresh untuk memuat riwayat job</div></div></td></tr>
+        <tr><td colspan="8"><div class="hist-info-empty"><div class="ei-icon">⏳</div><div class="ei-text">Klik Refresh untuk memuat riwayat job</div></div></td></tr>
       </tbody>
     </table>
+  </div>
+  <!-- ★ Hint double-click — hanya tampil untuk admin/supervisor -->
+  <div class="hist-dblclick-hint" id="histDblClickHint" style="display:none;">
+    ✏ Double-klik kolom <strong style="color:var(--amber-warn)">Selesai</strong>, <strong style="color:var(--hist-accent)">Diarsipkan</strong>, atau <strong style="color:var(--action-color)">Action</strong> untuk edit langsung
   </div>
 </div>
 
@@ -884,7 +919,7 @@ tr.filter-hidden { display: none; }
 <div id="deleteRowModal" class="modal"><div class="modal-box"><h3>🗑 Hapus Job?</h3><p id="deleteRowDesc"></p><p style="font-size:13px;margin-bottom:18px;">Tindakan ini tidak dapat dibatalkan.</p><div style="display:flex;justify-content:center;gap:12px;"><button id="confirmDeleteRowBtn">Ya, Hapus</button><button id="cancelDeleteRowBtn">Batal</button></div></div></div>
 <div id="logoutModal" class="modal"><div class="modal-box"><h3>⏻ LOGOUT</h3><p>Yakin ingin keluar dari akun <strong id="logoutUserName">—</strong>?</p><br><div style="display:flex;justify-content:center;gap:12px;"><button onclick="doLogout()" style="color:var(--red-err);border-color:rgba(255,23,68,0.4)">Ya, Logout</button><button onclick="closeLogoutModal()">Batal</button></div></div></div>
 
-<!-- ★ ACTION MODAL — muncul saat status → Selesai -->
+<!-- ★ ACTION MODAL -->
 <div id="actionModal" class="modal">
   <div class="modal-box">
     <h3>✅ JOB SELESAI — Input Tindakan</h3>
@@ -896,35 +931,11 @@ tr.filter-hidden { display: none; }
     <label class="action-modal-label">📋 Tindakan / Action yang dilakukan:</label>
     <textarea id="actionNoteInput" placeholder="Contoh: Ganti bearing, re-alignment shaft, test run OK. Atau tulis 'lihat laporan' jika sudah ada dokumen terpisah."></textarea>
     <div class="action-modal-footer-note">
-      💡 Isi tindakan agar historis pekerjaan tercatat lengkap. Bisa diisi/diubah kembali di halaman Histori.
+      💡 Isi tindakan agar historis pekerjaan tercatat lengkap. Bisa diisi/diubah kembali di halaman Histori dengan double-klik kolom Action.
     </div>
     <div class="action-modal-btns">
       <button class="action-skip-btn" onclick="submitActionModal(true)">⚡ Lewati</button>
       <button class="action-save-btn" onclick="submitActionModal(false)">✅ Selesai & Simpan</button>
-    </div>
-  </div>
-</div>
-
-<!-- ★ EDIT HIST MODAL — edit jam selesai, tanggal arsip, action -->
-<div id="editHistModal" class="modal">
-  <div class="modal-box">
-    <h3>✏ Edit Riwayat Job</h3>
-    <div id="editHistInfo" style="background:var(--bg-card);border:1px solid var(--border-faint);border-radius:6px;padding:10px 14px;margin-bottom:16px;font-family:'JetBrains Mono',monospace;font-size:11px;color:var(--text-mid);line-height:1.8;">—</div>
-    <div class="edit-hist-field">
-      <label>🕑 Jam Selesai (format HH:MM)</label>
-      <input type="time" id="editHistJamSelesai">
-    </div>
-    <div class="edit-hist-field">
-      <label>🗂 Tanggal Diarsipkan (format dd/MM/yyyy HH:MM)</label>
-      <input type="text" id="editHistArchivedAt" placeholder="Contoh: 04/05/2026 17:30">
-    </div>
-    <div class="edit-hist-field">
-      <label>📋 Action / Tindakan</label>
-      <textarea id="editHistAction" placeholder="Tindakan yang dilakukan..."></textarea>
-    </div>
-    <div class="edit-hist-btns">
-      <button class="edit-hist-cancel" onclick="closeEditHistModal()">❌ Batal</button>
-      <button class="edit-hist-save" onclick="saveEditHist()">💾 Simpan</button>
     </div>
   </div>
 </div>
@@ -998,7 +1009,7 @@ var PERMISSIONS = {
   'sharejob.archive':          ['admin', 'supervisor'],
   'sharejob.statusChange':     ['admin', 'supervisor'],
   'sharejob.editRunningText':  ['admin', 'supervisor'],
-  'sharejob.editHistory':      ['admin', 'supervisor'],   // ★ baru
+  'sharejob.editHistory':      ['admin', 'supervisor'],
   'sharejob.print':            ['admin', 'supervisor', 'teknisi', 'guest'],
   'sharejob.wa':               ['admin', 'supervisor', 'teknisi', 'guest'],
   'sharejob.filter':           ['admin', 'supervisor', 'teknisi', 'guest'],
@@ -1122,9 +1133,12 @@ function setupRoleUI(session) {
   if (hint) {
     if (session.role === ROLES.GUEST)           hint.textContent = '👁 Mode Tamu: hanya bisa melihat, filter, cetak, dan kirim WA';
     else if (session.role === ROLES.TEKNISI)    hint.textContent = '🔧 Teknisi: hanya bisa melihat, filter, cetak, dan kirim WA';
-    else if (session.role === ROLES.SUPERVISOR) hint.textContent = '🎯 Supervisor: Akses penuh — tambah, edit, hapus, archive, ubah status • Double-klik baris untuk edit';
-    else                                        hint.textContent = '👑 Admin: Akses penuh — tambah, edit, hapus, archive, ubah status • Double-klik baris untuk edit';
+    else if (session.role === ROLES.SUPERVISOR) hint.textContent = '🎯 Supervisor: Akses penuh — Double-klik baris untuk edit';
+    else                                        hint.textContent = '👑 Admin: Akses penuh — Double-klik baris untuk edit';
   }
+  // Tampilkan hint double-click di halaman histori
+  var hintEl = document.getElementById('histDblClickHint');
+  if (hintEl) hintEl.style.display = hasPermission('sharejob.editHistory') ? 'block' : 'none';
   showPermNotice(session.role);
 }
 
@@ -1190,10 +1204,10 @@ var TAHUN_AWAL = 2024;
 var STATUS_ORDER = { 'Pending':0, 'Proses':1, 'Selesai':2 };
 
 // ★ Action modal state
-var _actionPending = null; // { selectEl, id, taskInfo }
+var _actionPending = null;
 
-// ★ Edit hist state
-var _editHistId = null;
+// ★ Hist inline edit state
+var _histCurrentEditCell = null; // { td, rowId, field, originalContent }
 
 // ═══════════════════════════════════════
 // NAVIGATION
@@ -1304,8 +1318,10 @@ function openHistoryPage() {
   document.getElementById('historyPage').style.display = 'block';
   buildHistFilterOptions();
   loadHistory();
+  if (currentSession) setupRoleUI(currentSession);
 }
 function closeHistoryPage() {
+  cancelHistInlineEdit(); // batalkan edit yang sedang aktif
   document.getElementById('historyPage').style.display = 'none';
   document.getElementById('mainApp').style.display = 'block';
 }
@@ -1354,7 +1370,7 @@ function buildHistFilterOptions() {
 function renderHistoryTable() {
   var tbody = document.getElementById('histData');
   if (!allHistoryData.length) {
-    tbody.innerHTML = '<tr><td colspan="9"><div class="hist-info-empty"><div class="ei-icon">📭</div><div class="ei-text">Belum ada riwayat job yang diarsipkan</div></div></td></tr>';
+    tbody.innerHTML = '<tr><td colspan="8"><div class="hist-info-empty"><div class="ei-icon">📭</div><div class="ei-text">Belum ada riwayat job yang diarsipkan</div></div></td></tr>';
     return;
   }
   var grouped = {};
@@ -1365,7 +1381,7 @@ function renderHistoryTable() {
     grouped[key].names.push(t.nama);
   });
 
-  var canEditHist = hasPermission('sharejob.editHistory');
+  var canEdit = hasPermission('sharejob.editHistory');
   var html = '';
   order.forEach(function(key) {
     var g = grouped[key];
@@ -1375,30 +1391,197 @@ function renderHistoryTable() {
       ? '<span class="action-badge">' + escHtml(t.action) + '</span>'
       : '<span class="action-empty">— belum diisi</span>';
 
-    var editBtn = canEditHist
-      ? '<button class="btn-edit-hist" onclick="openEditHistModal(\'' + escHtml(t.id).replace(/'/g,"\\'") + '\',\'' + escHtml(allNama).replace(/'/g,"\\'") + '\',\'' + escHtml(t.tugas).replace(/'/g,"\\'") + '\',\'' + escHtml(t.jamSelesai||'').replace(/'/g,"\\'") + '\',\'' + escHtml(t.archivedAt||'').replace(/'/g,"\\'") + '\',\'' + escHtml(t.action||'').replace(/'/g,"\\'") + '\')" title="Edit">✏</button>'
-      : '';
+    // ★ Kolom yang bisa di-double-click untuk edit: Selesai (idx 5), Diarsipkan (idx 6), Action (idx 7)
+    // data-* attributes untuk keperluan edit
+    var editableAttr = canEdit ? ' class="hist-editable-cell"' : '';
+    var rowDataAttrs =
+      ' data-histid="' + escHtml(t.id) + '"' +
+      ' data-tanggal="' + escHtml(t.tanggal||'') + '"' +
+      ' data-nama="' + escHtml(allNama.toLowerCase()) + '"' +
+      ' data-mesin="' + escHtml((t.mesin||'').toLowerCase()) + '"' +
+      ' data-tugas="' + escHtml((t.tugas||'').toLowerCase()) + '"';
 
-    html += '<tr class="hist-group-row group-row" ' +
-      'data-tanggal="' + escHtml(t.tanggal||'') + '" ' +
-      'data-nama="' + escHtml(allNama.toLowerCase()) + '" ' +
-      'data-mesin="' + escHtml((t.mesin||'').toLowerCase()) + '" ' +
-      'data-tugas="' + escHtml((t.tugas||'').toLowerCase()) + '">' +
+    html += '<tr class="hist-group-row group-row"' + rowDataAttrs + '>' +
       '<td>' + escHtml(t.id) + '</td>' +
       '<td>' + escHtml(allNama) + '</td>' +
       '<td>' + escHtml(t.tugas) + '</td>' +
       '<td>' + escHtml(t.mesin) + '</td>' +
+      // Kolom Mulai (tidak editable)
       '<td style="color:var(--green-ok);font-family:\'JetBrains Mono\',monospace;font-weight:700;">' +
         (t.jamMulai ? escHtml(t.jamMulai) : '<span style="color:var(--text-dim)">—</span>') + '</td>' +
-      '<td style="color:var(--amber-warn);font-family:\'JetBrains Mono\',monospace;font-weight:700;">' +
+      // ★ Kolom Selesai — editable
+      '<td' + editableAttr + ' data-field="jamSelesai" data-value="' + escHtml(t.jamSelesai||'') + '" style="color:var(--amber-warn);font-family:\'JetBrains Mono\',monospace;font-weight:700;">' +
         (t.jamSelesai ? escHtml(t.jamSelesai) : '<span style="color:var(--text-dim)">—</span>') + '</td>' +
-      '<td class="hist-archived-at">' + escHtml(t.tanggal) +
-        (t.archivedAt ? '<br><span style="color:var(--hist-accent);font-size:9px;">' + escHtml(t.archivedAt) + '</span>' : '') + '</td>' +
-      '<td>' + actionHtml + '</td>' +
-      '<td style="text-align:center;padding:4px;">' + editBtn + '</td>' +
+      // ★ Kolom Diarsipkan — editable
+      '<td' + editableAttr + ' data-field="archivedAt" data-value="' + escHtml(t.archivedAt||'') + '" class="hist-archived-at' + (canEdit?' hist-editable-cell':'') + '">' +
+        escHtml(t.tanggal) +
+        (t.archivedAt ? '<br><span style="color:var(--hist-accent);font-size:9px;">' + escHtml(t.archivedAt) + '</span>' : '') +
+      '</td>' +
+      // ★ Kolom Action — editable
+      '<td' + editableAttr + ' data-field="action" data-value="' + escHtml(t.action||'') + '">' + actionHtml + '</td>' +
       '</tr>';
   });
   tbody.innerHTML = html;
+
+  // Pasang event double-click handler ke tbody (event delegation)
+  attachHistDblClick();
+}
+
+// ══════════════════════════════════════════
+// ★ HIST DOUBLE-CLICK INLINE EDIT
+// ══════════════════════════════════════════
+function attachHistDblClick() {
+  var tbody = document.getElementById('histData');
+  tbody.removeEventListener('dblclick', _histDblClickHandler);
+  tbody.addEventListener('dblclick', _histDblClickHandler);
+}
+
+function _histDblClickHandler(e) {
+  var td = e.target.closest('td.hist-editable-cell');
+  if (!td) return;
+
+  // Jika sudah ada cell lain yang sedang diedit, batalkan dulu
+  if (_histCurrentEditCell && _histCurrentEditCell.td !== td) {
+    cancelHistInlineEdit();
+  }
+
+  // Cegah double-edit cell yang sama
+  if (td.classList.contains('hist-cell-editing')) return;
+
+  if (!hasPermission('sharejob.editHistory')) {
+    showAccessDenied('Edit Histori', 'Admin atau Supervisor');
+    return;
+  }
+
+  var tr = td.closest('tr');
+  var histId = tr.getAttribute('data-histid');
+  var field = td.getAttribute('data-field');
+  var currentValue = td.getAttribute('data-value') || '';
+
+  // Simpan state original
+  _histCurrentEditCell = {
+    td: td,
+    rowId: histId,
+    field: field,
+    originalContent: td.innerHTML,
+    originalValue: currentValue
+  };
+
+  // Buat input sesuai field
+  var inputHtml = '';
+  if (field === 'jamSelesai') {
+    inputHtml = '<input type="time" class="hist-inline-input type-time" id="histInlineInput" value="' + escHtml(currentValue) + '">';
+  } else if (field === 'archivedAt') {
+    inputHtml = '<input type="text" class="hist-inline-input" id="histInlineInput" value="' + escHtml(currentValue) + '" placeholder="dd/MM/yyyy HH:MM">';
+  } else if (field === 'action') {
+    inputHtml = '<textarea class="hist-inline-input type-action" id="histInlineInput" placeholder="Tulis tindakan...">' + escHtml(currentValue) + '</textarea>';
+  }
+
+  td.classList.add('hist-cell-editing');
+  td.innerHTML = inputHtml +
+    '<div class="hist-inline-bar">' +
+    '<button class="hist-inline-save" onclick="saveHistInlineEdit()">✓ Simpan</button>' +
+    '<button class="hist-inline-cancel" onclick="cancelHistInlineEdit()">✕</button>' +
+    '</div>';
+
+  // Focus dan select semua teks
+  var inp = document.getElementById('histInlineInput');
+  if (inp) {
+    inp.focus();
+    if (inp.tagName === 'INPUT') inp.select();
+    // Enter untuk simpan, Esc untuk batal (kecuali textarea)
+    inp.addEventListener('keydown', function(ev) {
+      if (ev.key === 'Escape') { ev.preventDefault(); cancelHistInlineEdit(); }
+      if (ev.key === 'Enter' && inp.tagName !== 'TEXTAREA') { ev.preventDefault(); saveHistInlineEdit(); }
+    });
+  }
+}
+
+function cancelHistInlineEdit() {
+  if (!_histCurrentEditCell) return;
+  var td = _histCurrentEditCell.td;
+  td.innerHTML = _histCurrentEditCell.originalContent;
+  td.classList.remove('hist-cell-editing');
+  _histCurrentEditCell = null;
+}
+
+async function saveHistInlineEdit() {
+  if (!_histCurrentEditCell) return;
+  var inp = document.getElementById('histInlineInput');
+  if (!inp) return;
+
+  var newValue = inp.value.trim();
+  var field = _histCurrentEditCell.field;
+  var histId = _histCurrentEditCell.rowId;
+
+  // Siapkan params berdasarkan field yang diedit
+  var params = { histId: histId };
+  if (field === 'jamSelesai')   params.newJamSelesai  = newValue;
+  if (field === 'archivedAt')   params.newArchivedAt  = newValue;
+  if (field === 'action')       params.newAction      = newValue;
+
+  // Restore dulu supaya tidak blank saat loading
+  var savedState = _histCurrentEditCell;
+  _histCurrentEditCell = null;
+
+  showLoading(true, 'Menyimpan...');
+  try {
+    var url = new URL(MASTER_GAS_URL);
+    url.searchParams.set('action', 'updateHistoryRow');
+    url.searchParams.set('unit', currentUnit.code);
+    Object.keys(params).forEach(function(k){ url.searchParams.set(k, params[k]); });
+
+    var res = await fetch(url.toString());
+    var json = await res.json();
+
+    if (json.error) {
+      // Kembalikan ke original jika gagal
+      savedState.td.innerHTML = savedState.originalContent;
+      savedState.td.classList.remove('hist-cell-editing');
+      showAlert('Gagal menyimpan: ' + json.error);
+      return;
+    }
+
+    // Update tampilan cell langsung tanpa reload semua
+    savedState.td.classList.remove('hist-cell-editing');
+    savedState.td.setAttribute('data-value', newValue);
+
+    if (field === 'jamSelesai') {
+      savedState.td.innerHTML = newValue
+        ? '<span style="color:var(--amber-warn);font-family:\'JetBrains Mono\',monospace;font-weight:700;">' + escHtml(newValue) + '</span>'
+        : '<span style="color:var(--text-dim)">—</span>';
+    } else if (field === 'archivedAt') {
+      // Ambil tanggal dari row
+      var tr = savedState.td.closest('tr');
+      var tanggal = tr ? tr.getAttribute('data-tanggal') : '';
+      savedState.td.innerHTML = escHtml(tanggal) +
+        (newValue ? '<br><span style="color:var(--hist-accent);font-size:9px;">' + escHtml(newValue) + '</span>' : '');
+    } else if (field === 'action') {
+      savedState.td.innerHTML = newValue
+        ? '<span class="action-badge">' + escHtml(newValue) + '</span>'
+        : '<span class="action-empty">— belum diisi</span>';
+    }
+
+    // Update data lokal juga
+    var tr2 = savedState.td.closest('tr');
+    if (tr2) {
+      var rid = tr2.getAttribute('data-histid');
+      allHistoryData.forEach(function(item) {
+        if (item.id === rid) {
+          if (field === 'jamSelesai') item.jamSelesai = newValue;
+          if (field === 'archivedAt') item.archivedAt = newValue;
+          if (field === 'action') item.action = newValue;
+        }
+      });
+    }
+
+  } catch(err) {
+    savedState.td.innerHTML = savedState.originalContent;
+    savedState.td.classList.remove('hist-cell-editing');
+    showAlert('❌ Error: ' + err.message);
+  } finally {
+    showLoading(false);
+  }
 }
 
 function applyHistFilter() {
@@ -1457,56 +1640,7 @@ function resetHistFilter() {
 }
 
 // ═══════════════════════════════════════
-// ★ EDIT HISTORY MODAL
-// ═══════════════════════════════════════
-function openEditHistModal(id, nama, tugas, jamSelesai, archivedAt, action) {
-  if (!hasPermission('sharejob.editHistory')) { showAccessDenied('Edit Histori', 'Admin atau Supervisor'); return; }
-  _editHistId = id;
-  document.getElementById('editHistInfo').innerHTML =
-    '<strong style="color:var(--hist-accent)">ID:</strong> ' + escHtml(id) + '<br>' +
-    '<strong style="color:var(--hist-accent)">Nama:</strong> ' + escHtml(nama) + '<br>' +
-    '<strong style="color:var(--hist-accent)">Tugas:</strong> ' + escHtml(tugas);
-  document.getElementById('editHistJamSelesai').value = jamSelesai || '';
-  document.getElementById('editHistArchivedAt').value = archivedAt || '';
-  document.getElementById('editHistAction').value = action || '';
-  document.getElementById('editHistModal').style.display = 'flex';
-  setTimeout(function(){ document.getElementById('editHistJamSelesai').focus(); }, 100);
-}
-
-function closeEditHistModal() {
-  document.getElementById('editHistModal').style.display = 'none';
-  _editHistId = null;
-}
-
-async function saveEditHist() {
-  if (!_editHistId) return;
-  var jamSelesai  = document.getElementById('editHistJamSelesai').value.trim();
-  var archivedAt  = document.getElementById('editHistArchivedAt').value.trim();
-  var action      = document.getElementById('editHistAction').value.trim();
-
-  showLoading(true, 'Menyimpan perubahan...');
-  try {
-    var url = new URL(MASTER_GAS_URL);
-    url.searchParams.set('action', 'updateHistoryRow');
-    url.searchParams.set('unit', currentUnit.code);
-    url.searchParams.set('histId', _editHistId);
-    url.searchParams.set('newJamSelesai', jamSelesai);
-    url.searchParams.set('newArchivedAt', archivedAt);
-    url.searchParams.set('newAction', action);
-    var res = await fetch(url.toString());
-    var json = await res.json();
-    if (json.error) { showAlert('Gagal menyimpan: ' + json.error); return; }
-    closeEditHistModal();
-    await loadHistory(); // reload histori
-  } catch(err) {
-    showAlert('❌ Error: ' + err.message);
-  } finally {
-    showLoading(false);
-  }
-}
-
-// ═══════════════════════════════════════
-// ★ ACTION MODAL (muncul saat status → Selesai)
+// ★ ACTION MODAL
 // ═══════════════════════════════════════
 function openActionModal(selectEl, id, taskInfo) {
   _actionPending = { selectEl: selectEl, id: id, taskInfo: taskInfo };
@@ -1531,7 +1665,7 @@ async function submitActionModal(skip) {
   _actionPending = null;
   closeActionModal();
 
-  // Update status di UI dulu (optimistic)
+  // Update UI optimistic
   if (p.selectEl) {
     p.selectEl.setAttribute('data-prev', 'Selesai');
     p.selectEl.className = 'status-select selesai';
@@ -1539,7 +1673,6 @@ async function submitActionModal(skip) {
     if (tr) tr.setAttribute('data-status', 'Selesai');
   }
 
-  // Kirim ke GAS
   showLoading(true, 'Menyimpan & mengarsipkan...');
   try {
     var url = new URL(MASTER_GAS_URL);
@@ -1823,7 +1956,6 @@ function addTask() {
   });
 }
 
-// ★ UPDATED: changeStatus sekarang buka Action Modal jika → Selesai
 function changeStatus(select) {
   if (!hasPermission('sharejob.statusChange')) {
     select.value = select.getAttribute("data-prev") || select.value;
@@ -1834,7 +1966,6 @@ function changeStatus(select) {
   var newStatus = select.value;
   var prevStatus = select.getAttribute("data-prev");
 
-  // Jika berubah ke Selesai → buka modal action dulu
   if (newStatus === 'Selesai' && prevStatus !== 'Selesai') {
     var taskInfo = {
       nama:  select.getAttribute('data-nama')  || '',
@@ -1842,10 +1973,9 @@ function changeStatus(select) {
       mesin: select.getAttribute('data-mesin') || ''
     };
     openActionModal(select, id, taskInfo);
-    return; // jangan kirim ke GAS dulu, tunggu modal
+    return;
   }
 
-  // Untuk status lain (Pending/Proses) → langsung update
   select.setAttribute("data-prev", newStatus);
   select.className = "status-select " + getStatusClass(newStatus);
   var tr = select.closest("tr");
@@ -1901,7 +2031,7 @@ function confirmArchive() {
 function closeModal() { document.getElementById("confirmModal").style.display = "none"; }
 
 // ═══════════════════════════════════════
-// INLINE EDIT
+// INLINE EDIT (main table)
 // ═══════════════════════════════════════
 function startInlineEdit(tr) {
   if (currentEditingRow && currentEditingRow !== tr) { showAlert("Selesaikan edit baris sebelumnya!"); return; }
@@ -2268,11 +2398,9 @@ function escHtml(str) {
   return String(str||"").replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;").replace(/"/g,"&quot;").replace(/'/g,"&#39;");
 }
 
-// Keyboard shortcuts untuk modals
 document.getElementById('authPassword').addEventListener('keypress', function(e){ if(e.key==='Enter') doLogin(); });
 document.getElementById('authUsername').addEventListener('keypress', function(e){ if(e.key==='Enter') doLogin(); });
 document.getElementById('actionNoteInput').addEventListener('keydown', function(e){ if(e.key==='Enter' && e.ctrlKey) submitActionModal(false); });
-document.getElementById('editHistAction').addEventListener('keydown', function(e){ if(e.key==='Enter' && e.ctrlKey) saveEditHist(); });
 
 // ═══════════════════════════════════════
 // INIT
