@@ -1088,18 +1088,31 @@ tr:hover .btn-edit-ts{opacity:1;}
 <div class="modal-overlay" id="modal-pool-return">
   <div class="modal">
     <div class="modal-title">✅ Kembalikan ke Drives</div>
-    <div class="modal-sub">Drive akan dikembalikan ke posisi aslinya di sheet drives dengan status OK</div>
+    <div class="modal-sub">Pilih posisi drive yang akan menerima unit ini (status akan jadi OK)</div>
     <div class="modal-id" id="mpr-info"></div>
     <input type="hidden" id="mpr-sn">
-    <input type="hidden" id="mpr-drive-id">
     <input type="hidden" id="mpr-from-pool">
     <div class="form-group">
+      <label class="form-label">Pilih Group / Mixing</label>
+      <select class="form-select" id="mpr-group" onchange="populateMprDriveId()">
+        <option value="">-- Pilih Group --</option>
+      </select>
+    </div>
+    <div class="form-group">
+      <label class="form-label">Pilih Drive ID (posisi tujuan)</label>
+      <select class="form-select" id="mpr-drive-id">
+        <option value="">-- Pilih Drive ID --</option>
+      </select>
+    </div>
+    <div class="form-group">
       <label class="form-label">Keterangan</label>
-      <input class="form-input" id="mpr-ket" type="text" placeholder="Contoh: Sudah diperbaiki, selesai servis...">
+      <input class="form-input" id="mpr-ket" type="text" 
+             placeholder="Contoh: Sudah diperbaiki, selesai servis...">
     </div>
     <div class="modal-actions">
       <button class="btn-cancel" onclick="closeReturnPoolModal()">Batal</button>
-      <button class="btn-save-ok" id="btn-mpr-save" onclick="doReturnToDrives()">✅ Kembalikan ke Drives</button>
+      <button class="btn-save-ok" id="btn-mpr-save" 
+              onclick="doReturnToDrives()">✅ Kembalikan ke Drives</button>
     </div>
   </div>
 </div>
@@ -1579,30 +1592,93 @@ async function doMovePoolToPool(){
 // ══════════════════════════════════════════════════════════
 //  RETURN TO DRIVES MODAL
 // ══════════════════════════════════════════════════════════
-function openReturnPoolModal(sn,driveId,fromPool){
-  id('mpr-sn').value=sn;id('mpr-drive-id').value=driveId;id('mpr-from-pool').value=fromPool;
-  id('mpr-info').innerHTML=`Drive: <b>${esc(driveId)}</b> · SN: <b>${esc(sn)||'—'}</b><br>Dari pool: ${POOL_LABELS[fromPool]}`;
-  id('mpr-ket').value='';
-  id('btn-mpr-save').disabled=false;id('btn-mpr-save').textContent='✅ Kembalikan ke Drives';
+function openReturnPoolModal(sn, driveId, fromPool) {
+  id('mpr-sn').value = sn;
+  id('mpr-from-pool').value = fromPool;
+  id('mpr-info').innerHTML = 
+    `SN: <b>${esc(sn)||'—'}</b> · Dari pool: ${POOL_LABELS[fromPool]}<br>
+     <span style="font-size:10px;color:var(--muted)">
+       Drive ID asli: ${esc(driveId)||'—'}
+     </span>`;
+  id('mpr-ket').value = '';
+  id('btn-mpr-save').disabled = false;
+  id('btn-mpr-save').textContent = '✅ Kembalikan ke Drives';
+
+  // Populate group dropdown from drives cache
+  const drives = S.cache[S.plant + '_drives'] || [];
+  const groups = [...new Set(drives.map(d => d.group).filter(Boolean))];
+  const groupSel = id('mpr-group');
+  groupSel.innerHTML = '<option value="">-- Pilih Group --</option>' +
+    groups.map(g => `<option value="${g}">${g}</option>`).join('');
+
+  // Pre-select the original group if we can match it
+  const origDrive = drives.find(d => d.drive_id === driveId);
+  if (origDrive && origDrive.group) {
+    groupSel.value = origDrive.group;
+    populateMprDriveId(driveId); // pre-select original drive_id
+  } else {
+    id('mpr-drive-id').innerHTML = '<option value="">-- Pilih Drive ID --</option>';
+  }
+
   id('modal-pool-return').classList.add('open');
 }
-function closeReturnPoolModal(){id('modal-pool-return').classList.remove('open');}
-async function doReturnToDrives(){
-  const sn=id('mpr-sn').value,driveId=id('mpr-drive-id').value;
-  const fromPool=id('mpr-from-pool').value;
-  const ket=id('mpr-ket').value.trim();
-  const btn=id('btn-mpr-save');btn.disabled=true;btn.textContent='Memproses...';
-  try{
-    await apiGet({action:'returnPoolToDrives',plant:S.plant,from_pool:fromPool,serial_number:sn,drive_id:driveId,keterangan:ket||'—',updatedBy:S.username+'-'+S.role});
-    ['drives','groupList','pool_'+fromPool,'histori'].forEach(k=>delete S.cache[S.plant+'_'+k]);
-    closeReturnPoolModal();
-    await loadPoolData(fromPool,true);
-    updatePoolTabCounts();switchPool(fromPool);
-    showToast(`✅ Drive ${esc(driveId)} berhasil dikembalikan ke drives!`);
-  }catch(err){alert('Gagal: '+err.message);}
-  finally{btn.disabled=false;btn.textContent='✅ Kembalikan ke Drives';}
-}
 
+function populateMprDriveId(preSelectDriveId) {
+  const group = id('mpr-group').value;
+  const drives = S.cache[S.plant + '_drives'] || [];
+  const filtered = drives.filter(d => d.group === group);
+  const sel = id('mpr-drive-id');
+  sel.innerHTML = '<option value="">-- Pilih Drive ID --</option>' +
+    filtered.map(d => {
+      const st = d.status || 'kosong';
+      const label = `${d.drive_id} [${st.toUpperCase()}]${d.serial_number ? ' · SN:'+d.serial_number : ''}`;
+      return `<option value="${d.drive_id}" ${d.drive_id === preSelectDriveId ? 'selected' : ''}>
+        ${label}
+      </option>`;
+    }).join('');
+}
+function closeReturnPoolModal(){id('modal-pool-return').classList.remove('open');}
+async function doReturnToDrives() {
+  const sn = id('mpr-sn').value;
+  const fromPool = id('mpr-from-pool').value;
+  const targetDriveId = id('mpr-drive-id').value;
+  const ket = id('mpr-ket').value.trim();
+
+  if (!targetDriveId) {
+    alert('⚠️ Pilih Drive ID tujuan terlebih dahulu.');
+    return;
+  }
+
+  const btn = id('btn-mpr-save');
+  btn.disabled = true;
+  btn.textContent = 'Memproses...';
+
+  try {
+    await apiGet({
+      action: 'returnPoolToDrives',
+      plant: S.plant,
+      from_pool: fromPool,
+      serial_number: sn,
+      drive_id: targetDriveId,   // ← now uses chosen drive_id
+      keterangan: ket || '—',
+      updatedBy: S.username + '-' + S.role
+    });
+
+    ['drives', 'groupList', 'pool_' + fromPool, 'histori']
+      .forEach(k => delete S.cache[S.plant + '_' + k]);
+
+    closeReturnPoolModal();
+    await loadPoolData(fromPool, true);
+    updatePoolTabCounts();
+    switchPool(fromPool);
+    showToast(`✅ Drive berhasil dikembalikan ke ${esc(targetDriveId)}!`);
+  } catch (err) {
+    alert('Gagal: ' + err.message);
+  } finally {
+    btn.disabled = false;
+    btn.textContent = '✅ Kembalikan ke Drives';
+  }
+}
 // ══════════════════════════════════════════════════════════
 //  TOAST NOTIFICATION
 // ══════════════════════════════════════════════════════════
