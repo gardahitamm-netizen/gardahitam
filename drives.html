@@ -1659,23 +1659,6 @@ async function openReturnPoolModal(sn, driveId, fromPool, stiker) {
 
   id('modal-pool-return').classList.add('open');
 }
-
-  const drives = S.cache[S.plant + '_drives'] || [];
-  const groups = [...new Set(drives.map(d => d.group).filter(Boolean))];
-  const groupSel = id('mpr-group');
-  groupSel.innerHTML = '<option value="">-- Pilih Group --</option>' +
-    groups.map(g => `<option value="${g}">${g}</option>`).join('');
-
-  const origDrive = drives.find(d => d.drive_id === driveId);
-  if (origDrive && origDrive.group) {
-    groupSel.value = origDrive.group;
-    populateMprDriveId(driveId);
-  } else {
-    id('mpr-drive-id').innerHTML = '<option value="">-- Pilih Drive ID --</option>';
-  }
-
-  id('modal-pool-return').classList.add('open');
-}
 function populateMprDriveId(preSelectDriveId) {
   const group = id('mpr-group').value;
   const drives = S.cache[S.plant + '_drives'] || [];
