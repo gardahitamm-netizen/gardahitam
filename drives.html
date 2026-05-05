@@ -1534,29 +1534,46 @@ function openSendPoolModal(driveId,sn,merk,spek){
 }
 function closeSendPoolModal(){id('modal-pool-send').classList.remove('open');S._poolSend=null;}
 
-async function doSendToPool(){
-  if(!S._poolSend)return;
-  const btn=id('btn-mps-save');btn.disabled=true;btn.textContent='Mengirim...';
-  const targetPool=id('mps-target-pool').value;
-  const ket=id('mps-ket').value.trim();
-  try{
-    const result=await apiGet({
-      action:'moveDriveToPool',plant:S.plant,
-      drive_id:S._poolSend.driveId,
-      target_pool:targetPool,
-      keterangan:ket||'—',
-      updatedBy:S.username+'-'+S.role
+async function doSendToPool() {
+  if (!S._poolSend) return;
+  const btn = id('btn-mps-save');
+  btn.disabled = true;
+  btn.textContent = 'Mengirim...';
+  const targetPool = id('mps-target-pool').value;
+  const ket = id('mps-ket').value.trim();
+  try {
+    await apiGet({
+      action: 'moveDriveToPool', plant: S.plant,
+      drive_id: S._poolSend.driveId,
+      target_pool: targetPool,
+      keterangan: ket || '—',
+      updatedBy: S.username + '-' + S.role
     });
-    // Invalidate caches
-    ['drives','groupList','pool_'+targetPool].forEach(k=>delete S.cache[S.plant+'_'+k]);
+
+    // ← FORCE reload drives dari API (bukan dari cache)
+    const freshData = await apiGet({ action: 'getDrives', plant: S.plant });
+    const freshDrives = Array.isArray(freshData.drives) ? freshData.drives : [];
+    S.cache[S.plant + '_drives'] = freshDrives;
+    const seen = [], groups = [];
+    freshDrives.forEach(d => {
+      const g = String(d.group || '').trim();
+      if (g && !seen.includes(g)) { seen.push(g); groups.push(g); }
+    });
+    S.cache[S.plant + '_groupList'] = groups;
+
+    delete S.cache[S.plant + '_pool_' + targetPool];
     closeSendPoolModal();
     await renderDriveTab();
-    // Reload pool counts
-    await loadPoolData(targetPool,true);
+    await loadPoolData(targetPool, true);
     updatePoolTabCounts();
     showToast(`✅ Drive berhasil dipindah ke ${POOL_LABELS[targetPool]}`);
-  }catch(err){alert('Gagal: '+err.message);}
-  finally{btn.disabled=false;btn.textContent='📤 Kirim ke Pool';}
+  } catch (err) {
+    alert('Gagal: ' + err.message);
+  } finally {
+    btn.disabled = false;
+    btn.textContent = '📤 Kirim ke Pool';
+    S._poolSend = null;
+  }
 }
 
 // ══════════════════════════════════════════════════════════
@@ -1592,37 +1609,45 @@ async function doMovePoolToPool(){
 // ══════════════════════════════════════════════════════════
 //  RETURN TO DRIVES MODAL
 // ══════════════════════════════════════════════════════════
-function openReturnPoolModal(sn, driveId, fromPool) {
+async function openReturnPoolModal(sn, driveId, fromPool) {
   id('mpr-sn').value = sn;
   id('mpr-from-pool').value = fromPool;
-  id('mpr-info').innerHTML = 
-    `SN: <b>${esc(sn)||'—'}</b> · Dari pool: ${POOL_LABELS[fromPool]}<br>
-     <span style="font-size:10px;color:var(--muted)">
-       Drive ID asli: ${esc(driveId)||'—'}
-     </span>`;
+  id('mpr-info').innerHTML =
+    `SN: <b>${esc(sn) || '—'}</b> · Dari pool: ${POOL_LABELS[fromPool]}<br>
+     <span style="font-size:10px;color:var(--muted)">Drive ID asli: ${esc(driveId) || '—'}</span>`;
   id('mpr-ket').value = '';
   id('btn-mpr-save').disabled = false;
   id('btn-mpr-save').textContent = '✅ Kembalikan ke Drives';
 
-  // Populate group dropdown from drives cache
+  // ← Selalu pastikan drives cache fresh
+  if (!S.cache[S.plant + '_drives']) {
+    const data = await apiGet({ action: 'getDrives', plant: S.plant });
+    const drives = Array.isArray(data.drives) ? data.drives : [];
+    S.cache[S.plant + '_drives'] = drives;
+    const seen = [], groups = [];
+    drives.forEach(d => {
+      const g = String(d.group || '').trim();
+      if (g && !seen.includes(g)) { seen.push(g); groups.push(g); }
+    });
+    S.cache[S.plant + '_groupList'] = groups;
+  }
+
   const drives = S.cache[S.plant + '_drives'] || [];
   const groups = [...new Set(drives.map(d => d.group).filter(Boolean))];
   const groupSel = id('mpr-group');
   groupSel.innerHTML = '<option value="">-- Pilih Group --</option>' +
     groups.map(g => `<option value="${g}">${g}</option>`).join('');
 
-  // Pre-select the original group if we can match it
   const origDrive = drives.find(d => d.drive_id === driveId);
   if (origDrive && origDrive.group) {
     groupSel.value = origDrive.group;
-    populateMprDriveId(driveId); // pre-select original drive_id
+    populateMprDriveId(driveId);
   } else {
     id('mpr-drive-id').innerHTML = '<option value="">-- Pilih Drive ID --</option>';
   }
 
   id('modal-pool-return').classList.add('open');
 }
-
 function populateMprDriveId(preSelectDriveId) {
   const group = id('mpr-group').value;
   const drives = S.cache[S.plant + '_drives'] || [];
@@ -1659,13 +1684,23 @@ async function doReturnToDrives() {
       plant: S.plant,
       from_pool: fromPool,
       serial_number: sn,
-      drive_id: targetDriveId,   // ← now uses chosen drive_id
+      drive_id: targetDriveId,
       keterangan: ket || '—',
       updatedBy: S.username + '-' + S.role
     });
 
-    ['drives', 'groupList', 'pool_' + fromPool, 'histori']
-      .forEach(k => delete S.cache[S.plant + '_' + k]);
+    // ← FORCE reload drives dari API
+    const freshData = await apiGet({ action: 'getDrives', plant: S.plant });
+    const freshDrives = Array.isArray(freshData.drives) ? freshData.drives : [];
+    S.cache[S.plant + '_drives'] = freshDrives;
+    const seen = [], groups = [];
+    freshDrives.forEach(d => {
+      const g = String(d.group || '').trim();
+      if (g && !seen.includes(g)) { seen.push(g); groups.push(g); }
+    });
+    S.cache[S.plant + '_groupList'] = groups;
+
+    delete S.cache[S.plant + '_histori'];
 
     closeReturnPoolModal();
     await loadPoolData(fromPool, true);
@@ -1911,9 +1946,20 @@ async function saveStatus(){
       delete S.cache[S.plant+'_pool_'+targetPool];
       await loadPoolData(targetPool,true);updatePoolTabCounts();
     }
-    ['drives','groupList','histori','summary'].forEach(k=>delete S.cache[S.plant+'_'+k]);
-    closeModal();await renderDetailPage();
-    showToast('✅ Drive berhasil diupdate!');
+  const freshData = await apiGet({ action: 'getDrives', plant: S.plant });
+const freshDrives = Array.isArray(freshData.drives) ? freshData.drives : [];
+S.cache[S.plant + '_drives'] = freshDrives;
+const seen = [], groups = [];
+freshDrives.forEach(d => {
+  const g = String(d.group || '').trim();
+  if (g && !seen.includes(g)) { seen.push(g); groups.push(g); }
+});
+S.cache[S.plant + '_groupList'] = groups;
+delete S.cache[S.plant + '_histori'];
+delete S.cache[S.plant + '_summary'];
+closeModal();
+await renderDetailPage();
+showToast('✅ Drive berhasil diupdate!');
   }catch(err){alert('Gagal menyimpan: '+err.message);}
   finally{btn.disabled=false;btn.textContent='Simpan';}
 }
