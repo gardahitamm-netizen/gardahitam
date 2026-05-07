@@ -1394,7 +1394,11 @@ async function renderDriveTab(){
     function getDriveType(driveId){const s=String(driveId||'').toUpperCase();if(s.includes('.INU.')||s.includes('-INU')||s.includes('_INU'))return'INU';if(s.includes('.DSU.')||s.includes('-DSU')||s.includes('_DSU'))return'DSU';return'OTHER';}
     const groups={INU:[],DSU:[],OTHER:[]};
     drives.forEach(d=>{groups[getDriveType(d.drive_id)].push(d);});
-    const groupConfig=[{key:'INU',label:'⚡ Inverter Unit (INU)',color:'#4d9fff'},{key:'DSU',label:'🔌 DC Supply Unit (DSU)',color:'#c084fc'},{key:'OTHER',label:'📦 Lainnya',color:'#7eb8e8'}];
+const groupConfig=[
+  {key:'DSU',label:'🔌 DC Supply Unit (DSU)',color:'#c084fc'},
+  {key:'INU',label:'⚡ Inverter Unit (INU)',color:'#4d9fff'},
+  {key:'OTHER',label:'📦 Lainnya',color:'#7eb8e8'}
+];
     let html='';
     groupConfig.forEach(({key,label,color})=>{
       const grp=groups[key];if(!grp.length)return;
