@@ -1150,9 +1150,29 @@ const SESSION_KEY = 'gh_drive_session';
 const NAMA_BULAN  = ['','Januari','Februari','Maret','April','Mei','Juni','Juli','Agustus','September','Oktober','November','Desember'];
 const TAHUN_AWAL  = 2026;
 const ALL_PLANTS  = ['MCA','MCC','MCD','MCG','MCH','MCI','PLANT E'];
-const POOL_SHEETS = ['rusak','ws_boveri','abw6'];
-const POOL_LABELS = { rusak:'🔴 Rusak', ws_boveri:'🟡 WS Boveri', abw6:'🟣 ABW6' };
-const POOL_CLASS  = { rusak:'rusak', ws_boveri:'boveri', abw6:'abw6' };
+const POOL_SHEETS_MAP = {
+  'MCA': ['rusak','ws_boveri','abw1'],
+  'MCC': ['rusak','ws_boveri','abw1'],
+  'MCI': ['rusak','ws_boveri','abw1'],
+  'MCD': ['rusak','ws_boveri','abw4'],
+  'MCG': ['rusak','ws_boveri','abw6'],
+  'MCH': ['rusak','ws_boveri','abw6'],
+  'PLANT E': ['rusak','ws_boveri','abw6'],
+};
+function getPoolSheets(plant) {
+  return POOL_SHEETS_MAP[String(plant||'').toUpperCase()] || ['rusak','ws_boveri','abw6'];
+}
+function getPoolLabel(p) {
+  const map = { rusak:'🔴 Rusak', ws_boveri:'🟡 WS Boveri', abw6:'🟣 ABW6', abw4:'🟣 ABW4', abw1:'🟣 ABW1' };
+  return map[p] || ('🟣 '+p.toUpperCase());
+}
+function getPoolClass(p) {
+  if(p==='rusak') return 'rusak';
+  if(p==='ws_boveri') return 'boveri';
+  return 'abw6';
+}
+const POOL_LABELS = new Proxy({}, { get: (_,p) => getPoolLabel(p) });
+const POOL_CLASS  = new Proxy({}, { get: (_,p) => getPoolClass(p) });
 
 // ══════════════════════════════════════════════════════════
 //  STATE
@@ -1444,9 +1464,22 @@ function inuCard(d){
 //  POOL TAB
 // ══════════════════════════════════════════════════════════
 async function renderPoolTab(){
-  // Pre-load counts for all pools
-  await Promise.all(POOL_SHEETS.map(p=>loadPoolData(p)));
+  const pools = getPoolSheets(S.plant);
+  // Update pool tab buttons dynamically
+  const selectorRow = id('pool-selector-row');
+  // Clear existing buttons except refresh
+  selectorRow.innerHTML = pools.map(p => {
+    const cls = getPoolClass(p);
+    return `<button class="pool-tab-btn ${cls}" id="ptab-${p}" onclick="switchPool('${p}')">
+      ${getPoolLabel(p)} <span class="pool-count-badge ${cls}" id="pcount-${p}">0</span>
+    </button>`;
+  }).join('') + 
+  `<div class="pool-action-row"><button class="btn-pool-refresh" onclick="refreshPool()">⟳ Refresh Pool</button></div>`;
+
+  await Promise.all(pools.map(p=>loadPoolData(p)));
   updatePoolTabCounts();
+  // Set curPool to first pool if current curPool not valid for this plant
+  if(!pools.includes(S.curPool)) S.curPool = pools[0];
   switchPool(S.curPool);
 }
 
@@ -1461,7 +1494,8 @@ async function loadPoolData(poolName,force){
 }
 
 function updatePoolTabCounts(){
-  POOL_SHEETS.forEach(p=>{
+  const pools = getPoolSheets(S.plant);
+  pools.forEach(p=>{
     const items=S.cache[S.plant+'_pool_'+p]||[];
     const el=id('pcount-'+p);if(el)el.textContent=items.length;
   });
@@ -1481,12 +1515,25 @@ function switchPool(poolName){
 function renderPoolContent(poolName){
   const items=S.cache[S.plant+'_pool_'+poolName]||[];
   const hero=id('pool-hero');
-  const cls=POOL_CLASS[poolName]||'';
+  const cls=getPoolClass(poolName);
   hero.className='pool-hero '+cls;
-  const labels={rusak:'🔴 Pool Rusak — Drive bermasalah / kerusakan fisik',ws_boveri:'🟡 Pool WS Boveri — Spare workshop Boveri',abw6:'🟣 Pool ABW6 — Spare ABW6'};
-  const descs={rusak:'Drive yang mengalami kerusakan dan menunggu perbaikan atau penggantian.',ws_boveri:'Drive spare yang disimpan di workshop Boveri, siap dipasang kembali.',abw6:'Drive spare yang disimpan di ABW6.'};
-  id('pool-hero-title').textContent=labels[poolName]||poolName;
+  const labels={
+    rusak:'🔴 Pool Rusak — Drive bermasalah / kerusakan fisik',
+    ws_boveri:'🟡 Pool WS Boveri — Spare workshop Boveri',
+    abw6:'🟣 Pool ABW6 — Spare ABW6',
+    abw4:'🟣 Pool ABW4 — Spare ABW4',
+    abw1:'🟣 Pool ABW1 — Spare ABW1',
+  };
+  const descs={
+    rusak:'Drive yang mengalami kerusakan dan menunggu perbaikan atau penggantian.',
+    ws_boveri:'Drive spare yang disimpan di workshop Boveri, siap dipasang kembali.',
+    abw6:'Drive spare yang disimpan di ABW6.',
+    abw4:'Drive spare yang disimpan di ABW4.',
+    abw1:'Drive spare yang disimpan di ABW1.',
+  };
+  id('pool-hero-title').textContent=labels[poolName]||('🟣 Pool '+poolName.toUpperCase());
   id('pool-hero-sub').textContent=descs[poolName]||'';
+  // ... sisa kode sama
   id('pool-stats-row').innerHTML=`
     <div class="pool-stat"><div class="pool-stat-label">Total Drive</div><div class="pool-stat-val">${items.length}</div></div>
     <div class="pool-stat"><div class="pool-stat-label">Plant</div><div class="pool-stat-val" style="font-size:14px">${esc(S.plant)}</div></div>
@@ -1503,8 +1550,10 @@ function renderPoolContent(poolName){
 }
 
 function poolCard(item, poolName, i) {
-  const cls = POOL_CLASS[poolName] || '';
-  const otherPools = POOL_SHEETS.filter(p => p !== poolName);
+  const cls = getPoolClass(poolName);
+  const allPools = getPoolSheets(S.plant);
+  const otherPools = allPools.filter(p => p !== poolName);
+  // ... sisa sama
   const moveBtns = canEdit() ? otherPools.map(p =>
     `<button class="btn-pool-action btn-pool-move" 
       onclick="openMovePoolModal('${esc(item.serial_number)}','${esc(item.drive_id)}','${poolName}','${p}','${esc(item.stiker || '')}')">
@@ -1595,11 +1644,11 @@ async function doSendToPool() {
 // ══════════════════════════════════════════════════════════
 function openMovePoolModal(sn,driveId,fromPool,defaultTo){
   id('mpm-sn').value=sn;id('mpm-drive-id').value=driveId;id('mpm-from-pool').value=fromPool;
-  id('mpm-sn-label').textContent=`SN: ${sn||'—'} (dari ${POOL_LABELS[fromPool]})`;
+  id('mpm-sn-label').textContent=`SN: ${sn||'—'} (dari ${getPoolLabel(fromPool)})`;
   id('mpm-ket').value='';
-  // Build to-pool options excluding fromPool
+  const allPools = getPoolSheets(S.plant);
   const sel=id('mpm-to-pool');
-  sel.innerHTML=POOL_SHEETS.filter(p=>p!==fromPool).map(p=>`<option value="${p}" ${p===defaultTo?'selected':''}>${POOL_LABELS[p]}</option>`).join('');
+  sel.innerHTML=allPools.filter(p=>p!==fromPool).map(p=>`<option value="${p}" ${p===defaultTo?'selected':''}>${getPoolLabel(p)}</option>`).join('');
   id('btn-mpm-save').disabled=false;id('btn-mpm-save').textContent='🔄 Pindah';
   id('modal-pool-move').classList.add('open');
 }
