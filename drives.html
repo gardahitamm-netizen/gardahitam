@@ -1503,7 +1503,8 @@ function updatePoolTabCounts(){
 
 function switchPool(poolName){
   S.curPool=poolName;
-  POOL_SHEETS.forEach(p=>{
+  const pools=getPoolSheets(S.plant);
+  pools.forEach(p=>{
     const btn=id('ptab-'+p);if(!btn)return;
     btn.classList.remove('active');
   });
@@ -1578,7 +1579,8 @@ function poolCard(item, poolName, i) {
   </div>`;
 }
 async function refreshPool(){
-  POOL_SHEETS.forEach(p=>delete S.cache[S.plant+'_pool_'+p]);
+  const pools=getPoolSheets(S.plant);
+  pools.forEach(p=>delete S.cache[S.plant+'_pool_'+p]);
   await renderPoolTab();
 }
 
@@ -1589,9 +1591,11 @@ function openSendPoolModal(driveId,sn,merk,spek){
   id('mps-drive-id').textContent=driveId;
   id('mps-sn').textContent=sn||'—';
   id('mps-ket').value='';
-  id('mps-target-pool').value='rusak';
+  // ← Tambahkan ini: populate dropdown dinamis
+  const pools=getPoolSheets(S.plant);
+  const sel=id('mps-target-pool');
+  sel.innerHTML=pools.map(p=>`<option value="${p}">${getPoolLabel(p)} — ${p==='rusak'?'Drive bermasalah':p==='ws_boveri'?'Spare workshop Boveri':'Spare '+p.toUpperCase()}</option>`).join('');
   id('btn-mps-save').disabled=false;id('btn-mps-save').textContent='📤 Kirim ke Pool';
-  // Store in state
   S._poolSend={driveId,sn,merk,spek};
   id('modal-pool-send').classList.add('open');
 }
@@ -1990,6 +1994,10 @@ function openModal(driveId,status,keterangan,merk,spesifikasi,photoUrl,serialNum
   id('modal-sn').value=serialNumber||'';
   id('modal-stiker').value=stiker||'';
   id('modal-photo').value=photoUrl||'';
+  // Populate pool dropdown dinamis sesuai plant
+  const pools=getPoolSheets(S.plant);
+  const tpSel=id('modal-target-pool');
+  tpSel.innerHTML=pools.map(p=>`<option value="${p}">${getPoolLabel(p)}</option>`).join('');
   // Show/hide pool section
   const v=status||'ok';
   id('modal-pool-section').style.display=(v==='kosong'||v==='fault')?'block':'none';
@@ -2073,7 +2081,12 @@ async function printHistoriPDF(){
 // ══════════════════════════════════════════════════════════
 async function doRefresh(){
   const btn=id('btn-refresh');btn.classList.add('loading');
-  if(S.plant){['drives','groupList','histori','manuals','summary','asli','pool_rusak','pool_ws_boveri','pool_abw6'].forEach(k=>delete S.cache[S.plant+'_'+k]);}
+  if(S.plant){
+    const pools=getPoolSheets(S.plant);
+    const poolKeys=pools.map(p=>'pool_'+p);
+    ['drives','groupList','histori','manuals','summary','asli',...poolKeys]
+      .forEach(k=>delete S.cache[S.plant+'_'+k]);
+  }
   clearSearch();
   if(S.page==='detail')await renderDetailPage();
   else if(S.page==='mixing')await renderMixingPage();
