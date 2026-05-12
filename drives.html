@@ -1159,17 +1159,29 @@ const POOL_SHEETS_MAP = {
   'MCH': ['rusak','ws_boveri','abw6'],
   'PLANT E': ['rusak','ws_boveri','abw6'],
 };
+// Semua opsi pool yang tersedia di seluruh sistem
+const ALL_POOL_OPTIONS = ['rusak','ws_boveri','abw6','abw4','abw1'];
+
 function getPoolSheets(plant) {
   return POOL_SHEETS_MAP[String(plant||'').toUpperCase()] || ['rusak','ws_boveri','abw6'];
 }
 function getPoolLabel(p) {
-  const map = { rusak:'🔴 Rusak', ws_boveri:'🟡 WS Boveri', abw6:'🟣 ABW6', abw4:'🟣 ABW4', abw1:'🟣 ABW1' };
+  const map = {
+    rusak:'🔴 Rusak',
+    ws_boveri:'🟡 WS Boveri',
+    abw6:'🟣 ABW6',
+    abw4:'🟣 ABW4',
+    abw1:'🟣 ABW1'
+  };
   return map[p] || ('🟣 '+p.toUpperCase());
 }
 function getPoolClass(p) {
   if(p==='rusak') return 'rusak';
   if(p==='ws_boveri') return 'boveri';
   return 'abw6';
+}
+function getAllPoolOptions() {
+  return ALL_POOL_OPTIONS;
 }
 const POOL_LABELS = new Proxy({}, { get: (_,p) => getPoolLabel(p) });
 const POOL_CLASS  = new Proxy({}, { get: (_,p) => getPoolClass(p) });
@@ -1592,9 +1604,8 @@ function openSendPoolModal(driveId,sn,merk,spek){
   id('mps-sn').textContent=sn||'—';
   id('mps-ket').value='';
   // ← Tambahkan ini: populate dropdown dinamis
-  const pools=getPoolSheets(S.plant);
-  const sel=id('mps-target-pool');
-  sel.innerHTML=pools.map(p=>`<option value="${p}">${getPoolLabel(p)} — ${p==='rusak'?'Drive bermasalah':p==='ws_boveri'?'Spare workshop Boveri':'Spare '+p.toUpperCase()}</option>`).join('');
+const sel=id('mps-target-pool');
+sel.innerHTML=getAllPoolOptions().map(p=>`<option value="${p}">${getPoolLabel(p)} — ${p==='rusak'?'Drive bermasalah':p==='ws_boveri'?'Spare workshop Boveri':'Spare '+p.toUpperCase()}</option>`).join('');
   id('btn-mps-save').disabled=false;id('btn-mps-save').textContent='📤 Kirim ke Pool';
   S._poolSend={driveId,sn,merk,spek};
   id('modal-pool-send').classList.add('open');
@@ -1650,9 +1661,8 @@ function openMovePoolModal(sn,driveId,fromPool,defaultTo){
   id('mpm-sn').value=sn;id('mpm-drive-id').value=driveId;id('mpm-from-pool').value=fromPool;
   id('mpm-sn-label').textContent=`SN: ${sn||'—'} (dari ${getPoolLabel(fromPool)})`;
   id('mpm-ket').value='';
-  const allPools = getPoolSheets(S.plant);
-  const sel=id('mpm-to-pool');
-  sel.innerHTML=allPools.filter(p=>p!==fromPool).map(p=>`<option value="${p}" ${p===defaultTo?'selected':''}>${getPoolLabel(p)}</option>`).join('');
+const sel=id('mpm-to-pool');
+sel.innerHTML=getAllPoolOptions().filter(p=>p!==fromPool).map(p=>`<option value="${p}" ${p===defaultTo?'selected':''}>${getPoolLabel(p)}</option>`).join('');
   id('btn-mpm-save').disabled=false;id('btn-mpm-save').textContent='🔄 Pindah';
   id('modal-pool-move').classList.add('open');
 }
@@ -1995,10 +2005,8 @@ function openModal(driveId,status,keterangan,merk,spesifikasi,photoUrl,serialNum
   id('modal-stiker').value=stiker||'';
   id('modal-photo').value=photoUrl||'';
   // Populate pool dropdown dinamis sesuai plant
-  const pools=getPoolSheets(S.plant);
-  const tpSel=id('modal-target-pool');
-  tpSel.innerHTML=pools.map(p=>`<option value="${p}">${getPoolLabel(p)}</option>`).join('');
-  // Show/hide pool section
+const tpSel=id('modal-target-pool');
+tpSel.innerHTML=getAllPoolOptions().map(p=>`<option value="${p}">${getPoolLabel(p)}</option>`).join('');
   const v=status||'ok';
   id('modal-pool-section').style.display=(v==='kosong'||v==='fault')?'block':'none';
   id('modal-send-pool').checked=false;id('modal-pool-opts').style.display='none';
