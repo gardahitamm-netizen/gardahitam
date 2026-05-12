@@ -20,26 +20,19 @@ html{scroll-behavior:smooth}
   --panel:rgba(255,255,255,0.03);
   --border:rgba(0,212,255,0.12);--border2:rgba(0,212,255,0.25);
   --text:#f0f8ff;--text2:rgba(240,248,255,0.7);--text3:rgba(240,248,255,0.4);
-  /* PM colors */
   --pm-plan:#00dd60;--pm-plan-bg:rgba(0,200,80,0.15);--pm-plan-border:rgba(0,200,80,0.45);
   --pm-actual:#6aabff;--pm-actual-bg:rgba(68,130,210,0.18);--pm-actual-border:rgba(100,160,245,0.45);
   --pm-overdue:#ff6868;--pm-overdue-bg:rgba(255,50,50,0.15);--pm-overdue-border:rgba(255,80,80,0.4);
 }
 body{font-family:'Space Grotesk',sans-serif;background:var(--bg);color:var(--text);overflow-x:hidden;cursor:none}
-
-/* ── CURSOR ── */
 #cursor{position:fixed;width:10px;height:10px;background:var(--cyan);border-radius:50%;pointer-events:none;z-index:99999;mix-blend-mode:screen;transition:transform .08s,background .2s}
 #cursor-ring{position:fixed;width:40px;height:40px;border:1.5px solid rgba(0,212,255,0.5);border-radius:50%;pointer-events:none;z-index:99998;transition:all .18s ease}
 #cursor.hover{transform:scale(3);background:rgba(0,212,255,0.3)}
 #cursor-ring.hover{transform:scale(0.5);opacity:0}
-
-/* ── CANVAS BG ── */
 #bg-canvas{position:fixed;inset:0;z-index:0;pointer-events:none;opacity:.6}
 .noise{position:fixed;inset:0;z-index:1;opacity:.025;pointer-events:none;background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");background-size:200px}
 .scanline-top{position:fixed;top:0;left:0;right:0;height:2px;z-index:200;background:linear-gradient(90deg,transparent,var(--cyan),var(--cyan2),var(--cyan),transparent);animation:scanPulse 3s ease-in-out infinite;box-shadow:0 0 20px var(--cyan),0 0 60px rgba(0,212,255,0.4)}
 @keyframes scanPulse{0%,100%{opacity:1}50%{opacity:.6}}
-
-/* ── NAVBAR ── */
 .navbar{position:fixed;top:0;left:0;right:0;z-index:100;height:64px;display:flex;align-items:center;justify-content:space-between;padding:0 48px;backdrop-filter:blur(20px);background:rgba(5,8,16,0.85);border-bottom:1px solid var(--border)}
 .brand{display:flex;align-items:center;gap:14px;text-decoration:none}
 .brand-hex{width:38px;height:38px;clip-path:polygon(50% 0%,100% 25%,100% 75%,50% 100%,0% 75%,0% 25%);background:linear-gradient(135deg,var(--cyan),#0055ff);display:flex;align-items:center;justify-content:center;font-size:15px;animation:hexGlow 3s ease-in-out infinite}
@@ -52,8 +45,6 @@ body{font-family:'Space Grotesk',sans-serif;background:var(--bg);color:var(--tex
 .nav-link.active{color:#fff;background:rgba(255,255,255,0.06);border-color:rgba(255,255,255,0.1)}
 .nav-toggle{display:none;flex-direction:column;gap:5px;cursor:none;padding:4px;background:none;border:none}
 .nav-toggle span{display:block;width:22px;height:2px;background:var(--text2);border-radius:2px;transition:all .3s}
-
-/* ── PAGE LOADER ── */
 .page-loader{position:fixed;inset:0;background:var(--bg);z-index:99999;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:24px;transition:opacity .6s,visibility .6s}
 .page-loader.hidden{opacity:0;visibility:hidden}
 .loader-logo{font-family:'Orbitron',monospace;font-size:20px;font-weight:900;color:#fff;letter-spacing:.3em}
@@ -62,32 +53,21 @@ body{font-family:'Space Grotesk',sans-serif;background:var(--bg);color:var(--tex
 .loader-bar{height:100%;background:linear-gradient(90deg,var(--cyan),#0066ff);border-radius:2px;animation:loadProg 1.2s ease forwards;box-shadow:0 0 8px var(--cyan)}
 @keyframes loadProg{0%{width:0}70%{width:80%}100%{width:100%}}
 .loader-pct{font-family:'JetBrains Mono',monospace;font-size:11px;color:var(--text3);letter-spacing:.1em}
-
-/* ── MAIN CONTENT ── */
 .main{padding-top:64px;min-height:100vh;position:relative;z-index:2}
-
-/* ── PAGE HERO ── */
 .page-hero{padding:52px 48px 40px;border-bottom:1px solid rgba(0,212,255,0.08);background:linear-gradient(180deg,rgba(0,212,255,0.03),transparent);position:relative;overflow:hidden}
 .page-hero::before{content:'';position:absolute;top:-60px;right:-60px;width:400px;height:400px;background:radial-gradient(circle,rgba(0,212,255,0.04),transparent 70%);pointer-events:none}
 .page-hero-inner{max-width:1340px;margin:0 auto;display:flex;align-items:flex-end;justify-content:space-between;gap:24px;flex-wrap:wrap}
-.page-hero-left{}
 .page-eyebrow{display:inline-flex;align-items:center;gap:8px;font-family:'JetBrains Mono',monospace;font-size:10px;font-weight:700;color:var(--cyan);letter-spacing:.2em;text-transform:uppercase;margin-bottom:14px;opacity:.8}
 .page-eyebrow::before{content:'//';opacity:.5;margin-right:2px}
 .page-h1{font-family:'Orbitron',monospace;font-size:clamp(1.6rem,3vw,2.6rem);font-weight:900;color:#fff;letter-spacing:-.01em;margin-bottom:10px;line-height:1.1}
 .page-h1 em{color:var(--cyan);font-style:normal;text-shadow:0 0 24px rgba(0,212,255,0.4)}
 .page-desc{font-size:14px;color:var(--text2);max-width:520px;line-height:1.75}
 .page-hero-right{display:flex;gap:10px;align-items:center;flex-shrink:0;flex-wrap:wrap}
-
-/* ── STAT PILLS ── */
 .stat-pill{display:flex;align-items:center;gap:8px;padding:10px 18px;background:var(--panel);border:1px solid var(--border);border-radius:10px;transition:all .3s}
 .stat-pill:hover{border-color:var(--border2)}
 .stat-pill-num{font-family:'Orbitron',monospace;font-size:20px;font-weight:900;color:#fff}
 .stat-pill-lbl{font-family:'JetBrains Mono',monospace;font-size:9px;color:var(--text3);text-transform:uppercase;letter-spacing:.15em;line-height:1.4}
-
-/* ── CONTENT AREA ── */
 .content{padding:32px 48px 80px;max-width:1340px;margin:0 auto}
-
-/* ── OVERVIEW CARDS ── */
 .overview-row{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-bottom:28px}
 .ov-card{padding:22px 24px;background:var(--panel);border:1px solid rgba(255,255,255,0.07);border-radius:14px;position:relative;overflow:hidden;transition:all .3s;cursor:default}
 .ov-card:hover{transform:translateY(-3px);border-color:rgba(0,212,255,0.18)}
@@ -97,8 +77,6 @@ body{font-family:'Space Grotesk',sans-serif;background:var(--bg);color:var(--tex
 .ov-card:hover .ov-num{color:var(--oc,#00d4ff);text-shadow:0 0 24px var(--oc)}
 .ov-lbl{font-family:'JetBrains Mono',monospace;font-size:9px;color:var(--text3);text-transform:uppercase;letter-spacing:.18em}
 .ov-sub{font-size:11px;color:var(--text3);margin-top:5px}
-
-/* ── REMINDER ── */
 .reminder-bar{display:none;gap:12px;padding:14px 20px;border-radius:10px;background:rgba(255,184,0,0.06);border:1px solid rgba(255,184,0,0.28);margin-bottom:20px;align-items:flex-start}
 .reminder-bar.show{display:flex;animation:slideDown .4s ease}
 @keyframes slideDown{from{opacity:0;transform:translateY(-8px)}to{opacity:1;transform:none}}
@@ -106,7 +84,12 @@ body{font-family:'Space Grotesk',sans-serif;background:var(--bg);color:var(--tex
 .reminder-body{font-size:12px;color:var(--text2);line-height:1.7}
 .reminder-body strong{color:#ffb800}
 
-/* ── FILTER / TOOLBAR ── */
+/* ── ERROR BOX ── */
+.error-box{padding:32px 28px;border-radius:14px;background:rgba(255,68,68,0.05);border:1px solid rgba(255,68,68,0.25);margin-bottom:20px}
+.error-title{font-family:'Orbitron',monospace;font-size:14px;font-weight:700;color:#ff6868;margin-bottom:12px}
+.error-detail{font-family:'JetBrains Mono',monospace;font-size:11px;color:var(--text3);line-height:1.8;margin-bottom:16px;background:rgba(0,0,0,0.3);padding:12px 16px;border-radius:8px;border:1px solid rgba(255,255,255,0.05)}
+.error-actions{display:flex;gap:10px;flex-wrap:wrap}
+
 .toolbar{display:flex;gap:10px;align-items:center;flex-wrap:wrap;padding:14px 18px;background:rgba(255,255,255,0.02);border:1px solid var(--border);border-radius:12px;margin-bottom:24px}
 .tb-label{font-family:'JetBrains Mono',monospace;font-size:10px;color:var(--text3);letter-spacing:.12em;text-transform:uppercase;white-space:nowrap}
 .tb-select,.tb-input{background:rgba(0,0,0,0.45);border:1px solid rgba(0,212,255,0.2);color:var(--text);font-family:'JetBrains Mono',monospace;font-size:11px;padding:7px 12px;border-radius:8px;outline:none;cursor:pointer;transition:border-color .2s}
@@ -119,8 +102,6 @@ body{font-family:'Space Grotesk',sans-serif;background:var(--bg);color:var(--tex
 .tb-btn.cyan:hover{background:rgba(0,212,255,0.16);box-shadow:0 0 14px rgba(0,212,255,0.2)}
 .tb-btn.ghost{border-color:rgba(255,255,255,0.1);color:var(--text3)}
 .tb-btn.ghost:hover{border-color:rgba(255,255,255,0.25);color:var(--text2)}
-
-/* ── LEGEND STRIP ── */
 .legend-strip{display:flex;align-items:center;gap:8px;flex-wrap:wrap;margin-bottom:20px}
 .leg-item{display:flex;align-items:center;gap:7px;padding:5px 14px;border-radius:20px;font-family:'JetBrains Mono',monospace;font-size:10px;font-weight:700;letter-spacing:.1em}
 .leg-item.plan  {background:rgba(0,200,80,0.08);border:1px solid rgba(0,200,80,0.25);color:var(--pm-plan)}
@@ -129,11 +110,8 @@ body{font-family:'Space Grotesk',sans-serif;background:var(--bg);color:var(--tex
 .leg-dot{width:8px;height:8px;border-radius:50%;flex-shrink:0}
 .leg-sep{flex:1}
 .last-upd{font-family:'JetBrains Mono',monospace;font-size:10px;color:var(--text3)}
-
-/* ── PLANT GROUP ── */
 .plant-group{margin-bottom:20px;border:1px solid rgba(255,255,255,0.07);border-radius:16px;overflow:hidden;transition:border-color .3s}
 .plant-group:hover{border-color:rgba(0,212,255,0.15)}
-
 .plant-header{display:flex;align-items:center;gap:14px;padding:14px 22px;background:rgba(0,212,255,0.03);border-bottom:1px solid rgba(255,255,255,0.05);cursor:pointer;user-select:none;transition:background .2s}
 .plant-header:hover{background:rgba(0,212,255,0.06)}
 .plant-dot{width:10px;height:10px;border-radius:50%;background:var(--cyan);box-shadow:0 0 8px var(--cyan);flex-shrink:0;animation:blink 2.5s ease-in-out infinite}
@@ -148,31 +126,20 @@ body{font-family:'Space Grotesk',sans-serif;background:var(--bg);color:var(--tex
 .p-pill.total  {background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.1);color:var(--text3)}
 .plant-toggle{margin-left:auto;color:var(--text3);font-size:18px;transition:transform .3s;flex-shrink:0}
 .plant-group.collapsed .plant-toggle{transform:rotate(-90deg)}
-
 .plant-body{overflow:hidden;max-height:3000px;opacity:1;transition:max-height .45s ease,opacity .3s ease}
 .plant-group.collapsed .plant-body{max-height:0;opacity:0}
-
-/* ── TABLE ── */
 .tbl-wrap{overflow-x:auto;background:rgba(5,10,22,0.4)}
 .tbl-wrap::-webkit-scrollbar{height:5px}
 .tbl-wrap::-webkit-scrollbar-track{background:rgba(255,255,255,0.02)}
 .tbl-wrap::-webkit-scrollbar-thumb{background:rgba(0,212,255,0.2);border-radius:3px}
-
 table.pm{width:100%;border-collapse:collapse;font-size:12px;min-width:860px}
-
 table.pm thead tr{background:rgba(0,212,255,0.03);border-bottom:1px solid rgba(0,212,255,0.12)}
-table.pm thead th{
-  padding:10px 8px;font-family:'JetBrains Mono',monospace;font-size:9px;font-weight:700;
-  color:var(--cyan);letter-spacing:.15em;text-transform:uppercase;text-align:center;
-  white-space:nowrap;border-right:1px solid rgba(255,255,255,0.04);
-  position:sticky;top:0;background:rgba(8,13,24,.98);z-index:2
-}
+table.pm thead th{padding:10px 8px;font-family:'JetBrains Mono',monospace;font-size:9px;font-weight:700;color:var(--cyan);letter-spacing:.15em;text-transform:uppercase;text-align:center;white-space:nowrap;border-right:1px solid rgba(255,255,255,0.04);position:sticky;top:0;background:rgba(8,13,24,.98);z-index:2}
 table.pm thead th.s0{left:0;text-align:left;min-width:32px;z-index:3}
 table.pm thead th.s1{left:32px;text-align:left;min-width:90px;z-index:3}
 table.pm thead th.s2{left:122px;text-align:left;min-width:54px;z-index:3}
 table.pm thead th.th-now{background:rgba(0,212,255,0.1)!important;color:#fff!important;position:relative}
 table.pm thead th.th-now::after{content:'NOW';position:absolute;top:0;right:0;font-size:7px;background:var(--cyan);color:#020408;padding:1px 4px;border-radius:0 0 0 4px;font-weight:900;letter-spacing:.06em}
-
 table.pm tbody tr{border-bottom:1px solid rgba(255,255,255,0.03);transition:background .15s}
 table.pm tbody tr:hover{background:rgba(0,212,255,0.025)}
 table.pm tbody td{padding:8px 8px;color:var(--text2);text-align:center;border-right:1px solid rgba(255,255,255,0.03);vertical-align:middle}
@@ -183,8 +150,6 @@ table.pm tbody tr:hover td.s0,
 table.pm tbody tr:hover td.s1,
 table.pm tbody tr:hover td.s2{background:rgba(11,17,32,.99)}
 table.pm tbody td.td-now{background:rgba(0,212,255,0.02)}
-
-/* ── PM CELL ── */
 .pm-cell{width:56px;height:30px;border-radius:6px;display:flex;align-items:center;justify-content:center;font-family:'JetBrains Mono',monospace;font-size:9px;font-weight:700;margin:0 auto;position:relative;transition:transform .2s,box-shadow .2s;cursor:default;letter-spacing:.02em}
 .pm-cell:hover{transform:scale(1.2);z-index:20}
 .pm-cell.plan   {background:var(--pm-plan-bg);border:1px solid var(--pm-plan-border);color:var(--pm-plan);box-shadow:0 0 6px rgba(0,200,80,0.1)}
@@ -192,51 +157,31 @@ table.pm tbody td.td-now{background:rgba(0,212,255,0.02)}
 .pm-cell.overdue{background:var(--pm-overdue-bg);border:1px solid var(--pm-overdue-border);color:var(--pm-overdue);animation:overduePulse 2.2s ease-in-out infinite}
 .pm-cell.empty  {background:transparent;border:1px solid rgba(255,255,255,0.04);pointer-events:none}
 @keyframes overduePulse{0%,100%{box-shadow:0 0 5px rgba(255,50,50,0.1)}50%{box-shadow:0 0 15px rgba(255,50,50,0.4)}}
-
-/* Tooltip */
-.pm-cell[data-tip]:hover::after{
-  content:attr(data-tip);position:absolute;bottom:calc(100%+8px);left:50%;
-  transform:translateX(-50%);background:rgba(5,8,16,.97);border:1px solid var(--border2);
-  border-radius:6px;padding:5px 10px;font-size:10px;color:var(--text);
-  white-space:nowrap;z-index:100;pointer-events:none;
-  font-family:'JetBrains Mono',monospace;box-shadow:0 4px 20px rgba(0,0,0,.5)
-}
-
-/* ── PROGRESS BAR PER PLANT ── */
+.pm-cell[data-tip]:hover::after{content:attr(data-tip);position:absolute;bottom:calc(100%+8px);left:50%;transform:translateX(-50%);background:rgba(5,8,16,.97);border:1px solid var(--border2);border-radius:6px;padding:5px 10px;font-size:10px;color:var(--text);white-space:nowrap;z-index:100;pointer-events:none;font-family:'JetBrains Mono',monospace;box-shadow:0 4px 20px rgba(0,0,0,.5)}
 .plant-progress{padding:10px 22px 14px;display:flex;align-items:center;gap:12px;border-top:1px solid rgba(255,255,255,0.04);background:rgba(0,0,0,0.15)}
 .prog-label{font-family:'JetBrains Mono',monospace;font-size:10px;color:var(--text3);white-space:nowrap}
 .prog-bar-wrap{flex:1;height:4px;background:rgba(255,255,255,0.07);border-radius:2px;overflow:hidden}
 .prog-bar-fill{height:100%;border-radius:2px;transition:width 1s ease;background:linear-gradient(90deg,var(--pm-actual),var(--cyan))}
 .prog-pct{font-family:'JetBrains Mono',monospace;font-size:10px;color:var(--pm-actual);font-weight:700;min-width:36px;text-align:right}
-
-/* ── STATE MESSAGES ── */
 .state-box{padding:56px 20px;text-align:center;font-family:'JetBrains Mono',monospace;font-size:12px;color:var(--text3)}
 .state-icon{font-size:34px;display:block;margin-bottom:14px}
 .state-icon.spin{animation:spin 1.2s linear infinite;display:inline-block}
 @keyframes spin{to{transform:rotate(360deg)}}
-
-/* ── FOOTER ── */
-.footer{padding:40px 48px;text-align:center;position:relative;z-index:2;border-top:1px solid rgba(255,255,255,0.06);margin-top:0}
+.footer{padding:40px 48px;text-align:center;position:relative;z-index:2;border-top:1px solid rgba(255,255,255,0.06)}
 .footer-copy{font-size:12px;color:var(--text3)}
 .footer-line{height:1px;width:200px;margin:14px auto 0;background:linear-gradient(90deg,transparent,rgba(0,212,255,0.3),transparent)}
-
-/* ── SCROLL REVEAL ── */
 .reveal{opacity:0;transform:translateY(20px);transition:opacity .7s ease,transform .7s ease}
 .reveal.visible{opacity:1;transform:none}
-
-/* ── PRINT ── */
 @media print{
   .navbar,.toolbar,.legend-strip .leg-sep,.last-upd,.reminder-bar,
   .plant-toggle,#cursor,#cursor-ring,.noise,.scanline-top,#bg-canvas,
-  .page-loader,.tb-btn,.footer{display:none!important}
+  .page-loader,.tb-btn,.footer,.error-box{display:none!important}
   .plant-group.collapsed .plant-body{max-height:none!important;opacity:1!important}
   body{background:#fff;color:#000}
   .plant-header{background:#f0f0f0!important;border-bottom:1px solid #ccc}
   .plant-name,.page-h1{color:#000!important}
   .pm-cell{-webkit-print-color-adjust:exact;print-color-adjust:exact}
 }
-
-/* ── MOBILE ── */
 @media(max-width:700px){
   .navbar{padding:0 20px}
   .nav-links{display:none;flex-direction:column;position:fixed;top:64px;left:0;right:0;background:rgba(5,8,16,.98);padding:16px;border-bottom:1px solid var(--border)}
@@ -264,7 +209,6 @@ table.pm tbody td.td-now{background:rgba(0,212,255,0.02)}
 <div id="cursor"></div>
 <div id="cursor-ring"></div>
 
-<!-- NAVBAR -->
 <nav class="navbar">
   <a href="index.html" class="brand">
     <div class="brand-hex">🏭</div>
@@ -281,8 +225,6 @@ table.pm tbody td.td-now{background:rgba(0,212,255,0.02)}
 </nav>
 
 <div class="main">
-
-  <!-- PAGE HERO -->
   <div class="page-hero">
     <div class="page-hero-inner">
       <div class="page-hero-left">
@@ -291,72 +233,42 @@ table.pm tbody td.td-now{background:rgba(0,212,255,0.02)}
         <p class="page-desc">Rencana & realisasi perawatan preventif drive seluruh mixing center. Data langsung dari spreadsheet aktif.</p>
       </div>
       <div class="page-hero-right">
-        <div class="stat-pill">
-          <div>
-            <div class="stat-pill-num" id="hero-total">—</div>
-            <div class="stat-pill-lbl">Total<br>Mesin</div>
-          </div>
-        </div>
-        <div class="stat-pill">
-          <div>
-            <div class="stat-pill-num" style="color:var(--pm-plan)" id="hero-sched">—</div>
-            <div class="stat-pill-lbl">Terjadwal<br>Bulan Ini</div>
-          </div>
-        </div>
-        <div class="stat-pill">
-          <div>
-            <div class="stat-pill-num" style="color:var(--pm-actual)" id="hero-done">—</div>
-            <div class="stat-pill-lbl">Sudah<br>Dilaksanakan</div>
-          </div>
-        </div>
-        <div class="stat-pill">
-          <div>
-            <div class="stat-pill-num" style="color:var(--pm-overdue)" id="hero-overdue">—</div>
-            <div class="stat-pill-lbl">Over<br>Due</div>
-          </div>
-        </div>
+        <div class="stat-pill"><div><div class="stat-pill-num" id="hero-total">—</div><div class="stat-pill-lbl">Total<br>Mesin</div></div></div>
+        <div class="stat-pill"><div><div class="stat-pill-num" style="color:var(--pm-plan)" id="hero-sched">—</div><div class="stat-pill-lbl">Terjadwal<br>Bulan Ini</div></div></div>
+        <div class="stat-pill"><div><div class="stat-pill-num" style="color:var(--pm-actual)" id="hero-done">—</div><div class="stat-pill-lbl">Sudah<br>Dilaksanakan</div></div></div>
+        <div class="stat-pill"><div><div class="stat-pill-num" style="color:var(--pm-overdue)" id="hero-overdue">—</div><div class="stat-pill-lbl">Over<br>Due</div></div></div>
       </div>
     </div>
   </div>
 
-  <!-- CONTENT -->
   <div class="content">
-
-    <!-- Overview cards -->
     <div class="overview-row reveal">
-      <div class="ov-card" style="--oc:#00d4ff">
-        <div class="ov-num" id="ov-total">—</div>
-        <div class="ov-lbl">Total Mesin</div>
-        <div class="ov-sub">Semua plant</div>
-      </div>
-      <div class="ov-card" style="--oc:#00dd60">
-        <div class="ov-num" id="ov-sched">—</div>
-        <div class="ov-lbl">Terjadwal Bulan Ini</div>
-        <div class="ov-sub" id="ov-month-label">—</div>
-      </div>
-      <div class="ov-card" style="--oc:#6aabff">
-        <div class="ov-num" id="ov-done">—</div>
-        <div class="ov-lbl">Sudah Dilaksanakan</div>
-        <div class="ov-sub" id="ov-rate">Completion rate —%</div>
-      </div>
-      <div class="ov-card" style="--oc:#ff6868">
-        <div class="ov-num" id="ov-overdue">—</div>
-        <div class="ov-lbl">Overdue</div>
-        <div class="ov-sub">Perlu tindakan segera</div>
-      </div>
+      <div class="ov-card" style="--oc:#00d4ff"><div class="ov-num" id="ov-total">—</div><div class="ov-lbl">Total Mesin</div><div class="ov-sub">Semua plant</div></div>
+      <div class="ov-card" style="--oc:#00dd60"><div class="ov-num" id="ov-sched">—</div><div class="ov-lbl">Terjadwal Bulan Ini</div><div class="ov-sub" id="ov-month-label">—</div></div>
+      <div class="ov-card" style="--oc:#6aabff"><div class="ov-num" id="ov-done">—</div><div class="ov-lbl">Sudah Dilaksanakan</div><div class="ov-sub" id="ov-rate">Completion rate —%</div></div>
+      <div class="ov-card" style="--oc:#ff6868"><div class="ov-num" id="ov-overdue">—</div><div class="ov-lbl">Overdue</div><div class="ov-sub">Perlu tindakan segera</div></div>
     </div>
 
-    <!-- Reminder -->
     <div class="reminder-bar" id="reminder-bar">
       <span class="reminder-icon">🔔</span>
       <div class="reminder-body" id="reminder-body">Memuat...</div>
     </div>
 
-    <!-- Toolbar -->
+    <!-- Error box (tersembunyi, muncul jika error) -->
+    <div class="error-box" id="error-box" style="display:none">
+      <div class="error-title">⚠️ Gagal Memuat Data PM</div>
+      <div class="error-detail" id="error-detail">—</div>
+      <div class="error-actions">
+        <button class="tb-btn cyan" onclick="doRefresh()">⟳ Coba Lagi</button>
+        <button class="tb-btn ghost" onclick="document.getElementById('error-box').style.display='none'">✕ Tutup</button>
+      </div>
+    </div>
+
     <div class="toolbar reveal">
       <span class="tb-label">Filter:</span>
       <select class="tb-select" id="sel-plant" onchange="applyFilter()">
         <option value="">Semua Plant</option>
+        <!-- diisi dinamis setelah data dimuat -->
       </select>
       <select class="tb-select" id="sel-interval" onchange="applyFilter()">
         <option value="">Semua Interval</option>
@@ -378,7 +290,6 @@ table.pm tbody td.td-now{background:rgba(0,212,255,0.02)}
       <button class="tb-btn cyan" onclick="doPrint()">🖨️ Cetak</button>
     </div>
 
-    <!-- Legend -->
     <div class="legend-strip reveal">
       <div class="leg-item plan">  <span class="leg-dot" style="background:var(--pm-plan)"></span>   Plan / Rencana</div>
       <div class="leg-item actual"><span class="leg-dot" style="background:var(--pm-actual)"></span> Actual / Terlaksana</div>
@@ -387,18 +298,15 @@ table.pm tbody td.td-now{background:rgba(0,212,255,0.02)}
       <span class="last-upd" id="last-upd">— memuat data...</span>
     </div>
 
-    <!-- Plant groups container -->
     <div id="groups-container">
       <div class="state-box">
         <span class="state-icon spin">⚙️</span>
         Menghubungkan ke database PM...
       </div>
     </div>
+  </div>
+</div>
 
-  </div><!-- /content -->
-</div><!-- /main -->
-
-<!-- FOOTER -->
 <footer class="footer">
   <div class="footer-copy">© 2026 Garda Hitam — PT Gajah Tunggal. Developed by <strong style="color:rgba(240,248,255,0.6)">Rivan Surya Anggara</strong> & <strong style="color:rgba(240,248,255,0.6)">Zacky Nurastari Multazam</strong></div>
   <div class="footer-line"></div>
@@ -406,10 +314,9 @@ table.pm tbody td.td-now{background:rgba(0,212,255,0.02)}
 
 <script>
 // ══════════════════════════════════════════════════════
-// CONFIG — ganti URL setelah deploy GAS
+// CONFIG
 // ══════════════════════════════════════════════════════
 const GAS_URL = 'https://script.google.com/macros/s/AKfycbzOOA1ou00NzEVRv7O7Sttmn4FoUi683086Im37QxgEnEC-szZIqf_CMUhIIUDxCDt0Xg/exec';
-// Contoh: 'https://script.google.com/macros/s/AKfycb.../exec'
 
 // ══════════════════════════════════════════════════════
 // STATE
@@ -437,17 +344,85 @@ function currentMonthLabel() {
 }
 
 // ══════════════════════════════════════════════════════
+// FETCH DENGAN JSONP (bypass CORS untuk GAS)
+// ══════════════════════════════════════════════════════
+function fetchGAS(action) {
+  return new Promise((resolve, reject) => {
+    // Buat callback name unik
+    const cbName = 'gasCallback_' + Date.now();
+    let timeoutId;
+
+    // Bersihkan script tag dan callback setelah selesai
+    const cleanup = () => {
+      clearTimeout(timeoutId);
+      delete window[cbName];
+      const el = document.getElementById(cbName);
+      if (el) el.remove();
+    };
+
+    // Timeout 20 detik
+    timeoutId = setTimeout(() => {
+      cleanup();
+      reject(new Error('Request timeout setelah 20 detik. Cek koneksi internet kamu.'));
+    }, 20000);
+
+    // Setup callback global
+    window[cbName] = (data) => {
+      cleanup();
+      resolve(data);
+    };
+
+    // Buat script tag
+    const script = document.createElement('script');
+    script.id = cbName;
+    // GAS mendukung parameter callback untuk JSONP
+    script.src = GAS_URL + '?action=' + action + '&callback=' + cbName;
+    script.onerror = () => {
+      cleanup();
+      reject(new Error('Script gagal dimuat. URL GAS mungkin salah atau tidak bisa diakses.'));
+    };
+    document.head.appendChild(script);
+  });
+}
+
+// ══════════════════════════════════════════════════════
+// FETCH DENGAN FALLBACK: coba fetch dulu, kalau gagal pakai JSONP
+// ══════════════════════════════════════════════════════
+async function fetchData(action) {
+  // Coba fetch biasa dulu
+  try {
+    const ctrl = new AbortController();
+    const tid  = setTimeout(() => ctrl.abort(), 15000);
+    const res  = await fetch(GAS_URL + '?action=' + action, { signal: ctrl.signal });
+    clearTimeout(tid);
+    if (!res.ok) throw new Error('HTTP ' + res.status);
+    const data = await res.json();
+    return data;
+  } catch (fetchErr) {
+    // Fetch gagal (CORS/network) → coba JSONP
+    console.warn('[jadwalpm] fetch gagal, coba JSONP:', fetchErr.message);
+  }
+
+  // Fallback JSONP
+  return await fetchGAS(action);
+}
+
+// ══════════════════════════════════════════════════════
 // LOAD DATA
 // ══════════════════════════════════════════════════════
 async function loadData() {
   const container = document.getElementById('groups-container');
+  const errBox    = document.getElementById('error-box');
+  errBox.style.display = 'none';
+
   container.innerHTML = `<div class="state-box"><span class="state-icon spin">⚙️</span>Memuat jadwal PM semua plant...</div>`;
 
   try {
-    const res  = await fetch(GAS_URL + '?action=getAllPlants');
-    if (!res.ok) throw new Error('HTTP ' + res.status);
-    const data = await res.json();
-    if (!data.success) throw new Error(data.error || 'Data tidak valid');
+    const data = await fetchData('getAllPlants');
+
+    if (!data || !data.success) {
+      throw new Error(data && data.error ? data.error : 'Response tidak valid dari server');
+    }
 
     pmCache = data;
     populatePlantFilter(data.plants);
@@ -459,26 +434,51 @@ async function loadData() {
     if (upd) upd.textContent = 'Diperbarui: ' + new Date(data.lastUpdated).toLocaleTimeString('id-ID');
 
   } catch(err) {
+    console.error('[jadwalpm] Error:', err);
+
+    // Tampilkan pesan error yang informatif
+    let msg = err.message || String(err);
+    let hint = '';
+
+    if (msg.includes('abort') || msg.includes('timeout')) {
+      hint = '→ Koneksi terlalu lambat atau server tidak merespons. Coba refresh.';
+    } else if (msg.includes('Failed to fetch') || msg.includes('NetworkError') || msg.includes('network')) {
+      hint = '→ Periksa koneksi internet kamu. Jika internet aktif, mungkin ada pemblokiran CORS dari browser.';
+    } else if (msg.includes('404') || msg.includes('URL')) {
+      hint = '→ URL GAS_URL di file jadwalpm.html perlu diperbarui dengan URL deployment terbaru.';
+    } else if (msg.includes('Script gagal')) {
+      hint = '→ Pastikan GAS sudah di-deploy sebagai Web App dengan akses "Anyone".';
+    } else {
+      hint = '→ Coba refresh halaman atau periksa console browser untuk detail lebih lanjut.';
+    }
+
+    // Tampilkan error box
+    document.getElementById('error-detail').innerHTML =
+      `<b>Error:</b> ${msg}<br><br>${hint}`;
+    errBox.style.display = 'block';
+
     container.innerHTML = `
       <div class="state-box">
         <span class="state-icon">⚠️</span>
-        Gagal memuat data PM.<br>
-        <span style="font-size:11px;color:var(--text3);margin-top:6px;display:block">${err.message}</span>
+        Gagal memuat data. Lihat detail di atas.<br>
         <button class="tb-btn ghost" onclick="doRefresh()" style="margin-top:16px">⟳ Coba Lagi</button>
       </div>`;
   }
 }
 
 // ══════════════════════════════════════════════════════
-// POPULATE PLANT FILTER
+// POPULATE PLANT FILTER — dipanggil setelah data berhasil dimuat
 // ══════════════════════════════════════════════════════
 function populatePlantFilter(plants) {
   const sel = document.getElementById('sel-plant');
-  // clear existing options except first
+  // Hapus semua opsi kecuali yang pertama ("Semua Plant")
   while (sel.options.length > 1) sel.remove(1);
+  // Tambahkan satu opsi per plant dari data
   plants.forEach(p => {
+    if (!p.plant) return;
     const o = document.createElement('option');
-    o.value = p.plant; o.textContent = p.plant;
+    o.value = p.plant;
+    o.textContent = p.plant;
     sel.appendChild(o);
   });
 }
@@ -493,10 +493,17 @@ function renderAll(plants) {
     return;
   }
   container.innerHTML = '';
+  let anyRendered = false;
   plants.forEach(p => {
-    if (p.machines.length === 0) return;
+    if (!p.machines || p.machines.length === 0) return;
     container.appendChild(buildPlantGroup(p));
+    anyRendered = true;
   });
+  if (!anyRendered) {
+    container.innerHTML = `<div class="state-box"><span class="state-icon">🔍</span>Tidak ada mesin yang cocok dengan filter.</div>`;
+  }
+  // Re-observe reveal
+  document.querySelectorAll('.plant-group').forEach(el => revealObs.observe(el));
 }
 
 // ══════════════════════════════════════════════════════
@@ -506,20 +513,19 @@ function buildPlantGroup(p) {
   const { plant, machines, months } = p;
 
   let planCnt = 0, actualCnt = 0, overdueCnt = 0, schedNow = 0, doneNow = 0;
-  machines.forEach(m => m.months.forEach(mo => {
+  machines.forEach(m => (m.months || []).forEach(mo => {
     if (mo.type === 'plan')    { planCnt++;   if (isCurrentMonth(mo.month)) schedNow++; }
     if (mo.type === 'actual')  { actualCnt++; if (isCurrentMonth(mo.month)) doneNow++;  }
     if (mo.type === 'overdue') overdueCnt++;
   }));
 
-  const total   = schedNow + doneNow;
-  const pct     = total > 0 ? Math.round(doneNow / total * 100) : (doneNow > 0 ? 100 : 0);
+  const total = schedNow + doneNow;
+  const pct   = total > 0 ? Math.round(doneNow / total * 100) : (doneNow > 0 ? 100 : 0);
 
   const group = document.createElement('div');
-  group.className = 'plant-group reveal';
+  group.className = 'plant-group';
   group.dataset.plant = plant;
 
-  // Header
   const hdr = document.createElement('div');
   hdr.className = 'plant-header';
   hdr.innerHTML = `
@@ -534,17 +540,14 @@ function buildPlantGroup(p) {
     <span class="plant-toggle">⌄</span>`;
   hdr.addEventListener('click', () => group.classList.toggle('collapsed'));
 
-  // Body
   const body = document.createElement('div');
   body.className = 'plant-body';
 
-  // Table
   const wrap = document.createElement('div');
   wrap.className = 'tbl-wrap';
-  wrap.innerHTML = buildTable(machines, months);
+  wrap.innerHTML = buildTable(machines, months || []);
   body.appendChild(wrap);
 
-  // Progress bar
   const prog = document.createElement('div');
   prog.className = 'plant-progress';
   prog.innerHTML = `
@@ -580,7 +583,7 @@ function buildTable(machines, months) {
       <td class="s2">${m.interval}</td>`;
 
     months.forEach(mLabel => {
-      const mo    = m.months.find(x => x.month === mLabel);
+      const mo    = (m.months || []).find(x => x.month === mLabel);
       const isNow = isCurrentMonth(mLabel);
       let cls = 'empty', txt = '', tip = '';
 
@@ -614,7 +617,7 @@ function updateOverview(plants) {
   let total = 0, sched = 0, done = 0, over = 0;
   plants.forEach(p => {
     total += p.machines.length;
-    p.machines.forEach(m => m.months.forEach(mo => {
+    p.machines.forEach(m => (m.months || []).forEach(mo => {
       if (mo.type === 'overdue') over++;
       if (isCurrentMonth(mo.month)) {
         if (mo.type === 'plan')   sched++;
@@ -640,7 +643,7 @@ function updateOverview(plants) {
 function checkReminder(plants) {
   const pending = [];
   plants.forEach(p => p.machines.forEach(m => {
-    if (m.months.some(mo => isCurrentMonth(mo.month) && mo.type === 'plan'))
+    if ((m.months || []).some(mo => isCurrentMonth(mo.month) && mo.type === 'plan'))
       pending.push(`${p.plant} — ${m.mesin}`);
   }));
 
@@ -668,38 +671,32 @@ function applyFilter() {
     .filter(p => !fPlant || p.plant === fPlant)
     .map(p => ({
       ...p,
-      machines: p.machines.filter(m => {
+      machines: (p.machines || []).filter(m => {
         if (fInterval && String(m.interval).toUpperCase() !== fInterval) return false;
         if (fSearch   && !m.mesin.toLowerCase().includes(fSearch))       return false;
-        if (fStatus   && !m.months.some(mo => mo.type === fStatus))      return false;
+        if (fStatus   && !(m.months || []).some(mo => mo.type === fStatus)) return false;
         return true;
       })
     }))
     .filter(p => p.machines.length > 0);
 
   renderAll(filtered);
-  // re-observe reveal
-  document.querySelectorAll('.reveal').forEach(el => revealObs.observe(el));
 }
 
 // ══════════════════════════════════════════════════════
-// COLLAPSE / EXPAND
+// COLLAPSE / EXPAND / REFRESH / PRINT
 // ══════════════════════════════════════════════════════
 function collapseAll() { document.querySelectorAll('.plant-group').forEach(g => g.classList.add('collapsed')); }
 function expandAll()   { document.querySelectorAll('.plant-group').forEach(g => g.classList.remove('collapsed')); }
-
-// ══════════════════════════════════════════════════════
-// REFRESH & PRINT
-// ══════════════════════════════════════════════════════
-function doRefresh() { pmCache = null; loadData(); }
-function doPrint()   { window.print(); }
+function doRefresh()   { pmCache = null; loadData(); }
+function doPrint()     { window.print(); }
 
 // ══════════════════════════════════════════════════════
 // PAGE LOADER
 // ══════════════════════════════════════════════════════
-const loader = document.getElementById('pageLoader');
+const loader    = document.getElementById('pageLoader');
 const loaderPct = document.getElementById('loaderPct');
-const steps = ['LOADING PM DATA...','CONNECTING...','ALMOST READY...','READY'];
+const steps     = ['LOADING PM DATA...','CONNECTING...','ALMOST READY...','READY'];
 let si = 0;
 const li = setInterval(() => { if(si < steps.length) loaderPct.textContent = steps[si++]; }, 320);
 setTimeout(() => { clearInterval(li); loader.classList.add('hidden'); }, 1400);
@@ -730,7 +727,6 @@ document.querySelectorAll('a,button,.plant-header,.tb-btn,.ov-card,.stat-pill').
   resize(); window.addEventListener('resize',resize);
   const cols=['#00d4ff','#0066ff','#00ff87','#a78bfa'];
   for(let i=0;i<80;i++) particles.push({x:Math.random()*2000,y:Math.random()*2000,vx:(Math.random()-.5)*.3,vy:(Math.random()-.5)*.3,r:Math.random()*1.2+.2,a:Math.random()*.4+.1,color:cols[Math.floor(Math.random()*cols.length)]});
-  let frame=0;
   function draw(){
     ctx.clearRect(0,0,W,H);
     ctx.strokeStyle='rgba(0,80,180,0.03)'; ctx.lineWidth=1;
@@ -739,7 +735,7 @@ document.querySelectorAll('a,button,.plant-header,.tb-btn,.ov-card,.stat-pill').
     for(let y=0;y<H+g;y+=g){ctx.beginPath();ctx.moveTo(0,y);ctx.lineTo(W,y);ctx.stroke();}
     particles.forEach(p=>{p.x+=p.vx;p.y+=p.vy;if(p.x<0)p.x=W;if(p.x>W)p.x=0;if(p.y<0)p.y=H;if(p.y>H)p.y=0;ctx.beginPath();ctx.arc(p.x,p.y,p.r,0,Math.PI*2);ctx.fillStyle=p.color;ctx.globalAlpha=p.a;ctx.fill();});
     ctx.globalAlpha=1;
-    frame++; requestAnimationFrame(draw);
+    requestAnimationFrame(draw);
   }
   draw();
 })();
@@ -760,11 +756,10 @@ const revealObs = new IntersectionObserver(entries => {
 document.querySelectorAll('.reveal').forEach(el => revealObs.observe(el));
 
 // ══════════════════════════════════════════════════════
-// INIT — load data setelah loader selesai
+// INIT
 // ══════════════════════════════════════════════════════
 window.addEventListener('load', () => setTimeout(loadData, 1500));
 
-// Service Worker
 if('serviceWorker' in navigator){
   window.addEventListener('load', () => navigator.serviceWorker.register('/gardahitam/sw.js').catch(()=>{}));
 }
