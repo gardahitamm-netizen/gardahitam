@@ -464,52 +464,127 @@ body{font-family:'Space Grotesk',sans-serif;background:var(--bg);color:var(--tex
     </div>
 
     <div class="hero-right">
-      <a href="drives.html" class="nav-card" style="--cc:#00d4ff">
-        <div class="nav-card-stripe"></div>
-        <div class="nav-card-icon">⚡</div>
-        <div class="nav-card-body">
-          <div class="nav-card-title">Drive Monitoring</div>
-          <div class="nav-card-desc">Status INU, DSU & motor semua mixing</div>
-          <div class="nav-card-badge">REAL-TIME</div>
-        </div>
-        <div class="nav-card-arr">›</div>
-      </a>
-      <a href="sharejob.html" class="nav-card" style="--cc:#00ff87">
-        <div class="nav-card-stripe"></div>
-        <div class="nav-card-icon">🤝</div>
-        <div class="nav-card-body">
-          <div class="nav-card-title">Share Job</div>
-          <div class="nav-card-desc">Koordinasi pekerjaan antar unit mixing</div>
-          <div class="nav-card-badge">KOLABORASI</div>
-        </div>
-        <div class="nav-card-arr">›</div>
-      </a>
-      <a href="ioPlc.html" class="nav-card" style="--cc:#a78bfa">
-        <div class="nav-card-stripe"></div>
-        <div class="nav-card-icon">🖥️</div>
-        <div class="nav-card-body">
-          <div class="nav-card-title">I/O PLC</div>
-          <div class="nav-card-desc">Control & troubleshooting PLC tags</div>
-          <div class="nav-card-badge">KONTROL</div>
-        </div>
-        <div class="nav-card-arr">›</div>
-      </a>
-      <a href="jadwalpm.html" class="nav-card" style="--cc:#ffb800">
-        <div class="nav-card-stripe"></div>
-        <div class="nav-card-icon">📅</div>
-        <div class="nav-card-body">
-          <div class="nav-card-title">Jadwal PM</div>
-          <div class="nav-card-desc">Rencana & realisasi PM drive semua plant</div>
-          <div class="nav-card-badge">PREVENTIF</div>
-        </div>
-        <div class="nav-card-arr">›</div>
-      </a>
-      <div class="stats-row">
-        <div class="stat-block" style="--sc:#00d4ff;--sd:0s"><div class="stat-num" data-count="7">0</div><div class="stat-lbl">Plant Aktif</div></div>
-        <div class="stat-block" style="--sc:#00ff87;--sd:.7s"><div class="stat-num">24/7</div><div class="stat-lbl">Nonstop</div></div>
-        <div class="stat-block" style="--sc:#a78bfa;--sd:1.4s"><div class="stat-num">∞</div><div class="stat-lbl">Live Data</div></div>
-        <div class="stat-block" style="--sc:#ffb800;--sd:2.1s"><div class="stat-num" data-count="100">0</div><div class="stat-lbl">% Uptime</div></div>
-      </div>
+<!-- ═══ NAV CARDS ENHANCED ═══ -->
+<style>
+.nav-card.featured{
+  background:rgba(0,212,255,0.05);
+  border-color:rgba(0,212,255,0.2);
+  padding:24px 26px;
+}
+.nav-card.featured .nav-card-icon{width:62px;height:62px;border-radius:16px;font-size:28px}
+.nav-card.featured .nav-card-title{font-size:15px}
+.nav-card.featured .nav-card-desc{font-size:13px;color:var(--text2)}
+
+/* Corner brackets */
+.bracket{position:absolute;width:14px;height:14px;opacity:0;transition:opacity .3s}
+.bracket.tl{top:7px;left:7px;border-top:2px solid var(--cc);border-left:2px solid var(--cc)}
+.bracket.tr{top:7px;right:7px;border-top:2px solid var(--cc);border-right:2px solid var(--cc)}
+.bracket.bl{bottom:7px;left:7px;border-bottom:2px solid var(--cc);border-left:2px solid var(--cc)}
+.bracket.br{bottom:7px;right:7px;border-bottom:2px solid var(--cc);border-right:2px solid var(--cc)}
+.nav-card.featured:hover .bracket{opacity:1;animation:brktGlow 2s ease-in-out infinite}
+@keyframes brktGlow{0%,100%{opacity:.6}50%{opacity:1}}
+
+/* NEW/UTAMA ribbon */
+.card-ribbon{
+  position:absolute;top:-1px;right:72px;
+  font-family:'JetBrains Mono',monospace;font-size:8px;font-weight:700;
+  letter-spacing:.2em;padding:3px 11px;background:var(--cyan);color:#020408;
+  border-radius:0 0 6px 6px;z-index:2;
+}
+
+/* Glitch title on featured hover */
+.nav-card.featured:hover .nav-card-title{
+  animation:cardGlitch .8s ease infinite;
+}
+@keyframes cardGlitch{
+  0%,90%,100%{text-shadow:0 0 16px rgba(0,212,255,0.6)}
+  92%{text-shadow:-2px 0 #ff00ff,2px 0 #00ffff,0 0 16px rgba(0,212,255,0.6)}
+  95%{text-shadow:2px 0 #ff00ff,-2px 0 #00ffff,0 0 16px rgba(0,212,255,0.6)}
+}
+
+/* Pulse ring on icon (featured) */
+.nav-card.featured .nav-card-icon::after{
+  content:'';position:absolute;inset:-4px;border-radius:18px;
+  border:1px solid rgba(0,212,255,0.4);opacity:0;
+}
+.nav-card.featured:hover .nav-card-icon::after{
+  opacity:1;animation:iconPls 1.5s ease-in-out infinite;
+}
+@keyframes iconPls{0%,100%{transform:scale(1);opacity:.4}50%{transform:scale(1.1);opacity:.9}}
+
+/* Scan beam */
+.nc-scan{
+  position:absolute;top:-100%;left:0;right:0;height:50%;
+  background:linear-gradient(180deg,transparent,rgba(var(--rgb),0.07),transparent);
+  transition:top .5s ease;pointer-events:none;
+}
+.nav-card:hover .nc-scan{top:150%}
+</style>
+
+<!-- CARD 1: DRIVE MONITOR — FEATURED -->
+<a href="drives.html" class="nav-card featured" style="--cc:#00d4ff;--rgb:0,212,255">
+  <div class="nav-card-stripe"></div>
+  <div class="nc-scan"></div>
+  <div class="bracket tl"></div>
+  <div class="bracket tr"></div>
+  <div class="bracket bl"></div>
+  <div class="bracket br"></div>
+  <div class="card-ribbon">★ UTAMA</div>
+  <div class="nav-card-icon">⚡</div>
+  <div class="nav-card-body">
+    <div class="nav-card-title">Drive Monitoring</div>
+    <div class="nav-card-desc">Status INU, DSU & motor semua mixing</div>
+    <div class="nav-card-badge">REAL-TIME</div>
+  </div>
+  <div class="nav-card-arr">›</div>
+</a>
+
+<!-- CARD 2 -->
+<a href="sharejob.html" class="nav-card" style="--cc:#00ff87">
+  <div class="nav-card-stripe"></div>
+  <div class="nc-scan"></div>
+  <div class="nav-card-icon">🤝</div>
+  <div class="nav-card-body">
+    <div class="nav-card-title">Share Job</div>
+    <div class="nav-card-desc">Koordinasi pekerjaan antar unit mixing</div>
+    <div class="nav-card-badge">KOLABORASI</div>
+  </div>
+  <div class="nav-card-arr">›</div>
+</a>
+
+<!-- CARD 3 -->
+<a href="ioPlc.html" class="nav-card" style="--cc:#a78bfa">
+  <div class="nav-card-stripe"></div>
+  <div class="nc-scan"></div>
+  <div class="nav-card-icon">🖥️</div>
+  <div class="nav-card-body">
+    <div class="nav-card-title">I/O PLC</div>
+    <div class="nav-card-desc">Control & troubleshooting PLC tags</div>
+    <div class="nav-card-badge">KONTROL</div>
+  </div>
+  <div class="nav-card-arr">›</div>
+</a>
+
+<!-- CARD 4 -->
+<a href="jadwalpm.html" class="nav-card" style="--cc:#ffb800">
+  <div class="nav-card-stripe"></div>
+  <div class="nc-scan"></div>
+  <div class="nav-card-icon">📅</div>
+  <div class="nav-card-body">
+    <div class="nav-card-title">Jadwal PM</div>
+    <div class="nav-card-desc">Rencana & realisasi PM drive semua plant</div>
+    <div class="nav-card-badge">PREVENTIF</div>
+  </div>
+  <div class="nav-card-arr">›</div>
+</a>
+
+<!-- STATS ROW (tidak berubah, sudah bagus) -->
+<div class="stats-row">
+  <div class="stat-block" style="--sc:#00d4ff;--sd:0s"><div class="stat-num" data-count="7">0</div><div class="stat-lbl">Plant Aktif</div></div>
+  <div class="stat-block" style="--sc:#00ff87;--sd:.7s"><div class="stat-num">24/7</div><div class="stat-lbl">Nonstop</div></div>
+  <div class="stat-block" style="--sc:#a78bfa;--sd:1.4s"><div class="stat-num">∞</div><div class="stat-lbl">Live Data</div></div>
+  <div class="stat-block" style="--sc:#ffb800;--sd:2.1s"><div class="stat-num" data-count="100">0</div><div class="stat-lbl">% Uptime</div></div>
+</div>
     </div>
   </div>
 </section>
