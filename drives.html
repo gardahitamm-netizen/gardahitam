@@ -1329,26 +1329,6 @@ el.innerHTML=`<div class="plant-grid">${plants.map((p,i)=>plantCard(p,i)).join('
   }catch(err){el.innerHTML=errHTML(err.message,renderPlantPage);}
 }
 function plantCard(p,i){
-  function abwCard(abwName, plantList, i){
-  const colors={abw1:'#c084fc',abw4:'#f472b6',abw6:'#a78bfa'};
-  const color=colors[abwName]||'#c084fc';
-  const label=abwName.toUpperCase();
-  const desc={abw1:'Spare Workshop ABW1',abw4:'Spare Workshop ABW4',abw6:'Spare Workshop ABW6'}[abwName]||'Spare Workshop';
-  // Klik ke plant pertama yang punya abw ini, langsung ke tab pool
-  const firstPlant=plantList[0];
-  const plantListLabel=plantList.join(', ');
-  return`<div class="plant-card" onclick="navToPool('${firstPlant}','${abwName}')" style="animation-delay:${i*0.06}s;border-color:rgba(192,132,252,.3);">
-    <div class="plant-card-top" style="background:linear-gradient(135deg,rgba(192,132,252,.08),rgba(167,139,250,.05))">
-      <div class="plant-card-corner" style="background:${color};box-shadow:0 0 8px ${color}"></div>
-      <div class="plant-card-id">POOL · SPARE</div>
-      <div class="plant-card-name" style="color:${color}">🟣 ${label}</div>
-      <div class="plant-card-desc">${desc}</div>
-    </div>
-    <div class="plant-card-bottom" style="background:rgba(192,132,252,.05)">
-      <span class="plant-card-tag" style="background:rgba(192,132,252,.12);border-color:rgba(192,132,252,.35);color:${color}">${plantListLabel}</span>
-      <span class="plant-card-arr" style="color:${color}">→</span>
-    </div>
-  </div>`;
 }
   const m=PLANT_META[p.plant]||{desc:p.label||'',color:'#4d9fff'};
   const gl=S.cache[p.plant+'_groupList']||[];
@@ -1370,6 +1350,26 @@ function plantCard(p,i){
     </div>
   </div>`;
 }
+  function abwCard(abwName, plantList, i){
+  const colors={abw1:'#c084fc',abw4:'#f472b6',abw6:'#a78bfa'};
+  const color=colors[abwName]||'#c084fc';
+  const label=abwName.toUpperCase();
+  const desc={abw1:'Spare Workshop ABW1',abw4:'Spare Workshop ABW4',abw6:'Spare Workshop ABW6'}[abwName]||'Spare Workshop';
+  // Klik ke plant pertama yang punya abw ini, langsung ke tab pool
+  const firstPlant=plantList[0];
+  const plantListLabel=plantList.join(', ');
+  return`<div class="plant-card" onclick="navToPool('${firstPlant}','${abwName}')" style="animation-delay:${i*0.06}s;border-color:rgba(192,132,252,.3);">
+    <div class="plant-card-top" style="background:linear-gradient(135deg,rgba(192,132,252,.08),rgba(167,139,250,.05))">
+      <div class="plant-card-corner" style="background:${color};box-shadow:0 0 8px ${color}"></div>
+      <div class="plant-card-id">POOL · SPARE</div>
+      <div class="plant-card-name" style="color:${color}">🟣 ${label}</div>
+      <div class="plant-card-desc">${desc}</div>
+    </div>
+    <div class="plant-card-bottom" style="background:rgba(192,132,252,.05)">
+      <span class="plant-card-tag" style="background:rgba(192,132,252,.12);border-color:rgba(192,132,252,.35);color:${color}">${plantListLabel}</span>
+      <span class="plant-card-arr" style="color:${color}">→</span>
+    </div>
+  </div>`;
 // ══════════════════════════════════════════════════════════
 //  MIXING PAGE
 // ══════════════════════════════════════════════════════════
