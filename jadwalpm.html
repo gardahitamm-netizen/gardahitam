@@ -50,6 +50,19 @@ body{font-family:'Space Grotesk',sans-serif;background:var(--bg);color:var(--tex
 .nav-link{font-size:12px;font-weight:600;color:var(--text3);padding:8px 18px;border-radius:8px;text-decoration:none;transition:all .25s;border:1px solid transparent;letter-spacing:.06em;text-transform:uppercase}
 .nav-link:hover{color:var(--cyan);border-color:var(--border2);background:rgba(0,212,255,0.05)}
 .nav-link.active{color:#fff;background:rgba(255,255,255,0.06);border-color:rgba(255,255,255,0.1)}
+
+/* HOME BUTTON */
+.nav-link.home-btn{
+  display:inline-flex;align-items:center;gap:6px;
+  color:var(--cyan);border-color:rgba(0,212,255,0.3);
+  background:rgba(0,212,255,0.06);
+}
+.nav-link.home-btn:hover{
+  background:rgba(0,212,255,0.14);
+  box-shadow:0 0 14px rgba(0,212,255,0.2);
+  transform:translateY(-1px);
+}
+
 .nav-toggle{display:none;flex-direction:column;gap:5px;cursor:none;padding:4px;background:none;border:none}
 .nav-toggle span{display:block;width:22px;height:2px;background:var(--text2);border-radius:2px;transition:all .3s}
 
@@ -122,6 +135,8 @@ body{font-family:'Space Grotesk',sans-serif;background:var(--bg);color:var(--tex
 .tb-btn.cyan:hover{background:rgba(0,212,255,0.16);box-shadow:0 0 14px rgba(0,212,255,0.2)}
 .tb-btn.ghost{border-color:rgba(255,255,255,0.1);color:var(--text3)}
 .tb-btn.ghost:hover{border-color:rgba(255,255,255,0.25);color:var(--text2)}
+.tb-btn.home{background:rgba(0,212,255,0.08);border-color:rgba(0,212,255,0.3);color:var(--cyan);text-decoration:none}
+.tb-btn.home:hover{background:rgba(0,212,255,0.16);box-shadow:0 0 14px rgba(0,212,255,0.2)}
 
 /* LEGEND */
 .legend-strip{display:flex;align-items:center;gap:8px;flex-wrap:wrap;margin-bottom:20px}
@@ -194,7 +209,6 @@ table.pm tbody td.td-now{background:rgba(0,212,255,0.02)}
 }
 .pm-cell:hover{transform:scale(1.15);z-index:20}
 
-/* Warna sel sesuai status */
 .pm-cell.plan{
   background:var(--pm-plan-bg);
   border:1px solid var(--pm-plan-border);
@@ -213,7 +227,6 @@ table.pm tbody td.td-now{background:rgba(0,212,255,0.02)}
   color:var(--pm-overdue);
   animation:overduePulse 2.2s ease-in-out infinite
 }
-/* Sel kosong — tetap kelihatan sebagai kotak abu gelap */
 .pm-cell.empty{
   background:rgba(255,255,255,0.025);
   border:1px solid rgba(255,255,255,0.07);
@@ -226,7 +239,6 @@ table.pm tbody td.td-now{background:rgba(0,212,255,0.02)}
   50%     {box-shadow:0 0 18px rgba(255,50,50,0.45)}
 }
 
-/* Tooltip */
 .pm-cell[data-tip]:hover::after{
   content:attr(data-tip);position:absolute;bottom:calc(100%+8px);left:50%;
   transform:translateX(-50%);background:rgba(5,8,16,.97);border:1px solid var(--border2);
@@ -304,7 +316,7 @@ table.pm tbody td.td-now{background:rgba(0,212,255,0.02)}
   </a>
   <button class="nav-toggle" id="navToggle"><span></span><span></span><span></span></button>
   <div class="nav-links" id="navLinks">
-    <a href="index.html" class="nav-link">Home</a>
+    <a href="index.html" class="nav-link home-btn">🏠 Home</a>
     <a href="drives.html" class="nav-link">Drives</a>
     <a href="sharejob.html" class="nav-link">ShareJob</a>
     <a href="ioPlc.html" class="nav-link">I/O PLC</a>
@@ -318,7 +330,7 @@ table.pm tbody td.td-now{background:rgba(0,212,255,0.02)}
       <div class="page-hero-left">
         <div class="page-eyebrow">PM Drive Care 2026</div>
         <h1 class="page-h1">Jadwal PM <em>Semua Plant</em></h1>
-        <p class="page-desc">Rencana & realisasi perawatan preventif drive seluruh mixing center. Data langsung dari spreadsheet aktif.</p>
+        <p class="page-desc">Rencana &amp; realisasi perawatan preventif drive seluruh mixing center. Data langsung dari spreadsheet aktif.</p>
       </div>
       <div class="page-hero-right">
         <div class="stat-pill"><div><div class="stat-pill-num" id="hero-total">—</div><div class="stat-pill-lbl">Total<br>Mesin</div></div></div>
@@ -373,6 +385,7 @@ table.pm tbody td.td-now{background:rgba(0,212,255,0.02)}
       <button class="tb-btn ghost" onclick="collapseAll()">⊟ Tutup Semua</button>
       <button class="tb-btn ghost" onclick="expandAll()">⊞ Buka Semua</button>
       <button class="tb-btn ghost" onclick="doRefresh()">⟳ Refresh</button>
+      <a href="index.html" class="tb-btn home">🏠 Home</a>
       <button class="tb-btn cyan" onclick="doPrint()">🖨️ Cetak</button>
     </div>
 
@@ -394,20 +407,20 @@ table.pm tbody td.td-now{background:rgba(0,212,255,0.02)}
 </div>
 
 <footer class="footer">
-  <div class="footer-copy">© 2026 Garda Hitam — PT Gajah Tunggal. Developed by <strong style="color:rgba(240,248,255,0.6)">Rivan Surya Anggara</strong> & <strong style="color:rgba(240,248,255,0.6)">Zacky Nurastari Multazam</strong></div>
+  <div class="footer-copy">© 2026 Garda Hitam — PT Gajah Tunggal. Developed by <strong style="color:rgba(240,248,255,0.6)">Rivan Surya Anggara</strong> &amp; <strong style="color:rgba(240,248,255,0.6)">Zacky Nurastari Multazam</strong></div>
   <div class="footer-line"></div>
 </footer>
 
 <script>
 // ══════════════════════════════════════════════════════
-// CONFIG — ganti URL setelah deploy GAS
+// CONFIG
 // ══════════════════════════════════════════════════════
 const GAS_URL = 'https://script.google.com/macros/s/AKfycbzOOA1ou00NzEVRv7O7Sttmn4FoUi683086Im37QxgEnEC-szZIqf_CMUhIIUDxCDt0Xg/exec';
 
 let pmCache = null;
 
 // ── MONTH HELPERS ─────────────────────────────────────
-const MN = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+const MN    = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
 const MN_ID = ['Jan','Feb','Mar','Apr','Mei','Jun','Jul','Ags','Sep','Okt','Nov','Des'];
 
 function isCurrentMonth(label) {
@@ -439,13 +452,24 @@ async function fetchData(action) {
   return new Promise((resolve, reject) => {
     const cb  = 'gasCb_' + Date.now();
     let tid;
-    const cleanup = () => { clearTimeout(tid); delete window[cb]; const el=document.getElementById(cb); if(el) el.remove(); };
-    tid = setTimeout(() => { cleanup(); reject(new Error('Timeout 20 detik. Cek koneksi internet.')); }, 20000);
-    window[cb] = data => { cleanup(); resolve(data); };
+    const cleanup = () => {
+      clearTimeout(tid);
+      delete window[cb];
+      const el = document.getElementById(cb);
+      if (el) el.remove();
+    };
+    tid = setTimeout(() => {
+      cleanup();
+      reject(new Error('Timeout 20 detik. Cek koneksi internet.'));
+    }, 20000);
+    window[cb] = function(data) { cleanup(); resolve(data); };
     const s = document.createElement('script');
     s.id  = cb;
     s.src = GAS_URL + '?action=' + action + '&callback=' + cb;
-    s.onerror = () => { cleanup(); reject(new Error('JSONP gagal. Pastikan GAS sudah di-deploy dengan akses "Anyone".')); };
+    s.onerror = function() {
+      cleanup();
+      reject(new Error('JSONP gagal. Pastikan GAS sudah di-deploy dengan akses "Anyone".'));
+    };
     document.head.appendChild(s);
   });
 }
@@ -455,11 +479,13 @@ async function loadData() {
   const container = document.getElementById('groups-container');
   const errBox    = document.getElementById('error-box');
   errBox.style.display = 'none';
-  container.innerHTML = `<div class="state-box"><span class="state-icon spin">⚙️</span>Memuat jadwal PM semua plant...</div>`;
+  container.innerHTML = '<div class="state-box"><span class="state-icon spin">⚙️</span>Memuat jadwal PM semua plant...</div>';
 
   try {
     const data = await fetchData('getAllPlants');
-    if (!data || !data.success) throw new Error(data && data.error ? data.error : 'Response tidak valid');
+    if (!data || !data.success) {
+      throw new Error(data && data.error ? data.error : 'Response tidak valid');
+    }
 
     pmCache = data;
     populatePlantFilter(data.plants);
@@ -473,14 +499,17 @@ async function loadData() {
   } catch(err) {
     console.error('[PM]', err);
     let hint = '→ Coba refresh halaman.';
-    if (err.message.includes('Timeout'))        hint = '→ Koneksi lambat. Coba lagi.';
-    else if (err.message.includes('JSONP'))      hint = '→ Pastikan GAS di-deploy dengan akses "Anyone".';
-    else if (err.message.includes('HTTP 401'))   hint = '→ Deployment GAS perlu diubah ke akses "Anyone".';
+    if (err.message.includes('Timeout'))              hint = '→ Koneksi lambat. Coba lagi.';
+    else if (err.message.includes('JSONP'))           hint = '→ Pastikan GAS di-deploy dengan akses "Anyone".';
+    else if (err.message.includes('HTTP 401'))        hint = '→ Deployment GAS perlu diubah ke akses "Anyone".';
     else if (err.message.includes('tidak ditemukan')) hint = '→ Cek nama sheet di SHEET_NAME di Code.gs.';
 
-    document.getElementById('error-detail').innerHTML = `<b>Error:</b> ${err.message}<br><br>${hint}`;
+    document.getElementById('error-detail').innerHTML =
+      '<b>Error:</b> ' + err.message + '<br><br>' + hint;
     errBox.style.display = 'block';
-    container.innerHTML = `<div class="state-box"><span class="state-icon">⚠️</span>Gagal memuat data. Lihat detail di atas.<br><button class="tb-btn ghost" onclick="doRefresh()" style="margin-top:16px">⟳ Coba Lagi</button></div>`;
+    container.innerHTML =
+      '<div class="state-box"><span class="state-icon">⚠️</span>Gagal memuat data. Lihat detail di atas.<br>' +
+      '<button class="tb-btn ghost" onclick="doRefresh()" style="margin-top:16px">⟳ Coba Lagi</button></div>';
   }
 }
 
@@ -488,10 +517,11 @@ async function loadData() {
 function populatePlantFilter(plants) {
   const sel = document.getElementById('sel-plant');
   while (sel.options.length > 1) sel.remove(1);
-  plants.forEach(p => {
+  plants.forEach(function(p) {
     if (!p.plant) return;
     const o = document.createElement('option');
-    o.value = p.plant; o.textContent = p.plant;
+    o.value = p.plant;
+    o.textContent = p.plant;
     sel.appendChild(o);
   });
 }
@@ -500,64 +530,76 @@ function populatePlantFilter(plants) {
 function renderAll(plants) {
   const container = document.getElementById('groups-container');
   if (!plants || plants.length === 0) {
-    container.innerHTML = `<div class="state-box"><span class="state-icon">📭</span>Tidak ada data PM.</div>`;
+    container.innerHTML = '<div class="state-box"><span class="state-icon">📭</span>Tidak ada data PM.</div>';
     return;
   }
   container.innerHTML = '';
   let any = false;
-  plants.forEach(p => {
+  plants.forEach(function(p) {
     if (!p.machines || p.machines.length === 0) return;
     container.appendChild(buildPlantGroup(p));
     any = true;
   });
-  if (!any) container.innerHTML = `<div class="state-box"><span class="state-icon">🔍</span>Tidak ada mesin yang cocok dengan filter.</div>`;
-  document.querySelectorAll('.plant-group').forEach(el => revealObs.observe(el));
+  if (!any) {
+    container.innerHTML = '<div class="state-box"><span class="state-icon">🔍</span>Tidak ada mesin yang cocok dengan filter.</div>';
+  }
+  document.querySelectorAll('.plant-group').forEach(function(el) {
+    revealObs.observe(el);
+  });
 }
 
 // ── BUILD PLANT GROUP ─────────────────────────────────
 function buildPlantGroup(p) {
-  const { plant, machines, months } = p;
-  let planCnt=0, actualCnt=0, overdueCnt=0, schedNow=0, doneNow=0;
-  machines.forEach(m => (m.months||[]).forEach(mo => {
-    if (mo.type==='plan')    { planCnt++;   if(isCurrentMonth(mo.month)) schedNow++; }
-    if (mo.type==='actual')  { actualCnt++; if(isCurrentMonth(mo.month)) doneNow++;  }
-    if (mo.type==='overdue') overdueCnt++;
-  }));
-  const total = schedNow + doneNow;
-  const pct   = total > 0 ? Math.round(doneNow/total*100) : (doneNow>0?100:0);
+  const plant    = p.plant;
+  const machines = p.machines;
+  const months   = p.months || [];
 
-  const group = document.createElement('div');
-  group.className = 'plant-group';
+  var planCnt = 0, actualCnt = 0, overdueCnt = 0, schedNow = 0, doneNow = 0;
+  machines.forEach(function(m) {
+    (m.months || []).forEach(function(mo) {
+      if (mo.type === 'plan')    { planCnt++;    if (isCurrentMonth(mo.month)) schedNow++; }
+      if (mo.type === 'actual')  { actualCnt++;  if (isCurrentMonth(mo.month)) doneNow++;  }
+      if (mo.type === 'overdue') { overdueCnt++; }
+    });
+  });
+
+  var total = schedNow + doneNow;
+  var pct   = total > 0 ? Math.round(doneNow / total * 100) : (doneNow > 0 ? 100 : 0);
+
+  // Build pills HTML using string concatenation (no template literal issues)
+  var pillsHtml = '';
+  if (planCnt    > 0) pillsHtml += '<span class="p-pill plan">'    + planCnt    + ' PLAN</span>';
+  if (actualCnt  > 0) pillsHtml += '<span class="p-pill actual">'  + actualCnt  + ' DONE</span>';
+  if (overdueCnt > 0) pillsHtml += '<span class="p-pill overdue">' + overdueCnt + ' OVERDUE</span>';
+
+  var group = document.createElement('div');
+  group.className     = 'plant-group';
   group.dataset.plant = plant;
 
-  const hdr = document.createElement('div');
+  var hdr = document.createElement('div');
   hdr.className = 'plant-header';
-  hdr.innerHTML = `
-    <span class="plant-dot"></span>
-    <span class="plant-name">${plant}</span>
-    <span class="plant-meta">${machines.length} mesin</span>
-    <div class="plant-pills">
-      ${planCnt    > 0 ? `<span class="p-pill plan">${planCnt} PLAN</span>`:`'}
-      ${actualCnt  > 0 ? `<span class="p-pill actual">${actualCnt} DONE</span>`:`'}
-      ${overdueCnt > 0 ? `<span class="p-pill overdue">${overdueCnt} OVERDUE</span>`:`'}
-    </div>
-    <span class="plant-toggle">⌄</span>`;
-  hdr.addEventListener('click', () => group.classList.toggle('collapsed'));
+  hdr.innerHTML =
+    '<span class="plant-dot"></span>' +
+    '<span class="plant-name">' + plant + '</span>' +
+    '<span class="plant-meta">' + machines.length + ' mesin</span>' +
+    '<div class="plant-pills">' + pillsHtml + '</div>' +
+    '<span class="plant-toggle">⌄</span>';
+  hdr.addEventListener('click', function() { group.classList.toggle('collapsed'); });
 
-  const body = document.createElement('div');
+  var body = document.createElement('div');
   body.className = 'plant-body';
 
-  const wrap = document.createElement('div');
+  var wrap = document.createElement('div');
   wrap.className = 'tbl-wrap';
-  wrap.innerHTML = buildTable(machines, months||[]);
+  wrap.innerHTML = buildTable(machines, months);
   body.appendChild(wrap);
 
-  const prog = document.createElement('div');
+  var prog = document.createElement('div');
   prog.className = 'plant-progress';
-  prog.innerHTML = `
-    <span class="prog-label">Bulan ini</span>
-    <div class="prog-bar-wrap"><div class="prog-bar-fill" style="width:${pct}%"></div></div>
-    <span class="prog-pct">${pct}%</span>`;
+  prog.innerHTML =
+    '<span class="prog-label">Bulan ini</span>' +
+    '<div class="prog-bar-wrap"><div class="prog-bar-fill" style="width:' + pct + '%"></div></div>' +
+    '<span class="prog-pct">' + pct + '%</span>';
   body.appendChild(prog);
 
   group.appendChild(hdr);
@@ -567,161 +609,219 @@ function buildPlantGroup(p) {
 
 // ── BUILD TABLE ───────────────────────────────────────
 function buildTable(machines, months) {
-  let html = `<table class="pm"><thead><tr>
-    <th class="s0">NO</th><th class="s1">MESIN</th><th class="s2">INT</th>`;
-  months.forEach(m => {
-    html += `<th class="${isCurrentMonth(m)?'th-now':''}">${m}</th>`;
-  });
-  html += `</tr></thead><tbody>`;
+  var html = '<table class="pm"><thead><tr>' +
+    '<th class="s0">NO</th><th class="s1">MESIN</th><th class="s2">INT</th>';
 
-  machines.forEach((m, i) => {
-    html += `<tr>
-      <td class="s0">${m.no||i+1}</td>
-      <td class="s1">${m.mesin}</td>
-      <td class="s2">${m.interval}</td>`;
-    months.forEach(mLabel => {
-      const mo    = (m.months||[]).find(x => x.month === mLabel);
-      const isNow = isCurrentMonth(mLabel);
-      let cls='empty', txt='', tip='';
+  months.forEach(function(m) {
+    html += '<th class="' + (isCurrentMonth(m) ? 'th-now' : '') + '">' + m + '</th>';
+  });
+  html += '</tr></thead><tbody>';
+
+  machines.forEach(function(m, i) {
+    html += '<tr>' +
+      '<td class="s0">' + (m.no || i + 1) + '</td>' +
+      '<td class="s1">' + m.mesin + '</td>' +
+      '<td class="s2">' + m.interval + '</td>';
+
+    months.forEach(function(mLabel) {
+      var mo    = (m.months || []).find(function(x) { return x.month === mLabel; });
+      var isNow = isCurrentMonth(mLabel);
+      var cls = 'empty', txt = '', tip = '';
 
       if (mo && mo.type) {
         if (mo.type === 'plan') {
-          cls='plan'; txt=mo.value||'●';
-          tip=mo.value?`Rencana: ${mo.value}`:'Rencana PM';
+          cls = 'plan';
+          txt = mo.value || '●';
+          tip = mo.value ? 'Rencana: ' + mo.value : 'Rencana PM';
         } else if (mo.type === 'actual') {
-          cls='actual'; txt=mo.value||'✓';
-          tip=mo.value?`Actual: ${mo.value}`:'Sudah dilaksanakan';
+          cls = 'actual';
+          txt = mo.value || '✓';
+          tip = mo.value ? 'Actual: ' + mo.value : 'Sudah dilaksanakan';
         } else if (mo.type === 'overdue') {
-          cls='overdue'; txt='!'; tip='OVERDUE — belum dilaksanakan!';
+          cls = 'overdue';
+          txt = '!';
+          tip = 'OVERDUE — belum dilaksanakan!';
         }
       }
 
-      html += `<td class="${isNow?'td-now':''}">
-        <div class="pm-cell ${cls}"${tip?` data-tip="${tip}"`:''}>${txt}</div>
-      </td>`;
+      html += '<td class="' + (isNow ? 'td-now' : '') + '">' +
+        '<div class="pm-cell ' + cls + '"' + (tip ? ' data-tip="' + tip + '"' : '') + '>' +
+        txt + '</div></td>';
     });
-    html += `</tr>`;
+
+    html += '</tr>';
   });
-  return html + `</tbody></table>`;
+
+  return html + '</tbody></table>';
 }
 
 // ── OVERVIEW ──────────────────────────────────────────
 function updateOverview(plants) {
-  let total=0, sched=0, done=0, over=0;
-  plants.forEach(p => {
+  var total = 0, sched = 0, done = 0, over = 0;
+  plants.forEach(function(p) {
     total += p.machines.length;
-    p.machines.forEach(m => (m.months||[]).forEach(mo => {
-      if (mo.type==='overdue') over++;
-      if (isCurrentMonth(mo.month)) {
-        if (mo.type==='plan')   sched++;
-        if (mo.type==='actual') done++;
-      }
-    }));
+    p.machines.forEach(function(m) {
+      (m.months || []).forEach(function(mo) {
+        if (mo.type === 'overdue') over++;
+        if (isCurrentMonth(mo.month)) {
+          if (mo.type === 'plan')   sched++;
+          if (mo.type === 'actual') done++;
+        }
+      });
+    });
   });
-  const s=(id,v)=>{const el=document.getElementById(id);if(el)el.textContent=v;};
-  s('ov-total',total);s('hero-total',total);
-  s('ov-sched',sched);s('hero-sched',sched);
-  s('ov-done',done);  s('hero-done',done);
-  s('ov-overdue',over);s('hero-overdue',over);
-  const rate=(sched+done)>0?Math.round(done/(done+sched)*100):(done>0?100:0);
-  s('ov-rate',`Completion rate ${rate}%`);
-  s('ov-month-label',currentMonthLabel());
+
+  function s(id, v) { var el = document.getElementById(id); if (el) el.textContent = v; }
+  s('ov-total',   total); s('hero-total',   total);
+  s('ov-sched',   sched); s('hero-sched',   sched);
+  s('ov-done',    done);  s('hero-done',    done);
+  s('ov-overdue', over);  s('hero-overdue', over);
+
+  var rate = (sched + done) > 0 ? Math.round(done / (done + sched) * 100) : (done > 0 ? 100 : 0);
+  s('ov-rate', 'Completion rate ' + rate + '%');
+  s('ov-month-label', currentMonthLabel());
 }
 
 // ── REMINDER ──────────────────────────────────────────
 function checkReminder(plants) {
-  const pending=[];
-  plants.forEach(p => p.machines.forEach(m => {
-    if((m.months||[]).some(mo=>isCurrentMonth(mo.month)&&mo.type==='plan'))
-      pending.push(`${p.plant} — ${m.mesin}`);
-  }));
-  const bar=document.getElementById('reminder-bar');
-  const body=document.getElementById('reminder-body');
-  if(pending.length>0&&bar&&body){
+  var pending = [];
+  plants.forEach(function(p) {
+    p.machines.forEach(function(m) {
+      if ((m.months || []).some(function(mo) {
+        return isCurrentMonth(mo.month) && mo.type === 'plan';
+      })) {
+        pending.push(p.plant + ' — ' + m.mesin);
+      }
+    });
+  });
+
+  var bar  = document.getElementById('reminder-bar');
+  var body = document.getElementById('reminder-body');
+  if (pending.length > 0 && bar && body) {
     bar.classList.add('show');
-    const shown=pending.slice(0,5).join(', ');
-    const more=pending.length>5?` +${pending.length-5} lainnya`:'';
-    body.innerHTML=`<strong>⚠️ ${pending.length} mesin PM belum dilaksanakan bulan ini:</strong><br>${shown}${more}`;
+    var shown = pending.slice(0, 5).join(', ');
+    var more  = pending.length > 5 ? ' +' + (pending.length - 5) + ' lainnya' : '';
+    body.innerHTML = '<strong>⚠️ ' + pending.length + ' mesin PM belum dilaksanakan bulan ini:</strong><br>' + shown + more;
   }
 }
 
 // ── FILTER ────────────────────────────────────────────
 function applyFilter() {
   if (!pmCache) return;
-  const fP=document.getElementById('sel-plant').value;
-  const fI=document.getElementById('sel-interval').value;
-  const fS=document.getElementById('sel-status').value;
-  const fQ=document.getElementById('inp-search').value.toLowerCase().trim();
+  var fP = document.getElementById('sel-plant').value;
+  var fI = document.getElementById('sel-interval').value;
+  var fS = document.getElementById('sel-status').value;
+  var fQ = document.getElementById('inp-search').value.toLowerCase().trim();
 
-  const filtered=pmCache.plants
-    .filter(p=>!fP||p.plant===fP)
-    .map(p=>({...p,machines:(p.machines||[]).filter(m=>{
-      if(fI&&String(m.interval).toUpperCase()!==fI) return false;
-      if(fQ&&!m.mesin.toLowerCase().includes(fQ)) return false;
-      if(fS&&!(m.months||[]).some(mo=>mo.type===fS)) return false;
-      return true;
-    })}))
-    .filter(p=>p.machines.length>0);
+  var filtered = pmCache.plants
+    .filter(function(p) { return !fP || p.plant === fP; })
+    .map(function(p) {
+      return Object.assign({}, p, {
+        machines: (p.machines || []).filter(function(m) {
+          if (fI && String(m.interval).toUpperCase() !== fI) return false;
+          if (fQ && !m.mesin.toLowerCase().includes(fQ))     return false;
+          if (fS && !(m.months || []).some(function(mo) { return mo.type === fS; })) return false;
+          return true;
+        })
+      });
+    })
+    .filter(function(p) { return p.machines.length > 0; });
+
   renderAll(filtered);
 }
 
 // ── UTILS ─────────────────────────────────────────────
-function collapseAll(){document.querySelectorAll('.plant-group').forEach(g=>g.classList.add('collapsed'));}
-function expandAll()  {document.querySelectorAll('.plant-group').forEach(g=>g.classList.remove('collapsed'));}
-function doRefresh()  {pmCache=null;loadData();}
-function doPrint()    {window.print();}
+function collapseAll() { document.querySelectorAll('.plant-group').forEach(function(g) { g.classList.add('collapsed'); }); }
+function expandAll()   { document.querySelectorAll('.plant-group').forEach(function(g) { g.classList.remove('collapsed'); }); }
+function doRefresh()   { pmCache = null; loadData(); }
+function doPrint()     { window.print(); }
 
 // ── PAGE LOADER ───────────────────────────────────────
-const loader=document.getElementById('pageLoader');
-const loaderPct=document.getElementById('loaderPct');
-const lsteps=['LOADING PM DATA...','CONNECTING...','ALMOST READY...','READY'];
-let lsi=0;
-const lti=setInterval(()=>{if(lsi<lsteps.length)loaderPct.textContent=lsteps[lsi++];},320);
-setTimeout(()=>{clearInterval(lti);loader.classList.add('hidden');},1400);
+var loader    = document.getElementById('pageLoader');
+var loaderPct = document.getElementById('loaderPct');
+var lsteps    = ['LOADING PM DATA...','CONNECTING...','ALMOST READY...','READY'];
+var lsi = 0;
+var lti = setInterval(function() {
+  if (lsi < lsteps.length) loaderPct.textContent = lsteps[lsi++];
+}, 320);
+setTimeout(function() { clearInterval(lti); loader.classList.add('hidden'); }, 1400);
 
 // ── CURSOR ────────────────────────────────────────────
-const cur=document.getElementById('cursor'),ring=document.getElementById('cursor-ring');
-let mx=0,my=0,rx=0,ry=0;
-document.addEventListener('mousemove',e=>{mx=e.clientX;my=e.clientY;cur.style.left=(mx-5)+'px';cur.style.top=(my-5)+'px';});
-(function anim(){rx+=(mx-rx-20)*.16;ry+=(my-ry-20)*.16;ring.style.left=rx+'px';ring.style.top=ry+'px';requestAnimationFrame(anim);})();
-document.querySelectorAll('a,button,.plant-header,.tb-btn,.ov-card,.stat-pill').forEach(el=>{
-  el.addEventListener('mouseenter',()=>{cur.classList.add('hover');ring.classList.add('hover');});
-  el.addEventListener('mouseleave',()=>{cur.classList.remove('hover');ring.classList.remove('hover');});
+var cur = document.getElementById('cursor');
+var ring = document.getElementById('cursor-ring');
+var mx = 0, my = 0, rx = 0, ry = 0;
+document.addEventListener('mousemove', function(e) {
+  mx = e.clientX; my = e.clientY;
+  cur.style.left  = (mx - 5) + 'px';
+  cur.style.top   = (my - 5) + 'px';
+});
+(function anim() {
+  rx += (mx - rx - 20) * .16;
+  ry += (my - ry - 20) * .16;
+  ring.style.left = rx + 'px';
+  ring.style.top  = ry + 'px';
+  requestAnimationFrame(anim);
+})();
+document.querySelectorAll('a,button,.plant-header,.tb-btn,.ov-card,.stat-pill').forEach(function(el) {
+  el.addEventListener('mouseenter', function() { cur.classList.add('hover');    ring.classList.add('hover'); });
+  el.addEventListener('mouseleave', function() { cur.classList.remove('hover'); ring.classList.remove('hover'); });
 });
 
 // ── CANVAS BG ─────────────────────────────────────────
-(function(){
-  const cv=document.getElementById('bg-canvas'),ctx=cv.getContext('2d');
-  let W,H,P=[];
-  function resize(){W=cv.width=innerWidth;H=cv.height=innerHeight;}
-  resize();window.addEventListener('resize',resize);
-  const cols=['#00d4ff','#0066ff','#00ff87','#a78bfa'];
-  for(let i=0;i<80;i++) P.push({x:Math.random()*2000,y:Math.random()*2000,vx:(Math.random()-.5)*.3,vy:(Math.random()-.5)*.3,r:Math.random()*1.2+.2,a:Math.random()*.4+.1,c:cols[Math.floor(Math.random()*4)]});
-  function draw(){
-    ctx.clearRect(0,0,W,H);
-    ctx.strokeStyle='rgba(0,80,180,0.03)';ctx.lineWidth=1;
-    const g=64;
-    for(let x=0;x<W+g;x+=g){ctx.beginPath();ctx.moveTo(x,0);ctx.lineTo(x,H);ctx.stroke();}
-    for(let y=0;y<H+g;y+=g){ctx.beginPath();ctx.moveTo(0,y);ctx.lineTo(W,y);ctx.stroke();}
-    P.forEach(p=>{p.x+=p.vx;p.y+=p.vy;if(p.x<0)p.x=W;if(p.x>W)p.x=0;if(p.y<0)p.y=H;if(p.y>H)p.y=0;ctx.beginPath();ctx.arc(p.x,p.y,p.r,0,Math.PI*2);ctx.fillStyle=p.c;ctx.globalAlpha=p.a;ctx.fill();});
-    ctx.globalAlpha=1;requestAnimationFrame(draw);
+(function() {
+  var cv  = document.getElementById('bg-canvas');
+  var ctx = cv.getContext('2d');
+  var W, H, P = [];
+  function resize() { W = cv.width = innerWidth; H = cv.height = innerHeight; }
+  resize();
+  window.addEventListener('resize', resize);
+  var cols = ['#00d4ff','#0066ff','#00ff87','#a78bfa'];
+  for (var i = 0; i < 80; i++) {
+    P.push({
+      x: Math.random() * 2000, y: Math.random() * 2000,
+      vx: (Math.random() - .5) * .3, vy: (Math.random() - .5) * .3,
+      r: Math.random() * 1.2 + .2, a: Math.random() * .4 + .1,
+      c: cols[Math.floor(Math.random() * 4)]
+    });
+  }
+  function draw() {
+    ctx.clearRect(0, 0, W, H);
+    ctx.strokeStyle = 'rgba(0,80,180,0.03)'; ctx.lineWidth = 1;
+    var g = 64;
+    for (var x = 0; x < W + g; x += g) { ctx.beginPath(); ctx.moveTo(x,0); ctx.lineTo(x,H); ctx.stroke(); }
+    for (var y = 0; y < H + g; y += g) { ctx.beginPath(); ctx.moveTo(0,y); ctx.lineTo(W,y); ctx.stroke(); }
+    P.forEach(function(p) {
+      p.x += p.vx; p.y += p.vy;
+      if (p.x < 0) p.x = W; if (p.x > W) p.x = 0;
+      if (p.y < 0) p.y = H; if (p.y > H) p.y = 0;
+      ctx.beginPath(); ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
+      ctx.fillStyle = p.c; ctx.globalAlpha = p.a; ctx.fill();
+    });
+    ctx.globalAlpha = 1;
+    requestAnimationFrame(draw);
   }
   draw();
 })();
 
 // ── NAVBAR ────────────────────────────────────────────
-document.getElementById('navToggle').addEventListener('click',()=>{document.getElementById('navLinks').classList.toggle('open');});
+document.getElementById('navToggle').addEventListener('click', function() {
+  document.getElementById('navLinks').classList.toggle('open');
+});
 
 // ── SCROLL REVEAL ─────────────────────────────────────
-const revealObs=new IntersectionObserver(entries=>{
-  entries.forEach(e=>{if(e.isIntersecting){e.target.classList.add('visible');revealObs.unobserve(e.target);}});
-},{threshold:.08});
-document.querySelectorAll('.reveal').forEach(el=>revealObs.observe(el));
+var revealObs = new IntersectionObserver(function(entries) {
+  entries.forEach(function(e) {
+    if (e.isIntersecting) { e.target.classList.add('visible'); revealObs.unobserve(e.target); }
+  });
+}, { threshold: .08 });
+document.querySelectorAll('.reveal').forEach(function(el) { revealObs.observe(el); });
 
 // ── INIT ──────────────────────────────────────────────
-window.addEventListener('load',()=>setTimeout(loadData,1500));
-if('serviceWorker' in navigator){
-  window.addEventListener('load',()=>navigator.serviceWorker.register('/gardahitam/sw.js').catch(()=>{}));
+window.addEventListener('load', function() { setTimeout(loadData, 1500); });
+if ('serviceWorker' in navigator) {
+  window.addEventListener('load', function() {
+    navigator.serviceWorker.register('/gardahitam/sw.js').catch(function() {});
+  });
 }
 </script>
 </body>
