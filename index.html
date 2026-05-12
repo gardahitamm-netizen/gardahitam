@@ -629,7 +629,8 @@ body{font-family:'Space Grotesk',sans-serif;background:var(--bg);color:var(--tex
       <div class="panduan-tab" role="tab" onclick="switchPanduan(1)" id="ptab-1"><span class="tab-icon">⚡</span>Drive Monitor</div>
       <div class="panduan-tab" role="tab" onclick="switchPanduan(2)" id="ptab-2"><span class="tab-icon">🤝</span>Share Job</div>
       <div class="panduan-tab" role="tab" onclick="switchPanduan(3)" id="ptab-3"><span class="tab-icon">🖥️</span>I/O PLC</div>
-      <div class="panduan-tab" role="tab" onclick="switchPanduan(4)" id="ptab-4"><span class="tab-icon">💡</span>Tips & FAQ</div>
+      <div class="panduan-tab" role="tab" onclick="switchPanduan(4)" id="ptab-4"><span class="tab-icon">📅</span>Jadwal PM</div>
+      <div class="panduan-tab" role="tab" onclick="switchPanduan(5)" id="ptab-5"><span class="tab-icon">💡</span>Tips & FAQ</div>
     </div>
 
     <div class="panduan-body">
@@ -668,6 +669,14 @@ body{font-family:'Space Grotesk',sans-serif;background:var(--bg);color:var(--tex
                 <div class="p-step-title">I/O PLC</div>
                 <div class="p-step-desc">Akses daftar tag PLC Input/Output untuk troubleshooting kontrol. Cari nama tag, alamat, tipe, dan komentar dari file Excel yang tersimpan di Google Drive.</div>
                 <span class="p-step-tag tag-p">Kontrol</span>
+              </div>
+            </div>
+            <div class="p-step" style="--step-color:#ffb800">
+              <div class="p-step-num">📅</div>
+              <div class="p-step-body">
+                <div class="p-step-title">Jadwal PM</div>
+                <div class="p-step-desc">Pantau rencana dan realisasi Preventive Maintenance drive semua plant. Lihat status Plan, Actual, dan Overdue per mesin per bulan, filter berdasarkan plant atau interval PM.</div>
+                <span class="p-step-tag tag-a">PM Drive Care</span>
               </div>
             </div>
             <div class="p-step" style="--step-color:#ffb800">
@@ -1000,7 +1009,109 @@ body{font-family:'Space Grotesk',sans-serif;background:var(--bg);color:var(--tex
       </div>
 
       <!-- PANEL 4: TIPS & FAQ -->
+     <!-- PANEL 4: JADWAL PM -->
       <div class="panduan-panel" id="ppanel-4">
+        <div class="panel-hero">
+          <div class="panel-hero-icon" style="background:rgba(255,184,0,0.08);border-color:rgba(255,184,0,0.25)">📅</div>
+          <div class="panel-hero-text">
+            <h3>Jadwal PM — Panduan Lengkap</h3>
+            <p>Pantau rencana dan realisasi Preventive Maintenance drive seluruh mixing center. Data diambil langsung dari Google Sheets aktif via Google Apps Script.</p>
+          </div>
+        </div>
+        <div class="panel-body">
+          <div class="panel-sub-title">Cara Membaca Jadwal PM</div>
+          <div class="steps-grid">
+            <div class="p-step" style="--step-color:#00dd60">
+              <div class="p-step-num">🟢</div>
+              <div class="p-step-body">
+                <div class="p-step-title">Plan / Rencana</div>
+                <div class="p-step-desc">Sel berwarna hijau — PM sudah dijadwalkan untuk bulan tersebut namun belum dilaksanakan. Perlu ditindaklanjuti sebelum jatuh tempo.</div>
+                <span class="p-step-tag tag-g">Hijau di spreadsheet</span>
+              </div>
+            </div>
+            <div class="p-step" style="--step-color:#6aabff">
+              <div class="p-step-num">🔵</div>
+              <div class="p-step-body">
+                <div class="p-step-title">Actual / Terlaksana</div>
+                <div class="p-step-desc">Sel berwarna biru — PM sudah dilaksanakan sesuai jadwal atau sudah diselesaikan. Tercatat dalam histori realisasi.</div>
+                <span class="p-step-tag tag-c">Biru di spreadsheet</span>
+              </div>
+            </div>
+            <div class="p-step" style="--step-color:#ff6868">
+              <div class="p-step-num">🔴</div>
+              <div class="p-step-body">
+                <div class="p-step-title">Overdue</div>
+                <div class="p-step-desc">Sel berwarna merah — PM sudah melewati jadwal dan belum dilaksanakan. Perlu tindakan segera agar tidak mengganggu keandalan mesin.</div>
+                <span class="p-step-tag tag-r">Merah di spreadsheet</span>
+              </div>
+            </div>
+            <div class="p-step" style="--step-color:#ffb800">
+              <div class="p-step-num">📋</div>
+              <div class="p-step-body">
+                <div class="p-step-title">Interval PM</div>
+                <div class="p-step-desc">Kolom INT menunjukkan frekuensi PM: <strong>3M</strong> = setiap 3 bulan, <strong>6M</strong> = setiap 6 bulan, <strong>12M</strong> = setiap 1 tahun. Gunakan filter interval untuk fokus pada jadwal tertentu.</div>
+                <span class="p-step-tag tag-a">3M / 6M / 12M</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="panel-sub-title">Menggunakan Filter & Navigasi</div>
+          <div class="feat-grid-p">
+            <div class="feat-p"><span class="feat-p-icon">🏭</span><div class="feat-p-title">Filter Plant</div><div class="feat-p-desc">Pilih plant tertentu (MCA, MCC, MCD, dll) dari dropdown untuk menampilkan hanya jadwal PM plant tersebut.</div></div>
+            <div class="feat-p"><span class="feat-p-icon">🔁</span><div class="feat-p-title">Filter Interval</div><div class="feat-p-desc">Saring mesin berdasarkan interval PM: 3 bulan, 6 bulan, atau 12 bulan sesuai kebutuhan inspeksi.</div></div>
+            <div class="feat-p"><span class="feat-p-icon">🔍</span><div class="feat-p-title">Cari Mesin</div><div class="feat-p-desc">Ketik nama mesin di kotak pencarian untuk langsung menemukan jadwal PM mesin tertentu di seluruh plant.</div></div>
+            <div class="feat-p"><span class="feat-p-icon">📊</span><div class="feat-p-title">Filter Status</div><div class="feat-p-desc">Tampilkan hanya mesin dengan status tertentu: Ada Rencana, Sudah Dilaksanakan, atau Overdue.</div></div>
+            <div class="feat-p"><span class="feat-p-icon">⊟ ⊞</span><div class="feat-p-title">Tutup / Buka Semua</div><div class="feat-p-desc">Klik "Tutup Semua" untuk collapse semua group plant, atau "Buka Semua" untuk expand sekaligus.</div></div>
+            <div class="feat-p"><span class="feat-p-icon">🖨️</span><div class="feat-p-title">Cetak PDF</div><div class="feat-p-desc">Klik tombol Cetak untuk mencetak jadwal PM yang sedang tampil. Semua filter tetap berlaku saat cetak.</div></div>
+          </div>
+
+          <div class="panel-sub-title">Setup Awal (untuk Developer / Admin)</div>
+          <div class="steps-grid">
+            <div class="p-step" style="--step-color:#00d4ff">
+              <div class="p-step-num">1</div>
+              <div class="p-step-body">
+                <div class="p-step-title">Buka Google Apps Script</div>
+                <div class="p-step-desc">Buka spreadsheet PM Drive Care → menu Extensions → Apps Script. Paste kode Code.gs yang sudah disiapkan ke editor.</div>
+              </div>
+            </div>
+            <div class="p-step" style="--step-color:#00d4ff">
+              <div class="p-step-num">2</div>
+              <div class="p-step-body">
+                <div class="p-step-title">Set SPREADSHEET_ID & PLANT_SHEETS</div>
+                <div class="p-step-desc">Di baris atas Code.gs, isi <code>SPREADSHEET_ID</code> dengan ID spreadsheet PM kamu, dan sesuaikan <code>PLANT_SHEETS</code> dengan nama-nama tab sheet yang ada.</div>
+              </div>
+            </div>
+            <div class="p-step" style="--step-color:#00d4ff">
+              <div class="p-step-num">3</div>
+              <div class="p-step-body">
+                <div class="p-step-title">Deploy sebagai Web App</div>
+                <div class="p-step-desc">Klik Deploy → New deployment → pilih tipe "Web App" → Execute as: Me → Who has access: Anyone → klik Deploy. Salin URL yang muncul.</div>
+                <span class="p-step-tag tag-c">URL format: script.google.com/macros/s/.../exec</span>
+              </div>
+            </div>
+            <div class="p-step" style="--step-color:#00d4ff">
+              <div class="p-step-num">4</div>
+              <div class="p-step-body">
+                <div class="p-step-title">Tempel URL ke jadwalpm.html</div>
+                <div class="p-step-desc">Di file jadwalpm.html, cari baris <code>const GAS_URL = 'GANTI_DENGAN_WEB_APP_URL_GAS_KAMU';</code> dan ganti nilai tersebut dengan URL deploy yang baru disalin.</div>
+                <span class="p-step-tag tag-g">Selesai! Halaman siap digunakan</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="p-infobox amber">
+            <span class="p-infobox-icon">🎨</span>
+            <div class="p-infobox-text"><strong>Warna di spreadsheet menentukan status:</strong> Sistem membaca warna background sel secara otomatis — Hijau (#00b050 atau serupa) = Plan, Biru (#4472c4 atau serupa) = Actual, Merah (#FF0000 atau serupa) = Overdue. Pastikan pewarnaan sel di spreadsheet konsisten agar pembacaan status akurat.</div>
+          </div>
+          <div class="p-infobox cyan">
+            <span class="p-infobox-icon">⟳</span>
+            <div class="p-infobox-text"><strong>Data tidak muncul?</strong> Klik tombol "⟳ Refresh" di toolbar. Jika masih gagal, pastikan URL GAS_URL sudah diset dengan benar di file jadwalpm.html, dan deployment Apps Script sudah menggunakan akses "Anyone".</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- PANEL 5: TIPS & FAQ -->
+      <div class="panduan-panel" id="ppanel-5">
         <div class="panel-hero">
           <div class="panel-hero-icon" style="background:rgba(255,184,0,0.08);border-color:rgba(255,184,0,0.2)">💡</div>
           <div class="panel-hero-text">
@@ -1148,6 +1259,7 @@ body{font-family:'Space Grotesk',sans-serif;background:var(--bg);color:var(--tex
       <a href="drives.html" class="btn-glow">⚡ Drive Monitor</a>
       <a href="sharejob.html" class="btn-ghost"><span>🤝 Share Job</span></a>
       <a href="ioPlc.html" class="btn-ghost"><span>🖥️ I/O PLC</span></a>
+      <a href="jadwalpm.html" class="btn-ghost"><span>📅 Jadwal PM</span></a>
     </div>
   </div>
 </section>
@@ -1166,6 +1278,7 @@ body{font-family:'Space Grotesk',sans-serif;background:var(--bg);color:var(--tex
         <li><a href="drives.html">Drive Monitor</a></li>
         <li><a href="sharejob.html">Share Job</a></li>
         <li><a href="ioPlc.html">I/O PLC</a></li>
+        <li><a href="jadwalpm.html">Jadwal PM</a></li>
       </ul>
     </div>
     <div>
