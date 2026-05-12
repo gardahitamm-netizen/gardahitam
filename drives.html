@@ -1329,15 +1329,13 @@ el.innerHTML=`<div class="plant-grid">${plants.map((p,i)=>plantCard(p,i)).join('
   }catch(err){el.innerHTML=errHTML(err.message,renderPlantPage);}
 }
 function plantCard(p,i){
-}
   const m=PLANT_META[p.plant]||{desc:p.label||'',color:'#4d9fff'};
   const gl=S.cache[p.plant+'_groupList']||[];
   const tag=gl.length?gl.length+' Mixing':'Memuat…';
   const pools=getPoolSheets(p.plant);
   const abwPool=pools.find(x=>x.startsWith('abw'));
   const abwLabel=abwPool?abwPool.toUpperCase():'';
-  const abwColors={ABW1:'#c084fc',ABW4:'#c084fc',ABW6:'#c084fc'};
-  const abwColor=abwColors[abwLabel]||'#c084fc';
+  const abwColor='#c084fc';
   return`<div class="plant-card" onclick="navTo('mixing','${p.plant}')" style="animation-delay:${i*0.06}s">
     <div class="plant-card-top"><div class="plant-card-corner" style="background:${m.color};box-shadow:0 0 8px ${m.color}"></div>
     <div class="plant-card-id">PLANT ID · ${String(i+1).padStart(2,'0')}</div>
@@ -1350,12 +1348,12 @@ function plantCard(p,i){
     </div>
   </div>`;
 }
-  function abwCard(abwName, plantList, i){
+
+function abwCard(abwName, plantList, i){
   const colors={abw1:'#c084fc',abw4:'#f472b6',abw6:'#a78bfa'};
   const color=colors[abwName]||'#c084fc';
   const label=abwName.toUpperCase();
   const desc={abw1:'Spare Workshop ABW1',abw4:'Spare Workshop ABW4',abw6:'Spare Workshop ABW6'}[abwName]||'Spare Workshop';
-  // Klik ke plant pertama yang punya abw ini, langsung ke tab pool
   const firstPlant=plantList[0];
   const plantListLabel=plantList.join(', ');
   return`<div class="plant-card" onclick="navToPool('${firstPlant}','${abwName}')" style="animation-delay:${i*0.06}s;border-color:rgba(192,132,252,.3);">
@@ -1370,6 +1368,10 @@ function plantCard(p,i){
       <span class="plant-card-arr" style="color:${color}">→</span>
     </div>
   </div>`;
+}
+
+// ══════════════════════════════════════════════════════════
+//  MIXING PAGE
 // ══════════════════════════════════════════════════════════
 //  MIXING PAGE
 // ══════════════════════════════════════════════════════════
