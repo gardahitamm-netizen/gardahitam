@@ -20,19 +20,26 @@ html{scroll-behavior:smooth}
   --panel:rgba(255,255,255,0.03);
   --border:rgba(0,212,255,0.12);--border2:rgba(0,212,255,0.25);
   --text:#f0f8ff;--text2:rgba(240,248,255,0.7);--text3:rgba(240,248,255,0.4);
-  --pm-plan:#00dd60;--pm-plan-bg:rgba(0,200,80,0.15);--pm-plan-border:rgba(0,200,80,0.45);
-  --pm-actual:#6aabff;--pm-actual-bg:rgba(68,130,210,0.18);--pm-actual-border:rgba(100,160,245,0.45);
-  --pm-overdue:#ff6868;--pm-overdue-bg:rgba(255,50,50,0.15);--pm-overdue-border:rgba(255,80,80,0.4);
+  --pm-plan:#00dd60;--pm-plan-bg:rgba(0,200,80,0.18);--pm-plan-border:rgba(0,200,80,0.5);
+  --pm-actual:#6aabff;--pm-actual-bg:rgba(68,130,210,0.2);--pm-actual-border:rgba(100,160,245,0.5);
+  --pm-overdue:#ff6868;--pm-overdue-bg:rgba(255,50,50,0.18);--pm-overdue-border:rgba(255,80,80,0.5);
+  --pm-empty:rgba(255,255,255,0.02);--pm-empty-border:rgba(255,255,255,0.07);
 }
 body{font-family:'Space Grotesk',sans-serif;background:var(--bg);color:var(--text);overflow-x:hidden;cursor:none}
-#cursor{position:fixed;width:10px;height:10px;background:var(--cyan);border-radius:50%;pointer-events:none;z-index:99999;mix-blend-mode:screen;transition:transform .08s,background .2s}
+
+/* CURSOR */
+#cursor{position:fixed;width:10px;height:10px;background:var(--cyan);border-radius:50%;pointer-events:none;z-index:99999;mix-blend-mode:screen;transition:transform .08s}
 #cursor-ring{position:fixed;width:40px;height:40px;border:1.5px solid rgba(0,212,255,0.5);border-radius:50%;pointer-events:none;z-index:99998;transition:all .18s ease}
 #cursor.hover{transform:scale(3);background:rgba(0,212,255,0.3)}
 #cursor-ring.hover{transform:scale(0.5);opacity:0}
+
+/* CANVAS */
 #bg-canvas{position:fixed;inset:0;z-index:0;pointer-events:none;opacity:.6}
 .noise{position:fixed;inset:0;z-index:1;opacity:.025;pointer-events:none;background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");background-size:200px}
-.scanline-top{position:fixed;top:0;left:0;right:0;height:2px;z-index:200;background:linear-gradient(90deg,transparent,var(--cyan),var(--cyan2),var(--cyan),transparent);animation:scanPulse 3s ease-in-out infinite;box-shadow:0 0 20px var(--cyan),0 0 60px rgba(0,212,255,0.4)}
+.scanline-top{position:fixed;top:0;left:0;right:0;height:2px;z-index:200;background:linear-gradient(90deg,transparent,var(--cyan),var(--cyan),transparent);animation:scanPulse 3s ease-in-out infinite;box-shadow:0 0 20px var(--cyan)}
 @keyframes scanPulse{0%,100%{opacity:1}50%{opacity:.6}}
+
+/* NAVBAR */
 .navbar{position:fixed;top:0;left:0;right:0;z-index:100;height:64px;display:flex;align-items:center;justify-content:space-between;padding:0 48px;backdrop-filter:blur(20px);background:rgba(5,8,16,0.85);border-bottom:1px solid var(--border)}
 .brand{display:flex;align-items:center;gap:14px;text-decoration:none}
 .brand-hex{width:38px;height:38px;clip-path:polygon(50% 0%,100% 25%,100% 75%,50% 100%,0% 75%,0% 25%);background:linear-gradient(135deg,var(--cyan),#0055ff);display:flex;align-items:center;justify-content:center;font-size:15px;animation:hexGlow 3s ease-in-out infinite}
@@ -45,6 +52,8 @@ body{font-family:'Space Grotesk',sans-serif;background:var(--bg);color:var(--tex
 .nav-link.active{color:#fff;background:rgba(255,255,255,0.06);border-color:rgba(255,255,255,0.1)}
 .nav-toggle{display:none;flex-direction:column;gap:5px;cursor:none;padding:4px;background:none;border:none}
 .nav-toggle span{display:block;width:22px;height:2px;background:var(--text2);border-radius:2px;transition:all .3s}
+
+/* PAGE LOADER */
 .page-loader{position:fixed;inset:0;background:var(--bg);z-index:99999;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:24px;transition:opacity .6s,visibility .6s}
 .page-loader.hidden{opacity:0;visibility:hidden}
 .loader-logo{font-family:'Orbitron',monospace;font-size:20px;font-weight:900;color:#fff;letter-spacing:.3em}
@@ -53,7 +62,11 @@ body{font-family:'Space Grotesk',sans-serif;background:var(--bg);color:var(--tex
 .loader-bar{height:100%;background:linear-gradient(90deg,var(--cyan),#0066ff);border-radius:2px;animation:loadProg 1.2s ease forwards;box-shadow:0 0 8px var(--cyan)}
 @keyframes loadProg{0%{width:0}70%{width:80%}100%{width:100%}}
 .loader-pct{font-family:'JetBrains Mono',monospace;font-size:11px;color:var(--text3);letter-spacing:.1em}
+
+/* MAIN */
 .main{padding-top:64px;min-height:100vh;position:relative;z-index:2}
+
+/* PAGE HERO */
 .page-hero{padding:52px 48px 40px;border-bottom:1px solid rgba(0,212,255,0.08);background:linear-gradient(180deg,rgba(0,212,255,0.03),transparent);position:relative;overflow:hidden}
 .page-hero::before{content:'';position:absolute;top:-60px;right:-60px;width:400px;height:400px;background:radial-gradient(circle,rgba(0,212,255,0.04),transparent 70%);pointer-events:none}
 .page-hero-inner{max-width:1340px;margin:0 auto;display:flex;align-items:flex-end;justify-content:space-between;gap:24px;flex-wrap:wrap}
@@ -67,7 +80,11 @@ body{font-family:'Space Grotesk',sans-serif;background:var(--bg);color:var(--tex
 .stat-pill:hover{border-color:var(--border2)}
 .stat-pill-num{font-family:'Orbitron',monospace;font-size:20px;font-weight:900;color:#fff}
 .stat-pill-lbl{font-family:'JetBrains Mono',monospace;font-size:9px;color:var(--text3);text-transform:uppercase;letter-spacing:.15em;line-height:1.4}
+
+/* CONTENT */
 .content{padding:32px 48px 80px;max-width:1340px;margin:0 auto}
+
+/* OVERVIEW CARDS */
 .overview-row{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-bottom:28px}
 .ov-card{padding:22px 24px;background:var(--panel);border:1px solid rgba(255,255,255,0.07);border-radius:14px;position:relative;overflow:hidden;transition:all .3s;cursor:default}
 .ov-card:hover{transform:translateY(-3px);border-color:rgba(0,212,255,0.18)}
@@ -77,6 +94,8 @@ body{font-family:'Space Grotesk',sans-serif;background:var(--bg);color:var(--tex
 .ov-card:hover .ov-num{color:var(--oc,#00d4ff);text-shadow:0 0 24px var(--oc)}
 .ov-lbl{font-family:'JetBrains Mono',monospace;font-size:9px;color:var(--text3);text-transform:uppercase;letter-spacing:.18em}
 .ov-sub{font-size:11px;color:var(--text3);margin-top:5px}
+
+/* REMINDER */
 .reminder-bar{display:none;gap:12px;padding:14px 20px;border-radius:10px;background:rgba(255,184,0,0.06);border:1px solid rgba(255,184,0,0.28);margin-bottom:20px;align-items:flex-start}
 .reminder-bar.show{display:flex;animation:slideDown .4s ease}
 @keyframes slideDown{from{opacity:0;transform:translateY(-8px)}to{opacity:1;transform:none}}
@@ -84,12 +103,13 @@ body{font-family:'Space Grotesk',sans-serif;background:var(--bg);color:var(--tex
 .reminder-body{font-size:12px;color:var(--text2);line-height:1.7}
 .reminder-body strong{color:#ffb800}
 
-/* ── ERROR BOX ── */
-.error-box{padding:32px 28px;border-radius:14px;background:rgba(255,68,68,0.05);border:1px solid rgba(255,68,68,0.25);margin-bottom:20px}
-.error-title{font-family:'Orbitron',monospace;font-size:14px;font-weight:700;color:#ff6868;margin-bottom:12px}
-.error-detail{font-family:'JetBrains Mono',monospace;font-size:11px;color:var(--text3);line-height:1.8;margin-bottom:16px;background:rgba(0,0,0,0.3);padding:12px 16px;border-radius:8px;border:1px solid rgba(255,255,255,0.05)}
+/* ERROR BOX */
+.error-box{padding:28px;border-radius:14px;background:rgba(255,68,68,0.05);border:1px solid rgba(255,68,68,0.25);margin-bottom:20px;display:none}
+.error-title{font-family:'Orbitron',monospace;font-size:13px;font-weight:700;color:#ff6868;margin-bottom:10px}
+.error-detail{font-family:'JetBrains Mono',monospace;font-size:11px;color:var(--text3);line-height:1.8;margin-bottom:14px;background:rgba(0,0,0,0.3);padding:10px 14px;border-radius:8px}
 .error-actions{display:flex;gap:10px;flex-wrap:wrap}
 
+/* TOOLBAR */
 .toolbar{display:flex;gap:10px;align-items:center;flex-wrap:wrap;padding:14px 18px;background:rgba(255,255,255,0.02);border:1px solid var(--border);border-radius:12px;margin-bottom:24px}
 .tb-label{font-family:'JetBrains Mono',monospace;font-size:10px;color:var(--text3);letter-spacing:.12em;text-transform:uppercase;white-space:nowrap}
 .tb-select,.tb-input{background:rgba(0,0,0,0.45);border:1px solid rgba(0,212,255,0.2);color:var(--text);font-family:'JetBrains Mono',monospace;font-size:11px;padding:7px 12px;border-radius:8px;outline:none;cursor:pointer;transition:border-color .2s}
@@ -102,14 +122,18 @@ body{font-family:'Space Grotesk',sans-serif;background:var(--bg);color:var(--tex
 .tb-btn.cyan:hover{background:rgba(0,212,255,0.16);box-shadow:0 0 14px rgba(0,212,255,0.2)}
 .tb-btn.ghost{border-color:rgba(255,255,255,0.1);color:var(--text3)}
 .tb-btn.ghost:hover{border-color:rgba(255,255,255,0.25);color:var(--text2)}
+
+/* LEGEND */
 .legend-strip{display:flex;align-items:center;gap:8px;flex-wrap:wrap;margin-bottom:20px}
 .leg-item{display:flex;align-items:center;gap:7px;padding:5px 14px;border-radius:20px;font-family:'JetBrains Mono',monospace;font-size:10px;font-weight:700;letter-spacing:.1em}
-.leg-item.plan  {background:rgba(0,200,80,0.08);border:1px solid rgba(0,200,80,0.25);color:var(--pm-plan)}
-.leg-item.actual{background:rgba(68,130,210,0.1);border:1px solid rgba(68,130,210,0.3);color:var(--pm-actual)}
+.leg-item.plan   {background:rgba(0,200,80,0.08);border:1px solid rgba(0,200,80,0.25);color:var(--pm-plan)}
+.leg-item.actual {background:rgba(68,130,210,0.1);border:1px solid rgba(68,130,210,0.3);color:var(--pm-actual)}
 .leg-item.overdue{background:rgba(255,60,60,0.08);border:1px solid rgba(255,60,60,0.25);color:var(--pm-overdue)}
 .leg-dot{width:8px;height:8px;border-radius:50%;flex-shrink:0}
 .leg-sep{flex:1}
 .last-upd{font-family:'JetBrains Mono',monospace;font-size:10px;color:var(--text3)}
+
+/* PLANT GROUP */
 .plant-group{margin-bottom:20px;border:1px solid rgba(255,255,255,0.07);border-radius:16px;overflow:hidden;transition:border-color .3s}
 .plant-group:hover{border-color:rgba(0,212,255,0.15)}
 .plant-header{display:flex;align-items:center;gap:14px;padding:14px 22px;background:rgba(0,212,255,0.03);border-bottom:1px solid rgba(255,255,255,0.05);cursor:pointer;user-select:none;transition:background .2s}
@@ -123,65 +147,129 @@ body{font-family:'Space Grotesk',sans-serif;background:var(--bg);color:var(--tex
 .p-pill.plan   {background:rgba(0,200,80,0.1);border:1px solid rgba(0,200,80,0.3);color:var(--pm-plan)}
 .p-pill.actual {background:rgba(68,130,210,0.1);border:1px solid rgba(68,130,210,0.3);color:var(--pm-actual)}
 .p-pill.overdue{background:rgba(255,60,60,0.1);border:1px solid rgba(255,60,60,0.3);color:var(--pm-overdue)}
-.p-pill.total  {background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.1);color:var(--text3)}
 .plant-toggle{margin-left:auto;color:var(--text3);font-size:18px;transition:transform .3s;flex-shrink:0}
 .plant-group.collapsed .plant-toggle{transform:rotate(-90deg)}
-.plant-body{overflow:hidden;max-height:3000px;opacity:1;transition:max-height .45s ease,opacity .3s ease}
+.plant-body{overflow:hidden;max-height:4000px;opacity:1;transition:max-height .45s ease,opacity .3s ease}
 .plant-group.collapsed .plant-body{max-height:0;opacity:0}
+
+/* TABLE */
 .tbl-wrap{overflow-x:auto;background:rgba(5,10,22,0.4)}
 .tbl-wrap::-webkit-scrollbar{height:5px}
 .tbl-wrap::-webkit-scrollbar-track{background:rgba(255,255,255,0.02)}
 .tbl-wrap::-webkit-scrollbar-thumb{background:rgba(0,212,255,0.2);border-radius:3px}
-table.pm{width:100%;border-collapse:collapse;font-size:12px;min-width:860px}
-table.pm thead tr{background:rgba(0,212,255,0.03);border-bottom:1px solid rgba(0,212,255,0.12)}
-table.pm thead th{padding:10px 8px;font-family:'JetBrains Mono',monospace;font-size:9px;font-weight:700;color:var(--cyan);letter-spacing:.15em;text-transform:uppercase;text-align:center;white-space:nowrap;border-right:1px solid rgba(255,255,255,0.04);position:sticky;top:0;background:rgba(8,13,24,.98);z-index:2}
-table.pm thead th.s0{left:0;text-align:left;min-width:32px;z-index:3}
-table.pm thead th.s1{left:32px;text-align:left;min-width:90px;z-index:3}
-table.pm thead th.s2{left:122px;text-align:left;min-width:54px;z-index:3}
-table.pm thead th.th-now{background:rgba(0,212,255,0.1)!important;color:#fff!important;position:relative}
-table.pm thead th.th-now::after{content:'NOW';position:absolute;top:0;right:0;font-size:7px;background:var(--cyan);color:#020408;padding:1px 4px;border-radius:0 0 0 4px;font-weight:900;letter-spacing:.06em}
+
+table.pm{width:100%;border-collapse:collapse;font-size:12px;min-width:900px}
+table.pm thead tr{background:rgba(0,212,255,0.03);border-bottom:1px solid rgba(0,212,255,0.15)}
+table.pm thead th{
+  padding:10px 6px;font-family:'JetBrains Mono',monospace;font-size:10px;font-weight:700;
+  color:var(--cyan);letter-spacing:.12em;text-transform:uppercase;text-align:center;
+  white-space:nowrap;border-right:1px solid rgba(255,255,255,0.04);
+  position:sticky;top:0;background:rgba(8,13,24,.98);z-index:2
+}
+table.pm thead th.s0{left:0;text-align:left;min-width:36px;z-index:3}
+table.pm thead th.s1{left:36px;text-align:left;min-width:96px;z-index:3}
+table.pm thead th.s2{left:132px;text-align:left;min-width:48px;z-index:3}
+table.pm thead th.th-now{background:rgba(0,212,255,0.12)!important;color:#fff!important;position:relative}
+table.pm thead th.th-now::after{content:'NOW';position:absolute;top:0;right:0;font-size:7px;background:var(--cyan);color:#020408;padding:1px 4px;border-radius:0 0 0 4px;font-weight:900}
+
 table.pm tbody tr{border-bottom:1px solid rgba(255,255,255,0.03);transition:background .15s}
-table.pm tbody tr:hover{background:rgba(0,212,255,0.025)}
-table.pm tbody td{padding:8px 8px;color:var(--text2);text-align:center;border-right:1px solid rgba(255,255,255,0.03);vertical-align:middle}
+table.pm tbody tr:hover{background:rgba(0,212,255,0.03)}
+table.pm tbody td{padding:7px 6px;color:var(--text2);text-align:center;border-right:1px solid rgba(255,255,255,0.03);vertical-align:middle}
 table.pm tbody td.s0{font-family:'JetBrains Mono',monospace;font-size:10px;color:var(--text3);position:sticky;left:0;background:rgba(8,13,24,.98);z-index:1}
-table.pm tbody td.s1{font-weight:700;color:#fff;font-size:13px;text-align:left;white-space:nowrap;position:sticky;left:32px;background:rgba(8,13,24,.98);z-index:1}
-table.pm tbody td.s2{font-family:'JetBrains Mono',monospace;font-size:10px;color:var(--amber);text-align:left;position:sticky;left:122px;background:rgba(8,13,24,.98);z-index:1}
+table.pm tbody td.s1{font-weight:700;color:#fff;font-size:13px;text-align:left;white-space:nowrap;position:sticky;left:36px;background:rgba(8,13,24,.98);z-index:1}
+table.pm tbody td.s2{font-family:'JetBrains Mono',monospace;font-size:10px;color:var(--amber);text-align:left;position:sticky;left:132px;background:rgba(8,13,24,.98);z-index:1}
 table.pm tbody tr:hover td.s0,
 table.pm tbody tr:hover td.s1,
 table.pm tbody tr:hover td.s2{background:rgba(11,17,32,.99)}
 table.pm tbody td.td-now{background:rgba(0,212,255,0.02)}
-.pm-cell{width:56px;height:30px;border-radius:6px;display:flex;align-items:center;justify-content:center;font-family:'JetBrains Mono',monospace;font-size:9px;font-weight:700;margin:0 auto;position:relative;transition:transform .2s,box-shadow .2s;cursor:default;letter-spacing:.02em}
-.pm-cell:hover{transform:scale(1.2);z-index:20}
-.pm-cell.plan   {background:var(--pm-plan-bg);border:1px solid var(--pm-plan-border);color:var(--pm-plan);box-shadow:0 0 6px rgba(0,200,80,0.1)}
-.pm-cell.actual {background:var(--pm-actual-bg);border:1px solid var(--pm-actual-border);color:var(--pm-actual);box-shadow:0 0 6px rgba(68,130,210,0.1)}
-.pm-cell.overdue{background:var(--pm-overdue-bg);border:1px solid var(--pm-overdue-border);color:var(--pm-overdue);animation:overduePulse 2.2s ease-in-out infinite}
-.pm-cell.empty  {background:transparent;border:1px solid rgba(255,255,255,0.04);pointer-events:none}
-@keyframes overduePulse{0%,100%{box-shadow:0 0 5px rgba(255,50,50,0.1)}50%{box-shadow:0 0 15px rgba(255,50,50,0.4)}}
-.pm-cell[data-tip]:hover::after{content:attr(data-tip);position:absolute;bottom:calc(100%+8px);left:50%;transform:translateX(-50%);background:rgba(5,8,16,.97);border:1px solid var(--border2);border-radius:6px;padding:5px 10px;font-size:10px;color:var(--text);white-space:nowrap;z-index:100;pointer-events:none;font-family:'JetBrains Mono',monospace;box-shadow:0 4px 20px rgba(0,0,0,.5)}
+
+/* PM CELL */
+.pm-cell{
+  min-width:60px;height:32px;border-radius:6px;
+  display:flex;align-items:center;justify-content:center;
+  font-family:'JetBrains Mono',monospace;font-size:9px;font-weight:700;
+  margin:0 auto;position:relative;transition:transform .2s,box-shadow .2s;
+  cursor:default;letter-spacing:.02em;padding:0 4px;text-align:center;
+  white-space:nowrap;overflow:hidden;text-overflow:ellipsis
+}
+.pm-cell:hover{transform:scale(1.15);z-index:20}
+
+/* Warna sel sesuai status */
+.pm-cell.plan{
+  background:var(--pm-plan-bg);
+  border:1px solid var(--pm-plan-border);
+  color:var(--pm-plan);
+  box-shadow:0 0 8px rgba(0,200,80,0.12)
+}
+.pm-cell.actual{
+  background:var(--pm-actual-bg);
+  border:1px solid var(--pm-actual-border);
+  color:var(--pm-actual);
+  box-shadow:0 0 8px rgba(68,130,210,0.12)
+}
+.pm-cell.overdue{
+  background:var(--pm-overdue-bg);
+  border:1px solid var(--pm-overdue-border);
+  color:var(--pm-overdue);
+  animation:overduePulse 2.2s ease-in-out infinite
+}
+/* Sel kosong — tetap kelihatan sebagai kotak abu gelap */
+.pm-cell.empty{
+  background:rgba(255,255,255,0.025);
+  border:1px solid rgba(255,255,255,0.07);
+  color:transparent;
+  pointer-events:none
+}
+
+@keyframes overduePulse{
+  0%,100%{box-shadow:0 0 5px rgba(255,50,50,0.1)}
+  50%     {box-shadow:0 0 18px rgba(255,50,50,0.45)}
+}
+
+/* Tooltip */
+.pm-cell[data-tip]:hover::after{
+  content:attr(data-tip);position:absolute;bottom:calc(100%+8px);left:50%;
+  transform:translateX(-50%);background:rgba(5,8,16,.97);border:1px solid var(--border2);
+  border-radius:6px;padding:5px 10px;font-size:10px;color:var(--text);
+  white-space:nowrap;z-index:100;pointer-events:none;
+  font-family:'JetBrains Mono',monospace;box-shadow:0 4px 20px rgba(0,0,0,.5)
+}
+
+/* PROGRESS BAR */
 .plant-progress{padding:10px 22px 14px;display:flex;align-items:center;gap:12px;border-top:1px solid rgba(255,255,255,0.04);background:rgba(0,0,0,0.15)}
 .prog-label{font-family:'JetBrains Mono',monospace;font-size:10px;color:var(--text3);white-space:nowrap}
 .prog-bar-wrap{flex:1;height:4px;background:rgba(255,255,255,0.07);border-radius:2px;overflow:hidden}
 .prog-bar-fill{height:100%;border-radius:2px;transition:width 1s ease;background:linear-gradient(90deg,var(--pm-actual),var(--cyan))}
 .prog-pct{font-family:'JetBrains Mono',monospace;font-size:10px;color:var(--pm-actual);font-weight:700;min-width:36px;text-align:right}
+
+/* STATE MESSAGES */
 .state-box{padding:56px 20px;text-align:center;font-family:'JetBrains Mono',monospace;font-size:12px;color:var(--text3)}
 .state-icon{font-size:34px;display:block;margin-bottom:14px}
 .state-icon.spin{animation:spin 1.2s linear infinite;display:inline-block}
 @keyframes spin{to{transform:rotate(360deg)}}
+
+/* FOOTER */
 .footer{padding:40px 48px;text-align:center;position:relative;z-index:2;border-top:1px solid rgba(255,255,255,0.06)}
 .footer-copy{font-size:12px;color:var(--text3)}
 .footer-line{height:1px;width:200px;margin:14px auto 0;background:linear-gradient(90deg,transparent,rgba(0,212,255,0.3),transparent)}
+
+/* REVEAL */
 .reveal{opacity:0;transform:translateY(20px);transition:opacity .7s ease,transform .7s ease}
 .reveal.visible{opacity:1;transform:none}
+
+/* PRINT */
 @media print{
   .navbar,.toolbar,.legend-strip .leg-sep,.last-upd,.reminder-bar,
   .plant-toggle,#cursor,#cursor-ring,.noise,.scanline-top,#bg-canvas,
   .page-loader,.tb-btn,.footer,.error-box{display:none!important}
   .plant-group.collapsed .plant-body{max-height:none!important;opacity:1!important}
   body{background:#fff;color:#000}
-  .plant-header{background:#f0f0f0!important;border-bottom:1px solid #ccc}
+  .plant-header{background:#f0f0f0!important}
   .plant-name,.page-h1{color:#000!important}
   .pm-cell{-webkit-print-color-adjust:exact;print-color-adjust:exact}
 }
+
+/* MOBILE */
 @media(max-width:700px){
   .navbar{padding:0 20px}
   .nav-links{display:none;flex-direction:column;position:fixed;top:64px;left:0;right:0;background:rgba(5,8,16,.98);padding:16px;border-bottom:1px solid var(--border)}
@@ -251,11 +339,10 @@ table.pm tbody td.td-now{background:rgba(0,212,255,0.02)}
 
     <div class="reminder-bar" id="reminder-bar">
       <span class="reminder-icon">🔔</span>
-      <div class="reminder-body" id="reminder-body">Memuat...</div>
+      <div class="reminder-body" id="reminder-body"></div>
     </div>
 
-    <!-- Error box (tersembunyi, muncul jika error) -->
-    <div class="error-box" id="error-box" style="display:none">
+    <div class="error-box" id="error-box">
       <div class="error-title">⚠️ Gagal Memuat Data PM</div>
       <div class="error-detail" id="error-detail">—</div>
       <div class="error-actions">
@@ -268,7 +355,6 @@ table.pm tbody td.td-now{background:rgba(0,212,255,0.02)}
       <span class="tb-label">Filter:</span>
       <select class="tb-select" id="sel-plant" onchange="applyFilter()">
         <option value="">Semua Plant</option>
-        <!-- diisi dinamis setelah data dimuat -->
       </select>
       <select class="tb-select" id="sel-interval" onchange="applyFilter()">
         <option value="">Semua Interval</option>
@@ -291,8 +377,8 @@ table.pm tbody td.td-now{background:rgba(0,212,255,0.02)}
     </div>
 
     <div class="legend-strip reveal">
-      <div class="leg-item plan">  <span class="leg-dot" style="background:var(--pm-plan)"></span>   Plan / Rencana</div>
-      <div class="leg-item actual"><span class="leg-dot" style="background:var(--pm-actual)"></span> Actual / Terlaksana</div>
+      <div class="leg-item plan">  <span class="leg-dot" style="background:var(--pm-plan)"></span>Plan / Rencana</div>
+      <div class="leg-item actual"><span class="leg-dot" style="background:var(--pm-actual)"></span>Actual / Terlaksana</div>
       <div class="leg-item overdue"><span class="leg-dot" style="background:var(--pm-overdue)"></span>Overdue</div>
       <span class="leg-sep"></span>
       <span class="last-upd" id="last-upd">— memuat data...</span>
@@ -314,115 +400,66 @@ table.pm tbody td.td-now{background:rgba(0,212,255,0.02)}
 
 <script>
 // ══════════════════════════════════════════════════════
-// CONFIG
+// CONFIG — ganti URL setelah deploy GAS
 // ══════════════════════════════════════════════════════
 const GAS_URL = 'https://script.google.com/macros/s/AKfycbzOOA1ou00NzEVRv7O7Sttmn4FoUi683086Im37QxgEnEC-szZIqf_CMUhIIUDxCDt0Xg/exec';
 
-// ══════════════════════════════════════════════════════
-// STATE
-// ══════════════════════════════════════════════════════
 let pmCache = null;
 
-// ══════════════════════════════════════════════════════
-// MONTH HELPERS
-// ══════════════════════════════════════════════════════
+// ── MONTH HELPERS ─────────────────────────────────────
+const MN = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
 const MN_ID = ['Jan','Feb','Mar','Apr','Mei','Jun','Jul','Ags','Sep','Okt','Nov','Des'];
-const MN_EN = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
 
 function isCurrentMonth(label) {
   const now = new Date();
   const yr  = String(now.getFullYear()).slice(-2);
-  const a   = MN_ID[now.getMonth()] + '-' + yr;
-  const b   = MN_EN[now.getMonth()] + '-' + yr;
-  const l   = String(label).toLowerCase();
-  return l === a.toLowerCase() || l === b.toLowerCase();
+  const l   = String(label).toLowerCase().trim();
+  return l === (MN[now.getMonth()]    + '-' + yr).toLowerCase()
+      || l === (MN_ID[now.getMonth()] + '-' + yr).toLowerCase();
 }
 
 function currentMonthLabel() {
   const now = new Date();
-  return MN_EN[now.getMonth()] + ' ' + now.getFullYear();
+  return MN[now.getMonth()] + ' ' + now.getFullYear();
 }
 
-// ══════════════════════════════════════════════════════
-// FETCH DENGAN JSONP (bypass CORS untuk GAS)
-// ══════════════════════════════════════════════════════
-function fetchGAS(action) {
-  return new Promise((resolve, reject) => {
-    // Buat callback name unik
-    const cbName = 'gasCallback_' + Date.now();
-    let timeoutId;
-
-    // Bersihkan script tag dan callback setelah selesai
-    const cleanup = () => {
-      clearTimeout(timeoutId);
-      delete window[cbName];
-      const el = document.getElementById(cbName);
-      if (el) el.remove();
-    };
-
-    // Timeout 20 detik
-    timeoutId = setTimeout(() => {
-      cleanup();
-      reject(new Error('Request timeout setelah 20 detik. Cek koneksi internet kamu.'));
-    }, 20000);
-
-    // Setup callback global
-    window[cbName] = (data) => {
-      cleanup();
-      resolve(data);
-    };
-
-    // Buat script tag
-    const script = document.createElement('script');
-    script.id = cbName;
-    // GAS mendukung parameter callback untuk JSONP
-    script.src = GAS_URL + '?action=' + action + '&callback=' + cbName;
-    script.onerror = () => {
-      cleanup();
-      reject(new Error('Script gagal dimuat. URL GAS mungkin salah atau tidak bisa diakses.'));
-    };
-    document.head.appendChild(script);
-  });
-}
-
-// ══════════════════════════════════════════════════════
-// FETCH DENGAN FALLBACK: coba fetch dulu, kalau gagal pakai JSONP
-// ══════════════════════════════════════════════════════
+// ── FETCH: coba fetch biasa → fallback JSONP ──────────
 async function fetchData(action) {
-  // Coba fetch biasa dulu
   try {
     const ctrl = new AbortController();
-    const tid  = setTimeout(() => ctrl.abort(), 15000);
+    const tid  = setTimeout(() => ctrl.abort(), 12000);
     const res  = await fetch(GAS_URL + '?action=' + action, { signal: ctrl.signal });
     clearTimeout(tid);
     if (!res.ok) throw new Error('HTTP ' + res.status);
-    const data = await res.json();
-    return data;
-  } catch (fetchErr) {
-    // Fetch gagal (CORS/network) → coba JSONP
-    console.warn('[jadwalpm] fetch gagal, coba JSONP:', fetchErr.message);
+    return await res.json();
+  } catch(e) {
+    console.warn('[PM] fetch gagal, coba JSONP:', e.message);
   }
-
   // Fallback JSONP
-  return await fetchGAS(action);
+  return new Promise((resolve, reject) => {
+    const cb  = 'gasCb_' + Date.now();
+    let tid;
+    const cleanup = () => { clearTimeout(tid); delete window[cb]; const el=document.getElementById(cb); if(el) el.remove(); };
+    tid = setTimeout(() => { cleanup(); reject(new Error('Timeout 20 detik. Cek koneksi internet.')); }, 20000);
+    window[cb] = data => { cleanup(); resolve(data); };
+    const s = document.createElement('script');
+    s.id  = cb;
+    s.src = GAS_URL + '?action=' + action + '&callback=' + cb;
+    s.onerror = () => { cleanup(); reject(new Error('JSONP gagal. Pastikan GAS sudah di-deploy dengan akses "Anyone".')); };
+    document.head.appendChild(s);
+  });
 }
 
-// ══════════════════════════════════════════════════════
-// LOAD DATA
-// ══════════════════════════════════════════════════════
+// ── LOAD DATA ─────────────────────────────────────────
 async function loadData() {
   const container = document.getElementById('groups-container');
   const errBox    = document.getElementById('error-box');
   errBox.style.display = 'none';
-
   container.innerHTML = `<div class="state-box"><span class="state-icon spin">⚙️</span>Memuat jadwal PM semua plant...</div>`;
 
   try {
     const data = await fetchData('getAllPlants');
-
-    if (!data || !data.success) {
-      throw new Error(data && data.error ? data.error : 'Response tidak valid dari server');
-    }
+    if (!data || !data.success) throw new Error(data && data.error ? data.error : 'Response tidak valid');
 
     pmCache = data;
     populatePlantFilter(data.plants);
@@ -434,58 +471,32 @@ async function loadData() {
     if (upd) upd.textContent = 'Diperbarui: ' + new Date(data.lastUpdated).toLocaleTimeString('id-ID');
 
   } catch(err) {
-    console.error('[jadwalpm] Error:', err);
+    console.error('[PM]', err);
+    let hint = '→ Coba refresh halaman.';
+    if (err.message.includes('Timeout'))        hint = '→ Koneksi lambat. Coba lagi.';
+    else if (err.message.includes('JSONP'))      hint = '→ Pastikan GAS di-deploy dengan akses "Anyone".';
+    else if (err.message.includes('HTTP 401'))   hint = '→ Deployment GAS perlu diubah ke akses "Anyone".';
+    else if (err.message.includes('tidak ditemukan')) hint = '→ Cek nama sheet di SHEET_NAME di Code.gs.';
 
-    // Tampilkan pesan error yang informatif
-    let msg = err.message || String(err);
-    let hint = '';
-
-    if (msg.includes('abort') || msg.includes('timeout')) {
-      hint = '→ Koneksi terlalu lambat atau server tidak merespons. Coba refresh.';
-    } else if (msg.includes('Failed to fetch') || msg.includes('NetworkError') || msg.includes('network')) {
-      hint = '→ Periksa koneksi internet kamu. Jika internet aktif, mungkin ada pemblokiran CORS dari browser.';
-    } else if (msg.includes('404') || msg.includes('URL')) {
-      hint = '→ URL GAS_URL di file jadwalpm.html perlu diperbarui dengan URL deployment terbaru.';
-    } else if (msg.includes('Script gagal')) {
-      hint = '→ Pastikan GAS sudah di-deploy sebagai Web App dengan akses "Anyone".';
-    } else {
-      hint = '→ Coba refresh halaman atau periksa console browser untuk detail lebih lanjut.';
-    }
-
-    // Tampilkan error box
-    document.getElementById('error-detail').innerHTML =
-      `<b>Error:</b> ${msg}<br><br>${hint}`;
+    document.getElementById('error-detail').innerHTML = `<b>Error:</b> ${err.message}<br><br>${hint}`;
     errBox.style.display = 'block';
-
-    container.innerHTML = `
-      <div class="state-box">
-        <span class="state-icon">⚠️</span>
-        Gagal memuat data. Lihat detail di atas.<br>
-        <button class="tb-btn ghost" onclick="doRefresh()" style="margin-top:16px">⟳ Coba Lagi</button>
-      </div>`;
+    container.innerHTML = `<div class="state-box"><span class="state-icon">⚠️</span>Gagal memuat data. Lihat detail di atas.<br><button class="tb-btn ghost" onclick="doRefresh()" style="margin-top:16px">⟳ Coba Lagi</button></div>`;
   }
 }
 
-// ══════════════════════════════════════════════════════
-// POPULATE PLANT FILTER — dipanggil setelah data berhasil dimuat
-// ══════════════════════════════════════════════════════
+// ── POPULATE PLANT FILTER ─────────────────────────────
 function populatePlantFilter(plants) {
   const sel = document.getElementById('sel-plant');
-  // Hapus semua opsi kecuali yang pertama ("Semua Plant")
   while (sel.options.length > 1) sel.remove(1);
-  // Tambahkan satu opsi per plant dari data
   plants.forEach(p => {
     if (!p.plant) return;
     const o = document.createElement('option');
-    o.value = p.plant;
-    o.textContent = p.plant;
+    o.value = p.plant; o.textContent = p.plant;
     sel.appendChild(o);
   });
 }
 
-// ══════════════════════════════════════════════════════
-// RENDER ALL PLANTS
-// ══════════════════════════════════════════════════════
+// ── RENDER ALL PLANTS ─────────────────────────────────
 function renderAll(plants) {
   const container = document.getElementById('groups-container');
   if (!plants || plants.length === 0) {
@@ -493,34 +504,27 @@ function renderAll(plants) {
     return;
   }
   container.innerHTML = '';
-  let anyRendered = false;
+  let any = false;
   plants.forEach(p => {
     if (!p.machines || p.machines.length === 0) return;
     container.appendChild(buildPlantGroup(p));
-    anyRendered = true;
+    any = true;
   });
-  if (!anyRendered) {
-    container.innerHTML = `<div class="state-box"><span class="state-icon">🔍</span>Tidak ada mesin yang cocok dengan filter.</div>`;
-  }
-  // Re-observe reveal
+  if (!any) container.innerHTML = `<div class="state-box"><span class="state-icon">🔍</span>Tidak ada mesin yang cocok dengan filter.</div>`;
   document.querySelectorAll('.plant-group').forEach(el => revealObs.observe(el));
 }
 
-// ══════════════════════════════════════════════════════
-// BUILD PLANT GROUP
-// ══════════════════════════════════════════════════════
+// ── BUILD PLANT GROUP ─────────────────────────────────
 function buildPlantGroup(p) {
   const { plant, machines, months } = p;
-
-  let planCnt = 0, actualCnt = 0, overdueCnt = 0, schedNow = 0, doneNow = 0;
-  machines.forEach(m => (m.months || []).forEach(mo => {
-    if (mo.type === 'plan')    { planCnt++;   if (isCurrentMonth(mo.month)) schedNow++; }
-    if (mo.type === 'actual')  { actualCnt++; if (isCurrentMonth(mo.month)) doneNow++;  }
-    if (mo.type === 'overdue') overdueCnt++;
+  let planCnt=0, actualCnt=0, overdueCnt=0, schedNow=0, doneNow=0;
+  machines.forEach(m => (m.months||[]).forEach(mo => {
+    if (mo.type==='plan')    { planCnt++;   if(isCurrentMonth(mo.month)) schedNow++; }
+    if (mo.type==='actual')  { actualCnt++; if(isCurrentMonth(mo.month)) doneNow++;  }
+    if (mo.type==='overdue') overdueCnt++;
   }));
-
   const total = schedNow + doneNow;
-  const pct   = total > 0 ? Math.round(doneNow / total * 100) : (doneNow > 0 ? 100 : 0);
+  const pct   = total > 0 ? Math.round(doneNow/total*100) : (doneNow>0?100:0);
 
   const group = document.createElement('div');
   group.className = 'plant-group';
@@ -533,9 +537,9 @@ function buildPlantGroup(p) {
     <span class="plant-name">${plant}</span>
     <span class="plant-meta">${machines.length} mesin</span>
     <div class="plant-pills">
-      ${planCnt    > 0 ? `<span class="p-pill plan">${planCnt} PLAN</span>` : ''}
-      ${actualCnt  > 0 ? `<span class="p-pill actual">${actualCnt} DONE</span>` : ''}
-      ${overdueCnt > 0 ? `<span class="p-pill overdue">${overdueCnt} OVERDUE</span>` : ''}
+      ${planCnt    > 0 ? `<span class="p-pill plan">${planCnt} PLAN</span>`:`'}
+      ${actualCnt  > 0 ? `<span class="p-pill actual">${actualCnt} DONE</span>`:`'}
+      ${overdueCnt > 0 ? `<span class="p-pill overdue">${overdueCnt} OVERDUE</span>`:`'}
     </div>
     <span class="plant-toggle">⌄</span>`;
   hdr.addEventListener('click', () => group.classList.toggle('collapsed'));
@@ -545,7 +549,7 @@ function buildPlantGroup(p) {
 
   const wrap = document.createElement('div');
   wrap.className = 'tbl-wrap';
-  wrap.innerHTML = buildTable(machines, months || []);
+  wrap.innerHTML = buildTable(machines, months||[]);
   body.appendChild(wrap);
 
   const prog = document.createElement('div');
@@ -561,207 +565,163 @@ function buildPlantGroup(p) {
   return group;
 }
 
-// ══════════════════════════════════════════════════════
-// BUILD TABLE
-// ══════════════════════════════════════════════════════
+// ── BUILD TABLE ───────────────────────────────────────
 function buildTable(machines, months) {
   let html = `<table class="pm"><thead><tr>
-    <th class="s0">NO</th>
-    <th class="s1">MESIN</th>
-    <th class="s2">INT</th>`;
-
+    <th class="s0">NO</th><th class="s1">MESIN</th><th class="s2">INT</th>`;
   months.forEach(m => {
-    const now = isCurrentMonth(m);
-    html += `<th class="${now ? 'th-now' : ''}">${m}</th>`;
+    html += `<th class="${isCurrentMonth(m)?'th-now':''}">${m}</th>`;
   });
   html += `</tr></thead><tbody>`;
 
   machines.forEach((m, i) => {
     html += `<tr>
-      <td class="s0">${m.no || i+1}</td>
+      <td class="s0">${m.no||i+1}</td>
       <td class="s1">${m.mesin}</td>
       <td class="s2">${m.interval}</td>`;
-
     months.forEach(mLabel => {
-      const mo    = (m.months || []).find(x => x.month === mLabel);
+      const mo    = (m.months||[]).find(x => x.month === mLabel);
       const isNow = isCurrentMonth(mLabel);
-      let cls = 'empty', txt = '', tip = '';
+      let cls='empty', txt='', tip='';
 
-      if (mo) {
+      if (mo && mo.type) {
         if (mo.type === 'plan') {
-          cls = 'plan'; txt = mo.value || '●';
-          tip = mo.value ? `Rencana: ${mo.value}` : 'Rencana PM';
+          cls='plan'; txt=mo.value||'●';
+          tip=mo.value?`Rencana: ${mo.value}`:'Rencana PM';
         } else if (mo.type === 'actual') {
-          cls = 'actual'; txt = mo.value || '✓';
-          tip = mo.value ? `Actual: ${mo.value}` : 'Sudah dilaksanakan';
+          cls='actual'; txt=mo.value||'✓';
+          tip=mo.value?`Actual: ${mo.value}`:'Sudah dilaksanakan';
         } else if (mo.type === 'overdue') {
-          cls = 'overdue'; txt = '!';
-          tip = 'OVERDUE — belum dilaksanakan!';
+          cls='overdue'; txt='!'; tip='OVERDUE — belum dilaksanakan!';
         }
       }
 
-      html += `<td class="${isNow ? 'td-now' : ''}">
-        <div class="pm-cell ${cls}" ${tip ? `data-tip="${tip}"` : ''}>${txt}</div>
+      html += `<td class="${isNow?'td-now':''}">
+        <div class="pm-cell ${cls}"${tip?` data-tip="${tip}"`:''}>${txt}</div>
       </td>`;
     });
     html += `</tr>`;
   });
-
   return html + `</tbody></table>`;
 }
 
-// ══════════════════════════════════════════════════════
-// OVERVIEW CARDS
-// ══════════════════════════════════════════════════════
+// ── OVERVIEW ──────────────────────────────────────────
 function updateOverview(plants) {
-  let total = 0, sched = 0, done = 0, over = 0;
+  let total=0, sched=0, done=0, over=0;
   plants.forEach(p => {
     total += p.machines.length;
-    p.machines.forEach(m => (m.months || []).forEach(mo => {
-      if (mo.type === 'overdue') over++;
+    p.machines.forEach(m => (m.months||[]).forEach(mo => {
+      if (mo.type==='overdue') over++;
       if (isCurrentMonth(mo.month)) {
-        if (mo.type === 'plan')   sched++;
-        if (mo.type === 'actual') done++;
+        if (mo.type==='plan')   sched++;
+        if (mo.type==='actual') done++;
       }
     }));
   });
-
-  const s = (id, v) => { const el=document.getElementById(id); if(el) el.textContent=v; };
-  s('ov-total',   total); s('hero-total',   total);
-  s('ov-sched',   sched); s('hero-sched',   sched);
-  s('ov-done',    done);  s('hero-done',    done);
-  s('ov-overdue', over);  s('hero-overdue', over);
-
-  const rate = (sched + done) > 0 ? Math.round(done / (done + sched) * 100) : (done > 0 ? 100 : 0);
-  s('ov-rate', `Completion rate ${rate}%`);
-  s('ov-month-label', currentMonthLabel());
+  const s=(id,v)=>{const el=document.getElementById(id);if(el)el.textContent=v;};
+  s('ov-total',total);s('hero-total',total);
+  s('ov-sched',sched);s('hero-sched',sched);
+  s('ov-done',done);  s('hero-done',done);
+  s('ov-overdue',over);s('hero-overdue',over);
+  const rate=(sched+done)>0?Math.round(done/(done+sched)*100):(done>0?100:0);
+  s('ov-rate',`Completion rate ${rate}%`);
+  s('ov-month-label',currentMonthLabel());
 }
 
-// ══════════════════════════════════════════════════════
-// REMINDER BANNER
-// ══════════════════════════════════════════════════════
+// ── REMINDER ──────────────────────────────────────────
 function checkReminder(plants) {
-  const pending = [];
+  const pending=[];
   plants.forEach(p => p.machines.forEach(m => {
-    if ((m.months || []).some(mo => isCurrentMonth(mo.month) && mo.type === 'plan'))
+    if((m.months||[]).some(mo=>isCurrentMonth(mo.month)&&mo.type==='plan'))
       pending.push(`${p.plant} — ${m.mesin}`);
   }));
-
-  const bar  = document.getElementById('reminder-bar');
-  const body = document.getElementById('reminder-body');
-  if (pending.length > 0 && bar && body) {
+  const bar=document.getElementById('reminder-bar');
+  const body=document.getElementById('reminder-body');
+  if(pending.length>0&&bar&&body){
     bar.classList.add('show');
-    const shown = pending.slice(0, 5).join(', ');
-    const more  = pending.length > 5 ? ` +${pending.length-5} lainnya` : '';
-    body.innerHTML = `<strong>⚠️ ${pending.length} mesin punya PM terjadwal bulan ini yang belum dilaksanakan:</strong><br>${shown}${more}`;
+    const shown=pending.slice(0,5).join(', ');
+    const more=pending.length>5?` +${pending.length-5} lainnya`:'';
+    body.innerHTML=`<strong>⚠️ ${pending.length} mesin PM belum dilaksanakan bulan ini:</strong><br>${shown}${more}`;
   }
 }
 
-// ══════════════════════════════════════════════════════
-// FILTER
-// ══════════════════════════════════════════════════════
+// ── FILTER ────────────────────────────────────────────
 function applyFilter() {
   if (!pmCache) return;
-  const fPlant    = document.getElementById('sel-plant').value;
-  const fInterval = document.getElementById('sel-interval').value;
-  const fStatus   = document.getElementById('sel-status').value;
-  const fSearch   = document.getElementById('inp-search').value.toLowerCase().trim();
+  const fP=document.getElementById('sel-plant').value;
+  const fI=document.getElementById('sel-interval').value;
+  const fS=document.getElementById('sel-status').value;
+  const fQ=document.getElementById('inp-search').value.toLowerCase().trim();
 
-  const filtered = pmCache.plants
-    .filter(p => !fPlant || p.plant === fPlant)
-    .map(p => ({
-      ...p,
-      machines: (p.machines || []).filter(m => {
-        if (fInterval && String(m.interval).toUpperCase() !== fInterval) return false;
-        if (fSearch   && !m.mesin.toLowerCase().includes(fSearch))       return false;
-        if (fStatus   && !(m.months || []).some(mo => mo.type === fStatus)) return false;
-        return true;
-      })
-    }))
-    .filter(p => p.machines.length > 0);
-
+  const filtered=pmCache.plants
+    .filter(p=>!fP||p.plant===fP)
+    .map(p=>({...p,machines:(p.machines||[]).filter(m=>{
+      if(fI&&String(m.interval).toUpperCase()!==fI) return false;
+      if(fQ&&!m.mesin.toLowerCase().includes(fQ)) return false;
+      if(fS&&!(m.months||[]).some(mo=>mo.type===fS)) return false;
+      return true;
+    })}))
+    .filter(p=>p.machines.length>0);
   renderAll(filtered);
 }
 
-// ══════════════════════════════════════════════════════
-// COLLAPSE / EXPAND / REFRESH / PRINT
-// ══════════════════════════════════════════════════════
-function collapseAll() { document.querySelectorAll('.plant-group').forEach(g => g.classList.add('collapsed')); }
-function expandAll()   { document.querySelectorAll('.plant-group').forEach(g => g.classList.remove('collapsed')); }
-function doRefresh()   { pmCache = null; loadData(); }
-function doPrint()     { window.print(); }
+// ── UTILS ─────────────────────────────────────────────
+function collapseAll(){document.querySelectorAll('.plant-group').forEach(g=>g.classList.add('collapsed'));}
+function expandAll()  {document.querySelectorAll('.plant-group').forEach(g=>g.classList.remove('collapsed'));}
+function doRefresh()  {pmCache=null;loadData();}
+function doPrint()    {window.print();}
 
-// ══════════════════════════════════════════════════════
-// PAGE LOADER
-// ══════════════════════════════════════════════════════
-const loader    = document.getElementById('pageLoader');
-const loaderPct = document.getElementById('loaderPct');
-const steps     = ['LOADING PM DATA...','CONNECTING...','ALMOST READY...','READY'];
-let si = 0;
-const li = setInterval(() => { if(si < steps.length) loaderPct.textContent = steps[si++]; }, 320);
-setTimeout(() => { clearInterval(li); loader.classList.add('hidden'); }, 1400);
+// ── PAGE LOADER ───────────────────────────────────────
+const loader=document.getElementById('pageLoader');
+const loaderPct=document.getElementById('loaderPct');
+const lsteps=['LOADING PM DATA...','CONNECTING...','ALMOST READY...','READY'];
+let lsi=0;
+const lti=setInterval(()=>{if(lsi<lsteps.length)loaderPct.textContent=lsteps[lsi++];},320);
+setTimeout(()=>{clearInterval(lti);loader.classList.add('hidden');},1400);
 
-// ══════════════════════════════════════════════════════
-// CURSOR
-// ══════════════════════════════════════════════════════
-const cur = document.getElementById('cursor');
-const ring = document.getElementById('cursor-ring');
+// ── CURSOR ────────────────────────────────────────────
+const cur=document.getElementById('cursor'),ring=document.getElementById('cursor-ring');
 let mx=0,my=0,rx=0,ry=0;
-document.addEventListener('mousemove', e => {
-  mx=e.clientX; my=e.clientY;
-  cur.style.left=(mx-5)+'px'; cur.style.top=(my-5)+'px';
-});
-(function anim(){ rx+=(mx-rx-20)*.16; ry+=(my-ry-20)*.16; ring.style.left=rx+'px'; ring.style.top=ry+'px'; requestAnimationFrame(anim); })();
-document.querySelectorAll('a,button,.plant-header,.tb-btn,.ov-card,.stat-pill').forEach(el => {
-  el.addEventListener('mouseenter', () => { cur.classList.add('hover'); ring.classList.add('hover'); });
-  el.addEventListener('mouseleave', () => { cur.classList.remove('hover'); ring.classList.remove('hover'); });
+document.addEventListener('mousemove',e=>{mx=e.clientX;my=e.clientY;cur.style.left=(mx-5)+'px';cur.style.top=(my-5)+'px';});
+(function anim(){rx+=(mx-rx-20)*.16;ry+=(my-ry-20)*.16;ring.style.left=rx+'px';ring.style.top=ry+'px';requestAnimationFrame(anim);})();
+document.querySelectorAll('a,button,.plant-header,.tb-btn,.ov-card,.stat-pill').forEach(el=>{
+  el.addEventListener('mouseenter',()=>{cur.classList.add('hover');ring.classList.add('hover');});
+  el.addEventListener('mouseleave',()=>{cur.classList.remove('hover');ring.classList.remove('hover');});
 });
 
-// ══════════════════════════════════════════════════════
-// CANVAS BG
-// ══════════════════════════════════════════════════════
+// ── CANVAS BG ─────────────────────────────────────────
 (function(){
   const cv=document.getElementById('bg-canvas'),ctx=cv.getContext('2d');
-  let W,H,particles=[];
-  function resize(){W=cv.width=window.innerWidth;H=cv.height=window.innerHeight;}
-  resize(); window.addEventListener('resize',resize);
+  let W,H,P=[];
+  function resize(){W=cv.width=innerWidth;H=cv.height=innerHeight;}
+  resize();window.addEventListener('resize',resize);
   const cols=['#00d4ff','#0066ff','#00ff87','#a78bfa'];
-  for(let i=0;i<80;i++) particles.push({x:Math.random()*2000,y:Math.random()*2000,vx:(Math.random()-.5)*.3,vy:(Math.random()-.5)*.3,r:Math.random()*1.2+.2,a:Math.random()*.4+.1,color:cols[Math.floor(Math.random()*cols.length)]});
+  for(let i=0;i<80;i++) P.push({x:Math.random()*2000,y:Math.random()*2000,vx:(Math.random()-.5)*.3,vy:(Math.random()-.5)*.3,r:Math.random()*1.2+.2,a:Math.random()*.4+.1,c:cols[Math.floor(Math.random()*4)]});
   function draw(){
     ctx.clearRect(0,0,W,H);
-    ctx.strokeStyle='rgba(0,80,180,0.03)'; ctx.lineWidth=1;
+    ctx.strokeStyle='rgba(0,80,180,0.03)';ctx.lineWidth=1;
     const g=64;
     for(let x=0;x<W+g;x+=g){ctx.beginPath();ctx.moveTo(x,0);ctx.lineTo(x,H);ctx.stroke();}
     for(let y=0;y<H+g;y+=g){ctx.beginPath();ctx.moveTo(0,y);ctx.lineTo(W,y);ctx.stroke();}
-    particles.forEach(p=>{p.x+=p.vx;p.y+=p.vy;if(p.x<0)p.x=W;if(p.x>W)p.x=0;if(p.y<0)p.y=H;if(p.y>H)p.y=0;ctx.beginPath();ctx.arc(p.x,p.y,p.r,0,Math.PI*2);ctx.fillStyle=p.color;ctx.globalAlpha=p.a;ctx.fill();});
-    ctx.globalAlpha=1;
-    requestAnimationFrame(draw);
+    P.forEach(p=>{p.x+=p.vx;p.y+=p.vy;if(p.x<0)p.x=W;if(p.x>W)p.x=0;if(p.y<0)p.y=H;if(p.y>H)p.y=0;ctx.beginPath();ctx.arc(p.x,p.y,p.r,0,Math.PI*2);ctx.fillStyle=p.c;ctx.globalAlpha=p.a;ctx.fill();});
+    ctx.globalAlpha=1;requestAnimationFrame(draw);
   }
   draw();
 })();
 
-// ══════════════════════════════════════════════════════
-// NAVBAR TOGGLE
-// ══════════════════════════════════════════════════════
-document.getElementById('navToggle').addEventListener('click', () => {
-  document.getElementById('navLinks').classList.toggle('open');
-});
+// ── NAVBAR ────────────────────────────────────────────
+document.getElementById('navToggle').addEventListener('click',()=>{document.getElementById('navLinks').classList.toggle('open');});
 
-// ══════════════════════════════════════════════════════
-// SCROLL REVEAL
-// ══════════════════════════════════════════════════════
-const revealObs = new IntersectionObserver(entries => {
-  entries.forEach(e => { if(e.isIntersecting){ e.target.classList.add('visible'); revealObs.unobserve(e.target); }});
-}, {threshold:.08});
-document.querySelectorAll('.reveal').forEach(el => revealObs.observe(el));
+// ── SCROLL REVEAL ─────────────────────────────────────
+const revealObs=new IntersectionObserver(entries=>{
+  entries.forEach(e=>{if(e.isIntersecting){e.target.classList.add('visible');revealObs.unobserve(e.target);}});
+},{threshold:.08});
+document.querySelectorAll('.reveal').forEach(el=>revealObs.observe(el));
 
-// ══════════════════════════════════════════════════════
-// INIT
-// ══════════════════════════════════════════════════════
-window.addEventListener('load', () => setTimeout(loadData, 1500));
-
+// ── INIT ──────────────────────────────────────────────
+window.addEventListener('load',()=>setTimeout(loadData,1500));
 if('serviceWorker' in navigator){
-  window.addEventListener('load', () => navigator.serviceWorker.register('/gardahitam/sw.js').catch(()=>{}));
+  window.addEventListener('load',()=>navigator.serviceWorker.register('/gardahitam/sw.js').catch(()=>{}));
 }
 </script>
 </body>
