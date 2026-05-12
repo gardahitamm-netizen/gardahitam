@@ -1316,15 +1316,23 @@ function plantCard(p,i){
   const m=PLANT_META[p.plant]||{desc:p.label||'',color:'#4d9fff'};
   const gl=S.cache[p.plant+'_groupList']||[];
   const tag=gl.length?gl.length+' Mixing':'Memuat…';
+  const pools=getPoolSheets(p.plant);
+  const abwPool=pools.find(x=>x.startsWith('abw'));
+  const abwLabel=abwPool?abwPool.toUpperCase():'';
+  const abwColors={ABW1:'#c084fc',ABW4:'#c084fc',ABW6:'#c084fc'};
+  const abwColor=abwColors[abwLabel]||'#c084fc';
   return`<div class="plant-card" onclick="navTo('mixing','${p.plant}')" style="animation-delay:${i*0.06}s">
     <div class="plant-card-top"><div class="plant-card-corner" style="background:${m.color};box-shadow:0 0 8px ${m.color}"></div>
     <div class="plant-card-id">PLANT ID · ${String(i+1).padStart(2,'0')}</div>
     <div class="plant-card-name" style="color:${m.color}">${p.plant}</div>
     <div class="plant-card-desc">${m.desc}</div></div>
-    <div class="plant-card-bottom"><span class="plant-card-tag" id="mix-tag-${p.plant}">${tag}</span><span class="plant-card-arr">→</span></div>
+    <div class="plant-card-bottom">
+      <span class="plant-card-tag" id="mix-tag-${p.plant}">${tag}</span>
+      ${abwLabel?`<span class="plant-card-tag" style="background:rgba(192,132,252,.12);border-color:rgba(192,132,252,.35);color:${abwColor}">🟣 ${abwLabel}</span>`:''}
+      <span class="plant-card-arr">→</span>
+    </div>
   </div>`;
 }
-
 // ══════════════════════════════════════════════════════════
 //  MIXING PAGE
 // ══════════════════════════════════════════════════════════
