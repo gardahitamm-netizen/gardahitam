@@ -1616,16 +1616,23 @@ function poolCard(item, poolName, i) {
   const cls = getPoolClass(poolName);
   const allPools = getPoolSheets(S.plant);
   const otherPools = allPools.filter(p => p !== poolName);
-  // ... sisa sama
+
   const moveBtns = canEdit() ? otherPools.map(p =>
     `<button class="btn-pool-action btn-pool-move" 
       onclick="openMovePoolModal('${esc(item.serial_number)}','${esc(item.drive_id)}','${poolName}','${p}','${esc(item.stiker || '')}')">
-      → ${POOL_LABELS[p]}
+      → ${getPoolLabel(p)}
     </button>`).join('') : '';
+
   const returnBtn = canEdit() && item.drive_id
     ? `<button class="btn-pool-action btn-pool-return" 
         onclick="openReturnPoolModal('${esc(item.serial_number)}','${esc(item.drive_id)}','${poolName}','${esc(item.stiker || '')}')">
         ✅ Kembalikan ke Drives
+      </button>` : '';
+
+  const photoBtn = item.photo_url
+    ? `<button class="inu-photo-btn" 
+        onclick="window.open('${esc(item.photo_url)}','_blank')">
+        📷 Lihat Foto
       </button>` : '';
 
   return `<div class="pool-card ${poolName}" style="animation-delay:${i * 0.04}s">
@@ -1637,10 +1644,11 @@ function poolCard(item, poolName, i) {
     ${item.spesifikasi ? `<div class="pool-card-spec">${esc(item.spesifikasi)}</div>` : ''}
     ${item.keterangan  ? `<div class="pool-card-ket">💬 ${esc(item.keterangan)}</div>` : ''}
     ${item.dari        ? `<div class="pool-card-dari">📦 Dari: ${esc(item.dari)}</div>` : ''}
+    ${photoBtn}
     ${canEdit() ? `<div class="pool-card-actions">${returnBtn}${moveBtns}</div>` : ''}
   </div>`;
 }
-async function refreshPool(){
+  async function refreshPool(){
   const pools=getPoolSheets(S.plant);
   pools.forEach(p=>delete S.cache[S.plant+'_pool_'+p]);
   await renderPoolTab();
