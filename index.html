@@ -112,65 +112,13 @@ body{font-family:'Space Grotesk',sans-serif;background:var(--bg);color:var(--tex
 /* ── HERO RIGHT ── */
 .hero-right{display:flex;flex-direction:column;gap:14px}
 
-/* ── NAV CARDS BASE ── */
 .nav-card{position:relative;display:flex;align-items:center;gap:20px;background:var(--panel);border:1px solid rgba(255,255,255,0.07);border-radius:16px;padding:22px 26px;text-decoration:none;color:var(--text);overflow:hidden;transition:all .35s;animation:fadeInRight .8s ease both}
 .nav-card:nth-child(1){animation-delay:.2s}.nav-card:nth-child(2){animation-delay:.35s}.nav-card:nth-child(3){animation-delay:.5s}
 @keyframes fadeInRight{from{opacity:0;transform:translateX(30px)}to{opacity:1;transform:translateX(0)}}
 .nav-card::before{content:'';position:absolute;inset:0;background:radial-gradient(600px circle at var(--mx,50%) var(--my,50%),rgba(0,212,255,0.08),transparent 40%);opacity:0;transition:opacity .4s}
 .nav-card:hover::before{opacity:1}
 .nav-card::after{content:'';position:absolute;inset:0;border-radius:16px;background:linear-gradient(135deg,rgba(255,255,255,0.03),transparent);pointer-events:none}
-
-/* ── NAV CARD: WARNA BORDER SELALU TAMPIL (NORMAL STATE) ── */
-/* Cyan - Drive Monitoring */
-.nav-card[style*="--rgb:0,212,255"]{
-  border-color:rgba(0,212,255,0.4)!important;
-  background:rgba(0,212,255,0.04)!important;
-  box-shadow:0 0 20px rgba(0,212,255,0.08)
-}
-/* Green - Share Job */
-.nav-card[style*="--rgb:0,255,135"]{
-  border-color:rgba(0,255,135,0.4)!important;
-  background:rgba(0,255,135,0.04)!important;
-  box-shadow:0 0 20px rgba(0,255,135,0.08)
-}
-/* Purple - I/O PLC */
-.nav-card[style*="--rgb:167,139,250"]{
-  border-color:rgba(167,139,250,0.4)!important;
-  background:rgba(167,139,250,0.04)!important;
-  box-shadow:0 0 20px rgba(167,139,250,0.08)
-}
-/* Amber - Jadwal PM */
-.nav-card[style*="--rgb:255,184,0"]{
-  border-color:rgba(255,184,0,0.4)!important;
-  background:rgba(255,184,0,0.04)!important;
-  box-shadow:0 0 20px rgba(255,184,0,0.08)
-}
-
-/* ── NAV CARD: HOVER STATE — BORDER MAKIN TERANG ── */
-.nav-card[style*="--rgb:0,212,255"]:hover{
-  border-color:rgba(0,212,255,0.85)!important;
-  background:rgba(0,212,255,0.1)!important;
-  box-shadow:0 20px 60px rgba(0,0,0,0.5),0 0 0 1px rgba(0,212,255,0.4),0 0 35px rgba(0,212,255,0.2)!important;
-  transform:translateX(8px) translateY(-2px)
-}
-.nav-card[style*="--rgb:0,255,135"]:hover{
-  border-color:rgba(0,255,135,0.85)!important;
-  background:rgba(0,255,135,0.1)!important;
-  box-shadow:0 20px 60px rgba(0,0,0,0.5),0 0 0 1px rgba(0,255,135,0.4),0 0 35px rgba(0,255,135,0.2)!important;
-  transform:translateX(8px) translateY(-2px)
-}
-.nav-card[style*="--rgb:167,139,250"]:hover{
-  border-color:rgba(167,139,250,0.85)!important;
-  background:rgba(167,139,250,0.1)!important;
-  box-shadow:0 20px 60px rgba(0,0,0,0.5),0 0 0 1px rgba(167,139,250,0.4),0 0 35px rgba(167,139,250,0.2)!important;
-  transform:translateX(8px) translateY(-2px)
-}
-.nav-card[style*="--rgb:255,184,0"]:hover{
-  border-color:rgba(255,184,0,0.85)!important;
-  background:rgba(255,184,0,0.1)!important;
-  box-shadow:0 20px 60px rgba(0,0,0,0.5),0 0 0 1px rgba(255,184,0,0.4),0 0 35px rgba(255,184,0,0.2)!important;
-  transform:translateX(8px) translateY(-2px)
-}
+.nav-card:hover{border-color:rgba(var(--rgb),0.6)!important;transform:translateX(8px) translateY(-2px);background:rgba(var(--rgb),0.1)!important;box-shadow:0 20px 60px rgba(0,0,0,0.5),0 0 0 1px rgba(var(--rgb),0.2)!important}
 
 .nav-card-stripe{position:absolute;left:0;top:0;bottom:0;width:3px;background:linear-gradient(180deg,transparent,var(--cc,#00d4ff),transparent);opacity:0;transition:opacity .3s;border-radius:16px 0 0 16px}
 .nav-card:hover .nav-card-stripe{opacity:1}
@@ -178,7 +126,6 @@ body{font-family:'Space Grotesk',sans-serif;background:var(--bg);color:var(--tex
 .nav-card-icon{width:60px;height:60px;border-radius:16px;flex-shrink:0;display:flex;align-items:center;justify-content:center;position:relative;overflow:visible;transition:all .4s;background:rgba(var(--rgb),0.35);border:1.5px solid rgba(var(--rgb),0.8);box-shadow:0 0 20px rgba(var(--rgb),0.4),inset 0 0 20px rgba(var(--rgb),0.25)}
 .nav-card-icon::before{display:none}
 .nav-card:hover .nav-card-icon{background:rgba(var(--rgb),0.28);border-color:rgba(var(--rgb),0.8);box-shadow:0 0 24px rgba(var(--rgb),0.5),inset 0 0 20px rgba(var(--rgb),0.15);animation:iconPulse 1.5s ease-in-out infinite}
-@keyframes iconPulse{0%,100%{box-shadow:0 0 24px rgba(var(--rgb),0.5),inset 0 0 20px rgba(var(--rgb),0.15)}50%{box-shadow:0 0 40px rgba(var(--rgb),0.8),inset 0 0 30px rgba(var(--rgb),0.3)}}
 .nav-card-body{flex:1;min-width:0}
 .nav-card-title{font-family:'Orbitron',monospace;font-size:13px;font-weight:700;color:#fff;margin-bottom:4px;letter-spacing:.05em;transition:color .2s}
 .nav-card:hover .nav-card-title{color:var(--cc);text-shadow:0 0 12px rgba(var(--rgb),0.4)}
@@ -187,58 +134,6 @@ body{font-family:'Space Grotesk',sans-serif;background:var(--bg);color:var(--tex
 .nav-card-badge{font-family:'JetBrains Mono',monospace;font-size:9px;font-weight:700;padding:3px 9px;border-radius:4px;background:rgba(var(--rgb),0.08);border:1px solid rgba(var(--rgb),0.2);color:var(--cc);margin-top:8px;display:inline-block;letter-spacing:.12em;text-transform:uppercase}
 .nav-card-arr{font-size:22px;color:var(--text3);transition:all .3s;flex-shrink:0}
 .nav-card:hover .nav-card-arr{color:var(--cc,#00d4ff);transform:translateX(6px);text-shadow:0 0 10px var(--cc,#00d4ff)}
-
-/* ── NAV CARD FEATURED (Drive Monitoring) ── */
-.nav-card.featured{padding:24px 26px}
-.nav-card.featured .nav-card-icon{width:62px;height:62px;border-radius:16px;font-size:28px}
-.nav-card.featured .nav-card-title{font-size:15px}
-.nav-card.featured .nav-card-desc{font-size:13px;color:var(--text2)}
-
-/* Corner brackets */
-.bracket{position:absolute;width:14px;height:14px;opacity:0;transition:opacity .3s}
-.bracket.tl{top:7px;left:7px;border-top:2px solid var(--cc);border-left:2px solid var(--cc)}
-.bracket.tr{top:7px;right:7px;border-top:2px solid var(--cc);border-right:2px solid var(--cc)}
-.bracket.bl{bottom:7px;left:7px;border-bottom:2px solid var(--cc);border-left:2px solid var(--cc)}
-.bracket.br{bottom:7px;right:7px;border-bottom:2px solid var(--cc);border-right:2px solid var(--cc)}
-.nav-card:hover .bracket{opacity:1}
-.nav-card.featured:hover .bracket{animation:brktGlow 2s ease-in-out infinite}
-@keyframes brktGlow{0%,100%{opacity:.6}50%{opacity:1}}
-
-/* UTAMA ribbon */
-.card-ribbon{
-  position:absolute;top:-1px;right:72px;
-  font-family:'JetBrains Mono',monospace;font-size:8px;font-weight:700;
-  letter-spacing:.2em;padding:3px 11px;background:var(--cyan);color:#020408;
-  border-radius:0 0 6px 6px;z-index:2;
-}
-
-/* Glitch title on featured hover */
-.nav-card.featured:hover .nav-card-title{
-  animation:cardGlitch .8s ease infinite;
-}
-@keyframes cardGlitch{
-  0%,90%,100%{text-shadow:0 0 16px rgba(0,212,255,0.6)}
-  92%{text-shadow:-2px 0 #ff00ff,2px 0 #00ffff,0 0 16px rgba(0,212,255,0.6)}
-  95%{text-shadow:2px 0 #ff00ff,-2px 0 #00ffff,0 0 16px rgba(0,212,255,0.6)}
-}
-
-/* Pulse ring on icon (featured) */
-.nav-card.featured .nav-card-icon::after{
-  content:'';position:absolute;inset:-4px;border-radius:18px;
-  border:1px solid rgba(0,212,255,0.4);opacity:0;
-}
-.nav-card.featured:hover .nav-card-icon::after{
-  opacity:1;animation:iconPls 1.5s ease-in-out infinite;
-}
-@keyframes iconPls{0%,100%{transform:scale(1);opacity:.4}50%{transform:scale(1.1);opacity:.9}}
-
-/* Scan beam */
-.nc-scan{
-  position:absolute;top:-100%;left:0;right:0;height:50%;
-  background:linear-gradient(180deg,transparent,rgba(var(--rgb),0.07),transparent);
-  transition:top .5s ease;pointer-events:none;
-}
-.nav-card:hover .nc-scan{top:150%}
 
 /* STATS ROW */
 .stats-row{display:flex;gap:1px;overflow:hidden;border-radius:12px;border:1px solid rgba(255,255,255,0.07);background:rgba(255,255,255,0.015);animation:fadeInRight .8s .65s ease both}
@@ -400,6 +295,8 @@ body{font-family:'Space Grotesk',sans-serif;background:var(--bg);color:var(--tex
 ═══════════════════════════════════════════ */
 .panduan-section{padding:110px 48px;position:relative;z-index:2;background:linear-gradient(180deg,rgba(0,212,255,0.01),transparent)}
 .panduan-inner{max-width:1240px;margin:0 auto}
+
+/* Tab navigation */
 .panduan-tabs{display:flex;gap:0;border:1px solid var(--border);border-radius:12px;overflow:hidden;margin-bottom:0;background:rgba(0,0,0,0.3);flex-wrap:wrap}
 .panduan-tab{flex:1;min-width:120px;padding:14px 12px;font-family:'JetBrains Mono',monospace;font-size:11px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--text3);text-align:center;cursor:pointer;transition:all .25s;border-right:1px solid var(--border);border-bottom:1px solid var(--border);position:relative;display:flex;align-items:center;justify-content:center;gap:6px;user-select:none}
 .panduan-tab:last-child{border-right:none}
@@ -408,23 +305,31 @@ body{font-family:'Space Grotesk',sans-serif;background:var(--bg);color:var(--tex
 .panduan-tab.active{color:var(--cyan);background:rgba(0,212,255,0.06)}
 .panduan-tab.active::after{transform:scaleX(1)}
 .tab-icon{font-size:14px}
+
+/* Content panels */
 .panduan-body{border:1px solid var(--border);border-top:none;border-radius:0 0 16px 16px;background:rgba(5,10,22,0.8);backdrop-filter:blur(10px);overflow:hidden}
 .panduan-panel{display:none;animation:panelIn .3s ease}
 .panduan-panel.active{display:block}
 @keyframes panelIn{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:translateY(0)}}
+
+/* Panel hero bar */
 .panel-hero{padding:28px 32px 24px;background:linear-gradient(135deg,rgba(0,212,255,0.06),rgba(167,139,250,0.04));border-bottom:1px solid var(--border);display:flex;align-items:flex-start;gap:20px}
 .panel-hero-icon{width:52px;height:52px;border-radius:12px;display:flex;align-items:center;justify-content:center;font-size:22px;flex-shrink:0;border:1px solid}
 .panel-hero-text h3{font-family:'Orbitron',monospace;font-size:16px;font-weight:700;color:#fff;margin-bottom:6px;letter-spacing:.05em}
 .panel-hero-text p{font-size:13px;color:var(--text2);line-height:1.6;max-width:700px}
+
+/* Steps inside panels */
 .panel-body{padding:24px 32px 32px}
 .panel-sub-title{font-family:'JetBrains Mono',monospace;font-size:10px;font-weight:700;color:var(--cyan);letter-spacing:.2em;text-transform:uppercase;margin-bottom:14px;opacity:.7;display:flex;align-items:center;gap:8px}
 .panel-sub-title::after{content:'';flex:1;height:1px;background:linear-gradient(90deg,var(--border),transparent)}
+
 .steps-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:28px}
 .p-step{display:flex;gap:14px;padding:16px 18px;background:var(--panel);border:1px solid rgba(255,255,255,0.06);border-radius:12px;align-items:flex-start;transition:all .3s;position:relative;overflow:hidden}
 .p-step::before{content:'';position:absolute;top:0;left:0;bottom:0;width:2px;background:var(--step-color,var(--cyan));border-radius:12px 0 0 12px;opacity:0;transition:opacity .3s}
 .p-step:hover{background:rgba(0,212,255,0.03);border-color:rgba(0,212,255,0.15);transform:translateX(4px)}
 .p-step:hover::before{opacity:1}
 .p-step-num{width:28px;height:28px;border-radius:50%;background:rgba(0,212,255,0.1);border:1px solid rgba(0,212,255,0.25);display:flex;align-items:center;justify-content:center;font-family:'Orbitron',monospace;font-size:11px;font-weight:700;color:var(--cyan);flex-shrink:0}
+.p-step-body{}
 .p-step-title{font-size:13px;font-weight:700;color:#fff;margin-bottom:4px}
 .p-step-desc{font-size:12px;color:var(--text3);line-height:1.6}
 .p-step-tag{display:inline-block;font-family:'JetBrains Mono',monospace;font-size:9px;font-weight:700;padding:2px 8px;border-radius:4px;margin-top:6px;letter-spacing:.08em}
@@ -433,7 +338,11 @@ body{font-family:'Space Grotesk',sans-serif;background:var(--bg);color:var(--tex
 .tag-a{background:rgba(255,184,0,0.08);color:var(--amber);border:1px solid rgba(255,184,0,0.2)}
 .tag-r{background:rgba(255,68,68,0.08);color:#ff6b7a;border:1px solid rgba(255,68,68,0.2)}
 .tag-p{background:rgba(167,139,250,0.08);color:var(--purple);border:1px solid rgba(167,139,250,0.2)}
+
+/* Full-width step */
 .p-step.full{grid-column:span 2}
+
+/* Info boxes */
 .p-infobox{display:flex;gap:12px;padding:14px 18px;border-radius:10px;border:1px solid;margin-bottom:14px;align-items:flex-start}
 .p-infobox.cyan{background:rgba(0,212,255,0.05);border-color:rgba(0,212,255,0.2)}
 .p-infobox.amber{background:rgba(255,184,0,0.05);border-color:rgba(255,184,0,0.2)}
@@ -442,19 +351,27 @@ body{font-family:'Space Grotesk',sans-serif;background:var(--bg);color:var(--tex
 .p-infobox-icon{font-size:18px;flex-shrink:0;margin-top:1px}
 .p-infobox-text{font-size:12px;color:var(--text2);line-height:1.65}
 .p-infobox-text strong{color:#fff;font-weight:700}
+
+/* Role cards */
 .role-row{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-bottom:24px}
 .role-c{padding:16px;background:var(--panel);border:1px solid rgba(255,255,255,0.07);border-radius:12px;text-align:center;transition:all .3s}
 .role-c:hover{transform:translateY(-3px)}
 .role-c-dot{width:10px;height:10px;border-radius:50%;margin:0 auto 10px;box-shadow:0 0 10px currentColor}
 .role-c-name{font-family:'JetBrains Mono',monospace;font-size:12px;font-weight:700;margin-bottom:5px}
 .role-c-desc{font-size:11px;color:var(--text3);line-height:1.5}
+
+/* Status badges */
 .status-row-panduan{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:20px}
 .st-badge{display:flex;align-items:center;gap:6px;padding:5px 12px;border-radius:20px;font-family:'JetBrains Mono',monospace;font-size:11px;font-weight:700;border:1px solid}
 .st-dot-b{width:6px;height:6px;border-radius:50%;flex-shrink:0}
+
+/* Pool grid */
 .pool-row{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-bottom:20px}
 .pool-c{padding:14px 16px;border-radius:10px;border:1px solid}
 .pool-c-title{font-family:'JetBrains Mono',monospace;font-size:12px;font-weight:700;margin-bottom:4px}
 .pool-c-desc{font-size:11px;line-height:1.5}
+
+/* Feature grid */
 .feat-grid-p{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-bottom:20px}
 .feat-p{padding:16px;background:var(--panel);border:1px solid rgba(255,255,255,0.07);border-radius:12px;transition:all .3s}
 .feat-p:hover{border-color:rgba(0,212,255,0.2);background:rgba(0,212,255,0.03);transform:translateY(-2px)}
@@ -463,6 +380,8 @@ body{font-family:'Space Grotesk',sans-serif;background:var(--bg);color:var(--tex
 .feat-p-desc{font-size:11px;color:var(--text3);line-height:1.55}
 .feat-p:hover .feat-p-title{color:var(--cyan)}
 .feat-p:hover .feat-p-desc{color:var(--text2)}
+
+/* Tips grid */
 .tips-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:20px}
 .tip-c{padding:18px;background:var(--panel);border:1px solid rgba(255,255,255,0.07);border-radius:12px;display:flex;gap:14px;align-items:flex-start;transition:all .3s}
 .tip-c:hover{border-color:rgba(0,212,255,0.18);background:rgba(0,212,255,0.025);transform:translateX(3px)}
@@ -471,11 +390,23 @@ body{font-family:'Space Grotesk',sans-serif;background:var(--bg);color:var(--tex
 .tip-desc{font-size:11px;color:var(--text3);line-height:1.6}
 .tip-c:hover .tip-title{color:var(--cyan)}
 .tip-c:hover .tip-desc{color:var(--text2)}
+
+/* kbd style */
 .key{display:inline-block;background:rgba(255,255,255,0.08);border:1px solid rgba(255,255,255,0.15);border-radius:4px;padding:1px 7px;font-family:'JetBrains Mono',monospace;font-size:10px;color:var(--text2)}
 
 /* ── MOBILE ── */
 @media(max-width:1000px){.hero-inner,.about-grid{grid-template-columns:1fr;gap:50px}.steps-rail{grid-template-columns:1fr 1fr;gap:28px}.steps-rail::before,.steps-rail::after{display:none}.metrics-grid{grid-template-columns:1fr 1fr}.footer-grid{grid-template-columns:1fr}}
-@media(max-width:700px){.navbar{padding:0 20px}.nav-links{display:none;flex-direction:column;position:fixed;top:64px;left:0;right:0;background:rgba(5,8,16,.98);padding:16px;border-bottom:1px solid var(--border)}.nav-links.open{display:flex}.nav-toggle{display:flex}.hero,.section,.cta-section,.panduan-section{padding-left:20px;padding-right:20px}.metrics-banner{padding:0 20px}.steps-rail{grid-template-columns:1fr}.hero-h1{font-size:1.9rem}.adv-grid{grid-template-columns:1fr}.cta-btns{flex-direction:column;align-items:center}.panduan-tabs{flex-direction:column}.panduan-tab{border-right:none;border-bottom:1px solid var(--border);min-width:unset}.steps-grid,.role-row,.pool-row,.feat-grid-p,.tips-grid{grid-template-columns:1fr}.p-step.full{grid-column:span 1}.panel-body{padding:16px 20px 24px}.panel-hero{padding:20px 20px 18px}}
+@media(max-width:700px){.navbar{padding:0 20px}.nav-links{display:none;flex-direction:column;position:fixed;top:64px;left:0;right:0;background:rgba(5,8,16,.98);padding:16px;border-bottom:1px solid var(--border)}.nav-links.open{display:flex}.nav-toggle{display:flex}.hero,.section,.cta-section,.panduan-section{padding-left:20px;padding-right:20px}.metrics-banner{padding:0 20px}.steps-rail{grid-template-columns:1fr}.hero-h1{font-size:1.9rem}.adv-grid{grid-template-columns:1fr}.cta-btns{flex-direction:column;align-items:center}
+.panduan-tabs{flex-direction:column}.panduan-tab{border-right:none;border-bottom:1px solid var(--border);min-width:unset}.steps-grid,.role-row,.pool-row,.feat-grid-p,.tips-grid{grid-template-columns:1fr}.p-step.full{grid-column:span 1}.panel-body{padding:16px 20px 24px}.panel-hero{padding:20px 20px 18px}}
+/* ── ICON BOX ENHANCED ── */
+
+/* CORNER BRACKETS */
+.bracket{position:absolute;width:12px;height:12px;opacity:0;transition:opacity .3s,transform .3s}
+.bracket.tl{top:8px;left:8px;border-top:2px solid rgba(var(--rgb),0.8);border-left:2px solid rgba(var(--rgb),0.8);transform:translate(4px,4px)}
+.bracket.tr{top:8px;right:8px;border-top:2px solid rgba(var(--rgb),0.8);border-right:2px solid rgba(var(--rgb),0.8);transform:translate(-4px,4px)}
+.bracket.bl{bottom:8px;left:8px;border-bottom:2px solid rgba(var(--rgb),0.8);border-left:2px solid rgba(var(--rgb),0.8);transform:translate(4px,-4px)}
+.bracket.br{bottom:8px;right:8px;border-bottom:2px solid rgba(var(--rgb),0.8);border-right:2px solid rgba(var(--rgb),0.8);transform:translate(-4px,-4px)}
+.nav-card:hover .bracket{opacity:1;transform:translate(0,0)}
 </style>
 </head>
 <body>
@@ -541,107 +472,207 @@ body{font-family:'Space Grotesk',sans-serif;background:var(--bg);color:var(--tex
     </div>
 
     <div class="hero-right">
+<!-- ═══ NAV CARDS ENHANCED ═══ -->
+<style>
+.nav-card.featured{
+  background:rgba(0,212,255,0.05);
+  border-color:rgba(0,212,255,0.2);
+  padding:24px 26px;
+}
+.nav-card[style*="--rgb:0,255,135"]{
+  background:rgba(0,255,135,0.06)!important;
+  border-color:rgba(0,255,135,0.35)!important;
+  box-shadow:0 0 20px rgba(0,255,135,0.08)
+}
+.nav-card[style*="--rgb:0,255,135"]:hover{
+  background:rgba(0,255,135,0.1)!important;
+  border-color:rgba(0,255,135,0.75)!important;
+  box-shadow:0 20px 60px rgba(0,0,0,0.5),0 0 0 1px rgba(0,255,135,0.4),0 0 35px rgba(0,255,135,0.25)!important
+}
 
-      <!-- CARD 1: DRIVE MONITOR — FEATURED -->
-      <a href="drives.html" class="nav-card featured" style="--cc:#00d4ff;--rgb:0,212,255">
-        <div class="nav-card-stripe"></div>
-        <div class="nc-scan"></div>
-        <div class="bracket tl"></div><div class="bracket tr"></div>
-        <div class="bracket bl"></div><div class="bracket br"></div>
-        <div class="card-ribbon">★ UTAMA</div>
-        <div class="nav-card-icon">
-          <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#00d4ff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-            <polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"></polygon>
-          </svg>
-        </div>
-        <div class="nav-card-body">
-          <div class="nav-card-title">Drive Monitoring</div>
-          <div class="nav-card-desc">Status INU, DSU & motor semua mixing</div>
-          <div class="nav-card-badge">REAL-TIME</div>
-        </div>
-        <div class="nav-card-arr">›</div>
-      </a>
+.nav-card[style*="--rgb:167,139,250"]{
+  background:rgba(167,139,250,0.06)!important;
+  border-color:rgba(167,139,250,0.35)!important;
+  box-shadow:0 0 20px rgba(167,139,250,0.08)
+}
+.nav-card[style*="--rgb:167,139,250"]:hover{
+  background:rgba(167,139,250,0.1)!important;
+  border-color:rgba(167,139,250,0.75)!important;
+  box-shadow:0 20px 60px rgba(0,0,0,0.5),0 0 0 1px rgba(167,139,250,0.4),0 0 35px rgba(167,139,250,0.25)!important
+}
 
-      <!-- CARD 2: SHARE JOB -->
-      <a href="sharejob.html" class="nav-card" style="--cc:#00ff87;--rgb:0,255,135">
-        <div class="nav-card-stripe"></div>
-        <div class="nc-scan"></div>
-        <div class="bracket tl"></div><div class="bracket tr"></div>
-        <div class="bracket bl"></div><div class="bracket br"></div>
-        <div class="nav-card-icon">
-          <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#00ff87" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-            <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path>
-            <circle cx="9" cy="7" r="4"></circle>
-            <path d="M23 21v-2a4 4 0 0 0-3-3.87"></path>
-            <path d="M16 3.13a4 4 0 0 1 0 7.75"></path>
-          </svg>
-        </div>
-        <div class="nav-card-body">
-          <div class="nav-card-title">Share Job</div>
-          <div class="nav-card-desc">Koordinasi pekerjaan antar unit mixing</div>
-          <div class="nav-card-badge">KOLABORASI</div>
-        </div>
-        <div class="nav-card-arr">›</div>
-      </a>
+.nav-card[style*="--rgb:255,184,0"]{
+  background:rgba(255,184,0,0.06)!important;
+  border-color:rgba(255,184,0,0.35)!important;
+  box-shadow:0 0 20px rgba(255,184,0,0.08)
+}
+.nav-card[style*="--rgb:255,184,0"]:hover{
+  background:rgba(255,184,0,0.1)!important;
+  border-color:rgba(255,184,0,0.75)!important;
+  box-shadow:0 20px 60px rgba(0,0,0,0.5),0 0 0 1px rgba(255,184,0,0.4),0 0 35px rgba(255,184,0,0.25)!important
+}
+.nav-card[style*="--rgb:0,212,255"]:hover{border-color:rgba(0,212,255,0.75)!important;box-shadow:0 20px 60px rgba(0,0,0,0.5),0 0 0 1px rgba(0,212,255,0.35),0 0 30px rgba(0,212,255,0.2)!important}
+.nav-card[style*="--rgb:0,255,135"]:hover{border-color:rgba(0,255,135,0.75)!important;background:rgba(0,255,135,0.1)!important;box-shadow:0 20px 60px rgba(0,0,0,0.5),0 0 0 1px rgba(0,255,135,0.35),0 0 30px rgba(0,255,135,0.2)!important}
+.nav-card[style*="--rgb:167,139,250"]:hover{border-color:rgba(167,139,250,0.75)!important;background:rgba(167,139,250,0.1)!important;box-shadow:0 20px 60px rgba(0,0,0,0.5),0 0 0 1px rgba(167,139,250,0.35),0 0 30px rgba(167,139,250,0.2)!important}
+.nav-card[style*="--rgb:255,184,0"]:hover{border-color:rgba(255,184,0,0.75)!important;background:rgba(255,184,0,0.1)!important;box-shadow:0 20px 60px rgba(0,0,0,0.5),0 0 0 1px rgba(255,184,0,0.35),0 0 30px rgba(255,184,0,0.2)!important}
+.nav-card.featured .nav-card-icon{width:62px;height:62px;border-radius:16px;font-size:28px}
+.nav-card.featured .nav-card-title{font-size:15px}
+.nav-card.featured .nav-card-desc{font-size:13px;color:var(--text2)}
 
-      <!-- CARD 3: I/O PLC -->
-      <a href="ioPlc.html" class="nav-card" style="--cc:#a78bfa;--rgb:167,139,250">
-        <div class="nav-card-stripe"></div>
-        <div class="nc-scan"></div>
-        <div class="bracket tl"></div><div class="bracket tr"></div>
-        <div class="bracket bl"></div><div class="bracket br"></div>
-        <div class="nav-card-icon">
-          <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#a78bfa" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-            <rect x="2" y="3" width="20" height="14" rx="2"></rect>
-            <line x1="8" y1="21" x2="16" y2="21"></line>
-            <line x1="12" y1="17" x2="12" y2="21"></line>
-            <polyline points="6 8 10 12 14 8 18 12"></polyline>
-          </svg>
-        </div>
-        <div class="nav-card-body">
-          <div class="nav-card-title">I/O PLC</div>
-          <div class="nav-card-desc">Control & troubleshooting PLC tags</div>
-          <div class="nav-card-badge">KONTROL</div>
-        </div>
-        <div class="nav-card-arr">›</div>
-      </a>
+/* Corner brackets */
+.bracket{position:absolute;width:14px;height:14px;opacity:0;transition:opacity .3s}
+.bracket.tl{top:7px;left:7px;border-top:2px solid var(--cc);border-left:2px solid var(--cc)}
+.bracket.tr{top:7px;right:7px;border-top:2px solid var(--cc);border-right:2px solid var(--cc)}
+.bracket.bl{bottom:7px;left:7px;border-bottom:2px solid var(--cc);border-left:2px solid var(--cc)}
+.bracket.br{bottom:7px;right:7px;border-bottom:2px solid var(--cc);border-right:2px solid var(--cc)}
+.nav-card.featured:hover .bracket{opacity:1;animation:brktGlow 2s ease-in-out infinite}
+@keyframes brktGlow{0%,100%{opacity:.6}50%{opacity:1}}
 
-      <!-- CARD 4: JADWAL PM -->
-      <a href="jadwalpm.html" class="nav-card" style="--cc:#ffb800;--rgb:255,184,0">
-        <div class="nav-card-stripe"></div>
-        <div class="nc-scan"></div>
-        <div class="bracket tl"></div><div class="bracket tr"></div>
-        <div class="bracket bl"></div><div class="bracket br"></div>
-        <div class="nav-card-icon">
-          <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#ffb800" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-            <rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect>
-            <line x1="16" y1="2" x2="16" y2="6"></line>
-            <line x1="8" y1="2" x2="8" y2="6"></line>
-            <line x1="3" y1="10" x2="21" y2="10"></line>
-            <line x1="8" y1="14" x2="8.01" y2="14"></line>
-            <line x1="12" y1="14" x2="16" y2="14"></line>
-            <line x1="8" y1="18" x2="8.01" y2="18"></line>
-            <line x1="12" y1="18" x2="16" y2="18"></line>
-          </svg>
-        </div>
-        <div class="nav-card-body">
-          <div class="nav-card-title">Jadwal PM</div>
-          <div class="nav-card-desc">Rencana & realisasi PM drive semua plant</div>
-          <div class="nav-card-badge">PREVENTIF</div>
-        </div>
-        <div class="nav-card-arr">›</div>
-      </a>
+/* NEW/UTAMA ribbon */
+.card-ribbon{
+  position:absolute;top:-1px;right:72px;
+  font-family:'JetBrains Mono',monospace;font-size:8px;font-weight:700;
+  letter-spacing:.2em;padding:3px 11px;background:var(--cyan);color:#020408;
+  border-radius:0 0 6px 6px;z-index:2;
+}
 
-      <!-- STATS ROW -->
-      <div class="stats-row">
-        <div class="stat-block" style="--sc:#00d4ff;--sd:0s"><div class="stat-num" data-count="7">0</div><div class="stat-lbl">Plant Aktif</div></div>
-        <div class="stat-block" style="--sc:#00ff87;--sd:.7s"><div class="stat-num">24/7</div><div class="stat-lbl">Nonstop</div></div>
-        <div class="stat-block" style="--sc:#a78bfa;--sd:1.4s"><div class="stat-num">∞</div><div class="stat-lbl">Live Data</div></div>
-        <div class="stat-block" style="--sc:#ffb800;--sd:2.1s"><div class="stat-num" data-count="100">0</div><div class="stat-lbl">% Uptime</div></div>
-      </div>
+/* Glitch title on featured hover */
+.nav-card.featured:hover .nav-card-title{
+  animation:cardGlitch .8s ease infinite;
+}
+@keyframes cardGlitch{
+  0%,90%,100%{text-shadow:0 0 16px rgba(0,212,255,0.6)}
+  92%{text-shadow:-2px 0 #ff00ff,2px 0 #00ffff,0 0 16px rgba(0,212,255,0.6)}
+  95%{text-shadow:2px 0 #ff00ff,-2px 0 #00ffff,0 0 16px rgba(0,212,255,0.6)}
+}
+
+/* Pulse ring on icon (featured) */
+.nav-card.featured .nav-card-icon::after{
+  content:'';position:absolute;inset:-4px;border-radius:18px;
+  border:1px solid rgba(0,212,255,0.4);opacity:0;
+}
+.nav-card.featured:hover .nav-card-icon::after{
+  opacity:1;animation:iconPls 1.5s ease-in-out infinite;
+}
+@keyframes iconPls{0%,100%{transform:scale(1);opacity:.4}50%{transform:scale(1.1);opacity:.9}}
+
+/* Scan beam */
+.nc-scan{
+  position:absolute;top:-100%;left:0;right:0;height:50%;
+  background:linear-gradient(180deg,transparent,rgba(var(--rgb),0.07),transparent);
+  transition:top .5s ease;pointer-events:none;
+}
+.nav-card:hover .nc-scan{top:150%}
+</style>
+
+<!-- CARD 1: DRIVE MONITOR — FEATURED -->
+<a href="drives.html" class="nav-card featured" style="--cc:#00d4ff;--rgb:0,212,255">
+  <div class="nav-card-stripe"></div>
+  <div class="nc-scan"></div>
+  <div class="bracket tl"></div><div class="bracket tr"></div>
+  <div class="bracket bl"></div><div class="bracket br"></div>
+  <div class="card-ribbon">★ UTAMA</div>
+  <div class="nav-card-icon">
+    <div class="icon-glow"></div>
+    <div class="icon-ring"></div>
+    <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#00d4ff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+      <polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"></polygon>
+    </svg>
+  </div>
+  <div class="nav-card-body">
+    <div class="nav-card-title">Drive Monitoring</div>
+    <div class="nav-card-desc">Status INU, DSU & motor semua mixing</div>
+    <div class="nav-card-badge">REAL-TIME</div>
+  </div>
+  <div class="nav-card-arr">›</div>
+</a>
+
+<!-- CARD 2: SHARE JOB -->
+<a href="sharejob.html" class="nav-card" style="--cc:#00ff87;--rgb:0,255,135">
+  <div class="nav-card-stripe"></div>
+  <div class="nc-scan"></div>
+  <div class="bracket tl"></div><div class="bracket tr"></div>
+  <div class="bracket bl"></div><div class="bracket br"></div>
+  <div class="nav-card-icon">
+    <div class="icon-glow"></div>
+    <div class="icon-ring"></div>
+    <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#00ff87" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path>
+      <circle cx="9" cy="7" r="4"></circle>
+      <path d="M23 21v-2a4 4 0 0 0-3-3.87"></path>
+      <path d="M16 3.13a4 4 0 0 1 0 7.75"></path>
+    </svg>
+  </div>
+  <div class="nav-card-body">
+    <div class="nav-card-title">Share Job</div>
+    <div class="nav-card-desc">Koordinasi pekerjaan antar unit mixing</div>
+    <div class="nav-card-badge">KOLABORASI</div>
+  </div>
+  <div class="nav-card-arr">›</div>
+</a>
+
+<!-- CARD 3: I/O PLC -->
+<a href="ioPlc.html" class="nav-card" style="--cc:#a78bfa;--rgb:167,139,250">
+  <div class="nav-card-stripe"></div>
+  <div class="nc-scan"></div>
+  <div class="bracket tl"></div><div class="bracket tr"></div>
+  <div class="bracket bl"></div><div class="bracket br"></div>
+  <div class="nav-card-icon">
+    <div class="icon-glow"></div>
+    <div class="icon-ring"></div>
+    <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#a78bfa" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+      <rect x="2" y="3" width="20" height="14" rx="2"></rect>
+      <line x1="8" y1="21" x2="16" y2="21"></line>
+      <line x1="12" y1="17" x2="12" y2="21"></line>
+      <polyline points="6 8 10 12 14 8 18 12"></polyline>
+    </svg>
+  </div>
+  <div class="nav-card-body">
+    <div class="nav-card-title">I/O PLC</div>
+    <div class="nav-card-desc">Control & troubleshooting PLC tags</div>
+    <div class="nav-card-badge">KONTROL</div>
+  </div>
+  <div class="nav-card-arr">›</div>
+</a>
+
+<!-- CARD 4: JADWAL PM -->
+<a href="jadwalpm.html" class="nav-card" style="--cc:#ffb800;--rgb:255,184,0">
+  <div class="nav-card-stripe"></div>
+  <div class="nc-scan"></div>
+  <div class="bracket tl"></div><div class="bracket tr"></div>
+  <div class="bracket bl"></div><div class="bracket br"></div>
+  <div class="nav-card-icon">
+    <div class="icon-glow"></div>
+    <div class="icon-ring"></div>
+    <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#ffb800" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+      <rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect>
+      <line x1="16" y1="2" x2="16" y2="6"></line>
+      <line x1="8" y1="2" x2="8" y2="6"></line>
+      <line x1="3" y1="10" x2="21" y2="10"></line>
+      <line x1="8" y1="14" x2="8.01" y2="14"></line>
+      <line x1="12" y1="14" x2="16" y2="14"></line>
+      <line x1="8" y1="18" x2="8.01" y2="18"></line>
+      <line x1="12" y1="18" x2="16" y2="18"></line>
+    </svg>
+  </div>
+  <div class="nav-card-body">
+    <div class="nav-card-title">Jadwal PM</div>
+    <div class="nav-card-desc">Rencana & realisasi PM drive semua plant</div>
+    <div class="nav-card-badge">PREVENTIF</div>
+  </div>
+  <div class="nav-card-arr">›</div>
+</a>
+<!-- STATS ROW (tidak berubah, sudah bagus) -->
+<div class="stats-row">
+  <div class="stat-block" style="--sc:#00d4ff;--sd:0s"><div class="stat-num" data-count="7">0</div><div class="stat-lbl">Plant Aktif</div></div>
+  <div class="stat-block" style="--sc:#00ff87;--sd:.7s"><div class="stat-num">24/7</div><div class="stat-lbl">Nonstop</div></div>
+  <div class="stat-block" style="--sc:#a78bfa;--sd:1.4s"><div class="stat-num">∞</div><div class="stat-lbl">Live Data</div></div>
+  <div class="stat-block" style="--sc:#ffb800;--sd:2.1s"><div class="stat-num" data-count="100">0</div><div class="stat-lbl">% Uptime</div></div>
+</div>
     </div>
   </div>
 </section>
+
 
 <!-- ABOUT -->
 <section class="section reveal">
@@ -723,7 +754,9 @@ body{font-family:'Space Grotesk',sans-serif;background:var(--bg);color:var(--tex
 
 <div class="h-divider"></div>
 
-<!-- PANDUAN -->
+<!-- ═══════════════════════════════════════════
+     PANDUAN PENGGUNAAN
+═══════════════════════════════════════════ -->
 <section class="panduan-section reveal" id="panduan">
   <div class="panduan-inner">
     <div class="section-label">PANDUAN PENGGUNA</div>
@@ -740,6 +773,7 @@ body{font-family:'Space Grotesk',sans-serif;background:var(--bg);color:var(--tex
     </div>
 
     <div class="panduan-body">
+
       <!-- PANEL 0: MULAI DI SINI -->
       <div class="panduan-panel active" id="ppanel-0">
         <div class="panel-hero">
@@ -752,20 +786,75 @@ body{font-family:'Space Grotesk',sans-serif;background:var(--bg);color:var(--tex
         <div class="panel-body">
           <div class="panel-sub-title">4 Modul Utama</div>
           <div class="steps-grid">
-            <div class="p-step" style="--step-color:#00d4ff"><div class="p-step-num">⚡</div><div class="p-step-body"><div class="p-step-title">Drive Monitoring</div><div class="p-step-desc">Pantau status drive INU, DSU & motor semua mixing secara real-time. Edit status, kelola pool drive, lihat histori perubahan, dan analisa kesesuaian posisi drive.</div><span class="p-step-tag tag-c">Real-time</span></div></div>
-            <div class="p-step" style="--step-color:#00ff87"><div class="p-step-num">🤝</div><div class="p-step-body"><div class="p-step-title">Share Job</div><div class="p-step-desc">Bagi dan pantau pembagian pekerjaan harian antar teknisi per unit mixing. Ubah status job, cetak laporan, kirim via WhatsApp, dan lihat riwayat job yang sudah selesai.</div><span class="p-step-tag tag-g">Kolaborasi</span></div></div>
-            <div class="p-step" style="--step-color:#a78bfa"><div class="p-step-num">🖥️</div><div class="p-step-body"><div class="p-step-title">I/O PLC</div><div class="p-step-desc">Akses daftar tag PLC Input/Output untuk troubleshooting kontrol. Cari nama tag, alamat, tipe, dan komentar dari file Excel yang tersimpan di Google Drive.</div><span class="p-step-tag tag-p">Kontrol</span></div></div>
-            <div class="p-step" style="--step-color:#ffb800"><div class="p-step-num">📅</div><div class="p-step-body"><div class="p-step-title">Jadwal PM</div><div class="p-step-desc">Pantau rencana dan realisasi Preventive Maintenance drive semua plant. Lihat status Plan, Actual, dan Overdue per mesin per bulan, filter berdasarkan plant atau interval PM.</div><span class="p-step-tag tag-a">PM Drive Care</span></div></div>
-            <div class="p-step" style="--step-color:#ffb800"><div class="p-step-num">🏠</div><div class="p-step-body"><div class="p-step-title">Pusat Kendali (Home)</div><div class="p-step-desc">Halaman utama dengan overview semua unit, status sistem, proses mixing, dan akses cepat ke semua modul dari satu tempat.</div><span class="p-step-tag tag-a">Dashboard</span></div></div>
+            <div class="p-step" style="--step-color:#00d4ff">
+              <div class="p-step-num">⚡</div>
+              <div class="p-step-body">
+                <div class="p-step-title">Drive Monitoring</div>
+                <div class="p-step-desc">Pantau status drive INU, DSU & motor semua mixing secara real-time. Edit status, kelola pool drive, lihat histori perubahan, dan analisa kesesuaian posisi drive.</div>
+                <span class="p-step-tag tag-c">Real-time</span>
+              </div>
+            </div>
+            <div class="p-step" style="--step-color:#00ff87">
+              <div class="p-step-num">🤝</div>
+              <div class="p-step-body">
+                <div class="p-step-title">Share Job</div>
+                <div class="p-step-desc">Bagi dan pantau pembagian pekerjaan harian antar teknisi per unit mixing. Ubah status job, cetak laporan, kirim via WhatsApp, dan lihat riwayat job yang sudah selesai.</div>
+                <span class="p-step-tag tag-g">Kolaborasi</span>
+              </div>
+            </div>
+            <div class="p-step" style="--step-color:#a78bfa">
+              <div class="p-step-num">🖥️</div>
+              <div class="p-step-body">
+                <div class="p-step-title">I/O PLC</div>
+                <div class="p-step-desc">Akses daftar tag PLC Input/Output untuk troubleshooting kontrol. Cari nama tag, alamat, tipe, dan komentar dari file Excel yang tersimpan di Google Drive.</div>
+                <span class="p-step-tag tag-p">Kontrol</span>
+              </div>
+            </div>
+            <div class="p-step" style="--step-color:#ffb800">
+              <div class="p-step-num">📅</div>
+              <div class="p-step-body">
+                <div class="p-step-title">Jadwal PM</div>
+                <div class="p-step-desc">Pantau rencana dan realisasi Preventive Maintenance drive semua plant. Lihat status Plan, Actual, dan Overdue per mesin per bulan, filter berdasarkan plant atau interval PM.</div>
+                <span class="p-step-tag tag-a">PM Drive Care</span>
+              </div>
+            </div>
+            <div class="p-step" style="--step-color:#ffb800">
+              <div class="p-step-num">🏠</div>
+              <div class="p-step-body">
+                <div class="p-step-title">Pusat Kendali (Home)</div>
+                <div class="p-step-desc">Halaman utama dengan overview semua unit, status sistem, proses mixing, dan akses cepat ke semua modul dari satu tempat.</div>
+                <span class="p-step-tag tag-a">Dashboard</span>
+              </div>
+            </div>
           </div>
+
           <div class="panel-sub-title">Tipe Akun & Hak Akses</div>
           <div class="role-row">
-            <div class="role-c"><div class="role-c-dot" style="color:#00ff87;background:#00ff87"></div><div class="role-c-name" style="color:#00ff87">Teknisi</div><div class="role-c-desc">Akses unit sendiri. Bisa lihat, cari, filter, cetak, dan kirim WA. Tidak bisa edit atau tambah data.</div></div>
-            <div class="role-c"><div class="role-c-dot" style="color:#00e0f8;background:#00e0f8"></div><div class="role-c-name" style="color:#00e0f8">Supervisor</div><div class="role-c-desc">Akses semua unit. Bisa edit, tambah, hapus, archive, dan ubah status. Tidak bisa edit histori.</div></div>
-            <div class="role-c"><div class="role-c-dot" style="color:#ffb800;background:#ffb800"></div><div class="role-c-name" style="color:#ffb800">Admin</div><div class="role-c-desc">Akses penuh. Bisa edit histori, koreksi timestamp, dan semua fungsi Supervisor.</div></div>
+            <div class="role-c">
+              <div class="role-c-dot" style="color:#00ff87;background:#00ff87"></div>
+              <div class="role-c-name" style="color:#00ff87">Teknisi</div>
+              <div class="role-c-desc">Akses unit sendiri. Bisa lihat, cari, filter, cetak, dan kirim WA. Tidak bisa edit atau tambah data.</div>
+            </div>
+            <div class="role-c">
+              <div class="role-c-dot" style="color:#00e0f8;background:#00e0f8"></div>
+              <div class="role-c-name" style="color:#00e0f8">Supervisor</div>
+              <div class="role-c-desc">Akses semua unit. Bisa edit, tambah, hapus, archive, dan ubah status. Tidak bisa edit histori.</div>
+            </div>
+            <div class="role-c">
+              <div class="role-c-dot" style="color:#ffb800;background:#ffb800"></div>
+              <div class="role-c-name" style="color:#ffb800">Admin</div>
+              <div class="role-c-desc">Akses penuh. Bisa edit histori, koreksi timestamp, dan semua fungsi Supervisor.</div>
+            </div>
           </div>
-          <div class="p-infobox cyan"><span class="p-infobox-icon">📱</span><div class="p-infobox-text"><strong>Instalasi di smartphone (PWA):</strong> Buka website di Chrome → ketuk menu ⋮ (tiga titik) → pilih "Tambahkan ke Layar Utama" → ketuk Tambahkan. Selanjutnya bisa dibuka langsung seperti aplikasi dari homescreen tanpa buka browser. Mendukung Android & iOS.</div></div>
-          <div class="p-infobox amber"><span class="p-infobox-icon">💬</span><div class="p-infobox-text"><strong>Lupa password?</strong> Hubungi admin sistem: <strong>Rivan Surya Anggara</strong> atau <strong>Zacky Nurastari Multazam</strong> untuk reset kredensial. Tidak ada fitur reset mandiri demi keamanan sistem.</div></div>
+
+          <div class="p-infobox cyan">
+            <span class="p-infobox-icon">📱</span>
+            <div class="p-infobox-text"><strong>Instalasi di smartphone (PWA):</strong> Buka website di Chrome → ketuk menu ⋮ (tiga titik) → pilih "Tambahkan ke Layar Utama" → ketuk Tambahkan. Selanjutnya bisa dibuka langsung seperti aplikasi dari homescreen tanpa buka browser. Mendukung Android & iOS.</div>
+          </div>
+          <div class="p-infobox amber">
+            <span class="p-infobox-icon">💬</span>
+            <div class="p-infobox-text"><strong>Lupa password?</strong> Hubungi admin sistem: <strong>Rivan Surya Anggara</strong> atau <strong>Zacky Nurastari Multazam</strong> untuk reset kredensial. Tidak ada fitur reset mandiri demi keamanan sistem.</div>
+          </div>
         </div>
       </div>
 
@@ -773,16 +862,45 @@ body{font-family:'Space Grotesk',sans-serif;background:var(--bg);color:var(--tex
       <div class="panduan-panel" id="ppanel-1">
         <div class="panel-hero">
           <div class="panel-hero-icon" style="background:rgba(0,212,255,0.08);border-color:rgba(0,212,255,0.25)">⚡</div>
-          <div class="panel-hero-text"><h3>Drive Monitoring — Panduan Lengkap</h3><p>Pantau status drive INU, DSU, dan motor di seluruh plant mixing. Edit status drive, kelola pool drive rusak/spare, lihat histori, analisa kesesuaian, dan cetak laporan.</p></div>
+          <div class="panel-hero-text">
+            <h3>Drive Monitoring — Panduan Lengkap</h3>
+            <p>Pantau status drive INU, DSU, dan motor di seluruh plant mixing. Edit status drive, kelola pool drive rusak/spare, lihat histori, analisa kesesuaian, dan cetak laporan.</p>
+          </div>
         </div>
         <div class="panel-body">
           <div class="panel-sub-title">Login & Navigasi Awal</div>
           <div class="steps-grid">
-            <div class="p-step" style="--step-color:#00d4ff"><div class="p-step-num">1</div><div class="p-step-body"><div class="p-step-title">Buka halaman Drives</div><div class="p-step-desc">Klik menu "Drives" di navbar atas, atau klik kartu "Drive Monitoring" di halaman utama.</div></div></div>
-            <div class="p-step" style="--step-color:#00d4ff"><div class="p-step-num">2</div><div class="p-step-body"><div class="p-step-title">Pilih peran & masukkan kredensial</div><div class="p-step-desc">Pilih Teknisi, Supervisor, atau Admin. Masukkan username & password. Tekan Enter atau klik "Masuk ke Drive Monitoring".</div><span class="p-step-tag tag-c">Sesi tersimpan selama browser terbuka</span></div></div>
-            <div class="p-step" style="--step-color:#00d4ff"><div class="p-step-num">3</div><div class="p-step-body"><div class="p-step-title">Pilih plant dari daftar</div><div class="p-step-desc">7 plant tersedia: MCA, MCC, MCD, MCG, MCH, MCI, Plant E. Supervisor & Admin bisa pilih semua. Teknisi langsung masuk ke unit masing-masing.</div></div></div>
-            <div class="p-step" style="--step-color:#00d4ff"><div class="p-step-num">4</div><div class="p-step-body"><div class="p-step-title">Pilih mixing / line</div><div class="p-step-desc">Daftar mixing tampil dengan pill status. Kartu merah = ada fault. Klik mixing yang ingin diperiksa untuk masuk ke halaman detail.</div></div></div>
+            <div class="p-step" style="--step-color:#00d4ff">
+              <div class="p-step-num">1</div>
+              <div class="p-step-body">
+                <div class="p-step-title">Buka halaman Drives</div>
+                <div class="p-step-desc">Klik menu "Drives" di navbar atas, atau klik kartu "Drive Monitoring" di halaman utama.</div>
+              </div>
+            </div>
+            <div class="p-step" style="--step-color:#00d4ff">
+              <div class="p-step-num">2</div>
+              <div class="p-step-body">
+                <div class="p-step-title">Pilih peran & masukkan kredensial</div>
+                <div class="p-step-desc">Pilih Teknisi, Supervisor, atau Admin. Masukkan username & password. Tekan Enter atau klik "Masuk ke Drive Monitoring".</div>
+                <span class="p-step-tag tag-c">Sesi tersimpan selama browser terbuka</span>
+              </div>
+            </div>
+            <div class="p-step" style="--step-color:#00d4ff">
+              <div class="p-step-num">3</div>
+              <div class="p-step-body">
+                <div class="p-step-title">Pilih plant dari daftar</div>
+                <div class="p-step-desc">7 plant tersedia: MCA, MCC, MCD, MCG, MCH, MCI, Plant E. Supervisor & Admin bisa pilih semua. Teknisi langsung masuk ke unit masing-masing.</div>
+              </div>
+            </div>
+            <div class="p-step" style="--step-color:#00d4ff">
+              <div class="p-step-num">4</div>
+              <div class="p-step-body">
+                <div class="p-step-title">Pilih mixing / line</div>
+                <div class="p-step-desc">Daftar mixing tampil dengan pill status. Kartu merah = ada fault. Klik mixing yang ingin diperiksa untuk masuk ke halaman detail.</div>
+              </div>
+            </div>
           </div>
+
           <div class="panel-sub-title">Status Drive</div>
           <div class="status-row-panduan">
             <div class="st-badge" style="background:rgba(0,240,160,0.08);border-color:rgba(0,240,160,0.25)"><div class="st-dot-b" style="background:#00f0a0;box-shadow:0 0 6px #00f0a0"></div><span style="color:#00f0a0">OK — Beroperasi normal</span></div>
@@ -790,6 +908,7 @@ body{font-family:'Space Grotesk',sans-serif;background:var(--bg);color:var(--tex
             <div class="st-badge" style="background:rgba(255,184,32,0.08);border-color:rgba(255,184,32,0.25)"><div class="st-dot-b" style="background:#ffb820"></div><span style="color:#ffb820">Maintenance — Sedang diservis</span></div>
             <div class="st-badge" style="background:rgba(126,184,232,0.08);border-color:rgba(126,184,232,0.25)"><div class="st-dot-b" style="background:#7eb8e8"></div><span style="color:#7eb8e8">Kosong — Slot tidak terisi drive</span></div>
           </div>
+
           <div class="panel-sub-title">Tab-tab yang Tersedia di Detail Mixing</div>
           <div class="feat-grid-p">
             <div class="feat-p"><span class="feat-p-icon">⚡</span><div class="feat-p-title">Drive</div><div class="feat-p-desc">Kartu semua drive dalam mixing. Klik kartu untuk edit (perlu role Teknisi/Admin).</div></div>
@@ -799,21 +918,63 @@ body{font-family:'Space Grotesk',sans-serif;background:var(--bg);color:var(--tex
             <div class="feat-p"><span class="feat-p-icon">📋</span><div class="feat-p-title">Asli</div><div class="feat-p-desc">Perbandingan posisi drive asli (referensi) vs kondisi lapangan. Tampilkan SESUAI / TIDAK SESUAI.</div></div>
             <div class="feat-p"><span class="feat-p-icon">📈</span><div class="feat-p-title">Analisa</div><div class="feat-p-desc">Statistik kesesuaian, grafik bar/pie/line per mixing, insight otomatis, export CSV & PDF.</div></div>
           </div>
-          <div class="panel-sub-title">Cara Edit Status Drive</div>
+
+          <div class="panel-sub-title">Cara Edit Status Drive (Teknisi / Admin)</div>
           <div class="steps-grid">
-            <div class="p-step" style="--step-color:#00ff87"><div class="p-step-num">1</div><div class="p-step-body"><div class="p-step-title">Klik kartu drive yang ingin diubah</div><div class="p-step-desc">Modal edit muncul. Jika tidak bisa diklik, pastikan login dengan role Teknisi atau Admin.</div></div></div>
-            <div class="p-step" style="--step-color:#00ff87"><div class="p-step-num">2</div><div class="p-step-body"><div class="p-step-title">Ubah data yang diperlukan</div><div class="p-step-desc">Tersedia: Status, Merk/Nama, Spesifikasi/Tipe, Keterangan, Serial Number, Stiker/Label, dan Link Foto Google Drive.</div></div></div>
-            <div class="p-step" style="--step-color:#00ff87"><div class="p-step-num">3</div><div class="p-step-body"><div class="p-step-title">Opsional: Kirim ke Pool</div><div class="p-step-desc">Jika status diubah ke Fault/Kosong, centang "Kirim ke Pool" dan pilih tujuan pool (Rusak / WS Boveri / ABW).</div></div></div>
-            <div class="p-step" style="--step-color:#00ff87"><div class="p-step-num">4</div><div class="p-step-body"><div class="p-step-title">Klik "Simpan"</div><div class="p-step-desc">Data otomatis tersimpan ke Google Sheets dan masuk ke log histori.</div><span class="p-step-tag tag-r">Wajib sertakan keterangan yang jelas</span></div></div>
+            <div class="p-step" style="--step-color:#00ff87">
+              <div class="p-step-num">1</div>
+              <div class="p-step-body">
+                <div class="p-step-title">Klik kartu drive yang ingin diubah</div>
+                <div class="p-step-desc">Modal edit muncul. Jika tidak bisa diklik, pastikan login dengan role Teknisi atau Admin. Supervisor mode read-only di Drive Monitor.</div>
+              </div>
+            </div>
+            <div class="p-step" style="--step-color:#00ff87">
+              <div class="p-step-num">2</div>
+              <div class="p-step-body">
+                <div class="p-step-title">Ubah data yang diperlukan</div>
+                <div class="p-step-desc">Tersedia: Status, Merk/Nama, Spesifikasi/Tipe, Keterangan, Serial Number, Stiker/Label, dan Link Foto Google Drive.</div>
+              </div>
+            </div>
+            <div class="p-step" style="--step-color:#00ff87">
+              <div class="p-step-num">3</div>
+              <div class="p-step-body">
+                <div class="p-step-title">Opsional: Kirim ke Pool</div>
+                <div class="p-step-desc">Jika status diubah ke Fault/Kosong, centang "Kirim ke Pool" dan pilih tujuan pool (Rusak / WS Boveri / ABW).</div>
+              </div>
+            </div>
+            <div class="p-step" style="--step-color:#00ff87">
+              <div class="p-step-num">4</div>
+              <div class="p-step-body">
+                <div class="p-step-title">Klik "Simpan"</div>
+                <div class="p-step-desc">Data otomatis tersimpan ke Google Sheets dan masuk ke log histori. Pastikan semua data benar sebelum simpan — tidak bisa dibatalkan.</div>
+                <span class="p-step-tag tag-r">Wajib sertakan keterangan yang jelas</span>
+              </div>
+            </div>
           </div>
+
           <div class="panel-sub-title">Manajemen Pool Drive</div>
           <div class="pool-row">
-            <div class="pool-c" style="background:rgba(255,61,85,0.06);border-color:rgba(255,61,85,0.25)"><div class="pool-c-title" style="color:#ff3d55">🔴 Rusak</div><div class="pool-c-desc" style="color:rgba(255,61,85,0.7)">Drive bermasalah atau kerusakan fisik yang menunggu perbaikan atau penggantian.</div></div>
-            <div class="pool-c" style="background:rgba(255,184,32,0.06);border-color:rgba(255,184,32,0.25)"><div class="pool-c-title" style="color:#ffb820">🟡 WS Boveri</div><div class="pool-c-desc" style="color:rgba(255,184,32,0.7)">Drive spare di workshop Boveri, sudah diperbaiki dan siap dipasang kembali.</div></div>
-            <div class="pool-c" style="background:rgba(167,139,250,0.06);border-color:rgba(167,139,250,0.25)"><div class="pool-c-title" style="color:#a78bfa">🟣 ABW6/4/1</div><div class="pool-c-desc" style="color:rgba(167,139,250,0.7)">Drive spare di gudang ABW. Nomor berbeda tiap plant (ABW6, ABW4, atau ABW1).</div></div>
+            <div class="pool-c" style="background:rgba(255,61,85,0.06);border-color:rgba(255,61,85,0.25)">
+              <div class="pool-c-title" style="color:#ff3d55">🔴 Rusak</div>
+              <div class="pool-c-desc" style="color:rgba(255,61,85,0.7)">Drive bermasalah atau kerusakan fisik yang menunggu perbaikan atau penggantian.</div>
+            </div>
+            <div class="pool-c" style="background:rgba(255,184,32,0.06);border-color:rgba(255,184,32,0.25)">
+              <div class="pool-c-title" style="color:#ffb820">🟡 WS Boveri</div>
+              <div class="pool-c-desc" style="color:rgba(255,184,32,0.7)">Drive spare di workshop Boveri, sudah diperbaiki dan siap dipasang kembali.</div>
+            </div>
+            <div class="pool-c" style="background:rgba(167,139,250,0.06);border-color:rgba(167,139,250,0.25)">
+              <div class="pool-c-title" style="color:#a78bfa">🟣 ABW6/4/1</div>
+              <div class="pool-c-desc" style="color:rgba(167,139,250,0.7)">Drive spare di gudang ABW. Nomor berbeda tiap plant (ABW6, ABW4, atau ABW1).</div>
+            </div>
           </div>
-          <div class="p-infobox cyan"><span class="p-infobox-icon">🔄</span><div class="p-infobox-text"><strong>Kembalikan drive dari pool ke drives:</strong> Tab Pool → klik "✅ Kembalikan ke Drives" → pilih group/mixing dan drive ID tujuan → isi keterangan → klik Simpan.</div></div>
-          <div class="p-infobox green"><span class="p-infobox-icon">🌐</span><div class="p-infobox-text"><strong>Pencarian cross-plant:</strong> Di halaman daftar plant, gunakan kotak pencarian global di bagian atas. Masukkan serial number, merk, atau drive ID — sistem mencari di semua 7 plant sekaligus.</div></div>
+          <div class="p-infobox cyan">
+            <span class="p-infobox-icon">🔄</span>
+            <div class="p-infobox-text"><strong>Kembalikan drive dari pool ke drives:</strong> Tab Pool → klik "✅ Kembalikan ke Drives" pada kartu drive → pilih group/mixing dan drive ID tujuan → isi keterangan → klik Simpan. Status drive tujuan otomatis berubah menjadi OK dan serial number terupdate.</div>
+          </div>
+          <div class="p-infobox green">
+            <span class="p-infobox-icon">🌐</span>
+            <div class="p-infobox-text"><strong>Pencarian cross-plant:</strong> Di halaman daftar plant, gunakan kotak pencarian global di bagian atas. Masukkan serial number, merk, atau drive ID — sistem mencari di semua 7 plant sekaligus dan menampilkan semua hasil yang cocok.</div>
+          </div>
         </div>
       </div>
 
@@ -821,26 +982,89 @@ body{font-family:'Space Grotesk',sans-serif;background:var(--bg);color:var(--tex
       <div class="panduan-panel" id="ppanel-2">
         <div class="panel-hero">
           <div class="panel-hero-icon" style="background:rgba(0,255,135,0.06);border-color:rgba(0,255,135,0.2)">🤝</div>
-          <div class="panel-hero-text"><h3>Share Job — Panduan Lengkap</h3><p>Sistem pembagian dan monitoring pekerjaan harian antar teknisi per unit mixing. Semua job tersimpan real-time di Google Sheets dengan fitur filter, cetak, WA, dan riwayat lengkap.</p></div>
+          <div class="panel-hero-text">
+            <h3>Share Job — Panduan Lengkap</h3>
+            <p>Sistem pembagian dan monitoring pekerjaan harian antar teknisi per unit mixing. Semua job tersimpan real-time di Google Sheets dengan fitur filter, cetak, WA, dan riwayat lengkap.</p>
+          </div>
         </div>
         <div class="panel-body">
           <div class="panel-sub-title">Cara Masuk ke Sistem</div>
           <div class="steps-grid">
-            <div class="p-step" style="--step-color:#00ff87"><div class="p-step-num">1</div><div class="p-step-body"><div class="p-step-title">Buka halaman Share Job</div><div class="p-step-desc">Klik menu "ShareJob" di navbar atau kartu Share Job di halaman utama.</div></div></div>
-            <div class="p-step" style="--step-color:#00ff87"><div class="p-step-num">2</div><div class="p-step-body"><div class="p-step-title">Login atau masuk sebagai Tamu</div><div class="p-step-desc">Masukkan username & password, atau klik "Masuk Tamu" untuk akses baca saja tanpa login.</div><span class="p-step-tag tag-g">Tamu: read-only access</span></div></div>
-            <div class="p-step" style="--step-color:#00ff87"><div class="p-step-num">3</div><div class="p-step-body"><div class="p-step-title">Pilih unit / departemen</div><div class="p-step-desc">Muncul grid pilihan unit (MCA, MCC, MCD, MCG, MCH, MCI, Plant E). Teknisi langsung masuk unit masing-masing.</div></div></div>
-            <div class="p-step" style="--step-color:#00ff87"><div class="p-step-num">4</div><div class="p-step-body"><div class="p-step-title">Lihat tabel job harian</div><div class="p-step-desc">Tabel menampilkan: ID, Nama teknisi, Tugas, Mesin, Status, Tanggal, Jam Mulai, dan Jam Selesai.</div></div></div>
+            <div class="p-step" style="--step-color:#00ff87">
+              <div class="p-step-num">1</div>
+              <div class="p-step-body">
+                <div class="p-step-title">Buka halaman Share Job</div>
+                <div class="p-step-desc">Klik menu "ShareJob" di navbar atau kartu Share Job di halaman utama.</div>
+              </div>
+            </div>
+            <div class="p-step" style="--step-color:#00ff87">
+              <div class="p-step-num">2</div>
+              <div class="p-step-body">
+                <div class="p-step-title">Login atau masuk sebagai Tamu</div>
+                <div class="p-step-desc">Masukkan username & password, atau klik "Masuk Tamu" untuk akses baca saja tanpa login. Mode Tamu bisa melihat, filter, cetak, dan kirim WA.</div>
+                <span class="p-step-tag tag-g">Tamu: read-only access</span>
+              </div>
+            </div>
+            <div class="p-step" style="--step-color:#00ff87">
+              <div class="p-step-num">3</div>
+              <div class="p-step-body">
+                <div class="p-step-title">Pilih unit / departemen</div>
+                <div class="p-step-desc">Muncul grid pilihan unit (MCA, MCC, MCD, MCG, MCH, MCI, Plant E). Teknisi langsung masuk unit masing-masing. Admin/Supervisor bebas pilih.</div>
+              </div>
+            </div>
+            <div class="p-step" style="--step-color:#00ff87">
+              <div class="p-step-num">4</div>
+              <div class="p-step-body">
+                <div class="p-step-title">Lihat tabel job harian</div>
+                <div class="p-step-desc">Tabel menampilkan: ID, Nama teknisi, Tugas, Mesin, Status, Tanggal, Jam Mulai, dan Jam Selesai. Gunakan filter di atas tabel untuk menyaring data.</div>
+              </div>
+            </div>
           </div>
+
+          <div class="panel-sub-title">Tambah Job Baru (Supervisor / Admin)</div>
+          <div class="steps-grid">
+            <div class="p-step full" style="--step-color:#ffb800">
+              <div class="p-step-num">1</div>
+              <div class="p-step-body">
+                <div class="p-step-title">Klik ikon pensil ✏️ (toggle input) di bar atas</div>
+                <div class="p-step-desc">Panel input muncul di atas tabel. Hanya tampil untuk Supervisor dan Admin. Isi kolom: <strong>ID</strong> (nomor job), <strong>Nama</strong> (bisa beberapa, tekan Enter untuk nama baru), <strong>Tugas</strong>, <strong>Mesin</strong>, <strong>Jam Mulai</strong>, dan <strong>Status awal</strong> (Pending/Proses/Selesai). Klik "Tambah" untuk menyimpan. Job langsung masuk ke tabel dan tersimpan ke spreadsheet.</div>
+                <span class="p-step-tag tag-a">Khusus Supervisor & Admin</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="panel-sub-title">Mengubah Status Job</div>
+          <div class="steps-grid">
+            <div class="p-step" style="--step-color:#00e0f8">
+              <div class="p-step-num">1</div>
+              <div class="p-step-body">
+                <div class="p-step-title">Klik dropdown Status di kolom Status</div>
+                <div class="p-step-desc">Pilih: <strong>Pending</strong> (belum dikerjakan), <strong>Proses</strong> (sedang berjalan), atau <strong>Selesai</strong> (job selesai & akan diarsipkan).</div>
+              </div>
+            </div>
+            <div class="p-step" style="--step-color:#00e0f8">
+              <div class="p-step-num">2</div>
+              <div class="p-step-body">
+                <div class="p-step-title">Jika Selesai: job otomatis diarsipkan</div>
+                <div class="p-step-desc">Setelah archive sukses, muncul modal opsional "Tambah Catatan Tindakan". Isi atau klik "Lewati" — bisa diisi nanti di halaman Histori dengan double-klik kolom Action.</div>
+                <span class="p-step-tag tag-g">Catatan tindakan bisa diedit kapanpun</span>
+              </div>
+            </div>
+          </div>
+
           <div class="panel-sub-title">Fitur-fitur Lengkap</div>
           <div class="feat-grid-p">
             <div class="feat-p"><span class="feat-p-icon">🔍</span><div class="feat-p-title">Filter & Cari</div><div class="feat-p-desc">Filter tanggal/bulan/tahun/status. Cari nama, mesin, atau tugas secara bersamaan.</div></div>
-            <div class="feat-p"><span class="feat-p-icon">🖨️</span><div class="feat-p-title">Cetak PDF</div><div class="feat-p-desc">Klik "Cetak" — hanya baris yang terlihat (sesuai filter) yang dicetak. Format A4 landscape.</div></div>
+            <div class="feat-p"><span class="feat-p-icon">🖨️</span><div class="feat-p-title">Cetak PDF</div><div class="feat-p-desc">Klik "Cetak" — hanya baris yang terlihat (sesuai filter) yang dicetak. Format A4 landscape, rapi otomatis.</div></div>
             <div class="feat-p"><span class="feat-p-icon">📱</span><div class="feat-p-title">Kirim WhatsApp</div><div class="feat-p-desc">Klik "Kirim WA", preview pesan muncul, masukkan nomor (format 08xxx), klik Kirim → terbuka WA Web.</div></div>
-            <div class="feat-p"><span class="feat-p-icon">📜</span><div class="feat-p-title">Halaman Histori</div><div class="feat-p-desc">Semua job selesai/diarsipkan. Double-klik kolom untuk edit langsung (Admin/Supervisor).</div></div>
+            <div class="feat-p"><span class="feat-p-icon">📜</span><div class="feat-p-title">Halaman Histori</div><div class="feat-p-desc">Semua job selesai/diarsipkan. Double-klik kolom Selesai, Diarsipkan, atau Action untuk edit langsung (Admin/Supervisor).</div></div>
             <div class="feat-p"><span class="feat-p-icon">✏️</span><div class="feat-p-title">Edit Inline Baris</div><div class="feat-p-desc">Double-klik baris di tabel utama untuk edit ID, Nama, Tugas, Mesin, Jam Mulai. Tekan <span class="key">Esc</span> untuk batal.</div></div>
-            <div class="feat-p"><span class="feat-p-icon">⬇️</span><div class="feat-p-title">Auto Scroll</div><div class="feat-p-desc">Klik "Auto Scroll" untuk scroll tabel otomatis naik-turun — berguna saat monitor dari TVwall.</div></div>
+            <div class="feat-p"><span class="feat-p-icon">⬇️</span><div class="feat-p-title">Auto Scroll</div><div class="feat-p-desc">Klik "Auto Scroll" untuk scroll tabel otomatis naik-turun — berguna saat monitor dari layar jauh atau TVwall.</div></div>
           </div>
-          <div class="p-infobox amber"><span class="p-infobox-icon">🗑️</span><div class="p-infobox-text"><strong>Hapus job:</strong> Klik ikon tong sampah → muncul tombol ✕ di tiap baris → klik ✕ lalu konfirmasi. Tindakan ini <strong>tidak bisa dibatalkan</strong>. Hanya Admin & Supervisor.</div></div>
+          <div class="p-infobox amber">
+            <span class="p-infobox-icon">🗑️</span>
+            <div class="p-infobox-text"><strong>Hapus job:</strong> Klik ikon tong sampah di bar atas untuk aktifkan mode hapus → muncul tombol ✕ di tiap baris → klik ✕ lalu konfirmasi di modal. Tindakan ini <strong>tidak bisa dibatalkan</strong>. Hanya Admin & Supervisor.</div>
+          </div>
         </div>
       </div>
 
@@ -848,47 +1072,180 @@ body{font-family:'Space Grotesk',sans-serif;background:var(--bg);color:var(--tex
       <div class="panduan-panel" id="ppanel-3">
         <div class="panel-hero">
           <div class="panel-hero-icon" style="background:rgba(167,139,250,0.08);border-color:rgba(167,139,250,0.25)">🖥️</div>
-          <div class="panel-hero-text"><h3>I/O PLC — Panduan Lengkap</h3><p>Akses daftar tag PLC Input/Output dari file Excel di Google Drive. Digunakan untuk troubleshooting sinyal kontrol dan identifikasi alamat PLC per unit mixing.</p></div>
+          <div class="panel-hero-text">
+            <h3>I/O PLC — Panduan Lengkap</h3>
+            <p>Akses daftar tag PLC Input/Output dari file Excel di Google Drive. Digunakan untuk troubleshooting sinyal kontrol dan identifikasi alamat PLC per unit mixing.</p>
+          </div>
         </div>
         <div class="panel-body">
           <div class="panel-sub-title">Langkah Penggunaan</div>
           <div class="steps-grid">
-            <div class="p-step" style="--step-color:#a78bfa"><div class="p-step-num">1</div><div class="p-step-body"><div class="p-step-title">Buka halaman I/O PLC & login</div><div class="p-step-desc">Klik menu "I/O PLC" di navbar. Masukkan username dan password.</div></div></div>
-            <div class="p-step" style="--step-color:#a78bfa"><div class="p-step-num">2</div><div class="p-step-body"><div class="p-step-title">Pilih plant</div><div class="p-step-desc">Muncul daftar plant (MCG, MCA, MCC, MCD, MCH, MCI). Klik plant yang ingin diperiksa tag PLCnya.</div></div></div>
-            <div class="p-step" style="--step-color:#a78bfa"><div class="p-step-num">3</div><div class="p-step-body"><div class="p-step-title">Pilih unit / mixer</div><div class="p-step-desc">Muncul daftar unit dalam plant (Mixer-1, Conveyor-A, Panel Utama, dll). Klik unit yang ingin diperiksa.</div></div></div>
-            <div class="p-step" style="--step-color:#a78bfa"><div class="p-step-num">4</div><div class="p-step-body"><div class="p-step-title">Pilih file I/O List</div><div class="p-step-desc">Muncul daftar file Excel dari Google Drive untuk unit tersebut. Klik file yang ingin dilihat tag-tagnya.</div></div></div>
-            <div class="p-step full" style="--step-color:#a78bfa"><div class="p-step-num">5</div><div class="p-step-body"><div class="p-step-title">Baca & cari tag PLC di tabel</div><div class="p-step-desc">Tabel menampilkan: <strong>Nomor</strong>, <strong>Nama Tag</strong>, <strong>Tipe</strong> (Input/Output/Memory), <strong>Alamat</strong> (Address PLC), dan <strong>Komentar</strong>. Gunakan kotak pencarian di atas untuk filter otomatis saat mengetik.</div><span class="p-step-tag tag-p">Cari by nama, address, tipe, atau komentar</span></div></div>
+            <div class="p-step" style="--step-color:#a78bfa">
+              <div class="p-step-num">1</div>
+              <div class="p-step-body">
+                <div class="p-step-title">Buka halaman I/O PLC & login</div>
+                <div class="p-step-desc">Klik menu "I/O PLC" di navbar. Masukkan username dan password. Sesi tersimpan selama tab browser tidak ditutup.</div>
+              </div>
+            </div>
+            <div class="p-step" style="--step-color:#a78bfa">
+              <div class="p-step-num">2</div>
+              <div class="p-step-body">
+                <div class="p-step-title">Pilih plant</div>
+                <div class="p-step-desc">Muncul daftar plant (MCG, MCA, MCC, MCD, MCH, MCI). Klik plant yang ingin diperiksa tag PLCnya. Setiap plant ditandai warna berbeda.</div>
+              </div>
+            </div>
+            <div class="p-step" style="--step-color:#a78bfa">
+              <div class="p-step-num">3</div>
+              <div class="p-step-body">
+                <div class="p-step-title">Pilih unit / mixer</div>
+                <div class="p-step-desc">Muncul daftar unit dalam plant (contoh: Mixer-1, Conveyor-A, Panel Utama, dll). Klik unit yang ingin diperiksa.</div>
+              </div>
+            </div>
+            <div class="p-step" style="--step-color:#a78bfa">
+              <div class="p-step-num">4</div>
+              <div class="p-step-body">
+                <div class="p-step-title">Pilih file I/O List</div>
+                <div class="p-step-desc">Muncul daftar file Excel dari Google Drive untuk unit tersebut. Setiap file = satu dokumen I/O list. Klik file yang ingin dilihat tag-tagnya.</div>
+              </div>
+            </div>
+            <div class="p-step full" style="--step-color:#a78bfa">
+              <div class="p-step-num">5</div>
+              <div class="p-step-body">
+                <div class="p-step-title">Baca & cari tag PLC di tabel</div>
+                <div class="p-step-desc">Tabel menampilkan: <strong>Nomor</strong>, <strong>Nama Tag</strong>, <strong>Tipe</strong> (Input/Output/Memory), <strong>Alamat</strong> (Address PLC), dan <strong>Komentar</strong>. Tag dengan komentar "spare" ditampilkan lebih redup — tidak aktif. Gunakan kotak pencarian di atas untuk filter otomatis saat mengetik — tidak perlu tekan Enter.</div>
+                <span class="p-step-tag tag-p">Cari by nama, address, tipe, atau komentar</span>
+              </div>
+            </div>
           </div>
-          <div class="p-infobox green"><span class="p-infobox-icon">🔧</span><div class="p-infobox-text"><strong>Tips troubleshooting:</strong> Jika tahu alamat PLC yang bermasalah (contoh: <span class="key">I0.0</span> <span class="key">Q1.2</span> <span class="key">MW10</span>), ketik langsung di kotak cari. Sistem akan filter dan tampilkan tag beserta fungsinya.</div></div>
-          <div class="p-infobox amber"><span class="p-infobox-icon">⚠️</span><div class="p-infobox-text"><strong>Tag "spare"</strong> ditampilkan dengan warna redup — menandakan tag tersebut tidak aktif digunakan dalam konfigurasi saat ini.</div></div>
+
+          <div class="panel-sub-title">Tips Navigasi</div>
+          <div class="steps-grid">
+            <div class="p-step" style="--step-color:#00e0f8">
+              <div class="p-step-num">💡</div>
+              <div class="p-step-body">
+                <div class="p-step-title">Pindah antar file tanpa kembali</div>
+                <div class="p-step-desc">Sidebar kiri (desktop) atau bar horizontal (mobile) menampilkan semua file dalam unit aktif. Klik nama file lain untuk langsung pindah tanpa harus kembali ke halaman sebelumnya.</div>
+              </div>
+            </div>
+            <div class="p-step" style="--step-color:#00e0f8">
+              <div class="p-step-num">💡</div>
+              <div class="p-step-body">
+                <div class="p-step-title">Refresh jika ada file baru</div>
+                <div class="p-step-desc">Klik tombol "Refresh" di pojok kanan atas untuk memuat ulang data dari Google Drive — berguna jika file Excel baru ditambahkan atau konten berubah.</div>
+              </div>
+            </div>
+          </div>
+
+          <div class="p-infobox green">
+            <span class="p-infobox-icon">🔧</span>
+            <div class="p-infobox-text"><strong>Tips troubleshooting:</strong> Jika tahu alamat PLC yang bermasalah (contoh: <span class="key">I0.0</span> <span class="key">Q1.2</span> <span class="key">MW10</span>), ketik langsung di kotak cari. Sistem akan filter dan tampilkan tag beserta fungsinya dalam deskripsi komentar.</div>
+          </div>
+          <div class="p-infobox amber">
+            <span class="p-infobox-icon">⚠️</span>
+            <div class="p-infobox-text"><strong>Tag "spare"</strong> ditampilkan dengan warna redup — menandakan tag tersebut tidak aktif digunakan dalam konfigurasi saat ini. Untuk troubleshooting efektif, fokus pada tag dengan komentar yang jelas dan deskriptif.</div>
+          </div>
         </div>
       </div>
 
-      <!-- PANEL 4: JADWAL PM -->
+      <!-- PANEL 4: TIPS & FAQ -->
+     <!-- PANEL 4: JADWAL PM -->
       <div class="panduan-panel" id="ppanel-4">
         <div class="panel-hero">
           <div class="panel-hero-icon" style="background:rgba(255,184,0,0.08);border-color:rgba(255,184,0,0.25)">📅</div>
-          <div class="panel-hero-text"><h3>Jadwal PM — Panduan Lengkap</h3><p>Pantau rencana dan realisasi Preventive Maintenance drive seluruh mixing center. Data diambil langsung dari Google Sheets aktif via Google Apps Script.</p></div>
+          <div class="panel-hero-text">
+            <h3>Jadwal PM — Panduan Lengkap</h3>
+            <p>Pantau rencana dan realisasi Preventive Maintenance drive seluruh mixing center. Data diambil langsung dari Google Sheets aktif via Google Apps Script.</p>
+          </div>
         </div>
         <div class="panel-body">
           <div class="panel-sub-title">Cara Membaca Jadwal PM</div>
           <div class="steps-grid">
-            <div class="p-step" style="--step-color:#00dd60"><div class="p-step-num">🟢</div><div class="p-step-body"><div class="p-step-title">Plan / Rencana</div><div class="p-step-desc">Sel berwarna hijau — PM sudah dijadwalkan untuk bulan tersebut namun belum dilaksanakan.</div><span class="p-step-tag tag-g">Hijau di spreadsheet</span></div></div>
-            <div class="p-step" style="--step-color:#6aabff"><div class="p-step-num">🔵</div><div class="p-step-body"><div class="p-step-title">Actual / Terlaksana</div><div class="p-step-desc">Sel berwarna biru — PM sudah dilaksanakan sesuai jadwal atau sudah diselesaikan.</div><span class="p-step-tag tag-c">Biru di spreadsheet</span></div></div>
-            <div class="p-step" style="--step-color:#ff6868"><div class="p-step-num">🔴</div><div class="p-step-body"><div class="p-step-title">Overdue</div><div class="p-step-desc">Sel berwarna merah — PM sudah melewati jadwal dan belum dilaksanakan. Perlu tindakan segera.</div><span class="p-step-tag tag-r">Merah di spreadsheet</span></div></div>
-            <div class="p-step" style="--step-color:#ffb800"><div class="p-step-num">📋</div><div class="p-step-body"><div class="p-step-title">Interval PM</div><div class="p-step-desc">Kolom INT: <strong>3M</strong> = setiap 3 bulan, <strong>6M</strong> = setiap 6 bulan, <strong>12M</strong> = setiap 1 tahun.</div><span class="p-step-tag tag-a">3M / 6M / 12M</span></div></div>
+            <div class="p-step" style="--step-color:#00dd60">
+              <div class="p-step-num">🟢</div>
+              <div class="p-step-body">
+                <div class="p-step-title">Plan / Rencana</div>
+                <div class="p-step-desc">Sel berwarna hijau — PM sudah dijadwalkan untuk bulan tersebut namun belum dilaksanakan. Perlu ditindaklanjuti sebelum jatuh tempo.</div>
+                <span class="p-step-tag tag-g">Hijau di spreadsheet</span>
+              </div>
+            </div>
+            <div class="p-step" style="--step-color:#6aabff">
+              <div class="p-step-num">🔵</div>
+              <div class="p-step-body">
+                <div class="p-step-title">Actual / Terlaksana</div>
+                <div class="p-step-desc">Sel berwarna biru — PM sudah dilaksanakan sesuai jadwal atau sudah diselesaikan. Tercatat dalam histori realisasi.</div>
+                <span class="p-step-tag tag-c">Biru di spreadsheet</span>
+              </div>
+            </div>
+            <div class="p-step" style="--step-color:#ff6868">
+              <div class="p-step-num">🔴</div>
+              <div class="p-step-body">
+                <div class="p-step-title">Overdue</div>
+                <div class="p-step-desc">Sel berwarna merah — PM sudah melewati jadwal dan belum dilaksanakan. Perlu tindakan segera agar tidak mengganggu keandalan mesin.</div>
+                <span class="p-step-tag tag-r">Merah di spreadsheet</span>
+              </div>
+            </div>
+            <div class="p-step" style="--step-color:#ffb800">
+              <div class="p-step-num">📋</div>
+              <div class="p-step-body">
+                <div class="p-step-title">Interval PM</div>
+                <div class="p-step-desc">Kolom INT menunjukkan frekuensi PM: <strong>3M</strong> = setiap 3 bulan, <strong>6M</strong> = setiap 6 bulan, <strong>12M</strong> = setiap 1 tahun. Gunakan filter interval untuk fokus pada jadwal tertentu.</div>
+                <span class="p-step-tag tag-a">3M / 6M / 12M</span>
+              </div>
+            </div>
           </div>
-          <div class="panel-sub-title">Filter & Navigasi</div>
+
+          <div class="panel-sub-title">Menggunakan Filter & Navigasi</div>
           <div class="feat-grid-p">
-            <div class="feat-p"><span class="feat-p-icon">🏭</span><div class="feat-p-title">Filter Plant</div><div class="feat-p-desc">Pilih plant tertentu dari dropdown untuk menampilkan hanya jadwal PM plant tersebut.</div></div>
-            <div class="feat-p"><span class="feat-p-icon">🔁</span><div class="feat-p-title">Filter Interval</div><div class="feat-p-desc">Saring mesin berdasarkan interval PM: 3 bulan, 6 bulan, atau 12 bulan.</div></div>
-            <div class="feat-p"><span class="feat-p-icon">🔍</span><div class="feat-p-title">Cari Mesin</div><div class="feat-p-desc">Ketik nama mesin di kotak pencarian untuk langsung menemukan jadwal PM mesin tertentu.</div></div>
-            <div class="feat-p"><span class="feat-p-icon">📊</span><div class="feat-p-title">Filter Status</div><div class="feat-p-desc">Tampilkan hanya mesin dengan status: Ada Rencana, Sudah Dilaksanakan, atau Overdue.</div></div>
-            <div class="feat-p"><span class="feat-p-icon">⊟ ⊞</span><div class="feat-p-title">Tutup / Buka Semua</div><div class="feat-p-desc">Collapse atau expand semua group plant sekaligus dengan satu klik.</div></div>
-            <div class="feat-p"><span class="feat-p-icon">🖨️</span><div class="feat-p-title">Cetak PDF</div><div class="feat-p-desc">Cetak jadwal PM yang sedang tampil. Semua filter tetap berlaku saat cetak.</div></div>
+            <div class="feat-p"><span class="feat-p-icon">🏭</span><div class="feat-p-title">Filter Plant</div><div class="feat-p-desc">Pilih plant tertentu (MCA, MCC, MCD, dll) dari dropdown untuk menampilkan hanya jadwal PM plant tersebut.</div></div>
+            <div class="feat-p"><span class="feat-p-icon">🔁</span><div class="feat-p-title">Filter Interval</div><div class="feat-p-desc">Saring mesin berdasarkan interval PM: 3 bulan, 6 bulan, atau 12 bulan sesuai kebutuhan inspeksi.</div></div>
+            <div class="feat-p"><span class="feat-p-icon">🔍</span><div class="feat-p-title">Cari Mesin</div><div class="feat-p-desc">Ketik nama mesin di kotak pencarian untuk langsung menemukan jadwal PM mesin tertentu di seluruh plant.</div></div>
+            <div class="feat-p"><span class="feat-p-icon">📊</span><div class="feat-p-title">Filter Status</div><div class="feat-p-desc">Tampilkan hanya mesin dengan status tertentu: Ada Rencana, Sudah Dilaksanakan, atau Overdue.</div></div>
+            <div class="feat-p"><span class="feat-p-icon">⊟ ⊞</span><div class="feat-p-title">Tutup / Buka Semua</div><div class="feat-p-desc">Klik "Tutup Semua" untuk collapse semua group plant, atau "Buka Semua" untuk expand sekaligus.</div></div>
+            <div class="feat-p"><span class="feat-p-icon">🖨️</span><div class="feat-p-title">Cetak PDF</div><div class="feat-p-desc">Klik tombol Cetak untuk mencetak jadwal PM yang sedang tampil. Semua filter tetap berlaku saat cetak.</div></div>
           </div>
-          <div class="p-infobox amber"><span class="p-infobox-icon">🎨</span><div class="p-infobox-text"><strong>Warna di spreadsheet menentukan status:</strong> Hijau (#00b050) = Plan, Biru (#4472c4) = Actual, Merah (#FF0000) = Overdue. Pastikan pewarnaan sel konsisten agar pembacaan status akurat.</div></div>
-          <div class="p-infobox cyan"><span class="p-infobox-icon">⟳</span><div class="p-infobox-text"><strong>Data tidak muncul?</strong> Klik tombol "⟳ Refresh". Jika masih gagal, pastikan URL GAS_URL sudah diset dengan benar dan deployment Apps Script sudah menggunakan akses "Anyone".</div></div>
+
+          <div class="panel-sub-title">Setup Awal (untuk Developer / Admin)</div>
+          <div class="steps-grid">
+            <div class="p-step" style="--step-color:#00d4ff">
+              <div class="p-step-num">1</div>
+              <div class="p-step-body">
+                <div class="p-step-title">Buka Google Apps Script</div>
+                <div class="p-step-desc">Buka spreadsheet PM Drive Care → menu Extensions → Apps Script. Paste kode Code.gs yang sudah disiapkan ke editor.</div>
+              </div>
+            </div>
+            <div class="p-step" style="--step-color:#00d4ff">
+              <div class="p-step-num">2</div>
+              <div class="p-step-body">
+                <div class="p-step-title">Set SPREADSHEET_ID & PLANT_SHEETS</div>
+                <div class="p-step-desc">Di baris atas Code.gs, isi <code>SPREADSHEET_ID</code> dengan ID spreadsheet PM kamu, dan sesuaikan <code>PLANT_SHEETS</code> dengan nama-nama tab sheet yang ada.</div>
+              </div>
+            </div>
+            <div class="p-step" style="--step-color:#00d4ff">
+              <div class="p-step-num">3</div>
+              <div class="p-step-body">
+                <div class="p-step-title">Deploy sebagai Web App</div>
+                <div class="p-step-desc">Klik Deploy → New deployment → pilih tipe "Web App" → Execute as: Me → Who has access: Anyone → klik Deploy. Salin URL yang muncul.</div>
+                <span class="p-step-tag tag-c">URL format: script.google.com/macros/s/.../exec</span>
+              </div>
+            </div>
+            <div class="p-step" style="--step-color:#00d4ff">
+              <div class="p-step-num">4</div>
+              <div class="p-step-body">
+                <div class="p-step-title">Tempel URL ke jadwalpm.html</div>
+                <div class="p-step-desc">Di file jadwalpm.html, cari baris <code>const GAS_URL = 'GANTI_DENGAN_WEB_APP_URL_GAS_KAMU';</code> dan ganti nilai tersebut dengan URL deploy yang baru disalin.</div>
+                <span class="p-step-tag tag-g">Selesai! Halaman siap digunakan</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="p-infobox amber">
+            <span class="p-infobox-icon">🎨</span>
+            <div class="p-infobox-text"><strong>Warna di spreadsheet menentukan status:</strong> Sistem membaca warna background sel secara otomatis — Hijau (#00b050 atau serupa) = Plan, Biru (#4472c4 atau serupa) = Actual, Merah (#FF0000 atau serupa) = Overdue. Pastikan pewarnaan sel di spreadsheet konsisten agar pembacaan status akurat.</div>
+          </div>
+          <div class="p-infobox cyan">
+            <span class="p-infobox-icon">⟳</span>
+            <div class="p-infobox-text"><strong>Data tidak muncul?</strong> Klik tombol "⟳ Refresh" di toolbar. Jika masih gagal, pastikan URL GAS_URL sudah diset dengan benar di file jadwalpm.html, dan deployment Apps Script sudah menggunakan akses "Anyone".</div>
+          </div>
         </div>
       </div>
 
@@ -896,29 +1253,97 @@ body{font-family:'Space Grotesk',sans-serif;background:var(--bg);color:var(--tex
       <div class="panduan-panel" id="ppanel-5">
         <div class="panel-hero">
           <div class="panel-hero-icon" style="background:rgba(255,184,0,0.08);border-color:rgba(255,184,0,0.2)">💡</div>
-          <div class="panel-hero-text"><h3>Tips & FAQ</h3><p>Kumpulan tips berguna, pintasan, dan jawaban atas pertanyaan yang paling sering muncul dari pengguna baru maupun lama.</p></div>
+          <div class="panel-hero-text">
+            <h3>Tips & FAQ</h3>
+            <p>Kumpulan tips berguna, pintasan, dan jawaban atas pertanyaan yang paling sering muncul dari pengguna baru maupun lama.</p>
+          </div>
         </div>
         <div class="panel-body">
           <div class="panel-sub-title">Tips Penting</div>
           <div class="tips-grid">
-            <div class="tip-c"><span class="tip-icon">📱</span><div><div class="tip-title">Instalasi PWA di Smartphone</div><div class="tip-desc">Chrome Android: ketuk ⋮ → "Tambahkan ke Layar Utama". Chrome iOS: ketuk ⬆ (Share) → "Tambahkan ke Layar Utama". Icon Garda Hitam muncul di homescreen.</div></div></div>
-            <div class="tip-c"><span class="tip-icon">🌐</span><div><div class="tip-title">Pencarian Cross-Plant di Drive Monitor</div><div class="tip-desc">Di halaman pilih plant, ada kotak "Cari drive di semua plant..." — masukkan serial number atau merk untuk mencari di semua 7 plant sekaligus.</div></div></div>
-            <div class="tip-c"><span class="tip-icon">🌙</span><div><div class="tip-title">Ganti Tema Dark / Light</div><div class="tip-desc">Setiap halaman ada tombol 🌙 Dark / ☀️ Light di pojok kanan atas. Pengaturan disimpan otomatis di browser.</div></div></div>
-            <div class="tip-c"><span class="tip-icon">🖨️</span><div><div class="tip-title">Cetak Hanya Data yang Difilter</div><div class="tip-desc">Terapkan filter dahulu sebelum klik Cetak. Sistem hanya mencetak baris yang terlihat di tabel.</div></div></div>
-            <div class="tip-c"><span class="tip-icon">⟳</span><div><div class="tip-title">Data Tidak Muncul / Loading Lama</div><div class="tip-desc">Klik tombol "Refresh" di topbar halaman. Semua data diambil dari Google Sheets via Apps Script yang memerlukan koneksi internet aktif.</div></div></div>
-            <div class="tip-c"><span class="tip-icon">⚡</span><div><div class="tip-title">Drive Fault — Tindakan Cepat</div><div class="tip-desc">Buka Drive Monitor → pilih plant & mixing → klik kartu drive fault → update status & tambah keterangan → Simpan. Histori otomatis tercatat.</div></div></div>
+            <div class="tip-c">
+              <span class="tip-icon">📱</span>
+              <div>
+                <div class="tip-title">Instalasi PWA di Smartphone</div>
+                <div class="tip-desc">Chrome Android: ketuk ⋮ → "Tambahkan ke Layar Utama". Chrome iOS: ketuk ⬆ (Share) → "Tambahkan ke Layar Utama". Selanjutnya bisa dibuka seperti aplikasi native — icon Garda Hitam muncul di homescreen.</div>
+              </div>
+            </div>
+            <div class="tip-c">
+              <span class="tip-icon">🌐</span>
+              <div>
+                <div class="tip-title">Pencarian Cross-Plant di Drive Monitor</div>
+                <div class="tip-desc">Di halaman pilih plant, ada kotak "Cari drive di semua plant..." — masukkan serial number atau merk untuk mencari di semua 7 plant sekaligus tanpa harus masuk satu per satu.</div>
+              </div>
+            </div>
+            <div class="tip-c">
+              <span class="tip-icon">🌙</span>
+              <div>
+                <div class="tip-title">Ganti Tema Dark / Light</div>
+                <div class="tip-desc">Setiap halaman ada tombol 🌙 Dark / ☀️ Light di pojok kanan atas. Pengaturan disimpan otomatis di browser — tidak perlu diubah ulang saat kembali menggunakan halaman yang sama.</div>
+              </div>
+            </div>
+            <div class="tip-c">
+              <span class="tip-icon">🖨️</span>
+              <div>
+                <div class="tip-title">Cetak Hanya Data yang Difilter</div>
+                <div class="tip-desc">Terapkan filter (tanggal/bulan/status) dahulu sebelum klik Cetak. Sistem hanya mencetak baris yang terlihat di tabel, bukan semua data — hasilnya lebih bersih dan relevan.</div>
+              </div>
+            </div>
+            <div class="tip-c">
+              <span class="tip-icon">⟳</span>
+              <div>
+                <div class="tip-title">Data Tidak Muncul / Loading Lama</div>
+                <div class="tip-desc">Klik tombol "Refresh" di topbar halaman. Semua data diambil dari Google Sheets via Apps Script yang memerlukan koneksi internet aktif. Jika tetap gagal, cek koneksi jaringan terlebih dahulu.</div>
+              </div>
+            </div>
+            <div class="tip-c">
+              <span class="tip-icon">⚡</span>
+              <div>
+                <div class="tip-title">Drive Fault — Tindakan Cepat</div>
+                <div class="tip-desc">Buka Drive Monitor → pilih plant & mixing → klik kartu drive fault → update status & tambah keterangan detail → Simpan. Histori otomatis tercatat. Hubungi teknisi lapangan jika tidak bisa diselesaikan remote.</div>
+              </div>
+            </div>
           </div>
+
           <div class="panel-sub-title">Pertanyaan Umum (FAQ)</div>
           <div class="steps-grid">
-            <div class="p-step full" style="--step-color:#00d4ff"><div class="p-step-num">❓</div><div class="p-step-body"><div class="p-step-title">Berapa lama satu batch mixing berlangsung?</div><div class="p-step-desc">Durasi bervariasi 7–20 menit per batch, tergantung jenis produk dan formula campuran karet.</div></div></div>
-            <div class="p-step full" style="--step-color:#00d4ff"><div class="p-step-num">❓</div><div class="p-step-body"><div class="p-step-title">Apakah data aman dan tidak bisa diakses sembarangan?</div><div class="p-step-desc">Ya. Data tersimpan di Google Sheets dengan akses terkontrol via akun Google Workspace. Histori perubahan lengkap tidak pernah dihapus otomatis oleh sistem.</div></div></div>
-            <div class="p-step full" style="--step-color:#00d4ff"><div class="p-step-num">❓</div><div class="p-step-body"><div class="p-step-title">Bagaimana cara melihat data mixing lain tanpa logout?</div><div class="p-step-desc">Drive Monitor: klik breadcrumb plant di bagian atas. Share Job: klik "Ganti Unit" di bar atas. I/O PLC: klik "← Kembali ke Plant".</div></div></div>
-            <div class="p-step full" style="--step-color:#00d4ff"><div class="p-step-num">❓</div><div class="p-step-body"><div class="p-step-title">Bisa diakses dari luar pabrik / jaringan luar?</div><div class="p-step-desc">Ya, website ini dapat diakses dari mana saja selama ada koneksi internet. Tidak terbatas pada jaringan intranet pabrik.</div></div></div>
+            <div class="p-step full" style="--step-color:#00d4ff">
+              <div class="p-step-num">❓</div>
+              <div class="p-step-body">
+                <div class="p-step-title">Berapa lama satu batch mixing berlangsung?</div>
+                <div class="p-step-desc">Durasi bervariasi 7–20 menit per batch, tergantung jenis produk dan formula campuran karet. Proses lebih panjang biasanya untuk compound karet khusus dengan spesifikasi tinggi.</div>
+              </div>
+            </div>
+            <div class="p-step full" style="--step-color:#00d4ff">
+              <div class="p-step-num">❓</div>
+              <div class="p-step-body">
+                <div class="p-step-title">Apakah data aman dan tidak bisa diakses sembarangan?</div>
+                <div class="p-step-desc">Ya. Data tersimpan di Google Sheets dengan akses terkontrol via akun Google Workspace. Sistem login memiliki mekanisme autentikasi tersendiri. Histori perubahan lengkap tidak pernah dihapus otomatis oleh sistem.</div>
+              </div>
+            </div>
+            <div class="p-step full" style="--step-color:#00d4ff">
+              <div class="p-step-num">❓</div>
+              <div class="p-step-body">
+                <div class="p-step-title">Bagaimana cara melihat data mixing lain tanpa logout?</div>
+                <div class="p-step-desc">Di Drive Monitor: klik breadcrumb plant di bagian atas untuk kembali ke daftar plant, lalu pilih plant lain. Di Share Job (Admin/Supervisor): klik "Ganti Unit" di bar atas. Di I/O PLC: klik "← Kembali ke Plant" di bagian atas halaman unit.</div>
+              </div>
+            </div>
+            <div class="p-step full" style="--step-color:#00d4ff">
+              <div class="p-step-num">❓</div>
+              <div class="p-step-body">
+                <div class="p-step-title">Bisa diakses dari luar pabrik / jaringan luar?</div>
+                <div class="p-step-desc">Ya, website ini dapat diakses dari mana saja selama ada koneksi internet. Tidak terbatas pada jaringan intranet pabrik. Akses dari smartphone, tablet, atau laptop pribadi di luar pabrik berfungsi normal.</div>
+              </div>
+            </div>
           </div>
-          <div class="p-infobox green"><span class="p-infobox-icon">✅</span><div class="p-infobox-text"><strong>Siap mulai?</strong> Klik salah satu tab panduan di atas untuk detail lengkap, atau langsung buka modul yang ingin digunakan dari navbar di bagian atas halaman.</div></div>
+          <div class="p-infobox green">
+            <span class="p-infobox-icon">✅</span>
+            <div class="p-infobox-text"><strong>Siap mulai?</strong> Klik salah satu tab panduan di atas untuk detail lengkap, atau langsung buka modul yang ingin digunakan dari navbar di bagian atas halaman. Untuk pertanyaan lebih lanjut, hubungi tim developer Garda Hitam.</div>
+          </div>
         </div>
       </div>
-    </div>
+
+    </div><!-- /panduan-body -->
   </div>
 </section>
 
@@ -932,12 +1357,30 @@ body{font-family:'Space Grotesk',sans-serif;background:var(--bg);color:var(--tex
       <h2 class="section-h2">Pertanyaan <em>Umum</em></h2>
     </div>
     <div class="faq-wrap">
-      <div class="faq-item"><div class="faq-q" onclick="toggleFaq(this)">Apa itu Garda Hitam dan mengapa penting?<div class="faq-toggle">+</div></div><div class="faq-a">Garda Hitam adalah platform monitoring terpadu untuk seluruh unit mixing di garda hitam. Platform ini memungkinkan tim teknis memantau status drive seperti INU, DSU, spesifikasi motor mixer, menjadwalkan perawatan, dan share job yang dapat dimonitor melalui website ini secara real-time.</div></div>
-      <div class="faq-item"><div class="faq-q" onclick="toggleFaq(this)">Berapa lama proses satu batch mixing berlangsung?<div class="faq-toggle">+</div></div><div class="faq-a">Durasi satu batch bervariasi tergantung jenis produk dan formula. Umumnya berlangsung antara 7 menit hingga 20 menit per batch, tergantung spesifikasi campuran karet yang diproduksi.</div></div>
-      <div class="faq-item"><div class="faq-q" onclick="toggleFaq(this)">Bagaimana cara mengakses data unit tertentu?<div class="faq-toggle">+</div></div><div class="faq-a">Pilih modul dari Menu Utama — Drive Monitoring untuk status drive per mixing, I/O PLC untuk tag control, atau Share Job untuk koordinasi antar unit. Setiap modul menampilkan daftar plant yang bisa dipilih langsung.</div></div>
-      <div class="faq-item"><div class="faq-q" onclick="toggleFaq(this)">Apa yang harus dilakukan jika drive menampilkan status Fault?<div class="faq-toggle">+</div></div><div class="faq-a">Segera buka Drive Monitoring, pilih plant dan mixing terkait, klik kartu drive untuk melihat detail dan update statusnya. Catat keterangan agar histori terdokumentasi. Hubungi teknisi lapangan jika fault tidak dapat diselesaikan secara remote.</div></div>
-      <div class="faq-item"><div class="faq-q" onclick="toggleFaq(this)">Apakah portal ini dapat diakses melalui smartphone?<div class="faq-toggle">+</div></div><div class="faq-a">Ya, portal Garda Hitam dirancang responsif dan dapat diakses melalui browser smartphone maupun tablet. Untuk pengalaman terbaik, gunakan Chrome atau Edge versi terbaru. Platform juga mendukung PWA untuk instalasi di homescreen.</div></div>
-      <div class="faq-item"><div class="faq-q" onclick="toggleFaq(this)">Bagaimana cara menambah atau mengedit job di ShareJob?<div class="faq-toggle">+</div></div><div class="faq-a">Buka halaman ShareJob, klik tombol edit (ikon pensil) di sudut kiri atas, masukkan kredensial admin untuk autentikasi. Setelah login, panel input akan muncul dan Anda bisa menambah, mengedit, atau menghapus job dengan mudah.</div></div>
+      <div class="faq-item">
+        <div class="faq-q" onclick="toggleFaq(this)">Apa itu Garda Hitam dan mengapa penting?<div class="faq-toggle">+</div></div>
+        <div class="faq-a">Garda Hitam adalah platform monitoring terpadu untuk seluruh unit mixing di garda hitam. Platform ini memungkinkan tim teknis memantau status drive seperti INU, DSU, spesifikasi motor mixer, menjadwalkan perawatan, dan share job yang dapat dimonitor melalui website ini secara real-time.</div>
+      </div>
+      <div class="faq-item">
+        <div class="faq-q" onclick="toggleFaq(this)">Berapa lama proses satu batch mixing berlangsung?<div class="faq-toggle">+</div></div>
+        <div class="faq-a">Durasi satu batch bervariasi tergantung jenis produk dan formula. Umumnya berlangsung antara 7 menit hingga 20 menit per batch, tergantung spesifikasi campuran karet yang diproduksi.</div>
+      </div>
+      <div class="faq-item">
+        <div class="faq-q" onclick="toggleFaq(this)">Bagaimana cara mengakses data unit tertentu?<div class="faq-toggle">+</div></div>
+        <div class="faq-a">Pilih modul dari Menu Utama — Drive Monitoring untuk status drive per mixing, I/O PLC untuk tag control, atau Share Job untuk koordinasi antar unit. Setiap modul menampilkan daftar plant yang bisa dipilih langsung dengan tampilan yang intuitif.</div>
+      </div>
+      <div class="faq-item">
+        <div class="faq-q" onclick="toggleFaq(this)">Apa yang harus dilakukan jika drive menampilkan status Fault?<div class="faq-toggle">+</div></div>
+        <div class="faq-a">Segera buka Drive Monitoring, pilih plant dan mixing terkait, klik kartu drive untuk melihat detail dan update statusnya. Catat keterangan agar histori terdokumentasi. Hubungi teknisi lapangan jika fault tidak dapat diselesaikan secara remote.</div>
+      </div>
+      <div class="faq-item">
+        <div class="faq-q" onclick="toggleFaq(this)">Apakah portal ini dapat diakses melalui smartphone?<div class="faq-toggle">+</div></div>
+        <div class="faq-a">Ya, portal Garda Hitam dirancang responsif dan dapat diakses melalui browser smartphone maupun tablet. Untuk pengalaman terbaik, gunakan Chrome atau Edge versi terbaru. Platform juga mendukung PWA (Progressive Web App) untuk instalasi di homescreen.</div>
+      </div>
+      <div class="faq-item">
+        <div class="faq-q" onclick="toggleFaq(this)">Bagaimana cara menambah atau mengedit job di ShareJob?<div class="faq-toggle">+</div></div>
+        <div class="faq-a">Buka halaman ShareJob, klik tombol edit (ikon pensil) di sudut kiri atas, masukkan kredensial admin untuk autentikasi. Setelah login, panel input akan muncul dan Anda bisa menambah, mengedit, atau menghapus job dengan mudah.</div>
+      </div>
     </div>
   </div>
 </section>
