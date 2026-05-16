@@ -479,9 +479,13 @@ body{font-family:'Space Grotesk',sans-serif;background:var(--bg);color:var(--tex
   border-color:rgba(0,212,255,0.2);
   padding:24px 26px;
 }
-.nav-card[style*="--rgb:0,255,135"]{background:rgba(0,255,135,0.06)!important;border-color:rgba(0,255,135,0.35)!important;box-shadow:0 0 20px rgba(0,255,135,0.08)}
-.nav-card[style*="--rgb:167,139,250"]{background:rgba(167,139,250,0.06)!important;border-color:rgba(167,139,250,0.35)!important;box-shadow:0 0 20px rgba(167,139,250,0.08)}
-.nav-card[style*="--rgb:255,184,0"]{background:rgba(255,184,0,0.06)!important;border-color:rgba(255,184,0,0.35)!important;box-shadow:0 0 20px rgba(255,184,0,0.08)}
+.nav-card[style*="--rgb:0,255,135"]:not(:hover){background:rgba(0,255,135,0.06)!important;border-color:rgba(0,255,135,0.35)!important;box-shadow:0 0 20px rgba(0,255,135,0.08)}
+.nav-card[style*="--rgb:167,139,250"]:not(:hover){background:rgba(167,139,250,0.06)!important;border-color:rgba(167,139,250,0.35)!important;box-shadow:0 0 20px rgba(167,139,250,0.08)}
+.nav-card[style*="--rgb:255,184,0"]:not(:hover){background:rgba(255,184,0,0.06)!important;border-color:rgba(255,184,0,0.35)!important;box-shadow:0 0 20px rgba(255,184,0,0.08)}
+.nav-card[style*="--rgb:0,212,255"]:hover{border-color:rgba(0,212,255,0.75)!important;box-shadow:0 20px 60px rgba(0,0,0,0.5),0 0 0 1px rgba(0,212,255,0.35),0 0 30px rgba(0,212,255,0.2)!important}
+.nav-card[style*="--rgb:0,255,135"]:hover{border-color:rgba(0,255,135,0.75)!important;background:rgba(0,255,135,0.1)!important;box-shadow:0 20px 60px rgba(0,0,0,0.5),0 0 0 1px rgba(0,255,135,0.35),0 0 30px rgba(0,255,135,0.2)!important}
+.nav-card[style*="--rgb:167,139,250"]:hover{border-color:rgba(167,139,250,0.75)!important;background:rgba(167,139,250,0.1)!important;box-shadow:0 20px 60px rgba(0,0,0,0.5),0 0 0 1px rgba(167,139,250,0.35),0 0 30px rgba(167,139,250,0.2)!important}
+.nav-card[style*="--rgb:255,184,0"]:hover{border-color:rgba(255,184,0,0.75)!important;background:rgba(255,184,0,0.1)!important;box-shadow:0 20px 60px rgba(0,0,0,0.5),0 0 0 1px rgba(255,184,0,0.35),0 0 30px rgba(255,184,0,0.2)!important}
 .nav-card.featured .nav-card-icon{width:62px;height:62px;border-radius:16px;font-size:28px}
 .nav-card.featured .nav-card-title{font-size:15px}
 .nav-card.featured .nav-card-desc{font-size:13px;color:var(--text2)}
