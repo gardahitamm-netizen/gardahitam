@@ -123,10 +123,9 @@ body{font-family:'Space Grotesk',sans-serif;background:var(--bg);color:var(--tex
 .nav-card-stripe{position:absolute;left:0;top:0;bottom:0;width:3px;background:linear-gradient(180deg,transparent,var(--cc,#00d4ff),transparent);opacity:0;transition:opacity .3s;border-radius:16px 0 0 16px}
 .nav-card:hover .nav-card-stripe{opacity:1}
 
-.nav-card-icon{width:56px;height:56px;border-radius:14px;flex-shrink:0;background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.08);display:flex;align-items:center;justify-content:center;font-size:24px;transition:all .35s;position:relative;overflow:hidden}
-.nav-card-icon::before{content:'';position:absolute;inset:0;background:radial-gradient(circle,var(--cc,#00d4ff),transparent 70%);opacity:0;transition:opacity .3s}
-.nav-card:hover .nav-card-icon{border-color:rgba(0,212,255,0.3);box-shadow:0 0 20px rgba(0,212,255,0.15)}
-.nav-card:hover .nav-card-icon::before{opacity:.1}
+.nav-card-icon{width:60px;height:60px;border-radius:16px;flex-shrink:0;display:flex;align-items:center;justify-content:center;position:relative;overflow:visible;transition:all .4s;background:rgba(var(--rgb),0.18);border:1.5px solid rgba(var(--rgb),0.5);box-shadow:0 0 14px rgba(var(--rgb),0.25),inset 0 0 14px rgba(var(--rgb),0.1)}
+.nav-card-icon::before{display:none}
+.nav-card:hover .nav-card-icon{background:rgba(var(--rgb),0.28);border-color:rgba(var(--rgb),0.8);box-shadow:0 0 24px rgba(var(--rgb),0.5),inset 0 0 20px rgba(var(--rgb),0.15);animation:iconPulse 1.5s ease-in-out infinite}
 .nav-card-body{flex:1;min-width:0}
 .nav-card-title{font-family:'Orbitron',monospace;font-size:13px;font-weight:700;color:#fff;margin-bottom:4px;letter-spacing:.05em;transition:color .2s}
 .nav-card:hover .nav-card-title{color:var(--cyan);text-shadow:0 0 12px rgba(0,212,255,0.4)}
@@ -400,34 +399,6 @@ body{font-family:'Space Grotesk',sans-serif;background:var(--bg);color:var(--tex
 @media(max-width:700px){.navbar{padding:0 20px}.nav-links{display:none;flex-direction:column;position:fixed;top:64px;left:0;right:0;background:rgba(5,8,16,.98);padding:16px;border-bottom:1px solid var(--border)}.nav-links.open{display:flex}.nav-toggle{display:flex}.hero,.section,.cta-section,.panduan-section{padding-left:20px;padding-right:20px}.metrics-banner{padding:0 20px}.steps-rail{grid-template-columns:1fr}.hero-h1{font-size:1.9rem}.adv-grid{grid-template-columns:1fr}.cta-btns{flex-direction:column;align-items:center}
 .panduan-tabs{flex-direction:column}.panduan-tab{border-right:none;border-bottom:1px solid var(--border);min-width:unset}.steps-grid,.role-row,.pool-row,.feat-grid-p,.tips-grid{grid-template-columns:1fr}.p-step.full{grid-column:span 1}.panel-body{padding:16px 20px 24px}.panel-hero{padding:20px 20px 18px}}
 /* ── ICON BOX ENHANCED ── */
-.nav-card-icon{
-  width:60px;height:60px;border-radius:16px;flex-shrink:0;
-  display:flex;align-items:center;justify-content:center;
-  position:relative;overflow:visible;transition:all .4s;
-  background:rgba(var(--rgb),0.18);
-  border:1.5px solid rgba(var(--rgb),0.5);
-  box-shadow:0 0 12px rgba(var(--rgb),0.2),inset 0 0 12px rgba(var(--rgb),0.08);
-}
-.nav-card-icon .icon-glow{
-  position:absolute;inset:0;border-radius:16px;
-  background:radial-gradient(circle at 50%,rgba(var(--rgb),0.3),transparent 70%);
-  opacity:0;transition:opacity .4s;
-}
-.nav-card-icon .icon-ring{
-  position:absolute;inset:-5px;border-radius:20px;
-  border:1px solid rgba(var(--rgb),0.5);
-  opacity:0;transform:scale(0.85);transition:all .4s;
-}
-.nav-card:hover .icon-glow{opacity:1}
-.nav-card:hover .icon-ring{opacity:1;transform:scale(1)}
-.nav-card:hover .nav-card-icon{
-  background:rgba(var(--rgb),0.15);
-  border-color:rgba(var(--rgb),0.7);
-  box-shadow:0 0 20px rgba(var(--rgb),0.4),inset 0 0 20px rgba(var(--rgb),0.05);
-  animation:iconPulse 1.5s ease-in-out infinite;
-}
-.nav-card:hover .nav-card-icon svg{transform:scale(1.15) rotate(-5deg);transition:transform .4s}
-@keyframes iconPulse{0%,100%{box-shadow:0 0 0 0 rgba(var(--rgb),0.4)}50%{box-shadow:0 0 0 6px rgba(var(--rgb),0)}}
 
 /* CORNER BRACKETS */
 .bracket{position:absolute;width:12px;height:12px;opacity:0;transition:opacity .3s,transform .3s}
