@@ -139,7 +139,7 @@ body{font-family:'Space Grotesk',sans-serif;background:var(--bg);color:var(--tex
 .p-pill.overdue{background:rgba(255,60,60,0.1);border:1px solid rgba(255,60,60,0.3);color:var(--pm-overdue)}
 .plant-toggle{margin-left:auto;color:var(--text3);font-size:18px;transition:transform .3s;flex-shrink:0}
 .plant-group.collapsed .plant-toggle{transform:rotate(-90deg)}
-.plant-body{overflow:hidden;max-height:4000px;opacity:1;transition:max-height .45s ease,opacity .3s ease}
+.plant-body{overflow:hidden;max-height:9999px;opacity:1;transition:max-height .45s ease,opacity .3s ease}
 .plant-group.collapsed .plant-body{max-height:0;opacity:0}
 
 .tbl-wrap{overflow-x:auto;background:rgba(5,10,22,0.4)}
@@ -153,37 +153,45 @@ table.pm thead th{padding:10px 6px;font-family:'JetBrains Mono',monospace;font-s
 table.pm thead th.s0{left:0;text-align:left;min-width:36px;z-index:3}
 table.pm thead th.s1{left:36px;text-align:left;min-width:96px;z-index:3}
 table.pm thead th.s2{left:132px;text-align:left;min-width:48px;z-index:3}
+table.pm thead th.s3{left:180px;text-align:left;min-width:80px;z-index:3}
 table.pm thead th.th-now{background:rgba(0,212,255,0.12)!important;color:#fff!important;position:relative}
 table.pm thead th.th-now::after{content:'NOW';position:absolute;top:0;right:0;font-size:7px;background:var(--cyan);color:#020408;padding:1px 4px;border-radius:0 0 0 4px;font-weight:900}
 
-table.pm tbody tr{border-bottom:1px solid rgba(255,255,255,0.03);transition:background .15s}
-table.pm tbody tr:hover{background:rgba(0,212,255,0.03)}
-table.pm tbody td{padding:7px 6px;color:var(--text2);text-align:center;border-right:1px solid rgba(255,255,255,0.03);vertical-align:middle}
-table.pm tbody td.s0{font-family:'JetBrains Mono',monospace;font-size:10px;color:var(--text3);position:sticky;left:0;background:rgba(8,13,24,.98);z-index:1}
+/* Mesin group: 2 baris */
+table.pm tbody tr.row-sched{border-top:1px solid rgba(255,255,255,0.06)}
+table.pm tbody tr.row-actual{border-bottom:2px solid rgba(255,255,255,0.06)}
+table.pm tbody tr{transition:background .15s}
+table.pm tbody tr.row-sched:hover,table.pm tbody tr.row-actual:hover{background:rgba(0,212,255,0.02)}
+table.pm tbody td{padding:5px 6px;color:var(--text2);text-align:center;border-right:1px solid rgba(255,255,255,0.03);vertical-align:middle}
+table.pm tbody td.s0{font-family:'JetBrains Mono',monospace;font-size:10px;color:var(--text3);position:sticky;left:0;background:rgba(8,13,24,.98);z-index:1;text-align:center}
 table.pm tbody td.s1{font-weight:700;color:#fff;font-size:13px;text-align:left;white-space:nowrap;position:sticky;left:36px;background:rgba(8,13,24,.98);z-index:1}
 table.pm tbody td.s2{font-family:'JetBrains Mono',monospace;font-size:10px;color:var(--amber);text-align:left;position:sticky;left:132px;background:rgba(8,13,24,.98);z-index:1}
-table.pm tbody tr:hover td.s0,table.pm tbody tr:hover td.s1,table.pm tbody tr:hover td.s2{background:rgba(11,17,32,.99)}
+table.pm tbody td.s3{font-family:'JetBrains Mono',monospace;font-size:9px;font-weight:700;text-align:center;position:sticky;left:180px;background:rgba(8,13,24,.98);z-index:1;letter-spacing:.05em}
+td.s3.type-sched{color:var(--pm-plan)}
+td.s3.type-actual{color:var(--pm-actual)}
+table.pm tbody tr:hover td.s0,table.pm tbody tr:hover td.s1,table.pm tbody tr:hover td.s2,table.pm tbody tr:hover td.s3{background:rgba(11,17,32,.99)}
 table.pm tbody td.td-now{background:rgba(0,212,255,0.02)}
 
+/* Span cells for No/Mesin/Int across 2 rows */
+td.span2{vertical-align:middle}
+
 /* PM CELL */
-.pm-cell{min-width:60px;height:32px;border-radius:6px;display:flex;align-items:center;justify-content:center;font-family:'JetBrains Mono',monospace;font-size:9px;font-weight:700;margin:0 auto;position:relative;transition:transform .2s,box-shadow .2s;cursor:default;letter-spacing:.02em;padding:0 4px;text-align:center;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-.pm-cell:hover{transform:scale(1.1);z-index:20}
+.pm-cell{min-width:60px;height:28px;border-radius:6px;display:flex;align-items:center;justify-content:center;font-family:'JetBrains Mono',monospace;font-size:9px;font-weight:700;margin:0 auto;position:relative;transition:transform .2s,box-shadow .2s;letter-spacing:.02em;padding:0 4px;text-align:center;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 
-.pm-cell.plan{background:var(--pm-plan-bg);border:1px solid var(--pm-plan-border);color:var(--pm-plan);box-shadow:0 0 8px rgba(0,200,80,0.12);cursor:pointer}
-.pm-cell.plan:hover{box-shadow:0 0 18px rgba(0,200,80,0.35);border-color:var(--pm-plan)}
-/* ikon edit muncul saat hover */
-.pm-cell.plan::before{content:'✎';position:absolute;top:1px;right:2px;font-size:7px;opacity:0;transition:opacity .2s}
-.pm-cell.plan:hover::before{opacity:.7}
-
+.pm-cell.plan{background:var(--pm-plan-bg);border:1px solid var(--pm-plan-border);color:var(--pm-plan);box-shadow:0 0 8px rgba(0,200,80,0.12)}
 .pm-cell.actual{background:var(--pm-actual-bg);border:1px solid var(--pm-actual-border);color:var(--pm-actual);box-shadow:0 0 8px rgba(68,130,210,0.12)}
+/* Actual cell di baris Actual = bisa diklik */
+.pm-cell.actual-input{background:rgba(68,130,210,0.06);border:1px dashed rgba(100,160,245,0.3);color:rgba(106,171,255,0.4);cursor:pointer}
+.pm-cell.actual-input:hover{background:rgba(68,130,210,0.14);border-color:rgba(100,160,245,0.6);color:var(--pm-actual);transform:scale(1.08);box-shadow:0 0 14px rgba(68,130,210,0.25)}
+.pm-cell.actual-input::after{content:'+';font-size:12px;opacity:.5}
+.pm-cell.actual-done{background:var(--pm-actual-bg);border:1px solid var(--pm-actual-border);color:var(--pm-actual);box-shadow:0 0 8px rgba(68,130,210,0.12);cursor:pointer}
+.pm-cell.actual-done:hover{transform:scale(1.06);box-shadow:0 0 18px rgba(68,130,210,0.35)}
 .pm-cell.overdue{background:var(--pm-overdue-bg);border:1px solid var(--pm-overdue-border);color:var(--pm-overdue);animation:overduePulse 2.2s ease-in-out infinite}
-.pm-cell.empty{background:rgba(255,255,255,0.025);border:1px solid rgba(255,255,255,0.07);color:transparent;pointer-events:none}
+.pm-cell.empty{background:rgba(255,255,255,0.015);border:1px solid rgba(255,255,255,0.04);color:transparent;pointer-events:none}
 .pm-cell.saving{background:rgba(255,184,0,0.15)!important;border-color:rgba(255,184,0,0.5)!important;color:#ffb800!important;animation:savingPulse 1s ease-in-out infinite;cursor:wait!important}
 
 @keyframes overduePulse{0%,100%{box-shadow:0 0 5px rgba(255,50,50,0.1)}50%{box-shadow:0 0 18px rgba(255,50,50,0.45)}}
 @keyframes savingPulse{0%,100%{opacity:1}50%{opacity:.5}}
-
-/* Tooltip — gunakan JS tooltip agar tidak bentrok dengan ::before */
 
 .plant-progress{padding:10px 22px 14px;display:flex;align-items:center;gap:12px;border-top:1px solid rgba(255,255,255,0.04);background:rgba(0,0,0,0.15)}
 .prog-label{font-family:'JetBrains Mono',monospace;font-size:10px;color:var(--text3);white-space:nowrap}
@@ -204,7 +212,7 @@ table.pm tbody td.td-now{background:rgba(0,212,255,0.02)}
 .modal-badge{font-family:'JetBrains Mono',monospace;font-size:9px;font-weight:700;letter-spacing:.18em;text-transform:uppercase;color:var(--cyan);opacity:.7;margin-bottom:10px}
 .modal-title{font-family:'Orbitron',monospace;font-size:16px;font-weight:900;color:#fff;margin-bottom:6px}
 .modal-sub{font-size:12px;color:var(--text3);margin-bottom:24px;line-height:1.7}
-.modal-sub strong{color:var(--pm-plan)}
+.modal-sub strong{color:var(--pm-actual)}
 .modal-label{display:block;font-family:'JetBrains Mono',monospace;font-size:10px;color:var(--text3);letter-spacing:.12em;text-transform:uppercase;margin-bottom:8px}
 .modal-date{width:100%;padding:12px 16px;background:rgba(0,0,0,0.5);border:1px solid rgba(0,212,255,0.25);border-radius:10px;color:var(--text);font-family:'JetBrains Mono',monospace;font-size:13px;outline:none;transition:border-color .2s;cursor:pointer}
 .modal-date:focus{border-color:rgba(0,212,255,0.6);box-shadow:0 0 12px rgba(0,212,255,0.12)}
@@ -316,7 +324,7 @@ table.pm tbody td.td-now{background:rgba(0,212,255,0.02)}
         <div class="page-eyebrow">PM Drive Care 2026</div>
         <h1 class="page-h1">Jadwal PM <em>Semua Plant</em></h1>
         <p class="page-desc">Rencana &amp; realisasi perawatan preventif drive seluruh mixing center.<br>
-          <span style="font-size:12px;color:rgba(0,212,255,0.6)">💡 <strong style="color:var(--pm-plan)">Double-click</strong> cell hijau untuk input tanggal actual.</span></p>
+          <span style="font-size:12px;color:rgba(0,212,255,0.6)">💡 Klik cell <strong style="color:var(--pm-actual)">Actual</strong> untuk input tanggal pelaksanaan.</span></p>
       </div>
       <div class="page-hero-right">
         <div class="stat-pill"><div><div class="stat-pill-num" id="hero-total">—</div><div class="stat-pill-lbl">Total<br>Mesin</div></div></div>
@@ -360,8 +368,8 @@ table.pm tbody td.td-now{background:rgba(0,212,255,0.02)}
       </select>
       <select class="tb-select" id="sel-status" onchange="applyFilter()">
         <option value="">Semua Status</option>
-        <option value="plan">Ada Rencana</option>
-        <option value="actual">Sudah Dilaksanakan</option>
+        <option value="plan">Ada Rencana (Schedule)</option>
+        <option value="actual">Sudah Dilaksanakan (Actual)</option>
         <option value="overdue">Overdue</option>
       </select>
       <input class="tb-input" id="inp-search" placeholder="🔍 Cari mesin..." oninput="applyFilter()">
@@ -374,8 +382,8 @@ table.pm tbody td.td-now{background:rgba(0,212,255,0.02)}
     </div>
 
     <div class="legend-strip reveal">
-      <div class="leg-item plan"><span class="leg-dot" style="background:var(--pm-plan)"></span>Plan / Rencana <span style="opacity:.5;font-size:9px;margin-left:4px">(dbl-click untuk input)</span></div>
-      <div class="leg-item actual"><span class="leg-dot" style="background:var(--pm-actual)"></span>Actual / Terlaksana</div>
+      <div class="leg-item plan"><span class="leg-dot" style="background:var(--pm-plan)"></span>Schedule / Rencana</div>
+      <div class="leg-item actual"><span class="leg-dot" style="background:var(--pm-actual)"></span>Actual / Terlaksana <span style="opacity:.5;font-size:9px;margin-left:4px">(klik untuk input)</span></div>
       <div class="leg-item overdue"><span class="leg-dot" style="background:var(--pm-overdue)"></span>Overdue</div>
       <span class="leg-sep"></span>
       <span class="last-upd" id="last-upd">— memuat data...</span>
@@ -410,46 +418,27 @@ function isCurrentMonth(label) {
 function currentMonthLabel() { var now=new Date(); return MN[now.getMonth()]+' '+now.getFullYear(); }
 function formatTanggalID(d)  { return d.getDate()+' '+BLN_FULL[d.getMonth()]+' '+d.getFullYear(); }
 
-// ── JSONP universal (GET) ─────────────────────────────
+// ── JSONP fallback ─────────────────────────────────────
 function jsonpGet(params, resolve, reject) {
-  var cb  = 'gasCb_'+Date.now()+'_'+Math.floor(Math.random()*9999);
-  var tid;
-  var cleanup = function() {
-    clearTimeout(tid);
-    delete window[cb];
-    var el=document.getElementById(cb);
-    if (el) el.remove();
-  };
-  tid = setTimeout(function() { cleanup(); reject(new Error('Timeout 20 detik.')); }, 20000);
-  window[cb] = function(data) { cleanup(); resolve(data); };
-
-  var qs = Object.keys(params).map(function(k) {
-    return encodeURIComponent(k)+'='+encodeURIComponent(params[k]);
-  }).join('&');
-
-  var s=document.createElement('script');
-  s.id=cb;
+  var cb='gasCb_'+Date.now()+'_'+Math.floor(Math.random()*9999), tid;
+  var cleanup=function(){clearTimeout(tid);delete window[cb];var el=document.getElementById(cb);if(el)el.remove();};
+  tid=setTimeout(function(){cleanup();reject(new Error('Timeout 20 detik.'));},20000);
+  window[cb]=function(data){cleanup();resolve(data);};
+  var qs=Object.keys(params).map(function(k){return encodeURIComponent(k)+'='+encodeURIComponent(params[k]);}).join('&');
+  var s=document.createElement('script');s.id=cb;
   s.src=GAS_URL+'?'+qs+'&callback='+cb;
-  s.onerror=function() { cleanup(); reject(new Error('Script load gagal. Cek GAS deployment.')); };
+  s.onerror=function(){cleanup();reject(new Error('Script load gagal.'));};
   document.head.appendChild(s);
 }
 
-// Wrapper promise
 function gasGet(params) {
-  return new Promise(function(resolve,reject) {
-    // Coba fetch biasa dulu (lebih cepat kalau tidak ada CORS issue)
-    var url = GAS_URL+'?'+Object.keys(params).map(function(k){
-      return encodeURIComponent(k)+'='+encodeURIComponent(params[k]);
-    }).join('&');
-
+  return new Promise(function(resolve,reject){
+    var url=GAS_URL+'?'+Object.keys(params).map(function(k){return encodeURIComponent(k)+'='+encodeURIComponent(params[k]);}).join('&');
     var ctrl=new AbortController(), tid=setTimeout(function(){ctrl.abort();},10000);
     fetch(url,{signal:ctrl.signal})
-      .then(function(r){ clearTimeout(tid); if(!r.ok) throw new Error('HTTP '+r.status); return r.json(); })
+      .then(function(r){clearTimeout(tid);if(!r.ok)throw new Error('HTTP '+r.status);return r.json();})
       .then(resolve)
-      .catch(function() {
-        // Fallback JSONP
-        jsonpGet(params, resolve, reject);
-      });
+      .catch(function(){jsonpGet(params,resolve,reject);});
   });
 }
 
@@ -460,16 +449,16 @@ function loadData() {
   errBox.style.display='none';
   container.innerHTML='<div class="state-box"><span class="state-icon spin">⚙️</span>Memuat jadwal PM semua plant...</div>';
 
-  gasGet({action:'getAllPlants'}).then(function(data) {
-    if (!data||!data.success) throw new Error(data&&data.error?data.error:'Response tidak valid');
+  gasGet({action:'getAllPlants'}).then(function(data){
+    if(!data||!data.success) throw new Error(data&&data.error?data.error:'Response tidak valid');
     pmCache=data;
     populatePlantFilter(data.plants);
     renderAll(data.plants);
     updateOverview(data.plants);
     checkReminder(data.plants);
     var upd=document.getElementById('last-upd');
-    if (upd) upd.textContent='Diperbarui: '+new Date(data.lastUpdated).toLocaleTimeString('id-ID');
-  }).catch(function(err) {
+    if(upd) upd.textContent='Diperbarui: '+new Date(data.lastUpdated).toLocaleTimeString('id-ID');
+  }).catch(function(err){
     console.error('[PM]',err);
     document.getElementById('error-detail').innerHTML='<b>Error:</b> '+err.message+'<br><br>→ Coba refresh halaman.';
     errBox.style.display='block';
@@ -477,33 +466,36 @@ function loadData() {
   });
 }
 
-function populatePlantFilter(plants) {
+function populatePlantFilter(plants){
   var sel=document.getElementById('sel-plant');
-  while(sel.options.length>1) sel.remove(1);
+  while(sel.options.length>1)sel.remove(1);
   plants.forEach(function(p){
-    if(!p.plant) return;
-    var o=document.createElement('option'); o.value=p.plant; o.textContent=p.plant; sel.appendChild(o);
+    if(!p.plant)return;
+    var o=document.createElement('option');o.value=p.plant;o.textContent=p.plant;sel.appendChild(o);
   });
 }
 
-function renderAll(plants) {
+function renderAll(plants){
   var container=document.getElementById('groups-container');
-  if (!plants||plants.length===0){ container.innerHTML='<div class="state-box"><span class="state-icon">📭</span>Tidak ada data PM.</div>'; return; }
+  if(!plants||plants.length===0){container.innerHTML='<div class="state-box"><span class="state-icon">📭</span>Tidak ada data PM.</div>';return;}
   container.innerHTML='';
   var any=false;
-  plants.forEach(function(p){ if(!p.machines||p.machines.length===0) return; container.appendChild(buildPlantGroup(p)); any=true; });
-  if (!any) container.innerHTML='<div class="state-box"><span class="state-icon">🔍</span>Tidak ada mesin yang cocok.</div>';
-  document.querySelectorAll('.plant-group').forEach(function(el){ revealObs.observe(el); });
+  plants.forEach(function(p){if(!p.machines||p.machines.length===0)return;container.appendChild(buildPlantGroup(p));any=true;});
+  if(!any) container.innerHTML='<div class="state-box"><span class="state-icon">🔍</span>Tidak ada mesin yang cocok.</div>';
+  document.querySelectorAll('.plant-group').forEach(function(el){revealObs.observe(el);});
 }
 
-function buildPlantGroup(p) {
+// ── BUILD PLANT GROUP ─────────────────────────────────
+function buildPlantGroup(p){
   var machines=p.machines, months=p.months||[];
   var planCnt=0,actualCnt=0,overdueCnt=0,schedNow=0,doneNow=0;
   machines.forEach(function(m){
-    (m.months||[]).forEach(function(mo){
-      if(mo.type==='plan')    {planCnt++;   if(isCurrentMonth(mo.month)) schedNow++;}
-      if(mo.type==='actual')  {actualCnt++; if(isCurrentMonth(mo.month)) doneNow++;}
-      if(mo.type==='overdue') overdueCnt++;
+    (m.schedMonths||[]).forEach(function(mo){
+      if(mo.type==='plan'){planCnt++;if(isCurrentMonth(mo.month))schedNow++;}
+      if(mo.type==='overdue')overdueCnt++;
+    });
+    (m.actualMonths||[]).forEach(function(mo){
+      if(mo.type==='actual'){actualCnt++;if(isCurrentMonth(mo.month))doneNow++;}
     });
   });
   var total=schedNow+doneNow, pct=total>0?Math.round(doneNow/total*100):(doneNow>0?100:0);
@@ -512,111 +504,173 @@ function buildPlantGroup(p) {
   if(actualCnt>0)  pillsHtml+='<span class="p-pill actual">'+actualCnt+' DONE</span>';
   if(overdueCnt>0) pillsHtml+='<span class="p-pill overdue">'+overdueCnt+' OVERDUE</span>';
 
-  var group=document.createElement('div'); group.className='plant-group'; group.dataset.plant=p.plant;
-  var hdr=document.createElement('div'); hdr.className='plant-header';
+  var group=document.createElement('div');group.className='plant-group';group.dataset.plant=p.plant;
+  var hdr=document.createElement('div');hdr.className='plant-header';
   hdr.innerHTML='<span class="plant-dot"></span><span class="plant-name">'+p.plant+'</span><span class="plant-meta">'+machines.length+' mesin</span><div class="plant-pills">'+pillsHtml+'</div><span class="plant-toggle">⌄</span>';
-  hdr.addEventListener('click',function(){ group.classList.toggle('collapsed'); });
+  hdr.addEventListener('click',function(){group.classList.toggle('collapsed');});
 
-  var body=document.createElement('div'); body.className='plant-body';
-  var wrap=document.createElement('div'); wrap.className='tbl-wrap';
+  var body=document.createElement('div');body.className='plant-body';
+  var wrap=document.createElement('div');wrap.className='tbl-wrap';
   wrap.appendChild(buildTableDOM(machines,months));
   body.appendChild(wrap);
 
-  var prog=document.createElement('div'); prog.className='plant-progress';
+  var prog=document.createElement('div');prog.className='plant-progress';
   prog.innerHTML='<span class="prog-label">Bulan ini</span><div class="prog-bar-wrap"><div class="prog-bar-fill" style="width:'+pct+'%"></div></div><span class="prog-pct">'+pct+'%</span>';
   body.appendChild(prog);
 
-  group.appendChild(hdr); group.appendChild(body);
+  group.appendChild(hdr);group.appendChild(body);
   return group;
 }
 
-function buildTableDOM(machines, months) {
-  var tbl=document.createElement('table'); tbl.className='pm';
-  var thead=document.createElement('thead'), htr=document.createElement('tr');
-  [{cls:'s0',txt:'NO'},{cls:'s1',txt:'MESIN'},{cls:'s2',txt:'INT'}].forEach(function(h){
-    var th=document.createElement('th'); th.className=h.cls; th.textContent=h.txt; htr.appendChild(th);
+// ── BUILD TABLE — 2 baris per mesin ──────────────────
+function buildTableDOM(machines, months){
+  var tbl=document.createElement('table');tbl.className='pm';
+
+  // Header
+  var thead=document.createElement('thead'),htr=document.createElement('tr');
+  [{cls:'s0',txt:'NO'},{cls:'s1',txt:'MESIN'},{cls:'s2',txt:'INT'},{cls:'s3',txt:'TYPE'}].forEach(function(h){
+    var th=document.createElement('th');th.className=h.cls;th.textContent=h.txt;htr.appendChild(th);
   });
   months.forEach(function(m){
-    var th=document.createElement('th'); th.className=isCurrentMonth(m)?'th-now':''; th.textContent=m; htr.appendChild(th);
+    var th=document.createElement('th');th.className=isCurrentMonth(m)?'th-now':'';th.textContent=m;htr.appendChild(th);
   });
-  thead.appendChild(htr); tbl.appendChild(thead);
+  thead.appendChild(htr);tbl.appendChild(thead);
 
   var tbody=document.createElement('tbody');
+
   machines.forEach(function(m,i){
-    var tr=document.createElement('tr');
-    var tdNo=document.createElement('td'); tdNo.className='s0'; tdNo.textContent=m.no||(i+1); tr.appendChild(tdNo);
-    var tdM=document.createElement('td');  tdM.className='s1';  tdM.textContent=m.mesin;      tr.appendChild(tdM);
-    var tdI=document.createElement('td');  tdI.className='s2';  tdI.textContent=m.interval;   tr.appendChild(tdI);
+    // ── Baris SCHEDULE ──────────────────────────────
+    var trS=document.createElement('tr');trS.className='row-sched';
+
+    // NO — rowspan 2
+    var tdNo=document.createElement('td');tdNo.className='s0 span2';tdNo.rowSpan=2;
+    tdNo.textContent=m.no||(i+1);trS.appendChild(tdNo);
+    // MESIN — rowspan 2
+    var tdM=document.createElement('td');tdM.className='s1 span2';tdM.rowSpan=2;
+    tdM.textContent=m.mesin;trS.appendChild(tdM);
+    // INTERVAL — rowspan 2
+    var tdI=document.createElement('td');tdI.className='s2 span2';tdI.rowSpan=2;
+    tdI.textContent=m.interval;trS.appendChild(tdI);
+    // TYPE label
+    var tdTS=document.createElement('td');tdTS.className='s3 type-sched';tdTS.textContent='SCH';trS.appendChild(tdTS);
+
+    // Schedule month cells
+    months.forEach(function(mLabel){
+      var mo=(m.schedMonths||[]).find(function(x){return x.month===mLabel;});
+      var td=document.createElement('td');if(isCurrentMonth(mLabel))td.className='td-now';
+      var cell=document.createElement('div');cell.className='pm-cell';
+      var cls='empty',txt='';
+      if(mo&&mo.type){
+        if(mo.type==='plan')   {cls='plan';   txt='●';}
+        if(mo.type==='actual') {cls='actual'; txt=mo.value||'✓';}
+        if(mo.type==='overdue'){cls='overdue';txt='!';}
+      }
+      cell.classList.add(cls);cell.textContent=txt;
+      td.appendChild(cell);trS.appendChild(td);
+    });
+    tbody.appendChild(trS);
+
+    // ── Baris ACTUAL ────────────────────────────────
+    var trA=document.createElement('tr');trA.className='row-actual';
+    // TYPE label
+    var tdTA=document.createElement('td');tdTA.className='s3 type-actual';tdTA.textContent='ACT';trA.appendChild(tdTA);
 
     months.forEach(function(mLabel){
-      var mo=(m.months||[]).find(function(x){return x.month===mLabel;});
-      var td=document.createElement('td'); if(isCurrentMonth(mLabel)) td.className='td-now';
-      var cell=document.createElement('div'); cell.className='pm-cell';
-      var cls='empty', txt='';
-      if (mo&&mo.type) {
-        if (mo.type==='plan')   { cls='plan';   txt=mo.value||'●'; cell.title='Double-click untuk input actual'; }
-        if (mo.type==='actual') { cls='actual'; txt=mo.value||'✓'; cell.title='Actual: '+(mo.value||'Terlaksana'); }
-        if (mo.type==='overdue'){ cls='overdue';txt='!';            cell.title='OVERDUE — belum dilaksanakan!'; }
-      }
-      cell.classList.add(cls); cell.textContent=txt;
+      var mo=(m.actualMonths||[]).find(function(x){return x.month===mLabel;});
+      var schedMo=(m.schedMonths||[]).find(function(x){return x.month===mLabel;});
+      var td=document.createElement('td');if(isCurrentMonth(mLabel))td.className='td-now';
+      var cell=document.createElement('div');cell.className='pm-cell';
 
-      if (cls==='plan') {
-        cell.addEventListener('dblclick',function(e){
-          e.stopPropagation();
-          openModal(m.mesin, mLabel, cell);
-        });
+      if(mo&&mo.type==='actual'){
+        // Ada actual → tampilkan biru, bisa diklik untuk edit
+        cell.classList.add('actual-done');
+        cell.textContent=mo.value||'✓';
+        cell.title='Actual: '+(mo.value||'Terlaksana')+'\nKlik untuk edit';
+        (function(mesin,month,cellEl,moRef){
+          cellEl.addEventListener('click',function(e){
+            e.stopPropagation();
+            openModal(mesin,month,cellEl,moRef);
+          });
+        })(m.mesin,mLabel,cell,mo);
+      } else if(schedMo&&schedMo.type==='plan'){
+        // Schedule ada plan → tampilkan slot actual kosong, bisa diklik
+        cell.classList.add('actual-input');
+        cell.title='Klik untuk input tanggal actual';
+        (function(mesin,month,cellEl){
+          cellEl.addEventListener('click',function(e){
+            e.stopPropagation();
+            openModal(mesin,month,cellEl,null);
+          });
+        })(m.mesin,mLabel,cell);
+      } else if(mo&&mo.type==='overdue'){
+        cell.classList.add('overdue');cell.textContent='!';
+      } else {
+        cell.classList.add('empty');
       }
-      td.appendChild(cell); tr.appendChild(td);
+
+      td.appendChild(cell);trA.appendChild(td);
     });
-    tbody.appendChild(tr);
+    tbody.appendChild(trA);
   });
+
   tbl.appendChild(tbody);
   return tbl;
 }
 
-function updateOverview(plants) {
+// ── OVERVIEW ─────────────────────────────────────────
+function updateOverview(plants){
   var total=0,sched=0,done=0,over=0;
   plants.forEach(function(p){
     total+=p.machines.length;
     p.machines.forEach(function(m){
-      (m.months||[]).forEach(function(mo){
-        if(mo.type==='overdue') over++;
-        if(isCurrentMonth(mo.month)){if(mo.type==='plan') sched++; if(mo.type==='actual') done++;}
+      (m.schedMonths||[]).forEach(function(mo){
+        if(mo.type==='overdue')over++;
+        if(isCurrentMonth(mo.month)&&mo.type==='plan')sched++;
+      });
+      (m.actualMonths||[]).forEach(function(mo){
+        if(isCurrentMonth(mo.month)&&mo.type==='actual')done++;
       });
     });
   });
   function s(id,v){var el=document.getElementById(id);if(el)el.textContent=v;}
-  s('ov-total',total);s('hero-total',total);s('ov-sched',sched);s('hero-sched',sched);
-  s('ov-done',done);s('hero-done',done);s('ov-overdue',over);s('hero-overdue',over);
+  s('ov-total',total);s('hero-total',total);
+  s('ov-sched',sched);s('hero-sched',sched);
+  s('ov-done',done);s('hero-done',done);
+  s('ov-overdue',over);s('hero-overdue',over);
   var rate=(sched+done)>0?Math.round(done/(done+sched)*100):(done>0?100:0);
-  s('ov-rate','Completion rate '+rate+'%'); s('ov-month-label',currentMonthLabel());
+  s('ov-rate','Completion rate '+rate+'%');s('ov-month-label',currentMonthLabel());
 }
 
-function checkReminder(plants) {
+function checkReminder(plants){
   var pending=[];
   plants.forEach(function(p){
     p.machines.forEach(function(m){
-      if((m.months||[]).some(function(mo){return isCurrentMonth(mo.month)&&mo.type==='plan';}))
-        pending.push(p.plant+' — '+m.mesin);
+      var hasSchedNow=(m.schedMonths||[]).some(function(mo){return isCurrentMonth(mo.month)&&mo.type==='plan';});
+      var hasActualNow=(m.actualMonths||[]).some(function(mo){return isCurrentMonth(mo.month)&&mo.type==='actual';});
+      if(hasSchedNow&&!hasActualNow) pending.push(p.plant+' — '+m.mesin);
     });
   });
-  var bar=document.getElementById('reminder-bar'), body=document.getElementById('reminder-body');
+  var bar=document.getElementById('reminder-bar'),body=document.getElementById('reminder-body');
   if(pending.length>0&&bar&&body){
     bar.classList.add('show');
-    var shown=pending.slice(0,5).join(', '), more=pending.length>5?' +'+(pending.length-5)+' lainnya':'';
+    var shown=pending.slice(0,5).join(', '),more=pending.length>5?' +'+(pending.length-5)+' lainnya':'';
     body.innerHTML='<strong>⚠️ '+pending.length+' mesin PM belum dilaksanakan bulan ini:</strong><br>'+shown+more;
   }
 }
 
-function applyFilter() {
-  if(!pmCache) return;
-  var fP=document.getElementById('sel-plant').value, fI=document.getElementById('sel-interval').value;
-  var fS=document.getElementById('sel-status').value, fQ=document.getElementById('inp-search').value.toLowerCase().trim();
+function applyFilter(){
+  if(!pmCache)return;
+  var fP=document.getElementById('sel-plant').value,fI=document.getElementById('sel-interval').value;
+  var fS=document.getElementById('sel-status').value,fQ=document.getElementById('inp-search').value.toLowerCase().trim();
   var filtered=pmCache.plants.filter(function(p){return !fP||p.plant===fP;}).map(function(p){
     return Object.assign({},p,{machines:(p.machines||[]).filter(function(m){
-      if(fI&&String(m.interval).toUpperCase()!==fI) return false;
-      if(fQ&&!m.mesin.toLowerCase().includes(fQ)) return false;
-      if(fS&&!(m.months||[]).some(function(mo){return mo.type===fS;})) return false;
+      if(fI&&String(m.interval).toUpperCase()!==fI)return false;
+      if(fQ&&!m.mesin.toLowerCase().includes(fQ))return false;
+      if(fS){
+        var inSched=(m.schedMonths||[]).some(function(mo){return mo.type===fS;});
+        var inActual=(m.actualMonths||[]).some(function(mo){return mo.type===fS;});
+        if(!inSched&&!inActual)return false;
+      }
       return true;
     })});
   }).filter(function(p){return p.machines.length>0;});
@@ -626,77 +680,71 @@ function applyFilter() {
 // ══════════════════════════════════════════════════════
 // MODAL
 // ══════════════════════════════════════════════════════
-var _modalMesin='', _modalMonth='', _modalCell=null;
+var _modalMesin='',_modalMonth='',_modalCell=null,_modalMoRef=null;
 
-function openModal(mesin,month,cellEl) {
-  _modalMesin=mesin; _modalMonth=month; _modalCell=cellEl;
+function openModal(mesin,month,cellEl,moRef){
+  _modalMesin=mesin;_modalMonth=month;_modalCell=cellEl;_modalMoRef=moRef;
   document.getElementById('modal-mesin').textContent=mesin;
   document.getElementById('modal-month').textContent=month;
   document.getElementById('modal-preview').textContent='';
   document.getElementById('modal-submit-btn').disabled=true;
-  // Default hari ini
   var now=new Date();
-  var yyyy=now.getFullYear(), mm=String(now.getMonth()+1).padStart(2,'0'), dd=String(now.getDate()).padStart(2,'0');
-  document.getElementById('modal-date-input').value=yyyy+'-'+mm+'-'+dd;
+  var yyyy=now.getFullYear(),mm=String(now.getMonth()+1).padStart(2,'0'),dd=String(now.getDate()).padStart(2,'0');
+  // Kalau ada nilai sebelumnya, coba parse
+  if(moRef&&moRef.value){
+    // Format "12 Mei 2026" → parse
+    document.getElementById('modal-date-input').value=yyyy+'-'+mm+'-'+dd;
+  } else {
+    document.getElementById('modal-date-input').value=yyyy+'-'+mm+'-'+dd;
+  }
   onDateChange();
   document.getElementById('modalOverlay').classList.add('open');
 }
 
-function closeModal() { document.getElementById('modalOverlay').classList.remove('open'); }
+function closeModal(){document.getElementById('modalOverlay').classList.remove('open');}
+document.getElementById('modalOverlay').addEventListener('click',function(e){if(e.target===this)closeModal();});
+document.addEventListener('keydown',function(e){if(e.key==='Escape')closeModal();});
 
-document.getElementById('modalOverlay').addEventListener('click',function(e){ if(e.target===this) closeModal(); });
-document.addEventListener('keydown',function(e){ if(e.key==='Escape') closeModal(); });
-
-function onDateChange() {
+function onDateChange(){
   var val=document.getElementById('modal-date-input').value;
-  var btn=document.getElementById('modal-submit-btn'), prev=document.getElementById('modal-preview');
-  if(!val){ prev.textContent=''; btn.disabled=true; return; }
-  var p=val.split('-'), d=new Date(parseInt(p[0]),parseInt(p[1])-1,parseInt(p[2]));
+  var btn=document.getElementById('modal-submit-btn'),prev=document.getElementById('modal-preview');
+  if(!val){prev.textContent='';btn.disabled=true;return;}
+  var p=val.split('-'),d=new Date(parseInt(p[0]),parseInt(p[1])-1,parseInt(p[2]));
   prev.textContent='→ '+formatTanggalID(d);
   btn.disabled=false;
 }
 
-// ── SUBMIT via JSONP GET ───────────────────────────────
-function submitActual() {
+function submitActual(){
   var val=document.getElementById('modal-date-input').value;
-  if(!val) return;
-  var p=val.split('-'), d=new Date(parseInt(p[0]),parseInt(p[1])-1,parseInt(p[2]));
-  var tanggal=formatTanggalID(d); // "12 Mei 2026"
+  if(!val)return;
+  var p=val.split('-'),d=new Date(parseInt(p[0]),parseInt(p[1])-1,parseInt(p[2]));
+  var tanggal=formatTanggalID(d);
 
   closeModal();
 
-  // Set cell loading
-  var savedCell=_modalCell, savedMesin=_modalMesin, savedMonth=_modalMonth;
-  if(savedCell){ savedCell.className='pm-cell saving'; savedCell.textContent='...'; }
+  var savedCell=_modalCell,savedMesin=_modalMesin,savedMonth=_modalMonth;
+  if(savedCell){savedCell.className='pm-cell saving';savedCell.textContent='...';}
 
   showToast('info','⏳ Menyimpan ke Google Sheet...');
 
-  // Kirim via JSONP GET — tidak ada CORS issue
-  gasGet({
-    action:  'updateCell',
-    mesin:   savedMesin,
-    month:   savedMonth,
-    tanggal: tanggal
-  }).then(function(res) {
-    if(!res.success) throw new Error(res.error||'GAS mengembalikan gagal');
+  gasGet({action:'updateCell',mesin:savedMesin,month:savedMonth,tanggal:tanggal}).then(function(res){
+    if(!res.success)throw new Error(res.error||'GAS mengembalikan gagal');
 
-    // Update cell → actual
-    if(savedCell) {
-      savedCell.className='pm-cell actual';
+    // Update cell → actual-done
+    if(savedCell){
+      savedCell.className='pm-cell actual-done';
       savedCell.textContent=tanggal;
-      savedCell.title='Actual: '+tanggal;
-      // Hapus dblclick
-      var newCell=savedCell.cloneNode(true);
-      if(savedCell.parentNode) savedCell.parentNode.replaceChild(newCell,savedCell);
+      savedCell.title='Actual: '+tanggal+'\nKlik untuk edit';
     }
 
     // Update cache
-    if(pmCache) {
+    if(pmCache){
       pmCache.plants.forEach(function(pl){
         pl.machines.forEach(function(m){
           if(m.mesin===savedMesin){
-            var mo=(m.months||[]).find(function(x){return x.month===savedMonth;});
+            var mo=(m.actualMonths||[]).find(function(x){return x.month===savedMonth;});
             if(mo){mo.type='actual';mo.value=tanggal;}
+            else if(m.actualMonths) m.actualMonths.push({month:savedMonth,type:'actual',value:tanggal});
           }
         });
       });
@@ -704,54 +752,49 @@ function submitActual() {
     }
 
     showToast('success','✓ Tersimpan! '+savedMesin+' — '+tanggal);
-
-  }).catch(function(err) {
+  }).catch(function(err){
     console.error('[PM submit]',err);
-    if(savedCell){ savedCell.className='pm-cell plan'; savedCell.textContent='●'; savedCell.title='Double-click untuk input actual'; }
+    if(savedCell){savedCell.className='pm-cell actual-input';savedCell.textContent='';savedCell.title='Klik untuk input tanggal actual';}
     showToast('error','✗ Gagal simpan: '+err.message);
   });
 }
 
 // ── TOAST ─────────────────────────────────────────────
 var _toastTid=null;
-function showToast(type,msg) {
+function showToast(type,msg){
   var t=document.getElementById('toast');
-  t.className='toast '+type; t.textContent=msg;
-  void t.offsetWidth; t.classList.add('show');
+  t.className='toast '+type;t.textContent=msg;
+  void t.offsetWidth;t.classList.add('show');
   clearTimeout(_toastTid);
-  _toastTid=setTimeout(function(){ t.classList.remove('show'); },4500);
+  _toastTid=setTimeout(function(){t.classList.remove('show');},4500);
 }
 
-function collapseAll(){ document.querySelectorAll('.plant-group').forEach(function(g){g.classList.add('collapsed');}); }
-function expandAll()  { document.querySelectorAll('.plant-group').forEach(function(g){g.classList.remove('collapsed');}); }
-function doRefresh()  { pmCache=null; loadData(); }
-function doPrint()    { window.print(); }
+function collapseAll(){document.querySelectorAll('.plant-group').forEach(function(g){g.classList.add('collapsed');});}
+function expandAll()  {document.querySelectorAll('.plant-group').forEach(function(g){g.classList.remove('collapsed');});}
+function doRefresh()  {pmCache=null;loadData();}
+function doPrint()    {window.print();}
 
 // ── PAGE LOADER ───────────────────────────────────────
-var loader=document.getElementById('pageLoader'), loaderPct=document.getElementById('loaderPct');
-var lsteps=['LOADING PM DATA...','CONNECTING...','ALMOST READY...','READY'], lsi=0;
-var lti=setInterval(function(){ if(lsi<lsteps.length) loaderPct.textContent=lsteps[lsi++]; },320);
-setTimeout(function(){ clearInterval(lti); loader.classList.add('hidden'); },1400);
+var loader=document.getElementById('pageLoader'),loaderPct=document.getElementById('loaderPct');
+var lsteps=['LOADING PM DATA...','CONNECTING...','ALMOST READY...','READY'],lsi=0;
+var lti=setInterval(function(){if(lsi<lsteps.length)loaderPct.textContent=lsteps[lsi++];},320);
+setTimeout(function(){clearInterval(lti);loader.classList.add('hidden');},1400);
 
 // ── CURSOR ────────────────────────────────────────────
-var cur=document.getElementById('cursor'), ring=document.getElementById('cursor-ring');
+var cur=document.getElementById('cursor'),ring=document.getElementById('cursor-ring');
 var mx=0,my=0,rx=0,ry=0;
-document.addEventListener('mousemove',function(e){ mx=e.clientX; my=e.clientY; cur.style.left=(mx-5)+'px'; cur.style.top=(my-5)+'px'; });
-(function anim(){ rx+=(mx-rx-20)*.16; ry+=(my-ry-20)*.16; ring.style.left=rx+'px'; ring.style.top=ry+'px'; requestAnimationFrame(anim); })();
-document.querySelectorAll('a,button,.plant-header,.tb-btn,.ov-card,.stat-pill').forEach(function(el){
-  el.addEventListener('mouseenter',function(){cur.classList.add('hover');ring.classList.add('hover');});
-  el.addEventListener('mouseleave',function(){cur.classList.remove('hover');ring.classList.remove('hover');});
-});
+document.addEventListener('mousemove',function(e){mx=e.clientX;my=e.clientY;cur.style.left=(mx-5)+'px';cur.style.top=(my-5)+'px';});
+(function anim(){rx+=(mx-rx-20)*.16;ry+=(my-ry-20)*.16;ring.style.left=rx+'px';ring.style.top=ry+'px';requestAnimationFrame(anim);})();
 
 // ── CANVAS BG ─────────────────────────────────────────
 (function(){
-  var cv=document.getElementById('bg-canvas'), ctx=cv.getContext('2d'), W,H,P=[];
-  function resize(){W=cv.width=innerWidth;H=cv.height=innerHeight;} resize();
+  var cv=document.getElementById('bg-canvas'),ctx=cv.getContext('2d'),W,H,P=[];
+  function resize(){W=cv.width=innerWidth;H=cv.height=innerHeight;}resize();
   window.addEventListener('resize',resize);
   var cols=['#00d4ff','#0066ff','#00ff87','#a78bfa'];
-  for(var i=0;i<80;i++) P.push({x:Math.random()*2000,y:Math.random()*2000,vx:(Math.random()-.5)*.3,vy:(Math.random()-.5)*.3,r:Math.random()*1.2+.2,a:Math.random()*.4+.1,c:cols[Math.floor(Math.random()*4)]});
+  for(var i=0;i<80;i++)P.push({x:Math.random()*2000,y:Math.random()*2000,vx:(Math.random()-.5)*.3,vy:(Math.random()-.5)*.3,r:Math.random()*1.2+.2,a:Math.random()*.4+.1,c:cols[Math.floor(Math.random()*4)]});
   function draw(){
-    ctx.clearRect(0,0,W,H); ctx.strokeStyle='rgba(0,80,180,0.03)'; ctx.lineWidth=1;
+    ctx.clearRect(0,0,W,H);ctx.strokeStyle='rgba(0,80,180,0.03)';ctx.lineWidth=1;
     var g=64;
     for(var x=0;x<W+g;x+=g){ctx.beginPath();ctx.moveTo(x,0);ctx.lineTo(x,H);ctx.stroke();}
     for(var y=0;y<H+g;y+=g){ctx.beginPath();ctx.moveTo(0,y);ctx.lineTo(W,y);ctx.stroke();}
@@ -760,21 +803,21 @@ document.querySelectorAll('a,button,.plant-header,.tb-btn,.ov-card,.stat-pill').
       if(p.x<0)p.x=W;if(p.x>W)p.x=0;if(p.y<0)p.y=H;if(p.y>H)p.y=0;
       ctx.beginPath();ctx.arc(p.x,p.y,p.r,0,Math.PI*2);ctx.fillStyle=p.c;ctx.globalAlpha=p.a;ctx.fill();
     });
-    ctx.globalAlpha=1; requestAnimationFrame(draw);
+    ctx.globalAlpha=1;requestAnimationFrame(draw);
   }
   draw();
 })();
 
-document.getElementById('navToggle').addEventListener('click',function(){ document.getElementById('navLinks').classList.toggle('open'); });
+document.getElementById('navToggle').addEventListener('click',function(){document.getElementById('navLinks').classList.toggle('open');});
 
 var revealObs=new IntersectionObserver(function(entries){
-  entries.forEach(function(e){ if(e.isIntersecting){e.target.classList.add('visible');revealObs.unobserve(e.target);} });
+  entries.forEach(function(e){if(e.isIntersecting){e.target.classList.add('visible');revealObs.unobserve(e.target);}});
 },{threshold:.08});
 document.querySelectorAll('.reveal').forEach(function(el){revealObs.observe(el);});
 
 window.addEventListener('load',function(){setTimeout(loadData,1500);});
 if('serviceWorker' in navigator){
-  window.addEventListener('load',function(){ navigator.serviceWorker.register('/gardahitam/sw.js').catch(function(){}); });
+  window.addEventListener('load',function(){navigator.serviceWorker.register('/gardahitam/sw.js').catch(function(){});});
 }
 </script>
 </body>
