@@ -175,18 +175,69 @@ table.pm tbody tr:hover td.s3{background:rgba(11,17,32,.99)}
 table.pm tbody td.td-now{background:rgba(0,212,255,0.02)}
 td.span2{vertical-align:middle}
 
-/* PM CELL */
-.pm-cell{min-width:60px;height:28px;border-radius:6px;display:flex;align-items:center;justify-content:center;font-family:'JetBrains Mono',monospace;font-size:9px;font-weight:700;margin:0 auto;position:relative;transition:transform .2s,box-shadow .2s;letter-spacing:.02em;padding:0 4px;text-align:center;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-.pm-cell.plan{background:var(--pm-plan-bg);border:1px solid var(--pm-plan-border);color:var(--pm-plan);box-shadow:0 0 8px rgba(0,200,80,0.12)}
-.pm-cell.actual{background:var(--pm-actual-bg);border:1px solid var(--pm-actual-border);color:var(--pm-actual);box-shadow:0 0 8px rgba(68,130,210,0.12)}
-.pm-cell.actual-input{background:rgba(68,130,210,0.06);border:1px dashed rgba(100,160,245,0.3);color:rgba(106,171,255,0.4);cursor:pointer}
-.pm-cell.actual-input:hover{background:rgba(68,130,210,0.14);border-color:rgba(100,160,245,0.6);color:var(--pm-actual);transform:scale(1.08);box-shadow:0 0 14px rgba(68,130,210,0.25)}
-.pm-cell.actual-input::after{content:'+';font-size:12px;opacity:.5}
-.pm-cell.actual-done{background:var(--pm-actual-bg);border:1px solid var(--pm-actual-border);color:var(--pm-actual);box-shadow:0 0 8px rgba(68,130,210,0.12);cursor:pointer}
-.pm-cell.actual-done:hover{transform:scale(1.06);box-shadow:0 0 18px rgba(68,130,210,0.35)}
-.pm-cell.overdue{background:var(--pm-overdue-bg);border:1px solid var(--pm-overdue-border);color:var(--pm-overdue);animation:overduePulse 2.2s ease-in-out infinite}
-.pm-cell.empty{background:rgba(255,255,255,0.015);border:1px solid rgba(255,255,255,0.04);color:transparent;pointer-events:none}
-.pm-cell.saving{background:rgba(255,184,0,0.15)!important;border-color:rgba(255,184,0,0.5)!important;color:#ffb800!important;animation:savingPulse 1s ease-in-out infinite;cursor:wait!important}
+/* ── PM CELL ─────────────────────────────────────── */
+.pm-cell{
+  min-width:60px;height:28px;border-radius:6px;
+  display:flex;align-items:center;justify-content:center;
+  font-family:'JetBrains Mono',monospace;font-size:9px;font-weight:700;
+  margin:0 auto;position:relative;transition:transform .2s,box-shadow .2s;
+  letter-spacing:.02em;padding:0 4px;text-align:center;
+  white-space:nowrap;overflow:hidden;text-overflow:ellipsis
+}
+
+/* Plan — READ ONLY, tidak bisa diklik */
+.pm-cell.plan{
+  background:var(--pm-plan-bg);border:1px solid var(--pm-plan-border);
+  color:var(--pm-plan);box-shadow:0 0 8px rgba(0,200,80,0.12);
+  cursor:default;pointer-events:none
+}
+
+/* Actual terisi */
+.pm-cell.actual{
+  background:var(--pm-actual-bg);border:1px solid var(--pm-actual-border);
+  color:var(--pm-actual);box-shadow:0 0 8px rgba(68,130,210,0.12)
+}
+.pm-cell.actual-done{
+  background:var(--pm-actual-bg);border:1px solid var(--pm-actual-border);
+  color:var(--pm-actual);box-shadow:0 0 8px rgba(68,130,210,0.12);
+  cursor:pointer
+}
+.pm-cell.actual-done:hover{
+  transform:scale(1.06);box-shadow:0 0 18px rgba(68,130,210,0.35);
+  border-color:var(--pm-actual)
+}
+
+/* Actual kosong — semua bulan bisa diklik */
+.pm-cell.actual-empty{
+  background:rgba(255,255,255,0.015);border:1px dashed rgba(100,160,245,0.18);
+  color:rgba(106,171,255,0.25);cursor:pointer;transition:all .2s
+}
+.pm-cell.actual-empty:hover{
+  background:rgba(68,130,210,0.12);border:1px dashed rgba(100,160,245,0.55);
+  color:var(--pm-actual);transform:scale(1.08);
+  box-shadow:0 0 14px rgba(68,130,210,0.25)
+}
+.pm-cell.actual-empty::after{content:'+';font-size:12px;opacity:.5}
+.pm-cell.actual-empty:hover::after{opacity:.9}
+
+/* Overdue */
+.pm-cell.overdue{
+  background:var(--pm-overdue-bg);border:1px solid var(--pm-overdue-border);
+  color:var(--pm-overdue);animation:overduePulse 2.2s ease-in-out infinite
+}
+
+/* Empty di baris schedule (bukan actual) */
+.pm-cell.empty{
+  background:rgba(255,255,255,0.015);border:1px solid rgba(255,255,255,0.04);
+  color:transparent;pointer-events:none
+}
+
+/* Saving state */
+.pm-cell.saving{
+  background:rgba(255,184,0,0.15)!important;border-color:rgba(255,184,0,0.5)!important;
+  color:#ffb800!important;animation:savingPulse 1s ease-in-out infinite;cursor:wait!important
+}
+
 @keyframes overduePulse{0%,100%{box-shadow:0 0 5px rgba(255,50,50,0.1)}50%{box-shadow:0 0 18px rgba(255,50,50,0.45)}}
 @keyframes savingPulse{0%,100%{opacity:1}50%{opacity:.5}}
 
@@ -201,10 +252,10 @@ td.span2{vertical-align:middle}
 .state-icon.spin{animation:spin 1.2s linear infinite;display:inline-block}
 @keyframes spin{to{transform:rotate(360deg)}}
 
-/* MODAL */
+/* ── MODAL ────────────────────────────────────────── */
 .modal-overlay{position:fixed;inset:0;background:rgba(0,0,0,0.72);backdrop-filter:blur(6px);z-index:9000;display:flex;align-items:center;justify-content:center;opacity:0;visibility:hidden;transition:opacity .25s,visibility .25s}
 .modal-overlay.open{opacity:1;visibility:visible}
-.modal-box{background:linear-gradient(135deg,rgba(8,13,24,.98),rgba(11,17,32,.98));border:1px solid rgba(0,212,255,0.25);border-radius:18px;padding:32px 36px;width:min(420px,92vw);position:relative;box-shadow:0 24px 80px rgba(0,0,0,.8),0 0 40px rgba(0,212,255,0.08);transform:translateY(16px) scale(.97);transition:transform .3s,opacity .3s}
+.modal-box{background:linear-gradient(135deg,rgba(8,13,24,.98),rgba(11,17,32,.98));border:1px solid rgba(0,212,255,0.25);border-radius:18px;padding:32px 36px;width:min(460px,92vw);position:relative;box-shadow:0 24px 80px rgba(0,0,0,.8),0 0 40px rgba(0,212,255,0.08);transform:translateY(16px) scale(.97);transition:transform .3s,opacity .3s}
 .modal-overlay.open .modal-box{transform:translateY(0) scale(1)}
 .modal-badge{font-family:'JetBrains Mono',monospace;font-size:9px;font-weight:700;letter-spacing:.18em;text-transform:uppercase;color:var(--cyan);opacity:.7;margin-bottom:10px}
 .modal-title{font-family:'Orbitron',monospace;font-size:16px;font-weight:900;color:#fff;margin-bottom:6px}
@@ -215,17 +266,19 @@ td.span2{vertical-align:middle}
 .modal-date:focus{border-color:rgba(0,212,255,0.6);box-shadow:0 0 12px rgba(0,212,255,0.12)}
 .modal-date::-webkit-calendar-picker-indicator{filter:invert(1) opacity(.6);cursor:pointer}
 .modal-preview{font-family:'JetBrains Mono',monospace;font-size:11px;color:var(--pm-actual);min-height:20px;margin-top:8px}
-.modal-actions{display:flex;gap:10px;justify-content:flex-end;margin-top:18px}
+.modal-actions{display:flex;gap:10px;justify-content:flex-end;margin-top:18px;flex-wrap:wrap}
 .modal-btn{display:inline-flex;align-items:center;gap:6px;padding:10px 22px;border-radius:10px;font-family:'JetBrains Mono',monospace;font-size:11px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;cursor:pointer;transition:all .25s;border:1px solid}
 .modal-btn.cancel{background:transparent;border-color:rgba(255,255,255,0.12);color:var(--text3)}
 .modal-btn.cancel:hover{border-color:rgba(255,255,255,0.3);color:var(--text2)}
 .modal-btn.submit{background:rgba(68,130,210,0.15);border-color:rgba(100,160,245,0.4);color:var(--pm-actual)}
 .modal-btn.submit:hover{background:rgba(68,130,210,0.28);box-shadow:0 0 16px rgba(68,130,210,0.25)}
 .modal-btn.submit:disabled{opacity:.4;cursor:not-allowed;box-shadow:none}
+.modal-btn.delete{background:rgba(255,60,60,0.1);border-color:rgba(255,60,60,0.35);color:var(--pm-overdue)}
+.modal-btn.delete:hover{background:rgba(255,60,60,0.22);box-shadow:0 0 14px rgba(255,60,60,0.25)}
 .modal-close{position:absolute;top:16px;right:18px;background:none;border:none;color:var(--text3);font-size:18px;cursor:pointer;transition:color .2s;line-height:1}
 .modal-close:hover{color:var(--text)}
 
-/* TOAST */
+/* ── TOAST ─────────────────────────────────────────── */
 .toast{position:fixed;bottom:28px;right:28px;z-index:99998;padding:12px 22px;border-radius:10px;font-family:'JetBrains Mono',monospace;font-size:11px;font-weight:700;letter-spacing:.06em;display:flex;align-items:center;gap:10px;box-shadow:0 8px 32px rgba(0,0,0,.6);transform:translateY(20px);opacity:0;transition:transform .3s,opacity .3s;pointer-events:none}
 .toast.show{transform:translateY(0);opacity:1}
 .toast.success{background:rgba(0,200,80,0.15);border:1px solid rgba(0,200,80,0.4);color:#00dd60}
@@ -277,7 +330,7 @@ td.span2{vertical-align:middle}
 <div id="cursor"></div>
 <div id="cursor-ring"></div>
 
-<!-- MODAL -->
+<!-- MODAL INPUT ACTUAL -->
 <div class="modal-overlay" id="modalOverlay">
   <div class="modal-box">
     <button class="modal-close" onclick="closeModal()">✕</button>
@@ -292,6 +345,7 @@ td.span2{vertical-align:middle}
     <div class="modal-preview" id="modal-preview"></div>
     <div class="modal-actions">
       <button class="modal-btn cancel" onclick="closeModal()">Batal</button>
+      <button class="modal-btn delete" id="modal-delete-btn" onclick="submitClear()" style="display:none">🗑 Hapus</button>
       <button class="modal-btn submit" id="modal-submit-btn" onclick="submitActual()" disabled>✓ Simpan ke Sheet</button>
     </div>
   </div>
@@ -321,7 +375,11 @@ td.span2{vertical-align:middle}
         <div class="page-eyebrow">PM Drive Care 2026</div>
         <h1 class="page-h1">Jadwal PM <em>Semua Plant</em></h1>
         <p class="page-desc">Rencana &amp; realisasi perawatan preventif drive seluruh mixing center.<br>
-          <span style="font-size:12px;color:rgba(0,212,255,0.6)">💡 Klik cell <strong style="color:var(--pm-actual)">Actual</strong> untuk input tanggal pelaksanaan.</span></p>
+          <span style="font-size:12px;color:rgba(0,212,255,0.6)">
+            💡 <strong style="color:var(--pm-plan)">Hijau</strong> = Schedule (tidak bisa diubah) &nbsp;|&nbsp;
+            <strong style="color:var(--pm-actual)">Biru</strong> = Actual (klik semua kolom ACT untuk input)
+          </span>
+        </p>
       </div>
       <div class="page-hero-right">
         <div class="stat-pill"><div><div class="stat-pill-num" id="hero-total">—</div><div class="stat-pill-lbl">Total<br>Mesin</div></div></div>
@@ -379,8 +437,8 @@ td.span2{vertical-align:middle}
     </div>
 
     <div class="legend-strip reveal">
-      <div class="leg-item plan"><span class="leg-dot" style="background:var(--pm-plan)"></span>Schedule / Rencana</div>
-      <div class="leg-item actual"><span class="leg-dot" style="background:var(--pm-actual)"></span>Actual / Terlaksana <span style="opacity:.5;font-size:9px;margin-left:4px">(klik untuk input)</span></div>
+      <div class="leg-item plan"><span class="leg-dot" style="background:var(--pm-plan)"></span>Schedule / Rencana <span style="opacity:.5;font-size:9px;margin-left:4px">(read-only)</span></div>
+      <div class="leg-item actual"><span class="leg-dot" style="background:var(--pm-actual)"></span>Actual / Terlaksana <span style="opacity:.5;font-size:9px;margin-left:4px">(klik baris ACT untuk input)</span></div>
       <div class="leg-item overdue"><span class="leg-dot" style="background:var(--pm-overdue)"></span>Overdue</div>
       <span class="leg-sep"></span>
       <span class="last-upd" id="last-upd">— memuat data...</span>
@@ -410,10 +468,9 @@ var BLN_FULL= ['Januari','Februari','Maret','April','Mei','Juni','Juli','Agustus
 
 // ── HELPER ────────────────────────────────────────────
 function normalizeMonth(label) {
-  // Normalisasi: "Jan-26", "jan-26", "Jan-2026" → "jan-26"
+  // "Jan-26", "jan-26", "Jan-2026", "Mei-26" → "jan-26"
   if (!label) return '';
   var s = String(label).trim().toLowerCase();
-  // Ganti bulan Indonesia ke English untuk matching
   var idToEn = {
     'jan':'jan','feb':'feb','mar':'mar','apr':'apr',
     'mei':'may','jun':'jun','jul':'jul','ags':'aug',
@@ -444,8 +501,7 @@ function formatTanggalID(d) {
   return d.getDate() + ' ' + BLN_FULL[d.getMonth()] + ' ' + d.getFullYear();
 }
 
-// ── FETCH API ─────────────────────────────────────────
-// JSONP fallback (handle CORS dari GAS)
+// ── FETCH API (JSONP) ─────────────────────────────────
 function jsonpGet(params, resolve, reject) {
   var cb  = 'gasCb_' + Date.now() + '_' + Math.floor(Math.random() * 9999);
   var tid;
@@ -469,7 +525,6 @@ function jsonpGet(params, resolve, reject) {
 
 function gasGet(params) {
   return new Promise(function(resolve, reject) {
-    // Selalu pakai JSONP agar tidak kena CORS issue GAS
     jsonpGet(params, resolve, reject);
   });
 }
@@ -496,18 +551,15 @@ function loadData() {
 
       var upd = document.getElementById('last-upd');
       if (upd) {
-        try {
-          upd.textContent = 'Diperbarui: ' + new Date(data.lastUpdated).toLocaleTimeString('id-ID');
-        } catch(e) {
-          upd.textContent = 'Data berhasil dimuat';
-        }
+        try { upd.textContent = 'Diperbarui: ' + new Date(data.lastUpdated).toLocaleTimeString('id-ID'); }
+        catch(e) { upd.textContent = 'Data berhasil dimuat'; }
       }
     })
     .catch(function(err) {
       console.error('[PM] Error:', err);
       document.getElementById('error-detail').textContent =
         'Error: ' + err.message +
-        '\n\nPastikan:\n1. GAS sudah di-deploy ulang (Deploy → Manage deployments)\n2. Access: "Anyone" (bukan "Anyone with account")\n3. GAS_URL di atas sudah benar\n4. Jalankan testGetAllPlants() di GAS editor & cek Logs';
+        '\n\nPastikan:\n1. GAS sudah di-deploy ulang (Deploy → Manage deployments)\n2. Access: "Anyone" (bukan "Anyone with account")\n3. GAS_URL di atas sudah benar\n4. Jalankan testDebugColors() & testGetAllPlants() di GAS editor → cek Logs';
       errBox.style.display = 'block';
       container.innerHTML =
         '<div class="state-box"><span class="state-icon">⚠️</span>Gagal memuat data.' +
@@ -544,7 +596,6 @@ function renderAll(plants) {
     container.innerHTML = '<div class="state-box"><span class="state-icon">🔍</span>Tidak ada mesin yang cocok dengan filter.</div>';
     return;
   }
-  // Reveal animation
   document.querySelectorAll('.plant-group').forEach(function(el) { revealObs.observe(el); });
 }
 
@@ -560,7 +611,7 @@ function buildPlantGroup(p) {
       if (mo.type === 'overdue')   overdueCnt++;
     });
     (m.actualMonths || []).forEach(function(mo) {
-      if (mo.type === 'actual')  { actualCnt++;  if (isCurrentMonth(mo.month)) doneNow++;  }
+      if (mo.type === 'actual')  { actualCnt++;  if (isCurrentMonth(mo.month)) doneNow++; }
     });
   });
 
@@ -573,7 +624,7 @@ function buildPlantGroup(p) {
   if (overdueCnt > 0) pillsHtml += '<span class="p-pill overdue">' + overdueCnt + ' OVERDUE</span>';
 
   var group = document.createElement('div');
-  group.className    = 'plant-group';
+  group.className     = 'plant-group';
   group.dataset.plant = p.plant;
 
   var hdr = document.createElement('div');
@@ -608,11 +659,14 @@ function buildPlantGroup(p) {
 }
 
 // ── BUILD TABLE — 2 baris per mesin ──────────────────
+// PERUBAHAN KUNCI:
+// - Baris SCH (schedule): cell plan = hijau, read-only, pointer-events:none
+// - Baris ACT (actual): SEMUA kolom bulan bisa diklik, bukan hanya yang ada plan
 function buildTableDOM(machines, months) {
-  var tbl  = document.createElement('table');
+  var tbl = document.createElement('table');
   tbl.className = 'pm';
 
-  // ── Header ────────────────────────────────────────
+  // Header
   var thead = document.createElement('thead');
   var htr   = document.createElement('tr');
   [
@@ -622,55 +676,48 @@ function buildTableDOM(machines, months) {
     { cls: 's3', txt: 'TYPE' }
   ].forEach(function(h) {
     var th = document.createElement('th');
-    th.className  = h.cls;
+    th.className   = h.cls;
     th.textContent = h.txt;
     htr.appendChild(th);
   });
   months.forEach(function(m) {
     var th = document.createElement('th');
-    th.className  = isCurrentMonth(m) ? 'th-now' : '';
+    th.className   = isCurrentMonth(m) ? 'th-now' : '';
     th.textContent = m;
     htr.appendChild(th);
   });
   thead.appendChild(htr);
   tbl.appendChild(thead);
 
-  // ── Body ──────────────────────────────────────────
+  // Body
   var tbody = document.createElement('tbody');
 
   machines.forEach(function(m, idx) {
-    // ── Baris SCHEDULE ────────────────────────────
+
+    // ── Baris SCHEDULE (read-only, hijau) ─────────────
     var trS = document.createElement('tr');
     trS.className = 'row-sched';
 
-    // NO — rowspan 2
     var tdNo = document.createElement('td');
-    tdNo.className = 's0 span2';
-    tdNo.rowSpan   = 2;
+    tdNo.className = 's0 span2'; tdNo.rowSpan = 2;
     tdNo.textContent = m.no || (idx + 1);
     trS.appendChild(tdNo);
 
-    // MESIN — rowspan 2
     var tdM = document.createElement('td');
-    tdM.className = 's1 span2';
-    tdM.rowSpan   = 2;
+    tdM.className = 's1 span2'; tdM.rowSpan = 2;
     tdM.textContent = m.mesin;
     trS.appendChild(tdM);
 
-    // INTERVAL — rowspan 2
     var tdI = document.createElement('td');
-    tdI.className = 's2 span2';
-    tdI.rowSpan   = 2;
+    tdI.className = 's2 span2'; tdI.rowSpan = 2;
     tdI.textContent = m.interval || '—';
     trS.appendChild(tdI);
 
-    // TYPE label
     var tdTS = document.createElement('td');
     tdTS.className  = 's3 type-sched';
     tdTS.textContent = 'SCH';
     trS.appendChild(tdTS);
 
-    // Schedule month cells
     months.forEach(function(mLabel) {
       var mo = (m.schedMonths || []).find(function(x) { return x.month === mLabel; });
       var td = document.createElement('td');
@@ -678,67 +725,71 @@ function buildTableDOM(machines, months) {
 
       var cell = document.createElement('div');
       cell.className = 'pm-cell';
-      var cls = 'empty', txt = '';
-      if (mo && mo.type) {
-        if (mo.type === 'plan')    { cls = 'plan';    txt = '●'; }
-        if (mo.type === 'actual')  { cls = 'actual';  txt = mo.value || '✓'; }
-        if (mo.type === 'overdue') { cls = 'overdue'; txt = '!'; }
+
+      if (mo && mo.type === 'plan') {
+        // Hijau, read-only
+        cell.classList.add('plan');
+        cell.textContent = '●';
+        cell.title = 'Schedule PM — ' + mLabel;
+      } else if (mo && mo.type === 'overdue') {
+        cell.classList.add('overdue');
+        cell.textContent = '!';
+        cell.title = 'Overdue!';
+      } else {
+        // Empty schedule cell
+        cell.classList.add('empty');
       }
-      cell.classList.add(cls);
-      cell.textContent = txt;
-      if (mo && mo.value) cell.title = mo.value;
+
       td.appendChild(cell);
       trS.appendChild(td);
     });
     tbody.appendChild(trS);
 
-    // ── Baris ACTUAL ──────────────────────────────
+    // ── Baris ACTUAL (semua bulan bisa diklik) ────────
     var trA = document.createElement('tr');
     trA.className = 'row-actual';
 
-    // TYPE label
     var tdTA = document.createElement('td');
     tdTA.className  = 's3 type-actual';
     tdTA.textContent = 'ACT';
     trA.appendChild(tdTA);
 
     months.forEach(function(mLabel) {
-      var mo      = (m.actualMonths || []).find(function(x) { return x.month === mLabel; });
-      var schedMo = (m.schedMonths  || []).find(function(x) { return x.month === mLabel; });
-      var td      = document.createElement('td');
+      var mo  = (m.actualMonths || []).find(function(x) { return x.month === mLabel; });
+      var td  = document.createElement('td');
       if (isCurrentMonth(mLabel)) td.className = 'td-now';
 
       var cell = document.createElement('div');
       cell.className = 'pm-cell';
 
-      if (mo && mo.type === 'actual') {
-        // Ada actual → tampilkan biru, bisa diklik untuk edit
+      if (mo && mo.type === 'actual' && mo.value) {
+        // Ada actual terisi — tampilkan biru, bisa diklik untuk edit/hapus
         cell.classList.add('actual-done');
-        cell.textContent = mo.value || '✓';
-        cell.title = 'Actual: ' + (mo.value || 'Terlaksana') + '\nKlik untuk edit';
+        cell.textContent = mo.value;
+        cell.title = 'Actual: ' + mo.value + '\nDouble-klik untuk edit/hapus';
+        // Bind klik untuk edit
         (function(mesin, month, cellEl, moRef) {
+          cellEl.addEventListener('dblclick', function(e) {
+            e.stopPropagation();
+            openModal(mesin, month, cellEl, moRef);
+          });
+          // Single klik juga buka modal (kemudahan UX)
           cellEl.addEventListener('click', function(e) {
             e.stopPropagation();
             openModal(mesin, month, cellEl, moRef);
           });
         })(m.mesin, mLabel, cell, mo);
 
-      } else if (schedMo && schedMo.type === 'plan') {
-        // Schedule ada plan → slot actual kosong, bisa diklik
-        cell.classList.add('actual-input');
-        cell.title = 'Klik untuk input tanggal actual';
+      } else {
+        // KOSONG — semua kolom bulan bisa diklik untuk isi actual
+        cell.classList.add('actual-empty');
+        cell.title = 'Klik untuk input tanggal actual PM — ' + mLabel;
         (function(mesin, month, cellEl) {
           cellEl.addEventListener('click', function(e) {
             e.stopPropagation();
             openModal(mesin, month, cellEl, null);
           });
         })(m.mesin, mLabel, cell);
-
-      } else if (mo && mo.type === 'overdue') {
-        cell.classList.add('overdue');
-        cell.textContent = '!';
-      } else {
-        cell.classList.add('empty');
       }
 
       td.appendChild(cell);
@@ -772,8 +823,8 @@ function updateOverview(plants) {
   s('ov-done',    done);  s('hero-done',    done);
   s('ov-overdue', over);  s('hero-overdue', over);
   var rate = (sched + done) > 0 ? Math.round(done / (done + sched) * 100) : (done > 0 ? 100 : 0);
-  s('ov-rate',         'Completion rate ' + rate + '%');
-  s('ov-month-label',  currentMonthLabel());
+  s('ov-rate',        'Completion rate ' + rate + '%');
+  s('ov-month-label', currentMonthLabel());
 }
 
 function checkReminder(plants) {
@@ -824,24 +875,35 @@ function applyFilter() {
 }
 
 // ══════════════════════════════════════════════════════
-// MODAL
+// MODAL — input actual
 // ══════════════════════════════════════════════════════
 var _modalMesin = '', _modalMonth = '', _modalCell = null, _modalMoRef = null;
 
 function openModal(mesin, month, cellEl, moRef) {
   _modalMesin = mesin; _modalMonth = month;
   _modalCell  = cellEl; _modalMoRef = moRef;
+
   document.getElementById('modal-mesin').textContent = mesin;
   document.getElementById('modal-month').textContent  = month;
   document.getElementById('modal-preview').textContent = '';
   document.getElementById('modal-submit-btn').disabled = true;
 
+  // Tampilkan tombol Hapus hanya jika sudah ada actual
+  var delBtn = document.getElementById('modal-delete-btn');
+  if (moRef && moRef.value) {
+    delBtn.style.display = 'inline-flex';
+  } else {
+    delBtn.style.display = 'none';
+  }
+
+  // Default ke hari ini
   var now  = new Date();
   var yyyy = now.getFullYear();
   var mm   = String(now.getMonth() + 1).padStart(2, '0');
   var dd   = String(now.getDate()).padStart(2, '0');
   document.getElementById('modal-date-input').value = yyyy + '-' + mm + '-' + dd;
   onDateChange();
+
   document.getElementById('modalOverlay').classList.add('open');
 }
 
@@ -860,6 +922,7 @@ function onDateChange() {
   btn.disabled = false;
 }
 
+// ── SIMPAN ACTUAL ─────────────────────────────────────
 function submitActual() {
   var val = document.getElementById('modal-date-input').value;
   if (!val) return;
@@ -882,6 +945,13 @@ function submitActual() {
         savedCell.className  = 'pm-cell actual-done';
         savedCell.textContent = tanggal;
         savedCell.title       = 'Actual: ' + tanggal + '\nKlik untuk edit';
+        // Re-bind click untuk edit
+        var newCell = savedCell;
+        var moObj   = { month: savedMonth, type: 'actual', value: tanggal };
+        newCell.onclick = function(e) {
+          e.stopPropagation();
+          openModal(savedMesin, savedMonth, newCell, moObj);
+        };
       }
 
       // Update cache lokal
@@ -889,9 +959,10 @@ function submitActual() {
         pmCache.plants.forEach(function(pl) {
           (pl.machines || []).forEach(function(m) {
             if (m.mesin === savedMesin) {
-              var mo = (m.actualMonths || []).find(function(x) { return x.month === savedMonth; });
+              if (!m.actualMonths) m.actualMonths = [];
+              var mo = m.actualMonths.find(function(x) { return x.month === savedMonth; });
               if (mo) { mo.type = 'actual'; mo.value = tanggal; }
-              else if (m.actualMonths) m.actualMonths.push({ month: savedMonth, type: 'actual', value: tanggal });
+              else m.actualMonths.push({ month: savedMonth, type: 'actual', value: tanggal });
             }
           });
         });
@@ -903,11 +974,62 @@ function submitActual() {
     .catch(function(err) {
       console.error('[PM submit]', err);
       if (savedCell) {
-        savedCell.className  = 'pm-cell actual-input';
-        savedCell.textContent = '';
-        savedCell.title       = 'Klik untuk input tanggal actual';
+        // Kembalikan ke empty jika sebelumnya kosong, atau done jika sebelumnya ada
+        if (_modalMoRef && _modalMoRef.value) {
+          savedCell.className  = 'pm-cell actual-done';
+          savedCell.textContent = _modalMoRef.value;
+        } else {
+          savedCell.className  = 'pm-cell actual-empty';
+          savedCell.textContent = '';
+        }
       }
       showToast('error', '✗ Gagal simpan: ' + err.message);
+    });
+}
+
+// ── HAPUS ACTUAL ──────────────────────────────────────
+function submitClear() {
+  closeModal();
+  var savedCell  = _modalCell, savedMesin = _modalMesin, savedMonth = _modalMonth;
+  if (savedCell) { savedCell.className = 'pm-cell saving'; savedCell.textContent = '...'; }
+  showToast('info', '⏳ Menghapus dari Google Sheet...');
+
+  gasGet({ action: 'clearCell', mesin: savedMesin, month: savedMonth })
+    .then(function(res) {
+      if (!res.success) throw new Error(res.error || 'GAS gagal menghapus.');
+
+      if (savedCell) {
+        savedCell.className  = 'pm-cell actual-empty';
+        savedCell.textContent = '';
+        savedCell.title       = 'Klik untuk input tanggal actual PM — ' + savedMonth;
+        savedCell.onclick = function(e) {
+          e.stopPropagation();
+          openModal(savedMesin, savedMonth, savedCell, null);
+        };
+      }
+
+      // Update cache lokal
+      if (pmCache) {
+        pmCache.plants.forEach(function(pl) {
+          (pl.machines || []).forEach(function(m) {
+            if (m.mesin === savedMesin && m.actualMonths) {
+              var idx = m.actualMonths.findIndex(function(x) { return x.month === savedMonth; });
+              if (idx !== -1) m.actualMonths.splice(idx, 1);
+            }
+          });
+        });
+        updateOverview(pmCache.plants);
+      }
+
+      showToast('success', '🗑 Dihapus: ' + savedMesin + ' — ' + savedMonth);
+    })
+    .catch(function(err) {
+      console.error('[PM clear]', err);
+      if (savedCell && _modalMoRef && _modalMoRef.value) {
+        savedCell.className  = 'pm-cell actual-done';
+        savedCell.textContent = _modalMoRef.value;
+      }
+      showToast('error', '✗ Gagal hapus: ' + err.message);
     });
 }
 
