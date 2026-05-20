@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="id">
 <head>
@@ -25,12 +26,10 @@ html{scroll-behavior:smooth}
   --pm-overdue:#ff6868;--pm-overdue-bg:rgba(255,50,50,0.18);--pm-overdue-border:rgba(255,80,80,0.5);
 }
 body{font-family:'Space Grotesk',sans-serif;background:var(--bg);color:var(--text);overflow-x:hidden;cursor:none}
-
 #cursor{position:fixed;width:10px;height:10px;background:var(--cyan);border-radius:50%;pointer-events:none;z-index:99999;mix-blend-mode:screen;transition:transform .08s}
 #cursor-ring{position:fixed;width:40px;height:40px;border:1.5px solid rgba(0,212,255,0.5);border-radius:50%;pointer-events:none;z-index:99998;transition:all .18s ease}
 #cursor.hover{transform:scale(3);background:rgba(0,212,255,0.3)}
 #cursor-ring.hover{transform:scale(0.5);opacity:0}
-
 #bg-canvas{position:fixed;inset:0;z-index:0;pointer-events:none;opacity:.6}
 .noise{position:fixed;inset:0;z-index:1;opacity:.025;pointer-events:none;background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");background-size:200px}
 .scanline-top{position:fixed;top:0;left:0;right:0;height:2px;z-index:200;background:linear-gradient(90deg,transparent,var(--cyan),var(--cyan),transparent);animation:scanPulse 3s ease-in-out infinite;box-shadow:0 0 20px var(--cyan)}
@@ -48,7 +47,7 @@ body{font-family:'Space Grotesk',sans-serif;background:var(--bg);color:var(--tex
 .nav-link.active{color:#fff;background:rgba(255,255,255,0.06);border-color:rgba(255,255,255,0.1)}
 .nav-link.home-btn{display:inline-flex;align-items:center;gap:6px;color:var(--cyan);border-color:rgba(0,212,255,0.3);background:rgba(0,212,255,0.06)}
 .nav-link.home-btn:hover{background:rgba(0,212,255,0.14);box-shadow:0 0 14px rgba(0,212,255,0.2)}
-.nav-toggle{display:none;flex-direction:column;gap:5px;cursor:none;padding:4px;background:none;border:none}
+.nav-toggle{display:none;flex-direction:column;gap:5px;cursor:pointer;padding:4px;background:none;border:none}
 .nav-toggle span{display:block;width:22px;height:2px;background:var(--text2);border-radius:2px;transition:all .3s}
 
 .page-loader{position:fixed;inset:0;background:var(--bg);z-index:99999;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:24px;transition:opacity .6s,visibility .6s}
@@ -59,7 +58,6 @@ body{font-family:'Space Grotesk',sans-serif;background:var(--bg);color:var(--tex
 .loader-bar{height:100%;background:linear-gradient(90deg,var(--cyan),#0066ff);border-radius:2px;animation:loadProg 1.6s ease forwards;box-shadow:0 0 8px var(--cyan)}
 @keyframes loadProg{0%{width:0}70%{width:80%}100%{width:100%}}
 .loader-pct{font-family:'JetBrains Mono',monospace;font-size:11px;color:var(--text3);letter-spacing:.1em}
-
 .main{padding-top:64px;min-height:100vh;position:relative;z-index:2}
 
 .page-hero{padding:52px 48px 40px;border-bottom:1px solid rgba(0,212,255,0.08);background:linear-gradient(180deg,rgba(0,212,255,0.03),transparent);position:relative;overflow:hidden}
@@ -75,9 +73,7 @@ body{font-family:'Space Grotesk',sans-serif;background:var(--bg);color:var(--tex
 .stat-pill:hover{border-color:var(--border2)}
 .stat-pill-num{font-family:'Orbitron',monospace;font-size:20px;font-weight:900;color:#fff}
 .stat-pill-lbl{font-family:'JetBrains Mono',monospace;font-size:9px;color:var(--text3);text-transform:uppercase;letter-spacing:.15em;line-height:1.4}
-
 .content{padding:32px 48px 80px;max-width:1340px;margin:0 auto}
-
 .overview-row{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-bottom:28px}
 .ov-card{padding:22px 24px;background:var(--panel);border:1px solid rgba(255,255,255,0.07);border-radius:14px;position:relative;overflow:hidden;transition:all .3s;cursor:default}
 .ov-card:hover{transform:translateY(-3px);border-color:rgba(0,212,255,0.18)}
@@ -124,6 +120,7 @@ body{font-family:'Space Grotesk',sans-serif;background:var(--bg);color:var(--tex
 .leg-sep{flex:1}
 .last-upd{font-family:'JetBrains Mono',monospace;font-size:10px;color:var(--text3)}
 
+/* ── PLANT GROUP ─────────────────────────────────── */
 .plant-group{margin-bottom:20px;border:1px solid rgba(255,255,255,0.07);border-radius:16px;overflow:hidden;transition:border-color .3s}
 .plant-group:hover{border-color:rgba(0,212,255,0.15)}
 .plant-header{display:flex;align-items:center;gap:14px;padding:14px 22px;background:rgba(0,212,255,0.03);border-bottom:1px solid rgba(255,255,255,0.05);cursor:pointer;user-select:none;transition:background .2s}
@@ -142,71 +139,108 @@ body{font-family:'Space Grotesk',sans-serif;background:var(--bg);color:var(--tex
 .plant-body{overflow:hidden;max-height:9999px;opacity:1;transition:max-height .45s ease,opacity .3s ease}
 .plant-group.collapsed .plant-body{max-height:0;opacity:0}
 
+/* ── TABLE ───────────────────────────────────────── */
 .tbl-wrap{overflow-x:auto;background:rgba(5,10,22,0.4)}
 .tbl-wrap::-webkit-scrollbar{height:5px}
 .tbl-wrap::-webkit-scrollbar-track{background:rgba(255,255,255,0.02)}
 .tbl-wrap::-webkit-scrollbar-thumb{background:rgba(0,212,255,0.2);border-radius:3px}
 
-table.pm{width:100%;border-collapse:collapse;font-size:12px;min-width:900px}
+table.pm{width:100%;border-collapse:collapse;font-size:12px}
+/* min-width dynamically controlled by JS based on month count */
+
 table.pm thead tr{background:rgba(0,212,255,0.03);border-bottom:1px solid rgba(0,212,255,0.15)}
-table.pm thead th{padding:10px 6px;font-family:'JetBrains Mono',monospace;font-size:10px;font-weight:700;color:var(--cyan);letter-spacing:.12em;text-transform:uppercase;text-align:center;white-space:nowrap;border-right:1px solid rgba(255,255,255,0.04);position:sticky;top:0;background:rgba(8,13,24,.98);z-index:2}
-table.pm thead th.s0{left:0;text-align:left;min-width:36px;z-index:3}
-table.pm thead th.s1{left:36px;text-align:left;min-width:96px;z-index:3}
-table.pm thead th.s2{left:132px;text-align:left;min-width:48px;z-index:3}
-table.pm thead th.s3{left:180px;text-align:left;min-width:80px;z-index:3}
+table.pm thead th{
+  padding:10px 6px;
+  font-family:'JetBrains Mono',monospace;font-size:10px;font-weight:700;
+  color:var(--cyan);letter-spacing:.12em;text-transform:uppercase;
+  text-align:center;white-space:nowrap;
+  border-right:1px solid rgba(255,255,255,0.04);
+  background:rgba(8,13,24,.98);
+  position:sticky;top:0;z-index:2
+}
+/* Sticky left columns — header */
+table.pm thead th.s0{left:0;  text-align:left;width:40px;min-width:40px;z-index:3}
+table.pm thead th.s1{left:40px;text-align:left;width:110px;min-width:110px;z-index:3}
+table.pm thead th.s2{left:150px;text-align:left;width:50px;min-width:50px;z-index:3}
+table.pm thead th.s3{left:200px;text-align:center;width:50px;min-width:50px;z-index:3}
 table.pm thead th.th-now{background:rgba(0,212,255,0.12)!important;color:#fff!important;position:relative}
-table.pm thead th.th-now::after{content:'NOW';position:absolute;top:0;right:0;font-size:7px;background:var(--cyan);color:#020408;padding:1px 4px;border-radius:0 0 0 4px;font-weight:900}
+table.pm thead th.th-now::after{
+  content:'NOW';position:absolute;top:0;right:0;
+  font-size:7px;background:var(--cyan);color:#020408;
+  padding:1px 4px;border-radius:0 0 0 4px;font-weight:900
+}
+/* Month header cells */
+table.pm thead th.th-month{width:80px;min-width:80px}
 
 table.pm tbody tr.row-sched{border-top:1px solid rgba(255,255,255,0.06)}
 table.pm tbody tr.row-actual{border-bottom:2px solid rgba(255,255,255,0.06)}
 table.pm tbody tr{transition:background .15s}
-table.pm tbody tr.row-sched:hover,table.pm tbody tr.row-actual:hover{background:rgba(0,212,255,0.02)}
-table.pm tbody td{padding:5px 6px;color:var(--text2);text-align:center;border-right:1px solid rgba(255,255,255,0.03);vertical-align:middle}
-table.pm tbody td.s0{font-family:'JetBrains Mono',monospace;font-size:10px;color:var(--text3);position:sticky;left:0;background:rgba(8,13,24,.98);z-index:1;text-align:center}
-table.pm tbody td.s1{font-weight:700;color:#fff;font-size:13px;text-align:left;white-space:nowrap;position:sticky;left:36px;background:rgba(8,13,24,.98);z-index:1}
-table.pm tbody td.s2{font-family:'JetBrains Mono',monospace;font-size:10px;color:var(--amber);text-align:left;position:sticky;left:132px;background:rgba(8,13,24,.98);z-index:1}
-table.pm tbody td.s3{font-family:'JetBrains Mono',monospace;font-size:9px;font-weight:700;text-align:center;position:sticky;left:180px;background:rgba(8,13,24,.98);z-index:1;letter-spacing:.05em}
-td.s3.type-sched{color:var(--pm-plan)}
+table.pm tbody tr.row-sched:hover,
+table.pm tbody tr.row-actual:hover{background:rgba(0,212,255,0.02)}
+table.pm tbody td{
+  padding:4px 5px;color:var(--text2);
+  text-align:center;border-right:1px solid rgba(255,255,255,0.03);
+  vertical-align:middle
+}
+/* Sticky body cells */
+table.pm tbody td.s0{
+  font-family:'JetBrains Mono',monospace;font-size:10px;color:var(--text3);
+  position:sticky;left:0;background:rgba(8,13,24,.98);z-index:1;text-align:center;
+  width:40px
+}
+table.pm tbody td.s1{
+  font-weight:700;color:#fff;font-size:13px;text-align:left;white-space:nowrap;
+  position:sticky;left:40px;background:rgba(8,13,24,.98);z-index:1;
+  width:110px;max-width:110px
+}
+table.pm tbody td.s2{
+  font-family:'JetBrains Mono',monospace;font-size:10px;color:var(--amber);
+  text-align:center;position:sticky;left:150px;background:rgba(8,13,24,.98);z-index:1;
+  width:50px
+}
+table.pm tbody td.s3{
+  font-family:'JetBrains Mono',monospace;font-size:9px;font-weight:700;
+  text-align:center;position:sticky;left:200px;background:rgba(8,13,24,.98);z-index:1;
+  letter-spacing:.05em;width:50px
+}
+td.s3.type-sched {color:var(--pm-plan)}
 td.s3.type-actual{color:var(--pm-actual)}
 table.pm tbody tr:hover td.s0,
 table.pm tbody tr:hover td.s1,
 table.pm tbody tr:hover td.s2,
 table.pm tbody tr:hover td.s3{background:rgba(11,17,32,.99)}
-table.pm tbody td.td-now{background:rgba(0,212,255,0.02)}
-td.span2{vertical-align:middle}
+table.pm tbody td.td-now{background:rgba(0,212,255,0.02)!important}
 
 /* ── PM CELL ─────────────────────────────────────── */
 .pm-cell{
-  min-width:60px;height:28px;border-radius:6px;
+  width:72px;height:30px;border-radius:6px;
   display:flex;align-items:center;justify-content:center;
   font-family:'JetBrains Mono',monospace;font-size:9px;font-weight:700;
-  margin:0 auto;position:relative;transition:transform .2s,box-shadow .2s;
+  margin:1px auto;position:relative;transition:transform .2s,box-shadow .2s;
   letter-spacing:.02em;padding:0 4px;text-align:center;
   white-space:nowrap;overflow:hidden;text-overflow:ellipsis
 }
-
-/* Plan — READ ONLY, tidak bisa diklik */
+/* Plan — read only */
 .pm-cell.plan{
   background:var(--pm-plan-bg);border:1px solid var(--pm-plan-border);
   color:var(--pm-plan);box-shadow:0 0 8px rgba(0,200,80,0.12);
   cursor:default;pointer-events:none
 }
-
 /* Actual terisi */
-.pm-cell.actual{
-  background:var(--pm-actual-bg);border:1px solid var(--pm-actual-border);
-  color:var(--pm-actual);box-shadow:0 0 8px rgba(68,130,210,0.12)
-}
 .pm-cell.actual-done{
   background:var(--pm-actual-bg);border:1px solid var(--pm-actual-border);
   color:var(--pm-actual);box-shadow:0 0 8px rgba(68,130,210,0.12);
-  cursor:pointer
+  cursor:pointer;font-size:8px
 }
 .pm-cell.actual-done:hover{
   transform:scale(1.06);box-shadow:0 0 18px rgba(68,130,210,0.35);
   border-color:var(--pm-actual)
 }
-
+/* Overdue */
+.pm-cell.overdue{
+  background:var(--pm-overdue-bg);border:1px solid var(--pm-overdue-border);
+  color:var(--pm-overdue);animation:overduePulse 2.2s ease-in-out infinite
+}
 /* Actual kosong — semua bulan bisa diklik */
 .pm-cell.actual-empty{
   background:rgba(255,255,255,0.015);border:1px dashed rgba(100,160,245,0.18);
@@ -217,27 +251,18 @@ td.span2{vertical-align:middle}
   color:var(--pm-actual);transform:scale(1.08);
   box-shadow:0 0 14px rgba(68,130,210,0.25)
 }
-.pm-cell.actual-empty::after{content:'+';font-size:12px;opacity:.5}
+.pm-cell.actual-empty::after{content:'+';font-size:13px;opacity:.5}
 .pm-cell.actual-empty:hover::after{opacity:.9}
-
-/* Overdue */
-.pm-cell.overdue{
-  background:var(--pm-overdue-bg);border:1px solid var(--pm-overdue-border);
-  color:var(--pm-overdue);animation:overduePulse 2.2s ease-in-out infinite
-}
-
-/* Empty di baris schedule (bukan actual) */
+/* Empty sched cell */
 .pm-cell.empty{
-  background:rgba(255,255,255,0.015);border:1px solid rgba(255,255,255,0.04);
+  background:rgba(255,255,255,0.008);border:1px solid rgba(255,255,255,0.03);
   color:transparent;pointer-events:none
 }
-
-/* Saving state */
+/* Saving */
 .pm-cell.saving{
   background:rgba(255,184,0,0.15)!important;border-color:rgba(255,184,0,0.5)!important;
   color:#ffb800!important;animation:savingPulse 1s ease-in-out infinite;cursor:wait!important
 }
-
 @keyframes overduePulse{0%,100%{box-shadow:0 0 5px rgba(255,50,50,0.1)}50%{box-shadow:0 0 18px rgba(255,50,50,0.45)}}
 @keyframes savingPulse{0%,100%{opacity:1}50%{opacity:.5}}
 
@@ -246,16 +271,15 @@ td.span2{vertical-align:middle}
 .prog-bar-wrap{flex:1;height:4px;background:rgba(255,255,255,0.07);border-radius:2px;overflow:hidden}
 .prog-bar-fill{height:100%;border-radius:2px;transition:width 1s ease;background:linear-gradient(90deg,var(--pm-actual),var(--cyan))}
 .prog-pct{font-family:'JetBrains Mono',monospace;font-size:10px;color:var(--pm-actual);font-weight:700;min-width:36px;text-align:right}
-
 .state-box{padding:56px 20px;text-align:center;font-family:'JetBrains Mono',monospace;font-size:12px;color:var(--text3)}
 .state-icon{font-size:34px;display:block;margin-bottom:14px}
 .state-icon.spin{animation:spin 1.2s linear infinite;display:inline-block}
 @keyframes spin{to{transform:rotate(360deg)}}
 
-/* ── MODAL ────────────────────────────────────────── */
+/* ── MODAL ───────────────────────────────────────── */
 .modal-overlay{position:fixed;inset:0;background:rgba(0,0,0,0.72);backdrop-filter:blur(6px);z-index:9000;display:flex;align-items:center;justify-content:center;opacity:0;visibility:hidden;transition:opacity .25s,visibility .25s}
 .modal-overlay.open{opacity:1;visibility:visible}
-.modal-box{background:linear-gradient(135deg,rgba(8,13,24,.98),rgba(11,17,32,.98));border:1px solid rgba(0,212,255,0.25);border-radius:18px;padding:32px 36px;width:min(460px,92vw);position:relative;box-shadow:0 24px 80px rgba(0,0,0,.8),0 0 40px rgba(0,212,255,0.08);transform:translateY(16px) scale(.97);transition:transform .3s,opacity .3s}
+.modal-box{background:linear-gradient(135deg,rgba(8,13,24,.98),rgba(11,17,32,.98));border:1px solid rgba(0,212,255,0.25);border-radius:18px;padding:32px 36px;width:min(480px,92vw);position:relative;box-shadow:0 24px 80px rgba(0,0,0,.8),0 0 40px rgba(0,212,255,0.08);transform:translateY(16px) scale(.97);transition:transform .3s,opacity .3s}
 .modal-overlay.open .modal-box{transform:translateY(0) scale(1)}
 .modal-badge{font-family:'JetBrains Mono',monospace;font-size:9px;font-weight:700;letter-spacing:.18em;text-transform:uppercase;color:var(--cyan);opacity:.7;margin-bottom:10px}
 .modal-title{font-family:'Orbitron',monospace;font-size:16px;font-weight:900;color:#fff;margin-bottom:6px}
@@ -277,21 +301,17 @@ td.span2{vertical-align:middle}
 .modal-btn.delete:hover{background:rgba(255,60,60,0.22);box-shadow:0 0 14px rgba(255,60,60,0.25)}
 .modal-close{position:absolute;top:16px;right:18px;background:none;border:none;color:var(--text3);font-size:18px;cursor:pointer;transition:color .2s;line-height:1}
 .modal-close:hover{color:var(--text)}
-
-/* ── TOAST ─────────────────────────────────────────── */
+/* ── TOAST ───────────────────────────────────────── */
 .toast{position:fixed;bottom:28px;right:28px;z-index:99998;padding:12px 22px;border-radius:10px;font-family:'JetBrains Mono',monospace;font-size:11px;font-weight:700;letter-spacing:.06em;display:flex;align-items:center;gap:10px;box-shadow:0 8px 32px rgba(0,0,0,.6);transform:translateY(20px);opacity:0;transition:transform .3s,opacity .3s;pointer-events:none}
 .toast.show{transform:translateY(0);opacity:1}
 .toast.success{background:rgba(0,200,80,0.15);border:1px solid rgba(0,200,80,0.4);color:#00dd60}
 .toast.error{background:rgba(255,60,60,0.12);border:1px solid rgba(255,60,60,0.4);color:#ff6868}
 .toast.info{background:rgba(0,212,255,0.1);border:1px solid rgba(0,212,255,0.3);color:var(--cyan)}
-
 .footer{padding:40px 48px;text-align:center;position:relative;z-index:2;border-top:1px solid rgba(255,255,255,0.06)}
 .footer-copy{font-size:12px;color:var(--text3)}
 .footer-line{height:1px;width:200px;margin:14px auto 0;background:linear-gradient(90deg,transparent,rgba(0,212,255,0.3),transparent)}
-
 .reveal{opacity:0;transform:translateY(20px);transition:opacity .7s ease,transform .7s ease}
 .reveal.visible{opacity:1;transform:none}
-
 @media print{
   .navbar,.toolbar,.legend-strip .leg-sep,.last-upd,.reminder-bar,
   .plant-toggle,#cursor,#cursor-ring,.noise,.scanline-top,#bg-canvas,
@@ -376,8 +396,8 @@ td.span2{vertical-align:middle}
         <h1 class="page-h1">Jadwal PM <em>Semua Plant</em></h1>
         <p class="page-desc">Rencana &amp; realisasi perawatan preventif drive seluruh mixing center.<br>
           <span style="font-size:12px;color:rgba(0,212,255,0.6)">
-            💡 <strong style="color:var(--pm-plan)">Hijau</strong> = Schedule (tidak bisa diubah) &nbsp;|&nbsp;
-            <strong style="color:var(--pm-actual)">Biru</strong> = Actual (klik semua kolom ACT untuk input)
+            💡 <strong style="color:var(--pm-plan)">Hijau</strong> = Schedule (read-only) &nbsp;|&nbsp;
+            <strong style="color:var(--pm-actual)">Biru</strong> = Actual (klik untuk input / edit)
           </span>
         </p>
       </div>
@@ -423,8 +443,8 @@ td.span2{vertical-align:middle}
       </select>
       <select class="tb-select" id="sel-status" onchange="applyFilter()">
         <option value="">Semua Status</option>
-        <option value="plan">Ada Rencana (Schedule)</option>
-        <option value="actual">Sudah Dilaksanakan (Actual)</option>
+        <option value="plan">Ada Schedule</option>
+        <option value="actual">Sudah Actual</option>
         <option value="overdue">Overdue</option>
       </select>
       <input class="tb-input" id="inp-search" placeholder="🔍 Cari mesin..." oninput="applyFilter()">
@@ -438,10 +458,10 @@ td.span2{vertical-align:middle}
 
     <div class="legend-strip reveal">
       <div class="leg-item plan"><span class="leg-dot" style="background:var(--pm-plan)"></span>Schedule / Rencana <span style="opacity:.5;font-size:9px;margin-left:4px">(read-only)</span></div>
-      <div class="leg-item actual"><span class="leg-dot" style="background:var(--pm-actual)"></span>Actual / Terlaksana <span style="opacity:.5;font-size:9px;margin-left:4px">(klik baris ACT untuk input)</span></div>
+      <div class="leg-item actual"><span class="leg-dot" style="background:var(--pm-actual)"></span>Actual / Terlaksana <span style="opacity:.5;font-size:9px;margin-left:4px">(klik untuk input/edit)</span></div>
       <div class="leg-item overdue"><span class="leg-dot" style="background:var(--pm-overdue)"></span>Overdue</div>
       <span class="leg-sep"></span>
-      <span class="last-upd" id="last-upd">— memuat data...</span>
+      <span class="last-upd" id="last-upd">Memuat data...</span>
     </div>
 
     <div id="groups-container">
@@ -457,28 +477,27 @@ td.span2{vertical-align:middle}
 
 <script>
 // ══════════════════════════════════════════════════════
-// CONFIG — ganti URL setelah deploy ulang GAS
+// CONFIG
 // ══════════════════════════════════════════════════════
 var GAS_URL = 'https://script.google.com/macros/s/AKfycbzOOA1ou00NzEVRv7O7Sttmn4FoUi683086Im37QxgEnEC-szZIqf_CMUhIIUDxCDt0Xg/exec';
 
 var pmCache = null;
-var MN      = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
-var MN_ID   = ['Jan','Feb','Mar','Apr','Mei','Jun','Jul','Ags','Sep','Okt','Nov','Des'];
-var BLN_FULL= ['Januari','Februari','Maret','April','Mei','Juni','Juli','Agustus','September','Oktober','November','Desember'];
+var BLN_FULL = ['Januari','Februari','Maret','April','Mei','Juni','Juli','Agustus','September','Oktober','November','Desember'];
+var MN_EN    = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
 
-// ── HELPER ────────────────────────────────────────────
-function normalizeMonth(label) {
-  // "Jan-26", "jan-26", "Jan-2026", "Mei-26" → "jan-26"
+// ── HELPERS ───────────────────────────────────────────
+// Normalize ke "mon-yy" lowercase, Indonesia bulan → english
+function normMonth(label) {
   if (!label) return '';
   var s = String(label).trim().toLowerCase();
-  var idToEn = {
-    'jan':'jan','feb':'feb','mar':'mar','apr':'apr',
-    'mei':'may','jun':'jun','jul':'jul','ags':'aug',
-    'sep':'sep','okt':'oct','nov':'nov','des':'dec'
+  var map = {
+    'jan':'jan','feb':'feb','mar':'mar','apr':'apr','mei':'may',
+    'jun':'jun','jul':'jul','ags':'aug','sep':'sep','okt':'oct',
+    'nov':'nov','des':'dec','may':'may','aug':'aug','oct':'oct'
   };
   var parts = s.split('-');
   if (parts.length === 2) {
-    var mon = idToEn[parts[0]] || parts[0];
+    var mon = map[parts[0]] || parts[0];
     var yr  = parts[1].length === 4 ? parts[1].slice(-2) : parts[1];
     return mon + '-' + yr;
   }
@@ -486,46 +505,41 @@ function normalizeMonth(label) {
 }
 
 function isCurrentMonth(label) {
-  var now  = new Date();
-  var norm = normalizeMonth(label);
-  var cur  = (MN[now.getMonth()] + '-' + String(now.getFullYear()).slice(-2)).toLowerCase();
-  return norm === cur;
+  var now = new Date();
+  var cur = (MN_EN[now.getMonth()] + '-' + String(now.getFullYear()).slice(-2)).toLowerCase();
+  return normMonth(label) === cur;
 }
 
 function currentMonthLabel() {
   var now = new Date();
-  return MN[now.getMonth()] + ' ' + now.getFullYear();
+  return MN_EN[now.getMonth()] + ' ' + now.getFullYear();
 }
 
 function formatTanggalID(d) {
   return d.getDate() + ' ' + BLN_FULL[d.getMonth()] + ' ' + d.getFullYear();
 }
 
-// ── FETCH API (JSONP) ─────────────────────────────────
-function jsonpGet(params, resolve, reject) {
-  var cb  = 'gasCb_' + Date.now() + '_' + Math.floor(Math.random() * 9999);
-  var tid;
-  var cleanup = function() {
-    clearTimeout(tid);
-    delete window[cb];
-    var el = document.getElementById(cb);
-    if (el) el.remove();
-  };
-  tid = setTimeout(function() { cleanup(); reject(new Error('Timeout 25 detik — periksa koneksi.')); }, 25000);
-  window[cb] = function(data) { cleanup(); resolve(data); };
-  var qs = Object.keys(params).map(function(k) {
-    return encodeURIComponent(k) + '=' + encodeURIComponent(params[k]);
-  }).join('&');
-  var s  = document.createElement('script');
-  s.id   = cb;
-  s.src  = GAS_URL + '?' + qs + '&callback=' + cb;
-  s.onerror = function() { cleanup(); reject(new Error('Gagal load script — pastikan GAS sudah di-deploy sebagai "Anyone".')); };
-  document.head.appendChild(s);
-}
-
-function gasGet(params) {
+// ── JSONP FETCH ───────────────────────────────────────
+function jsonpGet(params) {
   return new Promise(function(resolve, reject) {
-    jsonpGet(params, resolve, reject);
+    var cb  = 'gasCb_' + Date.now() + '_' + Math.floor(Math.random() * 9999);
+    var tid;
+    var cleanup = function() {
+      clearTimeout(tid);
+      delete window[cb];
+      var el = document.getElementById(cb);
+      if (el) el.remove();
+    };
+    tid = setTimeout(function() { cleanup(); reject(new Error('Timeout 25 detik. Periksa koneksi.')); }, 25000);
+    window[cb] = function(data) { cleanup(); resolve(data); };
+    var qs = Object.keys(params).map(function(k) {
+      return encodeURIComponent(k) + '=' + encodeURIComponent(params[k]);
+    }).join('&');
+    var s  = document.createElement('script');
+    s.id   = cb;
+    s.src  = GAS_URL + '?' + qs + '&callback=' + cb;
+    s.onerror = function() { cleanup(); reject(new Error('Script load error. Pastikan GAS deploy access = "Anyone".')); };
+    document.head.appendChild(s);
   });
 }
 
@@ -536,33 +550,34 @@ function loadData() {
   errBox.style.display = 'none';
   container.innerHTML = '<div class="state-box"><span class="state-icon spin">⚙️</span>Memuat jadwal PM semua plant...</div>';
 
-  gasGet({ action: 'getAllPlants' })
+  jsonpGet({ action: 'getAllPlants' })
     .then(function(data) {
-      console.log('[PM] Response:', data);
-      if (!data) throw new Error('Response null/undefined dari GAS.');
-      if (!data.success) throw new Error(data.error || 'success=false tanpa pesan error.');
-      if (!data.plants) throw new Error('Field "plants" tidak ada dalam response GAS.');
+      console.log('[PM] Response:', JSON.stringify(data).substring(0, 500));
+      if (!data)              throw new Error('Response null dari GAS.');
+      if (!data.success)      throw new Error(data.error || 'success=false tanpa pesan.');
+      if (!data.plants)       throw new Error('Field "plants" tidak ada.');
+      if (!data.months)       throw new Error('Field "months" tidak ada.');
+      if (data.months.length === 0) throw new Error('Array months kosong. Cek baris header (HEADER_ROW=3) di GAS dan pastikan kolom E ke kanan berisi label bulan.');
 
       pmCache = data;
       populatePlantFilter(data.plants);
-      renderAll(data.plants);
+      renderAll(data.plants, data.months);
       updateOverview(data.plants);
       checkReminder(data.plants);
 
       var upd = document.getElementById('last-upd');
       if (upd) {
         try { upd.textContent = 'Diperbarui: ' + new Date(data.lastUpdated).toLocaleTimeString('id-ID'); }
-        catch(e) { upd.textContent = 'Data berhasil dimuat'; }
+        catch(e) { upd.textContent = 'Data dimuat'; }
       }
     })
     .catch(function(err) {
       console.error('[PM] Error:', err);
       document.getElementById('error-detail').textContent =
         'Error: ' + err.message +
-        '\n\nPastikan:\n1. GAS sudah di-deploy ulang (Deploy → Manage deployments)\n2. Access: "Anyone" (bukan "Anyone with account")\n3. GAS_URL di atas sudah benar\n4. Jalankan testDebugColors() & testGetAllPlants() di GAS editor → cek Logs';
+        '\n\nCek:\n1. GAS deploy ulang → access "Anyone"\n2. GAS_URL sudah benar\n3. Jalankan testGetAllPlants() di GAS editor → lihat Logs\n4. Pastikan baris 3 sheet berisi header bulan (Dec-25, Jan-26, ...)';
       errBox.style.display = 'block';
-      container.innerHTML =
-        '<div class="state-box"><span class="state-icon">⚠️</span>Gagal memuat data.' +
+      container.innerHTML = '<div class="state-box"><span class="state-icon">⚠️</span>Gagal memuat data.' +
         '<br><button class="tb-btn ghost" onclick="doRefresh()" style="margin-top:16px">⟳ Coba Lagi</button></div>';
     });
 }
@@ -578,33 +593,32 @@ function populatePlantFilter(plants) {
   });
 }
 
-// ── RENDER SEMUA PLANT ────────────────────────────────
-function renderAll(plants) {
+// ── RENDER ALL ────────────────────────────────────────
+function renderAll(plants, months) {
   var container = document.getElementById('groups-container');
   if (!plants || plants.length === 0) {
-    container.innerHTML = '<div class="state-box"><span class="state-icon">📭</span>Tidak ada data PM ditemukan.</div>';
+    container.innerHTML = '<div class="state-box"><span class="state-icon">📭</span>Tidak ada data PM.</div>';
     return;
   }
   container.innerHTML = '';
   var any = false;
   plants.forEach(function(p) {
     if (!p.machines || p.machines.length === 0) return;
-    container.appendChild(buildPlantGroup(p));
+    container.appendChild(buildPlantGroup(p, months));
     any = true;
   });
   if (!any) {
-    container.innerHTML = '<div class="state-box"><span class="state-icon">🔍</span>Tidak ada mesin yang cocok dengan filter.</div>';
+    container.innerHTML = '<div class="state-box"><span class="state-icon">🔍</span>Tidak ada mesin sesuai filter.</div>';
     return;
   }
   document.querySelectorAll('.plant-group').forEach(function(el) { revealObs.observe(el); });
 }
 
 // ── BUILD PLANT GROUP ─────────────────────────────────
-function buildPlantGroup(p) {
+function buildPlantGroup(p, months) {
   var machines = p.machines || [];
-  var months   = (pmCache && pmCache.months) ? pmCache.months : [];
-  var planCnt = 0, actualCnt = 0, overdueCnt = 0, schedNow = 0, doneNow = 0;
 
+  var planCnt = 0, actualCnt = 0, overdueCnt = 0, schedNow = 0, doneNow = 0;
   machines.forEach(function(m) {
     (m.schedMonths || []).forEach(function(mo) {
       if (mo.type === 'plan')    { planCnt++;    if (isCurrentMonth(mo.month)) schedNow++; }
@@ -619,9 +633,9 @@ function buildPlantGroup(p) {
   var pct   = total > 0 ? Math.round(doneNow / total * 100) : (doneNow > 0 ? 100 : 0);
 
   var pillsHtml = '';
-  if (planCnt > 0)    pillsHtml += '<span class="p-pill plan">'    + planCnt    + ' PLAN</span>';
-  if (actualCnt > 0)  pillsHtml += '<span class="p-pill actual">'  + actualCnt  + ' DONE</span>';
-  if (overdueCnt > 0) pillsHtml += '<span class="p-pill overdue">' + overdueCnt + ' OVERDUE</span>';
+  if (planCnt   > 0) pillsHtml += '<span class="p-pill plan">'    + planCnt    + ' PLAN</span>';
+  if (actualCnt > 0) pillsHtml += '<span class="p-pill actual">'  + actualCnt  + ' DONE</span>';
+  if (overdueCnt> 0) pillsHtml += '<span class="p-pill overdue">' + overdueCnt + ' OVERDUE</span>';
 
   var group = document.createElement('div');
   group.className     = 'plant-group';
@@ -631,7 +645,7 @@ function buildPlantGroup(p) {
   hdr.className = 'plant-header';
   hdr.innerHTML =
     '<span class="plant-dot"></span>' +
-    '<span class="plant-name">' + p.plant + '</span>' +
+    '<span class="plant-name">' + escHtml(p.plant) + '</span>' +
     '<span class="plant-meta">' + machines.length + ' mesin</span>' +
     '<div class="plant-pills">' + pillsHtml + '</div>' +
     '<span class="plant-toggle">⌄</span>';
@@ -648,7 +662,7 @@ function buildPlantGroup(p) {
   var prog = document.createElement('div');
   prog.className = 'plant-progress';
   prog.innerHTML =
-    '<span class="prog-label">Bulan ini</span>' +
+    '<span class="prog-label">Progress bulan ini</span>' +
     '<div class="prog-bar-wrap"><div class="prog-bar-fill" style="width:' + pct + '%"></div></div>' +
     '<span class="prog-pct">' + pct + '%</span>';
   body.appendChild(prog);
@@ -658,85 +672,96 @@ function buildPlantGroup(p) {
   return group;
 }
 
-// ── BUILD TABLE — 2 baris per mesin ──────────────────
-// PERUBAHAN KUNCI:
-// - Baris SCH (schedule): cell plan = hijau, read-only, pointer-events:none
-// - Baris ACT (actual): SEMUA kolom bulan bisa diklik, bukan hanya yang ada plan
+// ── BUILD TABLE ───────────────────────────────────────
 function buildTableDOM(machines, months) {
   var tbl = document.createElement('table');
   tbl.className = 'pm';
+  // Set min-width agar tabel tidak gepeng
+  var minW = 250 + months.length * 82;
+  tbl.style.minWidth = minW + 'px';
 
-  // Header
+  // ── Header ──────────────────────────────────────────
   var thead = document.createElement('thead');
   var htr   = document.createElement('tr');
-  [
-    { cls: 's0', txt: 'NO' },
-    { cls: 's1', txt: 'MESIN' },
-    { cls: 's2', txt: 'INT' },
-    { cls: 's3', txt: 'TYPE' }
-  ].forEach(function(h) {
+
+  function mkTh(cls, txt, extra) {
     var th = document.createElement('th');
-    th.className   = h.cls;
-    th.textContent = h.txt;
+    th.className   = cls || '';
+    th.textContent = txt;
+    if (extra) th.className += ' ' + extra;
     htr.appendChild(th);
-  });
+  }
+  mkTh('s0', 'NO');
+  mkTh('s1', 'MESIN');
+  mkTh('s2', 'INT');
+  mkTh('s3', 'TYPE');
+
   months.forEach(function(m) {
     var th = document.createElement('th');
-    th.className   = isCurrentMonth(m) ? 'th-now' : '';
+    th.className   = 'th-month' + (isCurrentMonth(m) ? ' th-now' : '');
     th.textContent = m;
     htr.appendChild(th);
   });
   thead.appendChild(htr);
   tbl.appendChild(thead);
 
-  // Body
+  // ── Body ─────────────────────────────────────────────
   var tbody = document.createElement('tbody');
 
   machines.forEach(function(m, idx) {
+    // Build lookup maps from months arrays
+    var schedMap  = {};
+    (m.schedMonths  || []).forEach(function(mo) { schedMap[normMonth(mo.month)]  = mo; });
+    var actualMap = {};
+    (m.actualMonths || []).forEach(function(mo) { actualMap[normMonth(mo.month)] = mo; });
 
-    // ── Baris SCHEDULE (read-only, hijau) ─────────────
+    // ── Row SCHEDULE ────────────────────────────────────
     var trS = document.createElement('tr');
     trS.className = 'row-sched';
 
+    // NO (rowspan 2)
     var tdNo = document.createElement('td');
-    tdNo.className = 's0 span2'; tdNo.rowSpan = 2;
+    tdNo.className = 's0'; tdNo.rowSpan = 2;
     tdNo.textContent = m.no || (idx + 1);
     trS.appendChild(tdNo);
 
+    // MESIN (rowspan 2)
     var tdM = document.createElement('td');
-    tdM.className = 's1 span2'; tdM.rowSpan = 2;
+    tdM.className = 's1'; tdM.rowSpan = 2;
     tdM.textContent = m.mesin;
     trS.appendChild(tdM);
 
+    // INT (rowspan 2)
     var tdI = document.createElement('td');
-    tdI.className = 's2 span2'; tdI.rowSpan = 2;
+    tdI.className = 's2'; tdI.rowSpan = 2;
     tdI.textContent = m.interval || '—';
     trS.appendChild(tdI);
 
+    // TYPE = SCH
     var tdTS = document.createElement('td');
     tdTS.className  = 's3 type-sched';
     tdTS.textContent = 'SCH';
     trS.appendChild(tdTS);
 
+    // Month cells — SCHEDULE
     months.forEach(function(mLabel) {
-      var mo = (m.schedMonths || []).find(function(x) { return x.month === mLabel; });
-      var td = document.createElement('td');
+      var key = normMonth(mLabel);
+      var mo  = schedMap[key];
+      var td  = document.createElement('td');
       if (isCurrentMonth(mLabel)) td.className = 'td-now';
 
       var cell = document.createElement('div');
       cell.className = 'pm-cell';
 
       if (mo && mo.type === 'plan') {
-        // Hijau, read-only
         cell.classList.add('plan');
         cell.textContent = '●';
         cell.title = 'Schedule PM — ' + mLabel;
       } else if (mo && mo.type === 'overdue') {
         cell.classList.add('overdue');
         cell.textContent = '!';
-        cell.title = 'Overdue!';
+        cell.title = 'Overdue — ' + mLabel;
       } else {
-        // Empty schedule cell
         cell.classList.add('empty');
       }
 
@@ -745,51 +770,37 @@ function buildTableDOM(machines, months) {
     });
     tbody.appendChild(trS);
 
-    // ── Baris ACTUAL (semua bulan bisa diklik) ────────
+    // ── Row ACTUAL ──────────────────────────────────────
     var trA = document.createElement('tr');
     trA.className = 'row-actual';
 
+    // TYPE = ACT
     var tdTA = document.createElement('td');
     tdTA.className  = 's3 type-actual';
     tdTA.textContent = 'ACT';
     trA.appendChild(tdTA);
 
+    // Month cells — ACTUAL (semua bisa diklik)
     months.forEach(function(mLabel) {
-      var mo  = (m.actualMonths || []).find(function(x) { return x.month === mLabel; });
+      var key = normMonth(mLabel);
+      var mo  = actualMap[key];
       var td  = document.createElement('td');
       if (isCurrentMonth(mLabel)) td.className = 'td-now';
 
       var cell = document.createElement('div');
       cell.className = 'pm-cell';
 
-      if (mo && mo.type === 'actual' && mo.value) {
-        // Ada actual terisi — tampilkan biru, bisa diklik untuk edit/hapus
+      if (mo && (mo.type === 'actual') && mo.value) {
+        // Terisi — tampilkan, bisa diklik untuk edit/hapus
         cell.classList.add('actual-done');
         cell.textContent = mo.value;
-        cell.title = 'Actual: ' + mo.value + '\nDouble-klik untuk edit/hapus';
-        // Bind klik untuk edit
-        (function(mesin, month, cellEl, moRef) {
-          cellEl.addEventListener('dblclick', function(e) {
-            e.stopPropagation();
-            openModal(mesin, month, cellEl, moRef);
-          });
-          // Single klik juga buka modal (kemudahan UX)
-          cellEl.addEventListener('click', function(e) {
-            e.stopPropagation();
-            openModal(mesin, month, cellEl, moRef);
-          });
-        })(m.mesin, mLabel, cell, mo);
-
+        cell.title = 'Actual: ' + mo.value + ' — Klik untuk edit/hapus';
+        bindActualCell(cell, m.mesin, mLabel, mo);
       } else {
-        // KOSONG — semua kolom bulan bisa diklik untuk isi actual
+        // Kosong — bisa diklik untuk isi
         cell.classList.add('actual-empty');
-        cell.title = 'Klik untuk input tanggal actual PM — ' + mLabel;
-        (function(mesin, month, cellEl) {
-          cellEl.addEventListener('click', function(e) {
-            e.stopPropagation();
-            openModal(mesin, month, cellEl, null);
-          });
-        })(m.mesin, mLabel, cell);
+        cell.title = 'Klik untuk input actual PM — ' + mLabel;
+        bindEmptyCell(cell, m.mesin, mLabel);
       }
 
       td.appendChild(cell);
@@ -800,6 +811,19 @@ function buildTableDOM(machines, months) {
 
   tbl.appendChild(tbody);
   return tbl;
+}
+
+function bindActualCell(cellEl, mesin, month, moRef) {
+  cellEl.addEventListener('click', function(e) {
+    e.stopPropagation();
+    openModal(mesin, month, cellEl, moRef);
+  });
+}
+function bindEmptyCell(cellEl, mesin, month) {
+  cellEl.addEventListener('click', function(e) {
+    e.stopPropagation();
+    openModal(mesin, month, cellEl, null);
+  });
 }
 
 // ── OVERVIEW ─────────────────────────────────────────
@@ -836,11 +860,10 @@ function checkReminder(plants) {
       if (hasSchedNow && !hasActualNow) pending.push(p.plant + ' — ' + m.mesin);
     });
   });
-  var bar = document.getElementById('reminder-bar');
-  var body = document.getElementById('reminder-body');
+  var bar = document.getElementById('reminder-bar'), body = document.getElementById('reminder-body');
   if (pending.length > 0 && bar && body) {
     bar.classList.add('show');
-    var shown = pending.slice(0, 5).join(', ');
+    var shown = pending.slice(0, 5).map(escHtml).join(', ');
     var more  = pending.length > 5 ? ' +' + (pending.length - 5) + ' lainnya' : '';
     body.innerHTML = '<strong>⚠️ ' + pending.length + ' mesin PM belum dilaksanakan bulan ini:</strong><br>' + shown + more;
   }
@@ -871,12 +894,10 @@ function applyFilter() {
     })
     .filter(function(p) { return (p.machines || []).length > 0; });
 
-  renderAll(filtered);
+  renderAll(filtered, pmCache.months);
 }
 
-// ══════════════════════════════════════════════════════
-// MODAL — input actual
-// ══════════════════════════════════════════════════════
+// ── MODAL ─────────────────────────────────────────────
 var _modalMesin = '', _modalMonth = '', _modalCell = null, _modalMoRef = null;
 
 function openModal(mesin, month, cellEl, moRef) {
@@ -888,37 +909,29 @@ function openModal(mesin, month, cellEl, moRef) {
   document.getElementById('modal-preview').textContent = '';
   document.getElementById('modal-submit-btn').disabled = true;
 
-  // Tampilkan tombol Hapus hanya jika sudah ada actual
   var delBtn = document.getElementById('modal-delete-btn');
-  if (moRef && moRef.value) {
-    delBtn.style.display = 'inline-flex';
-  } else {
-    delBtn.style.display = 'none';
-  }
+  delBtn.style.display = (moRef && moRef.value) ? 'inline-flex' : 'none';
 
-  // Default ke hari ini
-  var now  = new Date();
-  var yyyy = now.getFullYear();
-  var mm   = String(now.getMonth() + 1).padStart(2, '0');
-  var dd   = String(now.getDate()).padStart(2, '0');
-  document.getElementById('modal-date-input').value = yyyy + '-' + mm + '-' + dd;
+  var now = new Date();
+  document.getElementById('modal-date-input').value =
+    now.getFullYear() + '-' + String(now.getMonth()+1).padStart(2,'0') + '-' + String(now.getDate()).padStart(2,'0');
   onDateChange();
-
   document.getElementById('modalOverlay').classList.add('open');
 }
 
 function closeModal() { document.getElementById('modalOverlay').classList.remove('open'); }
+
 document.getElementById('modalOverlay').addEventListener('click', function(e) { if (e.target === this) closeModal(); });
 document.addEventListener('keydown', function(e) { if (e.key === 'Escape') closeModal(); });
 
 function onDateChange() {
-  var val  = document.getElementById('modal-date-input').value;
-  var btn  = document.getElementById('modal-submit-btn');
-  var prev = document.getElementById('modal-preview');
-  if (!val) { prev.textContent = ''; btn.disabled = true; return; }
+  var val = document.getElementById('modal-date-input').value;
+  var btn = document.getElementById('modal-submit-btn');
+  var prv = document.getElementById('modal-preview');
+  if (!val) { prv.textContent = ''; btn.disabled = true; return; }
   var p = val.split('-');
-  var d = new Date(parseInt(p[0]), parseInt(p[1]) - 1, parseInt(p[2]));
-  prev.textContent = '→ ' + formatTanggalID(d);
+  var d = new Date(parseInt(p[0]), parseInt(p[1])-1, parseInt(p[2]));
+  prv.textContent = '→ ' + formatTanggalID(d);
   btn.disabled = false;
 }
 
@@ -926,58 +939,50 @@ function onDateChange() {
 function submitActual() {
   var val = document.getElementById('modal-date-input').value;
   if (!val) return;
-  var p       = val.split('-');
-  var d       = new Date(parseInt(p[0]), parseInt(p[1]) - 1, parseInt(p[2]));
-  var tanggal = formatTanggalID(d);
+  var p   = val.split('-');
+  var d   = new Date(parseInt(p[0]), parseInt(p[1])-1, parseInt(p[2]));
+  var tgl = formatTanggalID(d);
 
   closeModal();
-
-  var savedCell  = _modalCell, savedMesin = _modalMesin, savedMonth = _modalMonth;
+  var savedCell = _modalCell, savedMesin = _modalMesin, savedMonth = _modalMonth, savedMoRef = _modalMoRef;
   if (savedCell) { savedCell.className = 'pm-cell saving'; savedCell.textContent = '...'; }
-
   showToast('info', '⏳ Menyimpan ke Google Sheet...');
 
-  gasGet({ action: 'updateCell', mesin: savedMesin, month: savedMonth, tanggal: tanggal })
+  jsonpGet({ action: 'updateCell', mesin: savedMesin, month: savedMonth, tanggal: tgl })
     .then(function(res) {
       if (!res.success) throw new Error(res.error || 'GAS gagal menyimpan.');
-
       if (savedCell) {
         savedCell.className  = 'pm-cell actual-done';
-        savedCell.textContent = tanggal;
-        savedCell.title       = 'Actual: ' + tanggal + '\nKlik untuk edit';
-        // Re-bind click untuk edit
-        var newCell = savedCell;
-        var moObj   = { month: savedMonth, type: 'actual', value: tanggal };
-        newCell.onclick = function(e) {
-          e.stopPropagation();
-          openModal(savedMesin, savedMonth, newCell, moObj);
-        };
+        savedCell.textContent = tgl;
+        savedCell.title       = 'Actual: ' + tgl + ' — Klik untuk edit';
+        var moObj = { month: savedMonth, type: 'actual', value: tgl };
+        // Remove old listeners by cloning
+        var newCell = savedCell.cloneNode(true);
+        savedCell.parentNode.replaceChild(newCell, savedCell);
+        bindActualCell(newCell, savedMesin, savedMonth, moObj);
       }
-
-      // Update cache lokal
+      // Update cache
       if (pmCache) {
         pmCache.plants.forEach(function(pl) {
-          (pl.machines || []).forEach(function(m) {
+          (pl.machines||[]).forEach(function(m) {
             if (m.mesin === savedMesin) {
               if (!m.actualMonths) m.actualMonths = [];
-              var mo = m.actualMonths.find(function(x) { return x.month === savedMonth; });
-              if (mo) { mo.type = 'actual'; mo.value = tanggal; }
-              else m.actualMonths.push({ month: savedMonth, type: 'actual', value: tanggal });
+              var existing = m.actualMonths.find(function(x) { return normMonth(x.month) === normMonth(savedMonth); });
+              if (existing) { existing.type = 'actual'; existing.value = tgl; }
+              else m.actualMonths.push({ month: savedMonth, type: 'actual', value: tgl });
             }
           });
         });
         updateOverview(pmCache.plants);
       }
-
-      showToast('success', '✓ Tersimpan! ' + savedMesin + ' — ' + tanggal);
+      showToast('success', '✓ Tersimpan! ' + savedMesin + ' — ' + tgl);
     })
     .catch(function(err) {
       console.error('[PM submit]', err);
       if (savedCell) {
-        // Kembalikan ke empty jika sebelumnya kosong, atau done jika sebelumnya ada
-        if (_modalMoRef && _modalMoRef.value) {
+        if (savedMoRef && savedMoRef.value) {
           savedCell.className  = 'pm-cell actual-done';
-          savedCell.textContent = _modalMoRef.value;
+          savedCell.textContent = savedMoRef.value;
         } else {
           savedCell.className  = 'pm-cell actual-empty';
           savedCell.textContent = '';
@@ -990,44 +995,40 @@ function submitActual() {
 // ── HAPUS ACTUAL ──────────────────────────────────────
 function submitClear() {
   closeModal();
-  var savedCell  = _modalCell, savedMesin = _modalMesin, savedMonth = _modalMonth;
+  var savedCell = _modalCell, savedMesin = _modalMesin, savedMonth = _modalMonth, savedMoRef = _modalMoRef;
   if (savedCell) { savedCell.className = 'pm-cell saving'; savedCell.textContent = '...'; }
   showToast('info', '⏳ Menghapus dari Google Sheet...');
 
-  gasGet({ action: 'clearCell', mesin: savedMesin, month: savedMonth })
+  jsonpGet({ action: 'clearCell', mesin: savedMesin, month: savedMonth })
     .then(function(res) {
       if (!res.success) throw new Error(res.error || 'GAS gagal menghapus.');
-
       if (savedCell) {
-        savedCell.className  = 'pm-cell actual-empty';
-        savedCell.textContent = '';
-        savedCell.title       = 'Klik untuk input tanggal actual PM — ' + savedMonth;
-        savedCell.onclick = function(e) {
-          e.stopPropagation();
-          openModal(savedMesin, savedMonth, savedCell, null);
-        };
+        var newCell = savedCell.cloneNode(false);
+        newCell.className  = 'pm-cell actual-empty';
+        newCell.textContent = '';
+        newCell.title       = 'Klik untuk input actual PM — ' + savedMonth;
+        savedCell.parentNode.replaceChild(newCell, savedCell);
+        bindEmptyCell(newCell, savedMesin, savedMonth);
       }
-
-      // Update cache lokal
       if (pmCache) {
         pmCache.plants.forEach(function(pl) {
-          (pl.machines || []).forEach(function(m) {
+          (pl.machines||[]).forEach(function(m) {
             if (m.mesin === savedMesin && m.actualMonths) {
-              var idx = m.actualMonths.findIndex(function(x) { return x.month === savedMonth; });
-              if (idx !== -1) m.actualMonths.splice(idx, 1);
+              m.actualMonths = m.actualMonths.filter(function(x) {
+                return normMonth(x.month) !== normMonth(savedMonth);
+              });
             }
           });
         });
         updateOverview(pmCache.plants);
       }
-
       showToast('success', '🗑 Dihapus: ' + savedMesin + ' — ' + savedMonth);
     })
     .catch(function(err) {
       console.error('[PM clear]', err);
-      if (savedCell && _modalMoRef && _modalMoRef.value) {
+      if (savedCell && savedMoRef && savedMoRef.value) {
         savedCell.className  = 'pm-cell actual-done';
-        savedCell.textContent = _modalMoRef.value;
+        savedCell.textContent = savedMoRef.value;
       }
       showToast('error', '✗ Gagal hapus: ' + err.message);
     });
@@ -1045,83 +1046,78 @@ function showToast(type, msg) {
   _toastTid = setTimeout(function() { t.classList.remove('show'); }, 4500);
 }
 
-function collapseAll() { document.querySelectorAll('.plant-group').forEach(function(g) { g.classList.add('collapsed'); }); }
-function expandAll()   { document.querySelectorAll('.plant-group').forEach(function(g) { g.classList.remove('collapsed'); }); }
+function escHtml(s) {
+  return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
+}
+function collapseAll() { document.querySelectorAll('.plant-group').forEach(function(g){g.classList.add('collapsed');}); }
+function expandAll()   { document.querySelectorAll('.plant-group').forEach(function(g){g.classList.remove('collapsed');}); }
 function doRefresh()   { pmCache = null; loadData(); }
 function doPrint()     { window.print(); }
 
 // ── PAGE LOADER ───────────────────────────────────────
 var loader    = document.getElementById('pageLoader');
 var loaderPct = document.getElementById('loaderPct');
-var lsteps    = ['LOADING PM DATA...','CONNECTING TO GAS...','PARSING SHEET...','READY'];
-var lsi       = 0;
-var lti       = setInterval(function() { if (lsi < lsteps.length) loaderPct.textContent = lsteps[lsi++]; }, 400);
-setTimeout(function() { clearInterval(lti); loader.classList.add('hidden'); loadData(); }, 1600);
+var lsteps    = ['LOADING PM DATA...','CONNECTING GAS...','PARSING SHEET...','READY'];
+var lsi = 0;
+var lti = setInterval(function(){ if(lsi<lsteps.length) loaderPct.textContent=lsteps[lsi++]; }, 400);
+setTimeout(function(){ clearInterval(lti); loader.classList.add('hidden'); loadData(); }, 1600);
 
 // ── CURSOR ────────────────────────────────────────────
-var cur = document.getElementById('cursor'), ring = document.getElementById('cursor-ring');
-var mx = 0, my = 0, rx = 0, ry = 0;
-document.addEventListener('mousemove', function(e) {
-  mx = e.clientX; my = e.clientY;
-  cur.style.left = (mx - 5) + 'px';
-  cur.style.top  = (my - 5) + 'px';
+var cur=document.getElementById('cursor'),ring=document.getElementById('cursor-ring');
+var mx=0,my=0,rx=0,ry=0;
+document.addEventListener('mousemove',function(e){
+  mx=e.clientX;my=e.clientY;
+  cur.style.left=(mx-5)+'px';cur.style.top=(my-5)+'px';
 });
-(function anim() {
-  rx += (mx - rx - 20) * .16;
-  ry += (my - ry - 20) * .16;
-  ring.style.left = rx + 'px';
-  ring.style.top  = ry + 'px';
+(function anim(){
+  rx+=(mx-rx-20)*.16;ry+=(my-ry-20)*.16;
+  ring.style.left=rx+'px';ring.style.top=ry+'px';
   requestAnimationFrame(anim);
 })();
 
 // ── CANVAS BG ─────────────────────────────────────────
-(function() {
-  var cv = document.getElementById('bg-canvas'), ctx = cv.getContext('2d'), W, H, P = [];
-  function resize() { W = cv.width = innerWidth; H = cv.height = innerHeight; }
-  resize();
-  window.addEventListener('resize', resize);
-  var cols = ['#00d4ff','#0066ff','#00ff87','#a78bfa'];
-  for (var i = 0; i < 80; i++) {
-    P.push({
-      x: Math.random() * 2000, y: Math.random() * 2000,
-      vx: (Math.random() - .5) * .3, vy: (Math.random() - .5) * .3,
-      r: Math.random() * 1.2 + .2, a: Math.random() * .4 + .1,
-      c: cols[Math.floor(Math.random() * 4)]
+(function(){
+  var cv=document.getElementById('bg-canvas'),ctx=cv.getContext('2d'),W,H,P=[];
+  function resize(){W=cv.width=innerWidth;H=cv.height=innerHeight;}
+  resize(); window.addEventListener('resize',resize);
+  var cols=['#00d4ff','#0066ff','#00ff87','#a78bfa'];
+  for(var i=0;i<80;i++) P.push({
+    x:Math.random()*2000,y:Math.random()*2000,
+    vx:(Math.random()-.5)*.3,vy:(Math.random()-.5)*.3,
+    r:Math.random()*1.2+.2,a:Math.random()*.4+.1,
+    c:cols[Math.floor(Math.random()*4)]
+  });
+  function draw(){
+    ctx.clearRect(0,0,W,H);
+    ctx.strokeStyle='rgba(0,80,180,0.03)';ctx.lineWidth=1;
+    var g=64;
+    for(var x=0;x<W+g;x+=g){ctx.beginPath();ctx.moveTo(x,0);ctx.lineTo(x,H);ctx.stroke();}
+    for(var y=0;y<H+g;y+=g){ctx.beginPath();ctx.moveTo(0,y);ctx.lineTo(W,y);ctx.stroke();}
+    P.forEach(function(p){
+      p.x+=p.vx;p.y+=p.vy;
+      if(p.x<0)p.x=W;if(p.x>W)p.x=0;
+      if(p.y<0)p.y=H;if(p.y>H)p.y=0;
+      ctx.beginPath();ctx.arc(p.x,p.y,p.r,0,Math.PI*2);
+      ctx.fillStyle=p.c;ctx.globalAlpha=p.a;ctx.fill();
     });
-  }
-  function draw() {
-    ctx.clearRect(0, 0, W, H);
-    ctx.strokeStyle = 'rgba(0,80,180,0.03)'; ctx.lineWidth = 1;
-    var g = 64;
-    for (var x = 0; x < W + g; x += g) { ctx.beginPath(); ctx.moveTo(x, 0); ctx.lineTo(x, H); ctx.stroke(); }
-    for (var y = 0; y < H + g; y += g) { ctx.beginPath(); ctx.moveTo(0, y); ctx.lineTo(W, y); ctx.stroke(); }
-    P.forEach(function(p) {
-      p.x += p.vx; p.y += p.vy;
-      if (p.x < 0) p.x = W; if (p.x > W) p.x = 0;
-      if (p.y < 0) p.y = H; if (p.y > H) p.y = 0;
-      ctx.beginPath(); ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
-      ctx.fillStyle = p.c; ctx.globalAlpha = p.a; ctx.fill();
-    });
-    ctx.globalAlpha = 1;
+    ctx.globalAlpha=1;
     requestAnimationFrame(draw);
   }
   draw();
 })();
 
-document.getElementById('navToggle').addEventListener('click', function() {
+document.getElementById('navToggle').addEventListener('click',function(){
   document.getElementById('navLinks').classList.toggle('open');
 });
 
-var revealObs = new IntersectionObserver(function(entries) {
-  entries.forEach(function(e) {
-    if (e.isIntersecting) { e.target.classList.add('visible'); revealObs.unobserve(e.target); }
-  });
-}, { threshold: .08 });
-document.querySelectorAll('.reveal').forEach(function(el) { revealObs.observe(el); });
+var revealObs=new IntersectionObserver(function(entries){
+  entries.forEach(function(e){if(e.isIntersecting){e.target.classList.add('visible');revealObs.unobserve(e.target);}});
+},{threshold:.08});
+document.querySelectorAll('.reveal').forEach(function(el){revealObs.observe(el);});
 
-if ('serviceWorker' in navigator) {
-  window.addEventListener('load', function() {
-    navigator.serviceWorker.register('/gardahitam/sw.js').catch(function() {});
+if('serviceWorker' in navigator){
+  window.addEventListener('load',function(){
+    navigator.serviceWorker.register('/gardahitam/sw.js').catch(function(){});
   });
 }
 </script>
