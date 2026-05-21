@@ -1575,41 +1575,200 @@ function switchPool(poolName){
   renderPoolContent(poolName);
 }
 
-function renderPoolContent(poolName){
-  const items=S.cache[S.plant+'_pool_'+poolName]||[];
-  const hero=id('pool-hero');
-  const cls=getPoolClass(poolName);
-  hero.className='pool-hero '+cls;
-  const labels={
-    rusak:'🔴 Pool Rusak — Drive bermasalah / kerusakan fisik',
-    ws_boveri:'🟡 Pool WS Boveri — Spare workshop Boveri',
-    abw6:'🟣 Pool ABW6 — Spare ABW6',
-    abw4:'🟣 Pool ABW4 — Spare ABW4',
-    abw1:'🟣 Pool ABW1 — Spare ABW1',
+function renderPoolContent(poolName) {
+  const items = S.cache[S.plant + '_pool_' + poolName] || [];
+  const hero = id('pool-hero');
+  const cls = getPoolClass(poolName);
+  hero.className = 'pool-hero ' + cls;
+
+  const labels = {
+    rusak: '🔴 Pool Rusak — Drive bermasalah / kerusakan fisik',
+    ws_boveri: '🟡 Pool WS Boveri — Spare workshop Boveri',
+    abw6: '🟣 Pool ABW6 — Spare ABW6',
+    abw4: '🟣 Pool ABW4 — Spare ABW4',
+    abw1: '🟣 Pool ABW1 — Spare ABW1',
   };
-  const descs={
-    rusak:'Drive yang mengalami kerusakan dan menunggu perbaikan atau penggantian.',
-    ws_boveri:'Drive spare yang disimpan di workshop Boveri, siap dipasang kembali.',
-    abw6:'Drive spare yang disimpan di ABW6.',
-    abw4:'Drive spare yang disimpan di ABW4.',
-    abw1:'Drive spare yang disimpan di ABW1.',
+  const descs = {
+    rusak: 'Drive yang mengalami kerusakan dan menunggu perbaikan atau penggantian.',
+    ws_boveri: 'Drive spare yang disimpan di workshop Boveri, siap dipasang kembali.',
+    abw6: 'Drive spare yang disimpan di ABW6.',
+    abw4: 'Drive spare yang disimpan di ABW4.',
+    abw1: 'Drive spare yang disimpan di ABW1.',
   };
-  id('pool-hero-title').textContent=labels[poolName]||('🟣 Pool '+poolName.toUpperCase());
-  id('pool-hero-sub').textContent=descs[poolName]||'';
-  // ... sisa kode sama
-  id('pool-stats-row').innerHTML=`
+  id('pool-hero-title').textContent = labels[poolName] || ('🟣 Pool ' + poolName.toUpperCase());
+  id('pool-hero-sub').textContent = descs[poolName] || '';
+  id('pool-stats-row').innerHTML = `
     <div class="pool-stat"><div class="pool-stat-label">Total Drive</div><div class="pool-stat-val">${items.length}</div></div>
     <div class="pool-stat"><div class="pool-stat-label">Plant</div><div class="pool-stat-val" style="font-size:14px">${esc(S.plant)}</div></div>
   `;
-  const contentEl=id('pool-content');
-  if(!items.length){
-    contentEl.innerHTML=`<div class="pool-empty"><span style="font-size:36px">${poolName==='rusak'?'✅':'📦'}</span><h3>Pool Kosong</h3><p>Tidak ada drive di pool ${POOL_LABELS[poolName]||poolName} saat ini.</p></div>`;
+
+  const contentEl = id('pool-content');
+  if (!items.length) {
+    contentEl.innerHTML = `<div class="pool-empty"><span style="font-size:36px">${poolName === 'rusak' ? '✅' : '📦'}</span><h3>Pool Kosong</h3><p>Tidak ada drive di pool ${POOL_LABELS[poolName] || poolName} saat ini.</p></div>`;
     return;
   }
-  contentEl.innerHTML=`<div style="margin-bottom:12px;display:flex;align-items:center;justify-content:space-between;flex-shrink:0;">
-    <span style="font-family:'JetBrains Mono',monospace;font-size:10px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:var(--muted)">${items.length} drive di pool ini</span>
-  </div>
-  <div class="pool-grid">${items.map((item,i)=>poolCard(item,poolName,i)).join('')}</div>`;
+
+  // ── DETEKSI TIPE & PLANT ──────────────────────────────
+  function detectTipe(item) {
+    const sp = String(item.spesifikasi || item.merk || '').toUpperCase();
+    if (sp.includes('ACS800')) return 'ACS800';
+    if (sp.includes('ACS880')) return 'ACS880';
+    if (sp.includes('ACS580')) return 'ACS580';
+    if (sp.includes('ACS550')) return 'ACS550';
+    if (sp.includes('ACS355')) return 'ACS355';
+    if (sp.includes('ACS150')) return 'ACS150';
+    return 'LAINNYA';
+  }
+
+  function detectPlant(item) {
+    const dari = String(item.dari || '').toUpperCase();
+    for (const p of ['MCA', 'MCC', 'MCD', 'MCG', 'MCH', 'MCI', 'PLANT E']) {
+      if (dari.includes(p)) return p;
+    }
+    const did = String(item.drive_id || '').toUpperCase();
+    for (const p of ['MCA', 'MCC', 'MCD', 'MCG', 'MCH', 'MCI']) {
+      if (did.startsWith(p)) return p;
+    }
+    return 'UNKNOWN';
+  }
+
+  // ── STATE FILTER ──────────────────────────────────────
+  if (!window._poolGroupBy) window._poolGroupBy = 'tipe';
+  if (window._poolFilterTipe === undefined) window._poolFilterTipe = '';
+  if (window._poolFilterPlant === undefined) window._poolFilterPlant = '';
+
+  const allTipes = [...new Set(items.map(detectTipe))].sort();
+  const allPlants = [...new Set(items.map(detectPlant))].sort();
+
+  // ── WARNA ─────────────────────────────────────────────
+  const tipeColors = {
+    ACS800:  { color: '#4d9fff', bg: 'rgba(77,159,255,.12)',   bd: 'rgba(77,159,255,.35)'   },
+    ACS880:  { color: '#00f0a0', bg: 'rgba(0,240,160,.12)',    bd: 'rgba(0,240,160,.35)'    },
+    ACS580:  { color: '#ffb820', bg: 'rgba(255,184,32,.12)',   bd: 'rgba(255,184,32,.35)'   },
+    ACS550:  { color: '#c084fc', bg: 'rgba(192,132,252,.12)',  bd: 'rgba(192,132,252,.35)'  },
+    ACS355:  { color: '#f472b6', bg: 'rgba(244,114,182,.12)',  bd: 'rgba(244,114,182,.35)'  },
+    ACS150:  { color: '#fb923c', bg: 'rgba(251,146,60,.12)',   bd: 'rgba(251,146,60,.35)'   },
+    LAINNYA: { color: '#9fc3e8', bg: 'rgba(159,195,232,.08)', bd: 'rgba(159,195,232,.25)'  },
+  };
+  const plantColors = {
+    MCA: '#4d9fff', MCC: '#00e0f8', MCD: '#00f0a0',
+    MCG: '#ffb820', MCH: '#ff6b81', MCI: '#c084fc',
+    'PLANT E': '#f472b6', UNKNOWN: '#9fc3e8',
+  };
+
+  // ── APPLY FILTER ──────────────────────────────────────
+  let filtered = items;
+  if (window._poolFilterTipe)  filtered = filtered.filter(i => detectTipe(i)  === window._poolFilterTipe);
+  if (window._poolFilterPlant) filtered = filtered.filter(i => detectPlant(i) === window._poolFilterPlant);
+
+  // ── TOOLBAR HTML ──────────────────────────────────────
+  const groupByBtns = ['tipe', 'plant'].map(g => {
+    const active = window._poolGroupBy === g;
+    return `<button onclick="window._poolGroupBy='${g}';renderPoolContent('${poolName}')"
+      style="padding:4px 10px;border-radius:6px;border:1px solid ${active ? 'var(--accent)' : 'var(--border)'};background:${active ? 'var(--accent-bg)' : 'transparent'};color:${active ? 'var(--accent)' : 'var(--muted)'};font-family:'JetBrains Mono',monospace;font-size:10px;font-weight:700;cursor:pointer">
+      ${g === 'tipe' ? '📦 Group: Tipe Drive' : '🏭 Group: Plant'}
+    </button>`;
+  }).join('');
+
+  const tipeFilterBtns = allTipes.map(t => {
+    const c = tipeColors[t] || tipeColors.LAINNYA;
+    const active = window._poolFilterTipe === t;
+    return `<button onclick="window._poolFilterTipe='${active ? '' : t}';renderPoolContent('${poolName}')"
+      style="display:inline-flex;align-items:center;gap:5px;padding:4px 10px;border-radius:6px;border:1px solid ${active ? c.color : c.bd};background:${active ? c.bg : 'transparent'};color:${c.color};font-family:'JetBrains Mono',monospace;font-size:10px;font-weight:700;cursor:pointer">
+      ${t}${active ? ' ✕' : ''}
+    </button>`;
+  }).join('');
+
+  const plantFilterBtns = allPlants.map(p => {
+    const c = plantColors[p] || '#9fc3e8';
+    const active = window._poolFilterPlant === p;
+    return `<button onclick="window._poolFilterPlant='${active ? '' : p}';renderPoolContent('${poolName}')"
+      style="display:inline-flex;align-items:center;gap:5px;padding:4px 10px;border-radius:6px;border:1px solid ${active ? c : c + '80'};background:${active ? c + '22' : 'transparent'};color:${c};font-family:'JetBrains Mono',monospace;font-size:10px;font-weight:700;cursor:pointer">
+      ${p}${active ? ' ✕' : ''}
+    </button>`;
+  }).join('');
+
+  const resetBtn = (window._poolFilterTipe || window._poolFilterPlant)
+    ? `<button onclick="window._poolFilterTipe='';window._poolFilterPlant='';renderPoolContent('${poolName}')"
+        style="padding:3px 10px;border-radius:6px;border:1px solid var(--fault-bd);background:var(--fault-bg);color:var(--fault);font-family:'JetBrains Mono',monospace;font-size:10px;cursor:pointer">
+        ✕ Reset Filter
+      </button>` : '';
+
+  // ── GROUPING ──────────────────────────────────────────
+  function groupBy(arr, keyFn) {
+    const map = {}, order = [];
+    arr.forEach(item => {
+      const k = keyFn(item);
+      if (!map[k]) { map[k] = []; order.push(k); }
+      map[k].push(item);
+    });
+    return { map, order };
+  }
+
+  const grouped = window._poolGroupBy === 'plant'
+    ? groupBy(filtered, detectPlant)
+    : groupBy(filtered, detectTipe);
+
+  // ── RENDER GROUP BLOCKS ───────────────────────────────
+  let groupHTML = '';
+  if (!filtered.length) {
+    groupHTML = `<div class="pool-empty"><span style="font-size:28px">🔍</span><h3>Tidak ada hasil</h3><p>Coba reset filter.</p></div>`;
+  } else {
+    grouped.order.forEach(groupKey => {
+      const groupItems = grouped.map[groupKey];
+      const isTipeGroup = window._poolGroupBy === 'tipe';
+
+      const c = isTipeGroup
+        ? (tipeColors[groupKey] || tipeColors.LAINNYA)
+        : { color: plantColors[groupKey] || '#9fc3e8', bg: (plantColors[groupKey] || '#9fc3e8') + '15', bd: (plantColors[groupKey] || '#9fc3e8') + '50' };
+
+      // Mini badge breakdown
+      const breakdown = isTipeGroup
+        ? [...new Set(groupItems.map(detectPlant))].map(p => {
+            const cnt = groupItems.filter(i => detectPlant(i) === p).length;
+            const pc = plantColors[p] || '#9fc3e8';
+            return `<span style="font-family:'JetBrains Mono',monospace;font-size:9px;font-weight:700;padding:2px 7px;border-radius:10px;background:${pc}20;color:${pc};border:1px solid ${pc}50">${p} ×${cnt}</span>`;
+          }).join(' ')
+        : [...new Set(groupItems.map(detectTipe))].map(t => {
+            const cnt = groupItems.filter(i => detectTipe(i) === t).length;
+            const tc = tipeColors[t] || tipeColors.LAINNYA;
+            return `<span style="font-family:'JetBrains Mono',monospace;font-size:9px;font-weight:700;padding:2px 7px;border-radius:10px;background:${tc.bg};color:${tc.color};border:1px solid ${tc.bd}">${t} ×${cnt}</span>`;
+          }).join(' ');
+
+      groupHTML += `
+        <div style="margin-bottom:24px">
+          <div style="display:flex;align-items:center;gap:10px;margin-bottom:12px;padding:10px 16px;background:${c.bg || c.color + '10'};border:1px solid ${c.bd || c.color + '40'};border-radius:10px;border-left:4px solid ${c.color}">
+            <span style="font-family:'JetBrains Mono',monospace;font-size:14px;font-weight:800;color:${c.color};letter-spacing:.5px">${groupKey}</span>
+            <span style="font-family:'JetBrains Mono',monospace;font-size:10px;font-weight:700;padding:3px 10px;border-radius:10px;background:${c.color}22;color:${c.color};border:1px solid ${c.color}50">${groupItems.length} drive</span>
+            <div style="display:flex;gap:5px;flex-wrap:wrap">${breakdown}</div>
+            <div style="flex:1;height:1px;background:linear-gradient(to right,${c.color}40,transparent)"></div>
+          </div>
+          <div class="pool-grid">
+            ${groupItems.map((item, i) => poolCardV2(item, poolName, i, detectTipe(item), detectPlant(item), tipeColors, plantColors)).join('')}
+          </div>
+        </div>`;
+    });
+  }
+
+  contentEl.innerHTML = `
+    <div style="background:var(--surf);border:1px solid var(--border);border-radius:10px;padding:12px 16px;margin-bottom:16px;display:flex;flex-direction:column;gap:10px">
+      <div style="display:flex;align-items:center;gap:8px;flex-wrap:wrap">
+        <span style="font-family:'JetBrains Mono',monospace;font-size:9px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;color:var(--muted)">GROUP BY</span>
+        ${groupByBtns}
+        <span style="margin-left:auto;font-family:'JetBrains Mono',monospace;font-size:10px;color:var(--muted)">${filtered.length} / ${items.length} drive</span>
+      </div>
+      <div style="display:flex;align-items:center;gap:8px;flex-wrap:wrap">
+        <span style="font-family:'JetBrains Mono',monospace;font-size:9px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;color:var(--muted)">TIPE</span>
+        ${tipeFilterBtns}
+      </div>
+      <div style="display:flex;align-items:center;gap:8px;flex-wrap:wrap">
+        <span style="font-family:'JetBrains Mono',monospace;font-size:9px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;color:var(--muted)">PLANT</span>
+        ${plantFilterBtns}
+        ${resetBtn}
+      </div>
+    </div>
+    ${groupHTML}
+  `;
 }
 
 function poolCard(item, poolName, i) {
@@ -1639,6 +1798,44 @@ function poolCard(item, poolName, i) {
     <div class="pool-card-ts">🕐 ${esc(item.timestamp)}</div>
     <div class="pool-card-sn">SN: ${esc(item.serial_number) || '—'}</div>
     ${item.stiker ? `<div class="pool-card-drive-id">🏷️ Stiker: ${esc(item.stiker)}</div>` : ''}
+    <div class="pool-card-drive-id">📍 ${esc(item.drive_id) || '—'}</div>
+    <div class="pool-card-merk">${esc(item.merk) || '—'}</div>
+    ${item.spesifikasi ? `<div class="pool-card-spec">${esc(item.spesifikasi)}</div>` : ''}
+    ${item.keterangan  ? `<div class="pool-card-ket">💬 ${esc(item.keterangan)}</div>` : ''}
+    ${item.dari        ? `<div class="pool-card-dari">📦 Dari: ${esc(item.dari)}</div>` : ''}
+    ${photoBtn}
+    ${canEdit() ? `<div class="pool-card-actions">${returnBtn}${moveBtns}</div>` : ''}
+  </div>`;
+}
+  function poolCardV2(item, poolName, i, tipe, plant, tipeColors, plantColors) {
+  const tc = tipeColors[tipe] || tipeColors.LAINNYA;
+  const pc = plantColors[plant] || '#9fc3e8';
+  const allPools = getPoolSheets(S.plant);
+  const otherPools = allPools.filter(p => p !== poolName);
+
+  const moveBtns = canEdit() ? otherPools.map(p =>
+    `<button class="btn-pool-action btn-pool-move"
+      onclick="openMovePoolModal('${esc(item.serial_number)}','${esc(item.drive_id)}','${poolName}','${p}','${esc(item.stiker || '')}')">
+      → ${getPoolLabel(p)}
+    </button>`).join('') : '';
+
+  const returnBtn = canEdit() && item.drive_id
+    ? `<button class="btn-pool-action btn-pool-return"
+        onclick="openReturnPoolModal('${esc(item.serial_number)}','${esc(item.drive_id)}','${poolName}','${esc(item.stiker || '')}')">
+        ✅ Kembalikan ke Drives
+      </button>` : '';
+
+  const photoBtn = item.photo_url
+    ? `<button class="inu-photo-btn" onclick="window.open('${esc(item.photo_url)}','_blank')">📷 Lihat Foto</button>` : '';
+
+  return `<div class="pool-card ${poolName}" style="animation-delay:${i * 0.04}s;border-top:3px solid ${tc.color}">
+    <div style="display:flex;gap:6px;flex-wrap:wrap;margin-bottom:10px">
+      <span style="font-family:'JetBrains Mono',monospace;font-size:10px;font-weight:800;padding:2px 9px;border-radius:5px;background:${tc.bg};color:${tc.color};border:1px solid ${tc.bd}">${tipe}</span>
+      <span style="font-family:'JetBrains Mono',monospace;font-size:10px;font-weight:800;padding:2px 9px;border-radius:5px;background:${pc}15;color:${pc};border:1px solid ${pc}50">${plant}</span>
+    </div>
+    <div class="pool-card-ts">🕐 ${esc(item.timestamp)}</div>
+    <div class="pool-card-sn">SN: ${esc(item.serial_number) || '—'}</div>
+    ${item.stiker  ? `<div class="pool-card-drive-id">🏷️ Stiker: ${esc(item.stiker)}</div>` : ''}
     <div class="pool-card-drive-id">📍 ${esc(item.drive_id) || '—'}</div>
     <div class="pool-card-merk">${esc(item.merk) || '—'}</div>
     ${item.spesifikasi ? `<div class="pool-card-spec">${esc(item.spesifikasi)}</div>` : ''}
