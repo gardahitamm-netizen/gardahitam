@@ -662,6 +662,71 @@ tr:hover .btn-edit-ts{opacity:1;}
   .global-result-grid{grid-template-columns:1fr!important;}
   .pool-selector-row{gap:6px!important;padding:8px 10px!important;}
 }
+  /* ══ PLANT PICKER POPUP ══ */
+.plant-picker-overlay{
+  display:none;position:fixed;inset:0;
+  background:rgba(0,0,0,.5);backdrop-filter:blur(4px);
+  z-index:450;align-items:center;justify-content:center;
+}
+.plant-picker-overlay.open{display:flex;animation:fadeIn .2s ease;}
+.plant-picker-box{
+  background:var(--surf);border:1px solid var(--border);
+  border-radius:16px;padding:24px;width:100%;max-width:480px;
+  margin:16px;animation:slideUp .25s cubic-bezier(.34,1.4,.64,1);
+}
+.plant-picker-box::before{
+  content:'';position:absolute;top:0;left:0;right:0;height:2px;
+  background:linear-gradient(90deg,var(--accent),var(--teal));
+  border-radius:16px 16px 0 0;
+}
+.plant-picker-box{position:relative;overflow:hidden;}
+.ppb-title{font-family:'JetBrains Mono',monospace;font-size:14px;font-weight:700;color:var(--text);margin-bottom:4px;}
+.ppb-sub{font-size:12px;color:var(--muted);margin-bottom:16px;}
+.ppb-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(90px,1fr));gap:8px;}
+.ppb-plant{
+  background:var(--surf2);border:1px solid var(--border);
+  border-radius:10px;padding:10px 12px;cursor:pointer;
+  transition:all .15s;text-align:left;
+}
+.ppb-plant:hover{border-color:var(--accent-bd);background:var(--surf3);}
+.ppb-plant.active{border-color:var(--accent);background:var(--accent-bg);}
+.ppb-plant-idx{font-family:'JetBrains Mono',monospace;font-size:9px;color:var(--muted);margin-bottom:4px;}
+.ppb-plant-name{font-family:'JetBrains Mono',monospace;font-size:14px;font-weight:700;color:var(--text);}
+.ppb-plant.active .ppb-plant-name{color:var(--accent);}
+.ppb-plant-desc{font-size:10px;color:var(--muted);margin-top:2px;}
+.ppb-close{
+  position:absolute;top:14px;right:14px;
+  font-family:'JetBrains Mono',monospace;font-size:10px;
+  padding:4px 10px;border-radius:6px;cursor:pointer;
+  border:1px solid var(--border);background:transparent;color:var(--muted);
+}
+.ppb-close:hover{border-color:var(--fault);color:var(--fault);}
+
+/* ══ PLANT SWITCHER BAR ══ */
+.plant-switcher-bar{
+  display:flex;align-items:center;gap:8px;flex-wrap:wrap;
+  padding:10px 16px;background:var(--surf2);
+  border-bottom:1px solid var(--border);flex-shrink:0;
+}
+.psb-label{font-family:'JetBrains Mono',monospace;font-size:10px;font-weight:700;
+  letter-spacing:1px;text-transform:uppercase;color:var(--muted);flex-shrink:0;}
+.psb-btns{display:flex;gap:5px;flex-wrap:wrap;}
+.psb-btn{
+  font-family:'JetBrains Mono',monospace;font-size:11px;font-weight:700;
+  padding:5px 12px;border-radius:6px;border:1px solid var(--border);
+  background:transparent;color:var(--muted);cursor:pointer;transition:all .15s;
+}
+.psb-btn:hover{border-color:var(--accent-bd);color:var(--accent);}
+.psb-btn.active{background:var(--accent-bg);border-color:var(--accent);color:var(--accent);}
+.psb-info{margin-left:auto;font-family:'JetBrains Mono',monospace;
+  font-size:10px;color:var(--teal);display:flex;align-items:center;gap:5px;}
+
+/* ══ HERO STAT CLICKABLE ══ */
+.plant-stat-box.clickable{cursor:pointer;transition:all .15s;}
+.plant-stat-box.clickable:hover{border-color:var(--accent-bd);background:rgba(77,159,255,.06);}
+.plant-stat-cta{font-family:'JetBrains Mono',monospace;font-size:9px;
+  color:var(--teal);margin-top:3px;letter-spacing:.5px;}
+
 </style>
 </head>
 <body>
@@ -807,6 +872,17 @@ tr:hover .btn-edit-ts{opacity:1;}
           <div class="plant-stat-box"><div class="plant-stat-label">System</div><div class="plant-stat-val ok">ONLINE</div></div>
           <div class="plant-stat-box"><div class="plant-stat-label">Last Sync</div><div class="plant-stat-val teal" id="stat-sync">—</div></div>
           <div class="plant-stat-box"><div class="plant-stat-label">Mode</div><div class="plant-stat-val" id="stat-mode">DARK</div></div>
+            <div class="plant-stat-box clickable" onclick="openPlantPicker('summary')">
+    <div class="plant-stat-label">⬜ Summary</div>
+    <div class="plant-stat-val accent">7</div>
+    <div class="plant-stat-cta">↗ Pilih plant</div>
+  </div>
+  <div class="plant-stat-box clickable" onclick="openPlantPicker('analisa')">
+    <div class="plant-stat-label">📊 Analisa</div>
+    <div class="plant-stat-val accent">7</div>
+    <div class="plant-stat-cta">↗ Pilih plant</div>
+  </div>
+</div>
         </div>
       </div>
       <div class="plant-section">
@@ -924,8 +1000,14 @@ tr:hover .btn-edit-ts{opacity:1;}
 
       <!-- TAB SUMMARY -->
       <div class="tab-content" id="tab-summary">
-        <div id="summary-content"></div>
-      </div>
+  <!-- Switcher bar -->
+  <div class="plant-switcher-bar" id="summary-switcher-bar" style="display:none">
+    <span class="psb-label">🏭 Plant:</span>
+    <div class="psb-btns" id="summary-psb-btns"></div>
+    <div class="psb-info" id="summary-psb-info">⟳ Memuat...</div>
+  </div>
+  <div id="summary-content" style="padding:20px"></div>
+</div>
 
       <!-- TAB ASLI -->
       <div class="tab-content" id="tab-asli">
@@ -934,8 +1016,14 @@ tr:hover .btn-edit-ts{opacity:1;}
 
       <!-- TAB ANALISA -->
       <div class="tab-content" id="tab-analisa">
-        <div id="analisa-content"></div>
-      </div>
+  <!-- Switcher bar -->
+  <div class="plant-switcher-bar" id="analisa-switcher-bar" style="display:none">
+    <span class="psb-label">🏭 Plant:</span>
+    <div class="psb-btns" id="analisa-psb-btns"></div>
+    <div class="psb-info" id="analisa-psb-info">⟳ Memuat...</div>
+  </div>
+  <div id="analisa-content"></div>
+</div>
 
       <!-- TAB POOL -->
       <div class="tab-content" id="tab-pool">
@@ -1372,6 +1460,155 @@ function abwCard(abwName, plantList, i){
     </div>
   </div>`;
 }
+  // ══════════════════════════════════════════════════════════
+//  PLANT PICKER & SWITCHER
+// ══════════════════════════════════════════════════════════
+const PLANT_META_LIST = [
+  {plant:'MCA', desc:'Mixing Center A', idx:'01'},
+  {plant:'MCC', desc:'Mixing Center C', idx:'02'},
+  {plant:'MCD', desc:'Mixing Center D', idx:'03'},
+  {plant:'MCG', desc:'Mixing Center G', idx:'04'},
+  {plant:'MCH', desc:'Mixing Center H', idx:'05'},
+  {plant:'MCI', desc:'Mixing Center I', idx:'06'},
+  {plant:'PLANT E', desc:'Plant Extension E', idx:'07'},
+];
+let _pickerMode = ''; // 'summary' | 'analisa'
+
+function openPlantPicker(mode) {
+  _pickerMode = mode;
+  const labels = {summary:'⬜ Summary — Pilih Plant', analisa:'📊 Analisa — Pilih Plant'};
+  const subs   = {summary:'Lihat ringkasan drive kosong per mixing', analisa:'Lihat analisa kesesuaian posisi drive'};
+  id('ppb-title').textContent = labels[mode] || 'Pilih Plant';
+  id('ppb-sub').textContent   = subs[mode]   || '';
+
+  // Render grid
+  const plantsToShow = canAccessAllPlants()
+    ? PLANT_META_LIST
+    : PLANT_META_LIST.filter(p => p.plant === S.loggedInPlant);
+
+  id('ppb-grid').innerHTML = plantsToShow.map((p, i) =>
+    `<div class="ppb-plant${S.plant === p.plant ? ' active' : ''}"
+      onclick="pickPlantAndGo('${p.plant}','${mode}')">
+      <div class="ppb-plant-idx">${p.idx}</div>
+      <div class="ppb-plant-name">${p.plant}</div>
+      <div class="ppb-plant-desc">${p.desc}</div>
+    </div>`
+  ).join('');
+
+  id('plant-picker-overlay').classList.add('open');
+}
+
+function closePlantPicker() {
+  id('plant-picker-overlay').classList.remove('open');
+}
+
+async function pickPlantAndGo(plant, mode) {
+  // Highlight pilihan
+  id('ppb-grid').querySelectorAll('.ppb-plant').forEach(el => {
+    el.classList.toggle('active', el.querySelector('.ppb-plant-name').textContent === plant);
+  });
+  setTimeout(async () => {
+    closePlantPicker();
+    // Navigasi ke detail page, langsung buka tab yang dipilih
+    S.plant = plant;
+    // Pastikan group ada
+    if (!S.cache[plant + '_drives']) {
+      try {
+        const data = await apiGet({action:'getDrives', plant});
+        const drives = Array.isArray(data.drives) ? data.drives : [];
+        S.cache[plant + '_drives'] = drives;
+        const seen = [], groups = [];
+        drives.forEach(d => {
+          const g = String(d.group || '').trim();
+          if (g && !seen.includes(g)) { seen.push(g); groups.push(g); }
+        });
+        S.cache[plant + '_groupList'] = groups;
+      } catch(e) {}
+    }
+    const groups = S.cache[plant + '_groupList'] || [];
+    S.curGroup = groups[0] || '';
+    showPage('detail');
+    S.tab = mode;
+    updateBC();
+    // Render tabs
+    document.querySelectorAll('.ctab').forEach(t => t.classList.remove('active'));
+    document.querySelectorAll('.tab-content').forEach(t => t.classList.remove('active'));
+    id('ctab-' + mode).classList.add('active');
+    id('tab-' + mode).classList.add('active');
+    showSearchBar(false);
+    id('detail-plant-badge').textContent = plant;
+    id('detail-mixing-label').textContent = S.curGroup;
+    // Render switcher bar
+    renderSwitcherBar(mode, plant);
+    // Render konten
+    if (mode === 'summary') await renderSummaryTab();
+    if (mode === 'analisa') await renderAnalisaTab();
+  }, 250);
+}
+
+function renderSwitcherBar(mode, activePlant) {
+  const barId  = mode + '-switcher-bar';
+  const btnsId = mode + '-psb-btns';
+  const infoId = mode + '-psb-info';
+  const bar    = id(barId);
+  if (!bar) return;
+  bar.style.display = 'flex';
+
+  const plantsToShow = canAccessAllPlants()
+    ? PLANT_META_LIST
+    : PLANT_META_LIST.filter(p => p.plant === S.loggedInPlant);
+
+  id(btnsId).innerHTML = plantsToShow.map(p =>
+    `<button class="psb-btn${p.plant === activePlant ? ' active' : ''}"
+      onclick="switchSummaryPlant('${p.plant}','${mode}')">${p.plant}</button>`
+  ).join('');
+
+  const meta = PLANT_META_LIST.find(p => p.plant === activePlant);
+  id(infoId).textContent = '📍 ' + (meta ? meta.desc : activePlant);
+}
+
+async function switchSummaryPlant(plant, mode) {
+  // Update button state
+  const btnsEl = id(mode + '-psb-btns');
+  if (btnsEl) btnsEl.querySelectorAll('.psb-btn').forEach(b => {
+    b.classList.toggle('active', b.textContent === plant);
+  });
+  const infoEl = id(mode + '-psb-info');
+  if (infoEl) {
+    const meta = PLANT_META_LIST.find(p => p.plant === plant);
+    infoEl.textContent = '📍 ' + (meta ? meta.desc : plant);
+  }
+
+  // Ganti plant state
+  S.plant = plant;
+  // Pastikan drives di-cache
+  if (!S.cache[plant + '_drives']) {
+    try {
+      const data = await apiGet({action:'getDrives', plant});
+      const drives = Array.isArray(data.drives) ? data.drives : [];
+      S.cache[plant + '_drives'] = drives;
+      const seen = [], groups = [];
+      drives.forEach(d => {
+        const g = String(d.group || '').trim();
+        if (g && !seen.includes(g)) { seen.push(g); groups.push(g); }
+      });
+      S.cache[plant + '_groupList'] = groups;
+    } catch(e) {}
+  }
+  const groups = S.cache[plant + '_groupList'] || [];
+  S.curGroup = groups[0] || '';
+  id('detail-plant-badge').textContent = plant;
+  id('detail-mixing-label').textContent = S.curGroup;
+  updateBC();
+
+  if (mode === 'summary') await renderSummaryTab();
+  if (mode === 'analisa') await renderAnalisaTab();
+}
+
+// Tutup picker kalau klik overlay
+id('plant-picker-overlay').addEventListener('click', e => {
+  if (e.target === id('plant-picker-overlay')) closePlantPicker();
+});
 
 // ══════════════════════════════════════════════════════════
 //  MIXING PAGE
@@ -2213,6 +2450,9 @@ function renderManualTable(){
 //  SUMMARY TAB
 // ══════════════════════════════════════════════════════════
 async function renderSummaryTab(){
+  // Aktifkan switcher bar
+  renderSwitcherBar('summary', S.plant);
+  // ... sisa kode existing tetap sama
   id('summary-content').innerHTML=loadingHTML('Memuat summary...');
   try{
     const data=await apiGet({action:'getSummaryKosong',plant:S.plant});
@@ -2230,6 +2470,9 @@ async function renderSummaryTab(){
 //  ASLI TAB
 // ══════════════════════════════════════════════════════════
 async function renderAsliTab(){
+  // Aktifkan switcher bar
+  renderSwitcherBar('analisa', S.plant);
+  // ... sisa kode existing tetap sama
   id('asli-content').innerHTML=loadingHTML('Memuat data asli...');
   try{
     if(!S.cache[S.plant+'_asli']){const data=await apiGet({action:'getAsli',plant:S.plant});S.cache[S.plant+'_asli']=data.asli||[];}
@@ -2432,6 +2675,15 @@ function renderAnalisaDetailTable(rows){const tbody=id('a-detail-tbody');tbody.i
 function renderAnalisaInsights(rows){const{sesuai,tidakSesuai,tidakDitemukan,total}=aCalcStats(rows);const pct=total>0?Math.round(sesuai/total*100):0;const groups=[...new Set(rows.map(r=>r.group).filter(Boolean))];const worst=groups.reduce((acc,g)=>{const s=aCalcStats(rows.filter(r=>r.group===g));const p=s.total>0?s.sesuai/s.total:1;return(!acc||p<acc.pct)?{group:g,pct:p,...s}:acc;},null);const best=groups.reduce((acc,g)=>{const s=aCalcStats(rows.filter(r=>r.group===g));const p=s.total>0?s.sesuai/s.total:0;return(!acc||p>acc.pct)?{group:g,pct:p,...s}:acc;},null);const items=[`Total <strong>${total}</strong> drive dianalisa di <strong>${S.plant}</strong> dengan tingkat kesesuaian posisi asli <strong>${pct}%</strong>.`,tidakDitemukan>0?`<strong>${tidakDitemukan} drive tidak ditemukan</strong> di lapangan — perlu investigasi fisik apakah drive dipindah tanpa pencatatan atau hilang.`:`Semua drive berhasil ditemukan di lapangan — tidak ada drive yang hilang.`,tidakSesuai>0?`<strong>${tidakSesuai} drive berada di posisi tidak sesuai</strong> data asli — kemungkinan terjadi relokasi tanpa pembaruan database.`:`Semua drive yang ditemukan berada di posisi yang sesuai dengan data asli.`,worst&&worst.total>0?`Mixing dengan ketidaksesuaian tertinggi: <strong>${worst.group}</strong> (${Math.round(worst.pct*100)}% sesuai).`:'',best&&best.total>0&&best.group!==(worst?.group)?`Mixing terbaik: <strong>${best.group}</strong> dengan kesesuaian <strong>${Math.round(best.pct*100)}%</strong>.`:'',pct<70?`<strong>Rekomendasi:</strong> Tingkat kesesuaian di bawah 70% — disarankan audit fisik menyeluruh dan rekonsiliasi database posisi drive.`:pct<90?`<strong>Rekomendasi:</strong> Lakukan pengecekan ulang pada mixing yang memiliki drive tidak sesuai.`:`<strong>Rekomendasi:</strong> Kondisi drive sudah sangat baik (≥90%). Pertahankan konsistensi sistem pencatatan.`,`<strong>Untuk TA:</strong> Data ini dapat dijadikan bahan analisa bab hasil & pembahasan, menunjukkan efektivitas sistem Garda Hitam dalam mendeteksi ketidaksesuaian posisi drive.`].filter(Boolean);id('a-insight-list').innerHTML=items.map(i=>`<li>${i}</li>`).join('');}
 function analisaExportCSV(){const allRows=S.cache[S.plant+'_asli']||[];const sel=id('a-mix-filter'),mix=sel?sel.value:'';const rows=mix?allRows.filter(r=>r.group===mix):allRows;let csv='No,Plant,Mixing,Drive ID (Asli),Ada di Lapangan,Serial Number,Spesifikasi,Status\n';rows.forEach((r,i)=>{const cari=(r.cari_data_lapangan||r['cari data lapangan']||'—').replace(/,/g,' ');csv+=`${i+1},"${S.plant}","${r.group||''}","${r.drive_id||''}","${cari}","${r.serial_number||''}","${(r.spesifikasi||'').replace(/,/g,' ')}","${aStatusNorm(r.status)}"\n`;});const blob=new Blob(['\uFEFF'+csv],{type:'text/csv;charset=utf-8;'});const url=URL.createObjectURL(blob);const a=document.createElement('a');a.href=url;a.download=`Analisa_Drive_${S.plant}_${mix||'Semua'}_${new Date().toISOString().slice(0,10)}.csv`;a.click();URL.revokeObjectURL(url);}
 function analisaPrintPDF(){const{jsPDF}=window.jspdf;const doc=new jsPDF({orientation:'landscape'});const allRows=S.cache[S.plant+'_asli']||[];const sel=id('a-mix-filter'),mix=sel?sel.value:'';const rows=mix?allRows.filter(r=>r.group===mix):allRows;const{sesuai,tidakSesuai,tidakDitemukan,total}=aCalcStats(rows);const pct=total>0?Math.round(sesuai/total*100):0;doc.setFontSize(16);doc.setFont('helvetica','bold');doc.text('Analisa Data Drive — '+S.plant,14,16);doc.setFontSize(10);doc.setFont('helvetica','normal');doc.text('Tugas Akhir · Sistem Monitoring Drive Garda Hitam',14,23);doc.text('Filter: '+(mix||'Semua Mixing')+'  |  Dicetak: '+new Date().toLocaleString('id-ID'),14,29);doc.setFontSize(9);doc.setFillColor(240,248,255);doc.roundedRect(14,33,260,18,2,2,'F');doc.text(`Total: ${total}  |  Sesuai: ${sesuai} (${pct}%)  |  Tidak Sesuai: ${tidakSesuai}  |  Tdk Ditemukan: ${tidakDitemukan}`,18,44);doc.autoTable({startY:56,head:[['#','Mixing','Drive ID (Asli)','Ada di Lapangan','Serial Number','Spesifikasi','Status']],body:rows.map((r,i)=>[i+1,r.group||'—',r.drive_id||'—',r.cari_data_lapangan||r['cari data lapangan']||'—',r.serial_number||'—',r.spesifikasi||'—',aStatusNorm(r.status)]),styles:{fontSize:8,cellPadding:2},headStyles:{fillColor:[13,26,46],textColor:255,fontStyle:'bold'},alternateRowStyles:{fillColor:[245,248,255]},didParseCell:(data)=>{if(data.column.index===6&&data.section==='body'){const v=String(data.cell.raw||'');if(v==='SESUAI')data.cell.styles.textColor=[0,149,79];else if(v==='TIDAK SESUAI')data.cell.styles.textColor=[200,30,50];else data.cell.styles.textColor=[24,95,165];}},theme:'grid'});const pageCount=doc.internal.getNumberOfPages();for(let i=1;i<=pageCount;i++){doc.setPage(i);doc.setFontSize(7);doc.setTextColor(150);doc.text(`Garda Hitam Drive Monitoring · ${S.plant} · Hal ${i}/${pageCount}`,14,doc.internal.pageSize.height-8);}doc.save(`Analisa_Drive_${S.plant}_${mix||'Semua'}_${new Date().toISOString().slice(0,10)}.pdf`);}
+<!-- ══ PLANT PICKER OVERLAY ══ -->
+<div class="plant-picker-overlay" id="plant-picker-overlay">
+  <div class="plant-picker-box">
+    <button class="ppb-close" onclick="closePlantPicker()">✕ Tutup</button>
+    <div class="ppb-title" id="ppb-title">📊 Pilih Plant</div>
+    <div class="ppb-sub" id="ppb-sub">Data ditampilkan sesuai plant yang dipilih</div>
+    <div class="ppb-grid" id="ppb-grid"></div>
+  </div>
+</div>
 </script>
 </body>
 </html>
