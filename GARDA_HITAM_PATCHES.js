@@ -104,18 +104,6 @@
     overflow: hidden !important;
   }
   /* FIX: Mixing page — hero tidak boleh mengambil banyak space */
- .mixing-page-wrap {
-  display: block !important;
-  height: 100% !important;
-  overflow-y: auto !important;
-  overflow-x: hidden !important;
-  flex: none !important;
-    min-height: 0 !important;
-    overflow-y: auto !important;
-    overflow-x: hidden !important;
-    -webkit-overflow-scrolling: touch !important;
-    display: block !important;        /* <-- FIX blank space: ubah dari flex ke block */
-  }
   .mixing-hero {
     /* Pastikan hero tidak collapse atau hilang */
     display: block !important;
