@@ -202,9 +202,9 @@ body{font-family:'Plus Jakarta Sans',sans-serif;background:var(--bg);color:var(-
 .bc-cur{color:var(--text);}
 .bc-sep{color:var(--border);}
 
-#pages-wrapper{flex:1;overflow:hidden;display:flex;flex-direction:column;min-height:0;height:0;}
+#pages-wrapper{flex:1;overflow:hidden;display:flex;flex-direction:column;min-height:0;}
 .page{display:none;flex:1;overflow:hidden;flex-direction:column;min-height:0;}
-.page.active{display:flex;animation:fadeUp .2s ease;}
+.page.active{display:flex;flex:1;min-height:0;animation:fadeUp .2s ease;}
 @keyframes fadeUp{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:translateY(0)}}
 
 /* ══ SEARCH BAR ══ */
