@@ -86,11 +86,12 @@
   }
 
   /* FIX: Plant grid cards — ukuran lebih compact */
-  .plant-grid {
-    display: grid !important;
-    grid-template-columns: repeat(auto-fill, minmax(180px, 1fr)) !important;
-    gap: 12px !important;
-  }
+ .plant-grid {
+  display: grid !important;
+  grid-template-columns: repeat(auto-fill, minmax(180px, 1fr)) !important;
+  gap: 12px !important;
+  align-items: start !important;
+}
   .plant-card {
     min-height: 0 !important;
   }
@@ -103,9 +104,12 @@
     overflow: hidden !important;
   }
   /* FIX: Mixing page — hero tidak boleh mengambil banyak space */
-  .mixing-page-wrap {
-    flex: 1 1 0% !important;
-    height: 0 !important;
+ .mixing-page-wrap {
+  display: block !important;
+  height: 100% !important;
+  overflow-y: auto !important;
+  overflow-x: hidden !important;
+  flex: none !important;
     min-height: 0 !important;
     overflow-y: auto !important;
     overflow-x: hidden !important;
@@ -229,20 +233,6 @@
   //  FIX renderDetailPage — root cause blank space di detail
   //  Masalah: content-area kadang tidak resize setelah tab switch
   // ================================================================
-  const _origSwitchTab = window.switchTab;
-  window.switchTab = async function (tab, force) {
-    if (typeof _origSwitchTab === 'function') {
-      await _origSwitchTab.apply(this, arguments);
-    }
-    // Force reflow content-area setelah tab switch
-    const ca = document.querySelector('.content-area');
-    if (ca) {
-      ca.style.display = 'none';
-      // eslint-disable-next-line no-unused-expressions
-      ca.offsetHeight; // trigger reflow
-      ca.style.display = '';
-    }
-  };
 
 
   // ================================================================
