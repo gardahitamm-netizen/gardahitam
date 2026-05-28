@@ -205,7 +205,6 @@ body{font-family:'Plus Jakarta Sans',sans-serif;background:var(--bg);color:var(-
 #pages-wrapper{flex:1;overflow:hidden;display:flex;flex-direction:column;min-height:0;}
 .page{display:none;flex:1;overflow:hidden;flex-direction:column;min-height:0;}
 .page.active{display:flex;position:relative;flex:1;min-height:0;overflow:hidden;flex-direction:column;pointer-events:auto;animation:fadeUp .2s ease;}
-.page.active{display:flex;flex:1;min-height:0;animation:fadeUp .2s ease;}
 @keyframes fadeUp{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:translateY(0)}}
 
 /* ══ SEARCH BAR ══ */
@@ -2688,6 +2687,5 @@ function analisaExportCSV(){const allRows=S.cache[S.plant+'_asli']||[];const sel
 function analisaPrintPDF(){const{jsPDF}=window.jspdf;const doc=new jsPDF({orientation:'landscape'});const allRows=S.cache[S.plant+'_asli']||[];const sel=id('a-mix-filter'),mix=sel?sel.value:'';const rows=mix?allRows.filter(r=>r.group===mix):allRows;const{sesuai,tidakSesuai,tidakDitemukan,total}=aCalcStats(rows);const pct=total>0?Math.round(sesuai/total*100):0;doc.setFontSize(16);doc.setFont('helvetica','bold');doc.text('Analisa Data Drive — '+S.plant,14,16);doc.setFontSize(10);doc.setFont('helvetica','normal');doc.text('Tugas Akhir · Sistem Monitoring Drive Garda Hitam',14,23);doc.text('Filter: '+(mix||'Semua Mixing')+'  |  Dicetak: '+new Date().toLocaleString('id-ID'),14,29);doc.setFontSize(9);doc.setFillColor(240,248,255);doc.roundedRect(14,33,260,18,2,2,'F');doc.text(`Total: ${total}  |  Sesuai: ${sesuai} (${pct}%)  |  Tidak Sesuai: ${tidakSesuai}  |  Tdk Ditemukan: ${tidakDitemukan}`,18,44);doc.autoTable({startY:56,head:[['#','Mixing','Drive ID (Asli)','Ada di Lapangan','Serial Number','Spesifikasi','Status']],body:rows.map((r,i)=>[i+1,r.group||'—',r.drive_id||'—',r.cari_data_lapangan||r['cari data lapangan']||'—',r.serial_number||'—',r.spesifikasi||'—',aStatusNorm(r.status)]),styles:{fontSize:8,cellPadding:2},headStyles:{fillColor:[13,26,46],textColor:255,fontStyle:'bold'},alternateRowStyles:{fillColor:[245,248,255]},didParseCell:(data)=>{if(data.column.index===6&&data.section==='body'){const v=String(data.cell.raw||'');if(v==='SESUAI')data.cell.styles.textColor=[0,149,79];else if(v==='TIDAK SESUAI')data.cell.styles.textColor=[200,30,50];else data.cell.styles.textColor=[24,95,165];}},theme:'grid'});const pageCount=doc.internal.getNumberOfPages();for(let i=1;i<=pageCount;i++){doc.setPage(i);doc.setFontSize(7);doc.setTextColor(150);doc.text(`Garda Hitam Drive Monitoring · ${S.plant} · Hal ${i}/${pageCount}`,14,doc.internal.pageSize.height-8);}doc.save(`Analisa_Drive_${S.plant}_${mix||'Semua'}_${new Date().toISOString().slice(0,10)}.pdf`);}
 </script>
   <script src="GARDA_HITAM_PATCHES.js"></script>
-</body>
 </body>
 </html>
