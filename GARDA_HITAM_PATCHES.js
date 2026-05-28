@@ -1,26 +1,15 @@
 // ================================================================
-//  GARDA HITAM — PATCH v5
-//  Taruh SEBELUM </body>
-//  HAPUS patch versi sebelumnya semua
+//  GARDA HITAM — PATCH v6
+//  Fix: blank space hitam, hero stats terpotong, card overflow
+//  Taruh SEBELUM </body> — HAPUS patch versi sebelumnya
 // ================================================================
 (function () {
   'use strict';
 
-  // ── CSS FIX v5 ─────────────────────────────────────────────
-  // Root cause teridentifikasi:
-  // 1. HTML asli punya DUA rule .page.active — rule kedua TIDAK
-  //    punya overflow:hidden, override rule pertama
-  // 2. Blank space besar = running-bar/breadcrumb ikut masuk
-  //    ke scroll area karena overflow tidak terkunci
-  // 3. Plant page tidak fit = body pakai height:100vh tapi
-  //    inner scroll tidak terdefinisi benar
-  //
-  // Solusi: inject CSS yang sangat spesifik dengan !important
-  // untuk override SEMUA rule konflik
+  // ── CSS FIX v6 ─────────────────────────────────────────────
+  document.head.insertAdjacentHTML('beforeend', `<style id="gh-v6-fix">
 
-  document.head.insertAdjacentHTML('beforeend', `<style id="gh-v5-fix">
-
-  /* ── 1. LOCK VIEWPORT — tidak boleh ada scroll di body ── */
+  /* ── 1. LOCK VIEWPORT ── */
   html {
     height: 100% !important;
     overflow: hidden !important;
@@ -33,22 +22,22 @@
     flex-direction: column !important;
   }
 
-  /* ── 2. TOPBAR STACK — semua flex-shrink:0 ── */
+  /* ── 2. TOPBAR STACK ── */
   .topbar      { flex-shrink: 0 !important; overflow: hidden !important; }
   .running-bar { flex-shrink: 0 !important; overflow: hidden !important; }
   .breadcrumb  { flex-shrink: 0 !important; overflow: hidden !important; }
 
-  /* ── 3. PAGES WRAPPER — isi sisa tinggi ── */
+  /* ── 3. PAGES WRAPPER ── */
   #pages-wrapper {
     flex: 1 1 0% !important;
-    height: 0 !important;          /* kunci: height:0 + flex:1 = isi sisa */
+    height: 0 !important;
     min-height: 0 !important;
     overflow: hidden !important;
     display: flex !important;
     flex-direction: column !important;
   }
 
-  /* ── 4. PAGE — hanya .active yang muncul ── */
+  /* ── 4. PAGE BASE ── */
   .page {
     display: none !important;
     flex: none !important;
@@ -57,11 +46,10 @@
     display: flex !important;
     flex-direction: column !important;
     flex: 1 1 0% !important;
-    height: 0 !important;          /* kunci sama dengan pages-wrapper */
+    height: 0 !important;
     min-height: 0 !important;
     overflow: hidden !important;
     position: relative !important;
-    animation: fadeUp .2s ease !important;
   }
 
   /* ── 5. PLANT PAGE ── */
@@ -80,10 +68,41 @@
     -webkit-overflow-scrolling: touch !important;
   }
 
+  /* FIX: Plant hero stats — jangan overflow/terpotong */
+  .plant-hero {
+    flex-shrink: 0 !important;
+    overflow: visible !important;
+    padding-bottom: 24px !important;
+  }
+  .plant-stats-row {
+    display: flex !important;
+    flex-wrap: wrap !important;
+    gap: 10px !important;
+    overflow: visible !important;
+  }
+  .plant-stat-box {
+    min-width: 100px !important;
+    flex-shrink: 0 !important;
+  }
+
+  /* FIX: Plant grid cards — ukuran lebih compact */
+  .plant-grid {
+    display: grid !important;
+    grid-template-columns: repeat(auto-fill, minmax(180px, 1fr)) !important;
+    gap: 12px !important;
+  }
+  .plant-card {
+    min-height: 0 !important;
+  }
+  .plant-card-name {
+    font-size: 18px !important;
+  }
+
   /* ── 6. MIXING PAGE ── */
   #page-mixing.active {
     overflow: hidden !important;
   }
+  /* FIX: Mixing page — hero tidak boleh mengambil banyak space */
   .mixing-page-wrap {
     flex: 1 1 0% !important;
     height: 0 !important;
@@ -91,6 +110,22 @@
     overflow-y: auto !important;
     overflow-x: hidden !important;
     -webkit-overflow-scrolling: touch !important;
+    display: block !important;        /* <-- FIX blank space: ubah dari flex ke block */
+  }
+  .mixing-hero {
+    /* Pastikan hero tidak collapse atau hilang */
+    display: block !important;
+    flex-shrink: 0 !important;
+    padding: 20px 24px 16px !important;
+  }
+  .mixing-section {
+    display: block !important;
+    padding: 16px 24px !important;
+  }
+  .mixing-grid {
+    display: grid !important;
+    grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)) !important;
+    gap: 8px !important;
   }
 
   /* ── 7. DETAIL PAGE ── */
@@ -121,10 +156,9 @@
     height: 0 !important;
     min-height: 0 !important;
     overflow-y: auto !important;
-    animation: fadeUp .2s ease !important;
   }
 
-  /* Tab dengan inner scroll area sendiri */
+  /* Tab dengan inner scroll area */
   #tab-histori.active,
   #tab-manual.active,
   #tab-pool.active {
@@ -139,12 +173,8 @@
     min-height: 0 !important;
     overflow-y: auto !important;
   }
-
-  /* Toolbar di dalam tab pool */
   .pool-selector-row { flex-shrink: 0 !important; }
   .pool-hero         { flex-shrink: 0 !important; }
-
-  /* Switcher bar summary/analisa */
   .plant-switcher-bar { flex-shrink: 0 !important; }
 
   /* ── 9. MOBILE ── */
@@ -156,11 +186,68 @@
       width: 100% !important;
       height: 100% !important;
     }
+    .plant-grid {
+      grid-template-columns: repeat(auto-fill, minmax(140px, 1fr)) !important;
+      gap: 8px !important;
+    }
+    .mixing-grid {
+      grid-template-columns: repeat(auto-fill, minmax(120px, 1fr)) !important;
+    }
+    .plant-stat-box {
+      min-width: 80px !important;
+      padding: 8px 10px !important;
+    }
+    .plant-stat-val {
+      font-size: 14px !important;
+    }
   }
   </style>`);
 
 
-  // ── renderPlantPage: WS Boveri card + stat clickable tetap ada ──
+  // ================================================================
+  //  FIX renderMixingPage — root cause blank space
+  //  Masalah: mixing-page-wrap pakai display:flex tapi child
+  //  (hero + section) tidak punya flex properties yang benar,
+  //  sehingga ada gap kosong besar.
+  //  Solusi: override renderMixingPage agar tidak bergantung flex
+  // ================================================================
+  const _origRenderMixingPage = window.renderMixingPage;
+  window.renderMixingPage = async function () {
+    // Pastikan wrap pakai display:block (bukan flex)
+    const wrap = document.querySelector('.mixing-page-wrap');
+    if (wrap) {
+      wrap.style.display = 'block';
+      wrap.style.overflowY = 'auto';
+    }
+    if (typeof _origRenderMixingPage === 'function') {
+      return _origRenderMixingPage.apply(this, arguments);
+    }
+  };
+
+
+  // ================================================================
+  //  FIX renderDetailPage — root cause blank space di detail
+  //  Masalah: content-area kadang tidak resize setelah tab switch
+  // ================================================================
+  const _origSwitchTab = window.switchTab;
+  window.switchTab = async function (tab, force) {
+    if (typeof _origSwitchTab === 'function') {
+      await _origSwitchTab.apply(this, arguments);
+    }
+    // Force reflow content-area setelah tab switch
+    const ca = document.querySelector('.content-area');
+    if (ca) {
+      ca.style.display = 'none';
+      // eslint-disable-next-line no-unused-expressions
+      ca.offsetHeight; // trigger reflow
+      ca.style.display = '';
+    }
+  };
+
+
+  // ================================================================
+  //  renderPlantPage: WS Boveri card + stat clickable
+  // ================================================================
   window.renderPlantPage = async function () {
     const el = document.getElementById('plant-content');
     el.innerHTML = '<div class="state-box"><div class="sp"></div><p>Memuat plant...</p></div>';
@@ -254,7 +341,9 @@
   };
 
 
-  // ── renderSummaryTab: dengan breakdown INU/DSU/tipe ──
+  // ================================================================
+  //  renderSummaryTab: dengan breakdown INU/DSU/tipe
+  // ================================================================
   window.renderSummaryTab = async function () {
     if (typeof renderSwitcherBar === 'function') renderSwitcherBar('summary', S.plant);
 
@@ -270,7 +359,6 @@
       const adaKosong   = rows.filter(r => r.kosong > 0);
       const bersih      = rows.filter(r => r.kosong === 0).length;
 
-      // Ambil drives untuk breakdown
       let allDrives = S.cache[S.plant + '_drives'] || [];
       if (!allDrives.length) {
         try {
@@ -310,7 +398,6 @@
         }).join('');
       };
 
-      // Semua drive kosong
       const allK = [];
       adaKosong.forEach(r => {
         allDrives
@@ -318,7 +405,6 @@
           .forEach(d => allK.push(d));
       });
 
-      // Breakdown panel
       let breakdownHTML = '';
       if (allK.length) {
         const tot  = allK.length;
@@ -437,5 +523,5 @@
     }
   };
 
-  console.log('[GH-PATCH v5] loaded OK');
+  console.log('[GH-PATCH v6] loaded OK');
 })();
