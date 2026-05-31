@@ -1,20 +1,20 @@
 // ================================================================
-//  GARDA HITAM — PATCH v9
-//  Fix: blank space hitam di mixing/detail/plant page
+//  GARDA HITAM — PATCH v10
+//  Fix: plant-hero terlalu tinggi → hero compact, stat row inline
+//  Fix: blank space hitam mixing/detail page
 //  Fix: mobile scroll & layout terpotong
-//  Fix: hero tidak muncul di bagian atas halaman
 // ================================================================
 (function () {
   'use strict';
 
   // Hapus semua patch lama
-  ['gh-v6-fix','gh-v7-fix','gh-v8-fix','gh-v9-fix'].forEach(function(pid) {
+  ['gh-v6-fix','gh-v7-fix','gh-v8-fix','gh-v9-fix','gh-v10-fix'].forEach(function(pid) {
     var el = document.getElementById(pid);
     if (el) el.remove();
   });
 
   // ── CSS FIX ────────────────────────────────────────────────────
-  document.head.insertAdjacentHTML('beforeend', `<style id="gh-v9-fix">
+  document.head.insertAdjacentHTML('beforeend', `<style id="gh-v10-fix">
 
   /* ── WRAPPER UTAMA ── */
   html, body {
@@ -23,7 +23,8 @@
     overflow: hidden !important;
     display: flex !important;
     flex-direction: column !important;
-    margin: 0 !important; padding: 0 !important;
+    margin: 0 !important;
+    padding: 0 !important;
   }
 
   /* ── PAGES WRAPPER ── */
@@ -51,12 +52,8 @@
   }
 
   /* ── PLANT PAGE ── */
-  #page-plant.active {
-    overflow: hidden !important;
-  }
-  #page-plant .global-search-wrap {
-    flex: 0 0 auto !important;
-  }
+  #page-plant.active { overflow: hidden !important; }
+  #page-plant .global-search-wrap { flex: 0 0 auto !important; }
   .plant-wrap {
     flex: 1 1 auto !important;
     min-height: 0 !important;
@@ -64,40 +61,84 @@
     overflow-x: hidden !important;
     -webkit-overflow-scrolling: touch !important;
   }
-  /* Hero & section tidak boleh collapse */
-  .plant-hero, .plant-section {
+
+  /* HERO COMPACT — kurangi padding & ukuran */
+  .plant-hero {
+    padding: 14px 24px 12px !important;
     flex-shrink: 0 !important;
     display: block !important;
-    width: 100% !important;
   }
+  .plant-hero-badge {
+    font-size: 8px !important;
+    padding: 3px 10px !important;
+    margin-bottom: 6px !important;
+  }
+  .plant-hero-title {
+    font-size: 20px !important;
+    margin-bottom: 2px !important;
+  }
+  .plant-hero-sub {
+    font-size: 11px !important;
+    margin-bottom: 10px !important;
+  }
+  /* Stat row — inline horizontal, tidak wrap */
+  .plant-stats-row {
+    display: flex !important;
+    gap: 8px !important;
+    flex-wrap: nowrap !important;
+    overflow-x: auto !important;
+    scrollbar-width: none !important;
+    padding-bottom: 2px !important;
+  }
+  .plant-stats-row::-webkit-scrollbar { display: none !important; }
+  .plant-stat-box {
+    padding: 6px 12px !important;
+    min-width: 80px !important;
+    flex-shrink: 0 !important;
+  }
+  .plant-stat-label {
+    font-size: 8px !important;
+    margin-bottom: 2px !important;
+  }
+  .plant-stat-val {
+    font-size: 14px !important;
+  }
+  .plant-stat-cta { font-size: 8px !important; margin-top: 1px !important; }
+
+  /* Plant section */
+  .plant-section {
+    padding: 14px 24px !important;
+    flex-shrink: 0 !important;
+    display: block !important;
+  }
+  .plant-section-head { margin-bottom: 10px !important; }
 
   /* ── MIXING PAGE ── */
-  #page-mixing.active {
-    overflow: hidden !important;
-  }
+  #page-mixing.active { overflow: hidden !important; }
   .mixing-page-wrap {
     flex: 1 1 auto !important;
     min-height: 0 !important;
     overflow-y: auto !important;
     overflow-x: hidden !important;
     -webkit-overflow-scrolling: touch !important;
-    display: block !important;        /* jangan flex agar hero tidak collapse */
-    width: 100% !important;
-  }
-  .mixing-hero, .mixing-section {
-    flex-shrink: 0 !important;
     display: block !important;
     width: 100% !important;
-    min-height: unset !important;
+  }
+  .mixing-hero {
+    padding: 14px 24px 12px !important;
+    flex-shrink: 0 !important;
+    display: block !important;
+  }
+  .mixing-hero-title { font-size: 18px !important; }
+  .mixing-section {
+    padding: 14px 24px !important;
+    flex-shrink: 0 !important;
+    display: block !important;
   }
 
   /* ── DETAIL PAGE ── */
-  #page-detail.active {
-    overflow: hidden !important;
-  }
-  .detail-back-row {
-    flex: 0 0 auto !important;
-  }
+  #page-detail.active { overflow: hidden !important; }
+  .detail-back-row { flex: 0 0 auto !important; }
   .content-area {
     flex: 1 1 auto !important;
     min-height: 0 !important;
@@ -114,10 +155,7 @@
   .search-wrap { flex: 0 0 auto !important; }
 
   /* ── TAB CONTENT ── */
-  .tab-content {
-    display: none !important;
-    flex: none !important;
-  }
+  .tab-content { display: none !important; flex: none !important; }
   .tab-content.active {
     display: flex !important;
     flex-direction: column !important;
@@ -126,8 +164,6 @@
     overflow-y: auto !important;
     animation: fadeUp .2s ease !important;
   }
-
-  /* Tab histori, manual, pool — scroll area terpisah */
   #tab-histori.active,
   #tab-manual.active,
   #tab-pool.active {
@@ -146,145 +182,88 @@
   .mb-filter-bar,
   .pool-selector-row,
   .pool-hero,
-  .plant-switcher-bar {
-    flex: 0 0 auto !important;
-  }
+  .plant-switcher-bar { flex: 0 0 auto !important; }
 
   /* ── MOBILE ── */
   @media (max-width: 768px) {
     html, body {
       position: fixed !important;
       top: 0 !important; left: 0 !important;
-      width: 100% !important;
-      height: 100% !important;
+      width: 100% !important; height: 100% !important;
     }
-
-    /* Topbar ringkas */
-    .topbar {
-      height: 44px !important;
-      padding: 0 10px !important;
-      gap: 6px !important;
-    }
+    .topbar { height: 44px !important; padding: 0 10px !important; gap: 6px !important; }
     .topbar-title { font-size: 11px !important; }
     .topbar-sub, .topbar-divider { display: none !important; }
-    .btn-back, .btn-theme, .btn-sm, .btn-logout {
-      font-size: 10px !important;
-      padding: 4px 8px !important;
-    }
+    .btn-back, .btn-theme, .btn-sm, .btn-logout { font-size: 10px !important; padding: 4px 8px !important; }
     .topbar-clock { display: none !important; }
     .role-badge { font-size: 9px !important; padding: 2px 7px !important; }
-
-    /* Running & breadcrumb */
     .running-bar { height: 22px !important; }
     .running-inner { font-size: 9px !important; }
     .breadcrumb {
-      padding: 0 10px !important;
-      font-size: 10px !important;
-      height: 26px !important;
-      overflow-x: auto !important;
-      scrollbar-width: none !important;
-      flex-wrap: nowrap !important;
-      white-space: nowrap !important;
+      padding: 0 10px !important; font-size: 10px !important; height: 26px !important;
+      overflow-x: auto !important; scrollbar-width: none !important;
+      flex-wrap: nowrap !important; white-space: nowrap !important;
     }
-
-    /* Global search */
-    .global-search-wrap { padding: 8px 10px !important; }
-
-    /* Plant hero lebih compact di mobile */
-    .plant-hero { padding: 16px 12px 14px !important; }
-    .plant-hero-title { font-size: 18px !important; }
-    .plant-section { padding: 12px 10px !important; }
-    .plant-grid {
-      grid-template-columns: repeat(auto-fill, minmax(140px, 1fr)) !important;
-      gap: 8px !important;
-    }
-    .plant-stats-row { gap: 6px !important; flex-wrap: wrap !important; }
-    .plant-stat-box { padding: 7px 10px !important; min-width: 80px !important; }
-    .plant-stat-val { font-size: 14px !important; }
-
-    /* Mixing hero */
-    .mixing-hero { padding: 14px 12px 12px !important; }
-    .mixing-hero-title { font-size: 16px !important; }
+    .global-search-wrap { padding: 6px 10px !important; }
+    /* Hero mobile lebih kecil lagi */
+    .plant-hero { padding: 10px 12px 8px !important; }
+    .plant-hero-title { font-size: 16px !important; }
+    .plant-hero-sub { font-size: 10px !important; margin-bottom: 8px !important; }
+    .plant-hero-badge { display: none !important; }
+    .plant-stat-box { padding: 5px 8px !important; min-width: 70px !important; }
+    .plant-stat-val { font-size: 13px !important; }
+    .plant-section { padding: 10px !important; }
+    .plant-grid { grid-template-columns: repeat(auto-fill, minmax(140px, 1fr)) !important; gap: 8px !important; }
+    .mixing-hero { padding: 10px 12px 8px !important; }
+    .mixing-hero-title { font-size: 15px !important; }
     .mixing-section { padding: 10px !important; }
-    .mixing-grid {
-      grid-template-columns: repeat(auto-fill, minmax(120px, 1fr)) !important;
-      gap: 6px !important;
-    }
-
-    /* Detail / cards */
+    .mixing-grid { grid-template-columns: repeat(auto-fill, minmax(120px, 1fr)) !important; gap: 6px !important; }
     .cards-grid { grid-template-columns: 1fr !important; gap: 8px !important; }
     .pool-grid  { grid-template-columns: 1fr !important; gap: 8px !important; }
     .inu-card   { padding: 13px 14px !important; }
-
-    /* Search bar */
     .search-wrap { padding: 7px 10px !important; gap: 6px !important; }
     .search-bar  { font-size: 11px !important; padding: 6px 10px !important; }
-
-    /* Modal dari bawah */
     .modal-overlay  { align-items: flex-end !important; padding: 0 !important; }
     .modal {
-      border-radius: 18px 18px 0 0 !important;
-      max-width: 100% !important;
-      margin: 0 !important;
-      padding: 20px 16px 32px !important;
-      max-height: 92vh !important;
-      overflow-y: auto !important;
-      width: 100% !important;
+      border-radius: 18px 18px 0 0 !important; max-width: 100% !important; margin: 0 !important;
+      padding: 20px 16px 32px !important; max-height: 92vh !important;
+      overflow-y: auto !important; width: 100% !important;
     }
     .ts-modal-overlay { align-items: flex-end !important; padding: 0 !important; }
-    .ts-modal {
-      border-radius: 18px 18px 0 0 !important;
-      max-width: 100% !important;
-      margin: 0 !important;
-      padding: 20px 16px 32px !important;
-    }
+    .ts-modal { border-radius: 18px 18px 0 0 !important; max-width: 100% !important; margin: 0 !important; padding: 20px 16px 32px !important; }
     .login-gate-overlay { align-items: flex-end !important; }
     .login-gate-box {
-      border-radius: 18px 18px 0 0 !important;
-      max-width: 100% !important;
-      margin: 0 !important;
-      padding: 24px 16px 36px !important;
-      max-height: 92vh !important;
-      overflow-y: auto !important;
+      border-radius: 18px 18px 0 0 !important; max-width: 100% !important; margin: 0 !important;
+      padding: 24px 16px 36px !important; max-height: 92vh !important; overflow-y: auto !important;
     }
-
-    /* Global results */
     .global-results-panel { padding: 12px !important; }
     .global-result-grid   { grid-template-columns: 1fr !important; }
-
-    /* Pool selector */
     .pool-selector-row { gap: 6px !important; padding: 8px 10px !important; }
   }
 
   </style>`);
 
   // ── PATCH renderMixingPage ──────────────────────────────────────
-  // Reset inline style yang mungkin di-set sebelumnya, lalu panggil original
   var _origRMP = window.renderMixingPage;
   if (typeof _origRMP === 'function') {
     window.renderMixingPage = async function () {
       var wrap = document.querySelector('.mixing-page-wrap');
-      if (wrap) {
-        // Hapus inline style yang mungkin memblokir display
-        wrap.removeAttribute('style');
-      }
+      if (wrap) wrap.removeAttribute('style');
       return _origRMP.apply(this, arguments);
     };
   }
 
   // ── PATCH showPage ──────────────────────────────────────────────
-  // Pastikan setiap page yang di-hide tidak menyisakan inline style
   var _origSP = window.showPage;
   if (typeof _origSP === 'function') {
     window.showPage = function (name) {
       _origSP.apply(this, arguments);
-      // Reset scroll pada mixing-page-wrap saat pindah halaman
       var mw = document.querySelector('.mixing-page-wrap');
       if (mw) mw.scrollTop = 0;
     };
   }
 
-  // ── PATCH renderPlantPage (tambah WS Boveri card) ──────────────
+  // ── PATCH renderPlantPage ───────────────────────────────────────
   window.renderPlantPage = async function () {
     var el = document.getElementById('plant-content');
     if (!el) return;
@@ -296,7 +275,6 @@
       var canAll = typeof canAccessAllPlants === 'function' ? canAccessAllPlants() : true;
       var plants = canAll ? data.plants : data.plants.filter(function (p) { return p.plant === S.loggedInPlant; });
 
-      // Kumpulkan ABW unik per grup plant
       var abwMap = {};
       plants.forEach(function (p) {
         var pools = typeof getPoolSheets === 'function' ? getPoolSheets(p.plant) : [];
@@ -307,7 +285,6 @@
         return typeof abwCard === 'function' ? abwCard(a, abwMap[a], plants.length + i) : '';
       }).join('');
 
-      // WS Boveri card shared
       var wbIdx = plants.length + Object.keys(abwMap).length;
       var wbCard = '<div class="plant-card" onclick="navToPool(\'MCG\',\'ws_boveri\')" style="animation-delay:' + (wbIdx * 0.06) + 's;border-color:rgba(255,184,32,.45);">'
         + '<div class="plant-card-top" style="background:linear-gradient(135deg,rgba(255,184,32,.12),rgba(255,184,32,.04))">'
@@ -325,10 +302,8 @@
 
       el.innerHTML = '<div class="plant-grid">'
         + plants.map(function (p, i) { return typeof plantCard === 'function' ? plantCard(p, i) : ''; }).join('')
-        + abwCards + wbCard
-        + '</div>';
+        + abwCards + wbCard + '</div>';
 
-      // Load mixing count per plant
       await Promise.all(plants.map(async function (p) {
         try {
           if (!S.cache[p.plant + '_groupList']) {
@@ -348,7 +323,6 @@
         } catch (e) {}
       }));
 
-      // Load WS Boveri count
       try {
         var wd = await apiGet({ action: 'getPool', plant: 'MCG', pool: 'ws_boveri' });
         var wb = document.getElementById('wb-count');
@@ -392,14 +366,14 @@
         return TIPES.find(function (t) { return sp.includes(t); }) || 'LAINNYA';
       };
       var COLORS = {
-        ACS880: {c:'#00f0a0',bg:'rgba(0,240,160,.12)',bd:'rgba(0,240,160,.35)'},
-        ACS800: {c:'#4d9fff',bg:'rgba(77,159,255,.12)',bd:'rgba(77,159,255,.35)'},
-        ACS580: {c:'#ffb820',bg:'rgba(255,184,32,.12)',bd:'rgba(255,184,32,.35)'},
-        ACS550: {c:'#c084fc',bg:'rgba(192,132,252,.12)',bd:'rgba(192,132,252,.35)'},
-        ACS355: {c:'#f472b6',bg:'rgba(244,114,182,.12)',bd:'rgba(244,114,182,.35)'},
-        ACS150: {c:'#fb923c',bg:'rgba(251,146,60,.12)',bd:'rgba(251,146,60,.35)'},
-        DCS880: {c:'#00e0f8',bg:'rgba(0,224,248,.10)',bd:'rgba(0,224,248,.30)'},
-        DCS800: {c:'#38bdf8',bg:'rgba(56,189,248,.10)',bd:'rgba(56,189,248,.30)'},
+        ACS880:{c:'#00f0a0',bg:'rgba(0,240,160,.12)',bd:'rgba(0,240,160,.35)'},
+        ACS800:{c:'#4d9fff',bg:'rgba(77,159,255,.12)',bd:'rgba(77,159,255,.35)'},
+        ACS580:{c:'#ffb820',bg:'rgba(255,184,32,.12)',bd:'rgba(255,184,32,.35)'},
+        ACS550:{c:'#c084fc',bg:'rgba(192,132,252,.12)',bd:'rgba(192,132,252,.35)'},
+        ACS355:{c:'#f472b6',bg:'rgba(244,114,182,.12)',bd:'rgba(244,114,182,.35)'},
+        ACS150:{c:'#fb923c',bg:'rgba(251,146,60,.12)',bd:'rgba(251,146,60,.35)'},
+        DCS880:{c:'#00e0f8',bg:'rgba(0,224,248,.10)',bd:'rgba(0,224,248,.30)'},
+        DCS800:{c:'#38bdf8',bg:'rgba(56,189,248,.10)',bd:'rgba(56,189,248,.30)'},
         LAINNYA:{c:'#9fc3e8',bg:'rgba(159,195,232,.08)',bd:'rgba(159,195,232,.25)'}
       };
       var getC = function (t) { return COLORS[t] || COLORS.LAINNYA; };
@@ -459,5 +433,6 @@
     }
   };
 
-  console.log('[GH-PATCH v9] loaded — blank space & mobile scroll fixed');
+  console.log('[GH-PATCH v10] loaded — hero compact, blank space fixed');
 })();
+
