@@ -1,55 +1,61 @@
 // ================================================================
-//  GARDA HITAM — PATCH v6
-//  Fix: blank space hitam, hero stats terpotong, card overflow
-//  Taruh SEBELUM </body> — HAPUS patch versi sebelumnya
+//  GARDA HITAM — PATCH v7
+//  Fix: blank space hitam di semua halaman (mixing, detail, plant)
+//  Root cause: height:0 + flex conflict bikin hero collapse
+//  Solusi: pakai height:100% + overflow scheme yang konsisten
 // ================================================================
 (function () {
   'use strict';
 
-  // ── CSS FIX v6 ─────────────────────────────────────────────
-  document.head.insertAdjacentHTML('beforeend', `<style id="gh-v6-fix">
+  // ── CSS FIX v7 ─────────────────────────────────────────────
+  document.head.insertAdjacentHTML('beforeend', `<style id="gh-v7-fix">
 
-  /* ── 1. LOCK VIEWPORT ── */
-  html {
+  /* ── HAPUS SEMUA STYLE GH-V6 JIKA ADA ── */
+  /* (sudah otomatis di-override karena specificity sama, v7 di-load belakangan) */
+
+  /* ── 1. VIEWPORT ── */
+  html, body {
     height: 100% !important;
+    max-height: 100vh !important;
     overflow: hidden !important;
+    margin: 0 !important;
+    padding: 0 !important;
   }
   body {
-    height: 100% !important;
-    max-height: 100% !important;
-    overflow: hidden !important;
     display: flex !important;
     flex-direction: column !important;
   }
 
-  /* ── 2. TOPBAR STACK ── */
-  .topbar      { flex-shrink: 0 !important; overflow: hidden !important; }
-  .running-bar { flex-shrink: 0 !important; overflow: hidden !important; }
-  .breadcrumb  { flex-shrink: 0 !important; overflow: hidden !important; }
-
-  /* ── 3. PAGES WRAPPER ── */
-  #pages-wrapper {
-    flex: 1 1 0% !important;
-    height: 0 !important;
+  /* ── 2. FIXED BARS ── */
+  .topbar,
+  .running-bar,
+  .breadcrumb {
+    flex: 0 0 auto !important;
+    overflow: hidden !important;
     min-height: 0 !important;
+  }
+
+  /* ── 3. PAGES WRAPPER — mengisi sisa tinggi ── */
+  #pages-wrapper {
+    flex: 1 1 auto !important;
     overflow: hidden !important;
     display: flex !important;
     flex-direction: column !important;
+    min-height: 0 !important;
+    /* JANGAN pakai height:0 — bikin anak collapse */
   }
 
   /* ── 4. PAGE BASE ── */
   .page {
     display: none !important;
-    flex: none !important;
   }
   .page.active {
     display: flex !important;
     flex-direction: column !important;
-    flex: 1 1 0% !important;
-    height: 0 !important;
-    min-height: 0 !important;
+    flex: 1 1 auto !important;
     overflow: hidden !important;
-    position: relative !important;
+    min-height: 0 !important;
+    animation: fadeUp .2s ease !important;
   }
 
   /* ── 5. PLANT PAGE ── */
@@ -57,62 +63,54 @@
     overflow: hidden !important;
   }
   #page-plant .global-search-wrap {
-    flex-shrink: 0 !important;
+    flex: 0 0 auto !important;
   }
   .plant-wrap {
-    flex: 1 1 0% !important;
-    height: 0 !important;
-    min-height: 0 !important;
+    flex: 1 1 auto !important;
     overflow-y: auto !important;
     overflow-x: hidden !important;
     -webkit-overflow-scrolling: touch !important;
+    min-height: 0 !important;
   }
-
-  /* FIX: Plant hero stats — jangan overflow/terpotong */
+  /* Hero & stats tidak boleh collapse */
   .plant-hero {
     flex-shrink: 0 !important;
-    overflow: visible !important;
-    padding-bottom: 24px !important;
   }
   .plant-stats-row {
     display: flex !important;
     flex-wrap: wrap !important;
     gap: 10px !important;
-    overflow: visible !important;
   }
   .plant-stat-box {
     min-width: 100px !important;
     flex-shrink: 0 !important;
   }
-
-  /* FIX: Plant grid cards — ukuran lebih compact */
- .plant-grid {
-  display: grid !important;
-  grid-template-columns: repeat(auto-fill, minmax(180px, 1fr)) !important;
-  gap: 12px !important;
-  align-items: start !important;
-}
-  .plant-card {
-    min-height: 0 !important;
-  }
-  .plant-card-name {
-    font-size: 18px !important;
+  .plant-grid {
+    display: grid !important;
+    grid-template-columns: repeat(auto-fill, minmax(180px, 1fr)) !important;
+    gap: 12px !important;
   }
 
   /* ── 6. MIXING PAGE ── */
   #page-mixing.active {
     overflow: hidden !important;
   }
-  /* FIX: Mixing page — hero tidak boleh mengambil banyak space */
-  .mixing-hero {
-    /* Pastikan hero tidak collapse atau hilang */
+  .mixing-page-wrap {
+    flex: 1 1 auto !important;
+    overflow-y: auto !important;
+    overflow-x: hidden !important;
+    -webkit-overflow-scrolling: touch !important;
+    min-height: 0 !important;
+    /* PENTING: display block bukan flex agar hero tidak collapse */
     display: block !important;
-    flex-shrink: 0 !important;
-    padding: 20px 24px 16px !important;
+  }
+  /* Hero harus selalu terlihat */
+  .mixing-hero {
+    display: block !important;
+    position: relative !important;
   }
   .mixing-section {
     display: block !important;
-    padding: 16px 24px !important;
   }
   .mixing-grid {
     display: grid !important;
@@ -124,33 +122,40 @@
   #page-detail.active {
     overflow: hidden !important;
   }
-  .detail-back-row { flex-shrink: 0 !important; }
+  .detail-back-row {
+    flex: 0 0 auto !important;
+  }
   .content-area {
-    flex: 1 1 0% !important;
-    height: 0 !important;
-    min-height: 0 !important;
+    flex: 1 1 auto !important;
     overflow: hidden !important;
     display: flex !important;
     flex-direction: column !important;
+    min-height: 0 !important;
   }
-  .content-tabs { flex-shrink: 0 !important; overflow-x: auto !important; }
-  .search-wrap  { flex-shrink: 0 !important; }
+  .content-tabs {
+    flex: 0 0 auto !important;
+    overflow-x: auto !important;
+    scrollbar-width: none !important;
+  }
+  .content-tabs::-webkit-scrollbar { display: none !important; }
+  .search-wrap {
+    flex: 0 0 auto !important;
+  }
 
   /* ── 8. TAB CONTENTS ── */
   .tab-content {
     display: none !important;
-    flex: none !important;
   }
   .tab-content.active {
     display: flex !important;
     flex-direction: column !important;
-    flex: 1 1 0% !important;
-    height: 0 !important;
-    min-height: 0 !important;
+    flex: 1 1 auto !important;
     overflow-y: auto !important;
+    min-height: 0 !important;
+    animation: fadeUp .2s ease !important;
   }
 
-  /* Tab dengan inner scroll area */
+  /* Tab dengan inner scroll area — overflow hidden di parent */
   #tab-histori.active,
   #tab-manual.active,
   #tab-pool.active {
@@ -160,16 +165,26 @@
   .histori-scroll-area,
   .manual-scroll-area,
   .pool-scroll-area {
-    flex: 1 1 0% !important;
-    height: 0 !important;
-    min-height: 0 !important;
+    flex: 1 1 auto !important;
     overflow-y: auto !important;
+    min-height: 0 !important;
+    -webkit-overflow-scrolling: touch !important;
   }
-  .pool-selector-row { flex-shrink: 0 !important; }
-  .pool-hero         { flex-shrink: 0 !important; }
-  .plant-switcher-bar { flex-shrink: 0 !important; }
+  /* Bagian fixed di tab pool */
+  .pool-selector-row,
+  .pool-hero,
+  .plant-switcher-bar,
+  .hist-filter-bar,
+  .mb-filter-bar {
+    flex: 0 0 auto !important;
+  }
 
-  /* ── 9. MOBILE ── */
+  /* ── 9. DRIVE HEADER di tab drive ── */
+  #tab-drive .drive-header {
+    flex: 0 0 auto !important;
+  }
+
+  /* ── 10. MOBILE ── */
   @media (max-width: 768px) {
     html, body {
       position: fixed !important;
@@ -184,6 +199,7 @@
     }
     .mixing-grid {
       grid-template-columns: repeat(auto-fill, minmax(120px, 1fr)) !important;
+      gap: 6px !important;
     }
     .plant-stat-box {
       min-width: 80px !important;
@@ -192,24 +208,40 @@
     .plant-stat-val {
       font-size: 14px !important;
     }
+    .plant-hero {
+      padding: 16px 12px 14px !important;
+    }
+    .mixing-hero {
+      padding: 14px 12px 12px !important;
+    }
+    .cards-grid {
+      grid-template-columns: 1fr !important;
+    }
+    .pool-grid {
+      grid-template-columns: 1fr !important;
+    }
   }
   </style>`);
 
+  // ── HAPUS style v6 jika masih ada ──────────────────────────
+  const oldStyle = document.getElementById('gh-v6-fix');
+  if (oldStyle) oldStyle.remove();
+
 
   // ================================================================
-  //  FIX renderMixingPage — root cause blank space
-  //  Masalah: mixing-page-wrap pakai display:flex tapi child
-  //  (hero + section) tidak punya flex properties yang benar,
-  //  sehingga ada gap kosong besar.
-  //  Solusi: override renderMixingPage agar tidak bergantung flex
+  //  FIX renderMixingPage
+  //  Pastikan .mixing-page-wrap pakai display:block supaya
+  //  .mixing-hero tidak di-flex-shrink jadi 0
   // ================================================================
   const _origRenderMixingPage = window.renderMixingPage;
   window.renderMixingPage = async function () {
-    // Pastikan wrap pakai display:block (bukan flex)
     const wrap = document.querySelector('.mixing-page-wrap');
     if (wrap) {
       wrap.style.display = 'block';
       wrap.style.overflowY = 'auto';
+      wrap.style.overflowX = 'hidden';
+      wrap.style.flex = '1 1 auto';
+      wrap.style.minHeight = '0';
     }
     if (typeof _origRenderMixingPage === 'function') {
       return _origRenderMixingPage.apply(this, arguments);
@@ -218,16 +250,11 @@
 
 
   // ================================================================
-  //  FIX renderDetailPage — root cause blank space di detail
-  //  Masalah: content-area kadang tidak resize setelah tab switch
-  // ================================================================
-
-
-  // ================================================================
-  //  renderPlantPage: WS Boveri card + stat clickable
+  //  FIX renderPlantPage — WS Boveri card + stat clickable
   // ================================================================
   window.renderPlantPage = async function () {
     const el = document.getElementById('plant-content');
+    if (!el) return;
     el.innerHTML = '<div class="state-box"><div class="sp"></div><p>Memuat plant...</p></div>';
     try {
       const data = await apiGet({ action: 'getPlants' });
@@ -320,7 +347,7 @@
 
 
   // ================================================================
-  //  renderSummaryTab: dengan breakdown INU/DSU/tipe
+  //  FIX renderSummaryTab — dengan breakdown INU/DSU/tipe
   // ================================================================
   window.renderSummaryTab = async function () {
     if (typeof renderSwitcherBar === 'function') renderSwitcherBar('summary', S.plant);
@@ -501,5 +528,5 @@
     }
   };
 
-  console.log('[GH-PATCH v6] loaded OK');
+  console.log('[GH-PATCH v7] loaded OK — blank space fix applied');
 })();
