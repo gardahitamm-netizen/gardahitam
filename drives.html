@@ -13,7 +13,6 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <title>Drive Monitoring — Garda Hitam</title>
 <style>
-/* ========== GAYA ASLI (TIDAK BERUBAH) ========== */
 @import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap');
 
 :root {
@@ -52,6 +51,7 @@
   --admin-color: #c084fc;
   --admin-bg:    rgba(192,132,252,.12);
   --admin-bd:    rgba(192,132,252,.35);
+  /* Pool colors */
   --rusak-color: #ff3d55;
   --rusak-bg:    rgba(255,61,85,.12);
   --rusak-bd:    rgba(255,61,85,.35);
@@ -202,54 +202,14 @@ body{font-family:'Plus Jakarta Sans',sans-serif;background:var(--bg);color:var(-
 .bc-cur{color:var(--text);}
 .bc-sep{color:var(--border);}
 
-/* LAYOUT UTAMA (YANG DIPERBAIKI) */
-#pages-wrapper {
-  display: flex !important;
-  flex-direction: column !important;
-  height: 100% !important;
-  width: 100% !important;
-  overflow: hidden !important;
-  min-height: 0 !important;
-}
-.page {
-  flex: 1 1 100% !important;
-  min-height: 0 !important;
-  overflow: hidden !important;
-}
-.page.active {
-  display: flex !important;
-  flex-direction: column !important;
-  min-height: 0 !important;
-  overflow: hidden !important;
-  animation: fadeUp .2s ease;
-}
-/* Scrollable areas */
-.plant-wrap,
-.mixing-page-wrap,
-.content-area,
-.tab-content.active,
-.histori-scroll-area,
-.manual-scroll-area,
-.pool-scroll-area {
-  flex: 1 1 auto !important;
-  min-height: 0 !important;
-  overflow-y: auto !important;
-  overflow-x: hidden !important;
-  -webkit-overflow-scrolling: touch !important;
-}
-.tab-content.active {
-  display: flex !important;
-  flex-direction: column !important;
-}
-.content-area {
-  display: flex !important;
-  flex-direction: column !important;
-  min-height: 0 !important;
-}
-/* Animasi */
+#pages-wrapper{flex:1 1 0%;height:0;overflow:hidden;display:flex;flex-direction:column;min-height:0;}
+.page{display:none;flex:1;overflow:hidden;flex-direction:column;min-height:0;}
+.page.active{display:flex;position:relative;flex:1 1 0%;height:0;min-height:0;overflow:hidden;flex-direction:column;pointer-events:auto;animation:fadeUp .2s ease;}
+  #page-mixing.active,#page-detail.active{overflow:hidden;}
+#page-mixing.active .mixing-page-wrap{flex:1 1 0%;height:0;}
 @keyframes fadeUp{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:translateY(0)}}
 
-/* GAYA ASLI LAINNYA (tidak diubah) */
+/* ══ SEARCH BAR ══ */
 .search-wrap{display:flex;align-items:center;gap:8px;padding:10px 16px;background:var(--surf);border-bottom:1px solid var(--border);flex-shrink:0;}
 .search-icon{font-size:14px;flex-shrink:0;color:var(--muted);}
 .search-bar{flex:1;background:var(--surf2);border:1px solid var(--border);color:var(--text);padding:8px 14px;border-radius:8px;font-size:12px;font-family:'JetBrains Mono',monospace;outline:none;transition:border-color .2s;}
@@ -260,6 +220,7 @@ body{font-family:'Plus Jakarta Sans',sans-serif;background:var(--bg);color:var(-
 .search-clear:hover{border-color:var(--fault);color:var(--fault);}
 .search-count{font-family:'JetBrains Mono',monospace;font-size:10px;color:var(--muted);flex-shrink:0;white-space:nowrap;}
 
+/* ══ GLOBAL SEARCH ══ */
 .global-search-wrap{padding:14px 20px;background:var(--surf);border-bottom:1px solid var(--border);flex-shrink:0;}
 .global-search-inner{display:flex;align-items:center;gap:10px;background:var(--surf2);border:1px solid var(--border);border-radius:10px;padding:8px 16px;transition:border-color .2s;}
 .global-search-inner:focus-within{border-color:var(--accent);box-shadow:0 0 0 3px rgba(77,159,255,.08);}
@@ -298,7 +259,7 @@ body{font-family:'Plus Jakarta Sans',sans-serif;background:var(--bg);color:var(-
 .global-no-results{display:flex;flex-direction:column;align-items:center;gap:12px;padding:60px 20px;color:var(--muted);font-family:'JetBrains Mono',monospace;font-size:12px;text-align:center;}
 .global-searching{display:flex;align-items:center;gap:10px;padding:40px 20px;justify-content:center;font-family:'JetBrains Mono',monospace;font-size:12px;color:var(--muted);}
 
-/* PLANT PAGE */
+/* ══ PLANT PAGE ══ */
 .plant-wrap{flex:1 1 0%;min-height:0;overflow-y:auto;overflow-x:hidden;width:100%;-webkit-overflow-scrolling:touch;}
 .plant-hero{position:relative;overflow:hidden;padding:36px 28px 28px;background:linear-gradient(135deg,#050a16,#0b1828,#091018);border-bottom:1px solid var(--border);}
 .plant-hero::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse 60% 80% at 70% 50%,rgba(77,159,255,.1),transparent 70%),radial-gradient(ellipse 40% 60% at 20% 80%,rgba(0,224,248,.07),transparent 60%);}
@@ -334,7 +295,7 @@ body{font-family:'Plus Jakarta Sans',sans-serif;background:var(--bg);color:var(-
 .plant-card:hover{border-color:var(--accent-bd);transform:translateY(-3px);box-shadow:0 12px 30px rgba(0,0,0,.5),0 0 0 1px var(--accent-bg);}
 .plant-card:hover .plant-card-arr{color:var(--accent);transform:translateX(3px);}
 
-/* MIXING PAGE */
+/* ══ MIXING PAGE ══ */
 .mixing-page-wrap{flex:1 1 0%;min-height:0;overflow-y:auto;overflow-x:hidden;width:100%;-webkit-overflow-scrolling:touch;}
 .mixing-hero{position:relative;overflow:hidden;padding:24px 28px 20px;background:linear-gradient(135deg,#050a16,#0b1828);border-bottom:1px solid var(--border);}
 .mixing-hero::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse 50% 70% at 60% 50%,rgba(77,159,255,.08),transparent 70%);}
@@ -363,7 +324,7 @@ body{font-family:'Plus Jakarta Sans',sans-serif;background:var(--bg);color:var(-
 .mix-card.has-fault{border-left:3px solid var(--fault);}
 .mix-card.has-fault .mix-card-label{color:var(--fault);}
 
-/* DETAIL PAGE */
+/* ══ DETAIL PAGE ══ */
 .content-area{flex:1;overflow:hidden;display:flex;flex-direction:column;min-width:0;min-height:0;}
 .content-tabs{display:flex;border-bottom:1px solid var(--border);background:#08111e;padding:0 20px;flex-shrink:0;overflow-x:auto;scrollbar-width:none;}
 .content-tabs::-webkit-scrollbar{display:none;}
@@ -440,7 +401,7 @@ body{font-family:'Plus Jakarta Sans',sans-serif;background:var(--bg);color:var(-
 .inu-role{font-family:'JetBrains Mono',monospace;font-size:10px;font-weight:600;color:var(--muted);margin-top:4px;font-style:italic;}
 .readonly-notice{display:flex;align-items:center;gap:8px;background:var(--teal-bg);border:1px solid var(--teal-bd);border-radius:8px;padding:8px 14px;font-family:'JetBrains Mono',monospace;font-size:11px;color:var(--teal);margin-bottom:14px;flex-shrink:0;}
 
-/* POOL TAB */
+/* ══ POOL TAB ══ */
 .pool-selector-row{display:flex;align-items:center;gap:10px;padding:12px 20px;background:var(--surf);border-bottom:1px solid var(--border);flex-shrink:0;flex-wrap:wrap;}
 .pool-tab-btn{display:flex;align-items:center;gap:6px;padding:7px 16px;border-radius:8px;border:1px solid var(--border);background:var(--surf2);color:var(--muted);font-family:'JetBrains Mono',monospace;font-size:11px;font-weight:700;cursor:pointer;transition:all .2s;letter-spacing:.5px;}
 .pool-tab-btn:hover{border-color:var(--accent-bd);color:var(--accent);}
@@ -485,10 +446,11 @@ body{font-family:'Plus Jakarta Sans',sans-serif;background:var(--bg);color:var(-
 .btn-pool-move:hover{background:rgba(255,184,32,.25);transform:translateY(-1px);}
 .pool-empty{display:flex;flex-direction:column;align-items:center;gap:12px;padding:60px 20px;color:var(--muted);font-family:'JetBrains Mono',monospace;font-size:12px;text-align:center;}
 
+/* ══ DRIVE CARD POOL BUTTON ══ */
 .btn-send-pool{display:flex;align-items:center;justify-content:center;gap:5px;margin-top:10px;padding:5px 11px;font-family:'JetBrains Mono',monospace;font-size:10px;font-weight:700;border-radius:6px;cursor:pointer;border:1px solid var(--maint-bd);background:var(--maint-bg);color:var(--maint);transition:all .18s;width:100%;}
 .btn-send-pool:hover{background:rgba(255,184,32,.25);transform:translateY(-1px);}
 
-/* HISTORI */
+/* ══ HISTORI ══ */
 .hist-filter-bar{display:flex;align-items:center;gap:10px;padding:10px 16px;background:var(--surf2);border-bottom:1px solid var(--border);flex-shrink:0;flex-wrap:wrap;}
 .hist-filter-label{font-family:'JetBrains Mono',monospace;font-size:10px;color:var(--muted);letter-spacing:1px;text-transform:uppercase;flex-shrink:0;}
 .hist-filter-group{display:flex;align-items:center;gap:6px;flex-shrink:0;}
@@ -545,6 +507,7 @@ tr:hover .btn-edit-ts{opacity:1;}
 .no-results{display:none;flex-direction:column;align-items:center;padding:40px 20px;gap:8px;color:var(--muted);font-family:'JetBrains Mono',monospace;font-size:12px;}
 .no-results.visible{display:flex;}
 
+/* HISTORY TABLE */
 .hist-table-wrap{overflow-x:auto;}
 .hist-table{width:100%;border-collapse:collapse;font-size:12px;}
 .hist-table th{text-align:left;padding:9px 12px;font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:1px;text-transform:uppercase;color:var(--muted);border-bottom:1px solid var(--border);background:var(--surf);white-space:nowrap;}
@@ -664,63 +627,43 @@ tr:hover .btn-edit-ts{opacity:1;}
 .state-box p{font-size:12px;text-align:center;max-width:340px;}
 .btn-retry{background:var(--accent-bg);border:1px solid var(--accent-bd);color:var(--accent);padding:6px 16px;border-radius:6px;font-size:12px;cursor:pointer;font-family:'JetBrains Mono',monospace;}
 
-/* MOBILE (DIPERBAIKI) */
-@media (max-width: 768px) {
-  html, body {
-    position: relative !important;
-    height: 100% !important;
-    overflow: hidden !important;
-  }
-  .topbar { height: 44px !important; padding: 0 10px !important; gap: 6px !important; }
-  .topbar-title { font-size: 11px !important; }
-  .topbar-sub, .topbar-divider { display: none !important; }
-  .btn-back, .btn-theme, .btn-sm, .btn-logout { font-size: 10px !important; padding: 4px 8px !important; }
-  .topbar-clock { display: none !important; }
-  .role-badge { font-size: 9px !important; padding: 2px 7px !important; }
-  .running-bar { height: 22px !important; }
-  .running-inner { font-size: 9px !important; }
-  .breadcrumb {
-    padding: 0 10px !important; font-size: 10px !important; height: 26px !important;
-    overflow-x: auto !important; scrollbar-width: none !important;
-    flex-wrap: nowrap !important; white-space: nowrap !important;
-  }
-  .plant-wrap, .mixing-page-wrap {
-    overflow-y: auto !important;
-    -webkit-overflow-scrolling: touch !important;
-  }
-  .plant-hero, .mixing-hero { padding: 16px 12px 14px !important; }
-  .plant-hero-title { font-size: 18px !important; }
-  .mixing-hero-title { font-size: 16px !important; }
-  .plant-section, .mixing-section { padding: 12px 10px !important; }
-  .plant-grid { grid-template-columns: repeat(auto-fill, minmax(140px, 1fr)) !important; gap: 8px !important; }
-  .mixing-grid { grid-template-columns: repeat(auto-fill, minmax(130px, 1fr)) !important; gap: 8px !important; }
-  .cards-grid { grid-template-columns: 1fr !important; gap: 8px !important; }
-  .pool-grid { grid-template-columns: 1fr !important; gap: 8px !important; }
-  .inu-card { padding: 13px 14px !important; }
-  .search-wrap { padding: 7px 10px !important; gap: 6px !important; }
-  .search-bar { font-size: 11px !important; padding: 6px 10px !important; }
-  .global-search-wrap { padding: 8px 10px !important; }
-  .modal-overlay { align-items: flex-end !important; padding: 0 !important; }
-  .modal {
-    border-radius: 18px 18px 0 0 !important; max-width: 100% !important; margin: 0 !important;
-    padding: 20px 16px 32px !important; max-height: 85vh !important;
-    overflow-y: auto !important; width: 100% !important;
-  }
-  .ts-modal-overlay { align-items: flex-end !important; padding: 0 !important; }
-  .ts-modal {
-    border-radius: 18px 18px 0 0 !important; max-width: 100% !important; margin: 0 !important;
-    padding: 20px 16px 32px !important;
-  }
-  .login-gate-overlay { align-items: flex-end !important; }
-  .login-gate-box {
-    border-radius: 18px 18px 0 0 !important; max-width: 100% !important; margin: 0 !important;
-    padding: 24px 16px 36px !important; max-height: 85vh !important;
-    overflow-y: auto !important;
-  }
-  .global-results-panel { padding: 12px !important; }
-  .global-result-grid { grid-template-columns: 1fr !important; }
-  .pool-selector-row { gap: 6px !important; padding: 8px 10px !important; }
+/* ══ MOBILE ══ */
+@media(max-width:768px){
+  html,body{overflow:hidden!important;height:100%!important;position:fixed!important;top:0!important;left:0!important;}
+  .topbar{height:44px!important;padding:0 10px!important;gap:6px!important;}
+  .topbar-title{font-size:11px!important;}
+  .topbar-sub,.topbar-divider{display:none!important;}
+  .btn-back{font-size:10px!important;padding:4px 8px!important;}
+  .btn-theme,.btn-sm,.btn-logout{font-size:10px!important;padding:4px 8px!important;}
+  .topbar-clock{display:none!important;}
+  .role-badge{font-size:9px!important;padding:2px 7px!important;}
+  .running-bar{height:22px!important;}
+  .running-inner{font-size:9px!important;}
+  .breadcrumb{padding:0 10px!important;font-size:10px!important;height:26px!important;overflow-x:auto!important;scrollbar-width:none!important;flex-wrap:nowrap!important;white-space:nowrap!important;}
+  .plant-wrap,.mixing-page-wrap{height:100%!important;overflow-y:auto!important;-webkit-overflow-scrolling:touch!important;}
+  .plant-hero,.mixing-hero{padding:16px 12px 14px!important;}
+  .plant-hero-title{font-size:18px!important;}
+  .mixing-hero-title{font-size:16px!important;}
+  .plant-section,.mixing-section{padding:12px 10px!important;}
+  .plant-grid{grid-template-columns:repeat(auto-fill,minmax(140px,1fr))!important;gap:8px!important;}
+  .mixing-grid{grid-template-columns:repeat(auto-fill,minmax(130px,1fr))!important;gap:8px!important;}
+  .cards-grid{grid-template-columns:1fr!important;gap:8px!important;}
+  .pool-grid{grid-template-columns:1fr!important;gap:8px!important;}
+  .inu-card{padding:13px 14px!important;}
+  .search-wrap{padding:7px 10px!important;gap:6px!important;}
+  .search-bar{font-size:11px!important;padding:6px 10px!important;}
+  .global-search-wrap{padding:8px 10px!important;}
+  .modal-overlay{align-items:flex-end!important;padding:0!important;}
+  .modal{border-radius:18px 18px 0 0!important;max-width:100%!important;margin:0!important;padding:20px 16px 32px!important;max-height:92vh!important;overflow-y:auto!important;width:100%!important;}
+  .ts-modal-overlay{align-items:flex-end!important;padding:0!important;}
+  .ts-modal{border-radius:18px 18px 0 0!important;max-width:100%!important;margin:0!important;padding:20px 16px 32px!important;}
+  .login-gate-box{border-radius:18px 18px 0 0!important;max-width:100%!important;margin:0!important;padding:24px 16px 36px!important;max-height:92vh!important;overflow-y:auto!important;}
+  .login-gate-overlay{align-items:flex-end!important;}
+  .global-results-panel{padding:12px!important;}
+  .global-result-grid{grid-template-columns:1fr!important;}
+  .pool-selector-row{gap:6px!important;padding:8px 10px!important;}
 }
+  /* ══ PLANT PICKER POPUP ══ */
 .plant-picker-overlay{
   display:none;position:fixed;inset:0;
   background:rgba(0,0,0,.5);backdrop-filter:blur(4px);
@@ -759,6 +702,8 @@ tr:hover .btn-edit-ts{opacity:1;}
   border:1px solid var(--border);background:transparent;color:var(--muted);
 }
 .ppb-close:hover{border-color:var(--fault);color:var(--fault);}
+
+/* ══ PLANT SWITCHER BAR ══ */
 .plant-switcher-bar{
   display:flex;align-items:center;gap:8px;flex-wrap:wrap;
   padding:10px 16px;background:var(--surf2);
@@ -776,10 +721,13 @@ tr:hover .btn-edit-ts{opacity:1;}
 .psb-btn.active{background:var(--accent-bg);border-color:var(--accent);color:var(--accent);}
 .psb-info{margin-left:auto;font-family:'JetBrains Mono',monospace;
   font-size:10px;color:var(--teal);display:flex;align-items:center;gap:5px;}
+
+/* ══ HERO STAT CLICKABLE ══ */
 .plant-stat-box.clickable{cursor:pointer;transition:all .15s;}
 .plant-stat-box.clickable:hover{border-color:var(--accent-bd);background:rgba(77,159,255,.06);}
 .plant-stat-cta{font-family:'JetBrains Mono',monospace;font-size:9px;
   color:var(--teal);margin-top:3px;letter-spacing:.5px;}
+
 </style>
 </head>
 <body>
@@ -834,7 +782,7 @@ tr:hover .btn-edit-ts{opacity:1;}
       <div class="btn-spin"></div>
       <span class="btn-label">🔐 Masuk ke Drive Monitoring</span>
     </button>
-    <div class="gate-security-note">🔒 <span>Session tersimpan selama browser terbuka. Logout manual diperlukan untuk keluar.</span></div>
+  <div class="gate-security-note">🔒 <span>Session tersimpan selama browser terbuka. Logout manual diperlukan untuk keluar.</span></div>
     <div style="text-align:center;margin-top:16px;">
       <a href="index.html" style="display:inline-flex;align-items:center;gap:6px;font-family:'JetBrains Mono',monospace;font-size:11px;color:var(--muted);text-decoration:none;padding:7px 16px;border:1px solid var(--border);border-radius:7px;background:transparent;transition:all .2s;" onmouseover="this.style.color='var(--teal)';this.style.borderColor='var(--teal-bd)'" onmouseout="this.style.color='var(--muted)';this.style.borderColor='var(--border)'">← Kembali ke Home</a>
     </div>
@@ -899,14 +847,17 @@ tr:hover .btn-edit-ts{opacity:1;}
   </div>
 </div>
 
-<!-- ══ PAGES WRAPPER ══ -->
+<!-- ══ PAGES ══ -->
 <div id="pages-wrapper">
+
   <!-- PAGE: PLANT LIST -->
   <div class="page active" id="page-plant">
     <div class="global-search-wrap">
       <div class="global-search-inner">
         <span class="global-search-icon">🌐</span>
-        <input class="global-search-bar" id="global-search-bar" type="text" placeholder="Cari drive di semua plant... (serial number, merk, drive ID)" autocomplete="off" oninput="onGlobalSearch(this.value)">
+        <input class="global-search-bar" id="global-search-bar" type="text"
+          placeholder="Cari drive di semua plant... (serial number, merk, drive ID)"
+          autocomplete="off" oninput="onGlobalSearch(this.value)">
         <span class="global-search-hint" id="global-search-status">Cross-plant search</span>
         <button class="global-search-clear" id="global-search-clear" onclick="clearGlobalSearch()">✕ Clear</button>
       </div>
@@ -922,16 +873,17 @@ tr:hover .btn-edit-ts{opacity:1;}
           <div class="plant-stat-box"><div class="plant-stat-label">System</div><div class="plant-stat-val ok">ONLINE</div></div>
           <div class="plant-stat-box"><div class="plant-stat-label">Last Sync</div><div class="plant-stat-val teal" id="stat-sync">—</div></div>
           <div class="plant-stat-box"><div class="plant-stat-label">Mode</div><div class="plant-stat-val" id="stat-mode">DARK</div></div>
-          <div class="plant-stat-box clickable" onclick="openPlantPicker('summary')">
-            <div class="plant-stat-label">⬜ Summary</div>
-            <div class="plant-stat-val accent">7</div>
-            <div class="plant-stat-cta">↗ Pilih plant</div>
-          </div>
-          <div class="plant-stat-box clickable" onclick="openPlantPicker('analisa')">
-            <div class="plant-stat-label">📊 Analisa</div>
-            <div class="plant-stat-val accent">7</div>
-            <div class="plant-stat-cta">↗ Pilih plant</div>
-          </div>
+            <div class="plant-stat-box clickable" onclick="openPlantPicker('summary')">
+    <div class="plant-stat-label">⬜ Summary</div>
+    <div class="plant-stat-val accent">7</div>
+    <div class="plant-stat-cta">↗ Pilih plant</div>
+  </div>
+  <div class="plant-stat-box clickable" onclick="openPlantPicker('analisa')">
+    <div class="plant-stat-label">📊 Analisa</div>
+    <div class="plant-stat-val accent">7</div>
+    <div class="plant-stat-cta">↗ Pilih plant</div>
+  </div>
+</div>
         </div>
       </div>
       <div class="plant-section">
@@ -1049,13 +1001,14 @@ tr:hover .btn-edit-ts{opacity:1;}
 
       <!-- TAB SUMMARY -->
       <div class="tab-content" id="tab-summary">
-        <div class="plant-switcher-bar" id="summary-switcher-bar" style="display:none">
-          <span class="psb-label">🏭 Plant:</span>
-          <div class="psb-btns" id="summary-psb-btns"></div>
-          <div class="psb-info" id="summary-psb-info">⟳ Memuat...</div>
-        </div>
-        <div id="summary-content" style="padding:20px"></div>
-      </div>
+  <!-- Switcher bar -->
+  <div class="plant-switcher-bar" id="summary-switcher-bar" style="display:none">
+    <span class="psb-label">🏭 Plant:</span>
+    <div class="psb-btns" id="summary-psb-btns"></div>
+    <div class="psb-info" id="summary-psb-info">⟳ Memuat...</div>
+  </div>
+  <div id="summary-content" style="padding:20px"></div>
+</div>
 
       <!-- TAB ASLI -->
       <div class="tab-content" id="tab-asli">
@@ -1064,16 +1017,18 @@ tr:hover .btn-edit-ts{opacity:1;}
 
       <!-- TAB ANALISA -->
       <div class="tab-content" id="tab-analisa">
-        <div class="plant-switcher-bar" id="analisa-switcher-bar" style="display:none">
-          <span class="psb-label">🏭 Plant:</span>
-          <div class="psb-btns" id="analisa-psb-btns"></div>
-          <div class="psb-info" id="analisa-psb-info">⟳ Memuat...</div>
-        </div>
-        <div id="analisa-content"></div>
-      </div>
+  <!-- Switcher bar -->
+  <div class="plant-switcher-bar" id="analisa-switcher-bar" style="display:none">
+    <span class="psb-label">🏭 Plant:</span>
+    <div class="psb-btns" id="analisa-psb-btns"></div>
+    <div class="psb-info" id="analisa-psb-info">⟳ Memuat...</div>
+  </div>
+  <div id="analisa-content"></div>
+</div>
 
       <!-- TAB POOL -->
       <div class="tab-content" id="tab-pool">
+        <!-- Pool selector row -->
         <div class="pool-selector-row" id="pool-selector-row">
           <button class="pool-tab-btn rusak" id="ptab-rusak" onclick="switchPool('rusak')">
             🔴 Rusak <span class="pool-count-badge rusak" id="pcount-rusak">0</span>
@@ -1088,11 +1043,13 @@ tr:hover .btn-edit-ts{opacity:1;}
             <button class="btn-pool-refresh" onclick="refreshPool()">⟳ Refresh Pool</button>
           </div>
         </div>
+        <!-- Pool hero -->
         <div class="pool-hero" id="pool-hero">
           <div class="pool-hero-title" id="pool-hero-title">Pool Drive</div>
           <div class="pool-hero-sub" id="pool-hero-sub">Pilih pool di atas untuk melihat drive yang tersimpan</div>
           <div class="pool-stats-row" id="pool-stats-row"></div>
         </div>
+        <!-- Pool scroll area -->
         <div class="pool-scroll-area">
           <div id="pool-content"></div>
         </div>
@@ -1134,6 +1091,7 @@ tr:hover .btn-edit-ts{opacity:1;}
       <input class="form-input" id="modal-photo" type="text" placeholder="Paste link Google Drive foto...">
       <div class="form-hint">Contoh: https://drive.google.com/file/d/xxx/view</div>
     </div>
+    <!-- Pool send option — only shown if status is kosong / fault -->
     <div id="modal-pool-section" style="display:none;">
       <div style="height:1px;background:var(--border);margin:16px 0;"></div>
       <div style="display:flex;align-items:center;gap:8px;margin-bottom:12px;">
@@ -1241,11 +1199,13 @@ tr:hover .btn-edit-ts{opacity:1;}
     </div>
     <div class="form-group">
       <label class="form-label">Keterangan</label>
-      <input class="form-input" id="mpr-ket" type="text" placeholder="Contoh: Sudah diperbaiki, selesai servis...">
+      <input class="form-input" id="mpr-ket" type="text" 
+             placeholder="Contoh: Sudah diperbaiki, selesai servis...">
     </div>
     <div class="modal-actions">
       <button class="btn-cancel" onclick="closeReturnPoolModal()">Batal</button>
-      <button class="btn-save-ok" id="btn-mpr-save" onclick="doReturnToDrives()">✅ Kembalikan ke Drives</button>
+      <button class="btn-save-ok" id="btn-mpr-save" 
+              onclick="doReturnToDrives()">✅ Kembalikan ke Drives</button>
     </div>
   </div>
 </div>
@@ -1271,8 +1231,7 @@ tr:hover .btn-edit-ts{opacity:1;}
     </div>
   </div>
 </div>
-
-<!-- ══ PLANT PICKER OVERLAY ══ -->
+  <!-- ══ PLANT PICKER OVERLAY ══ -->
 <div class="plant-picker-overlay" id="plant-picker-overlay">
   <div class="plant-picker-box">
     <button class="ppb-close" onclick="closePlantPicker()">✕ Tutup</button>
@@ -1281,6 +1240,7 @@ tr:hover .btn-edit-ts{opacity:1;}
     <div class="ppb-grid" id="ppb-grid"></div>
   </div>
 </div>
+
 
 <script>
 // ══════════════════════════════════════════════════════════
@@ -1301,6 +1261,7 @@ const POOL_SHEETS_MAP = {
   'MCH': ['rusak','ws_boveri','abw6'],
   'PLANT E': ['rusak','ws_boveri','abw6'],
 };
+// Semua opsi pool yang tersedia di seluruh sistem
 const ALL_POOL_OPTIONS = ['rusak','ws_boveri','abw6','abw4','abw1'];
 
 function getPoolSheets(plant) {
@@ -1411,7 +1372,7 @@ function navTo(page,plant,group){
   else if(page==='detail'){showPage('detail');S.tab='drive';showSearchBar(true);renderDetailPage();}
   updateBC();
 }
-function navToPool(plant, poolName){
+  function navToPool(plant, poolName){
   S.plant=plant;
   S.curPool=poolName;
   const groups=S.cache[plant+'_groupList']||[];
@@ -1443,14 +1404,15 @@ async function renderPlantPage(){
     const data=await apiGet({action:'getPlants'});
     id('stat-total').textContent=data.plants.length;id('stat-sync').textContent=new Date().toTimeString().slice(0,5);
     const plants=canAccessAllPlants()?data.plants:data.plants.filter(p=>p.plant===S.loggedInPlant);
-    const abwMap={};
-    plants.forEach(p=>{
-      const pools=getPoolSheets(p.plant);
-      const abw=pools.find(x=>x.startsWith('abw'));
-      if(abw){if(!abwMap[abw])abwMap[abw]=[];abwMap[abw].push(p.plant);}
-    });
-    const abwCards=Object.keys(abwMap).map((abw,i)=>abwCard(abw,abwMap[abw],plants.length+i)).join('');
-    el.innerHTML=`<div class="plant-grid">${plants.map((p,i)=>plantCard(p,i)).join('')}${abwCards}</div>`;
+  // Kartu ABW unik
+const abwMap={};
+plants.forEach(p=>{
+  const pools=getPoolSheets(p.plant);
+  const abw=pools.find(x=>x.startsWith('abw'));
+  if(abw){if(!abwMap[abw])abwMap[abw]=[];abwMap[abw].push(p.plant);}
+});
+const abwCards=Object.keys(abwMap).map((abw,i)=>abwCard(abw,abwMap[abw],plants.length+i)).join('');
+el.innerHTML=`<div class="plant-grid">${plants.map((p,i)=>plantCard(p,i)).join('')}${abwCards}</div>`;
     await Promise.all(plants.map(async p=>{
       try{
         if(!S.cache[p.plant+'_groupList']){
@@ -1509,8 +1471,7 @@ function abwCard(abwName, plantList, i){
     </div>
   </div>`;
 }
-
-// ══════════════════════════════════════════════════════════
+  // ══════════════════════════════════════════════════════════
 //  PLANT PICKER & SWITCHER
 // ══════════════════════════════════════════════════════════
 const PLANT_META_LIST = [
@@ -1522,7 +1483,7 @@ const PLANT_META_LIST = [
   {plant:'MCI', desc:'Mixing Center I', idx:'06'},
   {plant:'PLANT E', desc:'Plant Extension E', idx:'07'},
 ];
-let _pickerMode = '';
+let _pickerMode = ''; // 'summary' | 'analisa'
 
 function openPlantPicker(mode) {
   _pickerMode = mode;
@@ -1530,9 +1491,12 @@ function openPlantPicker(mode) {
   const subs   = {summary:'Lihat ringkasan drive kosong per mixing', analisa:'Lihat analisa kesesuaian posisi drive'};
   id('ppb-title').textContent = labels[mode] || 'Pilih Plant';
   id('ppb-sub').textContent   = subs[mode]   || '';
+
+  // Render grid
   const plantsToShow = canAccessAllPlants()
     ? PLANT_META_LIST
     : PLANT_META_LIST.filter(p => p.plant === S.loggedInPlant);
+
   id('ppb-grid').innerHTML = plantsToShow.map((p, i) =>
     `<div class="ppb-plant${S.plant === p.plant ? ' active' : ''}"
       onclick="pickPlantAndGo('${p.plant}','${mode}')">
@@ -1541,16 +1505,24 @@ function openPlantPicker(mode) {
       <div class="ppb-plant-desc">${p.desc}</div>
     </div>`
   ).join('');
+
   id('plant-picker-overlay').classList.add('open');
 }
-function closePlantPicker() { id('plant-picker-overlay').classList.remove('open'); }
+
+function closePlantPicker() {
+  id('plant-picker-overlay').classList.remove('open');
+}
+
 async function pickPlantAndGo(plant, mode) {
+  // Highlight pilihan
   id('ppb-grid').querySelectorAll('.ppb-plant').forEach(el => {
     el.classList.toggle('active', el.querySelector('.ppb-plant-name').textContent === plant);
   });
   setTimeout(async () => {
     closePlantPicker();
+    // Navigasi ke detail page, langsung buka tab yang dipilih
     S.plant = plant;
+    // Pastikan group ada
     if (!S.cache[plant + '_drives']) {
       try {
         const data = await apiGet({action:'getDrives', plant});
@@ -1569,6 +1541,7 @@ async function pickPlantAndGo(plant, mode) {
     showPage('detail');
     S.tab = mode;
     updateBC();
+    // Render tabs
     document.querySelectorAll('.ctab').forEach(t => t.classList.remove('active'));
     document.querySelectorAll('.tab-content').forEach(t => t.classList.remove('active'));
     id('ctab-' + mode).classList.add('active');
@@ -1576,11 +1549,14 @@ async function pickPlantAndGo(plant, mode) {
     showSearchBar(false);
     id('detail-plant-badge').textContent = plant;
     id('detail-mixing-label').textContent = S.curGroup;
+    // Render switcher bar
     renderSwitcherBar(mode, plant);
+    // Render konten
     if (mode === 'summary') await renderSummaryTab();
     if (mode === 'analisa') await renderAnalisaTab();
   }, 250);
 }
+
 function renderSwitcherBar(mode, activePlant) {
   const barId  = mode + '-switcher-bar';
   const btnsId = mode + '-psb-btns';
@@ -1588,17 +1564,22 @@ function renderSwitcherBar(mode, activePlant) {
   const bar    = id(barId);
   if (!bar) return;
   bar.style.display = 'flex';
+
   const plantsToShow = canAccessAllPlants()
     ? PLANT_META_LIST
     : PLANT_META_LIST.filter(p => p.plant === S.loggedInPlant);
+
   id(btnsId).innerHTML = plantsToShow.map(p =>
     `<button class="psb-btn${p.plant === activePlant ? ' active' : ''}"
       onclick="switchSummaryPlant('${p.plant}','${mode}')">${p.plant}</button>`
   ).join('');
+
   const meta = PLANT_META_LIST.find(p => p.plant === activePlant);
   id(infoId).textContent = '📍 ' + (meta ? meta.desc : activePlant);
 }
+
 async function switchSummaryPlant(plant, mode) {
+  // Update button state
   const btnsEl = id(mode + '-psb-btns');
   if (btnsEl) btnsEl.querySelectorAll('.psb-btn').forEach(b => {
     b.classList.toggle('active', b.textContent === plant);
@@ -1608,7 +1589,10 @@ async function switchSummaryPlant(plant, mode) {
     const meta = PLANT_META_LIST.find(p => p.plant === plant);
     infoEl.textContent = '📍 ' + (meta ? meta.desc : plant);
   }
+
+  // Ganti plant state
   S.plant = plant;
+  // Pastikan drives di-cache
   if (!S.cache[plant + '_drives']) {
     try {
       const data = await apiGet({action:'getDrives', plant});
@@ -1627,13 +1611,18 @@ async function switchSummaryPlant(plant, mode) {
   id('detail-plant-badge').textContent = plant;
   id('detail-mixing-label').textContent = S.curGroup;
   updateBC();
+
   if (mode === 'summary') await renderSummaryTab();
   if (mode === 'analisa') await renderAnalisaTab();
 }
+
+// Tutup picker kalau klik overlay
 id('plant-picker-overlay').addEventListener('click', e => {
   if (e.target === id('plant-picker-overlay')) closePlantPicker();
 });
 
+// ══════════════════════════════════════════════════════════
+//  MIXING PAGE
 // ══════════════════════════════════════════════════════════
 //  MIXING PAGE
 // ══════════════════════════════════════════════════════════
@@ -1693,6 +1682,7 @@ async function renderDetailPage(){
   }catch(e){}
   switchTab(S.tab,true);
 }
+
 async function switchTab(tab,force){
   if(S.tab===tab&&!force)return;
   S.tab=tab;
@@ -1734,11 +1724,11 @@ async function renderDriveTab(){
     function getDriveType(driveId){const s=String(driveId||'').toUpperCase();if(s.includes('.INU.')||s.includes('-INU')||s.includes('_INU'))return'INU';if(s.includes('.DSU.')||s.includes('-DSU')||s.includes('_DSU'))return'DSU';return'OTHER';}
     const groups={INU:[],DSU:[],OTHER:[]};
     drives.forEach(d=>{groups[getDriveType(d.drive_id)].push(d);});
-    const groupConfig=[
-      {key:'DSU',label:'🔌 DC Supply Unit (DSU)',color:'#c084fc'},
-      {key:'INU',label:'⚡ Inverter Unit (INU)',color:'#4d9fff'},
-      {key:'OTHER',label:'📦 Lainnya',color:'#7eb8e8'}
-    ];
+const groupConfig=[
+  {key:'DSU',label:'🔌 DC Supply Unit (DSU)',color:'#c084fc'},
+  {key:'INU',label:'⚡ Inverter Unit (INU)',color:'#4d9fff'},
+  {key:'OTHER',label:'📦 Lainnya',color:'#7eb8e8'}
+];
     let html='';
     groupConfig.forEach(({key,label,color})=>{
       const grp=groups[key];if(!grp.length)return;
@@ -1748,6 +1738,7 @@ async function renderDriveTab(){
     if(S.searchQuery)applyDriveSearch(S.searchQuery);
   }catch(err){id('drive-content').innerHTML=errHTML(err.message,renderDriveTab);id('drive-meta').textContent='Gagal memuat';}
 }
+
 function inuCard(d){
   const st=d.status||'kosong';
   const stTx={ok:'OK',fault:'Fault',maint:'Maintenance',maintenance:'Maintenance',kosong:'Kosong'}[st]||st;
@@ -1763,6 +1754,7 @@ function inuCard(d){
   const clickable=canEdit()?'clickable':'';
   const onclickAttr=canEdit()?`onclick="openModal('${esc(d.drive_id)}','${st}','${esc(ket)}','${esc(d.merk)}','${esc(spek)}','${esc(d.photo_url||'')}','${esc(sn)}','${esc(stiker)}')" `:'';
   const editHint=canEdit()?`<div class="inu-edit-hint">✏️ edit</div>`:'';
+  // Pool button — only for teknisi/admin, and show if has SN
   const poolBtn=canEdit()&&sn?`<button class="btn-send-pool" onclick="event.stopPropagation();openSendPoolModal('${esc(d.drive_id)}','${esc(sn)}','${esc(d.merk)}','${esc(spek)}')">🔧 Kirim ke Pool</button>`:'';
   return`<div class="inu-card ${st} ${clickable}" ${onclickAttr}>
     ${editHint}
@@ -1783,7 +1775,9 @@ function inuCard(d){
 // ══════════════════════════════════════════════════════════
 async function renderPoolTab(){
   const pools = getPoolSheets(S.plant);
+  // Update pool tab buttons dynamically
   const selectorRow = id('pool-selector-row');
+  // Clear existing buttons except refresh
   selectorRow.innerHTML = pools.map(p => {
     const cls = getPoolClass(p);
     return `<button class="pool-tab-btn ${cls}" id="ptab-${p}" onclick="switchPool('${p}')">
@@ -1791,11 +1785,14 @@ async function renderPoolTab(){
     </button>`;
   }).join('') + 
   `<div class="pool-action-row"><button class="btn-pool-refresh" onclick="refreshPool()">⟳ Refresh Pool</button></div>`;
+
   await Promise.all(pools.map(p=>loadPoolData(p)));
   updatePoolTabCounts();
+  // Set curPool to first pool if current curPool not valid for this plant
   if(!pools.includes(S.curPool)) S.curPool = pools[0];
   switchPool(S.curPool);
 }
+
 async function loadPoolData(poolName,force){
   if(!S.plant)return;
   const key=S.plant+'_pool_'+poolName;
@@ -1805,6 +1802,7 @@ async function loadPoolData(poolName,force){
     S.cache[key]=data.items||[];
   }catch(e){S.cache[key]=[];}
 }
+
 function updatePoolTabCounts(){
   const pools = getPoolSheets(S.plant);
   pools.forEach(p=>{
@@ -1812,6 +1810,7 @@ function updatePoolTabCounts(){
     const el=id('pcount-'+p);if(el)el.textContent=items.length;
   });
 }
+
 function switchPool(poolName){
   S.curPool=poolName;
   const pools=getPoolSheets(S.plant);
@@ -1823,11 +1822,13 @@ function switchPool(poolName){
   if(activeBtn)activeBtn.classList.add('active');
   renderPoolContent(poolName);
 }
+
 function renderPoolContent(poolName) {
   const items = S.cache[S.plant + '_pool_' + poolName] || [];
   const hero = id('pool-hero');
   const cls = getPoolClass(poolName);
   hero.className = 'pool-hero ' + cls;
+
   const labels = {
     rusak: '🔴 Pool Rusak — Drive bermasalah / kerusakan fisik',
     ws_boveri: '🟡 Pool WS Boveri — Spare workshop Boveri',
@@ -1848,11 +1849,14 @@ function renderPoolContent(poolName) {
     <div class="pool-stat"><div class="pool-stat-label">Total Drive</div><div class="pool-stat-val">${items.length}</div></div>
     <div class="pool-stat"><div class="pool-stat-label">Plant</div><div class="pool-stat-val" style="font-size:14px">${esc(S.plant)}</div></div>
   `;
+
   const contentEl = id('pool-content');
   if (!items.length) {
     contentEl.innerHTML = `<div class="pool-empty"><span style="font-size:36px">${poolName === 'rusak' ? '✅' : '📦'}</span><h3>Pool Kosong</h3><p>Tidak ada drive di pool ${POOL_LABELS[poolName] || poolName} saat ini.</p></div>`;
     return;
   }
+
+  // ── DETEKSI TIPE & PLANT ──────────────────────────────
   function detectTipe(item) {
     const sp = String(item.spesifikasi || item.merk || '').toUpperCase();
     if (sp.includes('ACS800')) return 'ACS800';
@@ -1863,6 +1867,7 @@ function renderPoolContent(poolName) {
     if (sp.includes('ACS150')) return 'ACS150';
     return 'LAINNYA';
   }
+
   function detectPlant(item) {
     const dari = String(item.dari || '').toUpperCase();
     for (const p of ['MCA', 'MCC', 'MCD', 'MCG', 'MCH', 'MCI', 'PLANT E']) {
@@ -1874,11 +1879,16 @@ function renderPoolContent(poolName) {
     }
     return 'UNKNOWN';
   }
+
+  // ── STATE FILTER ──────────────────────────────────────
   if (!window._poolGroupBy) window._poolGroupBy = 'tipe';
   if (window._poolFilterTipe === undefined) window._poolFilterTipe = '';
   if (window._poolFilterPlant === undefined) window._poolFilterPlant = '';
+
   const allTipes = [...new Set(items.map(detectTipe))].sort();
   const allPlants = [...new Set(items.map(detectPlant))].sort();
+
+  // ── WARNA ─────────────────────────────────────────────
   const tipeColors = {
     ACS800:  { color: '#4d9fff', bg: 'rgba(77,159,255,.12)',   bd: 'rgba(77,159,255,.35)'   },
     ACS880:  { color: '#00f0a0', bg: 'rgba(0,240,160,.12)',    bd: 'rgba(0,240,160,.35)'    },
@@ -1893,9 +1903,13 @@ function renderPoolContent(poolName) {
     MCG: '#ffb820', MCH: '#ff6b81', MCI: '#c084fc',
     'PLANT E': '#f472b6', UNKNOWN: '#9fc3e8',
   };
+
+  // ── APPLY FILTER ──────────────────────────────────────
   let filtered = items;
   if (window._poolFilterTipe)  filtered = filtered.filter(i => detectTipe(i)  === window._poolFilterTipe);
   if (window._poolFilterPlant) filtered = filtered.filter(i => detectPlant(i) === window._poolFilterPlant);
+
+  // ── TOOLBAR HTML ──────────────────────────────────────
   const groupByBtns = ['tipe', 'plant'].map(g => {
     const active = window._poolGroupBy === g;
     return `<button onclick="window._poolGroupBy='${g}';renderPoolContent('${poolName}')"
@@ -1903,6 +1917,7 @@ function renderPoolContent(poolName) {
       ${g === 'tipe' ? '📦 Group: Tipe Drive' : '🏭 Group: Plant'}
     </button>`;
   }).join('');
+
   const tipeFilterBtns = allTipes.map(t => {
     const c = tipeColors[t] || tipeColors.LAINNYA;
     const active = window._poolFilterTipe === t;
@@ -1911,6 +1926,7 @@ function renderPoolContent(poolName) {
       ${t}${active ? ' ✕' : ''}
     </button>`;
   }).join('');
+
   const plantFilterBtns = allPlants.map(p => {
     const c = plantColors[p] || '#9fc3e8';
     const active = window._poolFilterPlant === p;
@@ -1919,11 +1935,14 @@ function renderPoolContent(poolName) {
       ${p}${active ? ' ✕' : ''}
     </button>`;
   }).join('');
+
   const resetBtn = (window._poolFilterTipe || window._poolFilterPlant)
     ? `<button onclick="window._poolFilterTipe='';window._poolFilterPlant='';renderPoolContent('${poolName}')"
         style="padding:3px 10px;border-radius:6px;border:1px solid var(--fault-bd);background:var(--fault-bg);color:var(--fault);font-family:'JetBrains Mono',monospace;font-size:10px;cursor:pointer">
         ✕ Reset Filter
       </button>` : '';
+
+  // ── GROUPING ──────────────────────────────────────────
   function groupBy(arr, keyFn) {
     const map = {}, order = [];
     arr.forEach(item => {
@@ -1933,9 +1952,12 @@ function renderPoolContent(poolName) {
     });
     return { map, order };
   }
+
   const grouped = window._poolGroupBy === 'plant'
     ? groupBy(filtered, detectPlant)
     : groupBy(filtered, detectTipe);
+
+  // ── RENDER GROUP BLOCKS ───────────────────────────────
   let groupHTML = '';
   if (!filtered.length) {
     groupHTML = `<div class="pool-empty"><span style="font-size:28px">🔍</span><h3>Tidak ada hasil</h3><p>Coba reset filter.</p></div>`;
@@ -1943,9 +1965,12 @@ function renderPoolContent(poolName) {
     grouped.order.forEach(groupKey => {
       const groupItems = grouped.map[groupKey];
       const isTipeGroup = window._poolGroupBy === 'tipe';
+
       const c = isTipeGroup
         ? (tipeColors[groupKey] || tipeColors.LAINNYA)
         : { color: plantColors[groupKey] || '#9fc3e8', bg: (plantColors[groupKey] || '#9fc3e8') + '15', bd: (plantColors[groupKey] || '#9fc3e8') + '50' };
+
+      // Mini badge breakdown
       const breakdown = isTipeGroup
         ? [...new Set(groupItems.map(detectPlant))].map(p => {
             const cnt = groupItems.filter(i => detectPlant(i) === p).length;
@@ -1957,6 +1982,7 @@ function renderPoolContent(poolName) {
             const tc = tipeColors[t] || tipeColors.LAINNYA;
             return `<span style="font-family:'JetBrains Mono',monospace;font-size:9px;font-weight:700;padding:2px 7px;border-radius:10px;background:${tc.bg};color:${tc.color};border:1px solid ${tc.bd}">${t} ×${cnt}</span>`;
           }).join(' ');
+
       groupHTML += `
         <div style="margin-bottom:24px">
           <div style="display:flex;align-items:center;gap:10px;margin-bottom:12px;padding:10px 16px;background:${c.bg || c.color + '10'};border:1px solid ${c.bd || c.color + '40'};border-radius:10px;border-left:4px solid ${c.color}">
@@ -1971,6 +1997,7 @@ function renderPoolContent(poolName) {
         </div>`;
     });
   }
+
   contentEl.innerHTML = `
     <div style="background:var(--surf);border:1px solid var(--border);border-radius:10px;padding:12px 16px;margin-bottom:16px;display:flex;flex-direction:column;gap:10px">
       <div style="display:flex;align-items:center;gap:8px;flex-wrap:wrap">
@@ -1991,23 +2018,64 @@ function renderPoolContent(poolName) {
     ${groupHTML}
   `;
 }
-function poolCardV2(item, poolName, i, tipe, plant, tipeColors, plantColors) {
+
+function poolCard(item, poolName, i) {
+  const cls = getPoolClass(poolName);
+  const allPools = getPoolSheets(S.plant);
+  const otherPools = allPools.filter(p => p !== poolName);
+
+  const moveBtns = canEdit() ? otherPools.map(p =>
+    `<button class="btn-pool-action btn-pool-move" 
+      onclick="openMovePoolModal('${esc(item.serial_number)}','${esc(item.drive_id)}','${poolName}','${p}','${esc(item.stiker || '')}')">
+      → ${getPoolLabel(p)}
+    </button>`).join('') : '';
+
+  const returnBtn = canEdit() && item.drive_id
+    ? `<button class="btn-pool-action btn-pool-return" 
+        onclick="openReturnPoolModal('${esc(item.serial_number)}','${esc(item.drive_id)}','${poolName}','${esc(item.stiker || '')}')">
+        ✅ Kembalikan ke Drives
+      </button>` : '';
+
+  const photoBtn = item.photo_url
+    ? `<button class="inu-photo-btn" 
+        onclick="window.open('${esc(item.photo_url)}','_blank')">
+        📷 Lihat Foto
+      </button>` : '';
+
+  return `<div class="pool-card ${poolName}" style="animation-delay:${i * 0.04}s">
+    <div class="pool-card-ts">🕐 ${esc(item.timestamp)}</div>
+    <div class="pool-card-sn">SN: ${esc(item.serial_number) || '—'}</div>
+    ${item.stiker ? `<div class="pool-card-drive-id">🏷️ Stiker: ${esc(item.stiker)}</div>` : ''}
+    <div class="pool-card-drive-id">📍 ${esc(item.drive_id) || '—'}</div>
+    <div class="pool-card-merk">${esc(item.merk) || '—'}</div>
+    ${item.spesifikasi ? `<div class="pool-card-spec">${esc(item.spesifikasi)}</div>` : ''}
+    ${item.keterangan  ? `<div class="pool-card-ket">💬 ${esc(item.keterangan)}</div>` : ''}
+    ${item.dari        ? `<div class="pool-card-dari">📦 Dari: ${esc(item.dari)}</div>` : ''}
+    ${photoBtn}
+    ${canEdit() ? `<div class="pool-card-actions">${returnBtn}${moveBtns}</div>` : ''}
+  </div>`;
+}
+  function poolCardV2(item, poolName, i, tipe, plant, tipeColors, plantColors) {
   const tc = tipeColors[tipe] || tipeColors.LAINNYA;
   const pc = plantColors[plant] || '#9fc3e8';
   const allPools = getPoolSheets(S.plant);
   const otherPools = allPools.filter(p => p !== poolName);
+
   const moveBtns = canEdit() ? otherPools.map(p =>
     `<button class="btn-pool-action btn-pool-move"
       onclick="openMovePoolModal('${esc(item.serial_number)}','${esc(item.drive_id)}','${poolName}','${p}','${esc(item.stiker || '')}')">
       → ${getPoolLabel(p)}
     </button>`).join('') : '';
+
   const returnBtn = canEdit() && item.drive_id
     ? `<button class="btn-pool-action btn-pool-return"
         onclick="openReturnPoolModal('${esc(item.serial_number)}','${esc(item.drive_id)}','${poolName}','${esc(item.stiker || '')}')">
         ✅ Kembalikan ke Drives
       </button>` : '';
+
   const photoBtn = item.photo_url
     ? `<button class="inu-photo-btn" onclick="window.open('${esc(item.photo_url)}','_blank')">📷 Lihat Foto</button>` : '';
+
   return `<div class="pool-card ${poolName}" style="animation-delay:${i * 0.04}s;border-top:3px solid ${tc.color}">
     <div style="display:flex;gap:6px;flex-wrap:wrap;margin-bottom:10px">
       <span style="font-family:'JetBrains Mono',monospace;font-size:10px;font-weight:800;padding:2px 9px;border-radius:5px;background:${tc.bg};color:${tc.color};border:1px solid ${tc.bd}">${tipe}</span>
@@ -2025,7 +2093,7 @@ function poolCardV2(item, poolName, i, tipe, plant, tipeColors, plantColors) {
     ${canEdit() ? `<div class="pool-card-actions">${returnBtn}${moveBtns}</div>` : ''}
   </div>`;
 }
-async function refreshPool(){
+  async function refreshPool(){
   const pools=getPoolSheets(S.plant);
   pools.forEach(p=>delete S.cache[S.plant+'_pool_'+p]);
   await renderPoolTab();
@@ -2038,13 +2106,15 @@ function openSendPoolModal(driveId,sn,merk,spek){
   id('mps-drive-id').textContent=driveId;
   id('mps-sn').textContent=sn||'—';
   id('mps-ket').value='';
-  const sel=id('mps-target-pool');
-  sel.innerHTML=getAllPoolOptions().map(p=>`<option value="${p}">${getPoolLabel(p)} — ${p==='rusak'?'Drive bermasalah':p==='ws_boveri'?'Spare workshop Boveri':'Spare '+p.toUpperCase()}</option>`).join('');
+  // ← Tambahkan ini: populate dropdown dinamis
+const sel=id('mps-target-pool');
+sel.innerHTML=getAllPoolOptions().map(p=>`<option value="${p}">${getPoolLabel(p)} — ${p==='rusak'?'Drive bermasalah':p==='ws_boveri'?'Spare workshop Boveri':'Spare '+p.toUpperCase()}</option>`).join('');
   id('btn-mps-save').disabled=false;id('btn-mps-save').textContent='📤 Kirim ke Pool';
   S._poolSend={driveId,sn,merk,spek};
   id('modal-pool-send').classList.add('open');
 }
 function closeSendPoolModal(){id('modal-pool-send').classList.remove('open');S._poolSend=null;}
+
 async function doSendToPool() {
   if (!S._poolSend) return;
   const btn = id('btn-mps-save');
@@ -2060,6 +2130,8 @@ async function doSendToPool() {
       keterangan: ket || '—',
       updatedBy: S.username + '-' + S.role
     });
+
+    // ← FORCE reload drives dari API (bukan dari cache)
     const freshData = await apiGet({ action: 'getDrives', plant: S.plant });
     const freshDrives = Array.isArray(freshData.drives) ? freshData.drives : [];
     S.cache[S.plant + '_drives'] = freshDrives;
@@ -2069,6 +2141,7 @@ async function doSendToPool() {
       if (g && !seen.includes(g)) { seen.push(g); groups.push(g); }
     });
     S.cache[S.plant + '_groupList'] = groups;
+
     delete S.cache[S.plant + '_pool_' + targetPool];
     closeSendPoolModal();
     await renderDriveTab();
@@ -2091,8 +2164,8 @@ function openMovePoolModal(sn,driveId,fromPool,defaultTo){
   id('mpm-sn').value=sn;id('mpm-drive-id').value=driveId;id('mpm-from-pool').value=fromPool;
   id('mpm-sn-label').textContent=`SN: ${sn||'—'} (dari ${getPoolLabel(fromPool)})`;
   id('mpm-ket').value='';
-  const sel=id('mpm-to-pool');
-  sel.innerHTML=getAllPoolOptions().filter(p=>p!==fromPool).map(p=>`<option value="${p}" ${p===defaultTo?'selected':''}>${getPoolLabel(p)}</option>`).join('');
+const sel=id('mpm-to-pool');
+sel.innerHTML=getAllPoolOptions().filter(p=>p!==fromPool).map(p=>`<option value="${p}" ${p===defaultTo?'selected':''}>${getPoolLabel(p)}</option>`).join('');
   id('btn-mpm-save').disabled=false;id('btn-mpm-save').textContent='🔄 Pindah';
   id('modal-pool-move').classList.add('open');
 }
@@ -2127,6 +2200,7 @@ async function openReturnPoolModal(sn, driveId, fromPool, stiker) {
   id('mpr-ket').value = '';
   id('btn-mpr-save').disabled = false;
   id('btn-mpr-save').textContent = '✅ Kembalikan ke Drives';
+
   if (!S.cache[S.plant + '_drives']) {
     const data = await apiGet({ action: 'getDrives', plant: S.plant });
     const drives = Array.isArray(data.drives) ? data.drives : [];
@@ -2138,11 +2212,13 @@ async function openReturnPoolModal(sn, driveId, fromPool, stiker) {
     });
     S.cache[S.plant + '_groupList'] = groups;
   }
+
   const drives = S.cache[S.plant + '_drives'] || [];
   const groups = [...new Set(drives.map(d => d.group).filter(Boolean))];
   const groupSel = id('mpr-group');
   groupSel.innerHTML = '<option value="">-- Pilih Group --</option>' +
     groups.map(g => `<option value="${g}">${g}</option>`).join('');
+
   const origDrive = drives.find(d => d.drive_id === driveId);
   if (origDrive && origDrive.group) {
     groupSel.value = origDrive.group;
@@ -2150,6 +2226,7 @@ async function openReturnPoolModal(sn, driveId, fromPool, stiker) {
   } else {
     id('mpr-drive-id').innerHTML = '<option value="">-- Pilih Drive ID --</option>';
   }
+
   id('modal-pool-return').classList.add('open');
 }
 function populateMprDriveId(preSelectDriveId) {
@@ -2172,13 +2249,16 @@ async function doReturnToDrives() {
   const fromPool = id('mpr-from-pool').value;
   const targetDriveId = id('mpr-drive-id').value;
   const ket = id('mpr-ket').value.trim();
+
   if (!targetDriveId) {
     alert('⚠️ Pilih Drive ID tujuan terlebih dahulu.');
     return;
   }
+
   const btn = id('btn-mpr-save');
   btn.disabled = true;
   btn.textContent = 'Memproses...';
+
   try {
     await apiGet({
       action: 'returnPoolToDrives',
@@ -2189,6 +2269,8 @@ async function doReturnToDrives() {
       keterangan: ket || '—',
       updatedBy: S.username + '-' + S.role
     });
+
+    // ← FORCE reload drives dari API
     const freshData = await apiGet({ action: 'getDrives', plant: S.plant });
     const freshDrives = Array.isArray(freshData.drives) ? freshData.drives : [];
     S.cache[S.plant + '_drives'] = freshDrives;
@@ -2198,7 +2280,9 @@ async function doReturnToDrives() {
       if (g && !seen.includes(g)) { seen.push(g); groups.push(g); }
     });
     S.cache[S.plant + '_groupList'] = groups;
+
     delete S.cache[S.plant + '_histori'];
+
     closeReturnPoolModal();
     await loadPoolData(fromPool, true);
     updatePoolTabCounts();
@@ -2211,12 +2295,19 @@ async function doReturnToDrives() {
     btn.textContent = '✅ Kembalikan ke Drives';
   }
 }
+// ══════════════════════════════════════════════════════════
+//  TOAST NOTIFICATION
+// ══════════════════════════════════════════════════════════
 function showToast(msg){
   let t=document.getElementById('toast-el');
   if(!t){t=document.createElement('div');t.id='toast-el';t.style.cssText='position:fixed;bottom:20px;left:50%;transform:translateX(-50%);background:#1a2a40;border:1px solid var(--ok-bd);color:var(--ok);font-family:\'JetBrains Mono\',monospace;font-size:12px;padding:10px 20px;border-radius:10px;z-index:999;opacity:0;transition:opacity .3s;white-space:nowrap;pointer-events:none;';document.body.appendChild(t);}
   t.textContent=msg;t.style.opacity='1';
   clearTimeout(t._timer);t._timer=setTimeout(()=>{t.style.opacity='0';},3000);
 }
+
+// ══════════════════════════════════════════════════════════
+//  MODAL POOL OPTION IN EDIT MODAL
+// ══════════════════════════════════════════════════════════
 function togglePoolSendOption(){
   const checked=id('modal-send-pool').checked;
   id('modal-pool-opts').style.display=checked?'block':'none';
@@ -2370,7 +2461,9 @@ function renderManualTable(){
 //  SUMMARY TAB
 // ══════════════════════════════════════════════════════════
 async function renderSummaryTab(){
+  // Aktifkan switcher bar
   renderSwitcherBar('summary', S.plant);
+  // ... sisa kode existing tetap sama
   id('summary-content').innerHTML=loadingHTML('Memuat summary...');
   try{
     const data=await apiGet({action:'getSummaryKosong',plant:S.plant});
@@ -2388,7 +2481,9 @@ async function renderSummaryTab(){
 //  ASLI TAB
 // ══════════════════════════════════════════════════════════
 async function renderAsliTab(){
+  // Aktifkan switcher bar
   renderSwitcherBar('analisa', S.plant);
+  // ... sisa kode existing tetap sama
   id('asli-content').innerHTML=loadingHTML('Memuat data asli...');
   try{
     if(!S.cache[S.plant+'_asli']){const data=await apiGet({action:'getAsli',plant:S.plant});S.cache[S.plant+'_asli']=data.asli||[];}
@@ -2400,7 +2495,8 @@ async function renderAsliTab(){
     function statusBadge(st){if(st==='SESUAI')return`<span class="status-tag st-ok">✅ SESUAI</span>`;if(st==='TIDAK SESUAI')return`<span class="status-tag st-fault">❌ TIDAK SESUAI</span>`;if(st==='TIDAK DITEMUKAN')return`<span class="status-tag st-kosong">🔍 TDK DITEMUKAN</span>`;return`<span style="color:var(--muted)">—</span>`;}
     function renderCari(val,st){if(!val||val==='—')return'<span style="color:var(--muted)">—</span>';if(val.trim()==='#REF!')return`<span class="asli-ref-err">#REF!</span>`;if(st==='TIDAK SESUAI')return`<span class="asli-cari" style="color:var(--fault);border-color:rgba(255,61,85,.35);background:rgba(255,61,85,.1)">${esc(val)}</span>`;if(st==='SESUAI')return`<span class="asli-cari" style="color:var(--ok);border-color:rgba(0,240,160,.35);background:rgba(0,240,160,.1)">${esc(val)}</span>`;return`<span class="asli-cari">${esc(val)}</span>`;}
     id('asli-content').innerHTML=`<div style="padding:14px 20px 0"><div class="mb-header-row"><span class="mb-header-title">📋 Data Asli — ${esc(S.curGroup)}</span><span class="mb-header-count">${total} drive</span></div><div style="display:flex;gap:10px;flex-wrap:wrap;margin-bottom:14px"><div class="sum-stat" style="min-width:90px;padding:10px 14px"><div class="sum-stat-label">Sesuai</div><div class="sum-stat-val ok" style="font-size:18px">${sesuai}</div></div><div class="sum-stat" style="min-width:90px;padding:10px 14px"><div class="sum-stat-label">Tidak Sesuai</div><div class="sum-stat-val" style="font-size:18px;color:var(--fault)">${tidakSesuai}</div></div><div class="sum-stat" style="min-width:90px;padding:10px 14px"><div class="sum-stat-label">Tdk Ditemukan</div><div class="sum-stat-val kosong" style="font-size:18px">${tidakDitemukan}</div></div><div class="sum-stat" style="min-width:90px;padding:10px 14px"><div class="sum-stat-label">Total</div><div class="sum-stat-val accent" style="font-size:18px">${total}</div></div></div></div>
-    <div class="mb-table-wrap" style="padding:0 20px 20px"><table class="mb-table"><thead><tr><th class="mb-num">#</th><th>Drive ID (Posisi Asli)</th><th>Ada di Lapangan</th><th>Serial Number Asli</th><th>Spesifikasi</th><th>Stiker Asli</th><th>Stiker Lapangan</th><th>Status</th></tr></thead><tbody>${rows.map((r,i)=>{const match=!q||(r.drive_id+r.spesifikasi+r.serial_number+(r['cari data lapangan']||r.cari_data_lapangan||'')+r.status).toLowerCase().includes(q);const cari=r['cari data lapangan']||r.cari_data_lapangan||'';return`<tr style="${rowStyle(r.status)}${!match?';display:none':''}"><td class="mb-num">${i+1}</td><td><span class="asli-drive-id">${esc(r.drive_id)}</span></td><td>${renderCari(cari,r.status)}</td><td style="font-family:'JetBrains Mono',monospace;font-size:11px">${esc(r.serial_number)||'<span style="color:var(--muted)">—</span>'}</td>
+    <div class="mb-table-wrap" style="padding:0 20px 20px">
+   "<table class="mb-table"><thead><tr><th class="mb-num">#</th><th>Drive ID (Posisi Asli)</th><th>Ada di Lapangan</th><th>Serial Number Asli</th><th>Spesifikasi</th><th>Stiker Asli</th><th>Stiker Lapangan</th><th>Status</th></tr></thead><tbody>${rows.map((r,i)=>{const match=!q||(r.drive_id+r.spesifikasi+r.serial_number+(r['cari data lapangan']||r.cari_data_lapangan||'')+r.status).toLowerCase().includes(q);const cari=r['cari data lapangan']||r.cari_data_lapangan||'';return`<tr style="${rowStyle(r.status)}${!match?';display:none':''}"><td class="mb-num">${i+1}</td><td><span class="asli-drive-id">${esc(r.drive_id)}</span></td><td>${renderCari(cari,r.status)}</td><td style="font-family:'JetBrains Mono',monospace;font-size:11px">${esc(r.serial_number)||'<span style="color:var(--muted)">—</span>'}</td>
 <td style="font-size:12px">${esc(r.spesifikasi)||'<span style="color:var(--muted)">—</span>'}</td>
 <td><span class="inu-stiker-value" style="font-family:'JetBrains Mono',monospace;font-size:11px">${esc(r.stiker_asli)||'<span style="color:var(--muted)">—</span>'}</span></td>
 <td><span class="inu-stiker-value" style="font-family:'JetBrains Mono',monospace;font-size:11px;color:${r.stiker_lapangan?'var(--teal)':'var(--muted)'}">${esc(r.stiker_lapangan)||'—'}</span></td>
@@ -2422,8 +2518,9 @@ function openModal(driveId,status,keterangan,merk,spesifikasi,photoUrl,serialNum
   id('modal-sn').value=serialNumber||'';
   id('modal-stiker').value=stiker||'';
   id('modal-photo').value=photoUrl||'';
-  const tpSel=id('modal-target-pool');
-  tpSel.innerHTML=getAllPoolOptions().map(p=>`<option value="${p}">${getPoolLabel(p)}</option>`).join('');
+  // Populate pool dropdown dinamis sesuai plant
+const tpSel=id('modal-target-pool');
+tpSel.innerHTML=getAllPoolOptions().map(p=>`<option value="${p}">${getPoolLabel(p)}</option>`).join('');
   const v=status||'ok';
   id('modal-pool-section').style.display=(v==='kosong'||v==='fault')?'block':'none';
   id('modal-send-pool').checked=false;id('modal-pool-opts').style.display='none';
@@ -2437,25 +2534,26 @@ async function saveStatus(){
   btn.disabled=true;btn.textContent='Menyimpan...';
   try{
     await apiGet({action:'updateStatus',plant:S.plant,drive_id:S.editDrive,status,keterangan:id('modal-ket').value.trim(),merk:id('modal-merk').value.trim(),spesifikasi:id('modal-spek').value.trim(),serial_number:id('modal-sn').value.trim(),stiker:id('modal-stiker').value.trim(),photo_url:id('modal-photo').value.trim(),updatedBy:S.username+'-'+S.role});
+    // If send to pool is checked
     if(sendToPool&&id('modal-sn').value.trim()){
       await apiGet({action:'moveDriveToPool',plant:S.plant,drive_id:S.editDrive,target_pool:targetPool,keterangan:id('modal-ket').value.trim()||'—',updatedBy:S.username+'-'+S.role});
       delete S.cache[S.plant+'_pool_'+targetPool];
       await loadPoolData(targetPool,true);updatePoolTabCounts();
     }
-    const freshData = await apiGet({ action: 'getDrives', plant: S.plant });
-    const freshDrives = Array.isArray(freshData.drives) ? freshData.drives : [];
-    S.cache[S.plant + '_drives'] = freshDrives;
-    const seen = [], groups = [];
-    freshDrives.forEach(d => {
-      const g = String(d.group || '').trim();
-      if (g && !seen.includes(g)) { seen.push(g); groups.push(g); }
-    });
-    S.cache[S.plant + '_groupList'] = groups;
-    delete S.cache[S.plant + '_histori'];
-    delete S.cache[S.plant + '_summary'];
-    closeModal();
-    await renderDetailPage();
-    showToast('✅ Drive berhasil diupdate!');
+  const freshData = await apiGet({ action: 'getDrives', plant: S.plant });
+const freshDrives = Array.isArray(freshData.drives) ? freshData.drives : [];
+S.cache[S.plant + '_drives'] = freshDrives;
+const seen = [], groups = [];
+freshDrives.forEach(d => {
+  const g = String(d.group || '').trim();
+  if (g && !seen.includes(g)) { seen.push(g); groups.push(g); }
+});
+S.cache[S.plant + '_groupList'] = groups;
+delete S.cache[S.plant + '_histori'];
+delete S.cache[S.plant + '_summary'];
+closeModal();
+await renderDetailPage();
+showToast('✅ Drive berhasil diupdate!');
   }catch(err){alert('Gagal menyimpan: '+err.message);}
   finally{btn.disabled=false;btn.textContent='Simpan';}
 }
@@ -2541,12 +2639,16 @@ updateRoleBadge();
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.8.2/jspdf.plugin.autotable.min.js"></script>
 <script>
 if('serviceWorker' in navigator){window.addEventListener('load',()=>{navigator.serviceWorker.register('/gardahitam/sw.js').then(r=>console.log('[SW] Registered:',r.scope)).catch(e=>console.log('[SW] Error:',e));});}
+
+// ══════════════════════════════════════════════════════════
+//  TAB ANALISA
+// ══════════════════════════════════════════════════════════
 const ANALISA={cache:{},barChart:null,pieChart:null,lineChart:null};
 const A_COLORS={ok:'#00f0a0',ng:'#ff3d55',nf:'#4d9fff'};
 function aStatusNorm(s){const v=String(s||'').trim().toUpperCase();if(v==='SESUAI')return'SESUAI';if(v==='TIDAK SESUAI')return'TIDAK SESUAI';if(v.includes('TIDAK DITEMUKAN')||v.includes('TDK DITEMUKAN'))return'TIDAK DITEMUKAN';return v||'—';}
 function aCalcStats(rows){let sesuai=0,tidakSesuai=0,tidakDitemukan=0;rows.forEach(r=>{const s=aStatusNorm(r.status);if(s==='SESUAI')sesuai++;else if(s==='TIDAK SESUAI')tidakSesuai++;else if(s==='TIDAK DITEMUKAN')tidakDitemukan++;});return{sesuai,tidakSesuai,tidakDitemukan,total:rows.length};}
 async function renderAnalisaTab(){
-  renderSwitcherBar('analisa', S.plant);
+   renderSwitcherBar('analisa', S.plant);
   const el=id('analisa-content');el.innerHTML=loadingHTML('Memuat data analisa...');
   try{
     if(!S.cache[S.plant+'_asli']){const data=await apiGet({action:'getAsli',plant:S.plant});S.cache[S.plant+'_asli']=data.asli||[];}
@@ -2557,7 +2659,7 @@ async function renderAnalisaTab(){
   }catch(err){el.innerHTML=errHTML(err.message,renderAnalisaTab);}
 }
 function buildAnalisaHTML(rows){
-  const groups=[...new Set(rows.map(r=>r.group).filter(Boolean))];
+const groups=[...new Set(rows.map(r=>r.group).filter(Boolean))];
   const opts=groups.map(g=>`<option value="${g}">${g}</option>`).join('');
   return`<div class="analisa-wrap"><div class="analisa-top"><div><div class="analisa-title">📊 Analisa Data Drive — ${esc(S.plant)}</div><div class="analisa-sub">Perbandingan posisi asli vs kondisi lapangan</div></div><div class="analisa-btn-row"><button class="a-btn ok-btn" onclick="analisaExportCSV()">⬇ Export CSV</button><button class="a-btn fault-btn" onclick="analisaPrintPDF()">🖨️ Cetak PDF</button></div></div>
   <div class="analisa-filter-bar"><span class="a-filter-label">🔍 Filter Mixing:</span><select class="a-filter-sel" id="a-mix-filter"><option value="">Semua Mixing</option>${opts}</select><span id="a-filter-count" style="font-family:'JetBrains Mono',monospace;font-size:10px;color:var(--muted);margin-left:auto"></span></div>
@@ -2586,5 +2688,6 @@ function renderAnalisaInsights(rows){const{sesuai,tidakSesuai,tidakDitemukan,tot
 function analisaExportCSV(){const allRows=S.cache[S.plant+'_asli']||[];const sel=id('a-mix-filter'),mix=sel?sel.value:'';const rows=mix?allRows.filter(r=>r.group===mix):allRows;let csv='No,Plant,Mixing,Drive ID (Asli),Ada di Lapangan,Serial Number,Spesifikasi,Status\n';rows.forEach((r,i)=>{const cari=(r.cari_data_lapangan||r['cari data lapangan']||'—').replace(/,/g,' ');csv+=`${i+1},"${S.plant}","${r.group||''}","${r.drive_id||''}","${cari}","${r.serial_number||''}","${(r.spesifikasi||'').replace(/,/g,' ')}","${aStatusNorm(r.status)}"\n`;});const blob=new Blob(['\uFEFF'+csv],{type:'text/csv;charset=utf-8;'});const url=URL.createObjectURL(blob);const a=document.createElement('a');a.href=url;a.download=`Analisa_Drive_${S.plant}_${mix||'Semua'}_${new Date().toISOString().slice(0,10)}.csv`;a.click();URL.revokeObjectURL(url);}
 function analisaPrintPDF(){const{jsPDF}=window.jspdf;const doc=new jsPDF({orientation:'landscape'});const allRows=S.cache[S.plant+'_asli']||[];const sel=id('a-mix-filter'),mix=sel?sel.value:'';const rows=mix?allRows.filter(r=>r.group===mix):allRows;const{sesuai,tidakSesuai,tidakDitemukan,total}=aCalcStats(rows);const pct=total>0?Math.round(sesuai/total*100):0;doc.setFontSize(16);doc.setFont('helvetica','bold');doc.text('Analisa Data Drive — '+S.plant,14,16);doc.setFontSize(10);doc.setFont('helvetica','normal');doc.text('Tugas Akhir · Sistem Monitoring Drive Garda Hitam',14,23);doc.text('Filter: '+(mix||'Semua Mixing')+'  |  Dicetak: '+new Date().toLocaleString('id-ID'),14,29);doc.setFontSize(9);doc.setFillColor(240,248,255);doc.roundedRect(14,33,260,18,2,2,'F');doc.text(`Total: ${total}  |  Sesuai: ${sesuai} (${pct}%)  |  Tidak Sesuai: ${tidakSesuai}  |  Tdk Ditemukan: ${tidakDitemukan}`,18,44);doc.autoTable({startY:56,head:[['#','Mixing','Drive ID (Asli)','Ada di Lapangan','Serial Number','Spesifikasi','Status']],body:rows.map((r,i)=>[i+1,r.group||'—',r.drive_id||'—',r.cari_data_lapangan||r['cari data lapangan']||'—',r.serial_number||'—',r.spesifikasi||'—',aStatusNorm(r.status)]),styles:{fontSize:8,cellPadding:2},headStyles:{fillColor:[13,26,46],textColor:255,fontStyle:'bold'},alternateRowStyles:{fillColor:[245,248,255]},didParseCell:(data)=>{if(data.column.index===6&&data.section==='body'){const v=String(data.cell.raw||'');if(v==='SESUAI')data.cell.styles.textColor=[0,149,79];else if(v==='TIDAK SESUAI')data.cell.styles.textColor=[200,30,50];else data.cell.styles.textColor=[24,95,165];}},theme:'grid'});const pageCount=doc.internal.getNumberOfPages();for(let i=1;i<=pageCount;i++){doc.setPage(i);doc.setFontSize(7);doc.setTextColor(150);doc.text(`Garda Hitam Drive Monitoring · ${S.plant} · Hal ${i}/${pageCount}`,14,doc.internal.pageSize.height-8);}doc.save(`Analisa_Drive_${S.plant}_${mix||'Semua'}_${new Date().toISOString().slice(0,10)}.pdf`);}
 </script>
+<script src="GARDA_HITAM_PATCHES.js"></script>
 </body>
 </html>
