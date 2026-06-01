@@ -175,9 +175,9 @@ body.light .login-back-home { color:#2e5c8a; }
 .bc-sep{color:var(--border);flex-shrink:0;}
 
 /* PAGES */
-#pages-wrapper{flex:1;overflow:hidden;display:flex;flex-direction:column;min-height:0;}
-.page{display:none;flex:1;overflow:hidden;flex-direction:column;min-height:0;}
-.page.active{display:flex;animation:fadeUp .25s ease;}
+#pages-wrapper{flex:1 1 0%;height:0;overflow:hidden;display:flex;flex-direction:column;min-height:0;}
+.page{display:none;flex:1 1 0%;height:0;overflow:hidden;flex-direction:column;min-height:0;}
+.page.active{display:flex;flex:1 1 0%;height:0;min-height:0;overflow:hidden;flex-direction:column;animation:fadeUp .25s ease;}
 
 /* SEARCH */
 .search-wrap{display:flex;align-items:center;gap:8px;padding:10px 16px;background:var(--surf);border-bottom:1px solid var(--border);flex-shrink:0;}
@@ -201,7 +201,7 @@ body.light .login-back-home { color:#2e5c8a; }
 .no-results.visible{display:flex;}
 
 /* PLANT PAGE */
-.plant-wrap{padding:0;overflow-y:auto;width:100%;}
+.plant-wrap{flex:1 1 0%;height:0;min-height:0;padding:0;overflow-y:auto;width:100%;-webkit-overflow-scrolling:touch;}
 .plant-hero{position:relative;overflow:hidden;padding:34px 28px 26px;background:linear-gradient(135deg,#050a16,#0a1626,#080e1c);border-bottom:1px solid var(--border);}
 .plant-hero::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse 55% 80% at 75% 50%,rgba(91,173,255,.09),transparent 70%),radial-gradient(ellipse 35% 50% at 15% 90%,rgba(167,139,255,.07),transparent 60%);}
 .plant-hero-grid{position:absolute;inset:0;opacity:.034;background-image:linear-gradient(var(--border) 1px,transparent 1px),linear-gradient(90deg,var(--border) 1px,transparent 1px);background-size:36px 36px;}
@@ -314,7 +314,7 @@ body.light .login-back-home { color:#2e5c8a; }
   .running-inner { font-size:9px !important; }
   .breadcrumb { padding:0 10px !important; font-size:10px !important; height:26px !important; }
   #page-plant { overflow:hidden !important; }
-  .plant-wrap { height:100% !important; overflow-y:auto !important; -webkit-overflow-scrolling:touch !important; }
+  .plant-wrap { flex:1 1 0% !important; height:0 !important; overflow-y:auto !important; -webkit-overflow-scrolling:touch !important; }
   .plant-hero { padding:16px 12px 14px !important; }
   .plant-hero-title { font-size:18px !important; }
   .plant-hero-sub { font-size:10px !important; margin-bottom:12px !important; }
