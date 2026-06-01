@@ -202,7 +202,6 @@ body{font-family:'Plus Jakarta Sans',sans-serif;background:var(--bg);color:var(-
 .bc-cur{color:var(--text);}
 .bc-sep{color:var(--border);}
 
-#pages-wrapper{flex:1 1 0%;height:0;overflow:hidden;display:flex;flex-direction:column;position:relative;}
 #pages-wrapper{flex:1 1 0%;height:0;overflow:hidden;display:flex;flex-direction:column;}
 
 .page{display:none;flex:1 1 0%;height:0;overflow:hidden;flex-direction:column;min-height:0;}
@@ -882,17 +881,16 @@ html,body{overflow:hidden!important;height:100%!important;position:relative!impo
           <div class="plant-stat-box"><div class="plant-stat-label">System</div><div class="plant-stat-val ok">ONLINE</div></div>
           <div class="plant-stat-box"><div class="plant-stat-label">Last Sync</div><div class="plant-stat-val teal" id="stat-sync">—</div></div>
           <div class="plant-stat-box"><div class="plant-stat-label">Mode</div><div class="plant-stat-val" id="stat-mode">DARK</div></div>
-            <div class="plant-stat-box clickable" onclick="openPlantPicker('summary')">
-    <div class="plant-stat-label">⬜ Summary</div>
-    <div class="plant-stat-val accent">7</div>
-    <div class="plant-stat-cta">↗ Pilih plant</div>
-  </div>
-  <div class="plant-stat-box clickable" onclick="openPlantPicker('analisa')">
-    <div class="plant-stat-label">📊 Analisa</div>
-    <div class="plant-stat-val accent">7</div>
-    <div class="plant-stat-cta">↗ Pilih plant</div>
-  </div>
-</div>
+          <div class="plant-stat-box clickable" onclick="openPlantPicker('summary')">
+            <div class="plant-stat-label">⬜ Summary</div>
+            <div class="plant-stat-val accent">7</div>
+            <div class="plant-stat-cta">↗ Pilih plant</div>
+          </div>
+          <div class="plant-stat-box clickable" onclick="openPlantPicker('analisa')">
+            <div class="plant-stat-label">📊 Analisa</div>
+            <div class="plant-stat-val accent">7</div>
+            <div class="plant-stat-cta">↗ Pilih plant</div>
+          </div>
         </div>
       </div>
       <div class="plant-section">
@@ -904,6 +902,7 @@ html,body{overflow:hidden!important;height:100%!important;position:relative!impo
       </div>
     </div>
   </div>
+  <!-- ↑ PENUTUP page-plant yang tadinya hilang -->
 
   <!-- PAGE: MIXING -->
   <div class="page" id="page-mixing">
