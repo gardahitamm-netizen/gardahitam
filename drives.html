@@ -2640,7 +2640,7 @@ updateRoleBadge();
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.8.2/jspdf.plugin.autotable.min.js"></script>
 <script>
-if('serviceWorker' in navigator){window.addEventListener('load',()=>{navigator.serviceWorker.register('/gardahitam/sw.js').then(r=>console.log('[SW] Registered:',r.scope)).catch(e=>console.log('[SW] Error:',e));});}
+if('serviceWorker' in navigator){window.addEventListener('load',()=>{navigator.serviceWorker.register('/gardahitam/sw.js').then(r=>{console.log('[SW] Registered:',r.scope);r.update();}).catch(e=>console.log('[SW] Error:',e));});}
 
 // ══════════════════════════════════════════════════════════
 //  TAB ANALISA
