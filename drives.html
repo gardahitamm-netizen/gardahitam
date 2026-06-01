@@ -2481,21 +2481,544 @@ function renderManualTable(){
 // ══════════════════════════════════════════════════════════
 //  SUMMARY TAB
 // ══════════════════════════════════════════════════════════
-async function renderSummaryTab(){
+// ══════════════════════════════════════════════════════════
+//  SUMMARY TAB — v2 dengan breakdown tipe & unit
+// ══════════════════════════════════════════════════════════
+
+// Helper: deteksi tipe drive dari spesifikasi
+function detectDriveTipe(spek) {
+  const s = String(spek || '').toUpperCase();
+  if (s.includes('ACS800')) return 'ACS800';
+  if (s.includes('ACS880')) return 'ACS880';
+  if (s.includes('ACS580')) return 'ACS580';
+  if (s.includes('ACS550')) return 'ACS550';
+  if (s.includes('ACS355')) return 'ACS355';
+  if (s.includes('ACS150')) return 'ACS150';
+  if (s.includes('DCS')   || s.includes('DC DRIVE') || s.includes('DCDRIVE')) return 'DC Drive';
+  if (s.includes('DRIVES') || s.match(/\bDC\b/)) return 'DC Drive';
+  return 'Lainnya';
+}
+
+// Helper: deteksi unit dari drive_id
+function detectUnitJenis(driveId) {
+  const s = String(driveId || '').toUpperCase();
+  if (s.includes('.INU.') || s.includes('-INU') || s.includes('_INU')) return 'INU';
+  if (s.includes('.DSU.') || s.includes('-DSU') || s.includes('_DSU')) return 'DSU';
+  return 'OTHER';
+}
+
+// Warna per tipe drive (sesuai CSS vars Garda Hitam)
+const TIPE_COLORS = {
+  'ACS800':  { color: '#4d9fff', bg: 'rgba(77,159,255,.15)',  bd: 'rgba(77,159,255,.4)'  },
+  'ACS880':  { color: '#00f0a0', bg: 'rgba(0,240,160,.15)',   bd: 'rgba(0,240,160,.4)'   },
+  'ACS580':  { color: '#ffb820', bg: 'rgba(255,184,32,.15)',  bd: 'rgba(255,184,32,.4)'  },
+  'ACS550':  { color: '#c084fc', bg: 'rgba(192,132,252,.15)', bd: 'rgba(192,132,252,.4)' },
+  'ACS355':  { color: '#f472b6', bg: 'rgba(244,114,182,.15)', bd: 'rgba(244,114,182,.4)' },
+  'ACS150':  { color: '#fb923c', bg: 'rgba(251,146,60,.15)',  bd: 'rgba(251,146,60,.4)'  },
+  'DC Drive':{ color: '#00e0f8', bg: 'rgba(0,224,248,.12)',   bd: 'rgba(0,224,248,.3)'   },
+  'Lainnya': { color: '#9fc3e8', bg: 'rgba(159,195,232,.1)',  bd: 'rgba(159,195,232,.3)' },
+};
+
+async function renderSummaryTab() {
   // Aktifkan switcher bar
   renderSwitcherBar('summary', S.plant);
-  // ... sisa kode existing tetap sama
-  id('summary-content').innerHTML=loadingHTML('Memuat summary...');
-  try{
-    const data=await apiGet({action:'getSummaryKosong',plant:S.plant});
-    const rows=data.summary||[],totalKosong=data.totalKosong||0,totalDrive=data.totalDrive||0;
-    const adaKosong=rows.filter(r=>r.kosong>0),bersih=rows.filter(r=>r.kosong===0).length;
-    let html=`<div class="summary-stats"><div class="sum-stat"><div class="sum-stat-label">Drive Kosong</div><div class="sum-stat-val kosong">${totalKosong}</div></div><div class="sum-stat"><div class="sum-stat-label">Terdampak</div><div class="sum-stat-val" style="color:var(--maint)">${adaKosong.length}</div></div><div class="sum-stat"><div class="sum-stat-label">Bersih</div><div class="sum-stat-val ok">${bersih}</div></div><div class="sum-stat"><div class="sum-stat-label">Total Drive</div><div class="sum-stat-val accent">${totalDrive}</div></div></div>`;
-    if(!adaKosong.length){html+=`<div class="state-box"><div style="font-size:36px">✅</div><h3>Semua Drive Terisi</h3><p>Tidak ada drive kosong di ${esc(S.plant)}</p></div>`;}
-    else{html+=`<div class="summary-panel"><div class="summary-panel-head"><div class="summary-panel-title">⬜ Mixing dengan Drive Kosong</div><div class="summary-panel-count">${adaKosong.length} dari ${rows.length} mixing</div></div><div style="overflow-x:auto"><table class="sum-table"><thead><tr><th>Mixing</th><th>Kosong</th><th>Total</th><th>%</th></tr></thead><tbody>${adaKosong.map(r=>{const pct=Math.round(r.kosong/r.total*100);return`<tr><td><div class="sum-group-name">${esc(r.group)}</div></td><td><span class="sum-kosong-badge">⬜ ${r.kosong}</span></td><td><span class="sum-zero">${r.total}</span></td><td><div class="sum-pct-bar"><div class="sum-bar-track"><div class="sum-bar-fill" style="width:${pct}%"></div></div><span class="sum-pct-txt">${pct}%</span></div></td></tr>`;}).join('')}</tbody></table></div></div>
-      <div class="summary-panel"><div class="summary-panel-head"><div class="summary-panel-title">📋 Semua Mixing</div><div class="summary-panel-count">${rows.length} mixing</div></div><div style="overflow-x:auto"><table class="sum-table"><thead><tr><th>Mixing</th><th>OK</th><th>Kosong</th><th>Fault</th><th>Maint</th><th>Total</th></tr></thead><tbody>${rows.map(r=>`<tr><td><div class="sum-group-name">${esc(r.group)}</div></td><td style="color:${r.ok>0?'var(--ok)':'var(--muted)'};font-family:'JetBrains Mono',monospace;font-size:11px">${r.ok}</td><td>${r.kosong>0?`<span class="sum-kosong-badge">⬜ ${r.kosong}</span>`:`<span class="sum-zero">0</span>`}</td><td style="color:${r.fault>0?'var(--fault)':'var(--muted)'};font-family:'JetBrains Mono',monospace;font-size:11px">${r.fault}</td><td style="color:${r.maint>0?'var(--maint)':'var(--muted)'};font-family:'JetBrains Mono',monospace;font-size:11px">${r.maint}</td><td class="sum-zero">${r.total}</td></tr>`).join('')}</tbody></table></div></div>`;}
-    id('summary-content').innerHTML=html;
-  }catch(err){id('summary-content').innerHTML=errHTML(err.message,renderSummaryTab);}
+
+  const el = id('summary-content');
+  el.innerHTML = loadingHTML('Memuat summary...');
+
+  try {
+    // ── Ambil summary dari API ──────────────────────────
+    const data = await apiGet({ action: 'getSummaryKosong', plant: S.plant });
+    const rows = data.summary || [];
+    const totalKosong = data.totalKosong || 0;
+    const totalDrive  = data.totalDrive  || 0;
+
+    const adaKosong = rows.filter(r => r.kosong > 0);
+    const bersih    = rows.filter(r => r.kosong === 0).length;
+
+    // ── Ambil data drives untuk breakdown tipe & unit ──
+    if (!S.cache[S.plant + '_drives']) {
+      const d = await apiGet({ action: 'getDrives', plant: S.plant });
+      const drives = Array.isArray(d.drives) ? d.drives : [];
+      S.cache[S.plant + '_drives'] = drives;
+      const seen = [], groups = [];
+      drives.forEach(drv => {
+        const g = String(drv.group || '').trim();
+        if (g && !seen.includes(g)) { seen.push(g); groups.push(g); }
+      });
+      S.cache[S.plant + '_groupList'] = groups;
+    }
+
+    const allDrives   = S.cache[S.plant + '_drives'] || [];
+    const kosongDrives = allDrives.filter(d => !d.status || d.status === 'kosong');
+
+    // ── Build filter state (pakai window agar toggle bisa re-render) ──
+    if (window._sumFilterTipe  === undefined) window._sumFilterTipe  = '';
+    if (window._sumFilterUnit  === undefined) window._sumFilterUnit  = '';
+
+    // ── Render ──────────────────────────────────────────
+    el.innerHTML = buildSummaryHTML(rows, adaKosong, bersih, totalKosong, totalDrive, allDrives, kosongDrives);
+
+  } catch (err) {
+    el.innerHTML = errHTML(err.message, renderSummaryTab);
+  }
+}
+
+function buildSummaryHTML(rows, adaKosong, bersih, totalKosong, totalDrive, allDrives, kosongDrives) {
+  // ── 1. Metric cards ──────────────────────────────────
+  const metricHTML = `
+    <div class="summary-stats">
+      <div class="sum-stat">
+        <div class="sum-stat-label">Drive Kosong</div>
+        <div class="sum-stat-val kosong">${totalKosong}</div>
+      </div>
+      <div class="sum-stat">
+        <div class="sum-stat-label">Mixing Terdampak</div>
+        <div class="sum-stat-val" style="color:var(--maint)">${adaKosong.length}</div>
+      </div>
+      <div class="sum-stat">
+        <div class="sum-stat-label">Mixing Bersih</div>
+        <div class="sum-stat-val ok">${bersih}</div>
+      </div>
+      <div class="sum-stat">
+        <div class="sum-stat-label">Total Drive</div>
+        <div class="sum-stat-val accent">${totalDrive}</div>
+      </div>
+    </div>`;
+
+  // ── 2. Filter bar ────────────────────────────────────
+  const allTipe  = [...new Set(allDrives.map(d => detectDriveTipe(d.spesifikasi)))].sort();
+  const allUnit  = [...new Set(allDrives.map(d => detectUnitJenis(d.drive_id)))].filter(u => u !== 'OTHER').sort();
+  allUnit.push('OTHER');  // taruh di akhir
+
+  const tipeBtns = allTipe.map(t => {
+    const c = TIPE_COLORS[t] || TIPE_COLORS['Lainnya'];
+    const active = window._sumFilterTipe === t;
+    return `<button onclick="window._sumFilterTipe='${active ? '' : t}';rerenderSummaryContent()"
+      style="display:inline-flex;align-items:center;gap:5px;padding:4px 11px;border-radius:6px;
+             border:1px solid ${active ? c.color : c.bd};
+             background:${active ? c.bg : 'transparent'};
+             color:${c.color};font-family:'JetBrains Mono',monospace;font-size:10px;
+             font-weight:700;cursor:pointer;transition:all .15s;">
+      ${t}${active ? ' ✕' : ''}
+    </button>`;
+  }).join('');
+
+  const unitLabels = { INU: '⚡ INU', DSU: '🔌 DSU', OTHER: '📦 Lainnya' };
+  const unitBtns = allUnit.map(u => {
+    const active = window._sumFilterUnit === u;
+    return `<button onclick="window._sumFilterUnit='${active ? '' : u}';rerenderSummaryContent()"
+      style="display:inline-flex;align-items:center;gap:5px;padding:4px 11px;border-radius:6px;
+             border:1px solid ${active ? 'var(--accent)' : 'var(--border)'};
+             background:${active ? 'var(--accent-bg)' : 'transparent'};
+             color:${active ? 'var(--accent)' : 'var(--muted)'};
+             font-family:'JetBrains Mono',monospace;font-size:10px;font-weight:700;cursor:pointer;transition:all .15s;">
+      ${unitLabels[u] || u}${active ? ' ✕' : ''}
+    </button>`;
+  }).join('');
+
+  const resetBtn = (window._sumFilterTipe || window._sumFilterUnit)
+    ? `<button onclick="window._sumFilterTipe='';window._sumFilterUnit='';rerenderSummaryContent()"
+        style="padding:3px 10px;border-radius:6px;border:1px solid var(--fault-bd);
+               background:var(--fault-bg);color:var(--fault);font-family:'JetBrains Mono',monospace;
+               font-size:10px;cursor:pointer;">
+        ✕ Reset Filter
+      </button>` : '';
+
+  const filterBarHTML = `
+    <div style="background:var(--surf);border:1px solid var(--border);border-radius:10px;
+                padding:12px 16px;margin-bottom:16px;display:flex;flex-direction:column;gap:10px;">
+      <div style="display:flex;align-items:center;gap:8px;flex-wrap:wrap;">
+        <span style="font-family:'JetBrains Mono',monospace;font-size:9px;font-weight:700;
+                     letter-spacing:1.5px;text-transform:uppercase;color:var(--muted);flex-shrink:0;">
+          TIPE DRIVE
+        </span>
+        ${tipeBtns}
+      </div>
+      <div style="display:flex;align-items:center;gap:8px;flex-wrap:wrap;">
+        <span style="font-family:'JetBrains Mono',monospace;font-size:9px;font-weight:700;
+                     letter-spacing:1.5px;text-transform:uppercase;color:var(--muted);flex-shrink:0;">
+          JENIS UNIT
+        </span>
+        ${unitBtns}
+        ${resetBtn}
+      </div>
+    </div>`;
+
+  // ── 3. Breakdown drive kosong per tipe ───────────────
+  const tipeKosongMap = {};
+  const kosongDrivesFiltered = applyDriveFilter(kosongDrives);
+
+  kosongDrivesFiltered.forEach(d => {
+    const t = detectDriveTipe(d.spesifikasi);
+    if (!tipeKosongMap[t]) tipeKosongMap[t] = [];
+    tipeKosongMap[t].push(d);
+  });
+
+  const tipeKosongHTML = buildTipeKosongSection(tipeKosongMap, allDrives);
+
+  // ── 4. Breakdown INU vs DSU ──────────────────────────
+  const inuDsuHTML = buildInuDsuSection(allDrives, kosongDrivesFiltered);
+
+  // ── 5. Tabel mixing dengan drive kosong ─────────────
+  const filteredKosongRows = buildFilteredKosongRows(allDrives, rows);
+
+  const tableHTML = filteredKosongRows.length > 0 ? `
+    <div class="summary-panel">
+      <div class="summary-panel-head">
+        <div class="summary-panel-title">⬜ Mixing dengan Drive Kosong</div>
+        <div class="summary-panel-count">${filteredKosongRows.length} dari ${rows.length} mixing</div>
+      </div>
+      <div style="overflow-x:auto">
+        <table class="sum-table">
+          <thead>
+            <tr>
+              <th>Mixing</th>
+              <th>Kosong</th>
+              <th>Total</th>
+              <th>%</th>
+            </tr>
+          </thead>
+          <tbody>
+            ${filteredKosongRows.map(r => {
+              const pct = Math.round(r.kosong / r.total * 100);
+              return `<tr>
+                <td><div class="sum-group-name">${esc(r.group)}</div></td>
+                <td><span class="sum-kosong-badge">⬜ ${r.kosong}</span></td>
+                <td><span class="sum-zero">${r.total}</span></td>
+                <td>
+                  <div class="sum-pct-bar">
+                    <div class="sum-bar-track">
+                      <div class="sum-bar-fill" style="width:${pct}%"></div>
+                    </div>
+                    <span class="sum-pct-txt">${pct}%</span>
+                  </div>
+                </td>
+              </tr>`;
+            }).join('')}
+          </tbody>
+        </table>
+      </div>
+    </div>` : (window._sumFilterTipe || window._sumFilterUnit
+      ? `<div class="state-box" style="padding:20px;"><span style="font-size:24px">🔍</span><p style="margin-top:8px;">Tidak ada drive kosong untuk filter ini.</p></div>`
+      : `<div class="state-box" style="padding:20px;"><span style="font-size:24px">✅</span><h3>Semua Drive Terisi</h3><p>Tidak ada drive kosong di ${esc(S.plant)}</p></div>`);
+
+  // ── 6. Tabel semua mixing (tetap tampil tanpa filter) ─
+  const allRowsHTML = `
+    <div class="summary-panel">
+      <div class="summary-panel-head">
+        <div class="summary-panel-title">📋 Semua Mixing</div>
+        <div class="summary-panel-count">${rows.length} mixing</div>
+      </div>
+      <div style="overflow-x:auto">
+        <table class="sum-table">
+          <thead>
+            <tr><th>Mixing</th><th>OK</th><th>Kosong</th><th>Fault</th><th>Maint</th><th>Total</th></tr>
+          </thead>
+          <tbody>
+            ${rows.map(r => `<tr>
+              <td><div class="sum-group-name">${esc(r.group)}</div></td>
+              <td style="color:${r.ok > 0 ? 'var(--ok)' : 'var(--muted)'};font-family:'JetBrains Mono',monospace;font-size:11px">${r.ok}</td>
+              <td>${r.kosong > 0 ? `<span class="sum-kosong-badge">⬜ ${r.kosong}</span>` : `<span class="sum-zero">0</span>`}</td>
+              <td style="color:${r.fault > 0 ? 'var(--fault)' : 'var(--muted)'};font-family:'JetBrains Mono',monospace;font-size:11px">${r.fault}</td>
+              <td style="color:${r.maint > 0 ? 'var(--maint)' : 'var(--muted)'};font-family:'JetBrains Mono',monospace;font-size:11px">${r.maint}</td>
+              <td class="sum-zero">${r.total}</td>
+            </tr>`).join('')}
+          </tbody>
+        </table>
+      </div>
+    </div>`;
+
+  return `<div style="padding:20px;">
+    ${metricHTML}
+    ${filterBarHTML}
+    ${tipeKosongHTML}
+    ${inuDsuHTML}
+    ${tableHTML}
+    ${allRowsHTML}
+  </div>`;
+}
+
+// ── Helper: apply filter drive kosong ────────────────────
+function applyDriveFilter(drives) {
+  return drives.filter(d => {
+    if (window._sumFilterTipe  && detectDriveTipe(d.spesifikasi) !== window._sumFilterTipe)  return false;
+    if (window._sumFilterUnit  && detectUnitJenis(d.drive_id)     !== window._sumFilterUnit)  return false;
+    return true;
+  });
+}
+
+// ── Section: tipe kosong ──────────────────────────────────
+function buildTipeKosongSection(tipeKosongMap, allDrives) {
+  const tipes = Object.keys(tipeKosongMap);
+  if (!tipes.length) return '';
+
+  const cards = tipes.map(t => {
+    const items  = tipeKosongMap[t];
+    const c      = TIPE_COLORS[t] || TIPE_COLORS['Lainnya'];
+    const total  = allDrives.filter(d => detectDriveTipe(d.spesifikasi) === t).length;
+    const pct    = total > 0 ? Math.round(items.length / total * 100) : 0;
+
+    // Breakdown per mixing-line
+    const lineMap = {};
+    items.forEach(d => {
+      const key = `${d.group}`;
+      if (!lineMap[key]) lineMap[key] = [];
+      lineMap[key].push(d);
+    });
+
+    const lineRows = Object.entries(lineMap)
+      .sort((a, b) => b[1].length - a[1].length)
+      .map(([line, drv]) => `
+        <div style="display:flex;align-items:center;justify-content:space-between;
+                    padding:5px 0;border-bottom:1px solid var(--border);">
+          <span style="font-family:'JetBrains Mono',monospace;font-size:10px;color:var(--text);">${esc(line)}</span>
+          <span style="font-family:'JetBrains Mono',monospace;font-size:10px;font-weight:700;
+                       padding:2px 8px;border-radius:4px;background:${c.bg};
+                       color:${c.color};border:1px solid ${c.bd}">
+            ${drv.length} kosong
+          </span>
+        </div>`).join('');
+
+    return `
+      <div style="background:var(--surf);border:1px solid ${c.bd};border-radius:10px;
+                  border-left:4px solid ${c.color};padding:14px 16px;min-width:200px;flex:1 1 200px;">
+        <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:8px;">
+          <span style="font-family:'JetBrains Mono',monospace;font-size:14px;font-weight:800;color:${c.color};">
+            ${t}
+          </span>
+          <span style="font-family:'JetBrains Mono',monospace;font-size:18px;font-weight:700;color:${c.color};">
+            ${items.length}
+          </span>
+        </div>
+        <div style="display:flex;align-items:center;gap:6px;margin-bottom:10px;">
+          <div style="flex:1;height:5px;background:var(--surf3);border-radius:3px;overflow:hidden;">
+            <div style="height:100%;border-radius:3px;background:${c.color};width:${pct}%;"></div>
+          </div>
+          <span style="font-family:'JetBrains Mono',monospace;font-size:9px;color:var(--muted);">
+            ${pct}% dari ${total}
+          </span>
+        </div>
+        <div style="font-family:'JetBrains Mono',monospace;font-size:9px;font-weight:700;
+                    letter-spacing:1px;text-transform:uppercase;color:var(--muted);margin-bottom:6px;">
+          Detail per Line
+        </div>
+        ${lineRows}
+      </div>`;
+  }).join('');
+
+  return `
+    <div style="margin-bottom:20px;">
+      <div class="a-section-head" style="margin-bottom:12px;">
+        <span style="font-family:'JetBrains Mono',monospace;font-size:10px;font-weight:700;
+                     letter-spacing:2px;text-transform:uppercase;color:var(--muted);">
+          📦 DRIVE KOSONG PER TIPE
+        </span>
+        <div style="flex:1;height:1px;background:linear-gradient(to right,var(--border),transparent);"></div>
+      </div>
+      <div style="display:flex;gap:12px;flex-wrap:wrap;">${cards}</div>
+    </div>`;
+}
+
+// ── Section: INU vs DSU breakdown ────────────────────────
+function buildInuDsuSection(allDrives, kosongDrives) {
+  const unitTypes = ['INU', 'DSU', 'OTHER'];
+  const unitLabels = { INU: '⚡ INU — Inverter Unit', DSU: '🔌 DSU — DC Supply Unit', OTHER: '📦 Lainnya' };
+  const unitColors = {
+    INU:   { color: '#4d9fff', bg: 'rgba(77,159,255,.12)',  bd: 'rgba(77,159,255,.35)'  },
+    DSU:   { color: '#c084fc', bg: 'rgba(192,132,252,.12)', bd: 'rgba(192,132,252,.35)' },
+    OTHER: { color: '#9fc3e8', bg: 'rgba(159,195,232,.08)', bd: 'rgba(159,195,232,.25)' },
+  };
+
+  const statRows = unitTypes.map(u => {
+    const total  = allDrives.filter(d => detectUnitJenis(d.drive_id) === u).length;
+    if (!total) return '';
+    const kosong = kosongDrives.filter(d => detectUnitJenis(d.drive_id) === u).length;
+    const ok     = allDrives.filter(d => detectUnitJenis(d.drive_id) === u && d.status === 'ok').length;
+    const fault  = allDrives.filter(d => detectUnitJenis(d.drive_id) === u && d.status === 'fault').length;
+    const pctKosong = total > 0 ? Math.round(kosong / total * 100) : 0;
+    const c = unitColors[u];
+
+    // Breakdown kosong per mixing, grouped by tipe drive
+    const kosongUnit = kosongDrives.filter(d => detectUnitJenis(d.drive_id) === u);
+
+    const tipeBreakdown = {};
+    kosongUnit.forEach(d => {
+      const t = detectDriveTipe(d.spesifikasi);
+      if (!tipeBreakdown[t]) tipeBreakdown[t] = [];
+      tipeBreakdown[t].push(d);
+    });
+
+    const lineBreakdown = {};
+    kosongUnit.forEach(d => {
+      if (!lineBreakdown[d.group]) lineBreakdown[d.group] = [];
+      lineBreakdown[d.group].push(d);
+    });
+
+    const tipePills = Object.entries(tipeBreakdown)
+      .sort((a, b) => b[1].length - a[1].length)
+      .map(([t, drv]) => {
+        const tc = TIPE_COLORS[t] || TIPE_COLORS['Lainnya'];
+        return `<span style="font-family:'JetBrains Mono',monospace;font-size:9px;font-weight:700;
+                             padding:2px 8px;border-radius:10px;background:${tc.bg};
+                             color:${tc.color};border:1px solid ${tc.bd};">
+          ${t} ×${drv.length}
+        </span>`;
+      }).join('');
+
+    const lineRows = Object.entries(lineBreakdown)
+      .sort((a, b) => b[1].length - a[1].length)
+      .slice(0, 5)
+      .map(([line, drv]) => {
+        const firstDrive = drv[0];
+        const plant = S.plant;
+        return `<div style="display:flex;align-items:center;justify-content:space-between;
+                            padding:4px 0;border-bottom:1px solid rgba(31,48,80,.3);">
+          <div>
+            <span style="font-family:'JetBrains Mono',monospace;font-size:10px;
+                         font-weight:700;color:var(--accent);">${esc(plant)}</span>
+            <span style="font-family:'JetBrains Mono',monospace;font-size:10px;color:var(--muted);
+                         margin:0 4px;">›</span>
+            <span style="font-family:'JetBrains Mono',monospace;font-size:10px;color:var(--text);">
+              ${esc(line)}
+            </span>
+          </div>
+          <span style="font-family:'JetBrains Mono',monospace;font-size:9px;font-weight:700;
+                       padding:2px 7px;border-radius:4px;background:${c.bg};
+                       color:${c.color};border:1px solid ${c.bd};">
+            ${drv.length} kosong
+          </span>
+        </div>`;
+      }).join('');
+
+    const moreCount = Object.keys(lineBreakdown).length - 5;
+    const moreLabel = moreCount > 0
+      ? `<div style="font-family:'JetBrains Mono',monospace;font-size:9px;color:var(--muted);
+                     margin-top:4px;text-align:right;">+${moreCount} mixing lainnya...</div>` : '';
+
+    return `
+      <tr>
+        <td style="padding:14px 16px;vertical-align:top;">
+          <div style="font-family:'JetBrains Mono',monospace;font-size:13px;font-weight:800;
+                      color:${c.color};margin-bottom:2px;">${unitLabels[u]}</div>
+          <div style="font-family:'JetBrains Mono',monospace;font-size:9px;color:var(--muted);">
+            ${S.plant}
+          </div>
+        </td>
+        <td style="padding:14px 12px;text-align:center;vertical-align:top;">
+          <div style="font-family:'JetBrains Mono',monospace;font-size:20px;font-weight:700;
+                      color:var(--text);">${total}</div>
+          <div style="font-family:'JetBrains Mono',monospace;font-size:9px;color:var(--muted);">total</div>
+        </td>
+        <td style="padding:14px 12px;text-align:center;vertical-align:top;">
+          <div style="font-family:'JetBrains Mono',monospace;font-size:20px;font-weight:700;
+                      color:var(--ok);">${ok}</div>
+          <div style="font-family:'JetBrains Mono',monospace;font-size:9px;color:var(--muted);">OK</div>
+        </td>
+        <td style="padding:14px 12px;text-align:center;vertical-align:top;">
+          <div style="font-family:'JetBrains Mono',monospace;font-size:20px;font-weight:700;
+                      color:${kosong > 0 ? 'var(--kosong)' : 'var(--muted)'};">${kosong}</div>
+          <div style="font-family:'JetBrains Mono',monospace;font-size:9px;color:var(--muted);">Kosong</div>
+        </td>
+        <td style="padding:14px 12px;text-align:center;vertical-align:top;">
+          <div style="font-family:'JetBrains Mono',monospace;font-size:20px;font-weight:700;
+                      color:${fault > 0 ? 'var(--fault)' : 'var(--muted)'};">${fault}</div>
+          <div style="font-family:'JetBrains Mono',monospace;font-size:9px;color:var(--muted);">Fault</div>
+        </td>
+        <td style="padding:14px 16px;vertical-align:top;">
+          <div style="display:flex;align-items:center;gap:6px;margin-bottom:8px;">
+            <div style="flex:1;height:5px;background:var(--surf3);border-radius:3px;overflow:hidden;">
+              <div style="height:100%;border-radius:3px;background:${c.color};
+                          width:${pctKosong}%;transition:width .4s;"></div>
+            </div>
+            <span style="font-family:'JetBrains Mono',monospace;font-size:9px;
+                         color:${kosong > 0 ? c.color : 'var(--muted)'};">${pctKosong}%</span>
+          </div>
+          ${kosong > 0 ? `
+            <div style="display:flex;gap:4px;flex-wrap:wrap;margin-bottom:6px;">${tipePills}</div>
+            ${lineRows}
+            ${moreLabel}
+          ` : `<span style="font-family:'JetBrains Mono',monospace;font-size:10px;color:var(--ok);">✓ Semua terisi</span>`}
+        </td>
+      </tr>`;
+  }).filter(Boolean).join('');
+
+  return `
+    <div style="margin-bottom:20px;">
+      <div class="a-section-head" style="margin-bottom:12px;">
+        <span style="font-family:'JetBrains Mono',monospace;font-size:10px;font-weight:700;
+                     letter-spacing:2px;text-transform:uppercase;color:var(--muted);">
+          ⚡🔌 BREAKDOWN INU vs DSU
+        </span>
+        <div style="flex:1;height:1px;background:linear-gradient(to right,var(--border),transparent);"></div>
+      </div>
+      <div class="summary-panel">
+        <div style="overflow-x:auto;">
+          <table style="width:100%;border-collapse:collapse;font-size:12px;">
+            <thead>
+              <tr style="background:var(--surf2);">
+                <th style="text-align:left;padding:9px 16px;font-family:'JetBrains Mono',monospace;
+                           font-size:9px;letter-spacing:1px;text-transform:uppercase;color:var(--muted);
+                           border-bottom:1px solid var(--border);">Jenis Unit</th>
+                <th style="text-align:center;padding:9px 12px;font-family:'JetBrains Mono',monospace;
+                           font-size:9px;letter-spacing:1px;text-transform:uppercase;color:var(--muted);
+                           border-bottom:1px solid var(--border);">Total</th>
+                <th style="text-align:center;padding:9px 12px;font-family:'JetBrains Mono',monospace;
+                           font-size:9px;letter-spacing:1px;text-transform:uppercase;color:var(--muted);
+                           border-bottom:1px solid var(--border);">OK</th>
+                <th style="text-align:center;padding:9px 12px;font-family:'JetBrains Mono',monospace;
+                           font-size:9px;letter-spacing:1px;text-transform:uppercase;color:var(--muted);
+                           border-bottom:1px solid var(--border);">Kosong</th>
+                <th style="text-align:center;padding:9px 12px;font-family:'JetBrains Mono',monospace;
+                           font-size:9px;letter-spacing:1px;text-transform:uppercase;color:var(--muted);
+                           border-bottom:1px solid var(--border);">Fault</th>
+                <th style="text-align:left;padding:9px 16px;font-family:'JetBrains Mono',monospace;
+                           font-size:9px;letter-spacing:1px;text-transform:uppercase;color:var(--muted);
+                           border-bottom:1px solid var(--border);">Detail & Lokasi</th>
+              </tr>
+            </thead>
+            <tbody>${statRows}</tbody>
+          </table>
+        </div>
+      </div>
+    </div>`;
+}
+
+// ── Helper: filter tabel mixing kosong ───────────────────
+function buildFilteredKosongRows(allDrives, rows) {
+  if (!window._sumFilterTipe && !window._sumFilterUnit) {
+    return rows.filter(r => r.kosong > 0);
+  }
+
+  // Tentukan group mana yang punya drive kosong yang cocok filter
+  const matchedGroups = new Set();
+  allDrives.forEach(d => {
+    if (!d.status || d.status === 'kosong') {
+      if (window._sumFilterTipe  && detectDriveTipe(d.spesifikasi) !== window._sumFilterTipe)  return;
+      if (window._sumFilterUnit  && detectUnitJenis(d.drive_id)     !== window._sumFilterUnit)  return;
+      matchedGroups.add(String(d.group || '').trim());
+    }
+  });
+
+  return rows.filter(r => matchedGroups.has(r.group));
+}
+
+// ── Re-render tanpa fetch ulang ───────────────────────────
+async function rerenderSummaryContent() {
+  const el = id('summary-content');
+  if (!el) return;
+
+  const data = await apiGet({ action: 'getSummaryKosong', plant: S.plant });
+  const rows        = data.summary || [];
+  const totalKosong = data.totalKosong || 0;
+  const totalDrive  = data.totalDrive  || 0;
+  const adaKosong   = rows.filter(r => r.kosong > 0);
+  const bersih      = rows.filter(r => r.kosong === 0).length;
+
+  const allDrives    = S.cache[S.plant + '_drives'] || [];
+  const kosongDrives = allDrives.filter(d => !d.status || d.status === 'kosong');
+
+  el.innerHTML = buildSummaryHTML(rows, adaKosong, bersih, totalKosong, totalDrive, allDrives, kosongDrives);
 }
 
 // ══════════════════════════════════════════════════════════
