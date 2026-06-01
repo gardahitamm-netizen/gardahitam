@@ -1,6 +1,6 @@
 // ── GARDA HITAM SERVICE WORKER ──
 // Versi cache — naikkan angka ini setiap deploy biar cache lama dibersihkan
-const CACHE_VERSION = 'garda-hitam-v3';
+const CACHE_VERSION = 'garda-hitam-v4';
 
 // File-file yang di-cache untuk akses offline
 const STATIC_ASSETS = [
