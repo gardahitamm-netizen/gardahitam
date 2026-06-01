@@ -1,12 +1,15 @@
 // ── GARDA HITAM SERVICE WORKER ──
 // Versi cache — naikkan angka ini setiap deploy biar cache lama dibersihkan
-const CACHE_VERSION = 'garda-hitam-v1';
+const CACHE_VERSION = 'garda-hitam-v3';
 
 // File-file yang di-cache untuk akses offline
 const STATIC_ASSETS = [
   '/gardahitam/',
   '/gardahitam/index.html',
-  '/gardahitam/drive-monitoring.html',
+  '/gardahitam/drives.html',
+  '/gardahitam/ioPlc.html',
+  '/gardahitam/jadwalpm.html',
+  '/gardahitam/pusatkendali.html',
   '/gardahitam/manifest.json',
   '/gardahitam/icon-192.png',
   '/gardahitam/icon-512.png',
