@@ -333,14 +333,18 @@ body{font-family:'Plus Jakarta Sans',sans-serif;background:var(--bg);color:var(-
 .ctab{padding:12px 18px;font-size:12px;font-weight:600;cursor:pointer;color:var(--muted);border-bottom:2px solid transparent;transition:all .15s;white-space:nowrap;flex-shrink:0;}
 .ctab:hover{color:var(--text);}
 .ctab.active{color:var(--accent);border-bottom-color:var(--accent);}
-.tab-content{display:none;padding:20px;flex:1;overflow-y:auto;min-height:0;flex-direction:column;}
-.tab-content.active{display:flex;flex-direction:column;animation:fadeUp .2s ease;}
-#tab-histori.active{padding:0;display:flex;flex-direction:column;}
-.histori-scroll-area{flex:1;overflow-y:auto;min-height:0;padding:16px 20px 20px;}
-#tab-manual.active{padding:0;display:flex;flex-direction:column;}
-.manual-scroll-area{flex:1;overflow-y:auto;min-height:0;padding:16px 20px 20px;}
-#tab-pool.active{padding:0;display:flex;flex-direction:column;}
-.pool-scroll-area{flex:1;overflow-y:auto;min-height:0;padding:16px 20px 20px;}
+.tab-content{display:none;padding:20px;flex:1 1 0%;height:0;overflow-y:auto;min-height:0;flex-direction:column;}
+.tab-content.active{display:flex;flex:1 1 0%;height:0;min-height:0;flex-direction:column;overflow:hidden;animation:fadeUp .2s ease;}
+#tab-drive.active{overflow-y:auto;}
+#tab-summary.active{overflow:hidden;padding:0;display:flex;flex-direction:column;}
+#tab-analisa.active{overflow:hidden;padding:0;display:flex;flex-direction:column;}
+#tab-asli.active{overflow:hidden;padding:0;display:flex;flex-direction:column;}
+#tab-histori.active{padding:0;display:flex;flex-direction:column;overflow:hidden;}
+.histori-scroll-area{flex:1 1 0%;height:0;overflow-y:auto;min-height:0;padding:16px 20px 20px;}
+#tab-manual.active{padding:0;display:flex;flex-direction:column;overflow:hidden;}
+.manual-scroll-area{flex:1 1 0%;height:0;overflow-y:auto;min-height:0;padding:16px 20px 20px;}
+#tab-pool.active{padding:0;display:flex;flex-direction:column;overflow:hidden;}
+.pool-scroll-area{flex:1 1 0%;height:0;overflow-y:auto;min-height:0;padding:16px 20px 20px;}
 .detail-back-row{display:flex;align-items:center;gap:10px;padding:10px 20px;background:var(--surf);border-bottom:1px solid var(--border);flex-shrink:0;}
 .btn-back-mixing{display:flex;align-items:center;gap:5px;font-family:'JetBrains Mono',monospace;font-size:11px;padding:5px 12px;border-radius:5px;cursor:pointer;border:1px solid var(--border);background:var(--surf2);color:var(--muted);transition:all .2s;}
 .btn-back-mixing:hover{border-color:var(--teal);color:var(--teal);}
@@ -404,7 +408,7 @@ body{font-family:'Plus Jakarta Sans',sans-serif;background:var(--bg);color:var(-
 .readonly-notice{display:flex;align-items:center;gap:8px;background:var(--teal-bg);border:1px solid var(--teal-bd);border-radius:8px;padding:8px 14px;font-family:'JetBrains Mono',monospace;font-size:11px;color:var(--teal);margin-bottom:14px;flex-shrink:0;}
 
 /* ══ POOL TAB ══ */
-.pool-selector-row{display:flex;align-items:center;gap:10px;padding:12px 20px;background:var(--surf);border-bottom:1px solid var(--border);flex-shrink:0;flex-wrap:wrap;}
+.pool-selector-row{display:flex;align-items:center;gap:10px;padding:12px 20px;background:var(--surf);flex-shrink:0;border-bottom:1px solid var(--border);flex-shrink:0;flex-wrap:wrap;}
 .pool-tab-btn{display:flex;align-items:center;gap:6px;padding:7px 16px;border-radius:8px;border:1px solid var(--border);background:var(--surf2);color:var(--muted);font-family:'JetBrains Mono',monospace;font-size:11px;font-weight:700;cursor:pointer;transition:all .2s;letter-spacing:.5px;}
 .pool-tab-btn:hover{border-color:var(--accent-bd);color:var(--accent);}
 .pool-tab-btn.active.rusak{border-color:var(--rusak-bd);background:var(--rusak-bg);color:var(--rusak-color);}
@@ -707,7 +711,7 @@ html,body{overflow:hidden!important;height:100%!important;position:relative!impo
 
 /* ══ PLANT SWITCHER BAR ══ */
 .plant-switcher-bar{
-  display:flex;align-items:center;gap:8px;flex-wrap:wrap;
+  display:flex;align-items:center;gap:8px;flex-wrap:wrap;flex-shrink:0;
   padding:10px 16px;background:var(--surf2);
   border-bottom:1px solid var(--border);flex-shrink:0;
 }
@@ -1009,12 +1013,12 @@ html,body{overflow:hidden!important;height:100%!important;position:relative!impo
     <div class="psb-btns" id="summary-psb-btns"></div>
     <div class="psb-info" id="summary-psb-info">⟳ Memuat...</div>
   </div>
-  <div id="summary-content" style="padding:20px"></div>
+  <div id="summary-content" style="padding:20px;overflow-y:auto;flex:1 1 0%;height:0;min-height:0;"></div>
 </div>
 
       <!-- TAB ASLI -->
       <div class="tab-content" id="tab-asli">
-        <div id="asli-content"></div>
+        <div id="asli-content" style="flex:1 1 0%;height:0;min-height:0;overflow-y:auto;"></div>
       </div>
 
       <!-- TAB ANALISA -->
@@ -1025,7 +1029,7 @@ html,body{overflow:hidden!important;height:100%!important;position:relative!impo
     <div class="psb-btns" id="analisa-psb-btns"></div>
     <div class="psb-info" id="analisa-psb-info">⟳ Memuat...</div>
   </div>
-  <div id="analisa-content"></div>
+  <div id="analisa-content" style="flex:1 1 0%;height:0;min-height:0;overflow-y:auto;"></div>
 </div>
 
       <!-- TAB POOL -->
