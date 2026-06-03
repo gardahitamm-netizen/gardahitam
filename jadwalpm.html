@@ -27,25 +27,8 @@ html{scroll-behavior:smooth}
 }
 body{font-family:'Space Grotesk',sans-serif;background:var(--bg);color:var(--text);overflow-x:hidden}
 
-/* ── CURSOR — NO LAG VERSION ──────────────────────────────── */
-/* Cursor ring pakai CSS transition ringan, dot langsung ikut mouse */
-#cursor{
-  position:fixed;width:8px;height:8px;
-  background:var(--cyan);border-radius:50%;
-  pointer-events:none;z-index:99999;
-  mix-blend-mode:screen;
-  transform:translate(-50%,-50%);
-  /* NO transition — langsung */
-  will-change:transform;
-}
-#cursor-ring{
-  position:fixed;width:32px;height:32px;
-  border:1.5px solid rgba(0,212,255,0.45);border-radius:50%;
-  pointer-events:none;z-index:99998;
-  transform:translate(-50%,-50%);
-  transition:transform .12s ease,width .15s,height .15s,opacity .15s;
-  will-change:transform;
-}
+#cursor{position:fixed;width:8px;height:8px;background:var(--cyan);border-radius:50%;pointer-events:none;z-index:99999;mix-blend-mode:screen;transform:translate(-50%,-50%);will-change:transform}
+#cursor-ring{position:fixed;width:32px;height:32px;border:1.5px solid rgba(0,212,255,0.45);border-radius:50%;pointer-events:none;z-index:99998;transform:translate(-50%,-50%);transition:transform .12s ease,width .15s,height .15s,opacity .15s;will-change:transform}
 body.cursor-hover #cursor-ring{width:48px;height:48px;opacity:0.5}
 
 #bg-canvas{position:fixed;inset:0;z-index:0;pointer-events:none;opacity:.6}
@@ -138,7 +121,6 @@ body.cursor-hover #cursor-ring{width:48px;height:48px;opacity:0.5}
 .leg-sep{flex:1}
 .last-upd{font-family:'JetBrains Mono',monospace;font-size:10px;color:var(--text3)}
 
-/* ── PLANT GROUP ─────────────────────────────────── */
 .plant-group{margin-bottom:20px;border:1px solid rgba(255,255,255,0.07);border-radius:16px;overflow:hidden;transition:border-color .3s}
 .plant-group:hover{border-color:rgba(0,212,255,0.15)}
 .plant-header{display:flex;align-items:center;gap:14px;padding:14px 22px;background:rgba(0,212,255,0.03);border-bottom:1px solid rgba(255,255,255,0.05);cursor:pointer;user-select:none;transition:background .2s}
@@ -158,7 +140,6 @@ body.cursor-hover #cursor-ring{width:48px;height:48px;opacity:0.5}
 .plant-body{overflow:hidden;max-height:9999px;opacity:1;transition:max-height .45s ease,opacity .3s ease}
 .plant-group.collapsed .plant-body{max-height:0;opacity:0}
 
-/* ── TABLE ───────────────────────────────────────── */
 .tbl-wrap{overflow-x:auto;background:rgba(5,10,22,0.4)}
 .tbl-wrap::-webkit-scrollbar{height:5px}
 .tbl-wrap::-webkit-scrollbar-track{background:rgba(255,255,255,0.02)}
@@ -190,7 +171,6 @@ td.s3.type-corrective {color:var(--pm-corrective)}
 table.pm tbody tr:hover td.s0,table.pm tbody tr:hover td.s1,table.pm tbody tr:hover td.s2,table.pm tbody tr:hover td.s3{background:rgba(11,17,32,.99)}
 table.pm tbody td.td-now{background:rgba(0,212,255,0.02)!important}
 
-/* ── PM CELL ─────────────────────────────────────── */
 .pm-cell{width:72px;height:28px;border-radius:6px;display:flex;align-items:center;justify-content:center;font-family:'JetBrains Mono',monospace;font-size:9px;font-weight:700;margin:1px auto;position:relative;transition:transform .2s,box-shadow .2s;letter-spacing:.02em;padding:0 4px;text-align:center;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 .pm-cell.plan{background:var(--pm-plan-bg);border:1px solid var(--pm-plan-border);color:var(--pm-plan);cursor:default;pointer-events:none}
 .pm-cell.actual-done{background:var(--pm-actual-bg);border:1px solid var(--pm-actual-border);color:var(--pm-actual);cursor:pointer;font-size:8px}
@@ -228,7 +208,7 @@ table.pm tbody td.td-now{background:rgba(0,212,255,0.02)!important}
 .modal-box.corrective-mode{border-color:rgba(255,200,50,0.45)!important;box-shadow:0 24px 80px rgba(0,0,0,.8),0 0 40px rgba(255,210,80,0.12)}
 .modal-overlay.open .modal-box{transform:translateY(0) scale(1)}
 .modal-badge{font-family:'JetBrains Mono',monospace;font-size:9px;font-weight:700;letter-spacing:.18em;text-transform:uppercase;color:var(--cyan);opacity:.7;margin-bottom:10px}
-.modal-badge.corr-badge{color:var(--pm-corrective)!important}
+.modal-badge.corr-badge{color:var(--pm-corrective)!important;opacity:1}
 .modal-title{font-family:'Orbitron',monospace;font-size:16px;font-weight:900;color:#fff;margin-bottom:6px}
 .modal-sub{font-size:12px;color:var(--text3);margin-bottom:20px;line-height:1.7}
 .modal-sub strong{color:var(--pm-actual)}
@@ -240,22 +220,12 @@ table.pm tbody td.td-now{background:rgba(0,212,255,0.02)!important}
 .modal-date.corr-date{border-color:rgba(255,200,50,0.3)!important}
 .modal-date.corr-date:focus{border-color:rgba(255,200,50,0.7)!important;box-shadow:0 0 12px rgba(255,210,80,0.15)!important}
 .modal-date::-webkit-calendar-picker-indicator{filter:invert(1) opacity(.6);cursor:pointer}
-
-/* ★ NEW: field keterangan */
-.modal-textarea{
-  width:100%;padding:10px 14px;
-  background:rgba(0,0,0,0.5);border:1px solid rgba(0,212,255,0.2);
-  border-radius:10px;color:var(--text);
-  font-family:'Space Grotesk',sans-serif;font-size:12px;
-  outline:none;resize:vertical;min-height:72px;
-  transition:border-color .2s;line-height:1.6
-}
+.modal-textarea{width:100%;padding:10px 14px;background:rgba(0,0,0,0.5);border:1px solid rgba(0,212,255,0.2);border-radius:10px;color:var(--text);font-family:'Space Grotesk',sans-serif;font-size:12px;outline:none;resize:vertical;min-height:72px;transition:border-color .2s;line-height:1.6}
 .modal-textarea:focus{border-color:rgba(0,212,255,0.55);box-shadow:0 0 10px rgba(0,212,255,0.1)}
 .modal-textarea.corr-textarea{border-color:rgba(255,200,50,0.2)!important}
 .modal-textarea.corr-textarea:focus{border-color:rgba(255,200,50,0.6)!important;box-shadow:0 0 10px rgba(255,210,80,0.12)!important}
 .modal-textarea::placeholder{color:var(--text3)}
 .modal-charcount{font-family:'JetBrains Mono',monospace;font-size:9px;color:var(--text3);text-align:right;margin-top:4px}
-
 .modal-preview{font-family:'JetBrains Mono',monospace;font-size:11px;color:var(--pm-actual);min-height:20px;margin-top:8px}
 .modal-preview.corr-preview{color:var(--pm-corrective)!important}
 .modal-actions{display:flex;gap:10px;justify-content:flex-end;margin-top:20px;flex-wrap:wrap}
@@ -337,8 +307,6 @@ table.pm tbody td.td-now{background:rgba(0,212,255,0.02)!important}
 <canvas id="bg-canvas"></canvas>
 <div class="noise"></div>
 <div class="scanline-top"></div>
-
-<!-- ★ Cursor — simplified, no rAF lerp -->
 <div id="cursor"></div>
 <div id="cursor-ring"></div>
 
@@ -352,16 +320,12 @@ table.pm tbody td.td-now{background:rgba(0,212,255,0.02)!important}
       Mesin: <strong id="modal-mesin">—</strong><br>
       Bulan: <strong id="modal-month" style="color:var(--cyan)">—</strong>
     </div>
-
     <label class="modal-label" for="modal-date-input">Tanggal Pelaksanaan</label>
     <input class="modal-date" type="date" id="modal-date-input" oninput="onDateChange()">
     <div class="modal-preview" id="modal-preview"></div>
-
-    <!-- ★ NEW: Keterangan -->
     <label class="modal-label" for="modal-keterangan">Keterangan <span style="opacity:.45;font-size:9px">(opsional)</span></label>
     <textarea class="modal-textarea" id="modal-keterangan" placeholder="contoh: bearing aus, ganti oli, dll..." maxlength="120" oninput="onKetChange()"></textarea>
     <div class="modal-charcount" id="modal-charcount">0 / 120</div>
-
     <div class="modal-actions">
       <button class="modal-btn cancel" onclick="closeModal()">Batal</button>
       <button class="modal-btn delete" id="modal-delete-btn" onclick="submitClear()" style="display:none">🗑 Hapus</button>
@@ -652,11 +616,11 @@ function buildPlantGroup(p, months) {
   var planCnt=0, actualCnt=0, overdueCnt=0, correctiveCnt=0, schedNow=0, doneNow=0;
   machines.forEach(function(m) {
     (m.schedMonths || []).forEach(function(mo) {
-      if (mo.type === 'plan')   { planCnt++;    if (isCurrentMonth(mo.month)) schedNow++; }
-      if (mo.type === 'overdue') overdueCnt++;
+      if (mo.type === 'plan')    { planCnt++;    if (isCurrentMonth(mo.month)) schedNow++; }
+      if (mo.type === 'overdue')   overdueCnt++;
     });
     (m.actualMonths || []).forEach(function(mo) {
-      if (mo.type === 'actual') { actualCnt++;  if (isCurrentMonth(mo.month)) doneNow++; }
+      if (mo.type === 'actual')  { actualCnt++;  if (isCurrentMonth(mo.month)) doneNow++; }
     });
     (m.correctiveMonths || []).forEach(function(mo) {
       if (mo.type === 'corrective') correctiveCnt++;
@@ -731,21 +695,20 @@ function buildTableDOM(machines, months) {
 
   var tbody = document.createElement('tbody');
   machines.forEach(function(m, idx) {
-    var schedMap  = {};
-    (m.schedMonths      || []).forEach(function(mo) { schedMap[normMonth(mo.month)]       = mo; });
-    var actualMap = {};
-    (m.actualMonths     || []).forEach(function(mo) { actualMap[normMonth(mo.month)]      = mo; });
+    var schedMap      = {};
+    var actualMap     = {};
     var correctiveMap = {};
-    (m.correctiveMonths || []).forEach(function(mo) { correctiveMap[normMonth(mo.month)]  = mo; });
+    (m.schedMonths      || []).forEach(function(mo) { schedMap[normMonth(mo.month)]      = mo; });
+    (m.actualMonths     || []).forEach(function(mo) { actualMap[normMonth(mo.month)]     = mo; });
+    (m.correctiveMonths || []).forEach(function(mo) { correctiveMap[normMonth(mo.month)] = mo; });
 
-    // Row SCHEDULE
+    // ── Row SCHEDULE ──
     var trS = document.createElement('tr');
     trS.className = 'row-sched';
     var tdNo = document.createElement('td'); tdNo.className='s0'; tdNo.rowSpan=3; tdNo.textContent=m.no||(idx+1); trS.appendChild(tdNo);
     var tdM  = document.createElement('td'); tdM.className ='s1'; tdM.rowSpan=3; tdM.textContent=m.mesin; trS.appendChild(tdM);
     var tdI  = document.createElement('td'); tdI.className ='s2'; tdI.rowSpan=3; tdI.textContent=m.interval||'—'; trS.appendChild(tdI);
     var tdTS = document.createElement('td'); tdTS.className='s3 type-sched'; tdTS.textContent='SCH'; trS.appendChild(tdTS);
-
     months.forEach(function(mLabel) {
       var key  = normMonth(mLabel);
       var mo   = schedMap[key];
@@ -753,14 +716,14 @@ function buildTableDOM(machines, months) {
       if (isCurrentMonth(mLabel)) td.className = 'td-now';
       var cell = document.createElement('div');
       cell.className = 'pm-cell';
-      if (mo && mo.type === 'plan')    { cell.classList.add('plan');   cell.textContent='●'; cell.title='Schedule PM — '+mLabel; }
+      if (mo && mo.type === 'plan')     { cell.classList.add('plan');   cell.textContent='●'; cell.title='Schedule PM — '+mLabel; }
       else if (mo && mo.type==='overdue'){ cell.classList.add('overdue'); cell.textContent='!'; cell.title='Overdue — '+mLabel; }
       else cell.classList.add('empty');
       td.appendChild(cell); trS.appendChild(td);
     });
     tbody.appendChild(trS);
 
-    // Row ACTUAL
+    // ── Row ACTUAL ──
     var trA  = document.createElement('tr'); trA.className='row-actual';
     var tdTA = document.createElement('td'); tdTA.className='s3 type-actual'; tdTA.textContent='ACT'; trA.appendChild(tdTA);
     months.forEach(function(mLabel) {
@@ -771,7 +734,6 @@ function buildTableDOM(machines, months) {
       var cell = document.createElement('div');
       cell.className = 'pm-cell';
       if (mo && mo.type === 'actual' && mo.value) {
-        // Tampilkan hanya tanggal (split jika ada keterangan "Tgl | Ket")
         var display = mo.value.split(' | ')[0];
         cell.classList.add('actual-done');
         cell.textContent = display;
@@ -786,7 +748,7 @@ function buildTableDOM(machines, months) {
     });
     tbody.appendChild(trA);
 
-    // Row CORRECTIVE
+    // ── Row CORRECTIVE ──
     var trC  = document.createElement('tr'); trC.className='row-corrective';
     var tdTC = document.createElement('td'); tdTC.className='s3 type-corrective'; tdTC.textContent='COR'; trC.appendChild(tdTC);
     months.forEach(function(mLabel) {
@@ -939,7 +901,7 @@ function openModal(mesin, month, cellEl, moRef, isCorrective) {
   subMon.textContent = month;
   preview.textContent = '';
 
-  // ★ Prefill keterangan jika ada data existing
+  // Prefill keterangan jika ada existing data
   if (moRef && moRef.value) {
     var parts = moRef.value.split(' | ');
     ket.value = parts.length > 1 ? parts.slice(1).join(' | ') : '';
@@ -984,8 +946,8 @@ function openModal(mesin, month, cellEl, moRef, isCorrective) {
 }
 
 function closeModal() { document.getElementById('modalOverlay').classList.remove('open'); }
-document.getElementById('modalOverlay').addEventListener('click',function(e){if(e.target===this)closeModal();});
-document.addEventListener('keydown',function(e){if(e.key==='Escape')closeModal();});
+document.getElementById('modalOverlay').addEventListener('click', function(e){ if(e.target===this) closeModal(); });
+document.addEventListener('keydown', function(e){ if(e.key==='Escape') closeModal(); });
 
 function onDateChange() {
   var val=document.getElementById('modal-date-input').value;
@@ -997,7 +959,6 @@ function onDateChange() {
   prv.textContent = '→ ' + formatTanggalID(d);
   btn.disabled = false;
 }
-
 function onKetChange() {
   var ket   = document.getElementById('modal-keterangan');
   var count = document.getElementById('modal-charcount');
@@ -1018,7 +979,7 @@ function submitActual() {
   closeModal();
   if (savedCell) { savedCell.className='pm-cell saving'; savedCell.textContent='...'; }
 
-  // ★ FIX: pakai action yang benar untuk corrective
+  // ★ KUNCI: pakai action yang berbeda untuk corrective vs actual
   var action = isCorrective ? 'updateCorrectiveCell' : 'updateCell';
   showToast('info','⏳ Menyimpan '+(isCorrective?'corrective':'actual')+'...');
 
@@ -1026,7 +987,6 @@ function submitActual() {
     .then(function(res) {
       if (!res.success) throw new Error(res.error || 'GAS gagal.');
 
-      // Tampilkan di cell: hanya tanggal (keterangan di tooltip)
       var display = tgl;
       var fullVal = ket ? tgl + ' | ' + ket : tgl;
       var moObj   = { month:savedMonth, type: isCorrective?'corrective':'actual', value:fullVal };
@@ -1048,7 +1008,7 @@ function submitActual() {
         }
       }
 
-      // Update cache
+      // Update cache lokal
       if (pmCache) {
         pmCache.plants.forEach(function(pl) {
           (pl.machines||[]).forEach(function(m) {
@@ -1064,19 +1024,20 @@ function submitActual() {
         });
         updateOverview(pmCache.plants);
       }
+
       var toastType = isCorrective?'corrective':'success';
       var ketInfo   = ket ? ' | '+ket : '';
       showToast(toastType,(isCorrective?'🔧 Corrective':'✓ Actual')+' tersimpan! '+savedMesin+' — '+tgl+ketInfo);
     })
     .catch(function(err) {
       if (savedCell) {
-        if (savedMoRef&&savedMoRef.value) {
+        if (savedMoRef && savedMoRef.value) {
           var d2 = savedMoRef.value.split(' | ')[0];
-          savedCell.className  = isCorrective?'pm-cell corrective-done':'pm-cell actual-done';
+          savedCell.className   = isCorrective?'pm-cell corrective-done':'pm-cell actual-done';
           savedCell.textContent = d2;
         } else {
-          savedCell.className  = isCorrective?'pm-cell corrective-empty':'pm-cell actual-empty';
-          savedCell.textContent='';
+          savedCell.className   = isCorrective?'pm-cell corrective-empty':'pm-cell actual-empty';
+          savedCell.textContent = '';
         }
       }
       showToast('error','✗ Gagal simpan: '+err.message);
@@ -1126,9 +1087,9 @@ function submitClear() {
       showToast('success','🗑 Dihapus: '+savedMesin+' — '+savedMonth);
     })
     .catch(function(err) {
-      if (savedCell&&savedMoRef&&savedMoRef.value) {
+      if (savedCell && savedMoRef && savedMoRef.value) {
         var d2=savedMoRef.value.split(' | ')[0];
-        savedCell.className  = isCorrective?'pm-cell corrective-done':'pm-cell actual-done';
+        savedCell.className   = isCorrective?'pm-cell corrective-done':'pm-cell actual-done';
         savedCell.textContent = d2;
       }
       showToast('error','✗ Gagal hapus: '+err.message);
@@ -1158,8 +1119,8 @@ function updateAddPreview() {
   prev.innerHTML = '● '+checked.join('  ●  ');
 }
 function openAddMachine() {
-  document.getElementById('add-mesin').value   = '';
-  document.getElementById('add-interval').value= '3M';
+  document.getElementById('add-mesin').value    = '';
+  document.getElementById('add-interval').value = '3M';
   document.querySelectorAll('#month-grid-add .month-check').forEach(function(cb){cb.checked=false;});
   updateAddPreview();
   document.getElementById('addMachineOverlay').classList.add('open');
@@ -1185,7 +1146,7 @@ function submitAddMachine() {
     });
 }
 
-// ── TOAST ─────────────────────────────────────────────
+// ── UTILITIES ─────────────────────────────────────────
 var _toastTid=null;
 function showToast(type, msg) {
   var t=document.getElementById('toast');
@@ -1203,40 +1164,31 @@ function doRefresh()  {pmCache=null;loadData();}
 function doPrint()    {window.print();}
 
 // ── PAGE LOADER ───────────────────────────────────────
-var loader=document.getElementById('pageLoader');
-var loaderPct=document.getElementById('loaderPct');
-var lsteps=['LOADING PM DATA...','CONNECTING GAS...','PARSING SHEET...','READY'];
+var loader    = document.getElementById('pageLoader');
+var loaderPct = document.getElementById('loaderPct');
+var lsteps    = ['LOADING PM DATA...','CONNECTING GAS...','PARSING SHEET...','READY'];
 var lsi=0;
 var lti=setInterval(function(){if(lsi<lsteps.length)loaderPct.textContent=lsteps[lsi++];},400);
 setTimeout(function(){clearInterval(lti);loader.classList.add('hidden');loadData();},1600);
 
-// ── CURSOR — PERFORMA TINGGI ──────────────────────────
-// ★ FIX: Tidak pakai rAF lerp (penyebab lag). Dot langsung ikut
-//    mouse via CSS left/top. Ring pakai CSS transition ringan.
+// ── CURSOR ────────────────────────────────────────────
 (function(){
   var cur  = document.getElementById('cursor');
   var ring = document.getElementById('cursor-ring');
   if (!cur || !ring) return;
-
   document.addEventListener('mousemove', function(e) {
-    // Dot: langsung, zero-lag
     cur.style.left  = e.clientX + 'px';
     cur.style.top   = e.clientY + 'px';
-    // Ring: ikut via CSS transition (.12s) — cukup, tidak perlu rAF
     ring.style.left = e.clientX + 'px';
     ring.style.top  = e.clientY + 'px';
   }, { passive: true });
-
-  // Hover effect: pakai class bukan inline style
   document.addEventListener('mouseover', function(e) {
-    if (e.target.closest('a,button,.tb-btn,.pm-cell,.nav-link,.month-label,.modal-btn')) {
+    if (e.target.closest('a,button,.tb-btn,.pm-cell,.nav-link,.month-label,.modal-btn'))
       document.body.classList.add('cursor-hover');
-    }
   }, { passive: true });
   document.addEventListener('mouseout', function(e) {
-    if (e.target.closest('a,button,.tb-btn,.pm-cell,.nav-link,.month-label,.modal-btn')) {
+    if (e.target.closest('a,button,.tb-btn,.pm-cell,.nav-link,.month-label,.modal-btn'))
       document.body.classList.remove('cursor-hover');
-    }
   }, { passive: true });
 })();
 
