@@ -670,17 +670,39 @@ async function doLogin() {
     return;
   }
 
-  // Disable tombol selama proses
   const btn = $id('btn-login');
   btn.disabled = true;
   btn.textContent = '⏳ Logging in...';
 
   try {
+    // ── Coba ambil detail device via Client Hints (Chrome 110+) ──
+    let deviceDetail = navigator.userAgent;
+    try {
+      if (navigator.userAgentData) {
+        const hints = await navigator.userAgentData.getHighEntropyValues([
+          'platform', 'platformVersion', 'model', 'mobile',
+          'brands', 'uaFullVersion'
+        ]);
+        // Susun string detail
+        const brand  = hints.brands
+          ? hints.brands.filter(b => !b.brand.includes('Not')).map(b => b.brand + ' ' + b.version).join(', ')
+          : '';
+        const model    = hints.model    || '';
+        const platform = hints.platform || '';
+        const platVer  = hints.platformVersion || '';
+        const mobile   = hints.mobile ? 'Mobile' : 'Desktop';
+        deviceDetail = `${model}|${platform} ${platVer}|${brand}|${mobile}|${navigator.userAgent}`;
+      }
+    } catch(e) {
+      // Fallback ke userAgent biasa kalau Client Hints gagal
+      deviceDetail = navigator.userAgent;
+    }
+
     const params = new URLSearchParams({
       action    : 'login',
       username  : username,
       password  : password,
-      userAgent : navigator.userAgent   // info HP/browser
+      userAgent : deviceDetail
     });
 
     const res  = await fetch(API + '?' + params.toString());
