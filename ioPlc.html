@@ -662,7 +662,10 @@ function showApp() {
 // ══════════════════════════════════════════════════════
 //  LOGIN — hardcoded, tidak perlu API call
 // ══════════════════════════════════════════════════════
-function doLogin() {
+// ══════════════════════════════════════════════════════
+//  LOGIN — kirim ke Apps Script + catat ke spreadsheet
+// ══════════════════════════════════════════════════════
+async function doLogin() {
   const username = $id('inp-user').value.trim().toLowerCase();
   const password = $id('inp-pass').value.trim();
 
@@ -671,34 +674,53 @@ function doLogin() {
     return;
   }
 
-  // Cek ke daftar VALID_USERS
-  const found = VALID_USERS.find(u =>
-    u.username.toLowerCase() === username &&
-    String(u.password) === String(password)
-  );
+  // Disable tombol selama proses
+  const btn = $id('btn-login');
+  btn.disabled = true;
+  btn.textContent = '⏳ Logging in...';
 
-  if (found) {
-    SESSION = {
-      username : found.username,
-      plant    : found.plant,
-      role     : found.role,
-      loginAt  : Date.now()
-    };
-    setSession(SESSION);
-    S = freshState();
-    showApp();
-  } else {
-    showLoginErr('Username atau password salah');
-    // Shake animasi pada input
-    [$id('inp-user'), $id('inp-pass')].forEach(el => {
-      el.style.borderColor = 'var(--fault)';
-      el.style.animation = 'shake .3s ease';
-      setTimeout(() => {
-        el.style.borderColor = '';
-        el.style.animation = '';
-      }, 600);
+  try {
+    const params = new URLSearchParams({
+      action    : 'login',
+      username  : username,
+      password  : password,
+      userAgent : navigator.userAgent   // info HP/browser
     });
+
+    const res  = await fetch(API + '?' + params.toString());
+    const data = await res.json();
+
+    if (data.status === 'ok') {
+      SESSION = {
+        username : username,
+        plant    : data.plant_access || 'ALL',
+        role     : 'user',
+        loginAt  : Date.now()
+      };
+      setSession(SESSION);
+      S = freshState();
+      showApp();
+    } else {
+      showLoginErr(data.message || 'Username atau password salah');
+      shakeInputs();
+    }
+  } catch(err) {
+    showLoginErr('Gagal terhubung ke server. Coba lagi.');
+  } finally {
+    btn.disabled = false;
+    btn.textContent = '🔐 LOGIN';
   }
+}
+
+function shakeInputs() {
+  [$id('inp-user'), $id('inp-pass')].forEach(el => {
+    el.style.borderColor = 'var(--fault)';
+    el.style.animation   = 'shake .3s ease';
+    setTimeout(() => {
+      el.style.borderColor = '';
+      el.style.animation   = '';
+    }, 600);
+  });
 }
 
 function showLoginErr(msg) {
