@@ -3037,10 +3037,37 @@ async function renderAsliTab(){
     const sesuai=rows.filter(r=>r.status==='SESUAI').length,tidakSesuai=rows.filter(r=>r.status==='TIDAK SESUAI').length,tidakDitemukan=rows.filter(r=>r.status==='TIDAK DITEMUKAN').length;
     function rowStyle(st){if(st==='SESUAI')return'background:rgba(0,240,160,.08);border-left:3px solid var(--ok)';if(st==='TIDAK SESUAI')return'background:rgba(255,61,85,.08);border-left:3px solid var(--fault)';if(st==='TIDAK DITEMUKAN')return'background:rgba(126,184,232,.06);border-left:3px solid var(--kosong)';return'';}
     function statusBadge(st){if(st==='SESUAI')return`<span class="status-tag st-ok">✅ SESUAI</span>`;if(st==='TIDAK SESUAI')return`<span class="status-tag st-fault">❌ TIDAK SESUAI</span>`;if(st==='TIDAK DITEMUKAN')return`<span class="status-tag st-kosong">🔍 TDK DITEMUKAN</span>`;return`<span style="color:var(--muted)">—</span>`;}
-    function renderCari(val,st){if(!val||val==='—')return'<span style="color:var(--muted)">—</span>';if(val.trim()==='#REF!')return`<span class="asli-ref-err">#REF!</span>`;if(st==='TIDAK SESUAI')return`<span class="asli-cari" style="color:var(--fault);border-color:rgba(255,61,85,.35);background:rgba(255,61,85,.1)">${esc(val)}</span>`;if(st==='SESUAI')return`<span class="asli-cari" style="color:var(--ok);border-color:rgba(0,240,160,.35);background:rgba(0,240,160,.1)">${esc(val)}</span>`;return`<span class="asli-cari">${esc(val)}</span>`;}
-    id('asli-content').innerHTML=`<div style="padding:14px 20px 0"><div class="mb-header-row"><span class="mb-header-title">📋 Data Asli — ${esc(S.curGroup)}</span><span class="mb-header-count">${total} drive</span></div><div style="display:flex;gap:10px;flex-wrap:wrap;margin-bottom:14px"><div class="sum-stat" style="min-width:90px;padding:10px 14px"><div class="sum-stat-label">Sesuai</div><div class="sum-stat-val ok" style="font-size:18px">${sesuai}</div></div><div class="sum-stat" style="min-width:90px;padding:10px 14px"><div class="sum-stat-label">Tidak Sesuai</div><div class="sum-stat-val" style="font-size:18px;color:var(--fault)">${tidakSesuai}</div></div><div class="sum-stat" style="min-width:90px;padding:10px 14px"><div class="sum-stat-label">Tdk Ditemukan</div><div class="sum-stat-val kosong" style="font-size:18px">${tidakDitemukan}</div></div><div class="sum-stat" style="min-width:90px;padding:10px 14px"><div class="sum-stat-label">Total</div><div class="sum-stat-val accent" style="font-size:18px">${total}</div></div></div></div>
+    
+    function renderCari(val, st, sn) {
+    if (!val || val === '—') return '<span style="color:var(--muted)">—</span>';
+    if (val.trim() === '#REF!') return `<span class="asli-ref-err">#REF!</span>`;
+    const isNotFound = val.trim().toLowerCase() === 'tidak ditemukan';
+    if (isNotFound && sn) {
+    const safeSn = esc(sn);
+    return `<span class="asli-cari" style="color:var(--fault);border-color:rgba(255,61,85,.35);
+      background:rgba(255,61,85,.08);">tidak ditemukan</span>
+      <button onclick="doCrossPlantSearch('${safeSn}', this)"
+        style="margin-left:6px;display:inline-flex;align-items:center;gap:4px;
+               padding:2px 8px;border-radius:5px;border:1px solid rgba(0,224,248,.35);
+               background:rgba(0,224,248,.08);color:var(--teal);
+               font-family:'JetBrains Mono',monospace;font-size:9px;
+               font-weight:700;cursor:pointer;transition:all .15s;"
+        title="Cari ke semua plant">
+        🌐 Cari
+      </button>`;
+  }
+
+  if (st === 'TIDAK SESUAI') return `<span class="asli-cari" style="color:var(--fault);
+    border-color:rgba(255,61,85,.35);background:rgba(255,61,85,.1)">${esc(val)}</span>`;
+  if (st === 'SESUAI') return `<span class="asli-cari" style="color:var(--ok);
+    border-color:rgba(0,240,160,.35);background:rgba(0,240,160,.1)">${esc(val)}</span>`;
+
+  return `<span class="asli-cari">${esc(val)}</span>`;
+}
+  id('asli-content').innerHTML=`<div style="padding:14px 20px 0"><div class="mb-header-row"><span class="mb-header-title">📋 Data Asli — ${esc(S.curGroup)}</span><span class="mb-header-count">${total} drive</span></div><div style="display:flex;gap:10px;flex-wrap:wrap;margin-bottom:14px"><div class="sum-stat" style="min-width:90px;padding:10px 14px"><div class="sum-stat-label">Sesuai</div><div class="sum-stat-val ok" style="font-size:18px">${sesuai}</div></div><div class="sum-stat" style="min-width:90px;padding:10px 14px"><div class="sum-stat-label">Tidak Sesuai</div><div class="sum-stat-val" style="font-size:18px;color:var(--fault)">${tidakSesuai}</div></div><div class="sum-stat" style="min-width:90px;padding:10px 14px"><div class="sum-stat-label">Tdk Ditemukan</div><div class="sum-stat-val kosong" style="font-size:18px">${tidakDitemukan}</div></div><div class="sum-stat" style="min-width:90px;padding:10px 14px"><div class="sum-stat-label">Total</div><div class="sum-stat-val accent" style="font-size:18px">${total}</div></div></div></div>
     <div class="mb-table-wrap" style="padding:0 20px 20px">
-   "<table class="mb-table"><thead><tr><th class="mb-num">#</th><th>Drive ID (Posisi Asli)</th><th>Ada di Lapangan</th><th>Serial Number Asli</th><th>Spesifikasi</th><th>Stiker Asli</th><th>Stiker Lapangan</th><th>Status</th></tr></thead><tbody>${rows.map((r,i)=>{const match=!q||(r.drive_id+r.spesifikasi+r.serial_number+(r['cari data lapangan']||r.cari_data_lapangan||'')+r.status).toLowerCase().includes(q);const cari=r['cari data lapangan']||r.cari_data_lapangan||'';return`<tr style="${rowStyle(r.status)}${!match?';display:none':''}"><td class="mb-num">${i+1}</td><td><span class="asli-drive-id">${esc(r.drive_id)}</span></td><td>${renderCari(cari,r.status)}</td><td style="font-family:'JetBrains Mono',monospace;font-size:11px">${esc(r.serial_number)||'<span style="color:var(--muted)">—</span>'}</td>
+   "<table class="mb-table"><thead><tr><th class="mb-num">#</th><th>Drive ID (Posisi Asli)</th><th>Ada di Lapangan</th><th>Serial Number Asli</th><th>Spesifikasi</th><th>Stiker Asli</th><th>Stiker Lapangan</th><th>Status</th></tr></thead><tbody>${rows.map((r,i)=>{const match=!q||(r.drive_id+r.spesifikasi+r.serial_number+(r['cari data lapangan']||r.cari_data_lapangan||'')+r.status).toLowerCase().includes(q);const cari=r['cari data lapangan']||r.cari_data_lapangan||'';return`<tr style="${rowStyle(r.status)}${!match?';display:none':''}"><td class="mb-num">${i+1}</td><td><span class="asli-drive-id">${esc(r.drive_id)}</span></td>// SESUDAH — ganti jadi ini (tambah r.serial_number)
+<td>${renderCari(cari, r.status, r.serial_number)}</td><td style="font-family:'JetBrains Mono',monospace;font-size:11px">${esc(r.serial_number)||'<span style="color:var(--muted)">—</span>'}</td>
 <td style="font-size:12px">${esc(r.spesifikasi)||'<span style="color:var(--muted)">—</span>'}</td>
 <td><span class="inu-stiker-value" style="font-family:'JetBrains Mono',monospace;font-size:11px">${esc(r.stiker_asli)||'<span style="color:var(--muted)">—</span>'}</span></td>
 <td><span class="inu-stiker-value" style="font-family:'JetBrains Mono',monospace;font-size:11px;color:${r.stiker_lapangan?'var(--teal)':'var(--muted)'}">${esc(r.stiker_lapangan)||'—'}</span></td>
@@ -3177,6 +3204,45 @@ id('clock').textContent=new Date().toTimeString().slice(0,8);
 function toggleTheme(){const isLight=document.body.classList.toggle('light');id('btn-theme').textContent=isLight?'☀️ Light':'🌙 Dark';const m=id('stat-mode');if(m)m.textContent=isLight?'LIGHT':'DARK';localStorage.setItem('theme',isLight?'light':'dark');}
 if(localStorage.getItem('theme')==='light'){document.body.classList.add('light');document.addEventListener('DOMContentLoaded',()=>{const b=id('btn-theme');if(b)b.textContent='☀️ Light';const m=id('stat-mode');if(m)m.textContent='LIGHT';});}
 updateRoleBadge();
+  async function doCrossPlantSearch(sn, btnEl) {
+  if (!sn) return;
+
+  btnEl.textContent = '⏳ Mencari...';
+  btnEl.disabled = true;
+  btnEl.style.opacity = '0.6';
+
+  try {
+    const res = await apiGet({ action: 'searchSerialCrossPlant', serial_number: sn });
+
+    if (res.found && res.results.length > 0) {
+      const lines = res.results.map(r =>
+        `${r.plant} / ${r.sheet}${r.drive_id ? ' (' + r.drive_id + ')' : ''}`
+      ).join(' | ');
+
+      const wrapper = btnEl.parentElement;
+      wrapper.innerHTML = `
+        <span style="display:inline-flex;align-items:center;gap:5px;
+          padding:3px 10px;border-radius:5px;
+          border:1px solid rgba(244,114,182,.4);
+          background:rgba(244,114,182,.1);
+          color:#f472b6;font-family:'JetBrains Mono',monospace;
+          font-size:10px;font-weight:700;">
+          🌐 ${esc(lines)}
+        </span>`;
+    } else {
+      btnEl.textContent = '✕ Tidak ada di semua plant';
+      btnEl.style.color = 'var(--fault)';
+      btnEl.style.borderColor = 'var(--fault-bd)';
+      btnEl.style.opacity = '1';
+      btnEl.disabled = true;
+    }
+  } catch (err) {
+    btnEl.textContent = '⚠️ Error';
+    btnEl.style.opacity = '1';
+    btnEl.disabled = false;
+    console.error('Cross-plant search error:', err);
+  }
+}
 </script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.js"></script>
