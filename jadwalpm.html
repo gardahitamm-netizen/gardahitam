@@ -285,14 +285,43 @@ table.pm tbody td.td-now{background:rgba(0,212,255,0.02)!important}
   .nav-links{display:none;flex-direction:column;position:fixed;top:64px;left:0;right:0;background:rgba(5,8,16,.98);padding:16px;border-bottom:1px solid var(--border)}
   .nav-links.open{display:flex}
   .nav-toggle{display:flex}
-  .page-hero,.content{padding-left:20px;padding-right:20px}
+  .page-hero,.content{padding-left:16px;padding-right:16px}
+  .page-hero{padding-top:36px;padding-bottom:28px}
   .overview-row{grid-template-columns:1fr 1fr}
   .toolbar{flex-direction:column;align-items:stretch}
   .tb-input{width:100%}
   .page-hero-inner{flex-direction:column;align-items:flex-start}
+  .page-hero-right{width:100%;justify-content:space-between}
+  .stat-pill{flex:1;min-width:0;padding:8px 10px}
+  .stat-pill-num{font-size:16px}
+  .stat-pill-lbl{font-size:8px}
   .modal-box{padding:24px 20px}
   .add-form-grid{grid-template-columns:1fr}
-  .month-grid{grid-template-columns:repeat(4,1fr)}
+  .month-grid{grid-template-columns:repeat(3,1fr)}
+
+  /* ── Table: shrink sticky columns + cells so they fit phone screens ── */
+  table.pm{font-size:10px}
+  table.pm thead th.s0,table.pm tbody td.s0{width:24px;min-width:24px;left:0}
+  table.pm thead th.s1,table.pm tbody td.s1{width:64px;min-width:64px;max-width:64px;left:24px;font-size:11px;white-space:normal;line-height:1.2}
+  table.pm thead th.s2,table.pm tbody td.s2{width:32px;min-width:32px;left:88px;font-size:9px}
+  table.pm thead th.s3,table.pm tbody td.s3{width:32px;min-width:32px;left:120px;font-size:8px}
+  table.pm thead th.th-month{width:52px;min-width:52px;font-size:9px}
+  .pm-cell{width:48px;height:24px;font-size:8px;margin:1px auto}
+  .pm-cell.corrective-empty::after,.pm-cell.actual-empty::after{font-size:9px}
+
+  .plant-header{padding:10px 14px;gap:8px;flex-wrap:wrap}
+  .plant-name{font-size:11px}
+  .plant-meta{display:none}
+  .plant-pills{margin-left:0;gap:5px}
+  .p-pill{font-size:8px;padding:2px 7px}
+  .plant-toggle{margin-left:auto}
+
+  .legend-strip{gap:6px}
+  .leg-item{font-size:9px;padding:4px 10px}
+  .last-upd{width:100%;text-align:right}
+
+  .plant-progress{padding:8px 14px 12px;gap:8px}
+  .prog-label{font-size:9px}
 }
 </style>
 </head>
