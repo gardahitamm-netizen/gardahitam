@@ -343,6 +343,11 @@ tr.filter-hidden { display: none; }
 /* penanda visual: baris pertama dari blok ID yang sama */
 tr.id-block-start td { border-top: 2px solid var(--border-orange); }
 
+/* daftar nama satu tim di dalam 1 sel */
+.team-name-item { padding: 1px 0; }
+.team-name-item .tn-num { color: var(--text-dim); font-size: 10px; }
+.team-count { font-family: 'JetBrains Mono', monospace; font-size: 9px; color: var(--text-dim); margin-top: 3px; letter-spacing: 0.5px; }
+
 .status-select { width: 100%; font-size: 11px; font-weight: 700; font-family: 'JetBrains Mono', monospace; padding: 4px; border-radius: 3px; border: 1px solid transparent; text-transform: uppercase; cursor: pointer; }
 .pending { background: rgba(64,196,255,0.08); color: var(--blue-info); border-color: rgba(64,196,255,0.3); }
 .proses { background: rgba(255,215,64,0.08); color: var(--amber-warn); border-color: rgba(255,215,64,0.3); }
@@ -808,7 +813,7 @@ tr.id-block-start td { border-top: 2px solid var(--border-orange); }
         <input type="text" id="id" placeholder="Nomor ID">
         <div class="nama-wrap">
           <textarea id="nama" placeholder="Nama (1 nama per baris)"></textarea>
-          <span class="nama-hint">↵ ENTER = nama baru</span>
+          <span class="nama-hint">↵ ENTER = nama baru (jadi 1 tim)</span>
         </div>
         <textarea id="tugas" placeholder="Tugas"></textarea>
         <input type="text" id="mesin" placeholder="Mesin">
@@ -1064,8 +1069,6 @@ var MASTER_GAS_URL = "https://script.google.com/macros/s/AKfycbxcpj6mYF6YHVhdNNh
 
 /* ══════════════════════════════════════════════════════
    HELPER URL + CACHE BUSTER
-   Setiap request diberi parameter _t=timestamp supaya
-   browser / Google tidak menyajikan respons lama.
    ══════════════════════════════════════════════════════ */
 function gasUrl(action, params) {
   var url = new URL(MASTER_GAS_URL);
@@ -1205,8 +1208,8 @@ function setupRoleUI(session) {
   if (hint) {
     if (session.role === ROLES.GUEST)           hint.textContent = '👁 Mode Tamu: hanya bisa melihat, filter, cetak, dan kirim WA';
     else if (session.role === ROLES.TEKNISI)    hint.textContent = '🔧 Teknisi: hanya bisa melihat, filter, cetak, dan kirim WA';
-    else if (session.role === ROLES.SUPERVISOR) hint.textContent = '🎯 Supervisor: Akses penuh — Double-klik baris untuk edit';
-    else                                        hint.textContent = '👑 Admin: Akses penuh — Double-klik baris untuk edit';
+    else if (session.role === ROLES.SUPERVISOR) hint.textContent = '🎯 Supervisor: Akses penuh — Double-klik baris untuk edit (1 baris = 1 job/tim)';
+    else                                        hint.textContent = '👑 Admin: Akses penuh — Double-klik baris untuk edit (1 baris = 1 job/tim)';
   }
   var hintEl = document.getElementById('histDblClickHint');
   if (hintEl) hintEl.style.display = hasPermission('sharejob.editHistory') ? 'block' : 'none';
@@ -1237,7 +1240,7 @@ function confirmLogout() { document.getElementById('logoutUserName').textContent
 function closeLogoutModal() { document.getElementById('logoutModal').style.display = 'none'; }
 function doLogout() {
   clearSession(); closeLogoutModal();
-  currentUnit = null; allTasks = []; deleteMode = false;
+  currentUnit = null; allTasks = []; currentGroups = []; deleteMode = false;
   document.getElementById('mainApp').style.display = 'none';
   document.getElementById('activeUnitBar').style.display = 'none';
   document.getElementById('unitSelectorScreen').style.display = 'none';
@@ -1262,6 +1265,7 @@ function updateAubRoleChip() {
 
 var currentUnit = null;
 var allTasks = [];
+var currentGroups = [];
 var deleteMode = false;
 var currentEditingRow = null, originalRowData = null;
 var filterState = { tanggal:'', bulan:'', tahun:'', status:'' };
@@ -1359,7 +1363,7 @@ function showMainApp(unit) {
   document.getElementById('aubCode').textContent = unit.code;
   document.getElementById('aubName').textContent = unit.name;
   updateAubRoleChip();
-  allTasks = []; deleteMode = false;
+  allTasks = []; currentGroups = []; deleteMode = false;
   document.getElementById('toggleDeleteBtn').classList.remove('active');
   clearPrintContainer();
   buildFilterOptions();
@@ -1421,9 +1425,7 @@ function buildHistFilterOptions() {
 }
 
 /* ══════════════════════════════════════════════════════
-   HISTORI — 1 record = 1 baris (TIDAK digabung per ID)
-   Setiap baris menyimpan data-rowindex (nomor baris sheet)
-   supaya edit menargetkan baris yang benar walau ID sama.
+   HISTORI — 1 record = 1 baris
    ══════════════════════════════════════════════════════ */
 function renderHistoryTable() {
   var tbody = document.getElementById('histData');
@@ -1545,7 +1547,6 @@ async function saveHistInlineEdit() {
   var savedState = _histCurrentEditCell;
   _histCurrentEditCell = null;
 
-  // Kirim rowIndex (target presisi) + histId (fallback lama)
   var params = {
     unit:     currentUnit.code,
     rowIndex: savedState.rowIndex || '',
@@ -1585,7 +1586,6 @@ async function saveHistInlineEdit() {
         : '<span class="action-empty">— belum diisi</span>';
     }
 
-    // Update cache lokal berdasarkan INDEX baris, bukan ID
     var idx = parseInt(savedState.histIdx, 10);
     if (!isNaN(idx) && allHistoryData[idx]) {
       if (field === 'jamSelesai') allHistoryData[idx].jamSelesai = newValue;
@@ -1743,15 +1743,21 @@ function manualRefresh() {
   loadData(true);
   setTimeout(function(){ btn.classList.remove('spinning'); btn.disabled = false; }, 1000);
 }
+
+/* Urutkan: tanggal terbaru dulu, lalu jaga anggota 1 GroupKey
+   tetap berdekatan & urut sesuai urutan input (nomor baris sheet). */
 function sortTasks(tasks) {
   return tasks.slice().sort(function(a,b){
     var ta = tanggalToTimestamp(a.tanggal), tb = tanggalToTimestamp(b.tanggal);
     if (tb !== ta) return tb - ta;
-    var ia = String(a.id), ib = String(b.id);
-    if (ia !== ib) return ia < ib ? -1 : 1;   // jaga urutan blok ID tetap berdekatan
-    var sa = STATUS_ORDER[a.status] !== undefined ? STATUS_ORDER[a.status] : 99;
-    var sb = STATUS_ORDER[b.status] !== undefined ? STATUS_ORDER[b.status] : 99;
-    return sa - sb;
+    var ga = String(a.groupKey || ('row' + a.row));
+    var gb = String(b.groupKey || ('row' + b.row));
+    if (ga !== gb) {
+      var ia = String(a.id), ib = String(b.id);
+      if (ia !== ib) return ia < ib ? -1 : 1;
+      return (a.row || 0) - (b.row || 0);
+    }
+    return (a.row || 0) - (b.row || 0);
   });
 }
 function parseTanggal(str) {
@@ -1768,8 +1774,21 @@ function tanggalToYMD(str) { var p = parseTanggal(str); return p ? p.year+'-'+St
 function getStatusClass(s) { if (s==="Selesai") return "selesai"; if (s==="Proses") return "proses"; return "pending"; }
 
 /* ══════════════════════════════════════════════════════
-   TABEL HARIAN — 1 job = 1 baris.
-   Tidak ada penggabungan berdasarkan ID. ID boleh sama.
+   GROUPING — semua baris dgn GroupKey sama = 1 JOB / 1 TIM
+   ══════════════════════════════════════════════════════ */
+function groupTasks(tasks) {
+  var map = {}, order = [];
+  tasks.forEach(function(t) {
+    var key = t.groupKey ? ('gk:' + t.groupKey) : ('row:' + t.row);
+    if (!map[key]) { map[key] = { key: t.groupKey || '', items: [], first: t }; order.push(key); }
+    map[key].items.push(t);
+  });
+  return order.map(function(k){ return map[k]; });
+}
+
+/* ══════════════════════════════════════════════════════
+   TABEL HARIAN — 1 JOB (tim) = 1 baris tabel.
+   Nama anggota ditumpuk di dalam satu sel.
    ══════════════════════════════════════════════════════ */
 function renderTable() {
   var table = document.getElementById("mainTable");
@@ -1790,45 +1809,58 @@ function renderTable() {
   }
 
   var canChangeStatus = hasPermission('sharejob.statusChange');
+  currentGroups = groupTasks(allTasks);
   var html = "";
   var lastId = null;
 
-  allTasks.forEach(function(task, idx){
-    var sc = getStatusClass(task.status);
-    var rowIndex = task.row || '';
-    var isBlockStart = (String(task.id) !== lastId);
-    lastId = String(task.id);
+  currentGroups.forEach(function(g, gi) {
+    var t = g.first;
+    var namaArr = g.items.map(function(x){ return x.nama || ''; });
+    var namaJoin = namaArr.join(', ');
+    var sc = getStatusClass(t.status);
+    var isBlockStart = (String(t.id) !== lastId);
+    lastId = String(t.id);
 
     html += "<tr class='group-row group-start" + (isBlockStart ? " id-block-start" : "") +
-            "' data-taskidx='" + idx +
-            "' data-rowindex='" + escHtml(String(rowIndex)) +
-            "' data-groupid='" + escHtml(String(task.id)) +
-            "' data-status='" + escHtml(task.status) +
-            "' data-tanggal='" + escHtml(task.tanggal||'') + "'>";
+            "' data-gidx='" + gi +
+            "' data-groupkey='" + escHtml(String(g.key)) +
+            "' data-rowindex='" + escHtml(String(t.row || '')) +
+            "' data-groupid='" + escHtml(String(t.id)) +
+            "' data-status='" + escHtml(t.status) +
+            "' data-nama='" + escHtml(namaJoin.toLowerCase()) +
+            "' data-namadisp='" + escHtml(namaJoin) +
+            "' data-tugas='" + escHtml((t.tugas||'').toLowerCase()) +
+            "' data-mesin='" + escHtml((t.mesin||'').toLowerCase()) +
+            "' data-tanggal='" + escHtml(t.tanggal||'') + "'>";
 
     if (deleteMode && canDelete) {
-      html += "<td class='col-delete'><button class='btn-delete-row' onclick=\"askDeleteRow(" + idx + ")\">✕</button></td>";
+      html += "<td class='col-delete'><button class='btn-delete-row' onclick=\"askDeleteRow(" + gi + ")\">✕</button></td>";
     }
-    html += "<td>" + escHtml(String(task.id)) + "</td>";
-    html += "<td>" + escHtml(task.nama || '') + "</td>";
-    html += "<td>" + escHtml(task.tugas || '') + "</td>";
-    html += "<td>" + escHtml(task.mesin || '') + "</td>";
+    html += "<td>" + escHtml(String(t.id)) + "</td>";
+    html += "<td>" + namaArr.map(function(nm, i){
+              return "<div class='team-name-item'><span class='tn-num'>" + (i+1) + ".</span> " + escHtml(nm) + "</div>";
+            }).join('') +
+            (namaArr.length > 1 ? "<div class='team-count'>👥 " + namaArr.length + " orang — 1 tim</div>" : "") +
+            "</td>";
+    html += "<td>" + escHtml(t.tugas || '') + "</td>";
+    html += "<td>" + escHtml(t.mesin || '') + "</td>";
 
     var disabledAttr = canChangeStatus ? '' : ' disabled';
     html += "<td><select class='status-select " + sc +
-            "' data-taskidx='" + idx +
-            "' data-id='" + escHtml(String(task.id)) +
-            "' data-rowindex='" + escHtml(String(rowIndex)) +
-            "' data-prev='" + escHtml(task.status) +
+            "' data-gidx='" + gi +
+            "' data-id='" + escHtml(String(t.id)) +
+            "' data-groupkey='" + escHtml(String(g.key)) +
+            "' data-rowindex='" + escHtml(String(t.row || '')) +
+            "' data-prev='" + escHtml(t.status) +
             "' onchange='changeStatus(this)'" + disabledAttr + ">" +
-            "<option" + (task.status==="Pending"?" selected":"") + ">Pending</option>" +
-            "<option" + (task.status==="Proses" ?" selected":"") + ">Proses</option>" +
-            "<option" + (task.status==="Selesai"?" selected":"") + ">Selesai</option>" +
+            "<option" + (t.status==="Pending"?" selected":"") + ">Pending</option>" +
+            "<option" + (t.status==="Proses" ?" selected":"") + ">Proses</option>" +
+            "<option" + (t.status==="Selesai"?" selected":"") + ">Selesai</option>" +
             "</select></td>";
 
-    html += "<td>" + escHtml(task.tanggal || '') + "</td>";
-    html += "<td style='color:var(--green-ok);'>" + (task.jamMulai ? escHtml(task.jamMulai) : "<span style='color:var(--text-dim);font-size:11px;'>—</span>") + "</td>";
-    html += "<td style='color:var(--amber-warn);'>" + (task.jamSelesai ? escHtml(task.jamSelesai) : "<span style='color:var(--text-dim);font-size:11px;'>—</span>") + "</td>";
+    html += "<td>" + escHtml(t.tanggal || '') + "</td>";
+    html += "<td style='color:var(--green-ok);'>" + (t.jamMulai ? escHtml(t.jamMulai) : "<span style='color:var(--text-dim);font-size:11px;'>—</span>") + "</td>";
+    html += "<td style='color:var(--amber-warn);'>" + (t.jamSelesai ? escHtml(t.jamSelesai) : "<span style='color:var(--text-dim);font-size:11px;'>—</span>") + "</td>";
     html += "</tr>";
   });
 
@@ -1928,16 +1960,9 @@ function applyFilterToRows() {
     if (fT) { if (tanggalToYMD(ts) !== fT) show = false; }
     else { if (fB && (!p || p.month !== fB)) show = false; if (fY && (!p || p.year !== fY)) show = false; }
     if (fS && rs !== fS) show = false;
-    if (show) {
-      var offset = (deleteMode && hasPermission('sharejob.delete')) ? 1 : 0;
-      var cells = tr.children;
-      var nama  = cells[offset+1] ? cells[offset+1].textContent.toLowerCase() : '';
-      var tugas = cells[offset+2] ? cells[offset+2].textContent.toLowerCase() : '';
-      var mesin = cells[offset+3] ? cells[offset+3].textContent.toLowerCase() : '';
-      if (qNama  && nama.indexOf(qNama)   === -1) show = false;
-      if (qTugas && tugas.indexOf(qTugas) === -1) show = false;
-      if (qMesin && mesin.indexOf(qMesin) === -1) show = false;
-    }
+    if (show && qNama  && (tr.getAttribute('data-nama')||'').indexOf(qNama)   === -1) show = false;
+    if (show && qTugas && (tr.getAttribute('data-tugas')||'').indexOf(qTugas) === -1) show = false;
+    if (show && qMesin && (tr.getAttribute('data-mesin')||'').indexOf(qMesin) === -1) show = false;
     if (show) { tr.classList.remove('filter-hidden'); visible++; }
     else       { tr.classList.add('filter-hidden'); }
   });
@@ -1971,10 +1996,11 @@ async function changeStatus(select) {
 
   var id       = select.getAttribute("data-id");
   var rowIndex = select.getAttribute("data-rowindex") || '';
-  var taskIdx  = parseInt(select.getAttribute("data-taskidx"), 10);
+  var groupKey = select.getAttribute("data-groupkey") || '';
+  var gIdx     = parseInt(select.getAttribute("data-gidx"), 10);
+  var g        = (!isNaN(gIdx) && currentGroups[gIdx]) ? currentGroups[gIdx] : null;
   var newStatus  = select.value;
   var prevStatus = select.getAttribute("data-prev");
-  var taskObj = (!isNaN(taskIdx) && allTasks[taskIdx]) ? allTasks[taskIdx] : {};
 
   select.setAttribute("data-prev", newStatus);
   select.className = "status-select " + getStatusClass(newStatus);
@@ -1982,11 +2008,11 @@ async function changeStatus(select) {
   if (tr) tr.setAttribute("data-status", newStatus);
 
   var taskInfo = null;
-  if (newStatus === 'Selesai' && prevStatus !== 'Selesai') {
+  if (newStatus === 'Selesai' && prevStatus !== 'Selesai' && g) {
     taskInfo = {
-      nama:  taskObj.nama  || '',
-      tugas: taskObj.tugas || '',
-      mesin: taskObj.mesin || ''
+      nama:  g.items.map(function(x){ return x.nama; }).join(', '),
+      tugas: g.first.tugas || '',
+      mesin: g.first.mesin || ''
     };
   }
 
@@ -1996,6 +2022,7 @@ async function changeStatus(select) {
       unit: currentUnit.code,
       id: id,
       rowIndex: rowIndex,
+      groupKey: groupKey,
       status: newStatus,
       actionNote: ''
     });
@@ -2034,20 +2061,23 @@ function toggleInput() {
 }
 
 var pendingDelete = null;
-function askDeleteRow(taskIdx) {
+function askDeleteRow(gIdx) {
   if (!hasPermission('sharejob.delete')) { showAccessDenied('Hapus Job','Supervisor atau Admin'); return; }
-  var t = allTasks[taskIdx];
-  if (!t) return;
-  pendingDelete = { id: t.id, rowIndex: t.row || '', nama: t.nama || '', tugas: t.tugas || '' };
+  var g = currentGroups[gIdx];
+  if (!g) return;
+  var t = g.first;
+  var namaJoin = g.items.map(function(x){ return x.nama; }).join(', ');
+  pendingDelete = { id: t.id, rowIndex: t.row || '', groupKey: g.key || '' };
   document.getElementById("deleteRowDesc").textContent =
-    "ID: " + t.id + (t.nama ? " — " + t.nama : "") + (t.tugas ? " | " + t.tugas : "");
+    "ID: " + t.id + " — " + namaJoin + (t.tugas ? " | " + t.tugas : "") +
+    " (" + g.items.length + " orang / 1 job)";
   document.getElementById("deleteRowModal").style.display = "flex";
 }
 document.getElementById("confirmDeleteRowBtn").addEventListener("click", function(){
   if (!pendingDelete) return;
   var p = pendingDelete; pendingDelete = null;
   document.getElementById("deleteRowModal").style.display = "none";
-  api("deleteTask", { id: p.id, rowIndex: p.rowIndex }).then(function(res){
+  api("deleteGroup", { id: p.id, rowIndex: p.rowIndex, groupKey: p.groupKey }).then(function(res){
     if (res && res.error) showAlert("Gagal menghapus: " + res.error);
     else loadData(true);
   });
@@ -2071,7 +2101,8 @@ function confirmArchive() {
 function closeModal() { document.getElementById("confirmModal").style.display = "none"; }
 
 /* ══════════════════════════════════════════════════════
-   INLINE EDIT — sekarang per baris tunggal (1 nama saja)
+   INLINE EDIT — per JOB (tim). Nama = textarea multiline,
+   bisa tambah/kurangi anggota.
    ══════════════════════════════════════════════════════ */
 function startInlineEdit(tr) {
   if (currentEditingRow && currentEditingRow !== tr) { showAlert("Selesaikan edit baris sebelumnya!"); return; }
@@ -2080,15 +2111,17 @@ function startInlineEdit(tr) {
   var cells = tr.children;
   if (cells.length < 8 + offset) return;
 
-  var idx = parseInt(tr.getAttribute("data-taskidx"), 10);
-  var t = (!isNaN(idx) && allTasks[idx]) ? allTasks[idx] : null;
-  if (!t) return;
+  var gi = parseInt(tr.getAttribute("data-gidx"), 10);
+  var g = (!isNaN(gi) && currentGroups[gi]) ? currentGroups[gi] : null;
+  if (!g) return;
+  var t = g.first;
 
   currentEditingRow = tr;
   originalRowData = {
     id: String(t.id),
     rowIndex: t.row || '',
-    nama: t.nama || '',
+    groupKey: g.key || '',
+    nama: g.items.map(function(x){ return x.nama || ''; }).join('\n'),
     tugas: t.tugas || '',
     mesin: t.mesin || '',
     jamMulai: t.jamMulai || ''
@@ -2096,7 +2129,7 @@ function startInlineEdit(tr) {
 
   tr.classList.add("editing");
   cells[offset+0].innerHTML = "<input class='inline-input' id='ie-id' value='" + escHtml(originalRowData.id) + "'><div class='inline-save-bar'><button class='inline-btn inline-btn-save' onclick='saveInlineEdit()'>✓ Simpan</button><button class='inline-btn inline-btn-cancel' onclick='cancelInlineEdit()'>✕ Batal</button></div>";
-  cells[offset+1].innerHTML = "<input class='inline-input' id='ie-nama' value='" + escHtml(originalRowData.nama) + "'>";
+  cells[offset+1].innerHTML = "<textarea class='inline-input' id='ie-nama' rows='" + Math.max(2, g.items.length) + "'>" + escHtml(originalRowData.nama) + "</textarea><div class='team-count'>↵ ENTER = nama baru</div>";
   cells[offset+2].innerHTML = "<textarea class='inline-input' id='ie-tugas' rows='3'>" + escHtml(originalRowData.tugas) + "</textarea>";
   cells[offset+3].innerHTML = "<input class='inline-input' id='ie-mesin' value='" + escHtml(originalRowData.mesin) + "'>";
   cells[offset+6].innerHTML = "<input class='inline-input' id='ie-jam-mulai' type='time' value='" + escHtml(originalRowData.jamMulai) + "'>";
@@ -2107,18 +2140,19 @@ function startInlineEdit(tr) {
 }
 function saveInlineEdit() {
   if (!currentEditingRow) return;
-  var get = function(id, def){ var el = document.getElementById(id); return el ? el.value.trim() : def; };
-  var newId=get("ie-id",originalRowData.id), newNama=get("ie-nama",originalRowData.nama),
-      newTugas=get("ie-tugas",originalRowData.tugas), newMesin=get("ie-mesin",originalRowData.mesin),
-      newJamMulai=get("ie-jam-mulai",originalRowData.jamMulai);
-  if (!newId || !newNama || !newTugas || !newMesin) { showAlert("Semua kolom harus diisi!"); return; }
-  var oldId = originalRowData.id;
-  var rowIndex = originalRowData.rowIndex;
+  var get = function(id, def){ var el = document.getElementById(id); return el ? el.value : def; };
+  var newId       = get("ie-id", originalRowData.id).trim();
+  var newNama     = get("ie-nama", originalRowData.nama);
+  var newTugas    = get("ie-tugas", originalRowData.tugas).trim();
+  var newMesin    = get("ie-mesin", originalRowData.mesin).trim();
+  var newJamMulai = get("ie-jam-mulai", originalRowData.jamMulai).trim();
+  if (!newId || !newNama.trim() || !newTugas || !newMesin) { showAlert("Semua kolom harus diisi!"); return; }
+  var p = originalRowData;
   finishInlineEdit();
-  api("updateTaskAll", {
-    rowIndex: rowIndex, oldId: oldId, newId: newId,
-    newNama: newNama, newTugas: newTugas, newMesin: newMesin,
-    newJamMulai: newJamMulai, newJamSelesai: ''
+  api("updateTaskGroup", {
+    groupKey: p.groupKey, rowIndex: p.rowIndex,
+    newId: newId, newNama: newNama, newTugas: newTugas,
+    newMesin: newMesin, newJamMulai: newJamMulai
   }).then(function(res){
     if (res && res.error) showAlert("Gagal simpan: " + res.error);
     loadData(true);
@@ -2163,12 +2197,13 @@ function doPrint() {
     pageRows.forEach(function(tr){
       var cells = tr.querySelectorAll('td');
       var get = function(i2){return cells[off+i2]?cells[off+i2].textContent.trim():'';};
+      var namaPrint = tr.getAttribute('data-namadisp') || get(1);
       var sv = tr.getAttribute('data-status')||'';
       var sc2 = sv==='Selesai'?'#2e7d32':sv==='Proses'?'#e65100':'#1565c0';
       var sb = sv==='Selesai'?'#e8f5e9':sv==='Proses'?'#fff3e0':'#e3f2fd';
       var pTr = document.createElement('tr');
       pTr.className = 'group-start-print' + (tr.classList.contains('id-block-start') ? ' id-block-start-print' : '');
-      pTr.innerHTML = '<td>'+escHtml(get(0))+'</td><td>'+escHtml(get(1))+'</td><td>'+escHtml(get(2))+'</td><td>'+escHtml(get(3))+'</td><td><span class="status-badge" style="color:'+sc2+';background:'+sb+';border-color:'+sc2+'">'+escHtml(sv)+'</span></td><td>'+escHtml(get(5))+'</td><td>'+escHtml(get(6)||'—')+'</td><td>'+escHtml(get(7)||'—')+'</td>';
+      pTr.innerHTML = '<td>'+escHtml(get(0))+'</td><td>'+escHtml(namaPrint)+'</td><td>'+escHtml(get(2))+'</td><td>'+escHtml(get(3))+'</td><td><span class="status-badge" style="color:'+sc2+';background:'+sb+';border-color:'+sc2+'">'+escHtml(sv)+'</span></td><td>'+escHtml(get(5))+'</td><td>'+escHtml(get(6)||'—')+'</td><td>'+escHtml(get(7)||'—')+'</td>';
       tb.appendChild(pTr);
     });
     tbl.appendChild(tb); pageDiv.appendChild(tbl); container.appendChild(pageDiv);
@@ -2272,9 +2307,10 @@ function openWaModal() {
   visible.forEach(function(tr, i){
     var cells = tr.children;
     var get = function(i2){return cells[off+i2]?cells[off+i2].textContent.trim():'';};
+    var namaWa = tr.getAttribute('data-namadisp') || get(1);
     var sv = tr.getAttribute('data-status')||'';
     var si = sv==='Selesai'?'✅':sv==='Proses'?'🔄':'⏳';
-    pesan += (i+1)+". *"+get(1)+"*\n";
+    pesan += (i+1)+". *"+namaWa+"*\n";
     pesan += "   🆔 ID     : "+get(0)+"\n";
     pesan += "   🔧 Mesin  : "+get(3)+"\n";
     pesan += "   📌 Tugas  : "+get(2)+"\n";
