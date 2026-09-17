@@ -340,6 +340,9 @@ tr:hover td { background: rgba(255,109,0,0.05) !important; }
 tr.group-row { cursor: pointer; }
 tr.filter-hidden { display: none; }
 
+/* penanda visual: baris pertama dari blok ID yang sama */
+tr.id-block-start td { border-top: 2px solid var(--border-orange); }
+
 .status-select { width: 100%; font-size: 11px; font-weight: 700; font-family: 'JetBrains Mono', monospace; padding: 4px; border-radius: 3px; border: 1px solid transparent; text-transform: uppercase; cursor: pointer; }
 .pending { background: rgba(64,196,255,0.08); color: var(--blue-info); border-color: rgba(64,196,255,0.3); }
 .proses { background: rgba(255,215,64,0.08); color: var(--amber-warn); border-color: rgba(255,215,64,0.3); }
@@ -368,7 +371,6 @@ tr.filter-hidden { display: none; }
 .modal-box h3 { font-family: 'JetBrains Mono', monospace; font-size: 13px; letter-spacing: 3px; color: var(--orange); margin-bottom: 16px; }
 .modal button { margin: 5px; }
 
-/* ★ ACTION MODAL — muncul SETELAH archive berhasil, hanya untuk isi action */
 #actionModal .modal-box {
   border-color: rgba(255,215,64,0.4);
   max-width: 520px;
@@ -400,7 +402,6 @@ tr.filter-hidden { display: none; }
   font-family: 'JetBrains Mono', monospace; font-size: 10px; color: var(--text-dim);
   margin-bottom: 16px; padding: 8px 12px; border-left: 2px solid var(--action-bd);
 }
-/* Banner "sudah selesai" di atas action modal */
 .action-done-banner {
   display: flex; align-items: center; gap: 8px;
   background: rgba(0,230,118,0.08); border: 1px solid rgba(0,230,118,0.3);
@@ -553,6 +554,7 @@ tr.filter-hidden { display: none; }
 #historyTable thead tr { border-bottom: 2px solid var(--hist-accent); }
 #historyTable th { color: var(--hist-accent); }
 #historyTable tr:hover td { background: rgba(179,157,219,0.05) !important; }
+#historyTable tr.id-block-start td { border-top: 2px solid var(--hist-accent-bd); }
 .hist-info-empty { text-align: center; padding: 60px 20px; font-family: 'JetBrains Mono', monospace; font-size: 13px; color: var(--text-dim); letter-spacing: 1px; }
 .hist-info-empty .ei-icon { font-size: 36px; margin-bottom: 14px; }
 .hist-archived-at { font-family: 'JetBrains Mono', monospace; font-size: 10px; color: var(--text-dim); letter-spacing: 0.5px; }
@@ -582,8 +584,9 @@ tr.filter-hidden { display: none; }
   .print-page th { font-size: 10px; padding: 5px 7px; border: 1px solid #ccc !important; white-space: nowrap; }
   .print-page td { background: white !important; color: #000 !important; padding: 4px 7px; border: 1px solid #ccc !important; font-size: 11px; word-break: break-word !important; }
   .print-page tr:nth-child(even) td { background: #f5f5f5 !important; }
-  .print-page .group-start-print td { border-top: 2px solid #E65100 !important; }
-  .print-page.type-histori .group-start-print td { border-top: 2px solid #7B1FA2 !important; }
+  .print-page .group-start-print td { border-top: 1px solid #ccc !important; }
+  .print-page .id-block-start-print td { border-top: 2px solid #E65100 !important; }
+  .print-page.type-histori .id-block-start-print td { border-top: 2px solid #7B1FA2 !important; }
   .print-page .status-badge { font-size: 10px; padding: 2px 6px; border-radius: 3px; font-weight: 700; border: 1px solid #999; }
 }
 @media (max-width:760px){
@@ -616,7 +619,6 @@ tr.filter-hidden { display: none; }
   #autoScrollBtn{font-size:0}
   #autoScrollBtn svg{margin:0}
 
-  /* Filter / search bars: stack and use full width on small screens */
   .hist-filter-bar{padding:8px 10px;gap:6px}
   .hist-filter-label{font-size:9px}
   .hist-filter-group,.hist-filter-date,.hist-filter-select{font-size:10px}
@@ -627,7 +629,6 @@ tr.filter-hidden { display: none; }
   .search-item input{font-size:10px;padding:6px 28px 6px 22px}
   .hist-filter-result{flex-basis:100%;text-align:right}
 
-  /* Input form */
   .form-container{min-width:0;flex-wrap:wrap}
   #id{flex:1 1 100px}
   .nama-wrap{flex:1 1 100%}
@@ -637,7 +638,6 @@ tr.filter-hidden { display: none; }
   #status{flex:1 1 100px}
   input, textarea, select{font-size:14px}
 
-  /* Tables: allow horizontal scroll with sane minimum widths */
   #mainTable{min-width:640px}
   #historyTable{min-width:760px}
   table{font-size:11px}
@@ -986,8 +986,6 @@ tr.filter-hidden { display: none; }
 <div id="deleteRowModal" class="modal"><div class="modal-box"><h3>🗑 Hapus Job?</h3><p id="deleteRowDesc"></p><p style="font-size:13px;margin-bottom:18px;">Tindakan ini tidak dapat dibatalkan.</p><div style="display:flex;justify-content:center;gap:12px;"><button id="confirmDeleteRowBtn">Ya, Hapus</button><button id="cancelDeleteRowBtn">Batal</button></div></div></div>
 <div id="logoutModal" class="modal"><div class="modal-box"><h3>⏻ LOGOUT</h3><p>Yakin ingin keluar dari akun <strong id="logoutUserName">—</strong>?</p><br><div style="display:flex;justify-content:center;gap:12px;"><button onclick="doLogout()" style="color:var(--red-err);border-color:rgba(255,23,68,0.4)">Ya, Logout</button><button onclick="closeLogoutModal()">Batal</button></div></div></div>
 
-<!-- ★ ACTION MODAL — muncul SETELAH job berhasil diarsipkan -->
-<!-- Tujuan: user bisa tambah catatan, TIDAK blocking proses archive -->
 <div id="actionModal" class="modal">
   <div class="modal-box">
     <h3>📋 Tambah Catatan Tindakan</h3>
@@ -1064,6 +1062,26 @@ var UNIT_CONFIG = [
 var ALL_UNITS = UNIT_CONFIG.map(function(u){ return u.code; });
 var MASTER_GAS_URL = "https://script.google.com/macros/s/AKfycbxcpj6mYF6YHVhdNNhdn9mX2b_F9gi_2q8cJc_Co6QzjqDD_0qMdQGv4YxOBoLrJV0W/exec";
 
+/* ══════════════════════════════════════════════════════
+   HELPER URL + CACHE BUSTER
+   Setiap request diberi parameter _t=timestamp supaya
+   browser / Google tidak menyajikan respons lama.
+   ══════════════════════════════════════════════════════ */
+function gasUrl(action, params) {
+  var url = new URL(MASTER_GAS_URL);
+  url.searchParams.set('action', action);
+  if (params) {
+    Object.keys(params).forEach(function(k){
+      url.searchParams.set(k, (params[k] === null || params[k] === undefined) ? '' : params[k]);
+    });
+  }
+  url.searchParams.set('_t', Date.now() + '' + Math.floor(Math.random()*1000));
+  return url.toString();
+}
+function gasFetch(action, params) {
+  return fetch(gasUrl(action, params), { cache: 'no-store' });
+}
+
 var ROLES = { ADMIN:'admin', SUPERVISOR:'supervisor', TEKNISI:'teknisi', GUEST:'guest' };
 var FULL_ACCESS_ROLES = ['admin', 'supervisor'];
 var PERMISSIONS = {
@@ -1115,11 +1133,7 @@ async function doLogin() {
   btn.classList.add('loading'); btn.disabled = true;
   errorDiv.classList.remove('show');
   try {
-    var url = new URL(MASTER_GAS_URL);
-    url.searchParams.set('action','verifyUser');
-    url.searchParams.set('username', username);
-    url.searchParams.set('password', password);
-    var res = await fetch(url.toString());
+    var res = await gasFetch('verifyUser', { username: username, password: password });
     var result = await res.json();
     if (result.success) {
       var role = (result.role || '').toLowerCase().trim();
@@ -1223,7 +1237,7 @@ function confirmLogout() { document.getElementById('logoutUserName').textContent
 function closeLogoutModal() { document.getElementById('logoutModal').style.display = 'none'; }
 function doLogout() {
   clearSession(); closeLogoutModal();
-  currentUnit = null; allTasks = []; allGroups = []; deleteMode = false;
+  currentUnit = null; allTasks = []; deleteMode = false;
   document.getElementById('mainApp').style.display = 'none';
   document.getElementById('activeUnitBar').style.display = 'none';
   document.getElementById('unitSelectorScreen').style.display = 'none';
@@ -1247,7 +1261,7 @@ function updateAubRoleChip() {
 }
 
 var currentUnit = null;
-var allTasks = [], allGroups = [];
+var allTasks = [];
 var deleteMode = false;
 var currentEditingRow = null, originalRowData = null;
 var filterState = { tanggal:'', bulan:'', tahun:'', status:'' };
@@ -1257,10 +1271,7 @@ var NAMA_BULAN = ['','Januari','Februari','Maret','April','Mei','Juni','Juli','A
 var TAHUN_AWAL = 2024;
 var STATUS_ORDER = { 'Pending':0, 'Proses':1, 'Selesai':2 };
 
-// ★ ACTION MODAL STATE — dipisah dari archive flow
-// _actionPending diisi SETELAH archive sukses, hanya untuk update catatan
 var _actionPending = null;
-
 var _histCurrentEditCell = null;
 
 function showUnitSelector() {
@@ -1332,10 +1343,7 @@ async function selectUnit(unit) {
 
 async function testGasConnection(unit) {
   try {
-    var url = new URL(MASTER_GAS_URL);
-    url.searchParams.set('action','getTasks');
-    url.searchParams.set('unit', unit.code);
-    var res = await fetch(url.toString());
+    var res = await gasFetch('getTasks', { unit: unit.code });
     if (!res.ok) throw new Error('HTTP ' + res.status);
     var json = await res.json();
     if (json.error && json.error.indexOf('Unit tidak dikenal') !== -1) throw new Error('Unit ' + unit.code + ' tidak terdaftar di GAS');
@@ -1351,7 +1359,7 @@ function showMainApp(unit) {
   document.getElementById('aubCode').textContent = unit.code;
   document.getElementById('aubName').textContent = unit.name;
   updateAubRoleChip();
-  allTasks = []; allGroups = []; deleteMode = false;
+  allTasks = []; deleteMode = false;
   document.getElementById('toggleDeleteBtn').classList.remove('active');
   clearPrintContainer();
   buildFilterOptions();
@@ -1384,10 +1392,7 @@ function reloadHistory() {
 async function loadHistory() {
   showLoading(true, 'Memuat riwayat job...');
   try {
-    var url = new URL(MASTER_GAS_URL);
-    url.searchParams.set('action','getHistory');
-    url.searchParams.set('unit', currentUnit.code);
-    var res = await fetch(url.toString());
+    var res = await gasFetch('getHistory', { unit: currentUnit.code });
     if (!res.ok) throw new Error('HTTP ' + res.status);
     var json = await res.json();
     if (json.error) { showAlert('Error getHistory: ' + json.error); return; }
@@ -1415,41 +1420,44 @@ function buildHistFilterOptions() {
   }
 }
 
+/* ══════════════════════════════════════════════════════
+   HISTORI — 1 record = 1 baris (TIDAK digabung per ID)
+   Setiap baris menyimpan data-rowindex (nomor baris sheet)
+   supaya edit menargetkan baris yang benar walau ID sama.
+   ══════════════════════════════════════════════════════ */
 function renderHistoryTable() {
   var tbody = document.getElementById('histData');
   if (!allHistoryData.length) {
     tbody.innerHTML = '<tr><td colspan="8"><div class="hist-info-empty"><div class="ei-icon">📭</div><div class="ei-text">Belum ada riwayat job yang diarsipkan</div></div></td></tr>';
     return;
   }
-  var grouped = {};
-  var order = [];
-  allHistoryData.forEach(function(t) {
-    var key = t.id + '|' + t.tanggal + '|' + t.archivedAt;
-    if (!grouped[key]) { grouped[key] = { task: t, names: [] }; order.push(key); }
-    grouped[key].names.push(t.nama);
-  });
 
   var canEdit = hasPermission('sharejob.editHistory');
   var html = '';
-  order.forEach(function(key) {
-    var g = grouped[key];
-    var t = g.task;
-    var allNama = g.names.join(', ');
+  var lastId = null;
+
+  allHistoryData.forEach(function(t, idx) {
+    var nama = t.nama || '';
     var actionHtml = t.action
       ? '<span class="action-badge">' + escHtml(t.action) + '</span>'
       : '<span class="action-empty">— belum diisi</span>';
 
     var editableAttr = canEdit ? ' class="hist-editable-cell"' : '';
+    var isBlockStart = (String(t.id) !== lastId);
+    lastId = String(t.id);
+
     var rowDataAttrs =
-      ' data-histid="' + escHtml(t.id) + '"' +
+      ' data-histid="' + escHtml(String(t.id)) + '"' +
+      ' data-rowindex="' + escHtml(String(t.row || '')) + '"' +
+      ' data-histidx="' + idx + '"' +
       ' data-tanggal="' + escHtml(t.tanggal||'') + '"' +
-      ' data-nama="' + escHtml(allNama.toLowerCase()) + '"' +
+      ' data-nama="' + escHtml(nama.toLowerCase()) + '"' +
       ' data-mesin="' + escHtml((t.mesin||'').toLowerCase()) + '"' +
       ' data-tugas="' + escHtml((t.tugas||'').toLowerCase()) + '"';
 
-    html += '<tr class="hist-group-row group-row"' + rowDataAttrs + '>' +
-      '<td>' + escHtml(t.id) + '</td>' +
-      '<td>' + escHtml(allNama) + '</td>' +
+    html += '<tr class="hist-group-row group-row' + (isBlockStart ? ' id-block-start' : '') + '"' + rowDataAttrs + '>' +
+      '<td>' + escHtml(String(t.id)) + '</td>' +
+      '<td>' + escHtml(nama) + '</td>' +
       '<td>' + escHtml(t.tugas) + '</td>' +
       '<td>' + escHtml(t.mesin) + '</td>' +
       '<td style="color:var(--green-ok);font-family:\'JetBrains Mono\',monospace;font-weight:700;">' +
@@ -1481,12 +1489,14 @@ function _histDblClickHandler(e) {
   if (!hasPermission('sharejob.editHistory')) { showAccessDenied('Edit Histori', 'Admin atau Supervisor'); return; }
 
   var tr = td.closest('tr');
-  var histId = tr.getAttribute('data-histid');
+  var histId   = tr.getAttribute('data-histid');
+  var rowIndex = tr.getAttribute('data-rowindex');
+  var histIdx  = tr.getAttribute('data-histidx');
   var field = td.getAttribute('data-field');
   var currentValue = td.getAttribute('data-value') || '';
 
   _histCurrentEditCell = {
-    td: td, rowId: histId, field: field,
+    td: td, rowId: histId, rowIndex: rowIndex, histIdx: histIdx, field: field,
     originalContent: td.innerHTML, originalValue: currentValue
   };
 
@@ -1531,27 +1541,26 @@ async function saveHistInlineEdit() {
   if (!inp) return;
 
   var newValue = inp.value.trim();
-  var field = _histCurrentEditCell.field;
-  var histId = _histCurrentEditCell.rowId;
-  var params = { histId: histId };
-  if (field === 'jamSelesai')   params.newJamSelesai  = newValue;
-  if (field === 'archivedAt')   params.newArchivedAt  = newValue;
-  if (field === 'action')       params.newAction      = newValue;
-
+  var field    = _histCurrentEditCell.field;
   var savedState = _histCurrentEditCell;
   _histCurrentEditCell = null;
 
+  // Kirim rowIndex (target presisi) + histId (fallback lama)
+  var params = {
+    unit:     currentUnit.code,
+    rowIndex: savedState.rowIndex || '',
+    histId:   savedState.rowId
+  };
+  if (field === 'jamSelesai') params.newJamSelesai = newValue;
+  if (field === 'archivedAt') params.newArchivedAt = newValue;
+  if (field === 'action')     params.newAction     = newValue;
+
   showLoading(true, 'Menyimpan...');
   try {
-    var url = new URL(MASTER_GAS_URL);
-    url.searchParams.set('action', 'updateHistoryRow');
-    url.searchParams.set('unit', currentUnit.code);
-    Object.keys(params).forEach(function(k){ url.searchParams.set(k, params[k]); });
-
-    var res = await fetch(url.toString());
+    var res = await gasFetch('updateHistoryRow', params);
     var json = await res.json();
 
-    if (json.error) {
+    if (json && json.error) {
       savedState.td.innerHTML = savedState.originalContent;
       savedState.td.classList.remove('hist-cell-editing');
       showAlert('Gagal menyimpan: ' + json.error);
@@ -1563,7 +1572,7 @@ async function saveHistInlineEdit() {
 
     if (field === 'jamSelesai') {
       savedState.td.innerHTML = newValue
-        ? '<span style="color:var(--amber-warn);font-family:\'JetBrains Mono\',monospace;font-weight:700;">' + escHtml(newValue) + '</span>'
+        ? escHtml(newValue)
         : '<span style="color:var(--text-dim)">—</span>';
     } else if (field === 'archivedAt') {
       var tr = savedState.td.closest('tr');
@@ -1576,16 +1585,12 @@ async function saveHistInlineEdit() {
         : '<span class="action-empty">— belum diisi</span>';
     }
 
-    var tr2 = savedState.td.closest('tr');
-    if (tr2) {
-      var rid = tr2.getAttribute('data-histid');
-      allHistoryData.forEach(function(item) {
-        if (item.id === rid) {
-          if (field === 'jamSelesai') item.jamSelesai = newValue;
-          if (field === 'archivedAt') item.archivedAt = newValue;
-          if (field === 'action') item.action = newValue;
-        }
-      });
+    // Update cache lokal berdasarkan INDEX baris, bukan ID
+    var idx = parseInt(savedState.histIdx, 10);
+    if (!isNaN(idx) && allHistoryData[idx]) {
+      if (field === 'jamSelesai') allHistoryData[idx].jamSelesai = newValue;
+      if (field === 'archivedAt') allHistoryData[idx].archivedAt = newValue;
+      if (field === 'action')     allHistoryData[idx].action     = newValue;
     }
   } catch(err) {
     savedState.td.innerHTML = savedState.originalContent;
@@ -1651,15 +1656,9 @@ function resetHistFilter() {
   applyHistFilter();
 }
 
-// ══════════════════════════════════════════════════════
-// ★ ACTION MODAL — HANYA tampil SETELAH archive sukses
-// Flow baru:
-//   1. User ubah status → Selesai
-//   2. Langsung panggil GAS updateTaskStatus (archive)
-//   3. SETELAH berhasil → tampilkan modal isian action (opsional)
-//   4. User isi action → panggil updateHistoryRow
-//   5. User skip → tutup modal, selesai
-// ══════════════════════════════════════════════════════
+/* ══════════════════════════════════════════════════════
+   ACTION MODAL — tampil SETELAH archive sukses
+   ══════════════════════════════════════════════════════ */
 function openActionModal(jobId, taskInfo) {
   _actionPending = { jobId: jobId, taskInfo: taskInfo };
   document.getElementById('actionModalInfo').innerHTML =
@@ -1680,28 +1679,27 @@ function closeActionModal() {
 async function submitActionModal(skip) {
   if (!_actionPending) { closeActionModal(); return; }
   if (skip) { closeActionModal(); return; }
-  
+
   var actionNote = document.getElementById('actionNoteInput').value.trim();
-  if (!actionNote) { closeActionModal(); return; } // kosong = skip juga
-  
+  if (!actionNote) { closeActionModal(); return; }
+
   var p = _actionPending;
   closeActionModal();
 
-  // Update action di TaskHistory via updateHistoryRow
   showLoading(true, 'Menyimpan catatan...');
   try {
-    var url = new URL(MASTER_GAS_URL);
-    url.searchParams.set('action', 'updateHistoryRow');
-    url.searchParams.set('unit', currentUnit.code);
-    url.searchParams.set('histId', p.jobId);
-    url.searchParams.set('newAction', actionNote);
-    var res = await fetch(url.toString());
+    var res = await gasFetch('updateHistoryRow', {
+      unit: currentUnit.code,
+      histId: p.jobId,
+      histRow: p.taskInfo.histRow || '',
+      newAction: actionNote
+    });
     var json = await res.json();
     if (json && json.error) {
       showAlert('Catatan gagal disimpan: ' + json.error + '\n\nTapi job sudah berhasil diarsipkan. Bisa edit catatan di halaman Histori.');
     }
   } catch(err) {
-    // Gagal simpan catatan tidak kritis, job sudah diarsipkan
+    // tidak kritis
   } finally {
     showLoading(false);
   }
@@ -1711,15 +1709,9 @@ async function api(action, params) {
   if (!currentUnit) { showAlert("Belum ada unit yang dipilih!"); return { error:"No unit" }; }
   showLoading(true);
   try {
-    var url = new URL(MASTER_GAS_URL);
-    url.searchParams.set("action", action);
-    url.searchParams.set("unit", currentUnit.code);
-    if (params) {
-      Object.keys(params).forEach(function(k){
-        url.searchParams.set(k, params[k] === null || params[k] === undefined ? "" : params[k]);
-      });
-    }
-    var res = await fetch(url.toString());
+    var p = params ? Object.assign({}, params) : {};
+    p.unit = currentUnit.code;
+    var res = await gasFetch(action, p);
     if (!res.ok) throw new Error("HTTP " + res.status);
     var text = await res.text();
     try { return JSON.parse(text); } catch(e) { throw new Error("Response bukan JSON."); }
@@ -1755,6 +1747,8 @@ function sortTasks(tasks) {
   return tasks.slice().sort(function(a,b){
     var ta = tanggalToTimestamp(a.tanggal), tb = tanggalToTimestamp(b.tanggal);
     if (tb !== ta) return tb - ta;
+    var ia = String(a.id), ib = String(b.id);
+    if (ia !== ib) return ia < ib ? -1 : 1;   // jaga urutan blok ID tetap berdekatan
     var sa = STATUS_ORDER[a.status] !== undefined ? STATUS_ORDER[a.status] : 99;
     var sb = STATUS_ORDER[b.status] !== undefined ? STATUS_ORDER[b.status] : 99;
     return sa - sb;
@@ -1773,11 +1767,16 @@ function tanggalToTimestamp(str) { var p = parseTanggal(str); return p ? p.year*
 function tanggalToYMD(str) { var p = parseTanggal(str); return p ? p.year+'-'+String(p.month).padStart(2,'0')+'-'+String(p.day).padStart(2,'0') : ''; }
 function getStatusClass(s) { if (s==="Selesai") return "selesai"; if (s==="Proses") return "proses"; return "pending"; }
 
+/* ══════════════════════════════════════════════════════
+   TABEL HARIAN — 1 job = 1 baris.
+   Tidak ada penggabungan berdasarkan ID. ID boleh sama.
+   ══════════════════════════════════════════════════════ */
 function renderTable() {
   var table = document.getElementById("mainTable");
   var thead = document.getElementById("theadRow");
   var tbody = document.getElementById("data");
   var canDelete = hasPermission('sharejob.delete');
+
   if (deleteMode && canDelete) {
     table.classList.add("delete-mode");
     if (!thead.querySelector("th.col-delete")) {
@@ -1789,46 +1788,50 @@ function renderTable() {
     var ex = thead.querySelector("th.col-delete");
     if (ex) thead.removeChild(ex);
   }
-  var groups = [], lastId = null;
-  allTasks.forEach(function(task){
-    if (String(task.id) !== lastId) { groups.push([]); lastId = String(task.id); }
-    groups[groups.length-1].push(task);
-  });
-  allGroups = groups;
+
   var canChangeStatus = hasPermission('sharejob.statusChange');
   var html = "";
-  groups.forEach(function(group, gi){
-    var task = group[0];
+  var lastId = null;
+
+  allTasks.forEach(function(task, idx){
     var sc = getStatusClass(task.status);
-    var allNama = group.map(function(t){return t.nama;}).join(", ");
-    html += "<tr class='group-row group-start' data-groupid='" + escHtml(String(task.id)) +
-            "' data-groupidx='" + gi +
+    var rowIndex = task.row || '';
+    var isBlockStart = (String(task.id) !== lastId);
+    lastId = String(task.id);
+
+    html += "<tr class='group-row group-start" + (isBlockStart ? " id-block-start" : "") +
+            "' data-taskidx='" + idx +
+            "' data-rowindex='" + escHtml(String(rowIndex)) +
+            "' data-groupid='" + escHtml(String(task.id)) +
             "' data-status='" + escHtml(task.status) +
             "' data-tanggal='" + escHtml(task.tanggal||'') + "'>";
+
     if (deleteMode && canDelete) {
-      html += "<td class='col-delete'><button class='btn-delete-row' onclick=\"askDeleteRow('" + task.id + "','" + (task.nama||'').replace(/'/g,"\\'") + "')\">✕</button></td>";
+      html += "<td class='col-delete'><button class='btn-delete-row' onclick=\"askDeleteRow(" + idx + ")\">✕</button></td>";
     }
     html += "<td>" + escHtml(String(task.id)) + "</td>";
-    html += "<td>" + escHtml(allNama) + "</td>";
-    html += "<td>" + escHtml(task.tugas) + "</td>";
-    html += "<td>" + escHtml(task.mesin) + "</td>";
+    html += "<td>" + escHtml(task.nama || '') + "</td>";
+    html += "<td>" + escHtml(task.tugas || '') + "</td>";
+    html += "<td>" + escHtml(task.mesin || '') + "</td>";
+
     var disabledAttr = canChangeStatus ? '' : ' disabled';
     html += "<td><select class='status-select " + sc +
+            "' data-taskidx='" + idx +
             "' data-id='" + escHtml(String(task.id)) +
+            "' data-rowindex='" + escHtml(String(rowIndex)) +
             "' data-prev='" + escHtml(task.status) +
-            "' data-nama='" + escHtml(allNama).replace(/'/g,"&#39;") +
-            "' data-tugas='" + escHtml(task.tugas).replace(/'/g,"&#39;") +
-            "' data-mesin='" + escHtml(task.mesin).replace(/'/g,"&#39;") +
             "' onchange='changeStatus(this)'" + disabledAttr + ">" +
             "<option" + (task.status==="Pending"?" selected":"") + ">Pending</option>" +
             "<option" + (task.status==="Proses" ?" selected":"") + ">Proses</option>" +
             "<option" + (task.status==="Selesai"?" selected":"") + ">Selesai</option>" +
             "</select></td>";
-    html += "<td>" + escHtml(task.tanggal) + "</td>";
+
+    html += "<td>" + escHtml(task.tanggal || '') + "</td>";
     html += "<td style='color:var(--green-ok);'>" + (task.jamMulai ? escHtml(task.jamMulai) : "<span style='color:var(--text-dim);font-size:11px;'>—</span>") + "</td>";
     html += "<td style='color:var(--amber-warn);'>" + (task.jamSelesai ? escHtml(task.jamSelesai) : "<span style='color:var(--text-dim);font-size:11px;'>—</span>") + "</td>";
     html += "</tr>";
   });
+
   tbody.innerHTML = html;
   attachDoubleClickEdit();
 }
@@ -1947,7 +1950,7 @@ function addTask() {
       tugas=document.getElementById("tugas").value.trim(), mesin=document.getElementById("mesin").value.trim(),
       status=document.getElementById("status").value, jamMulai=document.getElementById("jamMulai").value;
   if (!id || !nama.trim() || !tugas || !mesin) { showAlert("ID, Nama, Tugas dan Mesin harus diisi!"); return; }
-  api("addTask", { id:id, nama:nama, tugas:tugas, mesin:mesin, status:status, jamMulai:jamMulai }).then(function(res){
+  api("addTask", { id:id, nama:nama, tugas:tugas, mesin:mesin, status:status, jamMulai:jamMulai, allowDuplicateId:'1' }).then(function(res){
     if (res.error) { showAlert("Error: " + res.error); return; }
     document.getElementById("id").value = "";
     document.getElementById("nama").value = "";
@@ -1959,62 +1962,56 @@ function addTask() {
   });
 }
 
-// ★ FLOW BARU changeStatus:
-// Ketika status → Selesai: langsung archive dulu (tanpa modal),
-// setelah archive sukses baru tampilkan modal isian action (opsional)
 async function changeStatus(select) {
   if (!hasPermission('sharejob.statusChange')) {
     select.value = select.getAttribute("data-prev") || select.value;
     showAccessDenied('Ubah Status', 'Supervisor atau Admin'); return;
   }
   if (currentEditingRow) { select.value = select.getAttribute("data-prev") || select.value; return; }
-  
-  var id = select.getAttribute("data-id");
-  var newStatus = select.value;
-  var prevStatus = select.getAttribute("data-prev");
 
-  // Update UI optimistic
+  var id       = select.getAttribute("data-id");
+  var rowIndex = select.getAttribute("data-rowindex") || '';
+  var taskIdx  = parseInt(select.getAttribute("data-taskidx"), 10);
+  var newStatus  = select.value;
+  var prevStatus = select.getAttribute("data-prev");
+  var taskObj = (!isNaN(taskIdx) && allTasks[taskIdx]) ? allTasks[taskIdx] : {};
+
   select.setAttribute("data-prev", newStatus);
   select.className = "status-select " + getStatusClass(newStatus);
   var tr = select.closest("tr");
   if (tr) tr.setAttribute("data-status", newStatus);
 
-  // Simpan taskInfo untuk action modal (siapkan sebelum loadData)
   var taskInfo = null;
   if (newStatus === 'Selesai' && prevStatus !== 'Selesai') {
     taskInfo = {
-      nama:  select.getAttribute('data-nama')  || '',
-      tugas: select.getAttribute('data-tugas') || '',
-      mesin: select.getAttribute('data-mesin') || ''
+      nama:  taskObj.nama  || '',
+      tugas: taskObj.tugas || '',
+      mesin: taskObj.mesin || ''
     };
   }
 
   showLoading(true, newStatus === 'Selesai' ? 'Mengarsipkan job...' : 'Mengubah status...');
   try {
-    var url = new URL(MASTER_GAS_URL);
-    url.searchParams.set('action', 'updateTaskStatus');
-    url.searchParams.set('unit', currentUnit.code);
-    url.searchParams.set('id', id);
-    url.searchParams.set('status', newStatus);
-    url.searchParams.set('actionNote', ''); // action dikirim kosong dulu, nanti update terpisah
-    var res = await fetch(url.toString());
+    var res = await gasFetch('updateTaskStatus', {
+      unit: currentUnit.code,
+      id: id,
+      rowIndex: rowIndex,
+      status: newStatus,
+      actionNote: ''
+    });
     var json = await res.json();
-    
+
     if (json && json.error) {
       showAlert('Gagal update status: ' + json.error);
-      // Rollback UI
       select.value = prevStatus;
       select.setAttribute("data-prev", prevStatus);
       select.className = "status-select " + getStatusClass(prevStatus);
       if (tr) tr.setAttribute("data-status", prevStatus);
     } else {
-      // Sukses → reload data
+      if (taskInfo && json && json.histRow) taskInfo.histRow = json.histRow;
       loadData(true);
-      // Jika selesai → tampilkan modal action SETELAH archive sukses
       if (taskInfo) {
-        setTimeout(function(){
-          openActionModal(id, taskInfo);
-        }, 400); // sedikit delay agar loadData mulai jalan
+        setTimeout(function(){ openActionModal(id, taskInfo); }, 400);
       }
     }
   } catch(err) {
@@ -2035,25 +2032,30 @@ function toggleInput() {
   var s = document.getElementById("inputSection");
   s.style.display = s.style.display === "none" ? "block" : "none";
 }
-var pendingDeleteId = null;
-function askDeleteRow(id, nama) {
+
+var pendingDelete = null;
+function askDeleteRow(taskIdx) {
   if (!hasPermission('sharejob.delete')) { showAccessDenied('Hapus Job','Supervisor atau Admin'); return; }
-  pendingDeleteId = id;
-  document.getElementById("deleteRowDesc").textContent = "ID: " + id + (nama ? " — " + nama : "");
+  var t = allTasks[taskIdx];
+  if (!t) return;
+  pendingDelete = { id: t.id, rowIndex: t.row || '', nama: t.nama || '', tugas: t.tugas || '' };
+  document.getElementById("deleteRowDesc").textContent =
+    "ID: " + t.id + (t.nama ? " — " + t.nama : "") + (t.tugas ? " | " + t.tugas : "");
   document.getElementById("deleteRowModal").style.display = "flex";
 }
 document.getElementById("confirmDeleteRowBtn").addEventListener("click", function(){
-  if (!pendingDeleteId) return;
-  var id = pendingDeleteId; pendingDeleteId = null;
+  if (!pendingDelete) return;
+  var p = pendingDelete; pendingDelete = null;
   document.getElementById("deleteRowModal").style.display = "none";
-  api("deleteTask", { id:id }).then(function(res){
+  api("deleteTask", { id: p.id, rowIndex: p.rowIndex }).then(function(res){
     if (res && res.error) showAlert("Gagal menghapus: " + res.error);
     else loadData(true);
   });
 });
 document.getElementById("cancelDeleteRowBtn").addEventListener("click", function(){
-  pendingDeleteId = null; document.getElementById("deleteRowModal").style.display = "none";
+  pendingDelete = null; document.getElementById("deleteRowModal").style.display = "none";
 });
+
 function archiveTasks() {
   if (!hasPermission('sharejob.archive')) { showAccessDenied('Archive Job','Supervisor atau Admin'); return; }
   document.getElementById("confirmModal").style.display = "flex";
@@ -2068,25 +2070,37 @@ function confirmArchive() {
 }
 function closeModal() { document.getElementById("confirmModal").style.display = "none"; }
 
+/* ══════════════════════════════════════════════════════
+   INLINE EDIT — sekarang per baris tunggal (1 nama saja)
+   ══════════════════════════════════════════════════════ */
 function startInlineEdit(tr) {
   if (currentEditingRow && currentEditingRow !== tr) { showAlert("Selesaikan edit baris sebelumnya!"); return; }
   if (tr.classList.contains("editing")) return;
-  if (!tr.classList.contains("group-start")) return;
   var offset = (deleteMode && hasPermission('sharejob.delete')) ? 1 : 0;
   var cells = tr.children;
   if (cells.length < 8 + offset) return;
+
+  var idx = parseInt(tr.getAttribute("data-taskidx"), 10);
+  var t = (!isNaN(idx) && allTasks[idx]) ? allTasks[idx] : null;
+  if (!t) return;
+
   currentEditingRow = tr;
-  var gi = parseInt(tr.getAttribute("data-groupidx"), 10);
-  var gt = (!isNaN(gi) && allGroups[gi]) ? allGroups[gi] : null;
-  if (!gt || !gt.length) { currentEditingRow = null; return; }
-  var ft = gt[0];
-  originalRowData = { id: String(ft.id), nama: gt.map(function(t){return t.nama;}).join("\n"), tugas: ft.tugas||"", mesin: ft.mesin||"", jamMulai: ft.jamMulai||"" };
+  originalRowData = {
+    id: String(t.id),
+    rowIndex: t.row || '',
+    nama: t.nama || '',
+    tugas: t.tugas || '',
+    mesin: t.mesin || '',
+    jamMulai: t.jamMulai || ''
+  };
+
   tr.classList.add("editing");
   cells[offset+0].innerHTML = "<input class='inline-input' id='ie-id' value='" + escHtml(originalRowData.id) + "'><div class='inline-save-bar'><button class='inline-btn inline-btn-save' onclick='saveInlineEdit()'>✓ Simpan</button><button class='inline-btn inline-btn-cancel' onclick='cancelInlineEdit()'>✕ Batal</button></div>";
-  cells[offset+1].innerHTML = "<textarea class='inline-input' id='ie-nama' rows='3' style='font-size:13px;'>" + escHtml(originalRowData.nama) + "</textarea>";
+  cells[offset+1].innerHTML = "<input class='inline-input' id='ie-nama' value='" + escHtml(originalRowData.nama) + "'>";
   cells[offset+2].innerHTML = "<textarea class='inline-input' id='ie-tugas' rows='3'>" + escHtml(originalRowData.tugas) + "</textarea>";
   cells[offset+3].innerHTML = "<input class='inline-input' id='ie-mesin' value='" + escHtml(originalRowData.mesin) + "'>";
   cells[offset+6].innerHTML = "<input class='inline-input' id='ie-jam-mulai' type='time' value='" + escHtml(originalRowData.jamMulai) + "'>";
+
   setTimeout(function(){ var inp = document.getElementById("ie-id"); if (inp) inp.focus(); }, 50);
   tr._escHandler = function(e){ if (e.key === "Escape") { e.preventDefault(); cancelInlineEdit(); } };
   document.addEventListener("keydown", tr._escHandler);
@@ -2099,8 +2113,13 @@ function saveInlineEdit() {
       newJamMulai=get("ie-jam-mulai",originalRowData.jamMulai);
   if (!newId || !newNama || !newTugas || !newMesin) { showAlert("Semua kolom harus diisi!"); return; }
   var oldId = originalRowData.id;
+  var rowIndex = originalRowData.rowIndex;
   finishInlineEdit();
-  api("updateTaskAll", { oldId:oldId, newId:newId, newNama:newNama, newTugas:newTugas, newMesin:newMesin, newJamMulai:newJamMulai, newJamSelesai:'' }).then(function(res){
+  api("updateTaskAll", {
+    rowIndex: rowIndex, oldId: oldId, newId: newId,
+    newNama: newNama, newTugas: newTugas, newMesin: newMesin,
+    newJamMulai: newJamMulai, newJamSelesai: ''
+  }).then(function(res){
     if (res && res.error) showAlert("Gagal simpan: " + res.error);
     loadData(true);
   });
@@ -2147,7 +2166,8 @@ function doPrint() {
       var sv = tr.getAttribute('data-status')||'';
       var sc2 = sv==='Selesai'?'#2e7d32':sv==='Proses'?'#e65100':'#1565c0';
       var sb = sv==='Selesai'?'#e8f5e9':sv==='Proses'?'#fff3e0':'#e3f2fd';
-      var pTr = document.createElement('tr'); pTr.className = 'group-start-print';
+      var pTr = document.createElement('tr');
+      pTr.className = 'group-start-print' + (tr.classList.contains('id-block-start') ? ' id-block-start-print' : '');
       pTr.innerHTML = '<td>'+escHtml(get(0))+'</td><td>'+escHtml(get(1))+'</td><td>'+escHtml(get(2))+'</td><td>'+escHtml(get(3))+'</td><td><span class="status-badge" style="color:'+sc2+';background:'+sb+';border-color:'+sc2+'">'+escHtml(sv)+'</span></td><td>'+escHtml(get(5))+'</td><td>'+escHtml(get(6)||'—')+'</td><td>'+escHtml(get(7)||'—')+'</td>';
       tb.appendChild(pTr);
     });
@@ -2198,7 +2218,7 @@ function doPrintHistory() {
       var cells = tr.querySelectorAll('td');
       var get = function(i){ return cells[i] ? cells[i].textContent.trim() : ''; };
       var pTr = document.createElement('tr');
-      pTr.className = 'group-start-print';
+      pTr.className = 'group-start-print' + (tr.classList.contains('id-block-start') ? ' id-block-start-print' : '');
       pTr.innerHTML = '<td>' + escHtml(get(0)) + '</td><td>' + escHtml(get(1)) + '</td><td>' + escHtml(get(2)) + '</td><td>' + escHtml(get(3)) + '</td><td style="color:#1B5E20;font-weight:700;text-align:center;">' + escHtml(get(4) || '—') + '</td><td style="color:#BF360C;font-weight:700;text-align:center;">' + escHtml(get(5) || '—') + '</td><td style="color:#4A148C;font-size:10px;">' + escHtml(get(6)) + '</td><td style="font-size:10px;">' + escHtml(get(7)) + '</td>';
       tb.appendChild(pTr);
     });
