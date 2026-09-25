@@ -598,6 +598,8 @@ tr.id-block-start td { border-top:2px solid var(--border-orange); }
     <span class="hist-filter-label">📅 Filter:</span>
     <div class="hist-filter-group"><span class="hist-filter-label" style="font-size:9px;">TGL</span><input type="date" class="hist-filter-date" id="hFilterTanggal" oninput="applyHistFilter()"></div>
     <span class="hist-filter-sep">|</span>
+    <div class="hist-filter-group"><span class="hist-filter-label" style="font-size:9px;">MGG</span><select class="hist-filter-select" id="hFilterMinggu" onchange="onHMingguChange()"><option value="">Semua Minggu</option></select></div>
+    <span class="hist-filter-sep">|</span>
     <div class="hist-filter-group"><select class="hist-filter-select" id="hFilterBulan" onchange="onHBulanTahunChange()"><option value="">Semua Bulan</option></select></div>
     <span class="hist-filter-sep">/</span>
     <div class="hist-filter-group"><select class="hist-filter-select" id="hFilterTahun" onchange="onHBulanTahunChange()"><option value="">Semua Tahun</option></select></div>
@@ -1054,14 +1056,29 @@ async function loadHistory() {
   }
 }
 
+/* ══════════ ISO WEEK HELPER (untuk filter "Per Minggu") ══════════ */
+function getISOWeek(day, month, year) {
+  var d = new Date(Date.UTC(year, month - 1, day));
+  var dayNum = d.getUTCDay() || 7;
+  d.setUTCDate(d.getUTCDate() + 4 - dayNum);
+  var yearStart = new Date(Date.UTC(d.getUTCFullYear(), 0, 1));
+  var weekNo = Math.ceil((((d - yearStart) / 86400000) + 1) / 7);
+  return { week: weekNo, isoYear: d.getUTCFullYear() };
+}
+
 function buildHistFilterOptions() {
   var bulanSel = document.getElementById('hFilterBulan');
   var tahunSel = document.getElementById('hFilterTahun');
+  var mingguSel = document.getElementById('hFilterMinggu');
   var nowYear = new Date().getFullYear();
   tahunSel.innerHTML = '<option value="">Semua Tahun</option>';
   for (var y = TAHUN_AWAL; y <= nowYear+1; y++) { var o = document.createElement('option'); o.value = y; o.textContent = y; tahunSel.appendChild(o); }
   bulanSel.innerHTML = '<option value="">Semua Bulan</option>';
   for (var m = 1; m <= 12; m++) { var o2 = document.createElement('option'); o2.value = m; o2.textContent = NAMA_BULAN[m]; bulanSel.appendChild(o2); }
+  if (mingguSel) {
+    mingguSel.innerHTML = '<option value="">Semua Minggu</option>';
+    for (var w = 1; w <= 53; w++) { var o3 = document.createElement('option'); o3.value = w; o3.textContent = 'Minggu ' + w; mingguSel.appendChild(o3); }
+  }
 }
 
 /* ══════════ HISTORI — 1 record = 1 baris ══════════ */
@@ -1081,11 +1098,16 @@ function renderHistoryTable() {
     var isBlockStart = (String(t.id) !== lastId);
     lastId = String(t.id);
 
+    var p = parseTanggal(t.tanggal || '');
+    var isoInfo = p ? getISOWeek(p.day, p.month, p.year) : null;
+
     var rowDataAttrs =
       ' data-histid="' + escHtml(String(t.id)) + '"' +
       ' data-rowindex="' + escHtml(String(t.row || '')) + '"' +
       ' data-histidx="' + idx + '"' +
       ' data-tanggal="' + escHtml(t.tanggal||'') + '"' +
+      ' data-isoweek="' + (isoInfo ? isoInfo.week : '') + '"' +
+      ' data-isoyear="' + (isoInfo ? isoInfo.isoYear : '') + '"' +
       ' data-nama="' + escHtml(nama.toLowerCase()) + '"' +
       ' data-mesin="' + escHtml((t.mesin||'').toLowerCase()) + '"' +
       ' data-tugas="' + escHtml((t.tugas||'').toLowerCase()) + '"';
@@ -1211,19 +1233,27 @@ async function saveHistInlineEdit() {
   } finally { showLoading(false); }
 }
 
+function onHMingguChange() {
+  // pilih minggu = mode filter mandiri; kosongkan tanggal spesifik supaya tidak bentrok
+  document.getElementById('hFilterTanggal').value = '';
+  applyHistFilter();
+}
+
 function applyHistFilter() {
   var fT = document.getElementById('hFilterTanggal').value || null;
+  var fW = document.getElementById('hFilterMinggu') ? (document.getElementById('hFilterMinggu').value ? +document.getElementById('hFilterMinggu').value : null) : null;
   var fB = document.getElementById('hFilterBulan').value ? +document.getElementById('hFilterBulan').value : null;
   var fY = document.getElementById('hFilterTahun').value ? +document.getElementById('hFilterTahun').value : null;
   var qNama  = (document.getElementById('hSearchNama').value || '').trim().toLowerCase();
   var qMesin = (document.getElementById('hSearchMesin').value || '').trim().toLowerCase();
   var qTugas = (document.getElementById('hSearchTugas').value || '').trim().toLowerCase();
-  var hasFilter = fT || fB || fY || qNama || qMesin || qTugas;
+  var hasFilter = fT || fW || fB || fY || qNama || qMesin || qTugas;
   var badge = document.getElementById('hPeriodBadge');
   var resetBtn = document.getElementById('hBtnResetFilter');
   if (hasFilter) {
     var label = '';
     if (fT) { var pts = fT.split('-'); label = pts.length===3 ? pts[2]+' '+NAMA_BULAN[+pts[1]]+' '+pts[0] : fT; }
+    else if (fW) label = 'Minggu ' + fW + (fY ? ' / ' + fY : '');
     else if (fB && fY) label = NAMA_BULAN[fB]+' '+fY;
     else if (fB) label = NAMA_BULAN[fB]+' (Semua Tahun)';
     else if (fY) label = 'Tahun '+fY;
@@ -1237,7 +1267,12 @@ function applyHistFilter() {
     var p = parseTanggal(ts);
     var show = true;
     if (fT) { if (tanggalToYMD(ts) !== fT) show = false; }
-    else {
+    else if (fW) {
+      var rw = tr.getAttribute('data-isoweek') ? +tr.getAttribute('data-isoweek') : null;
+      var ry = tr.getAttribute('data-isoyear') ? +tr.getAttribute('data-isoyear') : null;
+      if (rw !== fW) show = false;
+      if (show && fY && ry !== fY) show = false;
+    } else {
       if (fB && (!p || p.month !== fB)) show = false;
       if (fY && (!p || p.year !== fY)) show = false;
     }
@@ -1251,10 +1286,14 @@ function applyHistFilter() {
 }
 function onHBulanTahunChange() {
   if (document.getElementById('hFilterTanggal').value) document.getElementById('hFilterTanggal').value = '';
+  var mingguSel = document.getElementById('hFilterMinggu');
+  if (mingguSel) mingguSel.value = '';
   applyHistFilter();
 }
 function resetHistFilter() {
-  ['hFilterTanggal','hFilterBulan','hFilterTahun','hSearchNama','hSearchMesin','hSearchTugas'].forEach(function(id){ document.getElementById(id).value = ''; });
+  ['hFilterTanggal','hFilterMinggu','hFilterBulan','hFilterTahun','hSearchNama','hSearchMesin','hSearchTugas'].forEach(function(id){
+    var el = document.getElementById(id); if (el) el.value = '';
+  });
   document.getElementById('hPeriodBadge').style.display = 'none';
   document.getElementById('hBtnResetFilter').classList.add('hidden');
   applyHistFilter();
@@ -1593,7 +1632,7 @@ async function changeStatus(select) {
     taskInfo = { nama:g.items.map(function(x){ return x.nama; }).join(', '), tugas:g.first.tugas || '', mesin:g.first.mesin || '' };
   }
 
-  showLoading(true, newStatus === 'Selesai' ? 'Mengarsipkan job...' : 'Mengubah status...');
+  showLoading(true, newStatus === 'Selesai' ? 'Menandai selesai...' : 'Mengubah status...');
   try {
     var res = await gasFetch('updateTaskStatus', { unit:currentUnit.code, id:id, rowIndex:rowIndex, groupKey:groupKey, status:newStatus, actionNote:'' });
     var json = await res.json();
@@ -1604,9 +1643,11 @@ async function changeStatus(select) {
       select.className = "status-select " + getStatusClass(prevStatus);
       if (tr) tr.setAttribute("data-status", prevStatus);
     } else {
+      // Job TIDAK dihapus dari Job Harian — baris tetap tampil dengan jam Selesai
+      // yang langsung terisi (WIB), dan sudah otomatis tersalin ke Histori juga.
       if (taskInfo && json && json.histRow) taskInfo.histRow = json.histRow;
       loadData(true);
-      if (taskInfo) setTimeout(function(){ openActionModal(id, taskInfo); }, 400);
+      if (taskInfo && json && json.histRow) setTimeout(function(){ openActionModal(id, taskInfo); }, 400);
     }
   } catch(err) {
     showAlert('❌ Error: ' + err.message);
@@ -1821,9 +1862,11 @@ function doPrintHistory() {
 }
 function getHistPeriodLabel() {
   var fT = document.getElementById('hFilterTanggal').value;
+  var fW = document.getElementById('hFilterMinggu') ? document.getElementById('hFilterMinggu').value : '';
   var fB = document.getElementById('hFilterBulan').value;
   var fY = document.getElementById('hFilterTahun').value;
   if (fT) { var pts = fT.split('-'); return pts.length===3 ? pts[2]+' '+NAMA_BULAN[+pts[1]]+' '+pts[0] : fT; }
+  if (fW) return 'Minggu ' + fW + (fY ? ' / ' + fY : '');
   if (fB && fY) return NAMA_BULAN[+fB]+' '+fY;
   if (fB) return NAMA_BULAN[+fB]+' (Semua Tahun)';
   if (fY) return 'Tahun '+fY;
