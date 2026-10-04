@@ -323,6 +323,16 @@ table.pm tbody td.td-now{background:rgba(0,212,255,0.02)!important}
   .plant-progress{padding:8px 14px 12px;gap:8px}
   .prog-label{font-size:9px}
 }
+
+/* ── MULTI ENTRI PER BULAN ── */
+.pm-cell.multi{height:24px;margin:2px auto}
+.pm-cell.entry-add{height:14px;font-size:11px;line-height:1;font-weight:700;background:transparent;border:1px dashed rgba(100,160,245,0.28);color:rgba(106,171,255,0.5);cursor:pointer;margin:2px auto 1px;padding:0}
+.pm-cell.entry-add:hover{background:rgba(68,130,210,0.14);border-color:rgba(100,160,245,0.7);color:var(--pm-actual)}
+.pm-cell.entry-add.corr{border-color:rgba(255,200,50,0.28);color:rgba(255,210,80,0.5)}
+.pm-cell.entry-add.corr:hover{background:rgba(255,210,80,0.12);border-color:rgba(255,200,50,0.7);color:var(--pm-corrective)}
+td.td-saving{opacity:.45;pointer-events:none;transition:opacity .15s}
+.entry-count{position:absolute;top:-3px;right:-3px;min-width:12px;height:12px;border-radius:6px;background:var(--cyan);color:#020408;font-size:8px;font-weight:900;display:flex;align-items:center;justify-content:center;padding:0 3px}
+@media print{.pm-cell.entry-add{display:none!important}}
 </style>
 </head>
 <body>
@@ -649,10 +659,10 @@ function buildPlantGroup(p, months) {
       if (mo.type === 'overdue')   overdueCnt++;
     });
     (m.actualMonths || []).forEach(function(mo) {
-      if (mo.type === 'actual')  { actualCnt++;  if (isCurrentMonth(mo.month)) doneNow++; }
+      if (mo.type === 'actual')  { actualCnt += entCount(mo);  if (isCurrentMonth(mo.month)) doneNow++; }
     });
     (m.correctiveMonths || []).forEach(function(mo) {
-      if (mo.type === 'corrective') correctiveCnt++;
+      if (mo.type === 'corrective') correctiveCnt += entCount(mo);
     });
   });
   var total = schedNow + doneNow;
@@ -756,24 +766,10 @@ function buildTableDOM(machines, months) {
     var trA  = document.createElement('tr'); trA.className='row-actual';
     var tdTA = document.createElement('td'); tdTA.className='s3 type-actual'; tdTA.textContent='ACT'; trA.appendChild(tdTA);
     months.forEach(function(mLabel) {
-      var key  = normMonth(mLabel);
-      var mo   = actualMap[key];
-      var td   = document.createElement('td');
+      var td = document.createElement('td');
       if (isCurrentMonth(mLabel)) td.className = 'td-now';
-      var cell = document.createElement('div');
-      cell.className = 'pm-cell';
-      if (mo && mo.type === 'actual' && mo.value) {
-        var display = mo.value.split(' | ')[0];
-        cell.classList.add('actual-done');
-        cell.textContent = display;
-        cell.title = 'Actual: ' + mo.value + ' — Klik untuk edit/hapus';
-        bindActualCell(cell, m.mesin, mLabel, mo);
-      } else {
-        cell.classList.add('actual-empty');
-        cell.title = 'Klik untuk input actual PM — ' + mLabel;
-        bindEmptyCell(cell, m.mesin, mLabel);
-      }
-      td.appendChild(cell); trA.appendChild(td);
+      renderEntryCell(td, m, false, mLabel);
+      trA.appendChild(td);
     });
     tbody.appendChild(trA);
 
@@ -781,24 +777,10 @@ function buildTableDOM(machines, months) {
     var trC  = document.createElement('tr'); trC.className='row-corrective';
     var tdTC = document.createElement('td'); tdTC.className='s3 type-corrective'; tdTC.textContent='COR'; trC.appendChild(tdTC);
     months.forEach(function(mLabel) {
-      var key  = normMonth(mLabel);
-      var mo   = correctiveMap[key];
-      var td   = document.createElement('td');
+      var td = document.createElement('td');
       if (isCurrentMonth(mLabel)) td.className = 'td-now';
-      var cell = document.createElement('div');
-      cell.className = 'pm-cell';
-      if (mo && mo.type === 'corrective' && mo.value) {
-        var display = mo.value.split(' | ')[0];
-        cell.classList.add('corrective-done');
-        cell.textContent = display;
-        cell.title = 'Corrective: ' + mo.value + ' — Double-click untuk edit/hapus';
-        bindCorrectiveCell(cell, m.mesin, mLabel, mo);
-      } else {
-        cell.classList.add('corrective-empty');
-        cell.title = 'Double-click untuk input corrective — ' + mLabel;
-        bindCorrectiveEmpty(cell, m.mesin, mLabel);
-      }
-      td.appendChild(cell); trC.appendChild(td);
+      renderEntryCell(td, m, true, mLabel);
+      trC.appendChild(td);
     });
     tbody.appendChild(trC);
   });
@@ -807,29 +789,82 @@ function buildTableDOM(machines, months) {
   return tbl;
 }
 
-// ── CELL BINDINGS ─────────────────────────────────────
-function bindActualCell(el, mesin, month, moRef) {
-  el.addEventListener('click', function(e) { e.stopPropagation(); openModal(mesin, month, el, moRef, false); });
+// ── ENTRI PM (banyak per bulan) ───────────────────────
+function entCount(mo) {
+  if (!mo) return 0;
+  if (mo.entries && mo.entries.length) return mo.entries.length;
+  return mo.value ? 1 : 0;
 }
-function bindEmptyCell(el, mesin, month) {
-  el.addEventListener('click', function(e) { e.stopPropagation(); openModal(mesin, month, el, null, false); });
+function getEntries(m, isCorr, mLabel) {
+  var arr = (isCorr ? m.correctiveMonths : m.actualMonths) || [];
+  var key = normMonth(mLabel);
+  for (var i = 0; i < arr.length; i++) {
+    if (normMonth(arr[i].month) !== key) continue;
+    var mo = arr[i];
+    if (mo.entries && mo.entries.length) return mo.entries.slice();
+    if (mo.value) return String(mo.value).split('\n').map(function(s){return s.trim();}).filter(Boolean);
+  }
+  return [];
 }
-function bindCorrectiveCell(el, mesin, month, moRef) {
-  var timer = null;
-  el.addEventListener('dblclick', function(e) { e.stopPropagation(); clearTimeout(timer); openModal(mesin, month, el, moRef, true); });
-  el.addEventListener('click', function(e) {
-    e.stopPropagation();
-    clearTimeout(timer);
-    timer = setTimeout(function() { showToast('info','💡 Double-click untuk edit corrective: '+mesin+' — '+month); }, 220);
+function setEntries(m, isCorr, mLabel, entries) {
+  var field = isCorr ? 'correctiveMonths' : 'actualMonths';
+  if (!m[field]) m[field] = [];
+  var key = normMonth(mLabel), found = -1;
+  for (var i = 0; i < m[field].length; i++) {
+    if (normMonth(m[field][i].month) === key) { found = i; break; }
+  }
+  if (!entries.length) { if (found > -1) m[field].splice(found, 1); return; }
+  var obj = { month: mLabel, type: isCorr ? 'corrective' : 'actual', value: entries.join('\n'), entries: entries.slice() };
+  if (found > -1) m[field][found] = obj; else m[field].push(obj);
+}
+
+// Gambar ulang 1 sel bulan dari data cache: chip per entri + tombol "+"
+function renderEntryCell(td, m, isCorr, mLabel) {
+  td.innerHTML = '';
+  td.classList.remove('td-saving');
+  var entries = getEntries(m, isCorr, mLabel);
+  var kind = isCorr ? 'Corrective' : 'Actual';
+
+  if (!entries.length) {
+    var empty = document.createElement('div');
+    empty.className = 'pm-cell ' + (isCorr ? 'corrective-empty' : 'actual-empty');
+    empty.title = (isCorr ? 'Double-click' : 'Klik') + ' untuk input ' + kind.toLowerCase() + ' — ' + mLabel;
+    bindEntry(empty, td, m, isCorr, mLabel, null);
+    td.appendChild(empty);
+    return;
+  }
+
+  entries.forEach(function(ent, i) {
+    var cell = document.createElement('div');
+    cell.className = 'pm-cell multi ' + (isCorr ? 'corrective-done' : 'actual-done');
+    cell.textContent = ent.split(' | ')[0];
+    cell.title = kind + ' ke-' + (i + 1) + ': ' + ent + ' — ' + (isCorr ? 'Double-click' : 'Klik') + ' untuk edit/hapus';
+    bindEntry(cell, td, m, isCorr, mLabel, { index: i, value: ent });
+    td.appendChild(cell);
   });
+
+  var add = document.createElement('div');
+  add.className = 'pm-cell entry-add' + (isCorr ? ' corr' : '');
+  add.textContent = '+';
+  add.title = (isCorr ? 'Double-click' : 'Klik') + ' untuk tambah ' + kind.toLowerCase() + ' lagi bulan ini (sudah ' + entries.length + ')';
+  bindEntry(add, td, m, isCorr, mLabel, null);
+  td.appendChild(add);
 }
-function bindCorrectiveEmpty(el, mesin, month) {
+
+// entry = {index,value} untuk edit/hapus, null untuk tambah baru
+function bindEntry(el, td, m, isCorr, mLabel, entry) {
+  if (!isCorr) {
+    el.addEventListener('click', function(e) { e.stopPropagation(); openModal(td, m, mLabel, entry, false); });
+    return;
+  }
   var timer = null;
-  el.addEventListener('dblclick', function(e) { e.stopPropagation(); clearTimeout(timer); openModal(mesin, month, el, null, true); });
+  el.addEventListener('dblclick', function(e) { e.stopPropagation(); clearTimeout(timer); openModal(td, m, mLabel, entry, true); });
   el.addEventListener('click', function(e) {
     e.stopPropagation();
     clearTimeout(timer);
-    timer = setTimeout(function() { showToast('info','💡 Double-click untuk input corrective: '+mesin+' — '+month); }, 220);
+    timer = setTimeout(function() {
+      showToast('info', '💡 Double-click untuk ' + (entry ? 'edit' : 'input') + ' corrective: ' + m.mesin + ' — ' + mLabel);
+    }, 220);
   });
 }
 
@@ -847,7 +882,7 @@ function updateOverview(plants) {
         if (isCurrentMonth(mo.month) && mo.type==='actual') done++;
       });
       (m.correctiveMonths||[]).forEach(function(mo) {
-        if (mo.type==='corrective') corr++;
+        if (mo.type==='corrective') corr += entCount(mo);
       });
     });
   });
@@ -908,12 +943,24 @@ function applyFilter() {
 }
 
 // ── MODAL ─────────────────────────────────────────────
-var _modalMesin='', _modalMonth='', _modalCell=null, _modalMoRef=null, _modalIsCorrective=false;
+var _mTd=null, _mMachine=null, _mMonth='', _mEntry=null, _mIsCorr=false;
 
-function openModal(mesin, month, cellEl, moRef, isCorrective) {
-  _modalMesin = mesin; _modalMonth = month;
-  _modalCell  = cellEl; _modalMoRef = moRef;
-  _modalIsCorrective = !!isCorrective;
+// "20 Mei 2026" / "6 Jan 2026" / "07-Jan-26" -> "2026-05-20" (null kalau tidak terbaca)
+function parseEntryDate(str) {
+  var s = String(str || '').split(' | ')[0].trim();
+  var MONS = {jan:0,januari:0,feb:1,februari:1,mar:2,maret:2,apr:3,april:3,mei:4,may:4,jun:5,juni:5,jul:6,juli:6,
+              ags:7,agu:7,agt:7,agustus:7,aug:7,sep:8,sept:8,september:8,okt:9,oktober:9,oct:9,nov:10,november:10,des:11,desember:11,dec:11};
+  var mt = s.match(/^(\d{1,2})[\s\-\/]+([A-Za-z]+)[\s\-\/]+(\d{2,4})$/);
+  if (!mt) return null;
+  var mon = MONS[mt[2].toLowerCase()];
+  if (mon === undefined) return null;
+  var yr = parseInt(mt[3], 10); if (mt[3].length === 2) yr += 2000;
+  return yr + '-' + String(mon + 1).padStart(2, '0') + '-' + String(parseInt(mt[1], 10)).padStart(2, '0');
+}
+
+function openModal(td, m, month, entry, isCorrective) {
+  _mTd = td; _mMachine = m; _mMonth = month;
+  _mEntry = entry || null; _mIsCorr = !!isCorrective;
 
   var badge     = document.getElementById('modal-badge');
   var title     = document.getElementById('modal-title');
@@ -926,13 +973,13 @@ function openModal(mesin, month, cellEl, moRef, isCorrective) {
   var submitBtn = document.getElementById('modal-submit-btn');
   var delBtn    = document.getElementById('modal-delete-btn');
 
-  subMes.textContent = mesin;
-  subMon.textContent = month;
+  var n = getEntries(m, isCorrective, month).length;
+  subMes.textContent = m.mesin;
+  subMon.textContent = month + (n > 0 ? '  (sudah ' + n + ' entri)' : '');
   preview.textContent = '';
 
-  // Prefill keterangan jika ada existing data
-  if (moRef && moRef.value) {
-    var parts = moRef.value.split(' | ');
+  if (entry && entry.value) {
+    var parts = entry.value.split(' | ');
     ket.value = parts.length > 1 ? parts.slice(1).join(' | ') : '';
   } else {
     ket.value = '';
@@ -940,36 +987,43 @@ function openModal(mesin, month, cellEl, moRef, isCorrective) {
   onKetChange();
 
   if (isCorrective) {
-    badge.textContent   = '// Input Corrective PM';
+    badge.textContent   = entry ? '// Edit Corrective PM' : '// Input Corrective PM';
     badge.className     = 'modal-badge corr-badge';
-    title.textContent   = 'Catat Corrective Maintenance';
+    title.textContent   = entry ? 'Edit Corrective ke-' + (entry.index + 1)
+                                : (n > 0 ? 'Tambah Corrective ke-' + (n + 1) : 'Catat Corrective Maintenance');
     subMon.style.color  = 'var(--pm-corrective)';
     dateInp.className   = 'modal-date corr-date';
     preview.className   = 'modal-preview corr-preview';
     submitBtn.className = 'modal-btn submit corr-submit';
-    submitBtn.textContent='✓ Simpan Corrective';
+    submitBtn.textContent = entry ? '✓ Simpan Perubahan' : '✓ Simpan Corrective';
     ket.className       = 'modal-textarea corr-textarea';
     ket.placeholder     = 'contoh: bearing aus, ganti seal, koil terbakar...';
     box.className       = 'modal-box corrective-mode';
   } else {
-    badge.textContent   = '// Input Actual PM';
+    badge.textContent   = entry ? '// Edit Actual PM' : '// Input Actual PM';
     badge.className     = 'modal-badge';
-    title.textContent   = 'Catat Tanggal Pelaksanaan';
+    title.textContent   = entry ? 'Edit Pelaksanaan ke-' + (entry.index + 1)
+                                : (n > 0 ? 'Tambah Pelaksanaan ke-' + (n + 1) : 'Catat Tanggal Pelaksanaan');
     subMon.style.color  = 'var(--cyan)';
     dateInp.className   = 'modal-date';
     preview.className   = 'modal-preview';
     submitBtn.className = 'modal-btn submit';
-    submitBtn.textContent='✓ Simpan ke Sheet';
+    submitBtn.textContent = entry ? '✓ Simpan Perubahan' : '✓ Simpan ke Sheet';
     ket.className       = 'modal-textarea';
     ket.placeholder     = 'contoh: ganti oli, cleaning filter, dll...';
     box.className       = 'modal-box';
   }
 
-  delBtn.style.display = (moRef && moRef.value) ? 'inline-flex' : 'none';
+  delBtn.style.display = entry ? 'inline-flex' : 'none';
+  delBtn.textContent   = '🗑 Hapus entri ini';
   submitBtn.disabled   = true;
 
-  var now = new Date();
-  dateInp.value = now.getFullYear()+'-'+String(now.getMonth()+1).padStart(2,'0')+'-'+String(now.getDate()).padStart(2,'0');
+  var dv = entry ? parseEntryDate(entry.value) : null;
+  if (!dv) {
+    var now = new Date();
+    dv = now.getFullYear()+'-'+String(now.getMonth()+1).padStart(2,'0')+'-'+String(now.getDate()).padStart(2,'0');
+  }
+  dateInp.value = dv;
   onDateChange();
   document.getElementById('modalOverlay').classList.add('open');
 }
@@ -994,133 +1048,71 @@ function onKetChange() {
   if (count) count.textContent = ket.value.length + ' / 120';
 }
 
-// ── SIMPAN ────────────────────────────────────────────
+// Terapkan hasil dari server ke cache lokal lalu gambar ulang sel
+function applyServerEntries(m, isCorr, month, td, res, fallbackFn) {
+  var entries = (res && res.entries) ? res.entries : fallbackFn(getEntries(m, isCorr, month));
+  setEntries(m, isCorr, month, entries);
+  renderEntryCell(td, m, isCorr, month);
+  if (pmCache) updateOverview(pmCache.plants);
+}
+
+// ── SIMPAN (tambah baru ATAU edit 1 entri) ────────────
 function submitActual() {
   var val = document.getElementById('modal-date-input').value;
   if (!val) return;
   var p   = val.split('-');
   var d   = new Date(parseInt(p[0]),parseInt(p[1])-1,parseInt(p[2]));
   var tgl = formatTanggalID(d);
-  var ket = document.getElementById('modal-keterangan').value.trim();
+  var ket = document.getElementById('modal-keterangan').value.replace(/\s*[\r\n]+\s*/g,' ').trim();
 
-  var isCorrective = _modalIsCorrective;
-  var savedCell=_modalCell, savedMesin=_modalMesin, savedMonth=_modalMonth, savedMoRef=_modalMoRef;
+  var isCorr=_mIsCorr, td=_mTd, m=_mMachine, month=_mMonth, entry=_mEntry;
   closeModal();
-  if (savedCell) { savedCell.className='pm-cell saving'; savedCell.textContent='...'; }
+  if (td) td.classList.add('td-saving');
 
-  // ★ KUNCI: pakai action yang berbeda untuk corrective vs actual
-  var action = isCorrective ? 'updateCorrectiveCell' : 'updateCell';
-  showToast('info','⏳ Menyimpan '+(isCorrective?'corrective':'actual')+'...');
+  var action = isCorr ? 'updateCorrectiveCell' : 'updateCell';
+  showToast('info','⏳ Menyimpan '+(isCorr?'corrective':'actual')+'...');
 
-  jsonpGet({ action:action, mesin:savedMesin, month:savedMonth, tanggal:tgl, keterangan:ket })
+  jsonpGet({
+    action:action, mesin:m.mesin, month:month, tanggal:tgl, keterangan:ket,
+    index: entry ? entry.index : '', old: entry ? entry.value : ''
+  })
     .then(function(res) {
       if (!res.success) throw new Error(res.error || 'GAS gagal.');
-
-      var display = tgl;
       var fullVal = ket ? tgl + ' | ' + ket : tgl;
-      var moObj   = { month:savedMonth, type: isCorrective?'corrective':'actual', value:fullVal };
-
-      if (savedCell) {
-        var newCell = savedCell.cloneNode(false);
-        if (isCorrective) {
-          newCell.className   = 'pm-cell corrective-done';
-          newCell.textContent = display;
-          newCell.title       = 'Corrective: ' + fullVal + ' — Double-click edit';
-          savedCell.parentNode.replaceChild(newCell, savedCell);
-          bindCorrectiveCell(newCell, savedMesin, savedMonth, moObj);
-        } else {
-          newCell.className   = 'pm-cell actual-done';
-          newCell.textContent = display;
-          newCell.title       = 'Actual: ' + fullVal + ' — Klik untuk edit';
-          savedCell.parentNode.replaceChild(newCell, savedCell);
-          bindActualCell(newCell, savedMesin, savedMonth, moObj);
-        }
-      }
-
-      // Update cache lokal
-      if (pmCache) {
-        pmCache.plants.forEach(function(pl) {
-          (pl.machines||[]).forEach(function(m) {
-            if (m.mesin===savedMesin) {
-              var field = isCorrective?'correctiveMonths':'actualMonths';
-              var t     = isCorrective?'corrective':'actual';
-              if (!m[field]) m[field]=[];
-              var existing = m[field].find(function(x){return normMonth(x.month)===normMonth(savedMonth);});
-              if (existing) { existing.type=t; existing.value=fullVal; }
-              else m[field].push({ month:savedMonth, type:t, value:fullVal });
-            }
-          });
-        });
-        updateOverview(pmCache.plants);
-      }
-
-      var toastType = isCorrective?'corrective':'success';
-      var ketInfo   = ket ? ' | '+ket : '';
-      showToast(toastType,(isCorrective?'🔧 Corrective':'✓ Actual')+' tersimpan! '+savedMesin+' — '+tgl+ketInfo);
+      applyServerEntries(m, isCorr, month, td, res, function(cur) {
+        if (entry && cur[entry.index] !== undefined) cur[entry.index] = fullVal; else cur.push(fullVal);
+        return cur;
+      });
+      var ketInfo = ket ? ' | '+ket : '';
+      showToast(isCorr?'corrective':'success',(isCorr?'🔧 Corrective':'✓ Actual')+(entry?' diubah! ':' tersimpan! ')+m.mesin+' — '+tgl+ketInfo);
     })
     .catch(function(err) {
-      if (savedCell) {
-        if (savedMoRef && savedMoRef.value) {
-          var d2 = savedMoRef.value.split(' | ')[0];
-          savedCell.className   = isCorrective?'pm-cell corrective-done':'pm-cell actual-done';
-          savedCell.textContent = d2;
-        } else {
-          savedCell.className   = isCorrective?'pm-cell corrective-empty':'pm-cell actual-empty';
-          savedCell.textContent = '';
-        }
-      }
+      renderEntryCell(td, m, isCorr, month);
       showToast('error','✗ Gagal simpan: '+err.message);
     });
 }
 
-// ── HAPUS ─────────────────────────────────────────────
+// ── HAPUS (1 entri) ───────────────────────────────────
 function submitClear() {
-  var isCorrective=_modalIsCorrective;
-  var savedCell=_modalCell, savedMesin=_modalMesin, savedMonth=_modalMonth, savedMoRef=_modalMoRef;
+  var isCorr=_mIsCorr, td=_mTd, m=_mMachine, month=_mMonth, entry=_mEntry;
+  if (!entry) { closeModal(); return; }
   closeModal();
-  if (savedCell) { savedCell.className='pm-cell saving'; savedCell.textContent='...'; }
+  if (td) td.classList.add('td-saving');
 
-  var action = isCorrective?'clearCorrectiveCell':'clearCell';
+  var action = isCorr ? 'clearCorrectiveCell' : 'clearCell';
   showToast('info','⏳ Menghapus...');
 
-  jsonpGet({ action:action, mesin:savedMesin, month:savedMonth })
+  jsonpGet({ action:action, mesin:m.mesin, month:month, index:entry.index, old:entry.value })
     .then(function(res) {
       if (!res.success) throw new Error(res.error||'GAS gagal.');
-      if (savedCell) {
-        var newCell = savedCell.cloneNode(false);
-        if (isCorrective) {
-          newCell.className  = 'pm-cell corrective-empty';
-          newCell.textContent='';
-          newCell.title      = 'Double-click untuk input corrective — '+savedMonth;
-          savedCell.parentNode.replaceChild(newCell, savedCell);
-          bindCorrectiveEmpty(newCell, savedMesin, savedMonth);
-        } else {
-          newCell.className  = 'pm-cell actual-empty';
-          newCell.textContent='';
-          newCell.title      = 'Klik untuk input actual PM — '+savedMonth;
-          savedCell.parentNode.replaceChild(newCell, savedCell);
-          bindEmptyCell(newCell, savedMesin, savedMonth);
-        }
-      }
-      if (pmCache) {
-        pmCache.plants.forEach(function(pl) {
-          (pl.machines||[]).forEach(function(m) {
-            if (m.mesin===savedMesin) {
-              var field=isCorrective?'correctiveMonths':'actualMonths';
-              if (m[field]) m[field]=m[field].filter(function(x){return normMonth(x.month)!==normMonth(savedMonth);});
-            }
-          });
-        });
-        updateOverview(pmCache.plants);
-      }
-      showToast('success','🗑 Dihapus: '+savedMesin+' — '+savedMonth);
+      applyServerEntries(m, isCorr, month, td, res, function(cur) {
+        cur.splice(entry.index, 1);
+        return cur;
+      });
+      showToast('success','🗑 Dihapus: '+m.mesin+' — '+month);
     })
     .catch(function(err) {
-      if (savedCell && savedMoRef && savedMoRef.value) {
-        var d2=savedMoRef.value.split(' | ')[0];
-        savedCell.className   = isCorrective?'pm-cell corrective-done':'pm-cell actual-done';
-        savedCell.textContent = d2;
-      }
+      renderEntryCell(td, m, isCorr, month);
       showToast('error','✗ Gagal hapus: '+err.message);
     });
 }
