@@ -391,6 +391,13 @@ tr.id-block-start td { border-top:2px solid var(--border-orange); }
   .hist-back-btn,.hist-reload-btn,.hist-print-btn,.hist-wa-btn{height:38px;padding:0 10px;font-size:10px}
   .hist-page-header h2{font-size:15px;letter-spacing:3px}
 }
+tr.hist-date-row td { background:rgba(179,157,219,0.16) !important; color:var(--hist-accent); font-family:'JetBrains Mono',monospace; font-size:12px; font-weight:700; letter-spacing:2px; padding:11px 12px; border-top:2px solid var(--hist-accent); border-right:none; }
+tr.hist-date-row .hd-count, tr.hist-status-row .hd-count { opacity:.7; font-weight:400; letter-spacing:1px; }
+tr.hist-status-row td { font-family:'JetBrains Mono',monospace; font-size:10px; font-weight:700; letter-spacing:2px; padding:6px 12px; border-right:none; }
+tr.hist-status-row.st-pending td { background:rgba(64,196,255,0.08) !important; color:var(--blue-info); }
+tr.hist-status-row.st-proses td  { background:rgba(255,215,64,0.08) !important; color:var(--amber-warn); }
+tr.hist-status-row.st-selesai td { background:rgba(0,230,118,0.08) !important; color:var(--green-ok); }
+tr.hist-date-row:hover td, tr.hist-status-row:hover td { filter:none; }
 @keyframes fadeInUp { from{opacity:0;transform:translateY(16px);} to{opacity:1;transform:translateY(0);} }
 #historyPage { animation:fadeInUp .25s ease both; }
 </style>
@@ -1082,6 +1089,25 @@ function buildHistFilterOptions() {
 }
 
 /* ══════════ HISTORI — 1 record = 1 baris ══════════ */
+var HIST_STATUS_ORDER = ['Pending','Proses','Selesai'];
+var HIST_STATUS_META = {
+  Pending: { icon:'⏳', cls:'st-pending' },
+  Proses:  { icon:'🔄', cls:'st-proses' },
+  Selesai: { icon:'✅', cls:'st-selesai' }
+};
+function histStatusKey(s) {
+  s = String(s || '').trim().toLowerCase();
+  if (s === 'proses') return 'Proses';
+  if (s === 'selesai') return 'Selesai';
+  return 'Pending';
+}
+function histDateLabel(tanggal) {
+  var p = parseTanggal(tanggal || '');
+  if (!p) return tanggal || 'Tanggal tidak diketahui';
+  var hari = ['Minggu','Senin','Selasa','Rabu','Kamis','Jumat','Sabtu'][new Date(p.year, p.month - 1, p.day).getDay()];
+  return hari + ', ' + p.day + ' ' + NAMA_BULAN[p.month] + ' ' + p.year;
+}
+
 function renderHistoryTable() {
   var tbody = document.getElementById('histData');
   if (!allHistoryData.length) {
@@ -1089,10 +1115,51 @@ function renderHistoryTable() {
     return;
   }
   var canEdit = hasPermission('sharejob.editHistory');
-  var html = '', lastId = null;
 
-  allHistoryData.forEach(function(t, idx) {
+  // urutan tampil: tanggal terbaru dulu -> Pending -> Proses -> Selesai -> urutan input.
+  // (allHistoryData tidak diubah urutannya, supaya data-histidx untuk edit tetap benar)
+  var order = allHistoryData.map(function(t, i){ return i; });
+  order.sort(function(a, b) {
+    var ta = allHistoryData[a], tb = allHistoryData[b];
+    var ya = tanggalToYMD(ta.tanggal), yb = tanggalToYMD(tb.tanggal);
+    if (ya !== yb) return ya < yb ? 1 : -1;
+    var sa = HIST_STATUS_ORDER.indexOf(histStatusKey(ta.status));
+    var sb = HIST_STATUS_ORDER.indexOf(histStatusKey(tb.status));
+    if (sa !== sb) return sa - sb;
+    return (ta.row || 0) - (tb.row || 0);
+  });
+
+  // hitung jumlah per tanggal & per (tanggal+status) untuk label header
+  var cntDate = {}, cntStat = {};
+  order.forEach(function(i) {
+    var t = allHistoryData[i];
+    var dk = tanggalToYMD(t.tanggal) || 'x';
+    var sk = dk + '|' + histStatusKey(t.status);
+    cntDate[dk] = (cntDate[dk] || 0) + 1;
+    cntStat[sk] = (cntStat[sk] || 0) + 1;
+  });
+
+  var html = '', lastId = null, lastDate = null, lastStat = null;
+
+  order.forEach(function(idx) {
+    var t = allHistoryData[idx];
     var nama = t.nama || '';
+    var dk = tanggalToYMD(t.tanggal) || 'x';
+    var st = histStatusKey(t.status);
+    var sk = dk + '|' + st;
+
+    if (dk !== lastDate) {
+      html += '<tr class="hist-date-row"><td colspan="8">📅 ' + escHtml(histDateLabel(t.tanggal)) +
+              ' <span class="hd-count">— ' + cntDate[dk] + ' job</span></td></tr>';
+      lastDate = dk; lastStat = null; lastId = null;
+    }
+    if (sk !== lastStat) {
+      var meta = HIST_STATUS_META[st];
+      html += '<tr class="hist-status-row ' + meta.cls + '"><td colspan="8">' + meta.icon + ' ' + st.toUpperCase() +
+              ' <span class="hd-count">(' + cntStat[sk] + ')</span></td></tr>';
+      lastStat = sk; lastId = null;
+    }
+
     var actionHtml = t.action ? '<span class="action-badge">' + escHtml(t.action) + '</span>' : '<span class="action-empty">— belum diisi</span>';
     var editableAttr = canEdit ? ' class="hist-editable-cell"' : '';
     var isBlockStart = (String(t.id) !== lastId);
@@ -1106,6 +1173,7 @@ function renderHistoryTable() {
       ' data-rowindex="' + escHtml(String(t.row || '')) + '"' +
       ' data-histidx="' + idx + '"' +
       ' data-tanggal="' + escHtml(t.tanggal||'') + '"' +
+      ' data-status="' + st + '"' +
       ' data-isoweek="' + (isoInfo ? isoInfo.week : '') + '"' +
       ' data-isoyear="' + (isoInfo ? isoInfo.isoYear : '') + '"' +
       ' data-nama="' + escHtml(nama.toLowerCase()) + '"' +
@@ -1282,6 +1350,19 @@ function applyHistFilter() {
     if (show) { tr.classList.remove('filter-hidden'); visible++; }
     else { tr.classList.add('filter-hidden'); }
   });
+  var _curDate = null, _curStat = null, _dCnt = 0, _sCnt = 0;
+  var _closeStat = function(){ if (_curStat) _curStat.classList.toggle('filter-hidden', _sCnt === 0); };
+  var _closeDate = function(){ if (_curDate) _curDate.classList.toggle('filter-hidden', _dCnt === 0); };
+  document.querySelectorAll('#histData tr').forEach(function(tr) {
+    if (tr.classList.contains('hist-date-row')) {
+      _closeStat(); _closeDate(); _curDate = tr; _curStat = null; _dCnt = 0; _sCnt = 0;
+    } else if (tr.classList.contains('hist-status-row')) {
+      _closeStat(); _curStat = tr; _sCnt = 0;
+    } else if (tr.classList.contains('hist-group-row') && !tr.classList.contains('filter-hidden')) {
+      _dCnt++; _sCnt++;
+    }
+  });
+  _closeStat(); _closeDate();
   document.getElementById('hFilterResult').textContent = visible + ' job ditemukan';
 }
 function onHBulanTahunChange() {
@@ -1847,9 +1928,18 @@ function doPrintHistory() {
     var tbl = document.createElement('table');
     tbl.innerHTML = '<thead><tr><th style="width:130px">ID</th><th style="width:130px">Nama</th><th>Tugas</th><th style="width:110px">Mesin</th><th style="width:55px">Mulai</th><th style="width:55px">Selesai</th><th style="width:120px">Diarsipkan</th><th>Tindakan</th></tr></thead>';
     var tb = document.createElement('tbody');
+    var lastKey = '';
     pageRows.forEach(function(tr) {
       var cells = tr.querySelectorAll('td');
       var get = function(i){ return cells[i] ? cells[i].textContent.trim() : ''; };
+      var _key = (tr.getAttribute('data-tanggal') || '') + '|' + (tr.getAttribute('data-status') || '');
+      if (_key !== lastKey) {
+        lastKey = _key;
+        var _hr = document.createElement('tr');
+        _hr.innerHTML = '<td colspan="8" style="background:#EDE7F6 !important;color:#4A148C !important;font-weight:700;">' +
+          escHtml(tr.getAttribute('data-tanggal') || '') + ' — ' + escHtml((tr.getAttribute('data-status') || '').toUpperCase()) + '</td>';
+        tb.appendChild(_hr);
+      }
       var pTr = document.createElement('tr');
       pTr.className = 'group-start-print' + (tr.classList.contains('id-block-start') ? ' id-block-start-print' : '');
       pTr.innerHTML = '<td>' + escHtml(get(0)) + '</td><td>' + escHtml(get(1)) + '</td><td>' + escHtml(get(2)) + '</td><td>' + escHtml(get(3)) + '</td><td style="color:#1B5E20;font-weight:700;text-align:center;">' + escHtml(get(4) || '—') + '</td><td style="color:#BF360C;font-weight:700;text-align:center;">' + escHtml(get(5) || '—') + '</td><td style="color:#4A148C;font-size:10px;">' + escHtml(get(6)) + '</td><td style="font-size:10px;">' + escHtml(get(7)) + '</td>';
