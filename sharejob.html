@@ -1403,10 +1403,11 @@ async function submitActionModal(skip) {
   closeActionModal();
   showLoading(true, 'Menyimpan catatan...');
   try {
-    var res = await gasFetch('updateHistoryRow', { unit:currentUnit.code, histId:p.jobId, histRow:p.taskInfo.histRow || '', newAction:actionNote });
+    var res = await gasFetch('updateTaskAction', { unit:currentUnit.code, id:p.jobId,
+      groupKey:p.taskInfo.groupKey || '', rowIndex:p.taskInfo.rowIndex || '', action:actionNote });
     var json = await res.json();
-    if (json && json.error) showAlert('Catatan gagal disimpan: ' + json.error + '\n\nTapi job sudah berhasil diarsipkan. Bisa edit catatan di halaman Histori.');
-  } catch(err) { /* tidak kritis */ }
+    if (json && json.error) showAlert('Catatan gagal disimpan: ' + json.error);
+  } catch(err) { }
   finally { showLoading(false); }
 }
 
@@ -1710,12 +1711,14 @@ async function changeStatus(select) {
 
   var taskInfo = null;
   if (newStatus === 'Selesai' && prevStatus !== 'Selesai' && g) {
-    taskInfo = { nama:g.items.map(function(x){ return x.nama; }).join(', '), tugas:g.first.tugas || '', mesin:g.first.mesin || '' };
+    taskInfo = { nama:g.items.map(function(x){ return x.nama; }).join(', '),
+                 tugas:g.first.tugas || '', mesin:g.first.mesin || '',
+                 groupKey:groupKey, rowIndex:rowIndex };
   }
 
   showLoading(true, newStatus === 'Selesai' ? 'Menandai selesai...' : 'Mengubah status...');
   try {
-    var res = await gasFetch('updateTaskStatus', { unit:currentUnit.code, id:id, rowIndex:rowIndex, groupKey:groupKey, status:newStatus, actionNote:'' });
+    var res = await gasFetch('updateTaskStatus', { unit:currentUnit.code, id:id, rowIndex:rowIndex, groupKey:groupKey, status:newStatus });
     var json = await res.json();
     if (json && json.error) {
       showAlert('Gagal update status: ' + json.error);
@@ -1724,17 +1727,13 @@ async function changeStatus(select) {
       select.className = "status-select " + getStatusClass(prevStatus);
       if (tr) tr.setAttribute("data-status", prevStatus);
     } else {
-      // Job TIDAK dihapus dari Job Harian — baris tetap tampil dengan jam Selesai
-      // yang langsung terisi (WIB), dan sudah otomatis tersalin ke Histori juga.
-      if (taskInfo && json && json.histRow) taskInfo.histRow = json.histRow;
       loadData(true);
-      if (taskInfo && json && json.histRow) setTimeout(function(){ openActionModal(id, taskInfo); }, 400);
+      if (taskInfo) setTimeout(function(){ openActionModal(id, taskInfo); }, 400);
     }
   } catch(err) {
     showAlert('❌ Error: ' + err.message);
   } finally { showLoading(false); }
 }
-
 function toggleDeleteMode() {
   if (!hasPermission('sharejob.delete')) { showAccessDenied('Hapus Job','Supervisor atau Admin'); return; }
   deleteMode = !deleteMode;
