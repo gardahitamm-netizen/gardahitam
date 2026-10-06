@@ -742,16 +742,21 @@ var READ_ACTIONS = ['getTasks','getInit','getHistory','getRunningText','verifyUs
 async function gasFetch(action, params, retries) {
   if (retries === undefined) retries = 3;
   var isRead = READ_ACTIONS.indexOf(action) !== -1;
+  var p = params ? Object.assign({}, params) : {};
+  if (!isRead) {
+    // ID unik per aksi tulis; server menolak pemrosesan ganda dengan ID yang sama
+    p.reqId = Date.now().toString(36) + Math.random().toString(36).slice(2, 10);
+    retries = Math.min(retries, 1);
+  }
   var lastErr;
   for (var i = 0; i <= retries; i++) {
     try {
-      var res = await fetch(gasUrl(action, params), { cache: 'no-store' });
+      var res = await fetch(gasUrl(action, p), { cache: 'no-store' });
       if (res.ok) return res;
       lastErr = new Error('HTTP ' + res.status);
       if (!(res.status === 404 || res.status === 429 || res.status >= 500)) throw lastErr;
     } catch (err) {
       lastErr = err;
-      if (!isRead && err.name === 'TypeError') throw err; // jangan ulang tulis kalau status tidak jelas (anti dobel)
     }
     if (i < retries) await new Promise(function(r){ setTimeout(r, 700 * (i + 1)); });
   }
@@ -1047,19 +1052,27 @@ function reloadHistory() {
   });
 }
 
-async function loadHistory() {
-  showLoading(true, 'Memuat riwayat job...');
+async function loadHistory(fresh) {
+  var code = currentUnit.code, hasCache = false;
+  if (!fresh) {
+    try {
+      var c = JSON.parse(sessionStorage.getItem('sj_hist_' + code) || 'null');
+      if (c) { allHistoryData = c; renderHistoryTable(); applyHistFilter(); hasCache = true; }
+    } catch (e) {}
+  }
+  if (!hasCache) showLoading(true, 'Memuat riwayat job...');
   try {
-    var res = await gasFetch('getHistory', { unit: currentUnit.code });
+    var res = await gasFetch('getHistory', { unit: code, fresh: fresh ? '1' : '' });
     var json = await res.json();
+    if (!currentUnit || currentUnit.code !== code) return;
     if (json.error) { showAlert('Error getHistory: ' + json.error); return; }
     allHistoryData = json.data || [];
-    renderHistoryTable();
-    applyHistFilter();
-  } catch(err) {
-    showAlert('❌ Gagal memuat history: ' + err.message);
+    if (!_histCurrentEditCell) { renderHistoryTable(); applyHistFilter(); }
+    try { sessionStorage.setItem('sj_hist_' + code, JSON.stringify(allHistoryData)); } catch (e) {}
+  } catch (err) {
+    if (!hasCache) showAlert('❌ Gagal memuat history: ' + err.message);
   } finally {
-    showLoading(false);
+    if (!hasCache) showLoading(false);
   }
 }
 
