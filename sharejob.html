@@ -1487,8 +1487,15 @@ function manualRefresh() {
 }
 
 /* Urut murni sesuai urutan input di sheet (nomor baris) */
+function todayWIB() {
+  return new Date().toLocaleDateString('en-CA', { timeZone: 'Asia/Jakarta' }); // yyyy-mm-dd
+}
 function sortTasks(tasks) {
-  return tasks.slice().sort(function(a, b){ return (a.row || 0) - (b.row || 0); });
+  var today = todayWIB();
+  return tasks.filter(function(t) {
+    var y = tanggalToYMD(t.tanggal);
+    return !y || y >= today;            // job hari lalu otomatis kosong di Job Harian
+  }).sort(function(a, b){ return (a.row || 0) - (b.row || 0); });
 }
 function parseTanggal(str) {
   if (!str) return null;
@@ -2143,6 +2150,16 @@ function toggleTheme() {
   if (body.classList.contains('light-mode')) { body.classList.remove('light-mode'); icon.textContent='☀️'; localStorage.setItem('pjh_theme','dark'); }
   else { body.classList.add('light-mode'); icon.textContent='🌙'; localStorage.setItem('pjh_theme','light'); }
 }
+  /* Auto-kosongkan Job Harian saat pergantian hari (00:00 WIB) tanpa perlu refresh manual */
+var _lastDay = todayWIB();
+setInterval(function() {
+  var d = todayWIB();
+  if (d === _lastDay || !currentUnit || currentEditingRow) return;
+  _lastDay = d;
+  try { sessionStorage.removeItem('sj_hist_' + currentUnit.code); } catch (e) {}
+  loadData(true, false, true);                       // server ikut mengarsipkan
+  if (document.getElementById('historyPage').style.display === 'block') loadHistory(true);
+}, 15000);
 function updateClock() {
   var now = new Date();
   var days = ["Minggu","Senin","Selasa","Rabu","Kamis","Jumat","Sabtu"];
