@@ -670,6 +670,21 @@ tr.hist-date-row:hover td, tr.hist-status-row:hover td { filter:none; }
   </div>
 </div>
 
+ <!-- Modal Tandai Selesai (Histori) -->
+<div id="histSelesaiModal" class="modal">
+  <div class="modal-box" style="border-color:rgba(0,230,118,0.4);">
+    <h3 style="color:var(--green-ok);">✅ Tandai Selesai</h3>
+    <div class="action-modal-info" id="histSelesaiInfo"></div>
+    <label class="action-modal-label">📅 Tanggal selesai</label>
+    <input type="date" id="histSelesaiTgl" style="width:100%;margin-bottom:12px;">
+    <label class="action-modal-label">🕑 Jam selesai</label>
+    <input type="time" id="histSelesaiJam" style="width:100%;margin-bottom:16px;">
+    <div class="action-modal-btns">
+      <button class="action-skip-btn" onclick="cancelHistSelesai()">Batal</button>
+      <button class="action-save-btn" onclick="confirmHistSelesai()">💾 Simpan</button>
+    </div>
+  </div>
+</div>
 <!-- WA Modal Job Harian -->
 <div id="waModal" class="modal">
   <div class="modal-box">
@@ -1310,6 +1325,77 @@ async function saveHistInlineEdit() {
   } finally { showLoading(false); }
 }
 
+/* ══════════ UBAH STATUS DI HISTORI ══════════ */
+var _histStatusPending = null;
+
+function onHistStatusChange(sel) {
+  var prev = sel.getAttribute('data-prev');
+  if (!hasPermission('sharejob.editHistory')) {
+    sel.value = prev;
+    showAccessDenied('Edit Histori', 'Admin atau Supervisor');
+    return;
+  }
+  var tr = sel.closest('tr');
+  _histStatusPending = {
+    sel: sel, prev: prev, status: sel.value,
+    groupKey: sel.getAttribute('data-groupkey') || '',
+    rowIndex: sel.getAttribute('data-rowindex') || ''
+  };
+  if (sel.value === 'Selesai') {
+    var idx = parseInt(sel.getAttribute('data-histidx'), 10);
+    var t = allHistoryData[idx] || {};
+    var tglOld = tanggalToYMD(t.tglSelesai || '');
+    var now = new Date();
+    document.getElementById('histSelesaiInfo').innerHTML =
+      '<strong>' + escHtml(tr.getAttribute('data-namadisp') || '') + '</strong><br>' + escHtml(t.tugas || '');
+    document.getElementById('histSelesaiTgl').value = tglOld || todayWIB();
+    document.getElementById('histSelesaiJam').value = t.jamSelesai ||
+      (String(now.getHours()).padStart(2,'0') + ':' + String(now.getMinutes()).padStart(2,'0'));
+    document.getElementById('histSelesaiModal').style.display = 'flex';
+  } else {
+    submitHistStatus('', '');
+  }
+}
+
+function cancelHistSelesai() {
+  document.getElementById('histSelesaiModal').style.display = 'none';
+  if (_histStatusPending) {
+    _histStatusPending.sel.value = _histStatusPending.prev;
+    _histStatusPending = null;
+  }
+}
+
+function confirmHistSelesai() {
+  var tgl = document.getElementById('histSelesaiTgl').value;
+  var jam = document.getElementById('histSelesaiJam').value;
+  if (!tgl || !jam) { showAlert('Tanggal dan jam selesai harus diisi!'); return; }
+  document.getElementById('histSelesaiModal').style.display = 'none';
+  submitHistStatus(tgl, jam);
+}
+
+async function submitHistStatus(tgl, jam) {
+  var p = _histStatusPending;
+  if (!p) return;
+  _histStatusPending = null;
+  showLoading(true, 'Menyimpan status...');
+  try {
+    var res = await gasFetch('updateHistoryGroup', {
+      unit: currentUnit.code, groupKey: p.groupKey, rowIndex: p.rowIndex,
+      status: p.status, tglSelesai: tgl, jamSelesai: jam
+    });
+    var json = await res.json();
+    if (json && json.error) {
+      p.sel.value = p.prev;
+      showAlert('Gagal: ' + json.error);
+      return;
+    }
+    await loadHistory(true);
+  } catch (err) {
+    p.sel.value = p.prev;
+    showAlert('❌ Error: ' + err.message);
+  } finally { showLoading(false); }
+}
+  
 function onHMingguChange() {
   // pilih minggu = mode filter mandiri; kosongkan tanggal spesifik supaya tidak bentrok
   document.getElementById('hFilterTanggal').value = '';
@@ -1957,7 +2043,7 @@ function doPrintHistory() {
       }
       var pTr = document.createElement('tr');
       pTr.className = 'group-start-print' + (tr.classList.contains('id-block-start') ? ' id-block-start-print' : '');
-      pTr.innerHTML = '<td>' + escHtml(get(0)) + '</td><td>' + escHtml(get(1)) + '</td><td>' + escHtml(get(2)) + '</td><td>' + escHtml(get(3)) + '</td><td style="color:#1B5E20;font-weight:700;text-align:center;">' + escHtml(get(4) || '—') + '</td><td style="color:#BF360C;font-weight:700;text-align:center;">' + escHtml(get(5) || '—') + '</td><td style="color:#4A148C;font-size:10px;">' + escHtml(get(6)) + '</td><td style="font-size:10px;">' + escHtml(get(7)) + '</td>';
+      pTr.innerHTML = '<td>' + escHtml(get(0)) + '</td><td>' +  escHtml(tr.getAttribute('data-namadisp') || get(1)) + escHtml(get(2)) + '</td><td>' + escHtml(get(3)) + '</td><td style="color:#1B5E20;font-weight:700;text-align:center;">' + escHtml(get(4) || '—') + '</td><td style="color:#BF360C;font-weight:700;text-align:center;">' + escHtml(get(5) || '—') + '</td><td style="color:#4A148C;font-size:10px;">' + escHtml(get(6)) + '</td><td style="font-size:10px;">' + escHtml(get(7)) + '</td>';
       tb.appendChild(pTr);
     });
     tbl.appendChild(tb); pageDiv.appendChild(tbl); container.appendChild(pageDiv);
@@ -2061,7 +2147,7 @@ function openWaHistModal() {
   visible.forEach(function(tr, i) {
     var cells = tr.querySelectorAll('td');
     var get = function(idx){ return cells[idx] ? cells[idx].textContent.trim() : ''; };
-    pesan += (i+1) + ". *" + get(1) + "*\n";
+   pesan += (i+1) + ". *" + (tr.getAttribute('data-namadisp') || get(1)) + "*\n";
     pesan += "   🆔 ID        : " + get(0) + "\n";
     pesan += "   🔧 Mesin     : " + get(3) + "\n";
     pesan += "   📌 Tugas     : " + get(2) + "\n";
