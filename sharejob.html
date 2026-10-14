@@ -631,13 +631,12 @@ tr.hist-date-row:hover td, tr.hist-status-row:hover td { filter:none; }
 
   <div class="table-wrapper">
     <table id="historyTable">
-      <colgroup>
-        <col style="width:130px"><col style="width:130px"><col><col style="width:110px">
-        <col style="width:65px"><col style="width:65px"><col style="width:130px"><col style="width:200px">
-      </colgroup>
-      <thead>
-        <tr><th>ID</th><th>Nama</th><th>Tugas</th><th>Mesin</th><th>Mulai</th><th>Selesai</th><th>Diarsipkan</th><th>Action / Tindakan</th></tr>
-      </thead>
+     <colgroup>
+  <col style="width:130px"><col style="width:130px"><col><col style="width:110px">
+  <col style="width:65px"><col style="width:65px"><col style="width:130px"><col style="width:200px">
+  <col style="width:120px"><col style="width:100px">
+</colgroup>
+<thead><tr><th>ID</th><th>Nama</th><th>Tugas</th><th>Mesin</th><th>Mulai</th><th>Selesai</th><th>Diarsipkan</th><th>Action / Tindakan</th><th>Status</th><th>Tgl Selesai</th></tr></thead>
       <tbody id="histData">
         <tr><td colspan="8"><div class="hist-info-empty"><div class="ei-icon">⏳</div><div class="ei-text">Klik Refresh untuk memuat riwayat job</div></div></td></tr>
       </tbody>
@@ -1124,95 +1123,92 @@ function histDateLabel(tanggal) {
 function renderHistoryTable() {
   var tbody = document.getElementById('histData');
   if (!allHistoryData.length) {
-    tbody.innerHTML = '<tr><td colspan="8"><div class="hist-info-empty"><div class="ei-icon">📭</div><div class="ei-text">Belum ada riwayat job yang diarsipkan</div></div></td></tr>';
+    tbody.innerHTML = '<tr><td colspan="10"><div class="hist-info-empty"><div class="ei-icon">📭</div><div class="ei-text">Belum ada riwayat job yang diarsipkan</div></div></td></tr>';
     return;
   }
   var canEdit = hasPermission('sharejob.editHistory');
 
-  // urutan tampil: tanggal terbaru dulu -> Pending -> Proses -> Selesai -> urutan input.
-  // (allHistoryData tidak diubah urutannya, supaya data-histidx untuk edit tetap benar)
-  var order = allHistoryData.map(function(t, i){ return i; });
-  order.sort(function(a, b) {
-    var ta = allHistoryData[a], tb = allHistoryData[b];
-    var ya = tanggalToYMD(ta.tanggal), yb = tanggalToYMD(tb.tanggal);
-    if (ya !== yb) return ya < yb ? 1 : -1;
-    var sa = HIST_STATUS_ORDER.indexOf(histStatusKey(ta.status));
-    var sb = HIST_STATUS_ORDER.indexOf(histStatusKey(tb.status));
-    if (sa !== sb) return sa - sb;
-    return (ta.row || 0) - (tb.row || 0);
+  // kelompokkan per groupKey; nama dobel disembunyikan
+  var gmap = {}, groups = [];
+  allHistoryData.forEach(function(t, i) {
+    var key = t.groupKey ? 'gk:' + t.groupKey : 'row:' + t.row;
+    if (!gmap[key]) { gmap[key] = { items:[], first:t, idx:i }; groups.push(gmap[key]); }
+    var nm = (t.nama || '').trim().toLowerCase();
+    var g = gmap[key];
+    if (g.items.every(function(x){ return (x.nama || '').trim().toLowerCase() !== nm; })) g.items.push(t);
   });
 
-  // hitung jumlah per tanggal & per (tanggal+status) untuk label header
+  groups.sort(function(a, b) {
+    var ya = tanggalToYMD(a.first.tanggal), yb = tanggalToYMD(b.first.tanggal);
+    if (ya !== yb) return ya < yb ? 1 : -1;
+    var sa = HIST_STATUS_ORDER.indexOf(histStatusKey(a.first.status));
+    var sb = HIST_STATUS_ORDER.indexOf(histStatusKey(b.first.status));
+    if (sa !== sb) return sa - sb;
+    return (a.first.row || 0) - (b.first.row || 0);
+  });
+
   var cntDate = {}, cntStat = {};
-  order.forEach(function(i) {
-    var t = allHistoryData[i];
-    var dk = tanggalToYMD(t.tanggal) || 'x';
-    var sk = dk + '|' + histStatusKey(t.status);
-    cntDate[dk] = (cntDate[dk] || 0) + 1;
-    cntStat[sk] = (cntStat[sk] || 0) + 1;
+  groups.forEach(function(g) {
+    var dk = tanggalToYMD(g.first.tanggal) || 'x', sk = dk + '|' + histStatusKey(g.first.status);
+    cntDate[dk] = (cntDate[dk] || 0) + 1; cntStat[sk] = (cntStat[sk] || 0) + 1;
   });
 
   var html = '', lastId = null, lastDate = null, lastStat = null;
-
-  order.forEach(function(idx) {
-    var t = allHistoryData[idx];
-    var nama = t.nama || '';
-    var dk = tanggalToYMD(t.tanggal) || 'x';
-    var st = histStatusKey(t.status);
-    var sk = dk + '|' + st;
+  groups.forEach(function(g) {
+    var t = g.first, idx = g.idx;
+    var namaArr = g.items.map(function(x){ return x.nama || ''; });
+    var namaJoin = namaArr.join(', ');
+    var dk = tanggalToYMD(t.tanggal) || 'x', st = histStatusKey(t.status), sk = dk + '|' + st;
 
     if (dk !== lastDate) {
-      html += '<tr class="hist-date-row"><td colspan="8">📅 ' + escHtml(histDateLabel(t.tanggal)) +
+      html += '<tr class="hist-date-row"><td colspan="10">📅 ' + escHtml(histDateLabel(t.tanggal)) +
               ' <span class="hd-count">— ' + cntDate[dk] + ' job</span></td></tr>';
       lastDate = dk; lastStat = null; lastId = null;
     }
     if (sk !== lastStat) {
       var meta = HIST_STATUS_META[st];
-      html += '<tr class="hist-status-row ' + meta.cls + '"><td colspan="8">' + meta.icon + ' ' + st.toUpperCase() +
+      html += '<tr class="hist-status-row ' + meta.cls + '"><td colspan="10">' + meta.icon + ' ' + st.toUpperCase() +
               ' <span class="hd-count">(' + cntStat[sk] + ')</span></td></tr>';
       lastStat = sk; lastId = null;
     }
 
     var actionHtml = t.action ? '<span class="action-badge">' + escHtml(t.action) + '</span>' : '<span class="action-empty">— belum diisi</span>';
     var editableAttr = canEdit ? ' class="hist-editable-cell"' : '';
-    var isBlockStart = (String(t.id) !== lastId);
-    lastId = String(t.id);
-
+    var isBlockStart = (String(t.id) !== lastId); lastId = String(t.id);
     var p = parseTanggal(t.tanggal || '');
     var isoInfo = p ? getISOWeek(p.day, p.month, p.year) : null;
 
-    var rowDataAttrs =
-      ' data-histid="' + escHtml(String(t.id)) + '"' +
-      ' data-rowindex="' + escHtml(String(t.row || '')) + '"' +
-      ' data-histidx="' + idx + '"' +
-      ' data-tanggal="' + escHtml(t.tanggal||'') + '"' +
-      ' data-status="' + st + '"' +
-      ' data-isoweek="' + (isoInfo ? isoInfo.week : '') + '"' +
-      ' data-isoyear="' + (isoInfo ? isoInfo.isoYear : '') + '"' +
-      ' data-nama="' + escHtml(nama.toLowerCase()) + '"' +
-      ' data-mesin="' + escHtml((t.mesin||'').toLowerCase()) + '"' +
-      ' data-tugas="' + escHtml((t.tugas||'').toLowerCase()) + '"';
+    var statusCell = canEdit
+      ? '<select class="status-select ' + getStatusClass(st) + '" data-groupkey="' + escHtml(t.groupKey || '') +
+        '" data-rowindex="' + escHtml(String(t.row || '')) + '" data-histidx="' + idx + '" data-prev="' + st +
+        '" onchange="onHistStatusChange(this)">' +
+        HIST_STATUS_ORDER.map(function(s){ return '<option' + (s === st ? ' selected' : '') + '>' + s + '</option>'; }).join('') +
+        '</select>'
+      : '<span class="status-select ' + getStatusClass(st) + '" style="display:block;text-align:center;">' + st + '</span>';
 
-    html += '<tr class="hist-group-row group-row' + (isBlockStart ? ' id-block-start' : '') + '"' + rowDataAttrs + '>' +
+    html += '<tr class="hist-group-row group-row' + (isBlockStart ? ' id-block-start' : '') + '"' +
+      ' data-histid="' + escHtml(String(t.id)) + '" data-rowindex="' + escHtml(String(t.row || '')) + '" data-histidx="' + idx + '"' +
+      ' data-tanggal="' + escHtml(t.tanggal || '') + '" data-status="' + st + '"' +
+      ' data-isoweek="' + (isoInfo ? isoInfo.week : '') + '" data-isoyear="' + (isoInfo ? isoInfo.isoYear : '') + '"' +
+      ' data-namadisp="' + escHtml(namaJoin) + '" data-nama="' + escHtml(namaJoin.toLowerCase()) + '"' +
+      ' data-mesin="' + escHtml((t.mesin || '').toLowerCase()) + '" data-tugas="' + escHtml((t.tugas || '').toLowerCase()) + '">' +
       '<td>' + escHtml(String(t.id)) + '</td>' +
-      '<td>' + escHtml(nama) + '</td>' +
+      '<td>' + namaArr.map(function(nm, i){ return '<div class="team-name-item"><span class="tn-num">' + (i+1) + '.</span> ' + escHtml(nm) + '</div>'; }).join('') +
+        (namaArr.length > 1 ? '<div class="team-count">👥 ' + namaArr.length + ' orang — 1 tim</div>' : '') + '</td>' +
       '<td>' + escHtml(t.tugas) + '</td>' +
       '<td>' + escHtml(t.mesin) + '</td>' +
-      '<td style="color:var(--green-ok);font-family:\'JetBrains Mono\',monospace;font-weight:700;">' +
-        (t.jamMulai ? escHtml(t.jamMulai) : '<span style="color:var(--text-dim)">—</span>') + '</td>' +
-      '<td' + editableAttr + ' data-field="jamSelesai" data-value="' + escHtml(t.jamSelesai||'') + '" style="color:var(--amber-warn);font-family:\'JetBrains Mono\',monospace;font-weight:700;">' +
-        (t.jamSelesai ? escHtml(t.jamSelesai) : '<span style="color:var(--text-dim)">—</span>') + '</td>' +
-      '<td data-field="archivedAt" data-value="' + escHtml(t.archivedAt||'') + '"' + (canEdit?' class="hist-editable-cell hist-archived-at"':' class="hist-archived-at"') + '>' +
-        escHtml(t.tanggal) +
-        (t.archivedAt ? '<br><span style="color:var(--hist-accent);font-size:9px;">' + escHtml(t.archivedAt) + '</span>' : '') +
-      '</td>' +
-      '<td' + editableAttr + ' data-field="action" data-value="' + escHtml(t.action||'') + '">' + actionHtml + '</td>' +
+      '<td style="color:var(--green-ok);font-family:\'JetBrains Mono\',monospace;font-weight:700;">' + (t.jamMulai ? escHtml(t.jamMulai) : '<span style="color:var(--text-dim)">—</span>') + '</td>' +
+      '<td' + editableAttr + ' data-field="jamSelesai" data-value="' + escHtml(t.jamSelesai || '') + '" style="color:var(--amber-warn);font-family:\'JetBrains Mono\',monospace;font-weight:700;">' + (t.jamSelesai ? escHtml(t.jamSelesai) : '<span style="color:var(--text-dim)">—</span>') + '</td>' +
+      '<td data-field="archivedAt" data-value="' + escHtml(t.archivedAt || '') + '"' + (canEdit ? ' class="hist-editable-cell hist-archived-at"' : ' class="hist-archived-at"') + '>' +
+        escHtml(t.tanggal) + (t.archivedAt ? '<br><span style="color:var(--hist-accent);font-size:9px;">' + escHtml(t.archivedAt) + '</span>' : '') + '</td>' +
+      '<td' + editableAttr + ' data-field="action" data-value="' + escHtml(t.action || '') + '">' + actionHtml + '</td>' +
+      '<td>' + statusCell + '</td>' +
+      '<td style="color:var(--green-ok);font-family:\'JetBrains Mono\',monospace;">' + (t.tglSelesai ? escHtml(t.tglSelesai) : '<span style="color:var(--text-dim)">—</span>') + '</td>' +
       '</tr>';
   });
   tbody.innerHTML = html;
   attachHistDblClick();
 }
-
 function attachHistDblClick() {
   var tbody = document.getElementById('histData');
   tbody.removeEventListener('dblclick', _histDblClickHandler);
